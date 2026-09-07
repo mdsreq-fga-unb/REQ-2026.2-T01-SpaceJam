@@ -65,4 +65,8 @@ plugins:
 
 nav:
   - Home: index.md
+  - "1. Cenário Atual": cenario_atual.md
+  - "2. Solução Proposta": solucao.md
   - "3. Intervenção Social": intervencao_social.md
+  
+  

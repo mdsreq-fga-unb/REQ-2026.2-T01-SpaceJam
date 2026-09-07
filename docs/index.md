@@ -3,6 +3,14 @@
 Bem-vindo à documentação oficial do projeto **Space Jam**, desenvolvido na disciplina de **Requisitos de Software (FGA0313)** da **Universidade de Brasília (UnB - FCTE)** no semestre **2026.1**.
 
 ---
+## Integrantes
+
+- Anderson Fernandes da Silva
+- Guilherme Ferreira Mendes
+- Júlia Amanda Silva Lima 
+- Luiz Henrique Pessato da Mota
+- Paulo Sergio Rabelo Santana Rios
+- Thiago Alencar de Oliveira
 
 ## Visão Geral do Projeto
 
