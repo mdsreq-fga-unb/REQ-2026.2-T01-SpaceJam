@@ -10,8 +10,6 @@ copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.1
 theme:
   name: material
   language: pt
-  favicon: assets/favicon.png
-  logo: assets/favicon.png
   icon:
     repo: fontawesome/brands/github
 
@@ -53,20 +51,13 @@ markdown_extensions:
   - admonition
   - attr_list
   - md_in_html
+  - tables
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight
   - toc:
       permalink: true
       title: Nesta página
-  - tables
-  - pymdownx.details
-  - pymdownx.superfences
-  - pymdownx.caret
-  - pymdownx.mark
-  - pymdownx.tilde
-  - pymdownx.tabbed:
-      alternate_style: true
-  - pymdownx.snippets
-  - pymdownx.tasklist:
-      custom_checkbox: true
 
 plugins:
   - search:
@@ -74,3 +65,4 @@ plugins:
 
 nav:
   - Home: index.md
+  - "3. Intervenção Social": intervencao-social.md
