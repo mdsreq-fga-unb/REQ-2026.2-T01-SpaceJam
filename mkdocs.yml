@@ -17,17 +17,20 @@ theme:
     repo: fontawesome/brands/github
 
   palette:
+    # Tema Claro: Barra superior em Azul/Ciano 
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: orange
+      primary: cyan
       accent: deep orange
       toggle:
         icon: material/weather-night
         name: Modo escuro
+
+    # Tema Escuro: Barra superior em Laranja 
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: orange
-      accent: deep orange
+      accent: cyan
       toggle:
         icon: material/weather-sunny
         name: Modo claro
