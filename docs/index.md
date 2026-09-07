@@ -1,17 +1,22 @@
-# Welcome to MkDocs
+# Space Jam — Plataforma de Acompanhamento e Treinamento de Basquete
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Bem-vindo à documentação oficial do projeto **Space Jam**, desenvolvido na disciplina de **Requisitos de Software (FGA0313)** da **Universidade de Brasília (UnB - FCTE)** no semestre **2026.1**.
 
-## Commands
+---
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Visão Geral do Projeto
 
-## Project layout
+O **Space Jam** é uma plataforma web voltada para otimizar e centralizar o acompanhamento técnico e físico de atletas de basquete orientados pelo treinador Lucas Cordeiro. 
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+A solução resolve o problema de dispersão de registros (atualmente divididos entre Samsung Notes, Word e cadernos), oferecendo uma visão unificada do perfil do atleta, resultados de testes físicos, planos de treino, biblioteca de exercícios e acompanhamento do histórico de evolução.
+
+```tpp
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            PLATAFORMA SPACE JAM                             │
+├──────────────────────────────────┬──────────────────────────────────────────┤
+│           TREINADOR              │                 ATLETA                   │
+│ • Prescrição de treinos          │ • Consulta de plano e orientações        │
+│ • Registro de testes físicos     │ • Biblioteca de exercícios com vídeos    │
+│ • Acompanhamento da evolução     │ • Envio opcional de vídeo de execução    │
+│ • Feedback privado e individual  │ • Visualização do histórico longitudinal │
+└──────────────────────────────────┴──────────────────────────────────────────┘
