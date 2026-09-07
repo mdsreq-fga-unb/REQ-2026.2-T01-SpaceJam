@@ -10,7 +10,10 @@ copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.1
 theme:
   name: material
   language: pt
+  favicon: docs/favicon.png
+  logo: docs/favicon.png
   icon:
+    logo: material/basketball
     repo: fontawesome/brands/github
 
   palette:
