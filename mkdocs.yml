@@ -10,8 +10,8 @@ copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.1
 theme:
   name: material
   language: pt
-  favicon: docs/favicon.png
-  logo: docs/favicon.png
+  favicon: imagens/favicon.png
+  logo: imagens/favicon.png
   icon:
     logo: material/basketball
     repo: fontawesome/brands/github
@@ -48,7 +48,7 @@ theme:
     - content.code.copy
 
 extra_css:
-  - assets/stylesheets/extra.css
+  - stylesheets/extra.css
 
 markdown_extensions:
   - admonition
@@ -71,5 +71,3 @@ nav:
   - "1. Cenário Atual": cenario_atual.md
   - "2. Solução Proposta": solucao.md
   - "3. Intervenção Social": intervencao_social.md
-  
-  
