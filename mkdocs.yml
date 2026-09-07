@@ -1,1 +1,76 @@
-site_name: My Docs
+site_name: Space Jam · Treinamento e Acompanhamento de Atletas
+site_description: Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.1 · FCTE/UnB
+site_author: Equipe Space Jam
+site_url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/
+repo_url: https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+repo_name: mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+edit_uri: edit/gh-pages/docs/
+copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.1
+
+theme:
+  name: material
+  language: pt
+  favicon: assets/favicon.png
+  logo: assets/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: orange
+      accent: deep orange
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+
+  font:
+    text: Inter
+    code: JetBrains Mono
+
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.sections
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+      title: Nesta página
+  - tables
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.snippets
+  - pymdownx.tasklist:
+      custom_checkbox: true
+
+plugins:
+  - search:
+      lang: pt
+
+nav:
+  - Home: index.md
