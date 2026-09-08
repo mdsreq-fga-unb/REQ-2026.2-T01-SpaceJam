@@ -1,0 +1,78 @@
+site_name: Space Jam · Treinamento e Acompanhamento de Atletas
+site_description: Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.1 · FCTE/UnB
+site_author: Equipe Space Jam
+site_url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/
+repo_url: https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+repo_name: mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+edit_uri: edit/gh-pages/docs/
+copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.1
+
+theme:
+  name: material
+  language: pt
+  favicon: imagens/favicon.png
+  logo: imagens/favicon.png
+  icon:
+    logo: material/basketball
+    repo: fontawesome/brands/github
+
+  palette:
+    # Tema Claro: Barra superior em Azul/Ciano 
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: cyan
+      accent: deep orange
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
+
+    # Tema Escuro: Barra superior em Laranja 
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: orange
+      accent: cyan
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+
+  font:
+    text: Inter
+    code: JetBrains Mono
+
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.sections
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.superfences
+  - pymdownx.details
+  - pymdownx.highlight
+  - toc:
+      permalink: true
+      title: Nesta página
+
+plugins:
+  - search:
+      lang: pt
+
+nav:
+  - Home: index.md
+  - "1. Cenário Atual": cenario_atual.md
+  - "2. Solução Proposta": solucao.md
+  - "3. Intervenção Social": intervencao_social.md
+  - "5. Engenharia de Requisitos": engenharia_requisitos.md
+  - "7. Interação entre Equipe e Cliente": interacao_equipe_cliente.md
