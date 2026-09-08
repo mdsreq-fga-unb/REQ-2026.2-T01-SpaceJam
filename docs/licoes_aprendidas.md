@@ -1,6 +1,6 @@
 #UNIDADE 1
 
-Durante o desenvolvimento inicial do projeto TreinaAi, várias lições importantes foram aprendidas que irão influenciar as próximas fases. Abaixo estão as lições aprendidas, focando nas ações de melhoria, desafios enfrentados e como foram superados.
+Durante o desenvolvimento inicial do projeto Space Jam, várias lições importantes foram aprendidas que irão influenciar as próximas fases. Abaixo estão as lições aprendidas, focando nas ações de melhoria, desafios enfrentados e como foram superados.
 
 ##Aprendizado e melhorias para o processo
 
