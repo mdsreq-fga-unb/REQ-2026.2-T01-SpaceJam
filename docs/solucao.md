@@ -161,7 +161,16 @@ Para os **atletas**, espera-se que o produto proporcione:
 - maior organização das informações relacionadas ao próprio treinamento;
 - maior privacidade dos dados, vídeos e feedbacks.
 
-Para o **treinador**, além dos benefícios relacionados à organização das informações, espera-se uma redução do esforço necessário para localizar dados individuais e acompanhar a evolução dos atletas.
+Para o treinador, além dos benefícios relacionados à organização das informações, espera-se uma redução do esforço necessário para localizar dados individuais e acompanhar a evolução dos atletas.
 
-De maneira geral, o produto deverá contribuir para um acompanhamento **mais organizado, individualizado e rastreável**, funcionando como uma ferramenta de apoio ao trabalho presencial do treinador, sem substituir sua avaliação profissional durante os treinos.
+De maneira geral, o produto deverá contribuir para um acompanhamento mais organizado, individualizado e rastreável, funcionando como uma ferramenta de apoio ao trabalho presencial do treinador, sem substituir sua avaliação profissional durante os treinos.
+
+
+## Histórico de Versão
+
+| Data | Versão | Descrição | Autor |
+| --- | --- | --- | --- |
+| 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Paulo Sergio Rabelo Santana Rios |
+| 07/09/2026 | 0.1 | Elaboração inicial da seção de solução proposta. | Júlia Amanda Silva Lima |
+
 
