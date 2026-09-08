@@ -39,7 +39,7 @@ As decisões relevantes tomadas nas reuniões serão registradas de forma breve 
 
 ### Comunicação com o cliente
 
-O contato com Lucas Cordeiro ocorre pelo **WhatsApp** e pelo **Instagram**. As interações são realizadas conforme a disponibilidade do cliente e podem envolver esclarecimento de dúvidas, apresentação de artefatos, solicitação de informações e coleta de feedback.
+O contato com Lucas Cordeiro ocorre pelo **WhatsApp** e pelo **Instagram**, utilizados também para o agendamento. Quando for necessária uma interação síncrona, as reuniões com o cliente serão realizadas pelo **Microsoft Teams**, em datas combinadas conforme sua disponibilidade. As interações podem envolver esclarecimento de dúvidas, apresentação de artefatos, solicitação de informações e coleta de feedback.
 
 Para tornar as interações assíncronas mais objetivas, a equipe deve enviar perguntas contextualizadas e, quando possível, acompanhadas de protótipos, imagens ou exemplos. As respostas relevantes para o produto devem ser registradas na documentação ou no artefato relacionado.
 
@@ -54,7 +54,7 @@ A validação será progressiva e acompanhará os ciclos iterativos e incrementa
 O processo de validação será conduzido de forma simples e compatível com a disponibilidade do cliente:
 
 1. **Preparação e revisão interna:** a equipe seleciona e revisa o requisito, fluxo, protótipo ou incremento que precisa de validação.
-2. **Apresentação ao cliente:** o material é apresentado a Lucas em reunião ou enviado pelo WhatsApp ou Instagram, de acordo com sua disponibilidade.
+2. **Apresentação ao cliente:** o material é apresentado a Lucas em reunião pelo Microsoft Teams ou enviado pelo WhatsApp ou Instagram, de acordo com sua disponibilidade.
 3. **Registro e análise do feedback:** a equipe registra a resposta recebida e avalia os ajustes necessários considerando valor para o cliente, viabilidade e escopo do MVP.
 4. **Atualização:** os artefatos afetados são atualizados e, quando a mudança for significativa, reapresentados ao cliente.
 
@@ -76,5 +76,6 @@ Esse registro permite acompanhar como as necessidades e os feedbacks do cliente 
 
 | Data | Versão | Descrição | Autor |
 | --- | --- | --- | --- |
+| 07/09/2026 | 0.3 | Inclusão do Microsoft Teams como meio para reuniões com o cliente. | Luiz Henrique Pessato da Mota |
 | 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Luiz Henrique Pessato da Mota |
 | 07/09/2026 | 0.1 | Elaboração inicial da seção de interação entre equipe e cliente. | Luiz Henrique Pessato da Mota |
