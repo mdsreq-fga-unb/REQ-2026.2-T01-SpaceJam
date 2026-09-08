@@ -73,6 +73,9 @@
 | **Retrospectiva** | Análise e Consenso | Análise do Processo | Discussões em Grupo, Análise de Causas | Melhorias identificadas na condução da ER. |
 | | Organização e Atualização | Evolução Metodológica | Ajustes no Workflow de ER | Processo de requisitos ajustado para o próximo ciclo. |
 
+## Histórico de Versão
+
 | Data | Versão | Descrição | Autor |
 | --- | --- | --- | --- |
+| 07/09/2026 | 0.2 | Correção do histórico de versão. | Guilherme Ferreira Mendes |
 | 07/09/2026 | 0.1 | Estruturação inicial do Tópico 5 (Engenharia de Requisitos) e mapeamento das 6 atividades da ER. | Guilherme Ferreira Mendes |
