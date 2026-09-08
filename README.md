@@ -25,3 +25,13 @@ O **SpaceJam** é uma solução digital desenvolvida para apoiar a gestão e o a
 | <img src="https://github.com/Paulosrsr.png" width="80" alt="Paulo Sérgio" style="border-radius: 50%;"> | [Paulo Sérgio](https://github.com/Paulosrsr) | [@Paulosrsr](https://github.com/Paulosrsr) |
 | <img src="https://github.com/code-silva.png" width="80" alt="Anderson Fernandes" style="border-radius: 50%;"> | [Anderson Fernandes](https://github.com/code-silva) | [@code-silva](https://github.com/code-silva) |
 | <img src="https://github.com/OliveiraThiago14.png" width="80" alt="Thiago Oliveira" style="border-radius: 50%;"> | [Thiago Oliveira](https://github.com/OliveiraThiago14) | [@OliveiraThiago14](https://github.com/OliveiraThiago14) | |
+
+---
+
+## 🔗 Links Úteis e Documentação
+
+* 🌐 **Site da Documentação (GitHub Pages):** [Acessar Documentação Completa](https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/)
+* 📄 **Visão do Produto e Projeto:** Disponível na aba de Capítulos do nosso site MkDocs.
+* 🤝 **Cliente Parceiro:** Lucas Cordeiro (Treinador de Basquete)
+* 📸 **Instagram do Cliente:** [@cordeirotrainer](https://www.instagram.com/cordeirotrainer/)
+*
