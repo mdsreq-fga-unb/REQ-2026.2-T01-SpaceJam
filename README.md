@@ -66,3 +66,26 @@ O **SpaceJam** é uma solução digital desenvolvida para apoiar a gestão e o a
 git clone [https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git)
 cd REQ-2026.2-T01-SpaceJam
 ```
+
+2. **Crie e ative um ambiente virtual:**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # No Windows: venv\Scripts\activate
+```
+
+3. **Instale as dependências:**
+
+```bash
+pip install -r requeriments.txt
+```
+
+4. **Inicie o servidor de desenvolvimento do MkDocs:
+
+```bash
+mkdocks serve
+```
+
+Acesse a documentação no navegador através do endereço: http://127.0.0.1:8000/.
+
+
