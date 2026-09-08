@@ -2,54 +2,36 @@
 
 ## 5.1 Atividades e Técnicas de ER
 
-### Planejamento da Release
+### Elicitação e Descoberta
+* **Entrevistas com Cliente:** Conversas semiestruturadas com o treinador para mapear a rotina de treinos, fichas de avaliação física e dores no acompanhamento dos atletas.
+* **Brainstorming:** Sessões entre a equipe de desenvolvimento para discutir ideias sobre a biblioteca de exercícios, visualização de progresso e envio de vídeos.
+* **Análise Documental:** Avaliação dos documentos do Samsung Notes, Word e manuscritos que o treinador usa para fazer o histórico dos alunos.
+* **Análise de Tarefas:** Mapeamento do fluxo de navegação para identificar como o treinador e os atletas realizarão suas ações no aplicativo.
 
-* **Elicitação e Descoberta:**
-    * **Entrevistas com CLiente:** Conversas semiestruturadas com o treinador para mapear a rotina de treinos, fichas de avaliação física e dores no acompanhamento dos atletas.
-    * **Brainstorming:** Sessões entre a equipe de desenvolvimento para discutir ideias sobre a biblioteca de exercícios, visualização de progresso e envio de vídeos.
-    * **Análise Documental:** Avaliação dos documentos do Samsung Notes, World e manuescritos que o treinador usa para fazer o histórico dos alunos .
-* **Análise e Consenso:**
-    * **Matriz Valor x Esforço & MoSCoW:** Mapeamento conjunto entre o valor de negócio para o treinador e o esforço técnico de implementação, categorizando itens em *Must have*, *Should have*, *Could have* e *Won't have* para delimitar a linha de corte do MVP.
-    * **Análise de Custo/Benefício:** Avaliação do impacto de funcionalidades complexas frente ao prazo semestral do projeto.
-* **Declaração:**
-    * **Documento de Visão, Temas e Épicos:** Registro dos Objetivos Específicos (OEs) e estruturação dos requisitos em grandes blocos funcionais usando a linguagem do basquete e do treinamento esportivo.
+### Análise e Consenso
+* **Matriz Valor x Esforço:** Avaliação do valor de negócio para o treinador frente ao esforço técnico de implementação.
+* **Priorização MoSCoW:** Técnica aplicada em conjunto com a Matriz Valor x Esforço para categorizar os requisitos em *Must have*, *Should have*, *Could have* e *Won't have*, delimitando a linha de corte do MVP.
+* **Análise de Custo/Benefício:** Avaliação do impacto de funcionalidades complexas frente ao prazo semestral do projeto.
+* **Discussões em Equipe e Estimativa de Viabilidade:** Reuniões técnicas para analisar dependências de arquitetura e validar a capacidade de entrega.
 
-### Planejamento da Sprint
+### Declaração de Requisitos
+* **Documento de Visão:** Registro formal dos Objetivos Específicos (OEs) e da proposta do produto.
+* **Temas e Épicos:** Estruturação dos requisitos em grandes blocos funcionais usando a linguagem do basquete e do treinamento esportivo.
+* **User Stories (INVEST):** Decomposição estruturada dos requisitos em Histórias de Usuário descritas no formato de valor.
+* **Critérios de Aceitação:** Especificação detalhada das regras de negócio de cada história usando formatos verificáveis (*Dado/Quando/Então*).
 
-* **Elicitação e Descoberta:**
-    * **Entrevistas de Detalhamento:** Encontros focados com o treinador para elicitar regras específicas de prescrição de treinos e métricas de testes físicos.
-    * **Análise de Tarefas:** Mapeamento do fluxo de navegação para identificar como o treinador e os atletas realizarão suas ações no aplicativo.
-* **Análise e Consenso:**
-    * **Discussões em Equipe e Estimativa de Viabilidade:** Reuniões técnicas para analisar dependências de arquitetura e validar a capacidade de entrega da Sprint.
-* **Declaração:**
-    * **User Stories (INVEST) e Critérios de Aceitação:** Redação das histórias de usuário no formato de valor e especificação das regras de negócio usando cenários verificáveis (*Dado/Quando/Então*).
-* **Organização e Atualização:**
-    * **Grooming do Backlog:** Refinamento e reordenamento contínuo das Histórias de Usuário antes do início de cada Sprint.
+### Representação de Requisitos
+* **Prototipagem no Figma:** Criação de wireframes e mockups de alta e baixa fidelidade para validar os fluxos das telas antes da implementação do código.
 
-### Execução da Sprint (Prototipagem RAD)
+### Verificação e Validação de Requisitos
+* **Checklists de Qualidade de Requisitos (DoR):** Verificação técnica aplicada para inspecionar clareza, testabilidade e completude das histórias antes da admissão na Sprint.
+* **Demonstração e Teste com Usuário Real (Prototype Walkthrough):** Apresentação do incremento funcional diretamente ao treinador Lucas Cordeiro para navegação e coleta de feedback imediato.
+* **Análise de Causas e Discussões em Grupo:** Identificação de falhas de comunicação, ambiguidades ou gargalos na definição e validação dos requisitos durante a Retrospectiva.
 
-* **Representação:**
-    * **Prototipagem no Figma:** Criação de wireframes e mockups de alta/baixa fidelidade para validar os fluxos das telas antes da implementação do código.
-* **Verificação e Validação:**
-    * **Checklists de Qualidade de Requisitos (DoR):** Verificação técnica aplicada para inspecionar clareza, testabilidade e completude das histórias.
-* **Organização e Atualização:**
-    * **Gestão Visual no GitHub Projects:** Acompanhamento diário da movimentação de histórias e tarefas técnicas para mitigar bloqueios de fluxo.
-
-### Revisão da Sprint
-
-* **Verificação e Validação:**
-    * **Demonstração e Teste com Usuário Real (Prototype Walkthrough):** Apresentação do incremento funcional diretamente ao treinador Lucas Cordeiro para navegação e coleta de feedback imediato.
-* **Análise e Consenso:**
-    * **Negociação de Alterações:** Análise do feedback recebido para decidir quais ajustes serão incorporados, adiados ou reallocados no escopo.
-* **Organização e Atualização:**
-    * **Atualização dos Requisitos:** Reorganização do Product Backlog no GitHub Projects com base nas validações da Sprint Review.
-
-### Retrospectiva da Sprint
-
-* **Análise e Consenso:**
-    * **Análise de Causas e Discussões em Grupo:** Identificação de falhas de comunicação, ambiguidades ou gargalos na definição e validação dos requisitos.
-* **Organização e Atualização:**
-    * **Ajuste no Processo de ER:** Atualização das práticas da equipe para melhorar a escrita de critérios de aceite e o alinhamento de expectativas.
+### Organização e Atualização de Requisitos
+* **Grooming do Backlog:** Refinamento e reordenamento contínuo do Product Backlog antes e durante os ciclos.
+* **Gestão Visual no GitHub Projects:** Acompanhamento diário da movimentação de histórias e tarefas técnicas para mitigar bloqueios e manter a rastreabilidade.
+* **Ajuste no Processo de ER:** Atualização das práticas da equipe para melhorar a escrita de critérios de aceite e o alinhamento de expectativas a partir do feedback.
 
 ---
 
@@ -77,5 +59,6 @@
 
 | Data | Versão | Descrição | Autor |
 | --- | --- | --- | --- |
+| 08/09/2026 | 0.3 | Reestruturação da Seção 5.1 agrupando técnicas pelas 6 Atividades da ER para eliminar duplicidade com o fluxo do Scrum. | Guilherme Ferreira Mendes |
 | 07/09/2026 | 0.2 | Correção do histórico de versão. | Guilherme Ferreira Mendes |
 | 07/09/2026 | 0.1 | Estruturação inicial do Tópico 5 (Engenharia de Requisitos) e mapeamento das 6 atividades da ER. | Guilherme Ferreira Mendes |
