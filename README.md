@@ -80,7 +80,7 @@ source venv/bin/activate  # No Windows: venv\Scripts\activate
 pip install -r requeriments.txt
 ```
 
-4. **Inicie o servidor de desenvolvimento do MkDocs:
+4. **Inicie o servidor de desenvolvimento do MkDocs:**
 
 ```bash
 mkdocks serve
