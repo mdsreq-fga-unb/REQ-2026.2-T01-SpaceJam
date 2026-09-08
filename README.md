@@ -34,4 +34,35 @@ O **SpaceJam** é uma solução digital desenvolvida para apoiar a gestão e o a
 * 📄 **Visão do Produto e Projeto:** Disponível na aba de Capítulos do nosso site MkDocs.
 * 🤝 **Cliente Parceiro:** Lucas Cordeiro (Treinador de Basquete)
 * 📸 **Instagram do Cliente:** [@cordeirotrainer](https://www.instagram.com/cordeirotrainer/)
-*
+
+---
+
+## 📁 Estrutura do Repositório
+
+```text
+.
+├── .github/
+│   └── workflows/                # Automações e pipelines de CI/CD (deploy)
+├── docs/                         # Código-fonte da documentação (arquivos Markdown e assets)
+├── README.md                     # Apresentação principal do repositório
+├── mkdocs.yml                    # Arquivo de configuração do MkDocs
+└── requirements.txt              # Dependências Python para execução do MkDocs
+```
+
+---
+
+## 📌 Como Executar a Documentação Localmente
+
+### Pré-requisitos
+
+* **Python 3.10 ou superior**
+* **pip e virtualenv**
+
+### Passo a Passo
+
+1. **Clone o repositório:**
+
+```bash
+git clone [https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git)
+cd REQ-2026.2-T01-SpaceJam
+```
