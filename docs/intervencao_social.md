@@ -20,3 +20,7 @@ Entre os **impactos pretendidos**, destacam-se:
 * maior coleta, armazenamento e responsabilidade sobre dados pessoais e vídeos de praticantes.
 
 Dessa forma, a intervenção social da solução vai além de simplesmente "armazenar dados de treino em um site". Ela envolve a modificação das práticas de ensino do basquete, das dinâmicas de acompanhamento individual, das relações de confiança e dos meios de acesso ao desenvolvimento esportivo, demandando que os requisitos levem em conta tanto os benefícios esperados quanto os efeitos não previstos da utilização real do sistema.
+
+| Data | Versão | Descrição | Autor |
+| --- | --- | --- | --- |
+| 07/09/2026 | 0.1 | Elaboração e estruturação da Seção 3 (Intervenção Social) com definição de impactos pretendidos e efeitos emergentes. | Guilherme Ferreira Mendes |

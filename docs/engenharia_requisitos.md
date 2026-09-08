@@ -72,3 +72,7 @@
 | | Organização e Atualização | Atualização de Requisitos | Ajuste de User Stories e Backlog | Backlog Geral reordenado com base no uso real. |
 | **Retrospectiva** | Análise e Consenso | Análise do Processo | Discussões em Grupo, Análise de Causas | Melhorias identificadas na condução da ER. |
 | | Organização e Atualização | Evolução Metodológica | Ajustes no Workflow de ER | Processo de requisitos ajustado para o próximo ciclo. |
+
+| Data | Versão | Descrição | Autor |
+| --- | --- | --- | --- |
+| 07/09/2026 | 0.1 | Estruturação inicial do Tópico 5 (Engenharia de Requisitos) e mapeamento das 6 atividades da ER. | Guilherme Ferreira Mendes |
