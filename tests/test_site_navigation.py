@@ -90,6 +90,12 @@ class SiteNavigationTest(unittest.TestCase):
                 lessons_page.read_text(encoding="utf-8"),
             )
 
+            lessons_content = lessons_page.read_text(encoding="utf-8")
+            self.assertIn("Efeitos observados na primeira entrega", lessons_content)
+            self.assertIn("Responsável", lessons_content)
+            self.assertIn("Prazo", lessons_content)
+            self.assertIn("Evidência de conclusão", lessons_content)
+
     def test_document_pages_offer_editing_on_the_docs_branch(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
