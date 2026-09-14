@@ -10,8 +10,8 @@ copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
 theme:
   name: material
   language: pt
-  favicon: imagens/favicon.png
-  logo: imagens/favicon.png
+  favicon: imagens/space-jam-logo.svg
+  logo: imagens/space-jam-logo.svg
   icon:
     logo: material/basketball
     repo: fontawesome/brands/github
@@ -76,6 +76,7 @@ nav:
       - "3. Intervenção Social": intervencao_social.md
       - "5. Engenharia de Requisitos": engenharia_requisitos.md
       - "7. Interação entre Equipe e Cliente": interacao_equipe_cliente.md
+      - "11. Lições Aprendidas": licoes-aprendidas.md
   - Unidade 2:
       - Visão geral: unidade-2.md
   - Reuniões: reunioes.md

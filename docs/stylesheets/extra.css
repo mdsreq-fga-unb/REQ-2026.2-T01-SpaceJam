@@ -35,6 +35,17 @@
   box-shadow: 0 0.35rem 1rem rgba(36, 17, 63, 0.24);
 }
 
+.md-header__button.md-logo {
+  margin: 0.2rem 0.45rem 0.2rem 0;
+  padding: 0.15rem;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 1.7rem;
+  height: 1.7rem;
+}
+
 .md-header__title,
 .md-header__topic,
 .md-source,
