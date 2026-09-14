@@ -1,4 +1,4 @@
-# 7. INTERAÇÃO ENTRE EQUIPE E CLIENTE
+# 7. Interação entre Equipe e Cliente
 
 Esta seção apresenta como a equipe organiza o trabalho, mantém a comunicação com o cliente e registra as decisões e validações do projeto. A organização foi ajustada para um fluxo contínuo orientado pelo Kanban, preservando a autoria das contribuições e a rastreabilidade entre atividades, artefatos e feedbacks.
 

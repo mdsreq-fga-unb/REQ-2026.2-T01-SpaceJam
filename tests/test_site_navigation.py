@@ -65,6 +65,28 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertTrue((output / "unidade-2" / "index.html").is_file())
             self.assertIn("Unidade 2", homepage)
 
+    def test_homepage_surfaces_every_available_unit_one_document(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+
+            homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
+
+            self.assertEqual(homepage.count('class="sj-reading-card"'), 6)
+            self.assertIn('href="intervencao_social/"', homepage)
+
+    def test_document_pages_offer_editing_on_the_docs_branch(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+
+            scenario_page = (
+                Path(output_dir) / "cenario_atual" / "index.html"
+            ).read_text(encoding="utf-8")
+
+            self.assertIn(
+                "github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/cenario_atual.md",
+                scenario_page,
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

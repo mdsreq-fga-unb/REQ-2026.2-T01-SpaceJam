@@ -1,4 +1,4 @@
-# 5. ENGENHARIA DE REQUISITOS
+# 5. Engenharia de Requisitos
 
 ## 5.1 Atividades e Técnicas de ER
 
