@@ -17,8 +17,6 @@ A equipe **Stakeholders Anônimos** é composta por seis integrantes:
 
 A equipe não estabeleceu cargos permanentes. As responsabilidades são atribuídas por atividade no quadro Kanban. Cada item deve indicar, no mínimo, um responsável, a data prevista, seu estado atual e os artefatos relacionados. Uma atividade somente pode ser considerada concluída após a verificação dos critérios definidos e a atualização das evidências correspondentes.
 
-Na revisão da Unidade 1, a equipe decidiu alocar **dois ou três integrantes** na reorganização do cronograma. Luiz informou disponibilidade para participar dessa atividade, e a composição final será registrada no quadro Kanban. As demais responsabilidades também serão documentadas à medida que as atividades forem priorizadas, sem presumir papéis ainda não acordados pela equipe.
-
 ## 7.2 Organização do Trabalho com Kanban
 
 O Kanban será utilizado para tornar visível o fluxo de trabalho e apoiar a distribuição das atividades. Os itens serão acompanhados pelos seguintes estados:
