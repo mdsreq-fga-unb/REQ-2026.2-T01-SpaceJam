@@ -188,6 +188,7 @@ De maneira geral, o produto deverá contribuir para um acompanhamento mais organ
 
 | Data | Versão | Descrição | Autor |
 | --- | --- | --- | --- |
+| 17/09/2026 | 0.3 | Revisão da solução proposta a partir dos pontos de atenção apresentados na avaliação, incluindo consolidação das características do produto, ajuste dos objetivos, contexto de uso, armazenamento de vídeos, análise competitiva e viabilidade. | Paulo Sergio Rabelo Santana Rios |
 | 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Paulo Sergio Rabelo Santana Rios |
 | 07/09/2026 | 0.1 | Elaboração inicial da seção de solução proposta. | Júlia Amanda Silva Lima |
 
