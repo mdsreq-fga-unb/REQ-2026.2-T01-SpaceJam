@@ -26,16 +26,16 @@ mantendo a descrição do cenário atual restrita à Seção 1.
 ## 2.2 Objetivos Específicos (OE) do Produto
 
 
-- OE1 — Reduzir a dispersão dos dados de perfil, testes, planejamento e treinos, tornando mais eficiente a consulta do histórico e a comparação da evolução de cada atleta.
+- **OE1 — Centralizar as informações dos atletas:** Reduzir a dispersão dos dados de perfil, testes, planejamento e treinos, tornando mais eficiente a consulta do histórico e a comparação da evolução de cada atleta.
 
 
-- OE2 — Apoiar a organização e adaptação dos treinamentos considerando os objetivos, histórico de lesões, resultados dos testes, exercícios e orientações específicas de cada atleta.
+- **OE2 — Apoiar a organização dos treinamentos:** disponibilizar de forma estruturada informações sobre objetivos, histórico de lesões, resultados de testes, exercícios e orientações específicas, auxiliando o treinador na organização e adaptação dos treinamentos. A decisão sobre a adaptação do treinamento permanecerá sob responsabilidade do treinador, não sendo objetivo do produto realizar recomendações ou decisões automatizadas.
 
 
-- OE3 — Oferecer, como recurso complementar, um fluxo rastreável entre exercício, vídeo enviado e feedback privado.
+- **OE3 — Apoiar a comunicação e o feedback individual:** Oferecer, como recurso complementar, um fluxo rastreável entre exercício, vídeo enviado e feedback privado.
 
 
-- OE4 — Preservar a privacidade dos dados, vídeos e orientações individuais de cada atleta.
+- **OE4 — Preservar a privacidade das informações:** Preservar a privacidade dos dados, vídeos e orientações individuais de cada atleta.
 
 
 ## 2.3 Características do Produto
@@ -43,36 +43,31 @@ mantendo a descrição do cenário atual restrita à Seção 1.
 
 As características apresentadas a seguir foram definidas considerando os objetivos específicos do produto e as necessidades identificadas no contexto do cliente.
 
-| OE principal | ID | Contribuição secundária | Característica | Descrição resumida | Valor de negócio principal |
+| OE principal | ID | Contribuição secundária | Característica do Produto | Descrição resumida | Valor de negócio principal |
 |---|---|---|---|---|---|
-| OE1 | C1 | OE2 | Cadastro do perfil do atleta | Cadastro de informações como altura, peso, envergadura, standing reach, jump height, histórico de lesões e objetivos. | Centralizar as principais informações individuais do atleta. |
-| OE1 | C2 | OE2 | Registro de resultados dos testes | Permitir o registro dos resultados de testes físicos e específicos realizados pelos atletas. | Facilitar o acompanhamento do desempenho e da evolução. |
-| OE1 | C3 | OE2 | Registro do planejamento | Permitir ao treinador cadastrar e consultar o planejamento individual de cada atleta. | Organizar o planejamento e reduzir a dispersão das informações. |
-| OE1 | C4 | OE2 | Histórico de treinos | Registrar os treinos realizados e permitir sua consulta posteriormente. | Facilitar o acompanhamento da trajetória do atleta. |
-| OE1 | C5 | OE2 | Histórico integrado | Reunir informações de perfil, testes, planejamento e treinos em um histórico individual. | Facilitar a consulta e a comparação da evolução do atleta. |
-| OE2 | C6 | OE1 | Biblioteca de exercícios | Organizar exercícios por objetivo e fundamento, como arremesso, drible, passe, defesa, condicionamento, mobilidade e coordenação. | Facilitar a seleção e organização dos exercícios conforme a necessidade de cada atleta. |
-| OE2 | C7 | OE1 | Vídeos demonstrativos | Disponibilizar vídeos demonstrativos associados aos exercícios. | Facilitar a compreensão da execução dos exercícios. |
-| OE2 | C8 | OE1 | Instruções e erros comuns | Apresentar orientações sobre execução e principais erros relacionados a cada exercício. | Auxiliar o atleta na execução adequada das atividades. |
-| OE2 | C9 | OE1 | Orientações individuais | Permitir que o treinador disponibilize orientações específicas para cada atleta. | Apoiar a individualização do treinamento. |
-| OE3 | C10 | OE4 | Envio privado de vídeos | Permitir que o atleta envie opcionalmente um vídeo relacionado à execução de determinado exercício. | Criar um canal complementar para acompanhamento remoto. |
-| OE3 | C11 | OE4 | Feedback privado | Permitir que o treinador registre um feedback relacionado ao vídeo e ao exercício enviado. | Melhorar a comunicação e o acompanhamento entre treinador e atleta. |
-| OE3 | C12 | OE1 | Rastreamento do feedback | Associar o vídeo enviado ao exercício correspondente e ao feedback realizado pelo treinador. | Garantir maior organização e rastreabilidade do acompanhamento remoto. |
-| OE4 | C13 | OE1 | Perfis distintos de acesso | Diferenciar os acessos e permissões de treinador e atleta. | Garantir que cada usuário visualize somente as informações pertinentes ao seu perfil. |
-| OE4 | C14 | OE3 | Privacidade de vídeos e feedbacks | Restringir o acesso aos vídeos enviados e aos feedbacks realizados pelo treinador. | Proteger informações e conteúdos individuais dos atletas. |
-| OE4 | C15 | OE1 | Proteção dos dados individuais | Manter informações pessoais, testes, objetivos e histórico vinculados ao respectivo atleta. | Preservar a confidencialidade das informações armazenadas. |
+| OE1 | **CP1** | OE2 | **Gestão das informações do atleta** | Centralizar informações de perfil, objetivos, histórico de lesões e resultados de testes relacionados a cada atleta. | Facilitar o acesso, a organização e a consulta das informações individuais. |
+| OE1 | **CP2** | OE2 | **Planejamento e acompanhamento dos treinos** | Apoiar o registro, a organização e a consulta do planejamento e dos treinos realizados pelos atletas. | Facilitar o acompanhamento da rotina e do planejamento de treinamento. |
+| OE2 | **CP3** | OE1 | **Biblioteca de exercícios** | Organizar exercícios por objetivos e fundamentos, incluindo orientações, erros comuns e materiais demonstrativos. | Facilitar a seleção, organização e compreensão dos exercícios. |
+| OE1 | **CP4** | OE2 | **Acompanhamento da evolução** | Reunir informações históricas de testes e treinos para apoiar a consulta da evolução individual dos atletas. | Apoiar a análise da trajetória de desempenho ao longo do tempo. |
+| OE3 | **CP5** | OE2 | **Comunicação e feedback individual** | Apoiar o compartilhamento privado de vídeos relacionados aos exercícios e o registro de orientações e feedbacks individuais. | Complementar a comunicação e o acompanhamento realizados pelo treinador. |
+| OE4 | **CP6** | OE3 | **Privacidade e controle de acesso** | Controlar o acesso às informações, vídeos e orientações de acordo com o perfil e as permissões de cada usuário. | Preservar a confidencialidade e a proteção das informações dos atletas. | 
 
 ### Escopo inicial do produto
 
-Para o desenvolvimento do MVP, serão priorizadas as funcionalidades consideradas essenciais para atender aos objetivos do produto: cadastro dos atletas, gerenciamento do perfil, registro de testes, planejamento individual, biblioteca de exercícios, histórico de treinos, envio privado de vídeos e registro de feedbacks.
+Nesta etapa do projeto, foram identificadas como capacidades prioritárias da solução a gestão das informações dos atletas, o planejamento e acompanhamento dos treinos, a biblioteca de exercícios, o acompanhamento da evolução e os mecanismos de comunicação e feedback individual.
 
-Funcionalidades mais complexas, como análise automática de vídeo, ranking por frequência ou qualidade observada, métricas avançadas, suporte a turmas e expansão para outras modalidades esportivas, permanecerão fora do escopo do MVP.
+A definição definitiva do MVP, incluindo as funcionalidades que serão efetivamente implementadas na primeira versão, será realizada nas etapas posteriores do projeto, após o detalhamento dos requisitos, a validação com o cliente e a definição dos critérios de aceitação e validação.
 
-Essas funcionalidades poderão ser consideradas como possibilidades de evolução futura do produto, caso o MVP demonstre viabilidade e utilidade para o cliente.
+Entre as possibilidades consideradas para a solução estão o gerenciamento do perfil dos atletas, registro de testes, planejamento individual, organização de exercícios, histórico de treinos e comunicação entre treinador e atleta.
+
+Funcionalidades mais complexas, como análise automática de vídeo, ranking por frequência ou qualidade observada, métricas avançadas, suporte a turmas e expansão para outras modalidades esportivas, não fazem parte da definição inicial  da solução e poderão ser avaliadas posteriormente, caso sejam identificadas como necessidades relevantes e viáveis.
 
 
 ## 2.4 Tecnologias a Serem Utilizadas
 
-A solução será desenvolvida como uma **aplicação web responsiva**, tendo como plataforma principal de utilização os **computadores**, mas oferecendo compatibilidade com dispositivos móveis, como smartphones e tablets. Dessa forma, a interface deverá se adaptar a diferentes tamanhos de tela, garantindo uma experiência adequada tanto para o treinador quanto para os atletas.
+A solução será desenvolvida como uma aplicação web responsiva, acessível por computadores, smartphones e tablets. A interface deverá se adaptar a diferentes tamanhos de tela, considerando os diferentes contextos de utilização dos usuários.
+
+O treinador poderá utilizar computadores e smartphones para gerenciamento dos atletas, consulta das informações, organização do planejamento, acompanhamento dos treinos e comunicação com os atletas. Para os atletas, o smartphone será considerado o principal dispositivo de acesso, especialmente para consulta de exercícios, orientações, planejamento e, caso a funcionalidade seja validada, envio de vídeos relacionados aos exercícios.
 
 Para o desenvolvimento da interface, propõe-se a utilização do **React**, permitindo a construção de componentes reutilizáveis e de uma interface organizada e responsiva.
 
@@ -80,7 +75,20 @@ No desenvolvimento do back-end, será utilizada a linguagem **Python**, respons�
 
 Para o armazenamento dos dados, será utilizado o **PostgreSQL**, um banco de dados relacional que permitirá estruturar informações referentes aos atletas, testes, exercícios, planejamentos, treinos, vídeos e feedbacks.
 
-Para o armazenamento dos arquivos de vídeo, poderá ser utilizada uma solução de armazenamento em nuvem, permitindo que os arquivos de mídia sejam armazenados separadamente dos dados estruturados da aplicação.
+Caso o compartilhamento de vídeos seja validado e incorporado à solução, os arquivos de mídia deverão ser armazenados separadamente dos dados estruturados da aplicação, utilizando uma solução apropriada de armazenamento de arquivos. A definição da tecnologia específica deverá considerar fatores como custo, capacidade disponível, segurança, integração com a aplicação e facilidade de gerenciamento.
+
+Também deverão ser definidos, antes da implementação definitiva desse recurso, aspectos relacionados a:
+
+- tamanho máximo dos arquivos;
+- duração máxima dos vídeos;
+- formatos de arquivo aceitos;
+- mecanismos de autenticação e controle de acesso;
+- políticas de exclusão dos arquivos;
+- período de retenção dos vídeos;
+- custos de armazenamento;
+- regras de acesso aos conteúdos individuais;
+- necessidade de consentimento para o armazenamento e compartilhamento dos vídeos;
+- procedimentos aplicáveis ao acesso de responsáveis, quando houver atletas menores de idade.
 
 O controle de versão do projeto será realizado utilizando **Git**, possibilitando o desenvolvimento colaborativo, o acompanhamento das alterações e a organização do código produzido pela equipe.
 
@@ -96,20 +104,29 @@ A escolha das tecnologias considera a necessidade de desenvolver uma solução f
 ## 2.5 Pesquisa de Mercado e Análise Competitiva
 
 
-Foram analisadas plataformas voltadas para treinamento esportivo, basquete, acompanhamento de atletas e feedback por vídeo. A comparação considera as principais funcionalidades e sua relação com o contexto do cliente.
+Foram analisadas plataformas voltadas para treinamento esportivo, basquete, acompanhamento de atletas e feedback por vídeo. A análise tem como objetivo identificar capacidades presentes em soluções existentes e comparar essas capacidades com as características previstas para o produto proposto.
+
+As plataformas analisadas foram **HomeCourt**, **Onform** e **TrainHeroic**.
+
+A comparação deverá considerar critérios comuns às soluções analisadas, evitando comparar funcionalidades isoladas ou utilizar características presentes em apenas uma plataforma como único parâmetro de avaliação.
 
 
-| Plataforma | Principais funcionalidades | Relação com o contexto do cliente |
-|---|---|---|
-| HomeCourt | exercícios interativos de basquete, uso da câmera, estatísticas e feedback em tempo real. | foco em análise automática e gamificação; não reproduz a personalização do método de Lucas. |
-| Onform | gravação/análise de vídeo, câmera lenta, anotações, comparação e feedback. | atende múltiplos esportes, com análise de vídeo além do MVP proposto. |
-| TrainHeroic | biblioteca de treinos, acompanhamento de atletas, vídeo, comunicação e controle de aderência. | solução ampla de força/condicionamento, sem foco nos fundamentos do basquete. |
 
+| Critério | HomeCourt | Onform | TrainHeroic | Produto proposto |
+|---|---|---|---|---|
+| Foco em basquete | Sim | Não | Não | Sim |
+| Acompanhamento individual | Sim | Sim | Sim | Sim |
+| Organização de treinos | Sim | Parcial | Sim | Sim |
+| Biblioteca de exercícios | Sim | Não é o foco principal | Sim | Sim |
+| Vídeos demonstrativos | Sim | Sim | Sim | Sim |
+| Compartilhamento/análise de vídeos | Sim | Sim | Sim | A validar |
+| Feedback individual | Sim | Sim | Sim | A validar |
+| Histórico e acompanhamento | Sim | Sim | Sim | Sim |
+| Personalização segundo o método do treinador | Não é o foco principal | Não é o foco principal | Não é o foco principal | Sim |
+| Integração entre perfil, testes, planejamento e histórico | Parcial | Parcial | Parcial | Sim |
 
-Fontes oficiais: HomeCourt, Onform, TrainHeroic.
+A análise das plataformas indica que existem soluções que oferecem recursos relacionados ao treinamento esportivo, exercícios, acompanhamento individual e vídeo. Entretanto, a proposta deste produto está direcionada ao contexto específico do acompanhamento realizado por Lucas, buscando centralizar informações de perfil, testes, planejamento, exercícios e histórico em um mesmo ambiente.
 
-
-Enquanto essas plataformas são mais genéricas, o produto a ser desenvolvido tende a ser mais personalizado para cada usuário, com foco específico no basquete. Logo, o diferencial é centralizar perfil, testes, planejamento, exercícios e histórico com base no método de Lucas. Além disso, vídeos e feedback serão utilizados como recursos complementares, enquanto a análise automática, o ranking e as métricas avançadas ficam fora do escopo do MVP.
 
 ## 2.6 Viabilidade da Proposta
 
