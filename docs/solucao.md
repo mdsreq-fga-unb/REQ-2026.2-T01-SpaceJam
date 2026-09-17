@@ -40,17 +40,18 @@ mantendo a descrição do cenário atual restrita à Seção 1.
 
 ## 2.3 Características do Produto
 
-
 As características apresentadas a seguir foram definidas considerando os objetivos específicos do produto e as necessidades identificadas no contexto do cliente.
 
 | OE principal | ID | Contribuição secundária | Característica do Produto | Descrição resumida | Valor de negócio principal |
 |---|---|---|---|---|---|
-| OE1 | **CP1** | OE2 | **Gestão das informações do atleta** | Centralizar informações de perfil, objetivos, histórico de lesões e resultados de testes relacionados a cada atleta. | Facilitar o acesso, a organização e a consulta das informações individuais. |
-| OE1 | **CP2** | OE2 | **Planejamento e acompanhamento dos treinos** | Apoiar o registro, a organização e a consulta do planejamento e dos treinos realizados pelos atletas. | Facilitar o acompanhamento da rotina e do planejamento de treinamento. |
-| OE2 | **CP3** | OE1 | **Biblioteca de exercícios** | Organizar exercícios por objetivos e fundamentos, incluindo orientações, erros comuns e materiais demonstrativos. | Facilitar a seleção, organização e compreensão dos exercícios. |
-| OE1 | **CP4** | OE2 | **Acompanhamento da evolução** | Reunir informações históricas de testes e treinos para apoiar a consulta da evolução individual dos atletas. | Apoiar a análise da trajetória de desempenho ao longo do tempo. |
-| OE3 | **CP5** | OE2 | **Comunicação e feedback individual** | Apoiar o compartilhamento privado de vídeos relacionados aos exercícios e o registro de orientações e feedbacks individuais. | Complementar a comunicação e o acompanhamento realizados pelo treinador. |
-| OE4 | **CP6** | OE3 | **Privacidade e controle de acesso** | Controlar o acesso às informações, vídeos e orientações de acordo com o perfil e as permissões de cada usuário. | Preservar a confidencialidade e a proteção das informações dos atletas. | 
+| OE1 | CP1 | OE2 | Gestão das informações do atleta | Centralizar informações de perfil, objetivos, histórico de lesões e resultados de testes de cada atleta. | Facilitar o acesso, a organização e a consulta das informações individuais. |
+| OE1 | CP2 | OE2 | Acompanhamento da evolução | Reunir informações históricas de testes e treinos para apoiar a consulta da evolução individual dos atletas. | Apoiar a análise da trajetória de desempenho ao longo do tempo. |
+| OE2 | CP3 | OE1 | Planejamento e acompanhamento dos treinos | Apoiar o registro, a organização e a consulta do planejamento e dos treinos realizados pelos atletas. | Facilitar o acompanhamento da rotina e do planejamento de treinamento. |
+| OE2 | CP4 | OE1 | Biblioteca de exercícios | Organizar exercícios por objetivos e fundamentos, incluindo orientações, erros comuns e materiais demonstrativos. | Facilitar a seleção, organização e compreensão dos exercícios. |
+| OE3 | CP5 | OE4 | Envio privado de vídeos | Permitir que o atleta envie, de forma opcional, um vídeo relacionado à execução de um exercício. | Criar um canal complementar de acompanhamento remoto. |
+| OE3 | CP6 | OE4 | Feedback privado do treinador | Permitir que o treinador registre um feedback vinculado ao vídeo e ao exercício enviado pelo atleta. | Melhorar a comunicação e o acompanhamento entre treinador e atleta. |
+| OE4 | CP7 | OE3 | Perfis distintos de acesso | Diferenciar os acessos e permissões entre treinador e atleta. | Garantir que cada usuário visualize somente as informações pertinentes ao seu perfil. |
+| OE4 | CP8 | OE1 | Privacidade de dados, vídeos e feedbacks | Restringir o acesso aos dados, vídeos e feedbacks individuais de cada atleta. | Proteger a confidencialidade das informações armazenadas. |
 
 ### Escopo inicial do produto
 
@@ -117,7 +118,7 @@ A comparação deverá considerar critérios comuns às soluções analisadas, e
 | Foco em basquete | Sim | Não | Não | Sim |
 | Acompanhamento individual | Sim | Sim | Sim | Sim |
 | Organização de treinos | Sim | Parcial | Sim | Sim |
-| Biblioteca de exercícios | Sim | Não é o foco principal | Sim | Sim |
+| Biblioteca de exercícios | Sim | Não é o foco | Sim | Sim |
 | Vídeos demonstrativos | Sim | Sim | Sim | Sim |
 | Compartilhamento/análise de vídeos | Sim | Sim | Sim | A validar |
 | Feedback individual | Sim | Sim | Sim | A validar |
