@@ -65,13 +65,29 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertTrue((output / "unidade-2" / "index.html").is_file())
             self.assertIn("Unidade 2", homepage)
 
+    def test_project_schedule_is_generated_and_linked_from_the_homepage(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+
+            output = Path(output_dir)
+            schedule_page = output / "cronograma" / "index.html"
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+
+            self.assertTrue(schedule_page.is_file())
+            self.assertIn('href="cronograma/"', homepage)
+            self.assertIn("6. Cronograma e Entregas", homepage)
+            self.assertIn(
+                "Cronograma e Entregas",
+                schedule_page.read_text(encoding="utf-8"),
+            )
+
     def test_homepage_surfaces_every_available_unit_one_document(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
 
             homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
 
-            self.assertEqual(homepage.count('class="sj-reading-card"'), 7)
+            self.assertEqual(homepage.count('class="sj-reading-card"'), 8)
             self.assertIn('href="intervencao_social/"', homepage)
 
     def test_lessons_learned_page_is_generated_and_linked(self):

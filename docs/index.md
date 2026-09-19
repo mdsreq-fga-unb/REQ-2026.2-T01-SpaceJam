@@ -37,6 +37,7 @@
     <a class="sj-reading-card" href="solucao/"><span>02</span><strong>Solução proposta</strong><small>Objetivos e características pensadas para o produto.</small></a>
     <a class="sj-reading-card" href="intervencao_social/"><span>03</span><strong>Intervenção social</strong><small>Impactos pretendidos, efeitos emergentes e limites da solução.</small></a>
     <a class="sj-reading-card" href="engenharia_requisitos/"><span>05</span><strong>Engenharia de Requisitos</strong><small>Atividades, práticas e técnicas utilizadas no projeto.</small></a>
+    <a class="sj-reading-card" href="cronograma/"><span>06</span><strong>Cronograma e Entregas</strong><small>Ciclos RAD, resultados esperados e formas de validação.</small></a>
     <a class="sj-reading-card" href="interacao_equipe_cliente/"><span>07</span><strong>Interações</strong><small>Comunicação, validação e registro das decisões.</small></a>
     <a class="sj-reading-card" href="licoes-aprendidas/"><span>11</span><strong>Lições aprendidas</strong><small>Aprendizados da equipe e ações de melhoria para as próximas unidades.</small></a>
     <a class="sj-reading-card" href="reunioes/"><span>R</span><strong>Reuniões</strong><small>Índice reservado para atas e decisões do projeto.</small></a>
