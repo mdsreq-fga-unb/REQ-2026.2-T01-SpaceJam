@@ -69,13 +69,6 @@ Algumas atividades acompanharão todo o desenvolvimento:
 
 Quando um item precisar mudar de ciclo, a equipe registrará o motivo, a decisão tomada e o novo período previsto.
 
-## 6.6 Referências de organização
-
-Para complementar a estrutura do cronograma, foram observados projetos anteriores da disciplina com características próximas. Esses projetos serviram apenas como exemplos de organização; as decisões do Space Jam continuam baseadas em seu próprio contexto e nos materiais da disciplina.
-
-- [LF Bag Your Dreams — Estratégias de Engenharia de Software](https://mdsreq-fga-unb.github.io/2025.1-T01-LFBagYourDreams/documento-visao/estrategias/) e [Cronogramas e Entregas](https://mdsreq-fga-unb.github.io/2025.1-T01-LFBagYourDreams/documento-visao/cronograma/): projeto que também declarou abordagem híbrida, ciclo iterativo e incremental e processo RAD, separando levantamento, prototipação, construção, MVP e entrega final.
-- [ArtPlace — Processo de Desenvolvimento](https://mdsreq-fga-unb.github.io/2023.2-ArtPlace/processo/): exemplo de aplicação do RAD em ciclos semanais com registro das fases trabalhadas.
-
 ## Histórico de Revisão
 
 | Data | Versão | Descrição | Autor(es) |
