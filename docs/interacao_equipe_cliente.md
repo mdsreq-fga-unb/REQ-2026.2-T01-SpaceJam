@@ -1,6 +1,6 @@
 # 7. Interação entre Equipe e Cliente
 
-Esta seção apresenta como a equipe organiza o trabalho, mantém a comunicação com o cliente e registra as decisões e validações do projeto. A organização foi ajustada para um fluxo contínuo orientado pelo Kanban, preservando a autoria das contribuições e a rastreabilidade entre atividades, artefatos e feedbacks.
+Esta seção apresenta como a equipe organiza o trabalho, mantém a comunicação com o cliente e registra as decisões e validações do projeto. A organização acompanha a abordagem híbrida adotada pela equipe, com ciclo de vida iterativo e incremental e processo RAD, preservando a autoria das contribuições e a rastreabilidade entre atividades, artefatos e feedbacks.
 
 ## 7.1 Composição e Responsabilidades
 
@@ -15,11 +15,11 @@ A equipe **Stakeholders Anônimos** é composta por seis integrantes:
 | Paulo Sergio Rabelo Santana Rios |
 | Thiago Alencar de Oliveira |
 
-A equipe não estabeleceu cargos permanentes. As responsabilidades são atribuídas por atividade no quadro Kanban. Cada item deve indicar, no mínimo, um responsável, a data prevista, seu estado atual e os artefatos relacionados. Uma atividade somente pode ser considerada concluída após a verificação dos critérios definidos e a atualização das evidências correspondentes.
+A equipe não estabeleceu cargos permanentes. As responsabilidades são atribuídas conforme as atividades de cada ciclo e acompanhadas pelo GitHub Projects. Cada atividade deve indicar, no mínimo, um responsável, a data prevista, seu estado atual e os artefatos relacionados. Uma atividade somente pode ser considerada concluída após a verificação dos critérios definidos e a atualização das evidências correspondentes.
 
-## 7.2 Organização do Trabalho com Kanban
+## 7.2 Organização do Trabalho e Acompanhamento
 
-O Kanban será utilizado para tornar visível o fluxo de trabalho e apoiar a distribuição das atividades. Os itens serão acompanhados pelos seguintes estados:
+O trabalho será organizado em ciclos iterativos e incrementais, seguindo as fases do RAD aplicáveis a cada período: planejamento de requisitos, design do usuário, construção e cutover. O GitHub Projects será utilizado para tornar visível o andamento das atividades e apoiar sua distribuição. Os itens serão acompanhados pelos seguintes estados:
 
 1. **A fazer:** atividade priorizada e ainda não iniciada;
 2. **Em andamento:** atividade em execução por um responsável identificado;
@@ -34,13 +34,14 @@ O quadro deve permitir identificar responsáveis, prazos, dependências e impedi
 
 ### Comunicação interna
 
-A equipe realiza uma reunião fixa às **segundas-feiras, às 10h**, pelo Microsoft Teams. O encontro é utilizado para revisar o quadro Kanban, verificar atividades bloqueadas, ajustar prioridades, distribuir responsabilidades e registrar decisões coletivas. Questões pontuais e avisos são tratados de forma assíncrona pelo WhatsApp.
+A equipe realiza uma reunião fixa às **segundas-feiras, às 10h**, pelo Microsoft Teams. O encontro é utilizado para revisar as atividades no GitHub Projects, verificar impedimentos, ajustar prioridades, distribuir responsabilidades e registrar decisões coletivas. Questões pontuais e avisos são tratados de forma assíncrona pelo WhatsApp.
 
 | Ferramenta | Utilização no projeto |
 | --- | --- |
 | WhatsApp | Comunicação assíncrona, avisos, agendamentos e alinhamentos rápidos. |
 | Microsoft Teams | Reuniões da equipe e encontros síncronos com o cliente. |
 | GitHub | Versionamento dos artefatos e registro das contribuições. |
+| GitHub Projects | Acompanhamento das atividades, responsáveis, prazos e estados. |
 | GitHub Pages | Publicação e atualização da documentação do projeto. |
 | [Miro](https://miro.com/app/board/uXjVHrFoSVo=/) | Construção e discussão colaborativa de modelos e artefatos visuais. |
 
@@ -49,6 +50,8 @@ As decisões relevantes devem ser sintetizadas na seção de [Reuniões](reunioe
 ### Comunicação com o cliente
 
 O contato com Lucas Cordeiro ocorre pelo **WhatsApp** e pelo **Instagram**, utilizados também para agendamento. As reuniões síncronas serão realizadas pelo **Microsoft Teams**, em datas combinadas conforme a disponibilidade do cliente. A equipe priorizará interações nos momentos em que uma atividade entrar em validação, evitando que decisões relevantes dependam apenas de suposições internas.
+
+Em **17/09/2026**, a equipe realizou uma reunião pelo Microsoft Teams com Lucas para aprofundar o diagnóstico do contexto atual e discutir o direcionamento inicial da solução. Os resultados dessas conversas serão incorporados aos requisitos e aos demais artefatos conforme forem analisados e confirmados pela equipe.
 
 As perguntas devem ser contextualizadas e, quando possível, acompanhadas de protótipos, imagens, fluxos ou exemplos. As respostas relevantes serão associadas ao requisito ou artefato correspondente.
 
@@ -66,7 +69,7 @@ A validação será contínua e acompanhará a evolução dos itens de trabalho.
 2. **Revisão interna:** verificar clareza, consistência e prontidão do material antes de apresentá-lo;
 3. **Apresentação:** realizar a validação com Lucas e, quando aplicável, com atletas, de forma síncrona ou assíncrona;
 4. **Registro:** documentar data, canal, participantes, artefato avaliado, feedback e estado da decisão como aprovada, rejeitada ou pendente;
-5. **Atualização:** ajustar os artefatos e os itens do Kanban, mantendo as ligações de rastreabilidade afetadas;
+5. **Atualização:** ajustar os artefatos e as atividades no GitHub Projects, mantendo as ligações de rastreabilidade afetadas;
 6. **Confirmação:** reapresentar alterações relevantes antes de considerar o item concluído.
 
 A ausência de resposta não será interpretada como aprovação. O item permanecerá em validação ou será marcado como bloqueado até que haja confirmação ou uma decisão provisória explicitamente registrada pela equipe.
@@ -88,7 +91,8 @@ Para cada validação relevante, devem ser preservados, sempre que aplicável:
 
 | Data | Versão | Descrição | Autor |
 | --- | --- | --- | --- |
-| 14/09/2026 | 0.4 | Adequação da organização e da validação ao Kanban e inclusão da participação de atletas quando aplicável. | Luiz Henrique Pessato da Mota |
+| 19/09/2026 | 0.5 | Alinhamento da organização ao ciclo iterativo e incremental e ao RAD, inclusão do GitHub Projects e registro da reunião com o cliente. | Luiz Henrique Pessato da Mota |
+| 14/09/2026 | 0.4 | Adequação da organização do trabalho e da validação, com inclusão da participação de atletas quando aplicável. | Luiz Henrique Pessato da Mota |
 | 07/09/2026 | 0.3 | Inclusão do Microsoft Teams como meio para reuniões com o cliente. | Luiz Henrique Pessato da Mota |
 | 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Luiz Henrique Pessato da Mota |
 | 07/09/2026 | 0.1 | Elaboração inicial da seção de interação entre equipe e cliente. | Luiz Henrique Pessato da Mota |
