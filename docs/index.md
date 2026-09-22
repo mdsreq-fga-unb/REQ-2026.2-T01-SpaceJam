@@ -51,7 +51,8 @@
   </div>
 
   <div class="sj-role-grid">
-    <article class="sj-role-card">
+    <article class="sj-role-card sj-role-card--trainer">
+      <img class="sj-role-card__portrait" src="imagens/lucas-cordeiro.png" alt="Lucas Cordeiro orientando um treino de basquete" loading="lazy">
       <div><span aria-hidden="true">T</span><p>Lucas Cordeiro<small>Treinador</small></p></div>
       <ul><li>Prescrição de treinos e rotinas</li><li>Registro de testes físicos</li><li>Acompanhamento da evolução</li><li>Feedback privado e individual</li></ul>
     </article>
@@ -68,11 +69,11 @@
     <h2 id="equipe-space-jam">Stakeholders Anônimos</h2>
   </div>
   <ul class="sj-team-grid">
-    <li><span>AF</span>Anderson Fernandes da Silva</li>
-    <li><span>GF</span>Guilherme Ferreira Mendes</li>
-    <li><span>JA</span>Júlia Amanda Silva Lima</li>
-    <li><span>LH</span>Luiz Henrique Pessato da Mota</li>
-    <li><span>PS</span>Paulo Sergio Rabelo Santana Rios</li>
-    <li><span>TA</span>Thiago Alencar de Oliveira</li>
+    <li><a href="https://github.com/code-silva" target="_blank" rel="noopener noreferrer"><img src="imagens/equipe/anderson.png" alt="Foto de Anderson Fernandes da Silva" loading="lazy"><span><strong>Anderson Fernandes da Silva</strong><small>@code-silva</small></span></a></li>
+    <li><a href="https://github.com/Guilherme-Reis-Mendes" target="_blank" rel="noopener noreferrer"><img src="imagens/equipe/guilherme.png" alt="Avatar do GitHub de Guilherme Ferreira Mendes" loading="lazy"><span><strong>Guilherme Ferreira Mendes</strong><small>@Guilherme-Reis-Mendes</small></span></a></li>
+    <li><a href="https://github.com/juliaamandasl" target="_blank" rel="noopener noreferrer"><img src="imagens/equipe/julia.png" alt="Foto de Júlia Amanda Silva Lima" loading="lazy"><span><strong>Júlia Amanda Silva Lima</strong><small>@juliaamandasl</small></span></a></li>
+    <li><a href="https://github.com/luussato1" target="_blank" rel="noopener noreferrer"><img src="imagens/equipe/luiz.png" alt="Foto de Luiz Henrique Pessato da Mota" loading="lazy"><span><strong>Luiz Henrique Pessato da Mota</strong><small>@luussato1</small></span></a></li>
+    <li><a href="https://github.com/Paulosrsr" target="_blank" rel="noopener noreferrer"><img src="imagens/equipe/paulo.png" alt="Foto de Paulo Sergio Rabelo Santana Rios" loading="lazy"><span><strong>Paulo Sergio Rabelo Santana Rios</strong><small>@Paulosrsr</small></span></a></li>
+    <li><a href="https://github.com/OliveiraThiago14" target="_blank" rel="noopener noreferrer"><img src="imagens/equipe/thiago.png" alt="Foto de Thiago Alencar de Oliveira" loading="lazy"><span><strong>Thiago Alencar de Oliveira</strong><small>@OliveiraThiago14</small></span></a></li>
   </ul>
 </section>

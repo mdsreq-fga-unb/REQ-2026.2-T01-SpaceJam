@@ -49,6 +49,48 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertIn('class="md-sidebar md-sidebar--primary"', homepage)
             self.assertTrue((output / "stylesheets" / "extra.css").is_file())
 
+    def test_desktop_navigation_exposes_units_and_sidebar_control(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+
+            output = Path(output_dir)
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+            self.assertTrue('class="sj-desktop-nav' in homepage, "Desktop bar missing")
+            self.assertTrue('class="sj-sidebar-toggle"' in homepage, "Collapse button missing")
+            self.assertTrue('aria-controls="sj-primary-nav"' in homepage, "Sidebar control missing")
+            self.assertIn('href="cronograma/"', homepage)
+            self.assertIn('href="requisitos/"', homepage)
+            self.assertIn('href="reunioes/"', homepage)
+            script_path = output / "javascripts" / "sj-navigation.js"
+            self.assertTrue(script_path.is_file())
+            script = script_path.read_text(encoding="utf-8")
+            self.assertTrue('sidebar.id = "sj-primary-nav"' in script)
+
+            internal_page = (output / "cronograma" / "index.html").read_text(encoding="utf-8")
+            self.assertTrue('class="sj-sidebar-toggle"' in internal_page)
+            self.assertTrue('aria-controls="sj-primary-nav"' in internal_page)
+
+    def test_internal_design_notes_are_not_published(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            self.assertFalse((Path(output_dir) / "superpowers").exists())
+
+    def test_sidebar_unit_groups_are_collapsible(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
+            self.assertIn('class="md-nav__toggle md-toggle', homepage)
+            self.assertFalse(
+                'md-nav__item--section md-nav__item--nested' in homepage,
+                "Sidebar still renders fixed sections instead of collapsible groups",
+            )
+
+    def test_top_navigation_has_full_width_background_wrapper(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
+            self.assertTrue('class="sj-desktop-nav-wrap"' in homepage)
+
     def test_internal_document_links_are_resolved_by_mkdocs(self):
         with tempfile.TemporaryDirectory() as output_dir:
             result = self.build_site(output_dir)
@@ -111,6 +153,55 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertIn("Responsável", lessons_content)
             self.assertIn("Prazo", lessons_content)
             self.assertIn("Evidência de conclusão", lessons_content)
+
+    def test_lessons_are_consolidated_without_archive_navigation(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+            lessons = (output / "licoes-aprendidas" / "index.html").read_text(encoding="utf-8")
+            legacy = (output / "licoes_aprendidas" / "index.html").read_text(encoding="utf-8")
+
+            self.assertFalse('Lições Aprendidas (versão anterior)' in homepage)
+            self.assertTrue("Disponibilidade da equipe" in lessons)
+            self.assertTrue("Tomada de decisões" in lessons)
+            self.assertTrue('href="../licoes-aprendidas/"' in legacy)
+
+    def test_existing_revision_histories_are_collapsible_and_preserved(self):
+        pages = (
+            "engenharia_requisitos", "interacao_equipe_cliente", "intervencao_social",
+            "licoes-aprendidas", "reunioes", "solucao", "unidade-2", "cronograma",
+        )
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            for page in pages:
+                with self.subTest(page=page):
+                    source = (ROOT / "docs" / f"{page}.md").read_text(encoding="utf-8")
+                    html = (Path(output_dir) / page / "index.html").read_text(encoding="utf-8")
+                    self.assertTrue('<details class="abstract"' in html, f"{page}: no accordion")
+                    self.assertTrue("Histórico de revisão" in html, f"{page}: no label")
+                    rows = [line for line in source.splitlines() if line.lstrip().startswith("| ") and "/2026 |" in line]
+                    self.assertTrue(rows, f"{page}: revision rows missing")
+                    details_html = html.split('<details class="abstract"', 1)[1].split("</details>", 1)[0]
+                    self.assertEqual(details_html.count("<tr>"), len(rows) + 1, f"{page}: revision row count changed")
+                    for row in rows:
+                        cells = [cell.strip() for cell in row.strip().strip("|").split("|")]
+                        for cell in cells:
+                            self.assertTrue(cell in details_html, f"{page}: lost revision cell: {cell}")
+
+    def test_homepage_restores_client_and_team_images(self):
+        photos = ("anderson", "guilherme", "julia", "luiz", "paulo", "thiago")
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+            self.assertTrue((output / "imagens" / "lucas-cordeiro.png").is_file())
+            self.assertTrue('src="imagens/lucas-cordeiro.png"' in homepage)
+            for person in photos:
+                with self.subTest(person=person):
+                    self.assertTrue((output / "imagens" / "equipe" / f"{person}.png").is_file())
+                    self.assertTrue(f'src="imagens/equipe/{person}.png"' in homepage)
+            self.assertTrue("Avatar do GitHub de Guilherme" in homepage)
 
     def test_document_pages_offer_editing_on_the_docs_branch(self):
         with tempfile.TemporaryDirectory() as output_dir:

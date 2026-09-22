@@ -53,6 +53,121 @@
   color: #fff;
 }
 
+.sj-desktop-nav-wrap {
+  display: none;
+}
+
+@media screen and (min-width: 76.25em) {
+  .sj-desktop-nav-wrap {
+    display: block;
+    position: relative;
+    z-index: 10;
+    background: linear-gradient(105deg, #32145a, #6732a3);
+  }
+
+  .sj-desktop-nav {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+    max-width: 90rem;
+    min-height: 2.8rem;
+    padding: 0.3rem 0.8rem;
+    color: #fff;
+    background: transparent;
+  }
+
+  .sj-desktop-nav :is(a, button, summary) {
+    display: flex;
+    gap: 0.35rem;
+    align-items: center;
+    min-height: 2.1rem;
+    padding: 0.32rem 0.7rem;
+    color: #fff;
+    font: inherit;
+    font-size: 0.73rem;
+    font-weight: 650;
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    border-radius: 0.45rem;
+    cursor: pointer;
+  }
+
+  .sj-desktop-nav :is(a, button, summary):hover,
+  .sj-desktop-nav [aria-current="page"] {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.13);
+  }
+
+  .sj-desktop-nav :is(a, button, summary):focus-visible {
+    outline: 3px solid var(--sj-purple-600);
+    outline-offset: 2px;
+  }
+
+  .sj-top-menu {
+    position: relative;
+  }
+
+  .sj-top-menu summary {
+    list-style: none;
+  }
+
+  .sj-top-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .sj-top-menu summary::after {
+    content: "▾";
+    font-size: 0.6rem;
+  }
+
+  .sj-top-menu[open] summary::after {
+    transform: rotate(180deg);
+  }
+
+  .sj-top-menu__items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 20;
+    display: grid;
+    min-width: 14rem;
+    max-width: 22rem;
+    padding: 0.35rem;
+    background: #32145a;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.55rem;
+    box-shadow: var(--sj-shadow);
+  }
+
+  .sj-top-menu__items a {
+    line-height: 1.3;
+    white-space: normal;
+  }
+
+  .md-main__inner {
+    max-width: 90rem;
+  }
+
+  .md-sidebar--primary {
+    width: 14rem;
+    flex: 0 0 14rem;
+  }
+
+  .md-sidebar--secondary:not(:has(.md-nav__list)) {
+    display: none;
+  }
+
+  .md-content {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  html.sj-sidebar-closed .md-sidebar--primary {
+    display: none;
+  }
+}
+
 .md-grid {
   max-width: 74rem;
 }
@@ -549,8 +664,34 @@
   margin: 0.8rem 0 0;
 }
 
-.sj-team-grid {
-  display: grid;
+.md-typeset .sj-role-card__portrait {
+  width: 100%;
+  height: 12rem;
+  margin: 0;
+  object-fit: cover;
+  object-position: center 30%;
+  border: 0;
+  border-radius: calc(var(--sj-radius) - 1px) calc(var(--sj-radius) - 1px) 0 0;
+  box-shadow: none;
+}
+
+.sj-role-card--trainer {
+  overflow: hidden;
+  padding: 0;
+}
+
+.sj-role-card--trainer > div,
+.sj-role-card--trainer > ul {
+  margin-right: 1.15rem;
+  margin-left: 1.15rem;
+}
+
+.sj-role-card--trainer > div {
+  padding-top: 0.9rem;
+}
+
+.md-typeset .sj-team-grid {
+  display: grid !important;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.7rem;
   margin: 0;
@@ -558,31 +699,57 @@
   list-style: none;
 }
 
+.md-typeset .sj-team-grid li::marker {
+  content: "";
+}
+
 .sj-team-grid li {
-  display: flex;
-  gap: 0.65rem;
-  align-items: center;
   min-width: 0;
   margin: 0;
-  padding: 0.72rem;
   color: var(--sj-text);
   font-size: 0.7rem;
   font-weight: 650;
   background: var(--sj-surface-soft);
+  border: 1px solid var(--sj-border);
   border-radius: 0.75rem;
 }
 
-.sj-team-grid span {
-  display: grid;
-  width: 1.9rem;
-  height: 1.9rem;
-  flex: 0 0 1.9rem;
-  place-items: center;
-  color: #fff;
-  font-size: 0.58rem;
-  font-weight: 800;
-  background: #5b258f;
+.md-typeset .sj-team-grid a {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.72rem;
+  color: var(--sj-text);
+}
+
+.md-typeset .sj-team-grid img {
+  width: 3.8rem;
+  height: 3.8rem;
+  flex: 0 0 3.8rem;
+  margin: 0;
+  object-fit: cover;
+  border: 0;
   border-radius: 50%;
+  box-shadow: none;
+}
+
+.sj-team-grid a > span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+}
+
+.sj-team-grid strong {
+  color: var(--sj-purple-950);
+  line-height: 1.3;
+}
+
+.sj-team-grid small {
+  overflow: hidden;
+  margin-top: 0.15rem;
+  color: var(--sj-muted);
+  font-weight: 400;
+  text-overflow: ellipsis;
 }
 
 @media screen and (max-width: 76rem) {

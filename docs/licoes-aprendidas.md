@@ -42,6 +42,14 @@ A experiência da primeira entrega reforçou que o cronograma deve ser construí
 
 A reunião fixa da equipe às segundas-feiras, o uso do repositório como fonte da documentação e o quadro Kanban servirão como pontos de apoio para essa organização.
 
+### Tomada de decisões e participação da equipe
+
+Na primeira unidade, a indecisão adiou encaminhamentos e comprimiu prazos. A baixa participação nas conversas também dificultou o consenso sobre escolhas que afetavam mais de um artefato. Como melhoria, a equipe passou a buscar alinhamentos mais frequentes nos canais de comunicação, distribuir atividades com responsáveis e prazos claros e registrar as decisões tomadas.
+
+### Disponibilidade da equipe
+
+A incompatibilidade de agendas dificultou a escolha de um horário comum para as reuniões. A equipe estruturou um mapa de calor de disponibilidade para definir o encontro regular e previu o uso de enquetes quando ajustes pontuais forem necessários. A participação contínua nos canais de diálogo continua importante para que impedimentos e divergências sejam identificados antes do prazo da entrega.
+
 ### Ações de melhoria
 
 As ações abaixo foram formuladas para serem verificáveis. A identificação nominal de cada responsável será registrada no respectivo cartão do quadro Kanban, preservando a distribuição flexível das atividades adotada pela equipe.
@@ -56,9 +64,9 @@ As ações abaixo foram formuladas para serem verificáveis. A identificação n
 | Preparar a apresentação como uma entrega coletiva. | Apresentadores e revisor da apresentação definidos no Kanban. | Ensaio realizado pelo menos 24 horas antes da apresentação. | Checklist de revisão e versão final dos materiais. |
 | Garantir que todos conheçam o estado geral do projeto. | Todos os integrantes. | Revisão na reunião semanal e antes de cada entrega. | Ata com participantes, pendências e decisões registradas. |
 
-## Histórico de Versão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| --- | --- | --- | --- |
-| 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria. | Luiz Henrique Pessato da Mota |
-| 14/09/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1. | Luiz Henrique Pessato da Mota |
+    | Data | Versão | Descrição | Autor |
+    | --- | --- | --- | --- |
+    | 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria. | Luiz Henrique Pessato da Mota |
+    | 14/09/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1. | Luiz Henrique Pessato da Mota |

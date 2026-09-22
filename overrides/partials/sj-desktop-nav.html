@@ -1,0 +1,25 @@
+<nav class="sj-desktop-nav md-grid" aria-label="Navegação principal">
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">☰</button>
+  {% for label in ["Início", "Unidade 1", "Unidade 2", "Cronograma", "Reuniões"] %}
+    {% if label == "Cronograma" %}
+      <a href="{{ 'cronograma/' | url }}"{% if page.url == 'cronograma/' %} aria-current="page"{% endif %}>Cronograma</a>
+    {% else %}
+      {% for item in nav.items %}
+        {% if item.title == label %}
+          {% if item.children %}
+            <details class="sj-top-menu">
+              <summary>{{ item.title }}</summary>
+              <div class="sj-top-menu__items">
+                {% for child in item.children %}
+                  <a href="{{ child.url | url }}"{% if child.active %} aria-current="page"{% endif %}>{{ child.title }}</a>
+                {% endfor %}
+              </div>
+            </details>
+          {% else %}
+            <a href="{{ item.url | url }}"{% if item.active %} aria-current="page"{% endif %}>{{ item.title }}</a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+</nav>

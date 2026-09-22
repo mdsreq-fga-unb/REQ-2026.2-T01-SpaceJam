@@ -166,11 +166,11 @@ Para o treinador, além dos benefícios relacionados à organização das inform
 De maneira geral, o produto deverá contribuir para um acompanhamento mais organizado, individualizado e rastreável, funcionando como uma ferramenta de apoio ao trabalho presencial do treinador, sem substituir sua avaliação profissional durante os treinos.
 
 
-## Histórico de Versão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| --- | --- | --- | --- |
-| 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Paulo Sergio Rabelo Santana Rios |
-| 07/09/2026 | 0.1 | Elaboração inicial da seção de solução proposta. | Júlia Amanda Silva Lima |
+    | Data | Versão | Descrição | Autor |
+    | --- | --- | --- | --- |
+    | 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Paulo Sergio Rabelo Santana Rios |
+    | 07/09/2026 | 0.1 | Elaboração inicial da seção de solução proposta. | Júlia Amanda Silva Lima |
 
 

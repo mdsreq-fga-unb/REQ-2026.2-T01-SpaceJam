@@ -192,9 +192,9 @@ In `mkdocs.yml`, set `theme.custom_dir: overrides`, remove `navigation.expand` a
 
 **Files:** Modify `docs/index.md`, `docs/stylesheets/extra.css`, `tests/test_site_navigation.py`; add only user-supplied images under `docs/imagens/pessoas/`.
 
-**Interfaces:** Consumes photo files and the user's person-to-file identification. Produces named `<img>` elements with descriptive `alt` in the homepage team list and Lucas's existing role card. This task begins only after the files and permission to use them in the Pages are confirmed; other tasks are independent of it.
+**Interfaces:** Consumes the seven image files already saved in local commit `fbf26ce`, under `C:/Users/lu1zi/Documents/ChatGPT/requisitos/repositorio-oficial/.worktrees/cronograma-rad-pages/docs/imagens/`. Produces named `<img>` elements with descriptive `alt` in the homepage team list and Lucas's existing role card. The user's photo of Lucas is also still available at `C:/Users/lu1zi/AppData/Local/Temp/codex-clipboard-3ab1d280-fdf5-4e73-be69-f1512fe45f78.png`; use the project copy unless verification shows it differs. The team-to-file mapping is established in that worktree's `docs/index.md`.
 
-- [ ] **Step 1: Confirm the input mapping.** Inspect user-supplied photo files read-only and map each image to the correct team member or Lucas. Do not infer identity from appearance or obtain images from the web.
+- [ ] **Step 1: Confirm the input mapping.** Compare the seven files with the existing local `docs/index.md` mapping. Do not infer identity from appearance or fetch new images from the web. `guilherme.png` is a GitHub identicon, so its `alt` must say “Avatar do GitHub de Guilherme Ferreira Mendes”, not “Foto”.
 - [ ] **Step 2: Add failing tests for the actual mapping.** For each supplied asset, assert the generated homepage contains the expected name, image path and nonempty `alt`; assert the generated asset exists. Check Lucas's existing role card as well as the team list.
 - [ ] **Step 3: Verify red.** Run the new tests before copying images; expect missing image references/assets.
 - [ ] **Step 4: Add the authorized image files and markup.** Keep the existing team names and role descriptions. Use image dimensions/object-fit that do not distort faces; add credit/legend if required by the supplied material. Never replace a missing image with an invented portrait.
