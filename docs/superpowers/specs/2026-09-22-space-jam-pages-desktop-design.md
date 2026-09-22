@@ -28,7 +28,9 @@ Lições Aprendidas terá uma página canônica: `docs/licoes-aprendidas.md`. Mi
 
 Nas páginas com histórico de versão/revisão existente, usar o bloco recolhível já suportado por `pymdownx.details`. Preservar todas as linhas, datas, autores e descrições originais. Não criar histórico onde não há um. Usar o rótulo consistente “Histórico de revisão”, sem contador de versões nesta etapa para evitar um número desatualizado.
 
-Auditar todas as páginas publicadas na `main`, não apenas a inicial. Ajustar de modo global alinhamentos, quebras, contraste, largura e bordas de tabelas quando houver defeito observável, sem alterar dados acadêmicos nem a paleta. Nas tabelas extensas — especialmente Requisitos, Solução, Engenharia de Requisitos e Cronograma — priorizar leitura no desktop e rolagem horizontal contida quando necessária, sem cortar texto ou produzir overflow da página inteira. Fotos existentes devem conservar proporção e legenda quando aplicável; não adicionar fotos novas não fornecidas.
+Auditar todas as páginas publicadas na `main`, não apenas a inicial. Ajustar de modo global alinhamentos, quebras, contraste, largura e bordas de tabelas quando houver defeito observável, sem alterar dados acadêmicos nem a paleta. Nas tabelas extensas — especialmente Requisitos, Solução, Engenharia de Requisitos e Cronograma — priorizar leitura no desktop e rolagem horizontal contida quando necessária, sem cortar texto ou produzir overflow da página inteira.
+
+Adicionar as fotos autorizadas da equipe e do cliente quando os arquivos forem fornecidos. Na página inicial, os integrantes devem aparecer na seção Equipe, associados aos nomes já existentes; Lucas deve aparecer identificado como cliente/treinador, preferencialmente na seção de perspectivas de uso ou na página de cenário atual. Fotografias devem ter proporção preservada, texto alternativo e legenda/crédito quando aplicável. Não buscar retratos na internet, não inventar imagens e não publicar fotos de pessoas sem confirmação de que a equipe pode usá-las. A ausência de arquivos não impede a implementação e validação da navegação; a etapa de fotos fica pendente até o recebimento dos materiais.
 
 ## Verificação e limites de aceitação
 
@@ -37,8 +39,9 @@ Auditar todas as páginas publicadas na `main`, não apenas a inicial. Ajustar d
 - Conferir páginas representativas de cada grupo e todas as páginas com tabelas/histórico. Não deve haver transbordamento horizontal da página; tabelas largas podem rolar dentro de seu contêiner.
 - Conferir que a navegação móvel do Material ainda permite alcançar as páginas, embora a composição desktop tenha prioridade.
 - Comparar antes/depois a lista de páginas, links e alterações de conteúdo; preservar as cinco edições locais existentes e não modificar cores ou logotipo.
+- Validar que cada foto adicionada corresponde à pessoa identificada, tem texto alternativo e veio de arquivo indicado ou fornecido pelo usuário.
 - Revisar `git diff` e manter tudo local, sem envio ao GitHub.
 
 ## Fora do escopo
 
-Reescrever requisitos, mudar responsabilidades da equipe, inserir novas fotos, redesenhar a identidade visual, resolver PRs ou publicar o Pages.
+Reescrever requisitos, mudar responsabilidades da equipe, buscar fotos sem autorização, redesenhar a identidade visual, resolver PRs ou publicar o Pages.
