@@ -1,64 +1,43 @@
-# 11. Lições Aprendidas
+# 8. Lições Aprendidas
 
 Esta seção registra os principais aprendizados obtidos pela equipe durante o desenvolvimento do projeto. O objetivo é transformar dificuldades observadas, feedbacks recebidos e decisões tomadas em ações concretas para as próximas unidades.
 
-## 11.1 Unidade 1
+## 8.1 Unidade 1
 
-A Unidade 1 envolveu a compreensão do contexto do cliente, a definição inicial da visão do produto e do projeto e a organização dos primeiros artefatos. A revisão da entrega, os apontamentos do professor e do monitor e as conversas posteriores da equipe permitiram identificar os aprendizados apresentados a seguir.
+A Unidade 1 envolveu a compreensão do contexto do cliente, a definição inicial da visão do produto e do projeto e a organização dos primeiros artefatos. A revisão da entrega, os apontamentos do professor e do monitor e as conversas posteriores da equipe permitiram identificar os desafios que a equipe teve nesta unidade.
 
-### Efeitos observados na primeira entrega
+*Dificuldades enfrentadas e como foram superadas:*
 
-As dificuldades da equipe produziram efeitos concretos sobre a entrega. A elaboração separada das seções exigiu uma revisão posterior para corrigir diferenças de interpretação entre o cenário atual e a solução proposta. A combinação inicial entre RAD e Scrum não estava suficientemente justificada e precisou ser reavaliada. O cronograma também demandou retrabalho por representar atividades de desenvolvimento em vez de organizar os artefatos e entregas da disciplina.
+O grupo partiu de quatro ideias distintas, discutidas e lapidadas coletivamente desde as primeiras semanas, até que a proposta apresentada pelo integrante Luiz Henrique Pessato da Mota a plataforma de treinos específicos de basquete foi identificada como a mais viável, tanto do ponto de vista técnico quanto do impacto social. Esse processo, embora trabalhoso, fortaleceu o senso de pertencimento da equipe em relação à solução escolhida, pois a decisão foi genuinamente coletiva.
 
-Além disso, a integração do conteúdo próxima ao prazo reduziu o tempo disponível para revisão coletiva e preparação da apresentação. Algumas decisões, como a atribuição das responsabilidades do projeto e a cadência mínima de validação com o cliente, permaneceram pendentes e deverão ser definidas e registradas pela equipe.
+A equipe definiu a metodologia de trabalho com base na bibliografia da disciplina. Porém, após feedbacks foi evidenciado divergências na integração entre a abordagem escolhida, o ciclo de vida e os processos definidos. Diante disso, o grupo revisou e reestruturou a estratégia, definindo uma proposta validada e alinhada ao projeto.
 
-### Compreensão compartilhada do projeto
+A alocação tardia de tarefas e a ausência de prazos internos representaram os principais obstáculos operacionais da equipe. Para corrigir, após a primeira entrega, a equipe implementou um quadro Kanban para centralizar e visualizar o fluxo de trabalho, formalizando a atribuição formal de responsáveis e a definição de datas-limite por atividade. Essa reestruturação garantiu o acompanhamento contínuo das etapas e assegurou o cumprimento do cronograma estabelecido.
 
-A divisão do documento facilitou o início do trabalho, mas também evidenciou que cada integrante precisa compreender o projeto como um todo. Quando as seções são produzidas de forma isolada, podem surgir diferenças de interpretação, repetições e relações pouco claras entre problema, objetivos, características do produto e planejamento.
+O cronograma inicial apresentou desalinhamentos tanto em relação à estratégia operacional do grupo quanto às datas de entregas da disciplina. Diante dessa divergência, três integrantes foram responsáveis de revisar as etapas e adequar os prazos corretos. Em seguida, a seção foi submetida a uma revisão conjunta da equipe, obtendo assim um cronograma ajustado e compatível com as entregas previstas.
 
-Como aprendizado, a equipe reconheceu a necessidade de realizar revisões coletivas antes das entregas e de discutir decisões que afetem mais de uma seção do documento.
+Validação com o cliente da proposta de solução que por conta da disponibilidade da equipe e do cliente foi feita apenas por mensagens. A equipe reconheceu que o contato com o cliente ficou pendente, mas alinhou para acontecer semanalmente este contato.
 
-### Separação entre problema e solução
+A coleta de dados iniciais e a validação da proposta foram realizadas exclusivamente por troca de mensagens, por incompatibilidade de horários entre a equipe e o cliente. Reconhecendo essa limitação, o grupo acordou encontros semanais estabelecendo a prática de definir o dia e o horário do próximo encontro sempre ao término da reunião.
 
-Os primeiros feedbacks mostraram a importância de descrever o contexto e as dificuldades atuais do cliente antes de apresentar funcionalidades. A solução deve ser consequência das necessidades identificadas, e não o ponto de partida da análise.
 
-As respostas de Lucas ajudaram a esclarecer seu processo atual, que utiliza Samsung Notes, Word e caderno, além das limitações para a realização e o registro de testes. Isso tornou mais clara a relação entre o problema observado e a proposta do produto.
-
-### Validação contínua com o cliente
-
-O contato com Lucas demonstrou que suposições da equipe precisam ser confirmadas antes de serem registradas como requisitos ou decisões do projeto. Também foi possível perceber que as reuniões com o cliente dependerão de sua disponibilidade e devem ser complementadas por contatos assíncronos quando necessário.
-
-Para as próximas unidades, as dúvidas relevantes serão reunidas e apresentadas de forma objetiva, e as respostas utilizadas como evidências de validação dos artefatos.
-
-### Coerência entre estratégia e prática
-
-A definição inicial da estratégia de desenvolvimento reuniu conceitos que não estavam suficientemente relacionados à forma de trabalho da equipe. A revisão dessa decisão mostrou que a escolha de uma abordagem deve refletir as práticas realmente adotadas e ser justificável no contexto do projeto.
-
-A equipe decidiu organizar o trabalho com Kanban, utilizando um fluxo contínuo de atividades, limites de trabalho em andamento quando aplicáveis e acompanhamento visual do progresso.
-
-### Planejamento, rastreabilidade e comunicação
-
-A experiência da primeira entrega reforçou que o cronograma deve ser construído coletivamente, revisado com antecedência e relacionado aos artefatos esperados. Também se tornou evidente a importância de registrar reuniões, decisões, responsáveis e validações para manter a rastreabilidade do trabalho.
-
-A reunião fixa da equipe às segundas-feiras, o uso do repositório como fonte da documentação e o quadro Kanban servirão como pontos de apoio para essa organização.
-
-### Ações de melhoria
+*Ações de melhoria para unidade 2*
 
 As ações abaixo foram formuladas para serem verificáveis. A identificação nominal de cada responsável será registrada no respectivo cartão do quadro Kanban, preservando a distribuição flexível das atividades adotada pela equipe.
 
 | Ação | Responsável | Prazo | Evidência de conclusão |
 | --- | --- | --- | --- |
-| Revisar cada artefato de forma integrada, verificando sua relação com as demais seções. | Autor do artefato e revisor designado no cartão Kanban. | Até 48 horas antes da entrega correspondente. | Pull request revisado e cartão com critérios de conclusão atendidos. |
-| Registrar decisões, responsáveis e encaminhamentos das reuniões. | Facilitador e relator definidos no início de cada reunião. | Até 24 horas após a reunião. | Ata publicada na seção de reuniões e vinculada à atividade relacionada. |
-| Reunir dúvidas e validar com Lucas os artefatos que dependam de informações do cliente. | Integrante atribuído à atividade de contato com o cliente no Kanban. | Antes da revisão final do artefato afetado. | Registro da resposta ou ata de reunião vinculada ao artefato. |
-| Elaborar e revisar o cronograma com base nos artefatos e datas da disciplina. | Grupo de dois ou três integrantes indicado no Kanban. | Versão inicial antes do início das atividades da unidade e revisão semanal. | Cronograma versionado e cartões correspondentes atualizados. |
-| Manter a estratégia de trabalho coerente com as práticas realmente utilizadas. | Responsável pela organização do fluxo e equipe durante a reunião semanal. | Antes do início de cada unidade e sempre que o processo for alterado. | Políticas do quadro Kanban e seção de estratégia atualizadas. |
-| Preparar a apresentação como uma entrega coletiva. | Apresentadores e revisor da apresentação definidos no Kanban. | Ensaio realizado pelo menos 24 horas antes da apresentação. | Checklist de revisão e versão final dos materiais. |
-| Garantir que todos conheçam o estado geral do projeto. | Todos os integrantes. | Revisão na reunião semanal e antes de cada entrega. | Ata com participantes, pendências e decisões registradas. |
+| Revisar cada artefato de forma integrada, verificando sua relação com as demais seções | Autor do artefato e revisor designado no cartão Kanban | Até 48 horas antes da entrega correspondente | Pull request revisado e cartão com critérios de conclusão atendidos |
+| Registrar decisões, responsáveis e encaminhamentos das reuniões | Facilitador e relator definidos após a reunião | Até 48 horas após a reunião | Ata publicada na seção de reuniões |
+| Reunir dúvidas para validar com o cliente | Integrante atribuído à sessão | Antes da revisão final do artefato que será atualizado | Registro da resposta ou ata de reunião vinculada ao artefato |
+| Elaborar e revisar o cronograma com base na estratégia e datas da disciplina | Grupo de dois ou três integrantes indicado no Kanban | Versão inicial antes do início das atividades da unidade e revisão semanal | Cronograma versionado e cartões correspondentes atualizados |
+| Preparar a apresentação como uma entrega coletiva | Apresentadores e revisor da apresentação definidos no Kanban | 36 horas antes da apresentação | Checklist de revisão e versão final dos materiais |
+| Garantir que todos conheçam o estado geral do projeto | Todos os integrantes | Revisão na reunião semanal e antes de cada entrega | Ata com participantes, pendências e decisões registradas |
 
 ## Histórico de Versão
 
 | Data | Versão | Descrição | Autor |
 | --- | --- | --- | --- |
-| 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria. | Luiz Henrique Pessato da Mota |
-| 14/09/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1. | Luiz Henrique Pessato da Mota |
+| 31/08/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1 | Thiago Alencar de Oliveira |
+| 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria | Luiz Henrique Pessato da Mota |
+| 21/09/2026 | 0.3 | Aprimorando ações de melhoria e acrescentando desafios da unidade | Thiago Alencar de Oliveira | 
