@@ -1,3 +1,5 @@
+import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -69,6 +71,103 @@ class SiteNavigationTest(unittest.TestCase):
             internal_page = (output / "cronograma" / "index.html").read_text(encoding="utf-8")
             self.assertTrue('class="sj-sidebar-toggle"' in internal_page)
             self.assertTrue('aria-controls="sj-primary-nav"' in internal_page)
+
+    def test_desktop_navigation_focus_contrasts_with_both_gradient_ends(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            css = (Path(output_dir) / "stylesheets" / "extra.css").read_text(encoding="utf-8")
+            gradient = re.search(
+                r"\.sj-desktop-nav-wrap\s*\{[^}]*background:\s*linear-gradient\(105deg,\s*(#[0-9a-f]{6}),\s*(#[0-9a-f]{6})\)",
+                css,
+            )
+            focus = re.search(
+                r"\.sj-desktop-nav :is\(a, button, summary\):focus-visible\s*\{[^}]*outline:\s*3px solid (#[0-9a-f]{3,6})",
+                css,
+            )
+            self.assertIsNotNone(gradient)
+            self.assertIsNotNone(focus)
+
+            def luminance(color):
+                digits = color.lstrip("#")
+                if len(digits) == 3:
+                    digits = "".join(channel * 2 for channel in digits)
+                channels = [int(digits[index:index + 2], 16) / 255 for index in (0, 2, 4)]
+                linear = [channel / 12.92 if channel <= 0.04045 else ((channel + 0.055) / 1.055) ** 2.4 for channel in channels]
+                return sum(weight * channel for weight, channel in zip((0.2126, 0.7152, 0.0722), linear))
+
+            outline = luminance(focus.group(1))
+            for theme in ("light", "dark"):
+                for end, background in enumerate(gradient.groups(), start=1):
+                    with self.subTest(theme=theme, gradient_end=end):
+                        adjacent = luminance(background)
+                        contrast = (max(outline, adjacent) + 0.05) / (min(outline, adjacent) + 0.05)
+                        self.assertGreaterEqual(contrast, 3.0)
+
+    def test_sidebar_toggle_is_hidden_without_javascript(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+            css = (output / "stylesheets" / "extra.css").read_text(encoding="utf-8")
+            self.assertIn('class="md-sidebar md-sidebar--primary"', homepage)
+            self.assertIn('class="sj-sidebar-toggle"', homepage)
+            self.assertIsNotNone(
+                re.search(r"\.sj-desktop-nav \.sj-sidebar-toggle\s*\{\s*display:\s*none;", css)
+            )
+            self.assertIsNotNone(
+                re.search(r"\.sj-desktop-nav \.sj-sidebar-toggle\.sj-sidebar-toggle--ready\s*\{\s*display:\s*flex;", css)
+            )
+
+    def test_sidebar_toggle_appears_after_navigation_initializes(self):
+        if shutil.which("node") is None:
+            self.skipTest("Node.js is needed to exercise the navigation script")
+
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+
+            script = r"""
+const fs = require('fs');
+const vm = require('vm');
+const code = fs.readFileSync(process.argv[1], 'utf8');
+function fixture(hasSidebar) {
+  const classes = new Set();
+  const attrs = { 'aria-expanded': 'true' };
+  const listeners = {};
+  const toggle = {
+    classList: { add: name => classes.add(name), contains: name => classes.has(name) },
+    setAttribute: (name, value) => { attrs[name] = value; },
+    getAttribute: name => attrs[name],
+    addEventListener: (name, listener) => { listeners[name] = listener; }
+  };
+  const sidebar = hasSidebar ? {} : null;
+  const document = {
+    querySelector: selector => selector === '.md-sidebar--primary' ? sidebar : selector === '.sj-sidebar-toggle' ? toggle : null,
+    documentElement: { classList: { toggle: () => {} } },
+    addEventListener: () => {}
+  };
+  const sessionStorage = { getItem: () => null, setItem: () => {} };
+  return { classes, attrs, listeners, toggle, sidebar, document, sessionStorage };
+}
+const noScript = fixture(true);
+if (noScript.classes.has('sj-sidebar-toggle--ready')) throw Error('toggle visible without JS');
+const missingSidebar = fixture(false);
+vm.runInNewContext(code, missingSidebar);
+if (missingSidebar.classes.has('sj-sidebar-toggle--ready')) throw Error('toggle visible without sidebar');
+const initialized = fixture(true);
+vm.runInNewContext(code, initialized);
+if (initialized.sidebar.id !== 'sj-primary-nav') throw Error('sidebar target missing');
+if (!initialized.classes.has('sj-sidebar-toggle--ready')) throw Error('toggle remains hidden after initialization');
+initialized.listeners.click();
+if (initialized.attrs['aria-expanded'] !== 'false') throw Error('toggle no longer collapses sidebar');
+"""
+            result = subprocess.run(
+                ["node", "-e", script, str(output / "javascripts" / "sj-navigation.js")],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
 
     def test_internal_design_notes_are_not_published(self):
         with tempfile.TemporaryDirectory() as output_dir:

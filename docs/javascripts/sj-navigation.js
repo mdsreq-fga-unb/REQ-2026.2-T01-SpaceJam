@@ -27,6 +27,7 @@
     toggle.addEventListener("click", () => {
       setOpen(toggle.getAttribute("aria-expanded") !== "true");
     });
+    toggle.classList.add("sj-sidebar-toggle--ready");
   }
 
   document.addEventListener("keydown", (event) => {

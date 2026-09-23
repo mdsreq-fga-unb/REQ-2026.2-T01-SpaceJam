@@ -93,6 +93,14 @@
     cursor: pointer;
   }
 
+  .sj-desktop-nav .sj-sidebar-toggle {
+    display: none;
+  }
+
+  .sj-desktop-nav .sj-sidebar-toggle.sj-sidebar-toggle--ready {
+    display: flex;
+  }
+
   .sj-desktop-nav :is(a, button, summary):hover,
   .sj-desktop-nav [aria-current="page"] {
     color: #fff;
@@ -100,7 +108,7 @@
   }
 
   .sj-desktop-nav :is(a, button, summary):focus-visible {
-    outline: 3px solid var(--sj-purple-600);
+    outline: 3px solid #fff;
     outline-offset: 2px;
   }
 
