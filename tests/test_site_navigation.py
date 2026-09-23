@@ -76,11 +76,10 @@ class SiteNavigationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
             css = (Path(output_dir) / "stylesheets" / "extra.css").read_text(encoding="utf-8")
-            focus = re.search(
-                r"\.sj-sidebar-toggle:focus-visible\s*\{[^}]*outline:\s*3px solid (#[0-9a-f]{3,6})",
+            self.assertRegex(
                 css,
+                r"\.sj-sidebar-toggle:focus-visible\s*\{[^}]*outline:\s*3px solid var\(--sj-nav-focus\)",
             )
-            self.assertIsNotNone(focus)
 
             def luminance(color):
                 digits = color.lstrip("#")
@@ -90,10 +89,17 @@ class SiteNavigationTest(unittest.TestCase):
                 linear = [channel / 12.92 if channel <= 0.04045 else ((channel + 0.055) / 1.055) ** 2.4 for channel in channels]
                 return sum(weight * channel for weight, channel in zip((0.2126, 0.7152, 0.0722), linear))
 
-            outline = luminance(focus.group(1))
-            adjacent = luminance("#1f1a26")
-            contrast = (max(outline, adjacent) + 0.05) / (min(outline, adjacent) + 0.05)
-            self.assertGreaterEqual(contrast, 3.0)
+            for scheme in (":root", '[data-md-color-scheme="slate"]'):
+                block = re.search(re.escape(scheme) + r"\s*\{([^}]+)\}", css)
+                self.assertIsNotNone(block)
+                focus = re.search(r"--sj-nav-focus:\s*(#[0-9a-f]{3,6})", block.group(1))
+                adjacent = re.search(r"--sj-nav-bg:\s*(#[0-9a-f]{3,6})", block.group(1))
+                self.assertIsNotNone(focus)
+                self.assertIsNotNone(adjacent)
+                outline = luminance(focus.group(1))
+                background = luminance(adjacent.group(1))
+                contrast = (max(outline, background) + 0.05) / (min(outline, background) + 0.05)
+                self.assertGreaterEqual(contrast, 3.0, scheme)
 
     def test_sidebar_toggle_is_hidden_without_javascript(self):
         with tempfile.TemporaryDirectory() as output_dir:
