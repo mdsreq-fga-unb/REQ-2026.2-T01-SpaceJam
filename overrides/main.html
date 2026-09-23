@@ -2,7 +2,7 @@
 
 {% block header %}
   {{ super() }}
-  <div class="sj-desktop-nav-wrap">
-    {% include "partials/sj-desktop-nav.html" %}
-  </div>
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
 {% endblock %}

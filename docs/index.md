@@ -1,4 +1,5 @@
 <div class="sj-home">
+<p class="sj-home-breadcrumb">Início <span aria-hidden="true">/</span> <strong>Visão do projeto</strong></p>
 <section class="sj-home-hero" aria-labelledby="sj-home-title">
   <div class="sj-home-hero__copy">
     <p class="sj-kicker">Projeto acadêmico · Requisitos de Software · 2026.2</p>

@@ -51,13 +51,13 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertIn('class="md-sidebar md-sidebar--primary"', homepage)
             self.assertTrue((output / "stylesheets" / "extra.css").is_file())
 
-    def test_desktop_navigation_exposes_units_and_sidebar_control(self):
+    def test_desktop_sidebar_exposes_units_and_its_control(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
 
             output = Path(output_dir)
             homepage = (output / "index.html").read_text(encoding="utf-8")
-            self.assertTrue('class="sj-desktop-nav' in homepage, "Desktop bar missing")
+            self.assertNotIn('class="sj-desktop-nav', homepage)
             self.assertTrue('class="sj-sidebar-toggle"' in homepage, "Collapse button missing")
             self.assertTrue('aria-controls="sj-primary-nav"' in homepage, "Sidebar control missing")
             self.assertIn('href="cronograma/"', homepage)
@@ -72,19 +72,14 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertTrue('class="sj-sidebar-toggle"' in internal_page)
             self.assertTrue('aria-controls="sj-primary-nav"' in internal_page)
 
-    def test_desktop_navigation_focus_contrasts_with_both_gradient_ends(self):
+    def test_sidebar_control_has_visible_keyboard_focus(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
             css = (Path(output_dir) / "stylesheets" / "extra.css").read_text(encoding="utf-8")
-            gradient = re.search(
-                r"\.sj-desktop-nav-wrap\s*\{[^}]*background:\s*linear-gradient\(105deg,\s*(#[0-9a-f]{6}),\s*(#[0-9a-f]{6})\)",
-                css,
-            )
             focus = re.search(
-                r"\.sj-desktop-nav :is\(a, button, summary\):focus-visible\s*\{[^}]*outline:\s*3px solid (#[0-9a-f]{3,6})",
+                r"\.sj-sidebar-toggle:focus-visible\s*\{[^}]*outline:\s*3px solid (#[0-9a-f]{3,6})",
                 css,
             )
-            self.assertIsNotNone(gradient)
             self.assertIsNotNone(focus)
 
             def luminance(color):
@@ -96,12 +91,9 @@ class SiteNavigationTest(unittest.TestCase):
                 return sum(weight * channel for weight, channel in zip((0.2126, 0.7152, 0.0722), linear))
 
             outline = luminance(focus.group(1))
-            for theme in ("light", "dark"):
-                for end, background in enumerate(gradient.groups(), start=1):
-                    with self.subTest(theme=theme, gradient_end=end):
-                        adjacent = luminance(background)
-                        contrast = (max(outline, adjacent) + 0.05) / (min(outline, adjacent) + 0.05)
-                        self.assertGreaterEqual(contrast, 3.0)
+            adjacent = luminance("#1f1a26")
+            contrast = (max(outline, adjacent) + 0.05) / (min(outline, adjacent) + 0.05)
+            self.assertGreaterEqual(contrast, 3.0)
 
     def test_sidebar_toggle_is_hidden_without_javascript(self):
         with tempfile.TemporaryDirectory() as output_dir:
@@ -112,10 +104,10 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertIn('class="md-sidebar md-sidebar--primary"', homepage)
             self.assertIn('class="sj-sidebar-toggle"', homepage)
             self.assertIsNotNone(
-                re.search(r"\.sj-desktop-nav \.sj-sidebar-toggle\s*\{\s*display:\s*none;", css)
+                re.search(r"\.sj-sidebar-toggle\s*\{[^}]*display:\s*none;", css)
             )
             self.assertIsNotNone(
-                re.search(r"\.sj-desktop-nav \.sj-sidebar-toggle\.sj-sidebar-toggle--ready\s*\{\s*display:\s*flex;", css)
+                re.search(r"\.sj-sidebar-toggle\.sj-sidebar-toggle--ready\s*\{[^}]*display:\s*flex;", css)
             )
 
     def test_sidebar_toggle_appears_after_navigation_initializes(self):
@@ -143,11 +135,13 @@ function fixture(hasSidebar) {
   const sidebar = hasSidebar ? {} : null;
   const document = {
     querySelector: selector => selector === '.md-sidebar--primary' ? sidebar : selector === '.sj-sidebar-toggle' ? toggle : null,
+    querySelectorAll: () => [],
     documentElement: { classList: { toggle: () => {} } },
     addEventListener: () => {}
   };
   const sessionStorage = { getItem: () => null, setItem: () => {} };
-  return { classes, attrs, listeners, toggle, sidebar, document, sessionStorage };
+  const window = { matchMedia: () => ({ matches: true }) };
+  return { classes, attrs, listeners, toggle, sidebar, document, sessionStorage, window };
 }
 const noScript = fixture(true);
 if (noScript.classes.has('sj-sidebar-toggle--ready')) throw Error('toggle visible without JS');
@@ -179,16 +173,71 @@ if (initialized.attrs['aria-expanded'] !== 'false') throw Error('toggle no longe
             self.build_site(output_dir)
             homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
             self.assertIn('class="md-nav__toggle md-toggle', homepage)
+            self.assertNotIn('"navigation.expand"', homepage)
             self.assertFalse(
                 'md-nav__item--section md-nav__item--nested' in homepage,
                 "Sidebar still renders fixed sections instead of collapsible groups",
             )
 
-    def test_top_navigation_has_full_width_background_wrapper(self):
+    def test_sidebar_unit_groups_start_open_without_losing_native_collapse(self):
+        if shutil.which("node") is None:
+            self.skipTest("Node.js is needed to exercise the navigation script")
+
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            script_path = Path(output_dir) / "javascripts" / "sj-navigation.js"
+            script = r"""
+const fs = require('fs');
+const vm = require('vm');
+const code = fs.readFileSync(process.argv[1], 'utf8');
+function fixture(desktop) {
+  const groups = [0, 1].map(() => {
+    const attrs = { 'aria-expanded': 'false' };
+    const nav = { setAttribute: (name, value) => { attrs[name] = value; } };
+    return {
+      checked: false,
+      parentElement: { querySelector: selector => selector === 'nav.md-nav' ? nav : null },
+      attrs
+    };
+  });
+  const document = {
+    querySelector: () => null,
+    querySelectorAll: selector => selector === '.md-sidebar--primary .md-nav__item--nested > .md-nav__toggle' ? groups : [],
+    addEventListener: () => {}
+  };
+  const window = { matchMedia: () => ({ matches: desktop }) };
+  vm.runInNewContext(code, { document, window });
+  return groups;
+}
+const desktop = fixture(true);
+if (!desktop.every(group => group.checked && group.attrs['aria-expanded'] === 'true'))
+  throw Error('desktop groups did not open accessibly');
+const mobile = fixture(false);
+if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'false'))
+  throw Error('mobile groups must keep the root drawer visible');
+"""
+            result = subprocess.run(
+                ["node", "-e", script, str(script_path)],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_desktop_uses_one_navigation_tree(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
             homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
-            self.assertTrue('class="sj-desktop-nav-wrap"' in homepage)
+            self.assertNotIn('class="sj-desktop-nav-wrap"', homepage)
+            self.assertEqual(homepage.count('class="md-nav md-nav--primary"'), 1)
+
+    def test_dark_theme_is_default_and_light_theme_is_available(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
+            self.assertIn('data-md-color-scheme="slate"', homepage)
+            self.assertRegex(homepage, r'<body[^>]+data-md-color-scheme="slate"')
+            self.assertIn('data-md-color-scheme="default"', homepage)
 
     def test_internal_document_links_are_resolved_by_mkdocs(self):
         with tempfile.TemporaryDirectory() as output_dir:

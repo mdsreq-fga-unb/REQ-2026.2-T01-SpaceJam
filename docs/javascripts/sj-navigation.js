@@ -3,6 +3,19 @@
   const sidebar = document.querySelector(".md-sidebar--primary");
   const toggle = document.querySelector(".sj-sidebar-toggle");
 
+  const desktopLayout = window.matchMedia("(min-width: 76.25em)");
+  const syncUnitGroups = () => {
+    document.querySelectorAll(".md-sidebar--primary .md-nav__item--nested > .md-nav__toggle")
+      .forEach((group) => {
+        group.checked = desktopLayout.matches;
+        group.parentElement.querySelector("nav.md-nav")?.setAttribute(
+          "aria-expanded", String(desktopLayout.matches)
+        );
+      });
+  };
+  syncUnitGroups();
+  desktopLayout.addEventListener?.("change", syncUnitGroups);
+
   if (sidebar && toggle) {
     sidebar.id = "sj-primary-nav";
     let remembered = "1";
@@ -30,11 +43,4 @@
     toggle.classList.add("sj-sidebar-toggle--ready");
   }
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    const openMenu = document.querySelector(".sj-top-menu[open]");
-    if (!openMenu) return;
-    openMenu.open = false;
-    openMenu.querySelector("summary")?.focus();
-  });
 })();

@@ -18,21 +18,19 @@ theme:
     repo: fontawesome/brands/github
 
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      primary: deep purple
-      accent: purple
-      toggle:
-        icon: material/weather-night
-        name: Modo escuro
-
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+    - scheme: slate
       primary: deep purple
       accent: purple
       toggle:
         icon: material/weather-sunny
         name: Modo claro
+
+    - scheme: default
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/weather-night
+        name: Modo escuro
 
   font:
     text: Inter
