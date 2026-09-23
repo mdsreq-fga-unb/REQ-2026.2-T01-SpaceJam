@@ -824,6 +824,10 @@
 }
 
 @media screen and (max-width: 48rem) {
+  .md-typeset .md-typeset__scrollwrap {
+    margin-inline: 0;
+  }
+
   .sj-home .sj-summary-grid,
   .sj-home .sj-reading-grid,
   .md-typeset .sj-home .sj-team-grid,

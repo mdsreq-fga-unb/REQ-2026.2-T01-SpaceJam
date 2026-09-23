@@ -166,6 +166,18 @@ class SiteNavigationTest(unittest.TestCase):
                 html = (output / page / "index.html").read_text(encoding="utf-8")
                 self.assertIn('href="../stylesheets/extra.css"', html)
 
+    def test_mobile_table_scroller_override_is_built(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            css = (Path(output_dir) / "stylesheets" / "extra.css").read_text(encoding="utf-8")
+            mobile_rule = "@media screen and (max-width: 48rem) {"
+            self.assertIn(mobile_rule, css)
+            mobile_css = css.split(mobile_rule, 1)[1].split("@media", 1)[0]
+            self.assertRegex(
+                mobile_css,
+                r"\.md-typeset \.md-typeset__scrollwrap\s*\{\s*margin-inline: 0;\s*\}",
+            )
+
     def test_lessons_learned_page_is_generated_and_linked(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
