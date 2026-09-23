@@ -132,6 +132,23 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertEqual(homepage.count('class="sj-reading-card"'), 8)
             self.assertIn('href="intervencao_social/"', homepage)
 
+    def test_editorial_home_keeps_identity_people_and_all_reading_links(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+            self.assertIn('class="sj-home"', homepage)
+            self.assertIn('class="sj-home-court"', homepage)
+            self.assertIn('class="sj-client-feature"', homepage)
+            self.assertIn('class="sj-team-grid"', homepage)
+            self.assertEqual(homepage.count('class="sj-reading-card"'), 8)
+            self.assertIn('src="imagens/lucas-cordeiro.png"', homepage)
+            self.assertIn("Avatar do GitHub de Guilherme", homepage)
+            self.assertIn('href="requisitos/"', homepage)
+            for name in ("anderson", "guilherme", "julia", "luiz", "paulo", "thiago"):
+                self.assertIn(f'src="imagens/equipe/{name}.png"', homepage)
+            self.assertTrue((output / "imagens" / "space-jam-logo.svg").is_file())
+
     def test_lessons_learned_page_is_generated_and_linked(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
