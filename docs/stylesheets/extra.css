@@ -166,8 +166,8 @@
     outline-offset: 2px;
   }
 
-  .md-main__inner {
-    max-width: 1540px;
+  .md-main__inner.md-grid {
+    max-width: none;
   }
 
   .md-sidebar--primary {

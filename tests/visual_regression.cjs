@@ -154,6 +154,16 @@ async function pixel(page, x, y) {
     for (const width of [1220, 1920]) {
       await page.setViewportSize({ width, height: 900 });
       await open("solucao/");
+      await check(`sidebar stays aligned with the corner button at ${width}px`, async () => {
+        const position = await page.evaluate(() => {
+          const sidebar = document.querySelector(".md-sidebar--primary").getBoundingClientRect();
+          const toggle = document.querySelector(".sj-sidebar-toggle").getBoundingClientRect();
+          return { sidebarLeft: sidebar.left, sidebarRight: sidebar.right,
+            toggleLeft: toggle.left, toggleRight: toggle.right };
+        });
+        assert.ok(Math.abs(position.sidebarLeft - position.toggleLeft) <= 24 &&
+          position.toggleRight + 16 <= position.sidebarRight, JSON.stringify(position));
+      });
       await check(`navigation and tables stay contained at ${width}px`, async () => {
         const layout = await page.evaluate(() => {
           const toggle = document.querySelector(".sj-sidebar-toggle").getBoundingClientRect();
