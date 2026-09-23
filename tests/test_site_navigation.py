@@ -149,6 +149,23 @@ class SiteNavigationTest(unittest.TestCase):
                 self.assertIn(f'src="imagens/equipe/{name}.png"', homepage)
             self.assertTrue((output / "imagens" / "space-jam-logo.svg").is_file())
 
+    def test_editorial_styles_are_built_for_internal_pages(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+            css = (output / "stylesheets" / "extra.css").read_text(encoding="utf-8")
+            self.assertIn(".md-typeset h1,", css)
+            self.assertIn('font-family: Georgia, "Times New Roman", serif', css)
+            self.assertRegex(
+                css,
+                r'(?s)\.md-typeset h1,\s*\.md-typeset h2\s*\{[^}]*font-family: Georgia, "Times New Roman", serif',
+            )
+            self.assertIn(".md-typeset__table", css)
+            self.assertIn("overflow-x: auto", css)
+            for page in ("cenario_atual", "interacao_equipe_cliente", "requisitos"):
+                html = (output / page / "index.html").read_text(encoding="utf-8")
+                self.assertIn('href="../stylesheets/extra.css"', html)
+
     def test_lessons_learned_page_is_generated_and_linked(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)

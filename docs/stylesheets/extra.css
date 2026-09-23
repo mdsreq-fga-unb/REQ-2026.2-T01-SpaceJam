@@ -212,6 +212,11 @@
   padding-bottom: 3rem;
 }
 
+.md-content__inner:not(:has(.sj-home)) {
+  max-width: 58rem;
+  margin-inline: auto;
+}
+
 .md-typeset {
   color: var(--sj-text);
   font-size: 0.82rem;
@@ -219,10 +224,17 @@
 }
 
 .md-typeset h1,
+.md-typeset h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  overflow-wrap: break-word;
+}
+
+.md-typeset h1,
 .md-typeset h2,
 .md-typeset h3 {
   color: var(--sj-purple-950);
-  letter-spacing: -0.025em;
 }
 
 .md-typeset h1 {
@@ -230,7 +242,6 @@
   margin-bottom: 1.6rem;
   padding-bottom: 0.8rem;
   font-size: clamp(1.9rem, 4vw, 2.55rem);
-  font-weight: 800;
   line-height: 1.12;
 }
 
@@ -248,16 +259,23 @@
 .md-typeset h2 {
   margin-top: 2.3em;
   padding-bottom: 0.35rem;
-  font-weight: 750;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  line-height: 1.2;
   border-bottom: 1px solid var(--sj-border);
 }
 
 .md-typeset h3 {
+  letter-spacing: -0.025em;
   font-weight: 720;
 }
 
 .md-typeset a {
   color: var(--sj-purple-700);
+}
+
+.md-typeset a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .md-typeset a:focus-visible {
@@ -298,6 +316,7 @@
 
 .md-typeset__table {
   width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   border: 1px solid var(--sj-border);
   border-radius: 0.8rem;
@@ -308,6 +327,12 @@
   width: 100%;
   margin: 0;
   background: var(--sj-surface);
+}
+
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  padding: 0.65rem 0.75rem;
+  line-height: 1.55;
 }
 
 .md-typeset table:not([class]) th {
