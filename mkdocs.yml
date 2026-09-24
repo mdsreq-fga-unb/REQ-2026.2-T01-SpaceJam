@@ -1,36 +1,34 @@
-site_name: Space Jam · Treinamento e Acompanhamento de Atletas
-site_description: Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.1 · FCTE/UnB
+site_name: Space Jam
+site_description: Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB
 site_author: Equipe Space Jam
 site_url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/
 repo_url: https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
 repo_name: mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
-edit_uri: edit/gh-pages/docs/
-copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.1
+edit_uri: edit/docs/docs/
+copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
 
 theme:
   name: material
   language: pt
-  favicon: imagens/favicon.png
-  logo: imagens/favicon.png
+  favicon: imagens/space-jam-logo.svg
+  logo: imagens/space-jam-logo.svg
   icon:
     logo: material/basketball
     repo: fontawesome/brands/github
 
   palette:
-    # Tema Claro: Barra superior em Azul/Ciano 
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: cyan
-      accent: deep orange
+      primary: deep purple
+      accent: purple
       toggle:
         icon: material/weather-night
         name: Modo escuro
 
-    # Tema Escuro: Barra superior em Laranja 
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: orange
-      accent: cyan
+      primary: deep purple
+      accent: purple
       toggle:
         icon: material/weather-sunny
         name: Modo claro
@@ -40,14 +38,15 @@ theme:
     code: JetBrains Mono
 
   features:
-    - navigation.tabs
     - navigation.top
     - navigation.sections
+    - navigation.expand
     - navigation.indexes
     - navigation.footer
     - toc.follow
     - search.highlight
     - search.suggest
+    - content.action.edit
     - content.code.copy
 
 extra_css:
@@ -70,13 +69,18 @@ plugins:
       lang: pt
 
 nav:
-  - Home: index.md
-  - "1. Cenário Atual": cenario_atual.md
-  - "2. Solução Proposta": solucao.md
-  - "3. Intervenção Social": intervencao_social.md
-  - "4. Estratégias de Engenharia de Software": estrategia.md
-  - "5. Engenharia de Requisitos": engenharia_requisitos.md
-  - "6. Cronograma": cronograma.md
-  - "7. Interação entre Equipe e Cliente": interacao_equipe_cliente.md
-  - "8. Lições Aprendidas": licoes_aprendidas.md
-  - "9. Entregas": entregas.md
+  - Início: index.md
+  - Unidade 1:
+      - "1. Cenário Atual": cenario_atual.md
+      - "2. Solução Proposta": solucao.md
+      - "3. Intervenção Social": intervencao_social.md
+      - "4. Estratégias de Engenharia de Software": estrategia.md
+      - "5. Engenharia de Requisitos": engenharia_requisitos.md
+      - "6. Cronograma e Entregas": cronograma.md
+      - "7. Interação entre Equipe e Cliente": interacao_equipe_cliente.md
+      - "9. Entregas": entregas.md
+      - "11. Lições Aprendidas": licoes-aprendidas.md
+  - Unidade 2:
+      - Visão geral: unidade-2.md
+      - Requisitos: requisitos.md
+  - Reuniões: reunioes.md
