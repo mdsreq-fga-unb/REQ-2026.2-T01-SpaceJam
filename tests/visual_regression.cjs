@@ -73,6 +73,26 @@ async function pixel(page, x, y) {
     });
 
     await open("entregas/");
+    await check("delivery hero, sections and action share a centered reading axis", async () => {
+      const layout = await page.evaluate(() => {
+        const box = (selector) => document.querySelector(selector).getBoundingClientRect();
+        const center = (rect) => (rect.left + rect.right) / 2;
+        const reading = box(".md-content__inner");
+        const hero = box(".sj-delivery-hero");
+        const heading = document.querySelector(".md-content__inner > h2");
+        const paragraph = box(".md-content__inner > p");
+        const action = box(".sj-delivery-watch");
+        return { readingCenter: center(reading), readingWidth: reading.width,
+          heroCenter: center(hero), headingAlign: getComputedStyle(heading).textAlign,
+          paragraphCenter: center(paragraph), paragraphWidth: paragraph.width,
+          actionCenter: center(action) };
+      });
+      assert.ok(Math.abs(layout.heroCenter - layout.readingCenter) <= 2, JSON.stringify(layout));
+      assert.equal(layout.headingAlign, "center");
+      assert.ok(Math.abs(layout.paragraphCenter - layout.readingCenter) <= 2, JSON.stringify(layout));
+      assert.ok(layout.paragraphWidth <= layout.readingWidth - 40, JSON.stringify(layout));
+      assert.ok(Math.abs(layout.actionCenter - layout.readingCenter) <= 2, JSON.stringify(layout));
+    });
     await check("delivery overview uses aligned cards without leaving the page", async () => {
       const layout = await page.evaluate(() => {
         const cards = [...document.querySelectorAll(".sj-delivery-docs section")]

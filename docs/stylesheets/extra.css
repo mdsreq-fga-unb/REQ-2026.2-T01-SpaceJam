@@ -320,6 +320,42 @@
   margin-inline: auto;
 }
 
+.md-content__inner:has(.sj-delivery-hero) {
+  position: relative;
+}
+
+.md-content__inner:has(.sj-delivery-hero) > .md-content__button {
+  position: absolute;
+  z-index: 2;
+  top: 0.5rem;
+  right: 0.5rem;
+  float: none;
+}
+
+.md-content__inner:has(.sj-delivery-hero) > h2,
+.md-content__inner:has(.sj-delivery-hero) > h3 {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.md-content__inner:has(.sj-delivery-hero) > p {
+  max-width: 34rem;
+  margin-inline: auto;
+}
+
+.md-content__inner:has(.sj-delivery-hero) > h2,
+.md-content__inner:has(.sj-delivery-hero) > h3 {
+  text-align: center;
+}
+
+.md-content__inner:has(.sj-delivery-hero) > h2 {
+  border-bottom: 0;
+}
+
+.md-content__inner:has(.sj-delivery-hero) > p:has(> .sj-delivery-watch) {
+  text-align: center;
+}
+
 .md-typeset {
   color: var(--sj-text);
   font-size: 0.82rem;
@@ -441,6 +477,7 @@
 .sj-delivery-hero {
   position: relative;
   isolation: isolate;
+  width: 100%;
   margin-bottom: 2.7rem;
   padding: clamp(1.4rem, 3vw, 2.4rem);
   overflow: hidden;
@@ -463,6 +500,7 @@
 }
 
 .md-typeset .sj-delivery-eyebrow {
+  padding-right: 3rem;
   margin: 0;
   color: var(--sj-purple-700);
   font-size: 0.63rem;
