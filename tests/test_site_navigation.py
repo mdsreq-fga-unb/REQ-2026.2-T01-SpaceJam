@@ -277,6 +277,27 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             self.assertIn("drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/preview", page)
             self.assertIn('href="../cenario_atual/"', page)
 
+    def test_deliveries_page_connects_the_presentation_to_the_documented_scope(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+
+            page = (Path(output_dir) / "entregas" / "index.html").read_text(encoding="utf-8")
+            for section in (
+                "Escopo da entrega", "O que foi produzido", "Validação e acompanhamento",
+                "Vídeo da apresentação", "Documento publicado",
+            ):
+                self.assertIn(section, page)
+            cards = page.split('<div class="sj-delivery-docs">', 1)[1].split('</div>', 1)[0]
+            for target in (
+                "cenario_atual", "solucao", "intervencao_social", "estrategia",
+                "engenharia_requisitos", "cronograma", "interacao_equipe_cliente",
+            ):
+                self.assertIn(f'href="../{target}/"', cards)
+            self.assertIn(
+                'href="https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view"',
+                page,
+            )
+
     def test_project_schedule_is_generated_and_linked_from_the_homepage(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)

@@ -72,6 +72,55 @@ async function pixel(page, x, y) {
         `Reuniões starts at ${meetings.top}, before Requisitos ends at ${requirements.bottom}`);
     });
 
+    await open("entregas/");
+    await check("delivery overview uses aligned cards without leaving the page", async () => {
+      const layout = await page.evaluate(() => {
+        const cards = [...document.querySelectorAll(".sj-delivery-docs section")]
+          .map((section) => section.getBoundingClientRect());
+        const content = document.querySelector(".md-content").getBoundingClientRect();
+        return { cards: cards.map(({ left, right, top, bottom }) => ({ left, right, top, bottom })),
+          content: { left: content.left, right: content.right },
+          pageOverflow: document.documentElement.scrollWidth - innerWidth };
+      });
+      assert.equal(layout.cards.length, 3);
+      assert.equal(layout.pageOverflow, 0);
+      assert.ok(layout.cards.every((card) => card.left >= layout.content.left &&
+        card.right <= layout.content.right), JSON.stringify(layout));
+      assert.ok(layout.cards.every((card) => Math.abs(card.top - layout.cards[0].top) < 2),
+        `delivery cards are not aligned in one desktop row: ${JSON.stringify(layout.cards)}`);
+      assert.ok(layout.cards[0].right + 8 <= layout.cards[1].left &&
+        layout.cards[1].right + 8 <= layout.cards[2].left,
+        `delivery cards overlap: ${JSON.stringify(layout.cards)}`);
+    });
+    await check("delivery video has a visible exit when its embed cannot load", async () => {
+      const directLink = page.locator('.md-content a[href$="1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view"]').first();
+      assert.ok(await directLink.isVisible());
+      const preview = page.locator("details.sj-delivery-video-details");
+      assert.equal(await preview.count(), 1);
+      assert.equal(await preview.getAttribute("open"), null);
+      const summaryLayout = await preview.locator("summary").evaluate((summary) => ({
+        leadingIcon: getComputedStyle(summary, "::before").display,
+        leftMargin: parseFloat(getComputedStyle(summary).marginLeft),
+      }));
+      assert.equal(summaryLayout.leadingIcon, "none");
+      assert.ok(summaryLayout.leftMargin >= 0, JSON.stringify(summaryLayout));
+      await preview.locator("summary").click();
+      assert.ok(await preview.locator("iframe").isVisible());
+    });
+    await check("desktop footer stays clear of the sticky navigation", async () => {
+      await page.evaluate(() => scrollTo(0, document.body.scrollHeight));
+      const bounds = await page.evaluate(() => {
+        const right = (selector) => document.querySelector(selector).getBoundingClientRect().right;
+        const left = (selector) => document.querySelector(selector).getBoundingClientRect().left;
+        return { sidebarRight: right(".md-sidebar--primary"),
+          previousTitleLeft: left(".md-footer__link--prev .md-footer__title"),
+          copyrightLeft: left(".md-footer-meta__inner .md-copyright") };
+      });
+      assert.ok(bounds.previousTitleLeft >= bounds.sidebarRight &&
+        bounds.copyrightLeft >= bounds.sidebarRight, JSON.stringify(bounds));
+    });
+    await open("reunioes/");
+
     await check("hamburger stays in the upper-left corner without covering the brand", async () => {
       await page.locator(".sj-sidebar-toggle").click();
       const position = await page.evaluate(() => {
