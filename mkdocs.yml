@@ -51,6 +51,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/sj-navigation.js
+  - javascripts/sj-tables.js
 
 markdown_extensions:
   - admonition

@@ -408,15 +408,20 @@
   margin-inline: 0;
 }
 
-.md-typeset__table {
+.md-typeset .md-typeset__table {
   display: block;
   width: 100%;
   max-width: 100%;
+  padding: 0;
   overflow-x: auto;
   border: 1px solid var(--sj-border);
   border-radius: 0.8rem;
   scrollbar-color: var(--sj-nav-accent) var(--sj-surface-soft);
   scrollbar-width: thin;
+}
+
+.md-typeset details .md-typeset__table {
+  padding: 0;
 }
 
 .md-typeset table:not([class]) {
@@ -430,8 +435,10 @@
 
 .md-typeset__table > table:not([class]) {
   display: table;
+  width: 100%;
   max-width: none;
   overflow: visible;
+  border: 0;
 }
 
 .md-typeset table:not([class]) th,
@@ -459,6 +466,84 @@
 
 .md-typeset table:not([class]) tbody tr:hover {
   background: color-mix(in srgb, var(--sj-purple-100) 72%, transparent);
+}
+
+.md-typeset table.sj-data-cards {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+}
+
+.md-typeset table.sj-data-cards thead {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.md-typeset table.sj-data-cards tbody {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.md-typeset table.sj-data-cards tbody tr {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  background: var(--sj-surface-soft);
+  border: 1px solid var(--sj-border);
+  border-left: 3px solid var(--sj-purple-600);
+  border-radius: 0.8rem;
+  overflow: hidden;
+}
+
+.md-typeset table.sj-data-cards tbody tr:hover {
+  background: color-mix(in srgb, var(--sj-purple-100) 55%, var(--sj-surface-soft));
+}
+
+.md-typeset table.sj-data-cards tbody td {
+  display: block;
+  min-width: 0;
+  padding: 0.75rem 0.9rem;
+  border: 0;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset table.sj-data-cards tbody td::before {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--sj-purple-700);
+  content: attr(data-label);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.md-typeset table.sj-data-cards tbody td:first-child {
+  color: var(--sj-purple-900);
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.md-typeset table.sj-data-cards tbody td:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 60em) {
+  .md-typeset table.sj-data-cards tbody tr {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .md-typeset table.sj-data-cards tbody td:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
 }
 
 .md-content__button {

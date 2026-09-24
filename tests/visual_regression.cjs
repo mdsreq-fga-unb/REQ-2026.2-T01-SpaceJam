@@ -105,22 +105,62 @@ async function pixel(page, x, y) {
 
     await page.locator(".sj-sidebar-toggle").click();
     await open("cronograma/");
-    await check("wide tables fit the reading column and scroll internally", async () => {
+    await check("wide tables become readable cards without horizontal scrolling", async () => {
       const geometry = await page.evaluate(() => {
         const article = document.querySelector(".md-content__inner").getBoundingClientRect();
-        const wrapper = document.querySelector(".md-typeset__scrollwrap");
-        const table = wrapper.querySelector("table");
-        const box = wrapper.getBoundingClientRect();
+        const table = document.querySelector("table.sj-data-cards");
+        const box = table.getBoundingClientRect();
         return { articleLeft: article.left, articleRight: article.right,
-          left: box.left, right: box.right, client: wrapper.clientWidth,
-          scroll: wrapper.scrollWidth, tableWidth: table.getBoundingClientRect().width,
+          left: box.left, right: box.right, client: table.clientWidth,
+          scroll: table.scrollWidth, tableWidth: box.width,
+          cardCount: table.querySelectorAll("tbody tr").length,
+          labeledCells: table.querySelectorAll("tbody td[data-label]").length,
+          cellCount: table.querySelectorAll("tbody td").length,
+          hasLink: Boolean(table.querySelector('tbody a[href*="cenario_atual"]')),
           pageWidth: document.documentElement.scrollWidth };
       });
       assert.ok(geometry.left >= geometry.articleLeft - 1 && geometry.right <= geometry.articleRight + 1,
-        `table wrapper protrudes from article: ${JSON.stringify(geometry)}`);
-      assert.ok(geometry.tableWidth > geometry.client,
-        `dense six-column table should scroll rather than squeeze: ${JSON.stringify(geometry)}`);
+        `cards protrude from article: ${JSON.stringify(geometry)}`);
+      assert.ok(geometry.scroll <= geometry.client + 1,
+        `table still needs horizontal scrolling: ${JSON.stringify(geometry)}`);
+      assert.ok(geometry.tableWidth <= geometry.client + 1,
+        `table is wider than its reading column: ${JSON.stringify(geometry)}`);
+      assert.equal(geometry.labeledCells, geometry.cellCount,
+        `card fields lost their labels: ${JSON.stringify(geometry)}`);
+      assert.ok(geometry.cardCount === 2 && geometry.hasLink,
+        `cycle content or links disappeared: ${JSON.stringify(geometry)}`);
       assert.ok(geometry.pageWidth <= 1366, `whole page scrolls horizontally: ${JSON.stringify(geometry)}`);
+    });
+
+    for (const routeName of ["cronograma/", "engenharia_requisitos/", "solucao/"]) {
+      await open(routeName);
+      await check(`all wide tables fit without scrolling on ${routeName}`, async () => {
+        const tables = await page.evaluate(() => [...document.querySelectorAll("table.sj-data-cards")]
+          .map((table) => ({ client: table.clientWidth, scroll: table.scrollWidth,
+            labels: table.querySelectorAll("tbody td[data-label]").length,
+            cells: table.querySelectorAll("tbody td").length })));
+        assert.ok(tables.length, `${routeName} has no card tables`);
+        assert.ok(tables.every((table) => table.scroll <= table.client + 1 &&
+          table.labels === table.cells), JSON.stringify(tables));
+      });
+    }
+
+    await open("engenharia_requisitos/");
+    await check("cards repeat the group name when the source table leaves it blank", async () => {
+      const groups = await page.evaluate(() => [...document.querySelectorAll(
+        "table.sj-data-cards:first-of-type tbody tr"
+      )].slice(0, 3).map((row) => row.cells[0].textContent.trim()));
+      assert.deepEqual(groups, ["Planejamento da Release", "Planejamento da Release",
+        "Planejamento da Release"]);
+    });
+
+    await check("table frame has no empty inset", async () => {
+      const inset = await page.evaluate(() => {
+        const wrapper = document.querySelector(".md-typeset__table");
+        const table = wrapper.querySelector("table");
+        return table.getBoundingClientRect().left - wrapper.getBoundingClientRect().left;
+      });
+      assert.ok(inset <= 2, `table starts ${inset}px inside its frame`);
     });
 
     await check("dark page backdrop is consistent across documents", async () => {
