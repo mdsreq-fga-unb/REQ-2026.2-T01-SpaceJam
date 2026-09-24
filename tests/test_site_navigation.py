@@ -51,7 +51,7 @@ class SiteNavigationTest(unittest.TestCase):
             self.assertIn('class="md-sidebar md-sidebar--primary"', homepage)
             self.assertTrue((output / "stylesheets" / "extra.css").is_file())
 
-    def test_desktop_sidebar_exposes_units_and_its_control(self):
+    def test_desktop_sidebar_exposes_documents_and_its_control(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
 
@@ -251,15 +251,31 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
 
             self.assertNotIn("unrecognized relative link", result.stderr)
 
-    def test_unit_two_has_a_reserved_navigation_section(self):
+    def test_navigation_groups_documents_and_keeps_deliveries_separate(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
 
             output = Path(output_dir)
             homepage = (output / "index.html").read_text(encoding="utf-8")
 
-            self.assertTrue((output / "unidade-2" / "index.html").is_file())
-            self.assertIn("Unidade 2", homepage)
+            self.assertIn("Visão do Produto e Projeto", homepage)
+            self.assertIn('href="requisitos/"', homepage)
+            self.assertIn('href="entregas/"', homepage)
+            self.assertNotIn("Unidade 1", homepage)
+            self.assertNotIn("Unidade 2", homepage)
+            self.assertFalse((output / "unidade-2" / "index.html").exists())
+            self.assertTrue((ROOT / "docs" / "unidade-2.md").is_file())
+
+    def test_deliveries_page_preserves_the_existing_presentation(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+
+            page = (Path(output_dir) / "entregas" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("<h1", page)
+            self.assertIn("Entregas", page)
+            self.assertIn("Primeira entrega", page)
+            self.assertIn("drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/preview", page)
+            self.assertIn('href="../cenario_atual/"', page)
 
     def test_project_schedule_is_generated_and_linked_from_the_homepage(self):
         with tempfile.TemporaryDirectory() as output_dir:
@@ -370,7 +386,7 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
     def test_existing_revision_histories_are_collapsible_and_preserved(self):
         pages = (
             "engenharia_requisitos", "interacao_equipe_cliente", "intervencao_social",
-            "licoes-aprendidas", "reunioes", "solucao", "unidade-2", "cronograma",
+            "licoes-aprendidas", "reunioes", "solucao", "cronograma",
         )
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)

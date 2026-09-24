@@ -1,38 +1,21 @@
-<div style="text-align: center;">
+# Entregas
 
-<h1>🎥 Unidade 1 - Primeira Entrega</h1>
+Esta página reúne os materiais apresentados pela equipe. Os documentos do projeto ficam na seção **Visão do Produto e Projeto** da navegação.
 
-<p>
-Confira abaixo a primeira entrega do projeto.
-</p>
+## Primeira entrega
 
-<div style="
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-    margin: 30px auto;
-    aspect-ratio: 16 / 9;
-">
+A primeira entrega apresentou a visão inicial do projeto. Para consultar os documentos, comece pelo [Cenário Atual](cenario_atual.md) e acompanhe as demais seções da visão.
 
-    <iframe
-        src="https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/preview"
-        width="100%"
-        height="100%"
-        allow="autoplay"
-        style="border: none; border-radius: 12px;"
-        allowfullscreen>
-    </iframe>
+### Vídeo da apresentação
 
+<div class="sj-delivery-video">
+  <iframe
+    src="https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/preview"
+    title="Apresentação da primeira entrega do Space Jam"
+    loading="lazy"
+    allow="autoplay; fullscreen"
+    allowfullscreen>
+  </iframe>
 </div>
 
-<p>
-    <a
-        href="https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view"
-        target="_blank"
-        rel="noopener"
-    >
-        🔗 Abrir vídeo em outra janela
-    </a>
-</p>
-
-</div>
+[Abrir vídeo em outra janela](https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view){: target="_blank" rel="noopener noreferrer" }

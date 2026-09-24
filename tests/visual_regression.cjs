@@ -43,12 +43,29 @@ async function pixel(page, x, y) {
 
   try {
     await open("reunioes/");
+    await check("sidebar groups vision documents and links directly to deliveries", async () => {
+      const navigation = await page.evaluate(() => {
+        const sidebar = document.querySelector(".md-sidebar--primary");
+        return {
+          groups: [...sidebar.querySelectorAll(".md-nav__item--nested > .md-nav__link")]
+            .map((link) => link.textContent.trim()),
+          links: [...sidebar.querySelectorAll("a.md-nav__link")]
+            .map((link) => ({ text: link.textContent.trim(), href: link.getAttribute("href") })),
+        };
+      });
+      assert.deepEqual(navigation.groups, ["Visão do Produto e Projeto"]);
+      assert.ok(navigation.links.some((link) => link.text === "8. Requisitos de Software" &&
+        link.href.includes("requisitos/")));
+      assert.ok(navigation.links.some((link) => link.text === "Entregas" &&
+        link.href.includes("entregas/")));
+      assert.ok(navigation.links.every((link) => !/^Unidade [12]$/.test(link.text)));
+    });
     await check("sidebar links do not overlap", async () => {
       const links = await page.evaluate(() => [...document.querySelectorAll(".md-sidebar--primary a.md-nav__link")]
-        .filter((link) => ["Requisitos", "Reuniões"].includes(link.textContent.trim()))
+        .filter((link) => ["8. Requisitos de Software", "Reuniões"].includes(link.textContent.trim()))
         .map((link) => ({ text: link.textContent.trim(), top: link.getBoundingClientRect().top,
           bottom: link.getBoundingClientRect().bottom })));
-      const requirements = links.find((link) => link.text === "Requisitos");
+      const requirements = links.find((link) => link.text === "8. Requisitos de Software");
       const meetings = links.find((link) => link.text === "Reuniões");
       assert.ok(requirements && meetings, "both navigation links must exist");
       assert.ok(meetings.top >= requirements.bottom,
