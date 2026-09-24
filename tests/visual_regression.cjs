@@ -72,6 +72,62 @@ async function pixel(page, x, y) {
         `Reuniões starts at ${meetings.top}, before Requisitos ends at ${requirements.bottom}`);
     });
 
+    await check("document pages share a centered editorial reading axis", async () => {
+      for (const name of ["cenario_atual/", "solucao/", "intervencao_social/", "estrategia/",
+        "engenharia_requisitos/", "cronograma/", "interacao_equipe_cliente/", "requisitos/",
+        "licoes-aprendidas/", "reunioes/"]) {
+        await open(name);
+        const layout = await page.evaluate(() => {
+          const article = document.querySelector(".md-content__inner");
+          const box = (element) => {
+            if (!element) return null;
+            const rect = element.getBoundingClientRect();
+            return { center: (rect.left + rect.right) / 2, width: rect.width,
+              left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
+          };
+          const paragraph = [...article.children].find((element) => element.tagName === "P" &&
+            !element.querySelector("img"));
+          const list = [...article.children].find((element) => ["UL", "OL"].includes(element.tagName));
+          return { article: box(article), title: box(article.querySelector(":scope > h1")),
+            titleAlign: getComputedStyle(article.querySelector(":scope > h1")).textAlign,
+            section: box(article.querySelector(":scope > h2")),
+            sectionAlign: article.querySelector(":scope > h2") &&
+              getComputedStyle(article.querySelector(":scope > h2")).textAlign,
+            paragraph: box(paragraph), list: box(list), edit: box(article.querySelector(":scope > .md-content__button")),
+            overflow: document.documentElement.scrollWidth - innerWidth };
+        });
+        assert.equal(layout.titleAlign, "center", `${name}: ${JSON.stringify(layout)}`);
+        assert.ok(Math.abs(layout.title.center - layout.article.center) <= 2,
+          `${name}: ${JSON.stringify(layout)}`);
+        if (layout.section) assert.equal(layout.sectionAlign, "center", `${name}: ${JSON.stringify(layout)}`);
+        for (const block of [layout.paragraph, layout.list].filter(Boolean)) {
+          assert.ok(Math.abs(block.center - layout.article.center) <= 2 &&
+            block.width <= layout.article.width - 40, `${name}: ${JSON.stringify(layout)}`);
+        }
+        assert.ok(layout.edit.bottom <= layout.title.top || layout.edit.left >= layout.title.right ||
+          layout.edit.top >= layout.title.bottom, `${name}: edit button overlaps title`);
+        assert.equal(layout.overflow, 0, `${name}: page overflows`);
+      }
+    });
+
+    await open("");
+    await check("home section introductions center over their content grids", async () => {
+      const layout = await page.evaluate(() => {
+        const home = document.querySelector(".sj-home").getBoundingClientRect();
+        const center = (rect) => (rect.left + rect.right) / 2;
+        return { homeCenter: center(home), homeWidth: home.width,
+          headings: [...document.querySelectorAll(".sj-home .sj-section-heading")].map((element) => {
+            const rect = element.getBoundingClientRect();
+            return { center: center(rect), width: rect.width,
+              align: getComputedStyle(element).textAlign };
+          }) };
+      });
+      assert.ok(layout.headings.length >= 3, JSON.stringify(layout));
+      assert.ok(layout.headings.every((heading) => heading.align === "center" &&
+        Math.abs(heading.center - layout.homeCenter) <= 2 &&
+        heading.width <= layout.homeWidth - 40), JSON.stringify(layout));
+    });
+
     await open("entregas/");
     await check("delivery hero, sections and action share a centered reading axis", async () => {
       const layout = await page.evaluate(() => {
@@ -312,6 +368,26 @@ async function pixel(page, x, y) {
         assert.ok(layout.toggleRight + 8 <= layout.brandLeft, JSON.stringify(layout));
       });
     }
+
+    await check("document titles stay clear of the edit action at narrower widths", async () => {
+      for (const width of [1220, 390]) {
+        await page.setViewportSize({ width, height: 900 });
+        for (const name of ["solucao/", "engenharia_requisitos/", "reunioes/"]) {
+          await open(name);
+          const bounds = await page.evaluate(() => {
+            const title = document.querySelector(".md-content__inner > h1").getBoundingClientRect();
+            const edit = document.querySelector(".md-content__inner > .md-content__button").getBoundingClientRect();
+            return { title: { left: title.left, right: title.right, top: title.top, bottom: title.bottom },
+              edit: { left: edit.left, right: edit.right, top: edit.top, bottom: edit.bottom },
+              overflow: document.documentElement.scrollWidth - innerWidth };
+          });
+          assert.ok(bounds.title.right + 4 <= bounds.edit.left ||
+            bounds.title.top >= bounds.edit.bottom || bounds.title.bottom <= bounds.edit.top,
+          `${width}px ${name}: ${JSON.stringify(bounds)}`);
+          assert.equal(bounds.overflow, 0, `${width}px ${name}: page overflows`);
+        }
+      }
+    });
 
     await page.setViewportSize({ width: 800, height: 900 });
     await open("cronograma/");
