@@ -72,7 +72,7 @@ async function pixel(page, x, y) {
         `Reuniões starts at ${meetings.top}, before Requisitos ends at ${requirements.bottom}`);
     });
 
-    await check("document pages share a centered editorial reading axis", async () => {
+    await check("document titles center while section headings follow the reading column", async () => {
       for (const name of ["cenario_atual/", "solucao/", "intervencao_social/", "estrategia/",
         "engenharia_requisitos/", "cronograma/", "interacao_equipe_cliente/", "requisitos/",
         "licoes-aprendidas/", "reunioes/"]) {
@@ -88,21 +88,35 @@ async function pixel(page, x, y) {
           const paragraph = [...article.children].find((element) => element.tagName === "P" &&
             !element.querySelector("img"));
           const list = [...article.children].find((element) => ["UL", "OL"].includes(element.tagName));
+          const section = article.querySelector(":scope > h2");
+          const subsection = article.querySelector(":scope > h3");
           return { article: box(article), title: box(article.querySelector(":scope > h1")),
             titleAlign: getComputedStyle(article.querySelector(":scope > h1")).textAlign,
-            section: box(article.querySelector(":scope > h2")),
-            sectionAlign: article.querySelector(":scope > h2") &&
-              getComputedStyle(article.querySelector(":scope > h2")).textAlign,
+            section: box(section), sectionAlign: section && getComputedStyle(section).textAlign,
+            sectionRule: section && parseFloat(getComputedStyle(section).borderBottomWidth),
+            subsection: box(subsection), subsectionAlign: subsection && getComputedStyle(subsection).textAlign,
             paragraph: box(paragraph), list: box(list), edit: box(article.querySelector(":scope > .md-content__button")),
             overflow: document.documentElement.scrollWidth - innerWidth };
         });
         assert.equal(layout.titleAlign, "center", `${name}: ${JSON.stringify(layout)}`);
         assert.ok(Math.abs(layout.title.center - layout.article.center) <= 2,
           `${name}: ${JSON.stringify(layout)}`);
-        if (layout.section) assert.equal(layout.sectionAlign, "center", `${name}: ${JSON.stringify(layout)}`);
+        if (layout.section) {
+          assert.equal(layout.sectionAlign, "left", `${name}: ${JSON.stringify(layout)}`);
+          assert.ok(layout.sectionRule >= 1, `${name}: ${JSON.stringify(layout)}`);
+        }
+        if (layout.subsection) assert.equal(layout.subsectionAlign, "left", `${name}: ${JSON.stringify(layout)}`);
+        for (const block of [layout.section, layout.subsection].filter(Boolean)) {
+          assert.ok(Math.abs(block.center - layout.article.center) <= 2 &&
+            block.width <= layout.article.width - 40, `${name}: ${JSON.stringify(layout)}`);
+        }
         for (const block of [layout.paragraph, layout.list].filter(Boolean)) {
           assert.ok(Math.abs(block.center - layout.article.center) <= 2 &&
             block.width <= layout.article.width - 40, `${name}: ${JSON.stringify(layout)}`);
+        }
+        if (layout.section && layout.paragraph) {
+          assert.ok(Math.abs(layout.section.left - layout.paragraph.left) <= 2,
+            `${name}: headings and text have different left edges`);
         }
         assert.ok(layout.edit.bottom <= layout.title.top || layout.edit.left >= layout.title.right ||
           layout.edit.top >= layout.title.bottom, `${name}: edit button overlaps title`);
@@ -129,7 +143,7 @@ async function pixel(page, x, y) {
     });
 
     await open("entregas/");
-    await check("delivery hero, sections and action share a centered reading axis", async () => {
+    await check("delivery hero and action center while sections follow the reading column", async () => {
       const layout = await page.evaluate(() => {
         const box = (selector) => document.querySelector(selector).getBoundingClientRect();
         const center = (rect) => (rect.left + rect.right) / 2;
@@ -140,11 +154,13 @@ async function pixel(page, x, y) {
         const action = box(".sj-delivery-watch");
         return { readingCenter: center(reading), readingWidth: reading.width,
           heroCenter: center(hero), headingAlign: getComputedStyle(heading).textAlign,
-          paragraphCenter: center(paragraph), paragraphWidth: paragraph.width,
+          headingLeft: heading.getBoundingClientRect().left,
+          paragraphLeft: paragraph.left, paragraphCenter: center(paragraph), paragraphWidth: paragraph.width,
           actionCenter: center(action) };
       });
       assert.ok(Math.abs(layout.heroCenter - layout.readingCenter) <= 2, JSON.stringify(layout));
-      assert.equal(layout.headingAlign, "center");
+      assert.equal(layout.headingAlign, "left");
+      assert.ok(Math.abs(layout.headingLeft - layout.paragraphLeft) <= 2, JSON.stringify(layout));
       assert.ok(Math.abs(layout.paragraphCenter - layout.readingCenter) <= 2, JSON.stringify(layout));
       assert.ok(layout.paragraphWidth <= layout.readingWidth - 40, JSON.stringify(layout));
       assert.ok(Math.abs(layout.actionCenter - layout.readingCenter) <= 2, JSON.stringify(layout));
