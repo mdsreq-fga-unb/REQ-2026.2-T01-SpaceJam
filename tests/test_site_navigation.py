@@ -399,6 +399,7 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             )
 
             lessons_content = lessons_page.read_text(encoding="utf-8")
+            self.assertIn("Dificuldades enfrentadas e como foram superadas", lessons_content)
             self.assertIn("Responsável", lessons_content)
             self.assertIn("Prazo", lessons_content)
             self.assertIn("Evidência de conclusão", lessons_content)

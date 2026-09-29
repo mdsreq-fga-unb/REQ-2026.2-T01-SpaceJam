@@ -51,4 +51,3 @@ Após a comparação entre os processos **RAD** e **XP**, optou-se pelo **Rapid 
 - **Compatibilidade com o ciclo iterativo e incremental:** o RAD permite desenvolver uma parte da solução, validá-la, realizar ajustes e posteriormente acrescentar novas funcionalidades, mantendo o desenvolvimento progressivo do produto.
 
 - **Abordagem híbrida:** a abordagem híbrida permite combinar a flexibilidade e a adaptação do RAD com práticas mais estruturadas de documentação, testes, revisão e acompanhamento quando necessárias, adequando o processo às restrições do projeto.
-
