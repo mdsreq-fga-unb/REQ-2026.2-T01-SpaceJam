@@ -107,7 +107,7 @@ class SiteNavigationTest(unittest.TestCase):
             )
 
             lessons_content = lessons_page.read_text(encoding="utf-8")
-            self.assertIn("Efeitos observados na primeira entrega", lessons_content)
+            self.assertIn("Dificuldades enfrentadas e como foram superadas", lessons_content)
             self.assertIn("Responsável", lessons_content)
             self.assertIn("Prazo", lessons_content)
             self.assertIn("Evidência de conclusão", lessons_content)

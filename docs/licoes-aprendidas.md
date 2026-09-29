@@ -1,8 +1,8 @@
-# 8. Lições Aprendidas
+# 11. Lições Aprendidas
 
 Esta seção registra os principais aprendizados obtidos pela equipe durante o desenvolvimento do projeto. O objetivo é transformar dificuldades observadas, feedbacks recebidos e decisões tomadas em ações concretas para as próximas unidades.
 
-## 8.1 Unidade 1
+## 11.1 Unidade 1
 
 A Unidade 1 envolveu a compreensão do contexto do cliente, a definição inicial da visão do produto e do projeto e a organização dos primeiros artefatos. A revisão da entrega, os apontamentos do professor e do monitor e as conversas posteriores da equipe permitiram identificar os desafios que a equipe teve nesta unidade.
 
@@ -40,4 +40,4 @@ As ações abaixo foram formuladas para serem verificáveis. A identificação n
 | --- | --- | --- | --- |
 | 31/08/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1 | Thiago Alencar de Oliveira |
 | 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria | Luiz Henrique Pessato da Mota |
-| 21/09/2026 | 0.3 | Aprimorando ações de melhoria e acrescentando desafios da unidade | Thiago Alencar de Oliveira | 
+| 21/09/2026 | 0.3 | Aprimorando ações de melhoria e acrescentando desafios da unidade | Thiago Alencar de Oliveira |
