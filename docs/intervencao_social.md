@@ -1,4 +1,4 @@
-# 3 INTERVENÇÃO SOCIAL
+# 3. Intervenção Social
 
 A solução proposta pelo projeto **Space Jam** tende a produzir uma intervenção social voltada à democratização do acompanhamento esportivo de qualidade, à reorganização do trabalho de treinadores autônomos e ao incentivo da autonomia dos atletas.
 

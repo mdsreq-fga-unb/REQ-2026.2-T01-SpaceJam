@@ -1,4 +1,4 @@
-# 2 Solução Proposta
+# 2. Solução Proposta
 
 
 ## 2.1 Objetivo Geral do Produto

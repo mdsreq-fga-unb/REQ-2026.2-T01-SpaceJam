@@ -1,4 +1,4 @@
-# 5. ENGENHARIA DE REQUISITOS
+# 5. Engenharia de Requisitos
 
 No projeto **Space Jam**, o ciclo da Engenharia de Requisitos (ER) foi operacionalizado de forma integrada às quatro etapas do modelo *Rapid Application Development* (RAD): **Planejamento de Requisitos**, **Design do Usuário**, **Construção** e **Transição (Cutover)**. Essa abordagem assegura a execução contínua e iterativa das seis atividades fundamentais da ER — **Elicitação e Descoberta**, **Análise e Consenso**, **Declaração**, **Representação**, **Verificação e Validação** e **Organização e Atualização**. O eixo central desse fluxo baseia-se na criação ágil de protótipos e na validação constante dos fluxos de treino junto ao treinador Lucas Cordeiro e aos atletas.
 
@@ -117,6 +117,4 @@ O quadro a seguir relaciona cada fase do processo RAD adotado à atividade de En
 | 17/09/2026 | 1.0 | Reestruturação completa do Tópico 5 alinhado às 4 Macrofases do RAD (Ref #6). | Guilherme Ferreira Mendes |
 | 08/09/2026 | 0.3 | Reestruturação da Seção 5.1 agrupando técnicas pelas 6 Atividades da ER. | Guilherme Ferreira Mendes |
 | 07/09/2026 | 0.2 | Correção do histórico de versão. | Guilherme Ferreira Mendes |
-| 07/09/2026 | 0.1 | Estruturação inicial do Tópico 5 (Engenharia de Requisitos). | Guilherme Ferreira Mendes |
-
-
+| 07/09/2026 | 0.1 | Estruturação inicial do Tópico 5 (Engenharia de Requisitos) e mapeamento das 6 atividades da ER. | Guilherme Ferreira Mendes |
