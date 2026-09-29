@@ -40,7 +40,7 @@
 
 **Interfaces:**
 - Consumes: `SiteNavigationTest.build_site(output_dir)` existente.
-- Produces: testes que exigem `mvp/index.html`, conteúdo principal atualizado e menu sem agrupamentos obsoletos.
+- Produces: teste que exige `mvp/index.html` e menu sem agrupamentos obsoletos. A fidelidade da prosa será aferida por comparação direta com a `main`, não por testes de frases.
 
 - [ ] **Step 1: Escrever teste de navegação e conteúdo novo.** Adicionar um método à classe `SiteNavigationTest`:
 
@@ -59,28 +59,8 @@ def test_prioritization_is_reachable_without_old_unit_or_archive_groups(self):
         self.assertFalse((output / "unidade-2" / "index.html").exists())
 ```
 
-- [ ] **Step 2: Acrescentar marcadores de conteúdo da `main` às páginas acadêmicas.** Adicionar à classe `SiteNavigationTest`:
-
-```python
-def test_current_main_content_appears_in_academic_pages(self):
-    expected = {
-        "engenharia_requisitos": "5.2 Mapeamento ER x Processo",
-        "estrategia": "Híbrida",
-        "solucao": "CP8",
-        "licoes-aprendidas": "Dificuldades enfrentadas e como foram superadas",
-        "mvp": "Mínimo Produto Viável",
-    }
-    with tempfile.TemporaryDirectory() as output_dir:
-        self.build_site(output_dir)
-        for slug, marker in expected.items():
-            with self.subTest(slug=slug):
-                page = (Path(output_dir) / slug / "index.html").read_text(encoding="utf-8")
-                self.assertIn(marker, page)
-```
-
-No teste existente `test_lessons_learned_page_is_generated_and_linked`, substituir `"Efeitos observados na primeira entrega"` por `"Dificuldades enfrentadas e como foram superadas"`. No teste `test_lessons_are_consolidated_without_archive_navigation`, substituir as checagens de `"Disponibilidade da equipe"` e `"Tomada de decisões"` pela afirmação `"A alocação tardia de tarefas"`, mantendo a checagem do encaminhamento legado.
-- [ ] **Step 3: Confirmar que os testes novos falham antes da integração.** Executar `rtk proxy python -m unittest discover -s tests -p test_site_navigation.py` e confirmar falha por ausência de `mvp` e pelo conteúdo antigo; os 26 testes preexistentes passaram antes das edições.
-- [ ] **Step 4: Conferir o diff do teste.** Executar `rtk git diff --check` e limitar a mudança ao teste. Não alterar CSS/JS para satisfazer o teste.
+- [ ] **Step 2: Confirmar que o teste novo falha antes da integração.** Executar `rtk proxy python -m unittest discover -s tests -p test_site_navigation.py` e confirmar falha pela ausência de `mvp`; os 26 testes preexistentes passaram antes das edições.
+- [ ] **Step 3: Conferir o diff do teste.** Executar `rtk git diff --check` e limitar a mudança ao teste. Não alterar CSS/JS para satisfazer o teste.
 
 ### Task 2: Atualizar todas as páginas acadêmicas divergentes
 
@@ -99,7 +79,8 @@ No teste existente `test_lessons_learned_page_is_generated_and_linked`, substitu
 - [ ] **Step 1: Conferir arquivo a arquivo.** Para cada arquivo listado, usar `rtk proxy git diff --unified=3 origin/main HEAD -- docs/<nome>.md` e `rtk git show origin/main:docs/<nome>.md`; registrar quais diferenças são de conteúdo e quais são apenas o histórico recolhível.
 - [ ] **Step 2: Atualizar os cinco documentos divergentes com `apply_patch`.** Usar literalmente o texto, tabelas, números, nomes, datas e afirmações de `origin/main`. Não adaptar nem corrigir conclusões acadêmicas. Manter somente a diferença de apresentação do histórico recolhível, transpondo todas as linhas da tabela da `main` para dentro do invólucro local, na mesma ordem.
 - [ ] **Step 3: Validar os arquivos já equivalentes.** Conferir `docs/cenario_atual.md` e `docs/requisitos.md` com `rtk proxy git diff --exit-code origin/main -- docs/cenario_atual.md docs/requisitos.md`; confirmar que `cronograma.md`, `interacao_equipe_cliente.md` e `reunioes.md` só diferem no histórico recolhível e que todas as linhas continuam presentes.
-- [ ] **Step 4: Executar os testes de navegação novamente.** `rtk proxy python -m unittest discover -s tests -p test_site_navigation.py`; os marcadores de conteúdo acadêmico devem passar, enquanto o teste de `mvp` ainda pode falhar até a Task 3.
+- [ ] **Step 4: Remover expectativas obsoletas de prosa dos testes existentes.** Em `test_lessons_learned_page_is_generated_and_linked` e `test_lessons_are_consolidated_without_archive_navigation`, manter as verificações de rota, menu, tabela de ações e redirecionamento legado, mas remover as afirmações sobre frases do corpo que variam entre versões editoriais. Não substituir essas frases por outras frases frágeis.
+- [ ] **Step 5: Executar os testes de navegação novamente.** `rtk proxy python -m unittest discover -s tests -p test_site_navigation.py`; os testes do conteúdo acadêmico atualizado devem passar, enquanto o teste de `mvp` ainda falhará até a Task 3.
 - [ ] **Step 5: Revisar o diff sem tocar nos assets visuais.** `rtk git diff --check` e `rtk git diff --name-only`; os arquivos CSS, JS, override, imagens e home não podem aparecer.
 
 ### Task 3: Incorporar Priorização e MVP ao menu local
