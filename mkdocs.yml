@@ -85,3 +85,5 @@ nav:
       - Requisitos: requisitos.md
       - Priorização e MVP: mvp.md
   - Reuniões: reunioes.md
+  - Arquivo:
+      - "Lições Aprendidas (versão anterior)": licoes_aprendidas.md
