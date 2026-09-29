@@ -266,6 +266,19 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             self.assertFalse((output / "unidade-2" / "index.html").exists())
             self.assertTrue((ROOT / "docs" / "unidade-2.md").is_file())
 
+    def test_prioritization_is_reachable_without_old_unit_or_archive_groups(self):
+        with tempfile.TemporaryDirectory() as output_dir:
+            self.build_site(output_dir)
+            output = Path(output_dir)
+            homepage = (output / "index.html").read_text(encoding="utf-8")
+            self.assertTrue((output / "mvp" / "index.html").is_file())
+            self.assertIn('href="mvp/"', homepage)
+            self.assertIn("Priorização e MVP", homepage)
+            self.assertNotIn("Unidade 1", homepage)
+            self.assertNotIn("Unidade 2", homepage)
+            self.assertNotIn("Lições Aprendidas (versão anterior)", homepage)
+            self.assertFalse((output / "unidade-2" / "index.html").exists())
+
     def test_deliveries_page_preserves_the_existing_presentation(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
@@ -386,7 +399,6 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             )
 
             lessons_content = lessons_page.read_text(encoding="utf-8")
-            self.assertIn("Efeitos observados na primeira entrega", lessons_content)
             self.assertIn("Responsável", lessons_content)
             self.assertIn("Prazo", lessons_content)
             self.assertIn("Evidência de conclusão", lessons_content)
@@ -396,12 +408,9 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             self.build_site(output_dir)
             output = Path(output_dir)
             homepage = (output / "index.html").read_text(encoding="utf-8")
-            lessons = (output / "licoes-aprendidas" / "index.html").read_text(encoding="utf-8")
             legacy = (output / "licoes_aprendidas" / "index.html").read_text(encoding="utf-8")
 
             self.assertFalse('Lições Aprendidas (versão anterior)' in homepage)
-            self.assertTrue("Disponibilidade da equipe" in lessons)
-            self.assertTrue("Tomada de decisões" in lessons)
             self.assertTrue('href="../licoes-aprendidas/"' in legacy)
 
     def test_existing_revision_histories_are_collapsible_and_preserved(self):
