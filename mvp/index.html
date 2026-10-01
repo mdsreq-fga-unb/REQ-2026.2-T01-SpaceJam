@@ -1,0 +1,2287 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe Space Jam">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/mvp/">
+      
+      
+        <link rel="prev" href="../requisitos/">
+      
+      
+        <link rel="next" href="../licoes-aprendidas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../imagens/space-jam-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>9. Priorização e MVP - Space Jam</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#criterios-de-avaliacao-e-priorizacao" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Space Jam" class="md-header__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Space Jam
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              9. Priorização e MVP
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Space Jam" class="md-nav__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    Space Jam
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão do Produto e Projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visão do Produto e Projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cenario_atual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Cenário Atual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solucao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Solução Proposta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervencao_social/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervenção Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estrategia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Estratégias de Engenharia de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engenharia_requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cronograma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Cronograma e Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacao_equipe_cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Interação entre Equipe e Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Requisitos de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Priorização e MVP
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Priorização e MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-valor-de-negocio-vn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Valor de Negócio (VN)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-complexidade-tecnica-ct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Complexidade Técnica (CT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-esforco-de-implementacao-ei" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Esforço de Implementação (EI)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-priorizacao-dos-requisitos-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Priorização dos Requisitos — MoSCoW
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Priorização dos Requisitos — MoSCoW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matriz-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz MoSCoW
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-matriz-de-valor-de-negocio-esforco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Matriz de Valor de Negócio × Esforço
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Matriz de Valor de Negócio × Esforço">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matriz-44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz 4×4
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MVP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-funcionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos Funcionais
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-nao-funcionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos Não Funcionais
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requisitos Não Funcionais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rnfs-obrigatorios-para-o-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RNFs obrigatórios para o MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rnfs-associados-aos-rfs-do-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RNFs associados aos RFs do MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-consolidacao-das-avaliacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Consolidação das avaliações
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Consolidação das avaliações">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#calculo-do-esforco-tecnico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cálculo do Esforço Técnico
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licoes-aprendidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Lições Aprendidas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entregas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reunioes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-valor-de-negocio-vn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Valor de Negócio (VN)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-complexidade-tecnica-ct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Complexidade Técnica (CT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-esforco-de-implementacao-ei" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Esforço de Implementação (EI)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-priorizacao-dos-requisitos-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Priorização dos Requisitos — MoSCoW
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Priorização dos Requisitos — MoSCoW">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matriz-moscow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz MoSCoW
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-matriz-de-valor-de-negocio-esforco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Matriz de Valor de Negócio × Esforço
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Matriz de Valor de Negócio × Esforço">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matriz-44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz 4×4
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MVP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-funcionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos Funcionais
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requisitos-nao-funcionais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Requisitos Não Funcionais
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Requisitos Não Funcionais">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rnfs-obrigatorios-para-o-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RNFs obrigatórios para o MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rnfs-associados-aos-rfs-do-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RNFs associados aos RFs do MVP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-consolidacao-das-avaliacoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Consolidação das avaliações
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Consolidação das avaliações">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#calculo-do-esforco-tecnico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cálculo do Esforço Técnico
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/mvp.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="criterios-de-avaliacao-e-priorizacao">Critérios de Avaliação e Priorização<a class="headerlink" href="#criterios-de-avaliacao-e-priorizacao" title="Permanent link">&para;</a></h1>
+<p>Para definir a prioridade dos requisitos do projeto Space Jam, foram utilizados três critérios de avaliação:</p>
+<ul>
+<li><strong>Valor de Negócio (VN):</strong> representa a importância do requisito para os objetivos do produto e para as principais atividades dos usuários.</li>
+<li><strong>Complexidade Técnica (CT):</strong> representa o nível de complexidade envolvido no desenvolvimento da funcionalidade.</li>
+<li><strong>Esforço de Implementação (EI):</strong> representa a quantidade de trabalho e tempo necessários para implementar, testar e integrar o requisito.</li>
+</ul>
+<p>A avaliação dos requisitos utiliza uma escala de <strong>1 a 5</strong>, sendo que valores maiores representam maior valor de negócio, maior complexidade técnica ou maior esforço de implementação.</p>
+<hr />
+<h2 id="1-valor-de-negocio-vn">1. Valor de Negócio (VN)<a class="headerlink" href="#1-valor-de-negocio-vn" title="Permanent link">&para;</a></h2>
+<p>O <strong>Valor de Negócio</strong> representa a importância de cada requisito para o funcionamento do Space Jam e para o atendimento dos objetivos do produto.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Score</strong></th>
+<th style="text-align: left;"><strong>Classificação</strong></th>
+<th style="text-align: left;"><strong>Descrição</strong></th>
+<th style="text-align: left;"><strong>Exemplo</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>Crítico</strong></td>
+<td style="text-align: left;">É indispensável para o funcionamento básico do sistema ou para proteger informações importantes.</td>
+<td style="text-align: left;">Controle de acesso aos dados e vídeos dos atletas.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>Alto</strong></td>
+<td style="text-align: left;">É importante para o funcionamento das principais atividades do sistema. Sua ausência dificulta bastante o trabalho do treinador ou atleta.</td>
+<td style="text-align: left;">Registrar e acompanhar os treinos dos atletas.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>Médio</strong></td>
+<td style="text-align: left;">Facilita uma atividade importante, mas existem outras formas de realizá-la.</td>
+<td style="text-align: left;">Filtrar exercícios por objetivo ou fundamento.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>Baixo</strong></td>
+<td style="text-align: left;">Ajuda o usuário, mas não é necessária para realizar as principais atividades.</td>
+<td style="text-align: left;">Exibir uma informação complementar sobre um exercício.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>Muito baixo</strong></td>
+<td style="text-align: left;">Tem pouca importância e sua ausência praticamente não prejudica o sistema.</td>
+<td style="text-align: left;">Uma pequena melhoria visual em uma tela.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-complexidade-tecnica-ct">2. Complexidade Técnica (CT)<a class="headerlink" href="#2-complexidade-tecnica-ct" title="Permanent link">&para;</a></h2>
+<p>A <strong>Complexidade Técnica</strong> representa o nível de dificuldade técnica para desenvolver cada requisito, considerando a quantidade de informações envolvidas, regras do sistema e partes que precisam funcionar em conjunto.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Score</strong></th>
+<th style="text-align: left;"><strong>Classificação</strong></th>
+<th style="text-align: left;"><strong>Descrição</strong></th>
+<th style="text-align: left;"><strong>Exemplo</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>Muito alta</strong></td>
+<td style="text-align: left;">Envolve muitas partes do sistema, regras complexas, algoritmos avançados ou exige cuidados especiais.</td>
+<td style="text-align: left;">Controlar de forma detalhada quem pode acessar dados, vídeos e feedbacks de cada atleta.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>Alta</strong></td>
+<td style="text-align: left;">Envolve várias partes do sistema e exige cuidados maiores para funcionar corretamente.</td>
+<td style="text-align: left;">Enviar vídeos e relacioná-los a exercícios e atletas.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>Média</strong></td>
+<td style="text-align: left;">Envolve várias informações ou algumas regras que precisam ser controladas.</td>
+<td style="text-align: left;">Criar um planejamento de treino relacionando atleta, exercícios e objetivos.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>Baixa</strong></td>
+<td style="text-align: left;">Funcionalidade simples, mas que envolve algumas informações relacionadas.</td>
+<td style="text-align: left;">Cadastrar um exercício com nome, objetivo e descrição.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>Muito baixa</strong></td>
+<td style="text-align: left;">Funcionalidade simples, com poucas regras e poucas informações envolvidas.</td>
+<td style="text-align: left;">Exibir uma lista de exercícios.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-esforco-de-implementacao-ei">3. Esforço de Implementação (EI)<a class="headerlink" href="#3-esforco-de-implementacao-ei" title="Permanent link">&para;</a></h2>
+<p>O <strong>Esforço de Implementação</strong> representa a quantidade de trabalho necessária para desenvolver, testar e integrar cada requisito ao sistema.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Score</strong></th>
+<th style="text-align: left;"><strong>Classificação</strong></th>
+<th style="text-align: left;"><strong>Critério</strong></th>
+<th style="text-align: left;"><strong>Exemplo</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>5</strong></td>
+<td style="text-align: left;"><strong>Muito alto</strong></td>
+<td style="text-align: left;">Exige muito trabalho da equipe por mais de 5 dias e pode envolver várias etapas e partes do sistema.</td>
+<td style="text-align: left;">Implementar todo o controle de acesso e proteção dos dados e vídeos dos atletas.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>Alto</strong></td>
+<td style="text-align: left;">Exige de 3 a 5 dias de aplicação, testes e integração entre diferentes partes do sistema.</td>
+<td style="text-align: left;">Implementar o envio, armazenamento e visualização de vídeos.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>Médio</strong></td>
+<td style="text-align: left;">Exige alguns 2 dias de trabalho e envolve mais de uma parte do sistema.</td>
+<td style="text-align: left;">Criar o cadastro e acompanhamento de um planejamento de treino.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>2</strong></td>
+<td style="text-align: left;"><strong>Baixo</strong></td>
+<td style="text-align: left;">Exige pouco tempo e poucas alterações no sistema.</td>
+<td style="text-align: left;">Criar um cadastro simples de exercício.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1</strong></td>
+<td style="text-align: left;"><strong>Muito baixo</strong></td>
+<td style="text-align: left;">Pode ser feito rapidamente por uma pessoa.</td>
+<td style="text-align: left;">Alterar um texto ou exibir uma informação simples.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-priorizacao-dos-requisitos-moscow">4. Priorização dos Requisitos — MoSCoW<a class="headerlink" href="#4-priorizacao-dos-requisitos-moscow" title="Permanent link">&para;</a></h2>
+<p>Após a avaliação dos requisitos, foi utilizada a técnica <strong>MoSCoW</strong> para definir quais funcionalidades possuem maior prioridade para o desenvolvimento.</p>
+<p>A classificação foi definida a partir do <strong>Valor de Negócio</strong>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Valor de Negócio</strong></th>
+<th style="text-align: left;"><strong>MoSCoW</strong></th>
+<th style="text-align: left;"><strong>Significado</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><strong>4 a 5</strong></td>
+<td style="text-align: left;"><strong>Must Have</strong></td>
+<td style="text-align: left;">Funcionalidades essenciais para o produto e que devem estar presentes.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>4</strong></td>
+<td style="text-align: left;"><strong>Should Have</strong></td>
+<td style="text-align: left;">Funcionalidades importantes, mas que podem ser implementadas depois das funcionalidades essenciais.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>3</strong></td>
+<td style="text-align: left;"><strong>Could Have</strong></td>
+<td style="text-align: left;">Funcionalidades desejáveis que podem ser implementadas caso haja tempo e recursos disponíveis.</td>
+</tr>
+<tr>
+<td style="text-align: center;"><strong>1 a 2</strong></td>
+<td style="text-align: left;"><strong>Won't Have</strong></td>
+<td style="text-align: left;">Funcionalidades que não serão priorizadas para a versão atual do produto.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="matriz-moscow">Matriz MoSCoW<a class="headerlink" href="#matriz-moscow" title="Permanent link">&para;</a></h3>
+<p><iframe
+  width="768"
+  height="432"
+  src="https://miro.com/app/live-embed/uXjVHrFoSVo=/?focusWidget=3458764685315069399&embedMode=view_only_without_ui&embedId=611205558160"
+  frameborder="0"
+  scrolling="no"
+  allow="fullscreen; clipboard-read; clipboard-write"
+></iframe></p>
+<hr />
+<h2 id="5-matriz-de-valor-de-negocio-esforco">5. Matriz de Valor de Negócio × Esforço<a class="headerlink" href="#5-matriz-de-valor-de-negocio-esforco" title="Permanent link">&para;</a></h2>
+<p>Para auxiliar na priorização, também foi utilizada uma matriz relacionando o <strong>Valor de Negócio</strong> e o <strong>Esforço Técnico</strong>.</p>
+<p>A matriz permite visualizar quais requisitos possuem maior importância para o produto em relação ao trabalho necessário para implementá-los.</p>
+<p><img alt="Matriz de priorização" src="../imagens/matrix4x4.png" /></p>
+<h3 id="matriz-44">Matriz 4×4<a class="headerlink" href="#matriz-44" title="Permanent link">&para;</a></h3>
+<p><iframe
+  width="768"
+  height="432"
+  src="https://miro.com/app/live-embed/uXjVHrFoSVo=/?focusWidget=3458764685315496941&embedMode=view_only_without_ui&embedId=180809866817"
+  frameborder="0"
+  scrolling="no"
+  allow="fullscreen; clipboard-read; clipboard-write"
+></iframe>
+</p>
+<hr />
+<h2 id="6-mvp">6. MVP<a class="headerlink" href="#6-mvp" title="Permanent link">&para;</a></h2>
+<p>A partir das avaliações de <strong>Valor de Negócio</strong>, <strong>Complexidade Técnica</strong>, <strong>Esforço de Implementação</strong> e da priorização <strong>MoSCoW</strong>, foi definido o conjunto de requisitos que compõe o <strong>Mínimo Produto Viável (MVP)</strong> do Space Jam.</p>
+<p>O MVP concentra as funcionalidades necessárias para disponibilizar uma primeira versão funcional do produto, permitindo que os principais objetivos sejam atendidos.</p>
+<p>Os requisitos caracterizados com <strong>Must Have</strong> formam o núcleo essencial e funcional da aplicação para o lançamento do produto farão parte, obrigatoriamente, do MVP. A execeção que o time enxergou foi o requisito RF03502: Substituir vídeo enviado, que está classificado com <strong>Should Have</strong>, mas tem uma funcionalidade muito importante para a versão inicial.</p>
+<h2 id="requisitos-funcionais">Requisitos Funcionais<a class="headerlink" href="#requisitos-funcionais" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>MoSCoW</strong></th>
+<th style="text-align: left;"><strong>Código</strong></th>
+<th style="text-align: left;"><strong>Nome</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01101</td>
+<td style="text-align: left;">Cadastrar usuário</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01102</td>
+<td style="text-align: left;">Logar usuário</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01104</td>
+<td style="text-align: left;">Editar informações do perfil</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01107</td>
+<td style="text-align: left;">Trocar senha</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01208</td>
+<td style="text-align: left;">Consultar orientações e erros</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01209</td>
+<td style="text-align: left;">Consultar dificuldade</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01210</td>
+<td style="text-align: left;">Registrar dificuldade</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01211</td>
+<td style="text-align: left;">Editar dificuldade</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF01212</td>
+<td style="text-align: left;">Editar status exercícios</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02301</td>
+<td style="text-align: left;">Cadastrar planejamento</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02302</td>
+<td style="text-align: left;">Editar planejamento</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02304</td>
+<td style="text-align: left;">Consultar histórico de planejamento</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02306</td>
+<td style="text-align: left;">Consultar status de treino</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02307</td>
+<td style="text-align: left;">Registrar adaptação de treino</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02408</td>
+<td style="text-align: left;">Cadastrar exercício</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02411</td>
+<td style="text-align: left;">Documentar erros e orientações</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF02413</td>
+<td style="text-align: left;">Cadastrar descrição breve de vídeo base</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF03501</td>
+<td style="text-align: left;">Enviar vídeo de execução</td>
+</tr>
+<tr>
+<td style="text-align: left;">Should Have</td>
+<td style="text-align: left;">RF03502</td>
+<td style="text-align: left;">Substituir vídeo enviado</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF03601</td>
+<td style="text-align: left;">Registrar feedback</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF03602</td>
+<td style="text-align: left;">Editar feedback</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04702</td>
+<td style="text-align: left;">Consultar atletas acompanhados</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04803</td>
+<td style="text-align: left;">Consultar próprios dados cadastrais</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04804</td>
+<td style="text-align: left;">Consultar próprios resultados de testes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04805</td>
+<td style="text-align: left;">Consultar próprios vídeos enviados</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04806</td>
+<td style="text-align: left;">Consultar vídeos de atleta acompanhado</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04807</td>
+<td style="text-align: left;">Consultar feedback recebido</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04808</td>
+<td style="text-align: left;">Consultar próprio histórico de treinos</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04809</td>
+<td style="text-align: left;">Consultar próprios objetivos</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04810</td>
+<td style="text-align: left;">Consultar próprio planejamento de treinos</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04811</td>
+<td style="text-align: left;">Consultar perfil de atleta acompanhado</td>
+</tr>
+<tr>
+<td style="text-align: left;">Must Have</td>
+<td style="text-align: left;">RF04812</td>
+<td style="text-align: left;">Consultar resultados de testes de atleta acompanhado</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="requisitos-nao-funcionais">Requisitos Não Funcionais<a class="headerlink" href="#requisitos-nao-funcionais" title="Permanent link">&para;</a></h2>
+<h3 id="rnfs-obrigatorios-para-o-mvp">RNFs obrigatórios para o MVP<a class="headerlink" href="#rnfs-obrigatorios-para-o-mvp" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Classificação</strong></th>
+<th style="text-align: left;"><strong>Código</strong></th>
+<th style="text-align: left;"><strong>Nome</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF01</td>
+<td style="text-align: left;">Responsividade Mobile</td>
+</tr>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF02</td>
+<td style="text-align: left;">Arquitetura e Stack Tecnológica</td>
+</tr>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF03</td>
+<td style="text-align: left;">Estabilidade em Navegadores Padrão</td>
+</tr>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF05</td>
+<td style="text-align: left;">Proteção e Privacidade de Dados - Conformidade parcial com LGPD</td>
+</tr>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF15</td>
+<td style="text-align: left;">Assistência e Validação no Preenchimento de Dados</td>
+</tr>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF17</td>
+<td style="text-align: left;">Consentimento de Cookies</td>
+</tr>
+<tr>
+<td style="text-align: left;">Obrigatório para o MVP</td>
+<td style="text-align: left;">RNF18</td>
+<td style="text-align: left;">Persistência de Dados</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rnfs-associados-aos-rfs-do-mvp">RNFs associados aos RFs do MVP<a class="headerlink" href="#rnfs-associados-aos-rfs-do-mvp" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Classificação</strong></th>
+<th style="text-align: left;"><strong>Código</strong></th>
+<th style="text-align: left;"><strong>Nome</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Associado a RFs do MVP</td>
+<td style="text-align: left;">RNF06</td>
+<td style="text-align: left;">Compatibilidade de Vídeo</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associado a RFs do MVP</td>
+<td style="text-align: left;">RNF09</td>
+<td style="text-align: left;">Controle de Acesso Baseado em Funções (RBAC)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associado a RFs do MVP</td>
+<td style="text-align: left;">RNF10</td>
+<td style="text-align: left;">Isolamento Multi-inquilino de Dados</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associado a RFs do MVP</td>
+<td style="text-align: left;">RNF11</td>
+<td style="text-align: left;">Desempenho no Carregamento do Histórico</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associado a RFs do MVP</td>
+<td style="text-align: left;">RNF12</td>
+<td style="text-align: left;">Integridade na Catalogação de Exercícios</td>
+</tr>
+<tr>
+<td style="text-align: left;">Associado a RFs do MVP</td>
+<td style="text-align: left;">RNF16</td>
+<td style="text-align: left;">Gerenciamento Pré-Envio de Mídia</td>
+</tr>
+</tbody>
+</table>
+<h2 id="7-consolidacao-das-avaliacoes">7. Consolidação das avaliações<a class="headerlink" href="#7-consolidacao-das-avaliacoes" title="Permanent link">&para;</a></h2>
+<p>A <strong>média do esforço técnico</strong> de cada requisito foi obtida a partir das avaliações individuais realizadas pelos membros da equipe. Cada integrante atribuiu uma pontuação de <strong>1 a 5</strong>, conforme a escala de <strong>Esforço de Implementação</strong> definida anteriormente. Em seguida, foi calculada a média das avaliações de cada requisito.</p>
+<p>O mesmo procedimento foi aplicado ao <strong>Complexidade Técnica</strong>: cada membro avaliou os requisitos individualmente utilizando a escala de <strong>1 a 5</strong>, também mencionada anteriormente, e as avaliações foram consolidadas por meio da média.</p>
+<h3 id="calculo-do-esforco-tecnico">Cálculo do Esforço Técnico<a class="headerlink" href="#calculo-do-esforco-tecnico" title="Permanent link">&para;</a></h3>
+<p>O <strong>Esforço Técnico</strong> de cada requisito foi obtido a partir de duas avaliações realizadas pela equipe: <strong>Esforço de Implementação</strong> e <strong>Capacidade Técnica</strong>. Para cada requisito, foram calculadas as médias das avaliações dos integrantes em cada um desses critérios. Em seguida, as duas médias foram utilizadas para calcular uma média aritmética, resultando no valor final do Esforço Técnico.</p>
+<p>O <strong>Esforço Técnico (ET)</strong> foi calculado a partir das médias obtidas nos critérios <strong>Esforço de Implementação</strong> e <strong>Capacidade Técnica</strong>, utilizando a média aritmética entre os dois critérios:</p>
+<div class="arithmatex">\[
+{ET = \frac{M_E + M_{CT}}{2}}
+\]</div>
+<p>onde:</p>
+<ul>
+<li><span class="arithmatex">\(M_E\)</span> = média de <strong>Esforço de Implementação</strong>;</li>
+<li><span class="arithmatex">\(M_{CT}\)</span> = média de <strong>Capacidade Técnica</strong>.</li>
+</ul>
+<p>Assim, para cada requisito, primeiro foram calculadas as médias individuais de Esforço de Implementação e Capacidade Técnica e, posteriormente, essas duas médias foram somadas e divididas por 2.</p>
+<p>A tabela a seguir apresenta a <strong>consolidação das avaliações dos requisitos do projeto SpaceJam</strong>, reunindo os resultados obtidos para <strong>Valor de Negócio (VN)</strong> e <strong>Esforço Técnico</strong>. Essa consolidação permite visualizar, para cada requisito, sua relevância para o produto em conjunto com o esforço necessário para sua implementação, servindo como base para a definição das prioridades do projeto e para a aplicação da matriz de priorização.</p>
+<p>Os requisitos funcionais e não funcionais são apresentados juntamente com suas respectivas <strong>rastreabilidades</strong>, nomes, descrições e médias das avaliações realizadas pela equipe. As médias permitem considerar diferentes avaliações sobre cada requisito, reduzindo a influência de uma avaliação individual na definição da prioridade.</p>
+<table>
+<thead>
+<tr>
+<th>Rastreabilidade</th>
+<th>Código</th>
+<th>Nome</th>
+<th>Descrição</th>
+<th style="text-align: right;">Média de Esforço Técnico</th>
+<th style="text-align: right;">Valor de Negócio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01101</td>
+<td>Cadastrar usuário</td>
+<td>O sistema deve permitir que o usuário se cadastre no sistema, com informações: dados do usuário como nome, sobrenome, apelido, contato, altura, peso, envergadura, foto de perfil, senha, frequencia da realização da atividade física, objetivos, histórico de lesões, histórico de aptidão física e resultado de treinos</td>
+<td style="text-align: right;">2,33</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01102</td>
+<td>Logar usuário</td>
+<td>O sistema deve permitir o login de todos os usuários devidamente cadastrados na aplicação, fazendo a requisição de apelido e senha</td>
+<td style="text-align: right;">1,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01103</td>
+<td>Deslogar usuário</td>
+<td>O sistema deve permitir que o usuário possa deslogar do seu perfil</td>
+<td style="text-align: right;">1,17</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01104</td>
+<td>Editar informações do perfil</td>
+<td>O sistema deve permitir que o atleta edite seus dados pessoais por exemplo nome, sobrenome, apelido, contato, altura, peso, envergadura e foto de perfil. Já as informações que envolvem análise do treinador como resultados dos treinos, objetivos, histórico de lesões, histórico de aptidão física, só poderão ser editadas pelo treinador</td>
+<td style="text-align: right;">2,25</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01105</td>
+<td>Excluir usuário</td>
+<td>O sistema deve permitir que apenas o treinador exclua usuário que não são mais atletas do treinador</td>
+<td style="text-align: right;">2,00</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01106</td>
+<td>Criar senha aleatória</td>
+<td>O sistema deve criar uma senha aleatória com letras, números e caracteres e mandar para o email vinculado ao usuário para primeiro acesso</td>
+<td style="text-align: right;">2,17</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>OE1 - CP1</td>
+<td>RF01107</td>
+<td>Trocar senha</td>
+<td>O sistema deve permitir o usuário de mudar senha, sendo após o primeiro acesso de quesito obrigatório, seguindo os critérios de aceite: mínimo 6 caracteres, mínimo um caracter especial e mínimo um número</td>
+<td style="text-align: right;">1,83</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01208</td>
+<td>Consultar orientações e erros</td>
+<td>O sistema deve permitir que o treinador e o atleta consultem as orientações e erros dos exercícios associados ao atleta</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01209</td>
+<td>Consultar dificuldade</td>
+<td>O sistema deve permitir que o treinador consulte as dificuldades dos respectivos treinos orientados</td>
+<td style="text-align: right;">2,25</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01210</td>
+<td>Registrar dificuldade</td>
+<td>O sistema deve permitir que o atleta registre o nível de dificuldade em uma escala de 1 a 5 que sentiu ao realizar o exercício</td>
+<td style="text-align: right;">2,50</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01211</td>
+<td>Editar dificuldade</td>
+<td>O sistema deve permitir que o atleta modifique o nível de dificuldade da escala de 1 a 5 que sentiu ao realizar o exercício, enquanto o treino passado estiver disponível para o atleta</td>
+<td style="text-align: right;">2,75</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01212</td>
+<td>Editar status exercícios</td>
+<td>O sistema deve permitir que o treinador modifique os status dos exercícios ("Concluído", "A fazer", "Corrigir") de acordo com a análise presencial do treinador ou vídeo enviado pelo atleta, quando houver</td>
+<td style="text-align: right;">2,17</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01213</td>
+<td>Adicionar testes</td>
+<td>O sistema deve permitir que o treinador acrescente testes de aptidão física</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>OE1 - CP2</td>
+<td>RF01214</td>
+<td>Remover testes</td>
+<td>O sistema deve permitir que o treinador exclua testes de aptidão física</td>
+<td style="text-align: right;">2,08</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02301</td>
+<td>Cadastrar planejamento</td>
+<td>O sistema deve permitir que o treinador registre o planejamento de treinamento de cada atleta.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02302</td>
+<td>Editar planejamento</td>
+<td>O sistema deve permitir que o treinador altere o planejamento de treinamento de cada atleta.</td>
+<td style="text-align: right;">2,75</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02303</td>
+<td>Associar treino a objetivo</td>
+<td>O sistema deve permitir que o treinador associe cada treino planejado aos respectivos objetivos do atleta.</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02304</td>
+<td>Consultar histórico de planejamento</td>
+<td>O sistema deve permitir que o treinador consulte o histórico das alterações realizadas nos planejamentos de treinamento.</td>
+<td style="text-align: right;">1,83</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02305</td>
+<td>Comparar treinamentos</td>
+<td>O sistema deve permitir que o treinador visualize um relatório comparativo entre os treinos planejados e os realizados por cada atleta, para que seja analisado os resultados do treinamento do atleta.</td>
+<td style="text-align: right;">3,08</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02306</td>
+<td>Consultar status de treino</td>
+<td>O sistema deve permitir que o treinador identifique o estado de cada treino planejado, como não iniciado, em andamento ou concluído.</td>
+<td style="text-align: right;">2,50</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE2 - CP3</td>
+<td>RF02307</td>
+<td>Registrar adaptação de treino</td>
+<td>O sistema deve permitir que o treinador registre alterações realizadas em um treino planejado, podendo informar uma justificativa ou observação relacionada à alteração.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE2 - CP4</td>
+<td>RF02408</td>
+<td>Cadastrar exercício</td>
+<td>O sistema deve permitir que o treinador cadastre um exercício informando seu objetivo, fundamento e orientações para sua execução.</td>
+<td style="text-align: right;">1,75</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE2 - CP4</td>
+<td>RF02409</td>
+<td>Filtrar exercícios por fundamento</td>
+<td>O sistema deve permitir que o treinador filtre os exercícios da biblioteca de acordo com o fundamento esportivo associado.</td>
+<td style="text-align: right;">1,92</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>OE2 - CP4</td>
+<td>RF02410</td>
+<td>Associar exercício a objetivo</td>
+<td>O sistema deve permitir que o treinador associe um exercício a um ou mais objetivos de treinamento.</td>
+<td style="text-align: right;">3,08</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>OE2 - CP4</td>
+<td>RF02411</td>
+<td>Documentar erros e orientações</td>
+<td>O sistema deve permitir que o treinador associe erros comuns e respectivas orientações corretivas aos exercícios cadastrados.</td>
+<td style="text-align: right;">2,92</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE2 - CP4</td>
+<td>RF02412</td>
+<td>Gerar thumbnail de vídeo base</td>
+<td>O sistema deve permitir que o treinador faça o upload de uma imagem em miniatura (thumbnail) personalizada para o vídeo base do exercício ou, caso não seja enviada, deve gerar e exibir uma miniatura automaticamente a partir de um frame do arquivo de vídeo cadastrado.</td>
+<td style="text-align: right;">3,33</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>OE2 - CP4</td>
+<td>RF02413</td>
+<td>Cadastrar descrição breve de vídeo base</td>
+<td>O sistema deve disponibilizar um campo de texto resumido (descrição breve) associado a cada vídeo base da biblioteca de exercícios, permitindo que o treinador cadastre e edite essa informação e que atletas e treinadores a visualizem durante a consulta.</td>
+<td style="text-align: right;">2,00</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE3 - CP5</td>
+<td>RF03501</td>
+<td>Enviar vídeo de execução</td>
+<td>Permitir que o atleta grave ou selecione um vídeo do dispositivo e o envie vinculado a um exercício específico do seu treino</td>
+<td style="text-align: right;">3,75</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE3 - CP5</td>
+<td>RF03502</td>
+<td>Substituir vídeo enviado</td>
+<td>Permitir que o atleta substitua o vídeo vinculado a um exercício, desde que o treinador ainda não tenha registrado feedback sobre ele.</td>
+<td style="text-align: right;">3,75</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE3 - CP5</td>
+<td>RF03503</td>
+<td>Excluir vídeo enviado</td>
+<td>Permitir que o atleta exclua um vídeo já enviado, desde que o treinador ainda não tenha registrado feedback sobre ele.</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>OE3 - CP6</td>
+<td>RF03601</td>
+<td>Registrar feedback</td>
+<td>Permitir que o treinador registre um feedback textual vinculado ao vídeo e ao exercício enviado por um atleta sob seu acompanhamento.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE3 - CP6</td>
+<td>RF03602</td>
+<td>Editar feedback</td>
+<td>Permitir que o treinador edite um feedback que ele mesmo registrou anteriormente.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE3 - CP6</td>
+<td>RF03603</td>
+<td>Excluir feedback</td>
+<td>Permitir que o treinador exclua um feedback que ele mesmo registrou anteriormente.</td>
+<td style="text-align: right;">2,17</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>OE3 - CP6</td>
+<td>RF03604</td>
+<td>Notificar atleta sobre feedback</td>
+<td>O sistema deve notificar o atleta quando um feedback for registrado ou editado pelo treinador para um vídeo enviado por ele.</td>
+<td style="text-align: right;">3,00</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE4 - CP7</td>
+<td>RF04701</td>
+<td>Autenticar usuário</td>
+<td>O sistema deve permitir que treinador e atleta acessem suas respectivas contas por meio de credenciais individuais, identificando o perfil do usuário autenticado.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>OE4 - CP7</td>
+<td>RF04702</td>
+<td>Consultar atletas acompanhados</td>
+<td>O sistema deve permitir que o treinador autenticado consulte a relação dos atletas sob seu acompanhamento.</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04803</td>
+<td>Consultar próprios dados cadastrais</td>
+<td>O sistema deve permitir que o atleta autenticado consulte seus próprios dados cadastrais, sem acessar os dados cadastrais de outro atleta.</td>
+<td style="text-align: right;">1,83</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04804</td>
+<td>Consultar próprios resultados de testes</td>
+<td>O sistema deve permitir que o atleta autenticado consulte os resultados de testes associados à sua conta, sem acessar resultados de outros atletas.</td>
+<td style="text-align: right;">1,75</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04805</td>
+<td>Consultar próprios vídeos enviados</td>
+<td>O sistema deve permitir que o atleta autenticado consulte os vídeos de execução que enviou, vinculados aos respectivos exercícios, sem acessar vídeos enviados por outros atletas.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04806</td>
+<td>Consultar vídeos de atleta acompanhado</td>
+<td>O sistema deve permitir que o treinador autenticado consulte os vídeos de execução enviados pelos atletas sob seu acompanhamento, no contexto dos respectivos exercícios.</td>
+<td style="text-align: right;">2,75</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04807</td>
+<td>Consultar feedback recebido</td>
+<td>O sistema deve permitir que o atleta autenticado consulte os feedbacks que o treinador registrou para seus vídeos e exercícios, sem acessar feedbacks destinados a outros atletas.</td>
+<td style="text-align: right;">2,67</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04808</td>
+<td>Consultar próprio histórico de treinos</td>
+<td>O sistema deve permitir que o atleta autenticado consulte seu histórico de treinos, sem acessar o histórico de outros atletas.</td>
+<td style="text-align: right;">2,58</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04809</td>
+<td>Consultar próprios objetivos</td>
+<td>O sistema deve permitir que o atleta autenticado consulte os objetivos registrados para ele, sem acessar os objetivos de outros atletas.</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04810</td>
+<td>Consultar próprio planejamento de treinos</td>
+<td>O sistema deve permitir que o atleta autenticado consulte os treinos planejados para ele, sem acessar o planejamento de outros atletas.</td>
+<td style="text-align: right;">2,33</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04811</td>
+<td>Consultar perfil de atleta acompanhado</td>
+<td>O sistema deve permitir que o treinador autenticado consulte as informações de perfil dos atletas sob seu acompanhamento.</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>OE4 - CP8</td>
+<td>RF04812</td>
+<td>Consultar resultados de testes de atleta acompanhado</td>
+<td>O sistema deve permitir que o treinador autenticado consulte os resultados de testes dos atletas sob seu acompanhamento.</td>
+<td style="text-align: right;">2,25</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td>Global</td>
+<td>RNF01</td>
+<td>Responsividade Mobile</td>
+<td>A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Global</td>
+<td>RNF02</td>
+<td>Arquitetura e Stack Tecnológica</td>
+<td>O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional.</td>
+<td style="text-align: right;">3,67</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Global</td>
+<td>RNF03</td>
+<td>Estabilidade em Navegadores Padrão</td>
+<td>O sistema deve operar sem falhas críticas (erros bloqueantes de navegação ou persistência) nas versões mais atuais dos navegadores ao longo do desenvolvimento: Chrome, Firefox, Edge, Safari e Opera.</td>
+<td style="text-align: right;">3,58</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Global</td>
+<td>RNF04</td>
+<td>Acessibilidade Digital</td>
+<td>A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.</td>
+<td style="text-align: right;">3,30</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Global / CP8</td>
+<td>RNF05</td>
+<td>Proteção e Privacidade de Dados - Conformidade parcial com LGPD</td>
+<td>O sistema deve garantir a privacidade e proteção dos dados dos usuários em conformidade parcial com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º.</td>
+<td style="text-align: right;">4,00</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP5, CP6</td>
+<td>RNF06</td>
+<td>Compatibilidade de Vídeo</td>
+<td>O sistema deve aceitar e processar submissões de ficheiros de vídeo nos formatos .mp4 e .mov.</td>
+<td style="text-align: right;">2,80</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>CP5</td>
+<td>RNF07</td>
+<td>Feedback Visual de Upload</td>
+<td>A aplicação web deve exibir um indicador visual de progresso dinâmico (com porcentagem de 1% a 99%) durante a submissão do vídeo, informando o estado em tempo real até ao término (100%).</td>
+<td style="text-align: right;">3,40</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP6</td>
+<td>RNF08</td>
+<td>Interface de Feedback Anotado</td>
+<td>A interface do treinador deve permitir a associação de notas e observações textuais diretamente vinculadas à linha do tempo dos vídeos enviados pelos atletas.</td>
+<td style="text-align: right;">3,60</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP7</td>
+<td>RNF09</td>
+<td>Controle de Acesso Baseado em Funções (RBAC)</td>
+<td>O sistema deve aplicar controle de acesso rígido (Role-Based Access Control), garantindo que endpoints e visões referentes ao perfil Treinador não sejam acessíveis por Atletas.</td>
+<td style="text-align: right;">3,60</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP8</td>
+<td>RNF10</td>
+<td>Isolamento Multi-inquilino de Dados</td>
+<td>O acesso aos vídeos, dados de histórico e feedbacks de um atleta deve ser restrito exclusivamente ao próprio atleta e aos treinadores devidamente vinculados a ele.</td>
+<td style="text-align: right;">3,58</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP1, CP2</td>
+<td>RNF11</td>
+<td>Desempenho no Carregamento do Histórico</td>
+<td>As telas de consulta de histórico, perfil e gráficos de evolução do atleta devem carregar completamente em até 5 segundos sob simulação de limitação de rede (throttling em perfil Fast 4G no DevTools dos navegadores homologados) e sob carga nominal de até 50 requisições simultâneas ao servidor.</td>
+<td style="text-align: right;">3,40</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP4</td>
+<td>RNF12</td>
+<td>Integridade na Catalogação de Exercícios</td>
+<td>A base da biblioteca de exercícios deve suportar consultas por filtros combinados (objetivos, fundamentos e materiais) sem inconsistência de índices.</td>
+<td style="text-align: right;">3,08</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP5, CP8</td>
+<td>RNF13</td>
+<td>Resiliência e Armazenamento Protegido de Mídias</td>
+<td>O upload dos vídeos enviados pelos atletas deve ser processado e persistido de forma isolada em armazenamento em nuvem com criptografia em repouso (AES-256).</td>
+<td style="text-align: right;">3,90</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP5</td>
+<td>RNF14</td>
+<td>Restrição de Duração e Tamanho de Mídias</td>
+<td>Os vídeos de execução enviados pelos atletas devem possuir duração máxima de 60 segundos e limite de tamanho de até 100 MB.</td>
+<td style="text-align: right;">3,10</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP1, CP3</td>
+<td>RNF15</td>
+<td>Assistência e Validação no Preenchimento de Dados</td>
+<td>O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrigatórios e validar formatos antes do envio do formulário, prevenindo erros de digitação.</td>
+<td style="text-align: right;">3,70</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>CP5</td>
+<td>RNF16</td>
+<td>Gerenciamento Pré-Envio de Mídia</td>
+<td>A interface deve limitar a seleção de arquivos a 1 único arquivo por vez no campo de upload, apresentando botão de remoção/substituição antes da confirmação do envio</td>
+<td style="text-align: right;">2,42</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Global / CP8</td>
+<td>RNF17</td>
+<td>Consentimento de Cookies</td>
+<td>A aplicação web deve apresentar um aviso de consentimento de cookies no primeiro acesso, permitindo ao utilizador escolher entre "Aceitar Todos" ou "Apenas Essenciais" (LGPD Art. 7º e 8º).</td>
+<td style="text-align: right;">2,17</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>Global</td>
+<td>RNF18</td>
+<td>Persistência de Dados</td>
+<td>O sistema deve garantir que as informações cadastradas e os vídeos dos treinadores permaneçam armazenadas após reinicializações ou atualizações do sistema.</td>
+<td style="text-align: right;">3,33</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../requisitos/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 8. Requisitos de Software">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                8. Requisitos de Software
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../licoes-aprendidas/" class="md-footer__link md-footer__link--next" aria-label="Próximo: 11. Lições Aprendidas">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                11. Lições Aprendidas
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.indexes", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.action.edit", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/sj-navigation.js"></script>
+      
+        <script src="../javascripts/sj-tables.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
