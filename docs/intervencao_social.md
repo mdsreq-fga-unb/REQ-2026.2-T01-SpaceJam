@@ -23,10 +23,10 @@ Apoio ao Acompanhamento Físico: Promover a conscientização sobre a rotina de 
 
 Dessa forma, a intervenção social da plataforma Space Jam visa reestruturar as dinâmicas de acompanhamento individual e de trabalho no basquete local. Considerando as limitações do software, o projeto determina que a ferramenta funcione apenas como um auxílio na gestão de treinos, estipulando que os requisitos do sistema incluam garantias éticas relacionadas à privacidade, proteção de menores e limites de responsabilidade técnica.
 
-## Histórico de Versão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| --- | --- | --- | --- |
-| 07/09/2026 | 1.0 | Ajustes de moderação (escopo e prevenção de lesões) e incorporação de aspectos éticos, LGPD/menores e sobrecarga de trabalho. | Guilherme Ferreira Mendes |
-| 07/09/2026 | 0.2 | Correção do histórico de versão. | Guilherme Ferreira Mendes |
-| 07/09/2026 | 0.1 | Elaboração e estruturação da Seção 3 (Intervenção Social) com definição de impactos pretendidos e efeitos emergentes. | Guilherme Ferreira Mendes |
+    | Data | Versão | Descrição | Autor |
+    | --- | --- | --- | --- |
+    | 07/09/2026 | 1.0 | Ajustes de moderação (escopo e prevenção de lesões) e incorporação de aspectos éticos, LGPD/menores e sobrecarga de trabalho. | Guilherme Ferreira Mendes |
+    | 07/09/2026 | 0.2 | Correção do histórico de versão. | Guilherme Ferreira Mendes |
+    | 07/09/2026 | 0.1 | Elaboração e estruturação da Seção 3 (Intervenção Social) com definição de impactos pretendidos e efeitos emergentes. | Guilherme Ferreira Mendes |
