@@ -81,14 +81,11 @@ A classificação foi definida a partir do **Valor de Negócio**:
 
 ## 5. Matriz de Valor de Negócio × Esforço
 
-Para auxiliar na priorização, também foi utilizada uma matriz relacionando o **Valor de Negócio** e o **Esforço de Implementação**.
+Para auxiliar na priorização, também foi utilizada uma matriz relacionando o **Valor de Negócio** e o **Esforço Técnico**.
 
 A matriz permite visualizar quais requisitos possuem maior importância para o produto em relação ao trabalho necessário para implementá-los.
 
-| | **Baixo Esforço** | **Alto Esforço** |
-| :--- | :--- | :--- |
-| **Alto Valor de Negócio** | Prioridade de implementação | Avaliar prioridade e planejamento |
-| **Baixo Valor de Negócio** | Implementar posteriormente, se houver disponibilidade | Baixa prioridade |
+![Matriz de priorização](imagens/matrix4x4.png)
 
 ### Matriz 4×4
 
@@ -108,6 +105,8 @@ A matriz permite visualizar quais requisitos possuem maior importância para o p
 A partir das avaliações de **Valor de Negócio**, **Complexidade Técnica**, **Esforço de Implementação** e da priorização **MoSCoW**, foi definido o conjunto de requisitos que compõe o **Mínimo Produto Viável (MVP)** do Space Jam.
 
 O MVP concentra as funcionalidades necessárias para disponibilizar uma primeira versão funcional do produto, permitindo que os principais objetivos sejam atendidos.
+
+Os requisitos caracterizados com **Must Have** formam o núcleo essencial e funcional da aplicação para o lançamento do produto farão parte, obrigatoriamente, do MVP. A execeção que o time enxergou foi o requisito RF03502: Substituir vídeo enviado, que está classificado com **Should Have**, mas tem uma funcionalidade muito importante para a versão inicial.
 
 ## Requisitos Funcionais
 
@@ -180,7 +179,22 @@ A **média do esforço técnico** de cada requisito foi obtida a partir das aval
 
 O mesmo procedimento foi aplicado ao **Complexidade Técnica**: cada membro avaliou os requisitos individualmente utilizando a escala de **1 a 5**, também mencionada anteriormente, e as avaliações foram consolidadas por meio da média.
 
-Dessa forma, os valores apresentados na tabela representam a **avaliação conjunta da equipe** sobre o esforço técnico e o critério técnico de cada requisito, servindo como base para a análise e priorização dos requisitos.
+### Cálculo do Esforço Técnico
+
+O **Esforço Técnico** de cada requisito foi obtido a partir de duas avaliações realizadas pela equipe: **Esforço de Implementação** e **Capacidade Técnica**. Para cada requisito, foram calculadas as médias das avaliações dos integrantes em cada um desses critérios. Em seguida, as duas médias foram utilizadas para calcular uma média aritmética, resultando no valor final do Esforço Técnico.
+
+O **Esforço Técnico (ET)** foi calculado a partir das médias obtidas nos critérios **Esforço de Implementação** e **Capacidade Técnica**, utilizando a média aritmética entre os dois critérios:
+
+$$
+{ET = \frac{M_E + M_{CT}}{2}}
+$$
+
+onde:
+
+- $M_E$ = média de **Esforço de Implementação**;
+- $M_{CT}$ = média de **Capacidade Técnica**.
+
+Assim, para cada requisito, primeiro foram calculadas as médias individuais de Esforço de Implementação e Capacidade Técnica e, posteriormente, essas duas médias foram somadas e divididas por 2.
 
 A tabela a seguir apresenta a **consolidação das avaliações dos requisitos do projeto SpaceJam**, reunindo os resultados obtidos para **Valor de Negócio (VN)** e **Esforço Técnico**. Essa consolidação permite visualizar, para cada requisito, sua relevância para o produto em conjunto com o esforço necessário para sua implementação, servindo como base para a definição das prioridades do projeto e para a aplicação da matriz de priorização.
 
