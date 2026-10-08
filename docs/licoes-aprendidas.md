@@ -16,6 +16,8 @@ A alocação tardia de tarefas e a ausência de prazos internos representaram os
 
 O cronograma inicial apresentou desalinhamentos tanto em relação à estratégia operacional do grupo quanto às datas de entregas da disciplina. Diante dessa divergência, três integrantes foram responsáveis de revisar as etapas e adequar os prazos corretos. Em seguida, a seção foi submetida a uma revisão conjunta da equipe, obtendo assim um cronograma ajustado e compatível com as entregas previstas.
 
+Validação com o cliente da proposta de solução que por conta da disponibilidade da equipe e do cliente foi feita apenas por mensagens. A equipe reconheceu que o contato com o cliente ficou pendente, mas alinhou para acontecer semanalmente este contato.
+
 A coleta de dados iniciais e a validação da proposta foram realizadas exclusivamente por troca de mensagens, por incompatibilidade de horários entre a equipe e o cliente. Reconhecendo essa limitação, o grupo acordou encontros semanais estabelecendo a prática de definir o dia e o horário do próximo encontro sempre ao término da reunião.
 
 
