@@ -17,8 +17,8 @@ Cada ata deverá registrar, quando aplicável:
 - requisitos, documentos ou itens do Kanban afetados;
 - validações realizadas e pendências para o próximo encontro.
 
-## Histórico de Versão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| --- | --- | --- | --- |
-| 14/09/2026 | 0.1 | Criação da página destinada ao registro das reuniões do projeto. | Luiz Henrique Pessato da Mota |
+    | Data | Versão | Descrição | Autor |
+    | --- | --- | --- | --- |
+    | 14/09/2026 | 0.1 | Criação da página destinada ao registro das reuniões do projeto. | Luiz Henrique Pessato da Mota |

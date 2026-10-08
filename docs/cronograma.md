@@ -69,10 +69,10 @@ Algumas atividades acompanharão todo o desenvolvimento:
 
 Quando um item precisar mudar de ciclo, a equipe registrará o motivo, a decisão tomada e o novo período previsto.
 
-## Histórico de Revisão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor(es) |
-| :---: | :---: | --- | --- |
-| 19/09/2026 | 0.3 | Complementação do cronograma com o trabalho realizado nos ciclos iniciais, forma de validação, evidências e regra de atualização | Luiz Henrique Pessato da Mota |
-| 18/09/2026 | 0.2 | Ajuste dos ciclos e alinhamento do cronograma ao processo RAD | Paulo Sérgio Rabelo Santana Rios |
-| 08/09/2026 | 0.1 | Estruturação inicial do cronograma | Anderson Fernandes da Silva |
+    | Data | Versão | Descrição | Autor(es) |
+    | :---: | :---: | --- | --- |
+    | 19/09/2026 | 0.3 | Complementação do cronograma com o trabalho realizado nos ciclos iniciais, forma de validação, evidências e regra de atualização | Luiz Henrique Pessato da Mota |
+    | 18/09/2026 | 0.2 | Ajuste dos ciclos e alinhamento do cronograma ao processo RAD | Paulo Sérgio Rabelo Santana Rios |
+    | 08/09/2026 | 0.1 | Estruturação inicial do cronograma | Anderson Fernandes da Silva |
