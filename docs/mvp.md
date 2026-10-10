@@ -174,6 +174,10 @@ Os requisitos caracterizados com **Must Have** formam o núcleo essencial e func
 
 ## 7. Consolidação das avaliações
 
+!!! info "Revisão da autenticação em 10/10/2026"
+    RF04701 foi incorporado ao RF01102, conforme o [registro do catálogo](requisitos.md#consolidacao-da-revisao-de-10102026). O login permanece no MVP; a identificação do perfil integra esse mesmo requisito. A média anterior de RF04701 era 2,67 e seu valor de negócio estava sem pontuação. Esses dados permanecem como registro histórico, sem representar um item ativo adicional. As médias e prioridades dos requisitos vigentes foram preservadas nesta revisão; a equipe deve conferir se o esclarecimento dos textos exige reestimativa.
+
+
 
 A **média do esforço técnico** de cada requisito foi obtida a partir das avaliações individuais realizadas pelos membros da equipe. Cada integrante atribuiu uma pontuação de **1 a 5**, conforme a escala de **Esforço de Implementação** definida anteriormente. Em seguida, foi calculada a média das avaliações de cada requisito.
 
@@ -204,7 +208,7 @@ Os requisitos funcionais e não funcionais são apresentados juntamente com suas
 | Rastreabilidade | Código | Nome | Descrição | Média de Esforço Técnico | Valor de Negócio |
 |---|---|---|---|---:|---:|
 | OE1 - CP1 | RF01101 | Cadastrar usuário | O sistema deve permitir que o usuário se cadastre no sistema, com informações: dados do usuário como nome, sobrenome, apelido, contato, altura, peso, envergadura, foto de perfil, senha, frequencia da realização da atividade física, objetivos, histórico de lesões, histórico de aptidão física e resultado de treinos | 2,33 | 5 |
-| OE1 - CP1 | RF01102 | Logar usuário | O sistema deve permitir o login de todos os usuários devidamente cadastrados na aplicação, fazendo a requisição de apelido e senha | 1,67 | 5 |
+| OE1 - CP1; OE4 - CP7 | RF01102 | Logar usuário | O sistema deve permitir que usuários cadastrados se autentiquem por apelido e senha, identificando o perfil associado à conta autenticada (treinador ou atleta). | 1,67 | 5 |
 | OE1 - CP1 | RF01103 | Deslogar usuário | O sistema deve permitir que o usuário possa deslogar do seu perfil | 1,17 | 2 |
 | OE1 - CP1 | RF01104 | Editar informações do perfil | O sistema deve permitir que o atleta edite seus dados pessoais por exemplo nome, sobrenome, apelido, contato, altura, peso, envergadura e foto de perfil. Já as informações que envolvem análise do treinador como resultados dos treinos, objetivos, histórico de lesões, histórico de aptidão física, só poderão ser editadas pelo treinador | 2,25 | 5 |
 | OE1 - CP1 | RF01105 | Excluir usuário | O sistema deve permitir que apenas o treinador exclua usuário que não são mais atletas do treinador | 2,00 | 2 |
@@ -237,17 +241,16 @@ Os requisitos funcionais e não funcionais são apresentados juntamente com suas
 | OE3 - CP6 | RF03602 | Editar feedback | Permitir que o treinador edite um feedback que ele mesmo registrou anteriormente. | 2,67 | 5 |
 | OE3 - CP6 | RF03603 | Excluir feedback | Permitir que o treinador exclua um feedback que ele mesmo registrou anteriormente. | 2,17 | 1 |
 | OE3 - CP6 | RF03604 | Notificar atleta sobre feedback | O sistema deve notificar o atleta quando um feedback for registrado ou editado pelo treinador para um vídeo enviado por ele. | 3,00 | 5 |
-| OE4 - CP7 | RF04701 | Autenticar usuário | O sistema deve permitir que treinador e atleta acessem suas respectivas contas por meio de credenciais individuais, identificando o perfil do usuário autenticado. | 2,67 | — |
-| OE4 - CP7 | RF04702 | Consultar atletas acompanhados | O sistema deve permitir que o treinador autenticado consulte a relação dos atletas sob seu acompanhamento. | 2,42 | 4 |
+| OE4 - CP7 | RF04702 | Consultar atletas acompanhados | O sistema deve permitir que o treinador autenticado consulte a lista dos atletas vinculados ao seu acompanhamento, sem listar atletas sem vínculo autorizado. A consulta às informações de perfil de um atleta selecionado é descrita em RF04811. | 2,42 | 4 |
 | OE4 - CP8 | RF04803 | Consultar próprios dados cadastrais | O sistema deve permitir que o atleta autenticado consulte seus próprios dados cadastrais, sem acessar os dados cadastrais de outro atleta. | 1,83 | 5 |
 | OE4 - CP8 | RF04804 | Consultar próprios resultados de testes | O sistema deve permitir que o atleta autenticado consulte os resultados de testes associados à sua conta, sem acessar resultados de outros atletas. | 1,75 | 4 |
 | OE4 - CP8 | RF04805 | Consultar próprios vídeos enviados | O sistema deve permitir que o atleta autenticado consulte os vídeos de execução que enviou, vinculados aos respectivos exercícios, sem acessar vídeos enviados por outros atletas. | 2,67 | 4 |
 | OE4 - CP8 | RF04806 | Consultar vídeos de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os vídeos de execução enviados pelos atletas sob seu acompanhamento, no contexto dos respectivos exercícios. | 2,75 | 5 |
-| OE4 - CP8 | RF04807 | Consultar feedback recebido | O sistema deve permitir que o atleta autenticado consulte os feedbacks que o treinador registrou para seus vídeos e exercícios, sem acessar feedbacks destinados a outros atletas. | 2,67 | 5 |
+| OE4 - CP8 | RF04807 | Consultar feedback recebido | O sistema deve permitir que o atleta autenticado consulte os feedbacks individuais registrados pelo treinador para seus vídeos e exercícios, mantendo a associação ao conteúdo avaliado e sem acessar feedbacks destinados a outros atletas. | 2,67 | 5 |
 | OE4 - CP8 | RF04808 | Consultar próprio histórico de treinos | O sistema deve permitir que o atleta autenticado consulte seu histórico de treinos, sem acessar o histórico de outros atletas. | 2,58 | 4 |
 | OE4 - CP8 | RF04809 | Consultar próprios objetivos | O sistema deve permitir que o atleta autenticado consulte os objetivos registrados para ele, sem acessar os objetivos de outros atletas. | 2,42 | 4 |
 | OE4 - CP8 | RF04810 | Consultar próprio planejamento de treinos | O sistema deve permitir que o atleta autenticado consulte os treinos planejados para ele, sem acessar o planejamento de outros atletas. | 2,33 | 4 |
-| OE4 - CP8 | RF04811 | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil dos atletas sob seu acompanhamento. | 2,42 | 5 |
+| OE4 - CP8 | RF04811 | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil de um atleta selecionado entre os que estão vinculados ao seu acompanhamento, sem acessar o perfil de atletas sem vínculo autorizado. | 2,42 | 5 |
 | OE4 - CP8 | RF04812 | Consultar resultados de testes de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os resultados de testes dos atletas sob seu acompanhamento. | 2,25 | 5 |
 | Global | RNF01 | Responsividade Mobile | A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones | 2,42 | — |
 | Global | RNF02 | Arquitetura e Stack Tecnológica | O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional. | 3,67 | — |

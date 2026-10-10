@@ -39,7 +39,7 @@ Os requisitos funcionais do sistema são apresentados na tabela abaixo. A coluna
 | Rastreabilidade | Código | Nome | Descrição |
 |---|---|---|---|
 | OE1 - CP1 | **RF01101** | Cadastrar usuário | O sistema deve permitir que o usuário se cadastre no sistema, com informações: dados do usuário como nome, sobrenome, apelido, contato, altura, peso, envergadura, foto de perfil, senha, frequencia da realização da atividade física, objetivos, histórico de lesões, histórico de aptidão física e resultado de treinos. |
-| OE1 - CP1 | **RF01102** | Logar usuário | O sistema deve permitir o login de todos os usuários devidamente cadastrados na aplicação, fazendo a requisição de apelido e senha. |
+| OE1 - CP1; OE4 - CP7 | **RF01102** | Logar usuário | O sistema deve permitir que usuários cadastrados se autentiquem por apelido e senha, identificando o perfil associado à conta autenticada (treinador ou atleta). |
 | OE1 - CP1 | **RF01103** | Deslogar usuário | O sistema deve permitir que o usuário possa deslogar do seu perfil. |
 | OE1 - CP1 | **RF01104** | Editar informações do perfil | O sistema deve permitir que o atleta edite seus dados pessoais por exemplo nome, sobrenome, apelido, contato, altura, peso, envergadura e foto de perfil. Já as informações que envolvem análise do treinador como resultados dos treinos, objetivos, histórico de lesões, histórico de aptidão física, só poderão ser editadas pelo treinador. |
 | OE1 - CP1 | **RF01105** | Excluir usuário | O sistema deve permitir que apenas o treinador exclua usuário que não são mais atletas do treinador. |
@@ -72,18 +72,29 @@ Os requisitos funcionais do sistema são apresentados na tabela abaixo. A coluna
 | OE3 - CP6 | **RF03602** | Editar feedback | Permitir que o treinador edite um feedback que ele mesmo registrou anteriormente. |
 | OE3 - CP6 | **RF03603** | Excluir feedback | Permitir que o treinador exclua um feedback que ele mesmo registrou anteriormente. |
 | OE3 - CP6 | **RF03604** | Notificar atleta sobre feedback | O sistema deve notificar o atleta quando um feedback for registrado ou editado pelo treinador para um vídeo enviado por ele. |
-| OE4 - CP7 | **RF04701** | Autenticar usuário | O sistema deve permitir que treinador e atleta acessem suas respectivas contas por meio de credenciais individuais, identificando o perfil do usuário autenticado. |
-| OE4 - CP7 | **RF04702** | Consultar atletas acompanhados | O sistema deve permitir que o treinador autenticado consulte a relação dos atletas sob seu acompanhamento. |
+| OE4 - CP7 | **RF04702** | Consultar atletas acompanhados | O sistema deve permitir que o treinador autenticado consulte a lista dos atletas vinculados ao seu acompanhamento, sem listar atletas sem vínculo autorizado. A consulta às informações de perfil de um atleta selecionado é descrita em RF04811. |
 | OE4 - CP8 | **RF04803** | Consultar próprios dados cadastrais | O sistema deve permitir que o atleta autenticado consulte seus próprios dados cadastrais, sem acessar os dados cadastrais de outro atleta. |
 | OE4 - CP8 | **RF04804** | Consultar próprios resultados de testes | O sistema deve permitir que o atleta autenticado consulte os resultados de testes associados à sua conta, sem acessar resultados de outros atletas. |
 | OE4 - CP8 | **RF04805** | Consultar próprios vídeos enviados | O sistema deve permitir que o atleta autenticado consulte os vídeos de execução que enviou, vinculados aos respectivos exercícios, sem acessar vídeos enviados por outros atletas. |
 | OE4 - CP8 | **RF04806** | Consultar vídeos de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os vídeos de execução enviados pelos atletas sob seu acompanhamento, no contexto dos respectivos exercícios. |
-| OE4 - CP8 | **RF04807** | Consultar feedback recebido | O sistema deve permitir que o atleta autenticado consulte os feedbacks que o treinador registrou para seus vídeos e exercícios, sem acessar feedbacks destinados a outros atletas. |
+| OE4 - CP8 | **RF04807** | Consultar feedback recebido | O sistema deve permitir que o atleta autenticado consulte os feedbacks individuais registrados pelo treinador para seus vídeos e exercícios, mantendo a associação ao conteúdo avaliado e sem acessar feedbacks destinados a outros atletas. |
 | OE4 - CP8 | **RF04808** | Consultar próprio histórico de treinos | O sistema deve permitir que o atleta autenticado consulte seu histórico de treinos, sem acessar o histórico de outros atletas. |
 | OE4 - CP8 | **RF04809** | Consultar próprios objetivos | O sistema deve permitir que o atleta autenticado consulte os objetivos registrados para ele, sem acessar os objetivos de outros atletas. |
 | OE4 - CP8 | **RF04810** | Consultar próprio planejamento de treinos | O sistema deve permitir que o atleta autenticado consulte os treinos planejados para ele, sem acessar o planejamento de outros atletas. |
-| OE4 - CP8 | **RF04811** | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil dos atletas sob seu acompanhamento. |
+| OE4 - CP8 | **RF04811** | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil de um atleta selecionado entre os que estão vinculados ao seu acompanhamento, sem acessar o perfil de atletas sem vínculo autorizado. |
 | OE4 - CP8 | **RF04812** | Consultar resultados de testes de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os resultados de testes dos atletas sob seu acompanhamento. |
+
+## Consolidação da revisão de 10/10/2026
+
+O RF04701 foi incorporado ao RF01102 para evitar duas declarações de autenticação. O RF01102 conserva o vínculo principal com OE1/CP1 e registra também o vínculo com OE4/CP7. O código RF04701 permanece no histórico abaixo para localizar referências anteriores; não representa uma funcionalidade adicional e não deve receber implementação ou estimativa separada.
+
+| Código anterior | Situação | Requisito vigente | Comportamento preservado |
+| --- | --- | --- | --- |
+| RF04701 | Incorporado | RF01102 | Autenticação com credenciais individuais e identificação do perfil associado à conta. |
+
+Os demais códigos permanecem inalterados. RF04702 especifica a lista de atletas vinculados ao treinador; RF04811 especifica a consulta ao perfil de um atleta selecionado. RF04807 conserva a consulta ao feedback individual. O texto de RF01208 permanece inalterado nesta revisão: na reunião de 05/10, houve indicação de que sua intenção também era consultar feedback. A equipe precisa conferir se RF01208 e RF04807 representam a mesma consulta antes de escolher o código vigente e registrar a incorporação. Não se criou uma consulta adicional de orientações gerais para justificar a manutenção dos dois códigos.
+
+A identificação do perfil no login não substitui as restrições de acesso de RNF09 e RNF10. As referências anteriores a RF04701 em outros artefatos devem indicar sua incorporação ao RF01102, preservando o histórico.
 
 ## Requisitos Não-Funcionais
 
