@@ -174,11 +174,6 @@ Os requisitos caracterizados com **Must Have** formam o núcleo essencial e func
 
 ## 7. Consolidação das avaliações
 
-!!! info "Revisão da autenticação em 10/10/2026"
-    RF04701 foi incorporado ao RF01102, conforme o [registro do catálogo](requisitos.md#consolidacao-da-revisao-de-10102026). O login permanece no MVP; a identificação do perfil integra esse mesmo requisito. A média anterior de RF04701 era 2,67 e seu valor de negócio estava sem pontuação. Esses dados permanecem como registro histórico, sem representar um item ativo adicional. As médias e prioridades dos requisitos vigentes foram preservadas nesta revisão; a equipe deve conferir se o esclarecimento dos textos exige reestimativa.
-
-
-
 A **média do esforço técnico** de cada requisito foi obtida a partir das avaliações individuais realizadas pelos membros da equipe. Cada integrante atribuiu uma pontuação de **1 a 5**, conforme a escala de **Esforço de Implementação** definida anteriormente. Em seguida, foi calculada a média das avaliações de cada requisito.
 
 O mesmo procedimento foi aplicado ao **Complexidade Técnica**: cada membro avaliou os requisitos individualmente utilizando a escala de **1 a 5**, também mencionada anteriormente, e as avaliações foram consolidadas por meio da média.

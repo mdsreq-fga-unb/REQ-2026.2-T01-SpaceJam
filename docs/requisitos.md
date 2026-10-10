@@ -84,18 +84,6 @@ Os requisitos funcionais do sistema são apresentados na tabela abaixo. A coluna
 | OE4 - CP8 | **RF04811** | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil de um atleta selecionado entre os que estão vinculados ao seu acompanhamento, sem acessar o perfil de atletas sem vínculo autorizado. |
 | OE4 - CP8 | **RF04812** | Consultar resultados de testes de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os resultados de testes dos atletas sob seu acompanhamento. |
 
-## Consolidação da revisão de 10/10/2026
-
-O RF04701 foi incorporado ao RF01102 para evitar duas declarações de autenticação. O RF01102 conserva o vínculo principal com OE1/CP1 e registra também o vínculo com OE4/CP7. O código RF04701 permanece no histórico abaixo para localizar referências anteriores; não representa uma funcionalidade adicional e não deve receber implementação ou estimativa separada.
-
-| Código anterior | Situação | Requisito vigente | Comportamento preservado |
-| --- | --- | --- | --- |
-| RF04701 | Incorporado | RF01102 | Autenticação com credenciais individuais e identificação do perfil associado à conta. |
-
-Os demais códigos permanecem inalterados. RF04702 especifica a lista de atletas vinculados ao treinador; RF04811 especifica a consulta ao perfil de um atleta selecionado. RF04807 conserva a consulta ao feedback individual. O texto de RF01208 permanece inalterado nesta revisão: na reunião de 05/10, houve indicação de que sua intenção também era consultar feedback. A equipe precisa conferir se RF01208 e RF04807 representam a mesma consulta antes de escolher o código vigente e registrar a incorporação. Não se criou uma consulta adicional de orientações gerais para justificar a manutenção dos dois códigos.
-
-A identificação do perfil no login não substitui as restrições de acesso de RNF09 e RNF10. As referências anteriores a RF04701 em outros artefatos devem indicar sua incorporação ao RF01102, preservando o histórico.
-
 ## Requisitos Não-Funcionais
 
 
