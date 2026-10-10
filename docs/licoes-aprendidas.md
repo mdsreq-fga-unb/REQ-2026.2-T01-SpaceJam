@@ -34,10 +34,10 @@ As ações abaixo foram formuladas para serem verificáveis. A identificação n
 | Preparar a apresentação como uma entrega coletiva | Apresentadores e revisor da apresentação definidos no Kanban | 36 horas antes da apresentação | Checklist de revisão e versão final dos materiais |
 | Garantir que todos conheçam o estado geral do projeto | Todos os integrantes | Revisão na reunião semanal e antes de cada entrega | Ata com participantes, pendências e decisões registradas |
 
-## Histórico de Versão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| --- | --- | --- | --- |
-| 31/08/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1 | Thiago Alencar de Oliveira |
-| 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria | Luiz Henrique Pessato da Mota |
-| 21/09/2026 | 0.3 | Aprimorando ações de melhoria e acrescentando desafios da unidade | Thiago Alencar de Oliveira |
+    | Data | Versão | Descrição | Autor |
+    | --- | --- | --- | --- |
+    | 31/08/2026 | 0.1 | Registro das lições aprendidas e ações de melhoria da Unidade 1 | Thiago Alencar de Oliveira |
+    | 14/09/2026 | 0.2 | Detalhamento dos efeitos observados e das ações verificáveis de melhoria | Luiz Henrique Pessato da Mota |
+    | 21/09/2026 | 0.3 | Aprimorando ações de melhoria e acrescentando desafios da unidade | Thiago Alencar de Oliveira |

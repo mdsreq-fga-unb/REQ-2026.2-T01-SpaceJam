@@ -81,14 +81,11 @@ A classificação foi definida a partir do **Valor de Negócio**:
 
 ## 5. Matriz de Valor de Negócio × Esforço
 
-Para auxiliar na priorização, também foi utilizada uma matriz relacionando o **Valor de Negócio** e o **Esforço de Implementação**.
+Para auxiliar na priorização, também foi utilizada uma matriz relacionando o **Valor de Negócio** e o **Esforço Técnico**.
 
 A matriz permite visualizar quais requisitos possuem maior importância para o produto em relação ao trabalho necessário para implementá-los.
 
-| | **Baixo Esforço** | **Alto Esforço** |
-| :--- | :--- | :--- |
-| **Alto Valor de Negócio** | Prioridade de implementação | Avaliar prioridade e planejamento |
-| **Baixo Valor de Negócio** | Implementar posteriormente, se houver disponibilidade | Baixa prioridade |
+![Matriz de priorização](imagens/matrix4x4.png)
 
 ### Matriz 4×4
 
@@ -108,6 +105,8 @@ A matriz permite visualizar quais requisitos possuem maior importância para o p
 A partir das avaliações de **Valor de Negócio**, **Complexidade Técnica**, **Esforço de Implementação** e da priorização **MoSCoW**, foi definido o conjunto de requisitos que compõe o **Mínimo Produto Viável (MVP)** do Space Jam.
 
 O MVP concentra as funcionalidades necessárias para disponibilizar uma primeira versão funcional do produto, permitindo que os principais objetivos sejam atendidos.
+
+Os requisitos caracterizados com **Must Have** formam o núcleo essencial e funcional da aplicação para o lançamento do produto farão parte, obrigatoriamente, do MVP. A execeção que o time enxergou foi o requisito RF03502: Substituir vídeo enviado, que está classificado com **Should Have**, mas tem uma funcionalidade muito importante para a versão inicial.
 
 ## Requisitos Funcionais
 
@@ -175,12 +174,26 @@ O MVP concentra as funcionalidades necessárias para disponibilizar uma primeira
 
 ## 7. Consolidação das avaliações
 
-
 A **média do esforço técnico** de cada requisito foi obtida a partir das avaliações individuais realizadas pelos membros da equipe. Cada integrante atribuiu uma pontuação de **1 a 5**, conforme a escala de **Esforço de Implementação** definida anteriormente. Em seguida, foi calculada a média das avaliações de cada requisito.
 
 O mesmo procedimento foi aplicado ao **Complexidade Técnica**: cada membro avaliou os requisitos individualmente utilizando a escala de **1 a 5**, também mencionada anteriormente, e as avaliações foram consolidadas por meio da média.
 
-Dessa forma, os valores apresentados na tabela representam a **avaliação conjunta da equipe** sobre o esforço técnico e o critério técnico de cada requisito, servindo como base para a análise e priorização dos requisitos.
+### Cálculo do Esforço Técnico
+
+O **Esforço Técnico** de cada requisito foi obtido a partir de duas avaliações realizadas pela equipe: **Esforço de Implementação** e **Capacidade Técnica**. Para cada requisito, foram calculadas as médias das avaliações dos integrantes em cada um desses critérios. Em seguida, as duas médias foram utilizadas para calcular uma média aritmética, resultando no valor final do Esforço Técnico.
+
+O **Esforço Técnico (ET)** foi calculado a partir das médias obtidas nos critérios **Esforço de Implementação** e **Capacidade Técnica**, utilizando a média aritmética entre os dois critérios:
+
+$$
+{ET = \frac{M_E + M_{CT}}{2}}
+$$
+
+onde:
+
+- $M_E$ = média de **Esforço de Implementação**;
+- $M_{CT}$ = média de **Capacidade Técnica**.
+
+Assim, para cada requisito, primeiro foram calculadas as médias individuais de Esforço de Implementação e Capacidade Técnica e, posteriormente, essas duas médias foram somadas e divididas por 2.
 
 A tabela a seguir apresenta a **consolidação das avaliações dos requisitos do projeto SpaceJam**, reunindo os resultados obtidos para **Valor de Negócio (VN)** e **Esforço Técnico**. Essa consolidação permite visualizar, para cada requisito, sua relevância para o produto em conjunto com o esforço necessário para sua implementação, servindo como base para a definição das prioridades do projeto e para a aplicação da matriz de priorização.
 
@@ -190,7 +203,7 @@ Os requisitos funcionais e não funcionais são apresentados juntamente com suas
 | Rastreabilidade | Código | Nome | Descrição | Média de Esforço Técnico | Valor de Negócio |
 |---|---|---|---|---:|---:|
 | OE1 - CP1 | RF01101 | Cadastrar usuário | O sistema deve permitir que o usuário se cadastre no sistema, com informações: dados do usuário como nome, sobrenome, apelido, contato, altura, peso, envergadura, foto de perfil, senha, frequencia da realização da atividade física, objetivos, histórico de lesões, histórico de aptidão física e resultado de treinos | 2,33 | 5 |
-| OE1 - CP1 | RF01102 | Logar usuário | O sistema deve permitir o login de todos os usuários devidamente cadastrados na aplicação, fazendo a requisição de apelido e senha | 1,67 | 5 |
+| OE1 - CP1; OE4 - CP7 | RF01102 | Logar usuário | O sistema deve permitir que usuários cadastrados se autentiquem por apelido e senha, identificando o perfil associado à conta autenticada (treinador ou atleta). | 1,67 | 5 |
 | OE1 - CP1 | RF01103 | Deslogar usuário | O sistema deve permitir que o usuário possa deslogar do seu perfil | 1,17 | 2 |
 | OE1 - CP1 | RF01104 | Editar informações do perfil | O sistema deve permitir que o atleta edite seus dados pessoais por exemplo nome, sobrenome, apelido, contato, altura, peso, envergadura e foto de perfil. Já as informações que envolvem análise do treinador como resultados dos treinos, objetivos, histórico de lesões, histórico de aptidão física, só poderão ser editadas pelo treinador | 2,25 | 5 |
 | OE1 - CP1 | RF01105 | Excluir usuário | O sistema deve permitir que apenas o treinador exclua usuário que não são mais atletas do treinador | 2,00 | 2 |
@@ -223,17 +236,16 @@ Os requisitos funcionais e não funcionais são apresentados juntamente com suas
 | OE3 - CP6 | RF03602 | Editar feedback | Permitir que o treinador edite um feedback que ele mesmo registrou anteriormente. | 2,67 | 5 |
 | OE3 - CP6 | RF03603 | Excluir feedback | Permitir que o treinador exclua um feedback que ele mesmo registrou anteriormente. | 2,17 | 1 |
 | OE3 - CP6 | RF03604 | Notificar atleta sobre feedback | O sistema deve notificar o atleta quando um feedback for registrado ou editado pelo treinador para um vídeo enviado por ele. | 3,00 | 5 |
-| OE4 - CP7 | RF04701 | Autenticar usuário | O sistema deve permitir que treinador e atleta acessem suas respectivas contas por meio de credenciais individuais, identificando o perfil do usuário autenticado. | 2,67 | — |
-| OE4 - CP7 | RF04702 | Consultar atletas acompanhados | O sistema deve permitir que o treinador autenticado consulte a relação dos atletas sob seu acompanhamento. | 2,42 | 4 |
+| OE4 - CP7 | RF04702 | Consultar atletas acompanhados | O sistema deve permitir que o treinador autenticado consulte a lista dos atletas vinculados ao seu acompanhamento, sem listar atletas sem vínculo autorizado. A consulta às informações de perfil de um atleta selecionado é descrita em RF04811. | 2,42 | 4 |
 | OE4 - CP8 | RF04803 | Consultar próprios dados cadastrais | O sistema deve permitir que o atleta autenticado consulte seus próprios dados cadastrais, sem acessar os dados cadastrais de outro atleta. | 1,83 | 5 |
 | OE4 - CP8 | RF04804 | Consultar próprios resultados de testes | O sistema deve permitir que o atleta autenticado consulte os resultados de testes associados à sua conta, sem acessar resultados de outros atletas. | 1,75 | 4 |
 | OE4 - CP8 | RF04805 | Consultar próprios vídeos enviados | O sistema deve permitir que o atleta autenticado consulte os vídeos de execução que enviou, vinculados aos respectivos exercícios, sem acessar vídeos enviados por outros atletas. | 2,67 | 4 |
 | OE4 - CP8 | RF04806 | Consultar vídeos de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os vídeos de execução enviados pelos atletas sob seu acompanhamento, no contexto dos respectivos exercícios. | 2,75 | 5 |
-| OE4 - CP8 | RF04807 | Consultar feedback recebido | O sistema deve permitir que o atleta autenticado consulte os feedbacks que o treinador registrou para seus vídeos e exercícios, sem acessar feedbacks destinados a outros atletas. | 2,67 | 5 |
+| OE4 - CP8 | RF04807 | Consultar feedback recebido | O sistema deve permitir que o atleta autenticado consulte os feedbacks individuais registrados pelo treinador para seus vídeos e exercícios, mantendo a associação ao conteúdo avaliado e sem acessar feedbacks destinados a outros atletas. | 2,67 | 5 |
 | OE4 - CP8 | RF04808 | Consultar próprio histórico de treinos | O sistema deve permitir que o atleta autenticado consulte seu histórico de treinos, sem acessar o histórico de outros atletas. | 2,58 | 4 |
 | OE4 - CP8 | RF04809 | Consultar próprios objetivos | O sistema deve permitir que o atleta autenticado consulte os objetivos registrados para ele, sem acessar os objetivos de outros atletas. | 2,42 | 4 |
 | OE4 - CP8 | RF04810 | Consultar próprio planejamento de treinos | O sistema deve permitir que o atleta autenticado consulte os treinos planejados para ele, sem acessar o planejamento de outros atletas. | 2,33 | 4 |
-| OE4 - CP8 | RF04811 | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil dos atletas sob seu acompanhamento. | 2,42 | 5 |
+| OE4 - CP8 | RF04811 | Consultar perfil de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte as informações de perfil de um atleta selecionado entre os que estão vinculados ao seu acompanhamento, sem acessar o perfil de atletas sem vínculo autorizado. | 2,42 | 5 |
 | OE4 - CP8 | RF04812 | Consultar resultados de testes de atleta acompanhado | O sistema deve permitir que o treinador autenticado consulte os resultados de testes dos atletas sob seu acompanhamento. | 2,25 | 5 |
 | Global | RNF01 | Responsividade Mobile | A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones | 2,42 | — |
 | Global | RNF02 | Arquitetura e Stack Tecnológica | O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional. | 3,67 | — |
