@@ -427,7 +427,8 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
                     html = (Path(output_dir) / page / "index.html").read_text(encoding="utf-8")
                     self.assertTrue('<details class="abstract"' in html, f"{page}: no accordion")
                     self.assertTrue("Histórico de revisão" in html, f"{page}: no label")
-                    rows = [line for line in source.splitlines() if line.lstrip().startswith("| ") and "/2026 |" in line]
+                    revision_source = source.split('??? abstract "Histórico de revisão"', 1)[1]
+                    rows = [line for line in revision_source.splitlines() if line.lstrip().startswith("| ") and "/2026 |" in line]
                     self.assertTrue(rows, f"{page}: revision rows missing")
                     details_html = html.split('<details class="abstract"', 1)[1].split("</details>", 1)[0]
                     self.assertEqual(details_html.count("<tr>"), len(rows) + 1, f"{page}: revision row count changed")
