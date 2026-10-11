@@ -88,6 +88,7 @@ nav:
       - "7. Interação entre Equipe e Cliente": interacao_equipe_cliente.md
       - "8. Requisitos de Software": requisitos.md
       - "9. Priorização e MVP": mvp.md
+      - "DoR e DoD": dor_dod.md
       - "11. Lições Aprendidas": licoes-aprendidas.md
   - Entregas: entregas.md
   - Reuniões: reunioes.md
