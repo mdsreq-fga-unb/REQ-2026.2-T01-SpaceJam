@@ -40,5 +40,10 @@ Após a comparação entre os processos **RAD** e **XP**, optou-se pelo **Rapid 
 
 - **Documentação:** será produzida a documentação necessária para comunicação, desenvolvimento, validação e rastreabilidade dos requisitos. 
 
+- **Cronograma apertado e equipe reduzida:** o RAD aparece como uma opção para projetos com cronograma curto e com equipes pequenas, o que favorece sua consideração diante do tempo limitado disponível para o desenvolvimento acadêmico.
+
+**OBS:** O XP não foi escolhido como processo principal porque a estratégia do projeto prioriza a prototipação e a validação com o cliente, em vez da adoção formal do conjunto de práticas de engenharia característico do XP. Isso não impede que a equipe utilize práticas isoladas do XP, como testes automatizados e integração contínua, durante o desenvolvimento.
+
+
 
 
