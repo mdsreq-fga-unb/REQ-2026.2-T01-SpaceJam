@@ -46,8 +46,6 @@ A [Seção 7](interacao_equipe_cliente.md) descreve como a equipe registra decis
 
 A apresentação reúne o contexto do cliente, a proposta inicial e o planejamento do trabalho. O acesso direto funciona mesmo quando a prévia incorporada não carrega no navegador.
 
-[Assistir à apresentação no Google Drive](https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view){: .sj-delivery-watch target="_blank" rel="noopener noreferrer" }
-
 <details class="sj-delivery-video-details">
   <summary>Ver a prévia incorporada nesta página</summary>
   <div class="sj-delivery-video">
