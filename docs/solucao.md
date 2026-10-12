@@ -57,7 +57,7 @@ As características apresentadas a seguir foram definidas considerando os objeti
 
 Nesta etapa do projeto, foram identificadas como capacidades prioritárias da solução a gestão das informações dos atletas, o planejamento e acompanhamento dos treinos, a biblioteca de exercícios, o acompanhamento da evolução e os mecanismos de comunicação e feedback individual.
 
-A definição definitiva do MVP, incluindo as funcionalidades que serão efetivamente implementadas na primeira versão, será realizada nas etapas posteriores do projeto, após o detalhamento dos requisitos, a validação com o cliente e a definição dos critérios de aceitação e validação.
+A delimitação preliminar do MVP já está estabelecida com base nas capacidades prioritárias identificadas (CP1 a CP8) e na matriz de esforço e valor de negócio, garantindo o alinhamento entre o valor gerado e a viabilidade técnica. O detalhamento fino dessas funcionalidades e seus critérios de aceitação serão continuamente validados e ajustados junto ao cliente ao longo das iterações do projeto.
 
 Entre as possibilidades consideradas para a solução estão o gerenciamento do perfil dos atletas, registro de testes, planejamento individual, organização de exercícios, histórico de treinos e comunicação entre treinador e atleta.
 
@@ -145,9 +145,9 @@ As tecnologias propostas são amplamente utilizadas no desenvolvimento de aplica
 
 Outro fator favorável é a possibilidade de contato com o cliente durante o desenvolvimento. A participação do treinador permitirá validar se as funcionalidades desenvolvidas correspondem ao seu método de trabalho e às necessidades dos atletas.
 
-O principal risco está relacionado ao prazo da disciplina, especialmente no desenvolvimento do fluxo de vídeos e no gerenciamento adequado dos dados. Por esse motivo, funcionalidades de maior complexidade, como análise automática de vídeos, métricas avançadas, rankings e suporte a múltiplas turmas, foram explicitamente mantidas fora do MVP.
+O principal risco está relacionado ao prazo da disciplina, especialmente no desenvolvimento do fluxo de vídeos e no gerenciamento adequado dos dados. Por esse motivo, em consonância com o escopo delimitado no item 2.3, funcionalidades de maior complexidade (como análise automática de vídeos, métricas avançadas, rankings e suporte a múltiplas turmas) foram mantidas fora do MVP inicial.
 
-Considerando o escopo definido, as tecnologias propostas, a possibilidade de contato com o cliente e a priorização das funcionalidades essenciais, a equipe considera possível entregar um MVP funcional ao final do semestre.
+Considerando o escopo preliminar do MVP, as tecnologias propostas, a possibilidade de contato com o cliente e a priorização das funcionalidades essenciais, a equipe considera possível entregar um MVP funcional ao final do semestre.
 
 ### Detalhamento das Matrizes de Engenharia de Requisitos e Esforço Técnico
 
