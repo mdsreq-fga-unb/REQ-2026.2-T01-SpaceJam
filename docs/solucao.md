@@ -20,7 +20,7 @@ mantendo a descrição do cenário atual restrita à Seção 1.
 ![Rich Picture do cenário futuro apoiado pela solução proposta](imagens/rich_picture_cenario_futuro.png)
 
 
-*Figura 3 — Rich Picture do cenário futuro apoiado pela solução proposta.*
+*Figura 4 — Rich Picture do cenário futuro apoiado pela solução proposta.*
 
 
 ## 2.2 Objetivos Específicos (OE) do Produto
