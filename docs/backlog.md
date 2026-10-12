@@ -87,21 +87,17 @@ As Regras de Negócio definem as políticas, restrições e lógicas de domínio
 
 | ID | Regra de Negócio |
 | :--- | :--- |
-| **RN01** | Apenas utilizadores devidamente autenticados (treinadores e atletas) possuem permissão de acesso à plataforma, sob controlo rígido de perfis (RBAC). |
-| **RN02** | O isolamento de dados (*multi-tenant*) é estrito: um atleta tem permissão para visualizar única e exclusivamente os seus próprios dados cadastrais, objetivos, treinos planeados, vídeos enviados e feedbacks recebidos. |
-| **RN03** | Um treinador tem permissão de acesso e avaliação restrita exclusivamente aos perfis, treinos e vídeos dos atletas que estejam formalmente vinculados à sua carteira de acompanhamento. |
-| **RN04** | A edição de dados de análise clínica e desportiva (histórico de lesões, aptidão física, objetivos e resultados de treinos) é prerrogativa exclusiva do treinador. O atleta possui permissão para editar apenas os seus dados cadastrais e métricas corporais primárias (nome, contacto, peso, altura e envergadura). |
-| **RN05** | O atleta só possui permissão para substituir ou excluir um vídeo de execução de exercício caso o treinador ainda não tenha registado nenhum feedback avaliativo sobre aquela respetiva média. |
-| **RN06** | É obrigatória a redefinição da palavra-passe provisória no primeiro acesso. |
-| **RN07** | A exclusão de um perfil de utilizador (atleta) do sistema só pode ser executada mediante ação direta do treinador ao qual ele estava previamente vinculado. |
-| **RN08** | O envio de evidências práticas é restrito a exatamente 1 (um) ficheiro de vídeo por submissão de exercício, não sendo permitidos envios múltiplos para o mesmo treino. |
-| **RN09** | O ciclo de vida do status de um exercício inicia-se como "A fazer". O atleta possui permissão para alterá-lo diretamente para "Concluído". Cabe ao treinador auditar a execução (presencialmente ou por vídeo) e, caso necessário, sobrepor o status alterando-o para "Corrigir/Refazer". |
-| **RN10** | A validação das combinações de filtros na biblioteca de exercícios (fundamentos, objetivos e materiais) deve operar exclusivamente sobre as entidades previamente cadastradas e validadas pelo treinador no catálogo do sistema. |
-| **RN11** | O registo da perceção de dificuldade de um exercício pelo atleta deve obedecer obrigatoriamente a uma escala fixa de 1 a 5. |
-| **RN12** | Um treinador possui permissão para editar ou excluir feedbacks de texto ou anotações em vídeo, desde que tenham sido registados exclusivamente por ele mesmo. |
-| **RN13** | O atleta possui permissão para alterar o registo de nível de dificuldade (1 a 5) que atribuiu a um exercício, desde que o treino correspondente ainda esteja com o *status* vigente/disponível. |
-| **RN14** | **Aprovação de Treinadores:** O registo de contas com perfil "Treinador" é restrito e requer validação e autorização prévia por parte da equipa de administração da plataforma. |
-| **RN15** | **Vínculo Obrigatório via Código:** O cadastro de uma nova conta de "Atleta" só pode ser efetivado mediante a validação de um Código Único de Treinador no formulário de registo. Este código garante que o atleta seja vinculado automática e exclusivamente à carteira daquele treinador no instante da criação da conta. |
+| **RN01** | Um treinador tem permissão de acesso e avaliação restrita exclusivamente aos perfis, treinos e vídeos dos atletas que estejam formalmente vinculados à sua carteira de acompanhamento. |
+| **RN02** | A edição de dados de análise clínica e esportiva (histórico de lesões, aptidão física, objetivos e resultados de treinos) é prerrogativa exclusiva do treinador. O atleta possui permissão para editar apenas seus dados cadastrais e métricas corporais primárias (nome, contato, peso, altura e envergadura). |
+| **RN03** | O atleta só possui permissão para substituir ou excluir um vídeo de execução de exercício caso o treinador ainda não tenha registrado nenhum feedback avaliativo sobre aquela respectiva mídia. |
+| **RN04** | **Exclusão de perfis de atletas:** A exclusão de um perfil de atleta somente pode ser realizada pelo treinador ao qual o atleta está formalmente vinculado. A operação deve respeitar as políticas de retenção de dados e preservar os registros históricos que precisem ser mantidos. |
+| **RN05** | **Limite de vídeos por submissão:** Cada submissão de exercício pode conter exatamente um arquivo de vídeo. Não é permitido anexar mais de um vídeo à mesma submissão. Uma nova tentativa de execução poderá gerar uma nova submissão quando o exercício estiver disponível para correção ou refazimento, respeitando as demais regras do sistema. |
+| **RN06** | **Ciclo de vida dos exercícios:** Todo exercício deve ser criado automaticamente com o status “A fazer”. O atleta pode alterar o status para “Concluído” após executar o exercício. Compete exclusivamente ao treinador responsável alterar o status para “Concluído” ou “Corrigir/Refazer”, conforme sua avaliação. Quando o exercício receber o status “Corrigir/Refazer”, o atleta poderá realizar uma nova tentativa e enviar uma nova submissão, conforme as condições estabelecidas pelo sistema. |
+| **RN07** | O registro da percepção de dificuldade de um exercício pelo atleta deve obedecer obrigatoriamente a uma escala fixa de 1 a 5. |
+| **RN08** | Um treinador possui permissão para editar ou excluir feedbacks de texto ou anotações em vídeo, desde que tenham sido registrados exclusivamente por ele mesmo. |
+| **RN09** | O atleta possui permissão para alterar o registro de nível de dificuldade (1 a 5) que atribuiu a um exercício, desde que o treino correspondente ainda esteja com o status vigente/disponível. |
+| **RN10** | **Aprovação de Treinadores:** O registro de contas com perfil "Treinador" é restrito e requer validação e autorização prévia por parte da equipe de administração da plataforma. |
+| **RN11** | O registo de uma conta de 'Atleta' exige obrigatoriamente a introdução de um Código de Convite Privado (semelhante a uma senha de acesso) fornecido exclusivamente pelo treinador, servindo como credencial de autorização para a criação do perfil e vinculação imediata à respetiva carteira multi-tenant. |
 
 #### 10.1.4 User Stories Derivadas dos Requisitos Funcionais
 
@@ -384,5 +380,6 @@ Aplicando a regra de decisão da matriz e a priorização MoSCoW, o escopo do MV
 
 | Data | Versão | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
+| 12/10/2026 |0.3| Refinamento das Regras de Negócio. | Guilherme Ferreira Mendes |
 | 12/10/2026 |0.2| Adição dos US(histórias de usuário) e CA(critérios de aceitação), mais as tabelas do Miro. | Guilherme Ferreira Mendes |
 | 11/10/2026 |0.1| Criação e consolidação inicial do Backlog do Produto (RFs, RNFs e RNs). | Guilherme Ferreira Mendes |
