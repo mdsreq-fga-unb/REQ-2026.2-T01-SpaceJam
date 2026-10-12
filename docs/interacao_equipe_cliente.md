@@ -87,12 +87,12 @@ Para cada validação relevante, devem ser preservados, sempre que aplicável:
 - alteração decorrente;
 - responsável, prazo e referência ao artefato atualizado.
 
-## Histórico de Versão
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| --- | --- | --- | --- |
-| 19/09/2026 | 0.5 | Alinhamento da organização ao ciclo iterativo e incremental e ao RAD, inclusão do GitHub Projects e registro da reunião com o cliente. | Luiz Henrique Pessato da Mota |
-| 14/09/2026 | 0.4 | Adequação da organização do trabalho e da validação, com inclusão da participação de atletas quando aplicável. | Luiz Henrique Pessato da Mota |
-| 07/09/2026 | 0.3 | Inclusão do Microsoft Teams como meio para reuniões com o cliente. | Luiz Henrique Pessato da Mota |
-| 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Luiz Henrique Pessato da Mota |
-| 07/09/2026 | 0.1 | Elaboração inicial da seção de interação entre equipe e cliente. | Luiz Henrique Pessato da Mota |
+    | Data | Versão | Descrição | Autor |
+    | --- | --- | --- | --- |
+    | 19/09/2026 | 0.5 | Alinhamento da organização ao ciclo iterativo e incremental e ao RAD, inclusão do GitHub Projects e registro da reunião com o cliente. | Luiz Henrique Pessato da Mota |
+    | 14/09/2026 | 0.4 | Adequação da organização do trabalho e da validação, com inclusão da participação de atletas quando aplicável. | Luiz Henrique Pessato da Mota |
+    | 07/09/2026 | 0.3 | Inclusão do Microsoft Teams como meio para reuniões com o cliente. | Luiz Henrique Pessato da Mota |
+    | 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Luiz Henrique Pessato da Mota |
+    | 07/09/2026 | 0.1 | Elaboração inicial da seção de interação entre equipe e cliente. | Luiz Henrique Pessato da Mota |

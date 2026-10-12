@@ -3,15 +3,19 @@ name: Deploy
 on:
   push:
     branches:
-      - main
       - docs
   workflow_dispatch:
+
+concurrency:
+  group: pages-publicacao-docs
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/docs'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,5 +29,8 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r requirements.txt
 
+      - name: Verificar regras de publicacao
+        run: python -m unittest discover -s tests -p "test_pages_publication.py"
+
       - name: Publicar no GitHub Pages
-        run: mkdocs gh-deploy --force
+        run: mkdocs gh-deploy --strict --force
