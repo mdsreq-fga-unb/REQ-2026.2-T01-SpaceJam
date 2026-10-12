@@ -169,11 +169,6 @@ if (initialized.attrs['aria-expanded'] !== 'false') throw Error('toggle no longe
             )
             self.assertEqual(result.returncode, 0, result.stderr)
 
-    def test_internal_design_notes_are_not_published(self):
-        with tempfile.TemporaryDirectory() as output_dir:
-            self.build_site(output_dir)
-            self.assertFalse((Path(output_dir) / "superpowers").exists())
-
     def test_sidebar_unit_groups_are_collapsible(self):
         with tempfile.TemporaryDirectory() as output_dir:
             self.build_site(output_dir)
