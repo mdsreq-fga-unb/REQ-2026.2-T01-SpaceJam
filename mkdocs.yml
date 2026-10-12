@@ -73,7 +73,6 @@ plugins:
       lang: pt
 
 exclude_docs: |
-  /superpowers/
   /unidade-2.md
 
 nav:
