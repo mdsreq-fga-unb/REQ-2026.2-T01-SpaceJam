@@ -1,8 +1,8 @@
-# 8. Lições Aprendidas
+# 11. Lições Aprendidas
 
 Esta seção registra os principais aprendizados obtidos pela equipe durante o desenvolvimento do projeto. O objetivo é transformar dificuldades observadas, feedbacks recebidos e decisões tomadas em ações concretas para as próximas unidades.
 
-## 8.1 Unidade 1
+## 11.1 Unidade 1
 
 A Unidade 1 envolveu a compreensão do contexto do cliente, a definição inicial da visão do produto e do projeto e a organização dos primeiros artefatos. A revisão da entrega, os apontamentos do professor e do monitor e as conversas posteriores da equipe permitiram identificar os desafios que a equipe teve nesta unidade.
 
@@ -31,6 +31,7 @@ As ações abaixo foram formuladas para serem verificáveis. A identificação n
 | Elaborar e revisar o cronograma com base na estratégia e datas da disciplina | Anderson Fernandes | Antes do início das atividades da unidade e revisão quinzenal | Cronograma versionado e atualizado |
 | Preparar a apresentação como uma entrega coletiva | Júlia Amanda | 36 horas antes da apresentação | Checklist de revisão e versão final dos materiais |
 | Garantir que todos conheçam o estado geral do projeto | Júlia Amanda | Revisão na reunião semanal e antes de cada entrega | Documentação do que foi abordado na reunião na seção reuniões realizadas |
+
 
 ## Histórico de Versão
 
