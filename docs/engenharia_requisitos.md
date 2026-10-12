@@ -118,7 +118,7 @@ $$\text{Problema} \longrightarrow \text{Objetivo Específico (OE)} \longrightarr
 
 ---
 
-??? abstract "Histórico de revisão"
+### **Histórico de Versões**
 
 | Data | Versão | Descrição | Autor |
 | :---: | :---: | :--- | :--- |
