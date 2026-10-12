@@ -107,7 +107,13 @@ A escolha das tecnologias considera a necessidade de desenvolver uma solução f
 
 Foram analisadas plataformas voltadas para treinamento esportivo, basquete, acompanhamento de atletas e feedback por vídeo. A análise tem como objetivo identificar capacidades presentes em soluções existentes e comparar essas capacidades com as características previstas para o produto proposto.
 
-As plataformas analisadas foram **HomeCourt**, **Onform** e **TrainHeroic**.
+As plataformas analisadas foram **[HomeCourt](https://www.homecourt.ai/)**, **[Onform](https://onform.com/)** e **[TrainHeroic](https://www.trainheroic.com/)**.
+
+| Plataforma | Link de Referência |
+| :--- | :--- |
+| **HomeCourt** | [https://www.homecourt.ai/](https://www.homecourt.ai/) |
+| **Onform** | [https://onform.com/](https://onform.com/) |
+| **TrainHeroic** | [https://www.trainheroic.com/](https://www.trainheroic.com/) |
 
 A comparação deverá considerar critérios comuns às soluções analisadas, evitando comparar funcionalidades isoladas ou utilizar características presentes em apenas uma plataforma como único parâmetro de avaliação.
 
