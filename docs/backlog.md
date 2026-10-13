@@ -295,6 +295,17 @@ O valor de negócio representa o impacto do requisito nos fluxos principais da p
 | **Should Have** | O requisito apoia um fluxo essencial ou amplia um fluxo principal com suporte pedagógico, operacional ou de acompanhamento. O MVP continua funcionando sem ele, mas com perda de cobertura, automação ou qualidade. |
 | **Could Have** | O requisito complementa o uso do sistema, mas não altera a execução dos fluxos principais do MVP. |
 | **Won't Have** | O requisito não entra na primeira versão do MVP. Foi postergado por baixo impacto no fluxo principal ou por custo técnico incompatível com a versão inicial. |
+ 
+#### 10.2.2 Critérios Objetivos para o Valor de Negócio (VB)
+ 
+Para permitir o posicionamento quantitativo dos requisitos na Matriz de Priorização, as classificações MoSCoW foram convertidas em uma escala numérica de Valor de Negócio (VB), variando de 1 a 5.
+ 
+| Classificação MoSCoW | Valor de Negócio (VB) |
+| :--- | :---: |
+| Must Have | 4 ou 5 |
+| Should Have | 4 |
+| Could Have | 3 |
+| Won't Have | 1 ou 2 |
 
 #### 10.2.2 Critérios Objetivos para o Valor de Negócio (VB)
 
@@ -402,20 +413,25 @@ O Produto Mínimo Viável (MVP) da plataforma esportiva foi definido como o meno
 
 > *Um treinador consegue estruturar bibliotecas de exercícios e planejar rotinas de treino para a sua carteira de atletas sob um controle de acesso rigoroso; enquanto os atletas conseguem acessar essas prescrições, registrar sua percepção de esforço e enviar evidências em vídeo de sua execução, permitindo ao treinador o registro de feedback avaliativo de forma assíncrona, segura e isolada.*
 
-Aplicando a regra de decisão da matriz e a priorização MoSCoW, o escopo do MVP é composto pelos seguintes Requisitos Funcionais, abrangendo a totalidade dos itens classificados como *Must Have* e *Should Have* (incluindo o requisito essencial de *Logout*, vital para conformidade de segurança e encerramento de sessão).
+A linha de corte do MVP, definida no quadro de priorização MoSCoW (Miro), considera o valor de negócio e a complexidade técnica (CT) de cada requisito:
+ 
+> **MVP = todos os requisitos *Must Have* + os requisitos *Should Have* com CT < 3.**
+
+Os RFS 01103 e RF01106 estão como *Must Have* pois são necessários para completar o fluxo do MVP.
 
 **Distribuição do MVP por Característica de Produto**:
 
-| CP | Característica de Produto | RFs no MVP |
-| :--- | :--- | :--- |
-| CP1 | Controle de Acesso | RF01101, RF01102, RF01103, RF01104, RF01107 |
-| CP2 | Administração de Conteúdo | RF01208, RF01209, RF01210, RF01211 |
-| CP3 | Espaço de Construção | RF02301, RF02302, RF02304, RF02306 |
-| CP4 | Validador de Estruturas | RF02407, RF02410, RF02412 |
-| CP5 | Portfólio de Progresso | RF03501, RF03502 |
-| CP6 | Painel de Monitoramento | RF03601, RF03602, RF03604 |
-| CP7 | Controle de Atletas | RF04701 |
-| CP8 | Isolamento de Dados | RF04802, RF04803, RF04804, RF04805, RF04806, RF04807, RF04808, RF04809, RF04810, RF04811 |
+| CP | Requisitos no MVP | Qtd. |
+| :--- | :--- | :---: |
+| CP1 | RF01101, RF01102, RF01103, RF01104, RF01106, RF01107 | 6 |
+| CP2 | RF01208, RF01209, RF01210, RF01211 | 4 |
+| CP3 | RF02301, RF02302, RF02304, RF02306 | 4 |
+| CP4 | RF02407, RF02410, RF02412 | 3 |
+| CP5 | RF03501, RF03502 | 2 |
+| CP6 | RF03601, RF03602 | 2 |
+| CP7 | RF04701 | 1 |
+| CP8 | RF04802, RF04804, RF04805, RF04806, RF04807, RF04808, RF04809, RF04810 | 8 |
+| **Total** | | **30** |
 
 ---
 
@@ -423,6 +439,7 @@ Aplicando a regra de decisão da matriz e a priorização MoSCoW, o escopo do MV
 
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | :--- | :--- |
+    | 13/10/2026 | 0.4 | Ajuste da priorização MoSCoW (RF01106, RF04803, RF04811), definição da linha de corte do MVP (Must + Should com CT < 3) e unificação do MVP com o mvp.md | Guilherme Ferreira Mendes |
     | 12/10/2026 |0.3| Refinamento das Regras de Negócio. | Guilherme Ferreira Mendes |
     | 12/10/2026 |0.2| Adição dos US(histórias de usuário) e CA(critérios de aceitação), mais as tabelas do Miro. | Guilherme Ferreira Mendes |
     | 11/10/2026 |0.1| Criação e consolidação inicial do Backlog do Produto (RFs, RNFs e RNs). | Guilherme Ferreira Mendes |
