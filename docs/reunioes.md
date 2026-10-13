@@ -16,9 +16,20 @@ Esta página reúne as atas das reuniões do projeto Space Jam. Os encaminhament
 | 08/10/2026 | Reunião com Lucas | [Consultar ata](atas/2026-10-08-lucas.md) |
 
 
-**Evidências de ESW e ER**
+## Evidências de ESW e ER
+
+### Reunião de alinhamento com o brainstorm
+
+![Print da validação](imagens/Reunião_de_brainstorm.png)
+
+### Validação do protótipo inicial
 
 <iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://embed.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864&embed-host=share" allowfullscreen></iframe>
+
+O protótipo de baixa fidelidade acima foi validado via WhatsApp: 
+
+![Print da validação](imagens/Validação.png)
+
 
 ??? abstract "Histórico de revisão"
 
