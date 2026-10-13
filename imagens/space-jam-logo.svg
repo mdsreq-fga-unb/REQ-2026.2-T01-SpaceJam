@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img">
+  <title>Space Jam</title>
+  <desc>Bola de basquete roxa envolvida por um anel orbital.</desc>
+  <defs>
+    <linearGradient id="ball-gradient" x1="32" y1="24" x2="96" y2="104" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="0.55" stop-color="#ede9fe"/>
+      <stop offset="1" stop-color="#c4b5fd"/>
+    </linearGradient>
+    <linearGradient id="orbit-gradient" x1="11" y1="88" x2="117" y2="40" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c4b5fd"/>
+      <stop offset="1" stop-color="#f5f3ff"/>
+    </linearGradient>
+  </defs>
+
+  <path
+    d="M13 82c14 22 62 27 91 5 11-8 16-17 12-22-3-4-10-4-19-1"
+    fill="none"
+    stroke="url(#orbit-gradient)"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+
+  <circle cx="64" cy="62" r="42" fill="url(#ball-gradient)" stroke="#2e1065" stroke-width="5"/>
+  <path d="M23 57c25 0 47-13 60-34" fill="none" stroke="#6d28d9" stroke-width="5" stroke-linecap="round"/>
+  <path d="M45 25c-1 23 7 45 24 63 8 8 17 14 27 18" fill="none" stroke="#6d28d9" stroke-width="5" stroke-linecap="round"/>
+  <path d="M32 88c17-18 40-29 67-30" fill="none" stroke="#6d28d9" stroke-width="5" stroke-linecap="round"/>
+  <path d="M82 25c1 12 6 23 14 32 5 6 11 10 18 13" fill="none" stroke="#6d28d9" stroke-width="5" stroke-linecap="round"/>
+
+  <path
+    d="M108 18l3.2 7.8 7.8 3.2-7.8 3.2-3.2 7.8-3.2-7.8-7.8-3.2 7.8-3.2z"
+    fill="#fbbf24"
+    stroke="#fff"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+  <circle cx="21" cy="34" r="4" fill="#fbbf24" stroke="#fff" stroke-width="2"/>
+
+  <path
+    d="M13 82c14 22 62 27 91 5"
+    fill="none"
+    stroke="#fff"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+</svg>

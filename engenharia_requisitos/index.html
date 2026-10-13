@@ -1,0 +1,1853 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe Space Jam">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/engenharia_requisitos/">
+      
+      
+        <link rel="prev" href="../estrategia/">
+      
+      
+        <link rel="next" href="../cronograma/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../imagens/space-jam-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>5. Engenharia de Requisitos - Space Jam</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5-engenharia-de-requisitos" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Space Jam" class="md-header__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Space Jam
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Engenharia de Requisitos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Space Jam" class="md-nav__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    Space Jam
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão do Produto e Projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visão do Produto e Projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cenario_atual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Cenário Atual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solucao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Solução Proposta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervencao_social/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervenção Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estrategia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Estratégias de Engenharia de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-atividades-e-tecnicas-de-er" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Atividades e Técnicas de ER
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Atividades e Técnicas de ER">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#planejamento-de-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Planejamento de Requisitos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Planejamento de Requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elicitacao-e-descoberta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elicitação e Descoberta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analise-e-consenso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise e Consenso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaracao-de-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaração de Requisitos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-do-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design do Usuário
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design do Usuário">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elicitacao-e-descoberta_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elicitação e Descoberta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaracao-e-representacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaração e Representação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analise-e-consenso_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise e Consenso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construcao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construção
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Construção">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Representação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cutover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cutover
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cutover">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaracao-de-requisitos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaração de Requisitos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-estrutura-do-processo-de-er-dimensao-temporal-e-atividades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Estrutura do Processo de ER: Dimensão Temporal e Atividades
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Estrutura do Processo de ER: Dimensão Temporal e Atividades">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cadeia-de-rastreabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadeia de Rastreabilidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapeamento-das-atividades-de-er-as-fases-do-rad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapeamento das atividades de ER às fases do RAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cronograma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Cronograma e Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacao_equipe_cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Interação entre Equipe e Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Requisitos de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Priorização e MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Backlog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dor_dod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. DoR e DoD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licoes-aprendidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Lições Aprendidas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entregas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reunioes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-atividades-e-tecnicas-de-er" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Atividades e Técnicas de ER
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Atividades e Técnicas de ER">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#planejamento-de-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Planejamento de Requisitos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Planejamento de Requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elicitacao-e-descoberta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elicitação e Descoberta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analise-e-consenso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise e Consenso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaracao-de-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaração de Requisitos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#design-do-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Design do Usuário
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Design do Usuário">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#elicitacao-e-descoberta_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elicitação e Descoberta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaracao-e-representacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaração e Representação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#analise-e-consenso_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análise e Consenso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construcao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construção
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Construção">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#representacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Representação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cutover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cutover
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cutover">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#verificacao-e-validacao_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificação e Validação
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#declaracao-de-requisitos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaração de Requisitos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#organizacao-e-atualizacao_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organização e Atualização
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-estrutura-do-processo-de-er-dimensao-temporal-e-atividades" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Estrutura do Processo de ER: Dimensão Temporal e Atividades
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Estrutura do Processo de ER: Dimensão Temporal e Atividades">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cadeia-de-rastreabilidade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadeia de Rastreabilidade
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mapeamento-das-atividades-de-er-as-fases-do-rad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mapeamento das atividades de ER às fases do RAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/engenharia_requisitos.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="5-engenharia-de-requisitos">5. ENGENHARIA DE REQUISITOS<a class="headerlink" href="#5-engenharia-de-requisitos" title="Permanent link">&para;</a></h1>
+<p>No projeto <strong>Space Jam</strong>, o processo de Engenharia de Requisitos (ER) está organizado de forma integrada às quatro fases do modelo <em>Rapid Application Development</em> (RAD): <strong>Planejamento de Requisitos</strong>, <strong>Design do Usuário</strong>, <strong>Construção</strong> e <strong>Cutover</strong>. Essas fases orientam as atividades de elicitação, análise, especificação, representação, verificação, validação e atualização dos requisitos. O processo considera a elaboração de protótipos e a validação dos fluxos de treino junto ao treinador Lucas Cordeiro e aos atletas, conforme a disponibilidade dos envolvidos.</p>
+<h2 id="51-atividades-e-tecnicas-de-er">5.1 Atividades e Técnicas de ER<a class="headerlink" href="#51-atividades-e-tecnicas-de-er" title="Permanent link">&para;</a></h2>
+<p>A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos relacionadas às quatro fases do RAD. Durante o planejamento e o design, a equipe utiliza o Miro para organizar os artefatos de requisitos. Para acompanhar o desenvolvimento, utiliza o GitHub Projects, conforme descrito na <a href="../interacao_equipe_cliente/">Seção 7</a>. O quadro do Miro é um recurso de organização, sem adoção formal do framework Kanban.</p>
+<h3 id="planejamento-de-requisitos">Planejamento de Requisitos<a class="headerlink" href="#planejamento-de-requisitos" title="Permanent link">&para;</a></h3>
+<h4 id="elicitacao-e-descoberta">Elicitação e Descoberta<a class="headerlink" href="#elicitacao-e-descoberta" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Entrevista com o stakeholder:</strong> entrevista aberta e semiestruturada com o treinador Lucas Cordeiro para compreender o acompanhamento em quadra, a rotina de treinos e as principais dificuldades e oportunidades de melhoria.</li>
+<li><strong>Brainstorming interno:</strong> reuniões da equipe de desenvolvimento para levantar hipóteses de solução para a biblioteca de exercícios e o acompanhamento de métricas, cujas ideias são posteriormente avaliadas.</li>
+<li><strong>Análise documental:</strong> análise dos artefatos utilizados pelo treinador, como fichas manuais, anotações no Samsung Notes e planilhas.</li>
+</ul>
+<h4 id="analise-e-consenso">Análise e Consenso<a class="headerlink" href="#analise-e-consenso" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Matriz Valor × Esforço e análise de custo-benefício:</strong> avaliação do valor esperado para o treinador e os atletas em relação ao esforço técnico de implementação, com os requisitos distribuídos em quatro quadrantes (Q1 a Q4), conforme a <a href="../backlog/">Seção 10</a>.</li>
+<li><strong>Priorização MoSCoW:</strong> classificação das necessidades em <em>Must have</em>, <em>Should have</em>, <em>Could have</em> e <em>Won't have</em>, apoiando a definição do escopo do Produto Mínimo Viável (MVP).</li>
+<li><strong>Negociação de escopo com o cliente:</strong> alinhamento entre a equipe, o treinador e os atletas sobre expectativas, usabilidade e limites operacionais, conforme a disponibilidade dos participantes.</li>
+</ul>
+<h4 id="declaracao-de-requisitos">Declaração de Requisitos<a class="headerlink" href="#declaracao-de-requisitos" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Documento de Visão:</strong> registro dos Objetivos Específicos (OEs), das restrições de negócio, dos requisitos de alto nível e das características gerais do Space Jam.</li>
+<li><strong>Especificação de requisitos funcionais e não funcionais:</strong> documentação dos RFs e RNFs, incluindo requisitos relacionados à privacidade, à LGPD e à segurança dos dados de menores, quando aplicável.</li>
+</ul>
+<h4 id="verificacao-e-validacao">Verificação e Validação<a class="headerlink" href="#verificacao-e-validacao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Validação do escopo:</strong> apresentação do escopo de alto nível ao treinador e aos atletas para confirmar o alinhamento com as necessidades identificadas.</li>
+<li><strong>Revisão por pares:</strong> inspeção interna da documentação para identificar ambiguidades, redundâncias e inconsistências nos requisitos.</li>
+</ul>
+<h4 id="organizacao-e-atualizacao">Organização e Atualização<a class="headerlink" href="#organizacao-e-atualizacao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Organização do escopo e rastreabilidade:</strong> a equipe elaborou o MVP, a priorização MoSCoW, a matriz Valor × Esforço, a matriz de rastreabilidade e um quadro visual no <strong>Miro</strong>. Esses artefatos apoiam a organização do escopo e os vínculos entre os problemas identificados, os Objetivos Específicos (OE), as Características do Produto (CP), os Requisitos Funcionais (RF), os Requisitos Não Funcionais (RNF) e as Regras de Negócio (RN).</li>
+</ul>
+<h3 id="design-do-usuario">Design do Usuário<a class="headerlink" href="#design-do-usuario" title="Permanent link">&para;</a></h3>
+<h4 id="elicitacao-e-descoberta_1">Elicitação e Descoberta<a class="headerlink" href="#elicitacao-e-descoberta_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Análise de tarefas:</strong> mapeamento de como o treinador e os atletas realizam suas atividades, considerando objetivos, decisões e dificuldades.</li>
+<li><strong>Entrevistas e cocriação:</strong> conversas com o treinador e os atletas para discutir fluxos operacionais, avaliar telas e identificar exceções relevantes para a interface.</li>
+</ul>
+<h4 id="declaracao-e-representacao">Declaração e Representação<a class="headerlink" href="#declaracao-e-representacao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Prototipação no Figma:</strong> criação e evolução de telas e componentes interativos de baixa e alta fidelidade.</li>
+<li><strong>Modelagem complementar de requisitos:</strong> elaboração de modelos de fluxos de interação, matriz de permissões e acessos e modelo conceitual de dados.</li>
+<li><strong>Histórias de usuário e critérios de aceitação:</strong> descrição do comportamento esperado por meio de histórias de usuário, considerando os princípios INVEST, acompanhadas de critérios de aceitação no formato <em>Dado/Quando/Então</em>.</li>
+<li><strong>Definition of Ready (DoR):</strong> definição de critérios de prontidão para que uma história de usuário tenha requisitos, modelos e critérios de aceitação suficientes para iniciar a construção. O DoR é um acordo de trabalho da equipe e não substitui a verificação dos requisitos.</li>
+</ul>
+<h4 id="analise-e-consenso_1">Análise e Consenso<a class="headerlink" href="#analise-e-consenso_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Revisão das prioridades MoSCoW:</strong> ajuste das prioridades conforme o feedback sobre os protótipos, a usabilidade e as necessidades do negócio.</li>
+</ul>
+<h4 id="verificacao-e-validacao_1">Verificação e Validação<a class="headerlink" href="#verificacao-e-validacao_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Validação dos protótipos e fluxos:</strong> avaliação dos protótipos com o treinador, considerando as necessidades de negócio, e com os atletas, considerando a usabilidade e a clareza da interface. O resultado dessa avaliação orienta os ajustes antes da implementação.</li>
+</ul>
+<h4 id="organizacao-e-atualizacao_1">Organização e Atualização<a class="headerlink" href="#organizacao-e-atualizacao_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Atualização dos artefatos no Miro:</strong> manutenção dos vínculos entre requisitos, histórias de usuário e elementos de interface, utilizando o quadro visual como apoio à organização e à rastreabilidade.</li>
+</ul>
+<h3 id="construcao">Construção<a class="headerlink" href="#construcao" title="Permanent link">&para;</a></h3>
+<h4 id="representacao">Representação<a class="headerlink" href="#representacao" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Implementação dos requisitos especificados:</strong> transformação das histórias de usuário e dos protótipos avaliados em funcionalidades do sistema, com desenvolvimento incremental.</li>
+</ul>
+<h4 id="verificacao-e-validacao_2">Verificação e Validação<a class="headerlink" href="#verificacao-e-validacao_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Verificação interna:</strong> revisão por pares por meio de <em>Pull Requests</em> (PRs), conferência dos critérios de aceitação e aplicação de testes. A equipe prevê testes unitários automatizados para módulos críticos e testes funcionais manuais para as demais funcionalidades, conforme o plano de testes.</li>
+<li><strong>Validação com o cliente:</strong> apresentação de funcionalidades ou incrementos ao treinador e, quando pertinente, aos atletas, para avaliar a aderência à rotina de treino. As sessões de validação devem ser combinadas de acordo com a disponibilidade dos participantes.</li>
+</ul>
+<h4 id="organizacao-e-atualizacao_2">Organização e Atualização<a class="headerlink" href="#organizacao-e-atualizacao_2" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Acompanhamento do desenvolvimento no GitHub Projects:</strong> durante a construção, as histórias de usuário e tarefas são registradas como Issues e organizadas no GitHub Projects, que apoia o acompanhamento de status, responsáveis, prioridades e impedimentos. Quando aplicável, as Issues são vinculadas a branches, PRs e testes por meio de referências e links, mantendo a rastreabilidade entre requisitos e implementação.</li>
+</ul>
+<h3 id="cutover">Cutover<a class="headerlink" href="#cutover" title="Permanent link">&para;</a></h3>
+<h4 id="verificacao-e-validacao_3">Verificação e Validação<a class="headerlink" href="#verificacao-e-validacao_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Homologação e testes de aceitação:</strong> ao preparar uma versão para entrega, são realizados testes de aceitação e validação com o treinador e os atletas, conforme a disponibilidade e o estágio de implantação.</li>
+</ul>
+<h4 id="declaracao-de-requisitos_1">Declaração de Requisitos<a class="headerlink" href="#declaracao-de-requisitos_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Documentação da entrega:</strong> elaboração ou atualização das notas de versão (<em>release notes</em>) e das orientações de uso correspondentes à versão disponibilizada.</li>
+</ul>
+<h4 id="organizacao-e-atualizacao_3">Organização e Atualização<a class="headerlink" href="#organizacao-e-atualizacao_3" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Registro da versão e das melhorias futuras:</strong> atualização do GitHub Projects para identificar os itens concluídos, os itens não implementados e as demandas que poderão ser consideradas em versões futuras. A conclusão do desenvolvimento e a homologação pelo cliente são registradas como situações distintas.</li>
+</ul>
+<hr />
+<h2 id="52-estrutura-do-processo-de-er-dimensao-temporal-e-atividades">5.2 Estrutura do Processo de ER: Dimensão Temporal e Atividades<a class="headerlink" href="#52-estrutura-do-processo-de-er-dimensao-temporal-e-atividades" title="Permanent link">&para;</a></h2>
+<p>O processo de Engenharia de Requisitos do Space Jam considera duas dimensões complementares: a <strong>dimensão temporal</strong>, representada pelas fases do ciclo de vida RAD, e a <strong>dimensão funcional</strong>, formada pelas atividades de Engenharia de Requisitos. O Miro organiza os artefatos elaborados durante o planejamento e o design; o GitHub Projects acompanha as tarefas de desenvolvimento.</p>
+<h3 id="cadeia-de-rastreabilidade">Cadeia de Rastreabilidade<a class="headerlink" href="#cadeia-de-rastreabilidade" title="Permanent link">&para;</a></h3>
+<p>A rastreabilidade proposta relaciona as necessidades do negócio aos artefatos de especificação e implementação:</p>
+<p><strong>Problema → Objetivo Específico (OE) → Característica do Produto (CP) → RF/RNF e Regra de Negócio (RN) → História de Usuário (US) → Protótipo (Figma) → Issue no GitHub Projects → Código/PR → Teste → Feedback</strong></p>
+<p>Essa cadeia depende da manutenção dos vínculos entre os artefatos, por meio de referências e links. A ferramenta, por si só, não garante rastreabilidade automática.</p>
+<h3 id="mapeamento-das-atividades-de-er-as-fases-do-rad">Mapeamento das atividades de ER às fases do RAD<a class="headerlink" href="#mapeamento-das-atividades-de-er-as-fases-do-rad" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Fase do RAD</th>
+<th style="text-align: left;">Momento do ciclo</th>
+<th style="text-align: left;">Atividade de ER</th>
+<th style="text-align: left;">Técnica ou prática</th>
+<th style="text-align: left;">Resultado esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Planejamento de Requisitos</strong></td>
+<td style="text-align: left;">Início do projeto e definição do escopo</td>
+<td style="text-align: left;">Elicitação e Descoberta</td>
+<td style="text-align: left;">Entrevista com o stakeholder, brainstorming e análise documental</td>
+<td style="text-align: left;">Rotina de treino compreendida e dificuldades identificadas.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Planejamento de Requisitos</strong></td>
+<td style="text-align: left;">Definição do escopo</td>
+<td style="text-align: left;">Análise e Consenso</td>
+<td style="text-align: left;">Matriz Valor × Esforço, análise de custo-benefício, MoSCoW e negociação de escopo</td>
+<td style="text-align: left;">MVP e prioridades definidos com base nas necessidades identificadas.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Planejamento de Requisitos</strong></td>
+<td style="text-align: left;">Definição do escopo</td>
+<td style="text-align: left;">Declaração de Requisitos</td>
+<td style="text-align: left;">Documento de Visão e especificação de RFs/RNFs</td>
+<td style="text-align: left;">Objetivos, restrições e requisitos de alto nível documentados.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Planejamento de Requisitos</strong></td>
+<td style="text-align: left;">Definição do escopo</td>
+<td style="text-align: left;">Verificação e Validação</td>
+<td style="text-align: left;">Validação do escopo e revisão por pares</td>
+<td style="text-align: left;">Escopo revisado e alinhado às necessidades levantadas.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Planejamento de Requisitos</strong></td>
+<td style="text-align: left;">Organização dos artefatos</td>
+<td style="text-align: left;">Organização e Atualização</td>
+<td style="text-align: left;">MVP, MoSCoW, matriz Valor × Esforço, matriz de rastreabilidade e quadro visual no Miro</td>
+<td style="text-align: left;">Escopo organizado visualmente e relações entre problemas, objetivos e requisitos registradas.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Design do Usuário</strong></td>
+<td style="text-align: left;">Refinamento antes e durante a construção</td>
+<td style="text-align: left;">Elicitação e Descoberta</td>
+<td style="text-align: left;">Análise de tarefas, entrevistas e cocriação</td>
+<td style="text-align: left;">Fluxos operacionais e necessidades de interface identificados.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Design do Usuário</strong></td>
+<td style="text-align: left;">Especificação da solução</td>
+<td style="text-align: left;">Declaração e Representação</td>
+<td style="text-align: left;">Figma, modelos de permissões e dados, histórias de usuário, critérios de aceitação e DoR</td>
+<td style="text-align: left;">Protótipos e histórias de usuário suficientemente especificados para orientar a implementação.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Design do Usuário</strong></td>
+<td style="text-align: left;">Refinamento do escopo</td>
+<td style="text-align: left;">Análise e Consenso</td>
+<td style="text-align: left;">Revisão das prioridades MoSCoW</td>
+<td style="text-align: left;">Prioridades revistas de acordo com as necessidades e o feedback recebido.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Design do Usuário</strong></td>
+<td style="text-align: left;">Avaliação da solução proposta</td>
+<td style="text-align: left;">Verificação e Validação</td>
+<td style="text-align: left;">Avaliação dos protótipos e fluxos com treinador e atletas</td>
+<td style="text-align: left;">Ajustes identificados antes da implementação.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Design do Usuário</strong></td>
+<td style="text-align: left;">Organização dos artefatos</td>
+<td style="text-align: left;">Organização e Atualização</td>
+<td style="text-align: left;">Atualização da matriz de rastreabilidade e do quadro visual no Miro</td>
+<td style="text-align: left;">Relações entre requisitos, histórias e protótipos mantidas nos artefatos.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Construção</strong></td>
+<td style="text-align: left;">Ciclos de desenvolvimento</td>
+<td style="text-align: left;">Representação</td>
+<td style="text-align: left;">Implementação das histórias e dos protótipos especificados</td>
+<td style="text-align: left;">Funcionalidades implementadas de forma incremental.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Construção</strong></td>
+<td style="text-align: left;">Revisão e testes</td>
+<td style="text-align: left;">Verificação e Validação</td>
+<td style="text-align: left;">Revisão por pares, PRs, conferência dos critérios de aceitação e testes automatizados ou manuais</td>
+<td style="text-align: left;">Implementação verificada em relação aos requisitos e critérios de aceitação.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Construção</strong></td>
+<td style="text-align: left;">Avaliação dos incrementos</td>
+<td style="text-align: left;">Verificação e Validação</td>
+<td style="text-align: left;">Demonstração e coleta de feedback do treinador e dos atletas, conforme disponibilidade</td>
+<td style="text-align: left;">Necessidades de ajuste identificadas a partir da avaliação das funcionalidades.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Construção</strong></td>
+<td style="text-align: left;">Acompanhamento das tarefas</td>
+<td style="text-align: left;">Organização e Atualização</td>
+<td style="text-align: left;">GitHub Projects, Issues e links para PRs e testes</td>
+<td style="text-align: left;">Status, responsáveis e relações entre requisitos e implementação acompanhados.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cutover</strong></td>
+<td style="text-align: left;">Preparação da versão para entrega</td>
+<td style="text-align: left;">Verificação e Validação</td>
+<td style="text-align: left;">Testes de aceitação e homologação com o cliente</td>
+<td style="text-align: left;">Evidências de aceitação registradas, quando a validação tiver sido realizada.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cutover</strong></td>
+<td style="text-align: left;">Preparação da entrega</td>
+<td style="text-align: left;">Declaração de Requisitos</td>
+<td style="text-align: left;">Notas de versão e orientações de uso</td>
+<td style="text-align: left;">Documentação correspondente à versão disponibilizada.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Cutover</strong></td>
+<td style="text-align: left;">Fechamento e planejamento futuro</td>
+<td style="text-align: left;">Organização e Atualização</td>
+<td style="text-align: left;">Atualização do GitHub Projects e registro de demandas futuras</td>
+<td style="text-align: left;">Itens concluídos e melhorias pendentes identificados.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<details class="abstract">
+<summary>Histórico de revisão</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Data</th>
+<th style="text-align: center;">Versão</th>
+<th style="text-align: left;">Descrição</th>
+<th style="text-align: left;">Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">12/10/2026</td>
+<td style="text-align: center;">1.2</td>
+<td style="text-align: left;">Atualização da seção 5 com a organização dos artefatos de requisitos no Miro e o acompanhamento do desenvolvimento no GitHub Projects, sem adoção formal do framework Kanban; padronização de "Cutover" e de CP (Característica do Produto); inclusão da Issue na cadeia de rastreabilidade; descrição da matriz Valor × Esforço conforme a Seção 10.</td>
+<td style="text-align: left;">Guilherme Ferreira Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">06/10/2026</td>
+<td style="text-align: center;">1.1</td>
+<td style="text-align: left;">Ajuste conceitual do DoR, inclusão da dimensão temporal na tabela e explicitação da cadeia de rastreabilidade.</td>
+<td style="text-align: left;">Guilherme Ferreira Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">17/09/2026</td>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: left;">Reestruturação do tópico 5 alinhada às quatro fases do RAD.</td>
+<td style="text-align: left;">Guilherme Ferreira Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">08/09/2026</td>
+<td style="text-align: center;">0.3</td>
+<td style="text-align: left;">Reorganização da seção 5.1 conforme as atividades de Engenharia de Requisitos.</td>
+<td style="text-align: left;">Guilherme Ferreira Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">07/09/2026</td>
+<td style="text-align: center;">0.2</td>
+<td style="text-align: left;">Correção do histórico de versões.</td>
+<td style="text-align: left;">Guilherme Ferreira Mendes</td>
+</tr>
+<tr>
+<td style="text-align: center;">07/09/2026</td>
+<td style="text-align: center;">0.1</td>
+<td style="text-align: left;">Estruturação inicial do tópico 5 — Engenharia de Requisitos.</td>
+<td style="text-align: left;">Guilherme Ferreira Mendes</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../estrategia/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 4. Estratégias de Engenharia de Software">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                4. Estratégias de Engenharia de Software
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../cronograma/" class="md-footer__link md-footer__link--next" aria-label="Próximo: 6. Cronograma e Entregas">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                6. Cronograma e Entregas
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.indexes", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.action.edit", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../javascripts/sj-navigation.js"></script>
+      
+        <script src="../javascripts/sj-tables.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
