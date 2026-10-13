@@ -353,7 +353,50 @@ A partir desse cruzamento, os itens do backlog são distribuídos nos quadrantes
 
 <iframe width="100%" height="600" src="https://miro.com/app/live-embed/uXjVHrFoSVo=/?embedMode=view_only_without_ui&moveToViewport=1162%2C8496%2C1930%2C2082&embedId=290614433109" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
 
-#### 10.2.6 Definição do MVP
+#### 10.2.6 Priorização dos Requisitos Não Funcionais
+ 
+Os 18 requisitos não funcionais do catálogo (10.1.2) foram classificados em quatro grupos, de acordo com o papel de cada um na primeira versão do produto. A classificação indica quais RNFs precisam estar atendidos e verificados no MVP, quais acompanham os requisitos funcionais do MVP, quais evoluem nas versões seguintes e quais ficam fora do escopo inicial.
+ 
+**Critérios de classificação**
+ 
+| Grupo | Critério | Tratamento no MVP |
+| :--- | :--- | :--- |
+| **Obrigatórios para o MVP** | RNF de escopo global ou de proteção de dados e controle de acesso, que orienta decisões de arquitetura e precisa estar atendido desde a primeira versão. | Verificado no produto como um todo, conforme o DoD. |
+| **Associados a RFs do MVP** | RNF que restringe diretamente um ou mais RFs do MVP e entra na versão junto com eles. | Verificado nos critérios de aceitação dos RFs relacionados. |
+| **Evolutivos** | RNF que o MVP atende de forma básica, com meta completa e verificação mensurável nas versões seguintes. | Sem verificação formal da meta no MVP; a evolução é registrada no backlog. |
+| **Não aplicáveis ao MVP** | RNF cujo atendimento não é exigido na primeira versão. | Não verificado no MVP; permanece no catálogo para versões futuras. |
+ 
+**Classificação dos RNFs**
+ 
+| Grupo | ID | Requisito não funcional | Categoria | Escopo |
+| :--- | :--- | :--- | :--- | :--- |
+| **Obrigatórios para o MVP** | RNF01 | Responsividade Mobile | Usabilidade | Global |
+| **Obrigatórios para o MVP** | RNF02 | Arquitetura e Stack Tecnológica | Restrições | Global |
+| **Obrigatórios para o MVP** | RNF03 | Estabilidade em Navegadores Padrão | Suportabilidade | Global |
+| **Obrigatórios para o MVP** | RNF05 | Proteção e Privacidade de Dados (LGPD) | Confiabilidade | Global / CP8 |
+| **Obrigatórios para o MVP** | RNF09 | Controle de Acesso (RBAC) | Segurança | CP7 |
+| **Obrigatórios para o MVP** | RNF10 | Isolamento Multi-inquilino (*Multi-tenant*) | Segurança | CP8 |
+| **Obrigatórios para o MVP** | RNF17 | Consentimento de Cookies | Confiabilidade | Global / CP8 |
+| **Associados a RFs do MVP** | RNF06 | Compatibilidade de Vídeo | Suportabilidade | CP5, CP6 |
+| **Associados a RFs do MVP** | RNF12 | Integridade na Catalogação | Confiabilidade | CP4 |
+| **Associados a RFs do MVP** | RNF14 | Restrição de Mídias | Usabilidade | CP5 |
+| **Associados a RFs do MVP** | RNF16 | Gerenciamento Pré-Envio de Mídia | Usabilidade | CP5 |
+| **Evolutivos** | RNF07 | Feedback Visual de Upload | Usabilidade | CP5 |
+| **Evolutivos** | RNF08 | Interface de Feedback Anotado | Usabilidade | CP6 |
+| **Evolutivos** | RNF11 | Desempenho no Carregamento | Desempenho | CP1, CP2 |
+| **Evolutivos** | RNF13 | Armazenamento Protegido de Mídias | Segurança | CP5, CP8 |
+| **Evolutivos** | RNF15 | Validação no Preenchimento | Usabilidade | CP1, CP3 |
+| **Evolutivos** | RNF18 | Persistência de Dados | Confiabilidade | Global |
+| **Não aplicáveis ao MVP** | RNF04 | Acessibilidade Digital | Usabilidade | Global |
+ 
+Dos 18 RNFs, 7 são obrigatórios, 4 estão associados a RFs do MVP, 6 são evolutivos e 1 não se aplica à primeira versão. Os grupos *Obrigatórios* e *Associados* formam o conjunto de RNFs do MVP.
+
+[Acessar a priorização dos RNFs no Miro](https://miro.com/app/board/uXjVHrFoSVo=/)
+
+<iframe width="100%" height="600" src="https://miro.com/app/live-embed/uXjVHrFoSVo=/?embedMode=view_only_without_ui&moveToViewport=5521%2C9626%2C2251%2C1870&embedId=972933933673" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
+
+#### 10.2.7 Definição do MVP
+
 
 O Produto Mínimo Viável (MVP) da plataforma esportiva foi definido como o menor conjunto de funcionalidades viável capaz de demonstrar, em ambiente real, a hipótese de valor central do projeto:
 
