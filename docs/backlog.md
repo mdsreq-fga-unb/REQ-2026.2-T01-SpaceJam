@@ -376,10 +376,10 @@ Aplicando a regra de decisão da matriz e a priorização MoSCoW, o escopo do MV
 
 ---
 
-### **Histórico de Versões**
+??? abstract "Histórico de revisão"
 
-| Data | Versão | Descrição | Autor |
-| :---: | :---: | :--- | :--- |
-| 12/10/2026 |0.3| Refinamento das Regras de Negócio. | Guilherme Ferreira Mendes |
-| 12/10/2026 |0.2| Adição dos US(histórias de usuário) e CA(critérios de aceitação), mais as tabelas do Miro. | Guilherme Ferreira Mendes |
-| 11/10/2026 |0.1| Criação e consolidação inicial do Backlog do Produto (RFs, RNFs e RNs). | Guilherme Ferreira Mendes |
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | :--- | :--- |
+    | 12/10/2026 |0.3| Refinamento das Regras de Negócio. | Guilherme Ferreira Mendes |
+    | 12/10/2026 |0.2| Adição dos US(histórias de usuário) e CA(critérios de aceitação), mais as tabelas do Miro. | Guilherme Ferreira Mendes |
+    | 11/10/2026 |0.1| Criação e consolidação inicial do Backlog do Produto (RFs, RNFs e RNs). | Guilherme Ferreira Mendes |
