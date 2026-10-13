@@ -160,6 +160,21 @@ Para fundamentar empiricamente a viabilidade do projeto e orientar a priorizaç�
 👉 **[Acesse a Planilha Oficial de Esforço e Critério Técnico](https://drive.google.com/open?id=1NsXu36v7VtNlYdEkkLuny1TRThPGN5gy7tsmaVyjv-Y)**
 
 
+### 2.6.1 Experiência Técnica e Disponibilidade da Equipe
+
+A viabilidade de execução do MVP no prazo restrito da disciplina fundamenta-se na alocação estratégica e na complementaridade das competências técnicas dos 6 integrantes do grupo (*Anderson, Júlia, Thiago, Guilherme, Luiz e Paulo*):
+
+- **Domínio da Stack Tecnológica:** A equipe conta com experiência prévia na construção de aplicações web utilizando a arquitetura proposta (API REST desacoplada em Python/Django, Frontend SPA com React/TypeScript e SGBD PostgreSQL). A vivência prática prévia dos membros com o ecossistema Django (ORM, autenticação e controle de permissões DRF) e integração com React reduz drasticamente a curva de aprendizado e mitiga riscos de falhas arquiteturais na implementação do controle de acesso (*RBAC*), isolamento multi-tenant e consumo de APIs.
+- **Capacidade Operacional e Distribuição de Carga:** A equipe é composta por 6 desenvolvedores com disponibilidade dedicada à disciplina. A divisão de trabalho foi estruturada em duplas/frentes independentes (Autenticação/Perfis, Gestão de Treinos/Exercícios, Histórico/Evolução e Mídias/Feedbacks). Essa organização em frentes paralelas garante redundância de conhecimento, permitindo que a ausência ou gargalo individual de um membro não comprometa a continuidade das *sprints*.
+
+### 2.6.2 Análise de Dependência e Envolvimento do Cliente (Lucas) e dos Atletas
+
+Para assegurar que o projeto não seja paralisado por restrições externas de agenda, as dependências do contexto real foram mapeadas com estratégias claras de mitigação:
+
+- **Disponibilidade e Dependência do Treinador (Lucas Cordeiro):** Como cliente e especialista de domínio, a dependência do treinador concentra-se no refinamento de regras de negócio, fornecimento do catálogo inicial de exercícios e homologação do fluxo presencial. Para evitar gargalos provocados pela rotina intensa de treinos do Lucas, a comunicação é mantida prioritariamente de forma assíncrona (WhatsApp e reuniões virtuais curtas no Teams), restringindo a necessidade de validação síncrona a marcos específicos (final de iteração/Review).
+- **Dependência e Engajamento dos Atletas:** Os atletas (e seus respectivos responsáveis legais) atuam como usuários finais de consulta e envio opcional de vídeos. Para evitar que a viabilidade do software dependa de uma adesão imediata ou massiva dos alunos, a solução foi projetada de forma modular: a entrega principal de valor no MVP foca na organização e consulta realizada pelo próprio treinador. O engajamento dos atletas para teste de usabilidade será intermediado de forma assistida pelo próprio Lucas durante os treinos presenciais, eliminando o risco de rejeição ou atrasos por falta de adesão inicial.
+
+
 ## 2.7 Benefícios Esperados
 
 ### 2.7.1 Benefícios para o cliente
