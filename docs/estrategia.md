@@ -28,26 +28,22 @@ Para definir o processo de desenvolvimento mais adequado ao projeto Space Jam, f
 | **Escalabilidade** | Pode apresentar limitações quando há grande complexidade ou quando a participação dos usuários não pode ser mantida com frequência. | É orientado a equipes colaborativas e possui práticas que podem ser difíceis de manter quando a coordenação entre os integrantes é limitada. |
 | **Suporte às Equipes de Desenvolvimento** | Favorece equipes que conseguem trabalhar de forma colaborativa e realizar ciclos de prototipação e validação. | Favorece equipes pequenas e altamente colaborativas, com disponibilidade para aplicar continuamente suas práticas técnicas. |
 
-Embora o RAD e o XP apresentem práticas diferentes, a escolha do RAD não impede que práticas técnicas do XP sejam incorporadas ao projeto quando forem consideradas adequadas. Práticas como **testes automatizados, integração contínua, revisão de código e refatoração** podem ser utilizadas de forma complementar, sem que a equipe adote o XP como processo principal.
-
 ---
 
 ## 4.3 Justificativa da Escolha
 
 Após a comparação entre os processos **RAD** e **XP**, optou-se pelo **Rapid Application Development (RAD)**, integrado a uma **abordagem híbrida** e a um ciclo de vida **iterativo e incremental**, considerando as características do projeto, do cliente e da equipe.
 
-- **Adequação ao projeto:** o Space Jam envolve informações de atletas, treinamentos, exercícios e orientações. A prototipação do RAD permite representar as funcionalidades e identificar problemas de entendimento ou usabilidade durante o desenvolvimento.
+- **Prototipação e refinamento dos requisitos:** alguns requisitos podem ser melhor compreendidos por meio de representações visuais. Os protótipos permitem que o cliente avalie interfaces e fluxos e contribua para o refinamento da solução. Além disso, prototipação do RAD permite representar as funcionalidades e identificar problemas de entendimento ou usabilidade durante o desenvolvimento.
 
-- **Prototipação e refinamento dos requisitos:** alguns requisitos podem ser melhor compreendidos por meio de representações visuais. Os protótipos permitem que o cliente avalie interfaces e fluxos e contribua para o refinamento da solução.
+- **Participação do cliente:** o RAD valoriza a participação frequente do usuário, portanto a equipe se reunirá semanalmente, pelo Microsoft Teams, para validação dos protótipos, ou quando acontecer algum imprevisto, o time estará em contato constante pelo WhatsApp.
 
-- **Participação do cliente:** o RAD valoriza a participação frequente do usuário. Como a disponibilidade do cliente Lucas é limitada, essa participação será planejada para momentos relevantes de validação e refinamento, em vez de depender de reuniões constantes.
+- **Documentação:** será produzida a documentação necessária para comunicação, desenvolvimento, validação e rastreabilidade dos requisitos. 
 
-- **Testes:** os testes serão considerados parte do desenvolvimento e planejados de acordo com os requisitos e riscos do sistema. A equipe poderá utilizar práticas como testes automatizados e integração contínua quando forem relevantes para a qualidade do produto.
+- **Cronograma apertado e equipe reduzida:** o RAD aparece como uma opção para projetos com cronograma curto e com equipes pequenas, o que favorece sua consideração diante do tempo limitado disponível para o desenvolvimento acadêmico.
 
-- **Documentação:** será produzida a documentação necessária para comunicação, desenvolvimento, validação e rastreabilidade dos requisitos. O nível de documentação será definido conforme sua utilidade para o projeto.
+**OBS:** O XP não foi escolhido como processo principal porque a estratégia do projeto prioriza a prototipação e a validação com o cliente, em vez da adoção formal do conjunto de práticas de engenharia característico do XP. Isso não impede que a equipe utilize práticas isoladas do XP, como testes automatizados e integração contínua, durante o desenvolvimento.
 
-- **Práticas do XP não adotadas como obrigatórias:** embora algumas práticas do XP possam complementar o RAD, a equipe não adotará todas elas como parte obrigatória do processo. A **programação em pares**, por exemplo, exige a disponibilidade simultânea de dois integrantes, o que é pouco compatível com a disponibilidade do grupo. A **propriedade coletiva do código** também não será estabelecida como prática formal, pois a equipe organizará as responsabilidades de desenvolvimento conforme as atividades do projeto. Já práticas como **testes automatizados, integração contínua e refatoração** poderão ser utilizadas quando forem relevantes.
 
-- **Compatibilidade com o ciclo iterativo e incremental:** o RAD permite desenvolver uma parte da solução, validá-la, realizar ajustes e posteriormente acrescentar novas funcionalidades, mantendo o desenvolvimento progressivo do produto.
 
-- **Abordagem híbrida:** a abordagem híbrida permite combinar a flexibilidade e a adaptação do RAD com práticas mais estruturadas de documentação, testes, revisão e acompanhamento quando necessárias, adequando o processo às restrições do projeto.
+

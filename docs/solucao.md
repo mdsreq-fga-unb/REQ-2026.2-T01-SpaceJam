@@ -20,7 +20,7 @@ mantendo a descrição do cenário atual restrita à Seção 1.
 ![Rich Picture do cenário futuro apoiado pela solução proposta](imagens/rich_picture_cenario_futuro.png)
 
 
-*Figura 3 — Rich Picture do cenário futuro apoiado pela solução proposta.*
+*Figura 4 — Rich Picture do cenário futuro apoiado pela solução proposta.*
 
 
 ## 2.2 Objetivos Específicos (OE) do Produto
@@ -57,7 +57,7 @@ As características apresentadas a seguir foram definidas considerando os objeti
 
 Nesta etapa do projeto, foram identificadas como capacidades prioritárias da solução a gestão das informações dos atletas, o planejamento e acompanhamento dos treinos, a biblioteca de exercícios, o acompanhamento da evolução e os mecanismos de comunicação e feedback individual.
 
-A definição definitiva do MVP, incluindo as funcionalidades que serão efetivamente implementadas na primeira versão, será realizada nas etapas posteriores do projeto, após o detalhamento dos requisitos, a validação com o cliente e a definição dos critérios de aceitação e validação.
+A delimitação preliminar do MVP já está estabelecida com base nas capacidades prioritárias identificadas (CP1 a CP8) e na matriz de esforço e valor de negócio, garantindo o alinhamento entre o valor gerado e a viabilidade técnica. O detalhamento fino dessas funcionalidades e seus critérios de aceitação serão continuamente validados e ajustados junto ao cliente ao longo das iterações do projeto.
 
 Entre as possibilidades consideradas para a solução estão o gerenciamento do perfil dos atletas, registro de testes, planejamento individual, organização de exercícios, histórico de treinos e comunicação entre treinador e atleta.
 
@@ -107,7 +107,13 @@ A escolha das tecnologias considera a necessidade de desenvolver uma solução f
 
 Foram analisadas plataformas voltadas para treinamento esportivo, basquete, acompanhamento de atletas e feedback por vídeo. A análise tem como objetivo identificar capacidades presentes em soluções existentes e comparar essas capacidades com as características previstas para o produto proposto.
 
-As plataformas analisadas foram **HomeCourt**, **Onform** e **TrainHeroic**.
+As plataformas analisadas foram **[HomeCourt](https://www.homecourt.ai/)**, **[Onform](https://onform.com/)** e **[TrainHeroic](https://www.trainheroic.com/)**.
+
+| Plataforma | Link de Referência |
+| :--- | :--- |
+| **HomeCourt** | [https://www.homecourt.ai/](https://www.homecourt.ai/) |
+| **Onform** | [https://onform.com/](https://onform.com/) |
+| **TrainHeroic** | [https://www.trainheroic.com/](https://www.trainheroic.com/) |
 
 A comparação deverá considerar critérios comuns às soluções analisadas, evitando comparar funcionalidades isoladas ou utilizar características presentes em apenas uma plataforma como único parâmetro de avaliação.
 
@@ -139,9 +145,19 @@ As tecnologias propostas são amplamente utilizadas no desenvolvimento de aplica
 
 Outro fator favorável é a possibilidade de contato com o cliente durante o desenvolvimento. A participação do treinador permitirá validar se as funcionalidades desenvolvidas correspondem ao seu método de trabalho e às necessidades dos atletas.
 
-O principal risco está relacionado ao prazo da disciplina, especialmente no desenvolvimento do fluxo de vídeos e no gerenciamento adequado dos dados. Por esse motivo, funcionalidades de maior complexidade, como análise automática de vídeos, métricas avançadas, rankings e suporte a múltiplas turmas, foram explicitamente mantidas fora do MVP.
+O principal risco está relacionado ao prazo da disciplina, especialmente no desenvolvimento do fluxo de vídeos e no gerenciamento adequado dos dados. Por esse motivo, em consonância com o escopo delimitado no item 2.3, funcionalidades de maior complexidade (como análise automática de vídeos, métricas avançadas, rankings e suporte a múltiplas turmas) foram mantidas fora do MVP inicial.
 
-Considerando o escopo definido, as tecnologias propostas, a possibilidade de contato com o cliente e a priorização das funcionalidades essenciais, a equipe considera possível entregar um MVP funcional ao final do semestre.
+Considerando o escopo preliminar do MVP, as tecnologias propostas, a possibilidade de contato com o cliente e a priorização das funcionalidades essenciais, a equipe considera possível entregar um MVP funcional ao final do semestre.
+
+### Detalhamento das Matrizes de Engenharia de Requisitos e Esforço Técnico
+
+Para fundamentar empiricamente a viabilidade do projeto e orientar a priorização das sprints do MVP, a equipe elaborou uma matriz quantitativa unificada de Engenharia de Requisitos:
+
+- **Tabela 1 (Rastreabilidade e Valor de Negócio):** Associa cada Requisito Funcional aos Objetivos Estratégicos (ex.: `OE1 - CP1`), definindo seu escopo e quantificando o **Valor de Negócio** para garantir foco nas entregas de maior impacto.
+- **Tabela 2 (Avaliação Individual de Esforço Técnico):** Consolida a estimativa de esforço atribuída individualmente pelos 6 integrantes (*Anderson, Júlia, Thiago, Guilherme, Luiz e Paulo*), calculando a média (`Média1`) para alinhar a complexidade real do código à capacidade do grupo.
+- **Tabela 3 (Avaliação de Critério Técnico):** Pondera o nível de risco arquitetural e complexidade de domínio de cada funcionalidade segundo a pontuação de cada membro da equipe, servindo de subsídio direto para o planejamento do projeto e mitigação de riscos no cronograma.
+
+👉 **[Acesse a Planilha Oficial de Esforço e Critério Técnico](https://drive.google.com/open?id=1NsXu36v7VtNlYdEkkLuny1TRThPGN5gy7tsmaVyjv-Y)**
 
 
 ## 2.7 Benefícios Esperados
