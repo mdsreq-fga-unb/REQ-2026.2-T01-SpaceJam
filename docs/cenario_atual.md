@@ -7,7 +7,7 @@
 - **Nome:** Lucas Cordeiro (Professor/Treinador de Basquete).
 - **Atuação:** Treinador autônomo de basquete, com foco principal em atendimentos individuais e possibilidade de turmas ou escolinhas.
 - **Representante:** Lucas Cordeiro.
-- **Formas de contato:** WhatsApp, Instagram (@cordeirotrainer) e Google Meet.
+- **Formas de contato:** WhatsApp e Teams.
 - **Vínculo com o projeto:** Cliente real e parte interessada principal, responsável por apresentar e validar informações sobre o negócio, participar da elicitação e confirmar necessidades e requisitos do produto.
 
 
@@ -20,9 +20,8 @@ aulas, com observação da execução e aplicação de testes físicos e especí
 dos resultados e das necessidades de cada atleta, Lucas adapta o treinamento.
 
 
-O contato com atletas e potenciais clientes ocorre pelo WhatsApp e pelo Instagram
-(@cordeirotrainer). Para planejar e organizar treinos e informações dos atletas, Lucas utiliza
-Samsung Notes, Word e um caderno. Além disso, será utilizado o Google Meet para futuras reuniões.
+O contato com atletas e potenciais clientes ocorre pelo WhatsApp e pelo Instagram. Para planejar e organizar treinos e informações dos atletas, Lucas utiliza
+Samsung Notes, Word e um caderno. Além disso, será utilizado o Teams para futuras reuniões.
 
 
 Durante o treino presencial, Lucas demonstra exercícios, observa e corrige a execução, realiza

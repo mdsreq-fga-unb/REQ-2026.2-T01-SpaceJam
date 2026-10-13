@@ -107,7 +107,7 @@ A escolha das tecnologias considera a necessidade de desenvolver uma solução f
 
 Foram analisadas plataformas voltadas para treinamento esportivo, basquete, acompanhamento de atletas e feedback por vídeo. A análise tem como objetivo identificar capacidades presentes em soluções existentes e comparar essas capacidades com as características previstas para o produto proposto.
 
-As plataformas analisadas foram **[HomeCourt](https://www.homecourt.ai/)**, **[Onform](https://onform.com/)** e **[TrainHeroic](https://www.trainheroic.com/)**.
+As plataformas analisadas foram **HomeCourt**, **Onform** e **TrainHeroic**.
 
 | Plataforma | Link de Referência |
 | :--- | :--- |
@@ -151,13 +151,28 @@ Considerando o escopo preliminar do MVP, as tecnologias propostas, a possibilida
 
 ### Detalhamento das Matrizes de Engenharia de Requisitos e Esforço Técnico
 
-Para fundamentar empiricamente a viabilidade do projeto e orientar a priorização das sprints do MVP, a equipe elaborou uma matriz quantitativa unificada de Engenharia de Requisitos:
+Para fundamentar empiricamente a viabilidade do projeto e orientar a priorização por ciclos do MVP, a equipe elaborou uma matriz quantitativa unificada de Engenharia de Requisitos:
 
-- **Tabela 1 (Rastreabilidade e Valor de Negócio):** Associa cada Requisito Funcional aos Objetivos Estratégicos (ex.: `OE1 - CP1`), definindo seu escopo e quantificando o **Valor de Negócio** para garantir foco nas entregas de maior impacto.
+- **Tabela 1 (Rastreabilidade e Valor de Negócio):** Associa cada Requisito Funcional aos Objetivos Específicos (ex.: `OE1 - CP1`), definindo seu escopo e quantificando o **Valor de Negócio** para garantir foco nas entregas de maior impacto.
 - **Tabela 2 (Avaliação Individual de Esforço Técnico):** Consolida a estimativa de esforço atribuída individualmente pelos 6 integrantes (*Anderson, Júlia, Thiago, Guilherme, Luiz e Paulo*), calculando a média (`Média1`) para alinhar a complexidade real do código à capacidade do grupo.
 - **Tabela 3 (Avaliação de Critério Técnico):** Pondera o nível de risco arquitetural e complexidade de domínio de cada funcionalidade segundo a pontuação de cada membro da equipe, servindo de subsídio direto para o planejamento do projeto e mitigação de riscos no cronograma.
 
 👉 **[Acesse a Planilha Oficial de Esforço e Critério Técnico](https://drive.google.com/open?id=1NsXu36v7VtNlYdEkkLuny1TRThPGN5gy7tsmaVyjv-Y)**
+
+
+### 2.6.1 Experiência Técnica e Disponibilidade da Equipe
+
+A viabilidade de execução do MVP no prazo restrito da disciplina fundamenta-se na alocação estratégica e na complementaridade das competências técnicas dos 6 integrantes do grupo (*Anderson, Júlia, Thiago, Guilherme, Luiz e Paulo*):
+
+- **Domínio da Stack Tecnológica:** A equipe conta com experiência prévia na construção de aplicações web utilizando a arquitetura proposta (API REST desacoplada em Python/Django, Frontend SPA com React/TypeScript e SGBD PostgreSQL). A vivência prática prévia dos membros com o ecossistema Django (ORM, autenticação e controle de permissões DRF) e integração com React reduz drasticamente a curva de aprendizado e mitiga riscos de falhas arquiteturais na implementação do controle de acesso (*RBAC*), isolamento multi-tenant e consumo de APIs.
+- **Capacidade Operacional e Distribuição de Carga:** A equipe é composta por 6 desenvolvedores com disponibilidade dedicada à disciplina. A divisão de trabalho foi estruturada em duplas/frentes independentes (Autenticação/Perfis, Gestão de Treinos/Exercícios, Histórico/Evolução e Mídias/Feedbacks). Essa organização em frentes paralelas garante redundância de conhecimento, permitindo que a ausência ou gargalo individual de um membro não comprometa a continuidade das *sprints*.
+
+### 2.6.2 Análise de Dependência e Envolvimento do Cliente (Lucas) e dos Atletas
+
+Para assegurar que o projeto não seja paralisado por restrições externas de agenda, as dependências do contexto real foram mapeadas com estratégias claras de mitigação:
+
+- **Disponibilidade e Dependência do Treinador (Lucas Cordeiro):** Como cliente e especialista de domínio, a dependência do treinador concentra-se no refinamento de regras de negócio, fornecimento do catálogo inicial de exercícios e homologação do fluxo presencial. Para evitar gargalos provocados pela rotina intensa de treinos do Lucas, a comunicação é mantida prioritariamente de forma assíncrona (WhatsApp e reuniões virtuais curtas no Teams), restringindo a necessidade de validação síncrona a marcos específicos (final de iteração/Review).
+- **Dependência e Engajamento dos Atletas:** Os atletas (e seus respectivos responsáveis legais) atuam como usuários finais de consulta e envio opcional de vídeos. Para evitar que a viabilidade do software dependa de uma adesão imediata ou massiva dos alunos, a solução foi projetada de forma modular: a entrega principal de valor no MVP foca na organização e consulta realizada pelo próprio treinador. O engajamento dos atletas para teste de usabilidade será intermediado de forma assistida pelo próprio Lucas durante os treinos presenciais, eliminando o risco de rejeição ou atrasos por falta de adesão inicial.
 
 
 ## 2.7 Benefícios Esperados
@@ -204,6 +219,7 @@ De maneira geral, o produto deverá contribuir para um acompanhamento mais organ
 
     | Data | Versão | Descrição | Autor |
     | --- | --- | --- | --- |
+    | 13/10/2026 | 0.4 | Complementação da Seção 2.6 (Viabilidade) com a experiência técnica e disponibilidade da equipe, além do mapeamento e estratégias de mitigação para as dependências do treinador Lucas e dos atletas. | Anderson Fernandes da Silva |
     | 17/09/2026 | 0.3 | Revisão da solução proposta a partir dos pontos de atenção apresentados na avaliação, incluindo consolidação das características do produto, ajuste dos objetivos, contexto de uso, armazenamento de vídeos, análise competitiva e viabilidade. | Paulo Sergio Rabelo Santana Rios |
     | 07/09/2026 | 0.2 | Adequação da comunicação e da validação às decisões registradas na reunião da equipe. | Paulo Sergio Rabelo Santana Rios |
     | 07/09/2026 | 0.1 | Elaboração inicial da seção de solução proposta. | Júlia Amanda Silva Lima |
