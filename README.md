@@ -1,91 +1,133 @@
-# SpaceJam
+# ![Space Jam](assets/readme/banner.svg)
 
-[![UnB](https://img.shields.io/badge/UnB-FGA-blue)](https://fga.unb.br/)
-[![Requisitos de Software](https://img.shields.io/badge/Requisitos--de--Software-2026.2-brightgreen)](#)
+<p align="center">
+  <a href="https://fga.unb.br/"><img src="https://img.shields.io/badge/UnB-FGA-6D28D9?style=flat-square" alt="UnB · FGA"></a>
+  <img src="https://img.shields.io/badge/Requisitos_de_Software-2026.2-A78BFA?style=flat-square" alt="Requisitos de Software · 2026.2">
+</p>
 
-**Projeto da Disciplina de Requisitos de Software (2026.2)**  
-**Universidade de Brasília (UnB) — Campus Faculdade do Gama (FGA)**  
-**Docente:** Prof. Dr. George Marsicano
+<p align="center">
+  <strong><a href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/">Acessar a documentação do projeto ↗</a></strong>
+</p>
 
----
+<p align="center">
+  <a href="#sobre-o-projeto">Sobre o projeto</a> ·
+  <a href="#documentação">Documentação</a> ·
+  <a href="#equipe">Equipe</a> ·
+  <a href="#execução-local">Execução local</a>
+</p>
 
-## 🚀 Sobre o Projeto
+## Sobre o projeto
 
-O **SpaceJam** é uma solução digital desenvolvida para apoiar a gestão e o acompanhamento de atletas de basquete orientados pelo treinador Lucas Cordeiro (`@cordeirotrainer`). O sistema resolve a fragmentação de registros mantidos em notas, documentos e cadernos, centralizando em um só lugar o perfil dos atletas, histórico de testes físicos (altura, envergadura, standing reach, jump height), evolução técnica, lesões e planejamento de treinos.
+O **Space Jam** é um projeto de uma solução digital para apoiar a gestão e o acompanhamento individual de atletas de basquete orientados pelo treinador **Lucas Cordeiro** ([@cordeirotrainer](https://www.instagram.com/cordeirotrainer/)).
 
----
+A proposta busca centralizar os registros que hoje ficam distribuídos entre notas, documentos e cadernos: perfil dos atletas, histórico de testes físicos, evolução técnica, lesões e planejamento de treinos. Entre as informações dos testes estão altura, envergadura, *standing reach* e *jump height*.
 
-## 👥 Equipe de Desenvolvimento
+| Informação | Contexto acadêmico |
+| :--- | :--- |
+| **Disciplina** | Requisitos de Software · 2026.2 |
+| **Instituição** | Universidade de Brasília (UnB) · Campus Faculdade do Gama (FGA) |
+| **Docente** | Prof. Dr. George Marsicano |
+| **Cliente parceiro** | Lucas Cordeiro · Treinador de basquete |
 
-| Foto | Nome | GitHub |
-| :--: | :-- | :--: |
-| <img src="https://github.com/juliaamandasl.png" width="80" alt="Julia Amanda" style="border-radius: 50%;"> | [Julia Amanda](https://github.com/juliaamandasl) | [@juliaamandasl](https://github.com/juliaamandasl) |
-| <img src="https://github.com/luussato1.png" width="80" alt="Luiz Henrique" style="border-radius: 50%;"> | [Luiz Henrique](https://github.com/luussato1) | [@luussato1](https://github.com/luussato1) |
-| <img src="https://github.com/Guilherme-Reis-Mendes.png" width="80" alt="Guilherme Mendes" style="border-radius: 50%;"> | [Guilherme Mendes](https://github.com/Guilherme-Reis-Mendes) | [@Guilherme-Reis-Mendes](https://github.com/Guilherme-Reis-Mendes) |
-| <img src="https://github.com/Paulosrsr.png" width="80" alt="Paulo Sérgio" style="border-radius: 50%;"> | [Paulo Sérgio](https://github.com/Paulosrsr) | [@Paulosrsr](https://github.com/Paulosrsr) |
-| <img src="https://github.com/code-silva.png" width="80" alt="Anderson Fernandes" style="border-radius: 50%;"> | [Anderson Fernandes](https://github.com/code-silva) | [@code-silva](https://github.com/code-silva) |
-| <img src="https://github.com/OliveiraThiago14.png" width="80" alt="Thiago Oliveira" style="border-radius: 50%;"> | [Thiago Oliveira](https://github.com/OliveiraThiago14) | [@OliveiraThiago14](https://github.com/OliveiraThiago14) | |
+## Documentação
 
----
+Consulte o GitHub Pages para acompanhar o conteúdo do projeto.
 
-## 🔗 Links Úteis e Documentação
+| Página | Conteúdo |
+| :--- | :--- |
+| [Visão do Produto e Projeto](https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/) | Cenário atual, solução proposta e organização do projeto. |
+| [Requisitos de Software](https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/requisitos/) | Requisitos funcionais, não funcionais e rastreabilidade. |
+| [Entregas](https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/entregas/) | Registros e materiais das entregas. |
+| [Reuniões](https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/reunioes/) | Página destinada aos registros de reuniões. |
 
-* 🌐 **Site da Documentação (GitHub Pages):** [Acessar Documentação Completa](https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/)
-* 📄 **Visão do Produto e Projeto:** Disponível na aba de Capítulos do nosso site MkDocs.
-* 🤝 **Cliente Parceiro:** Lucas Cordeiro (Treinador de Basquete)
-* 📸 **Instagram do Cliente:** [@cordeirotrainer](https://www.instagram.com/cordeirotrainer/)
+## Equipe
 
----
+<table align="center">
+  <tr>
+    <td align="center" width="33%">
+      <a href="https://github.com/juliaamandasl"><img src="https://github.com/juliaamandasl.png" width="88" height="88" alt="Julia Amanda"><br><strong>Julia Amanda</strong></a><br>
+      <a href="https://github.com/juliaamandasl"><sub>@juliaamandasl</sub></a>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://github.com/luussato1"><img src="https://github.com/luussato1.png" width="88" height="88" alt="Luiz Henrique"><br><strong>Luiz Henrique</strong></a><br>
+      <a href="https://github.com/luussato1"><sub>@luussato1</sub></a>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://github.com/Guilherme-Reis-Mendes"><img src="https://github.com/Guilherme-Reis-Mendes.png" width="88" height="88" alt="Guilherme Mendes"><br><strong>Guilherme Mendes</strong></a><br>
+      <a href="https://github.com/Guilherme-Reis-Mendes"><sub>@Guilherme-Reis-Mendes</sub></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="33%">
+      <a href="https://github.com/Paulosrsr"><img src="https://github.com/Paulosrsr.png" width="88" height="88" alt="Paulo Sérgio"><br><strong>Paulo Sérgio</strong></a><br>
+      <a href="https://github.com/Paulosrsr"><sub>@Paulosrsr</sub></a>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://github.com/code-silva"><img src="https://github.com/code-silva.png" width="88" height="88" alt="Anderson Fernandes"><br><strong>Anderson Fernandes</strong></a><br>
+      <a href="https://github.com/code-silva"><sub>@code-silva</sub></a>
+    </td>
+    <td align="center" width="33%">
+      <a href="https://github.com/OliveiraThiago14"><img src="https://github.com/OliveiraThiago14.png" width="88" height="88" alt="Thiago Oliveira"><br><strong>Thiago Oliveira</strong></a><br>
+      <a href="https://github.com/OliveiraThiago14"><sub>@OliveiraThiago14</sub></a>
+    </td>
+  </tr>
+</table>
 
-## 📁 Estrutura do Repositório
+## Estrutura do repositório
 
 ```text
 .
 ├── .github/
-│   └── workflows/                # Automações e pipelines de CI/CD (deploy)
-├── docs/                         # Código-fonte da documentação (arquivos Markdown e assets)
-├── README.md                     # Apresentação principal do repositório
-├── mkdocs.yml                    # Arquivo de configuração do MkDocs
-└── requirements.txt              # Dependências Python para execução do MkDocs
+│   └── workflows/       # Automações de publicação
+├── assets/
+│   └── readme/          # Identidade visual do README
+├── docs/                # Documentação em Markdown e seus recursos
+├── README.md            # Apresentação do projeto
+├── mkdocs.yml           # Configuração do MkDocs
+└── requirements.txt     # Dependências da documentação
 ```
 
----
+## Execução local
 
-## 📌 Como Executar a Documentação Localmente
+Para visualizar a documentação no computador, use **Python 3.10 ou superior**, **pip** e um **ambiente virtual**. Os comandos abaixo usam o módulo `venv`, incluído no Python.
 
-### Pré-requisitos
-
-* **Python 3.10 ou superior**
-* **pip e virtualenv**
-
-### Passo a Passo
-
-1. **Clone o repositório:**
+### 1. Clonar o repositório
 
 ```bash
-git clone [https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git)
+git clone https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam.git
 cd REQ-2026.2-T01-SpaceJam
 ```
 
-2. **Crie e ative um ambiente virtual:**
+### 2. Criar e ativar o ambiente virtual
 
-```bash
-python3 -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
+**Windows (PowerShell)**
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
-3. **Instale as dependências:**
+**Linux ou macOS**
 
 ```bash
-pip install -r requeriments.txt
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-4. **Inicie o servidor de desenvolvimento do MkDocs:**
+### 3. Instalar as dependências
 
 ```bash
-mkdocks serve
+python -m pip install -r requirements.txt
 ```
 
-Acesse a documentação no navegador através do endereço: http://127.0.0.1:8000/.
+### 4. Iniciar a documentação
 
+```bash
+python -m mkdocs serve
+```
 
+Abra [http://127.0.0.1:8000/](http://127.0.0.1:8000/) no navegador. Para encerrar o servidor, pressione `Ctrl+C` no terminal.
+
+---
+
+<p align="center"><sub>Space Jam · Requisitos de Software · UnB/FGA · 2026.2</sub></p>

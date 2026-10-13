@@ -1,0 +1,5 @@
+/site/
+/tmp/
+/.cache/
+__pycache__/
+/.worktrees/

@@ -1,17 +1,17 @@
-## 6. Cronograma e Entregas
+# 6. Cronograma e Entregas
 
-O cronograma do Space Jam organiza a evolução do produto em ciclos curtos. A equipe adotou uma abordagem híbrida, com ciclo de vida iterativo e incremental e processo RAD. O planejamento considera o período de 07/09/2026 a 08/12/2026.
+O cronograma do **Space Jam** organiza a evolução do produto em ciclos curtos. A equipe adotou uma **abordagem híbrida**, com ciclo de vida **iterativo e incremental** e processo **RAD**. O planejamento considera o período de **07/09/2026 a 08/12/2026**.
 
 Os ciclos representam períodos de trabalho, e não sprints do Scrum. Em cada período, a equipe pode trabalhar com requisitos, protótipos, construção e validação em intensidades diferentes. A ordem das funcionalidades futuras ainda poderá mudar depois da definição e priorização do MVP.
 
-### 6.1 Ciclos realizados e em andamento
+## 6.1 Ciclos realizados e em andamento
 
 Os primeiros ciclos registram o trabalho que de fato ocorreu, em vez de apresentar funcionalidades ainda não implementadas.
 
 | Ciclo | Período | Situação | Atividade RAD predominante | Trabalho realizado | Evidência ou resultado | Retorno do cliente e revisão |
 |---|---|---|---|---|---|---|
-| C1 | 07/09 a 13/09 | Concluído | Planejamento de Requisitos | Revisão da visão inicial do produto e análise dos pontos que precisavam de correção ou confirmação com o cliente | Artefatos da visão revisados no Pages, com histórico registrado em Cenário Atual, Solução Proposta e Intervenção Social | Os pontos que precisavam de correção ou confirmação com o cliente levaram à conversa de diagnóstico com Lucas, realizada no C2 |
-| C2 | 14/09 a 20/09 | Concluído | Planejamento de Requisitos | Alinhamento do processo RAD, preparação e realização da conversa de diagnóstico com Lucas (17/09, pelo Teams) e início do levantamento dos requisitos | Tópico de Engenharia de Requisitos reorganizado; ata de 17/09 registrada na página de Reuniões; lista inicial de RFs e RNFs | Lucas reconheceu o valor de centralizar as informações dos atletas, descreveu o fluxo que liga exercício, vídeo-base, vídeo de execução e feedback e recomendou começar pelo funcionamento básico. A equipe passou a priorizar o básico e a manter essa associação. Os pontos a esclarecer (campos de cadastro, permissões, formato das correções e cuidados com dados e vídeos) seguiram para o C3 |
+| C1 | 07/09 a 13/09 | Concluído | Planejamento de Requisitos | Revisão da visão inicial do produto e análise dos pontos que precisavam de correção ou confirmação com o cliente | Artefatos da visão revisados no Pages, com histórico registrado em [Cenário Atual](cenario_atual.md), [Solução Proposta](solucao.md) e [Intervenção Social](intervencao_social.md) | Os pontos que precisavam de correção ou confirmação com o cliente levaram à conversa de diagnóstico com Lucas, realizada no C2 |
+| C2 | 14/09 a 20/09 | Concluído | Planejamento de Requisitos | Alinhamento do processo RAD, preparação e realização da conversa de diagnóstico com Lucas (17/09, pelo Teams) e início do levantamento dos requisitos | Tópico de [Engenharia de Requisitos](engenharia_requisitos.md) reorganizado; ata de 17/09 registrada na página de [Reuniões](reunioes.md); lista inicial de RFs e RNFs | Lucas reconheceu o valor de centralizar as informações dos atletas, descreveu o fluxo que liga exercício, vídeo-base, vídeo de execução e feedback e recomendou começar pelo funcionamento básico. A equipe passou a priorizar o básico e a manter essa associação. Os pontos a esclarecer (campos de cadastro, permissões, formato das correções e cuidados com dados e vídeos) seguiram para o C3 |
 | C3 | 21/09 a 27/09 | Concluído com pendências | Planejamento de Requisitos | Apresentação dos requisitos a Lucas, avaliação do valor de negócio em escala de 1 a 5 e esclarecimento dos fluxos de cadastro, treinos, vídeos e feedback (reunião de 26/09) | Ata de 26/09, com notas de valor de negócio revisadas e encaminhamentos | Lucas pediu que o atleta possa fazer o próprio cadastro, com autorização do treinador, e que o perfil inclua a frequência de atividade física. Esclareceu que os testes físicos são presenciais e apenas têm os resultados registrados no sistema, que o atleta pode registrar conclusão ou dificuldades sem enviar vídeo e que a duração do vídeo depende do exercício (30 segundos foi só um exemplo). As observações entram na revisão dos requisitos. Pendências: avaliação dos RNFs, fluxo de autorização do cadastro e recorte do MVP |
 
 Os ciclos C4 e C5, previstos para 28/09 a 11/10, não chegaram a ser executados nessas datas e foram replanejados para as semanas seguintes (veja o registro do replanejamento no item 6.2). Nesse intervalo, a equipe revisou a priorização com Lucas na reunião de 08/10 (ata registrada na página de Reuniões) e planejou a demonstração inicial do protótipo, prevista para 11/10, com horário a combinar.
@@ -27,7 +27,7 @@ Retorno de Lucas na reunião de 08/10, que alimenta o C4:
 
 Pendências desta reunião: consolidar a priorização, definir critérios de aceitação de status, feedback e vínculo entre contas, e esclarecer regras de acesso, visibilidade e consentimento.
 
-### 6.2 Planejamento dos próximos ciclos
+## 6.2 Planejamento dos próximos ciclos
 
 Os ciclos seguintes representam uma previsão inicial. A sequência poderá ser ajustada depois da revisão dos RFs, RNFs, dependências e prioridades do MVP.
 
@@ -44,7 +44,7 @@ Em cada ciclo, a equipe percorre as quatro etapas do RAD. O que muda de um ciclo
 | C10 | 23/11 a 29/11 | Integrar e homologar o MVP | Fechamento dos critérios de aceitação, revisão final dos RNFs (incluindo segurança e LGPD) e das correções prioritárias | Ajustes de usabilidade a partir dos testes, inclusive no celular | **Integração dos fluxos do MVP, consolidação da privacidade e correções prioritárias** | **Preparação do ambiente e homologação assistida com o treinador** | Fluxos do MVP integrados, privacidade e permissões consolidadas, correções prioritárias, ambiente de homologação e resultados dos testes |
 | C11 | 30/11 a 08/12 | Disponibilizar a versão acordada e acompanhar o uso inicial | Registro das limitações conhecidas e das evoluções futuras (como ranking, destaques e recompensas, citados por Lucas) | Ajustes finais de tela, se necessário | Correções críticas encontradas na homologação | **Implantação, documentação mínima de uso e monitoramento** | Implantação, documentação mínima de uso, monitoramento e registro das limitações conhecidas |
 
-#### Registro do replanejamento (reuniões de 17/09, 26/09 e 08/10)
+### Registro do replanejamento (reuniões de 17/09, 26/09 e 08/10)
 
 Os ciclos C4 e C5 não foram executados nas datas previstas (28/09 a 11/10): o período foi ocupado pela revisão da priorização e pelo planejamento da demonstração ao cliente. A equipe manteve o conteúdo dos ciclos e deslocou o calendário, preservando a data final do projeto (08/12/2026). Para isso, o cronograma passou de 12 para 11 ciclos: a privacidade deixou de ter ciclo próprio e foi incorporada ao fluxo de vídeo e à homologação.
 
@@ -60,7 +60,7 @@ Os ciclos C4 e C5 não foram executados nas datas previstas (28/09 a 11/10): o p
 | Integração e homologação do MVP | C11 (16/11 a 22/11) | C10 (23/11 a 29/11) | Deslocamento de uma semana |
 | Implantação e acompanhamento inicial | C12 (23/11 a 08/12) | C11 (30/11 a 08/12) | Último ciclo, mantendo a data final do projeto |
 
-#### Verificação, validação e retorno do cliente por ciclo
+### Verificação, validação e retorno do cliente por ciclo
 
 Cada ciclo termina com uma avaliação. O retorno do cliente pode gerar uma revisão que volta ao Planejamento de Requisitos ou ao Design do Usuário do ciclo seguinte.
 
@@ -78,7 +78,7 @@ Cada ciclo termina com uma avaliação. O retorno do cliente pode gerar uma revi
 !!! note "Planejamento em evolução"
     A partir do C4, os objetivos e resultados representam uma previsão inicial. Eles deverão ser atualizados quando a equipe concluir a priorização dos requisitos e do MVP, sem apagar o histórico das decisões anteriores.
 
-### 6.3 Como os ciclos serão conduzidos
+## 6.3 Como os ciclos serão conduzidos
 
 Antes de implementar uma funcionalidade, a equipe deverá compreender a necessidade, revisar os requisitos relacionados e, quando necessário, preparar um protótipo. Depois da avaliação do fluxo, o incremento poderá ser construído, testado e apresentado.
 
@@ -98,7 +98,7 @@ O quadro abaixo mostra o caminho de um ciclo e onde entra o retorno do cliente:
 
 Quando o retorno do cliente altera um fluxo, a equipe volta ao protótipo (passos 2 e 3) antes de reconstruir a funcionalidade.
 
-### 6.4 Verificação, validação e evidências
+## 6.4 Verificação, validação e evidências
 
 A equipe utilizará dois momentos diferentes de avaliação:
 
@@ -118,7 +118,7 @@ Dependendo do ciclo, poderão ser utilizadas como evidências:
 - registros das demonstrações e do retorno do cliente;
 - decisões de manter, corrigir ou replanejar uma funcionalidade.
 
-### 6.5 Cuidados contínuos
+## 6.5 Cuidados contínuos
 
 Algumas atividades acompanharão todo o desenvolvimento:
 
@@ -131,3 +131,12 @@ Algumas atividades acompanharão todo o desenvolvimento:
 - atualizar o MVP e o cronograma quando houver mudança de prioridade, indisponibilidade do cliente ou dificuldade técnica.
 
 Quando um item precisar mudar de ciclo, a equipe registrará o motivo, a decisão tomada e o novo período previsto.
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor(es) |
+    | :---: | :---: | --- | --- |
+    | 12/10/2026 | 0.4 | Atualização das fases RAD por ciclo, retorno do cliente e replanejamento do cronograma | Paulo Sérgio Rabelo Santana Rios |
+    | 19/09/2026 | 0.3 | Complementação do cronograma com o trabalho realizado nos ciclos iniciais, forma de validação, evidências e regra de atualização | Luiz Henrique Pessato da Mota |
+    | 18/09/2026 | 0.2 | Ajuste dos ciclos e alinhamento do cronograma ao processo RAD | Paulo Sérgio Rabelo Santana Rios |
+    | 08/09/2026 | 0.1 | Estruturação inicial do cronograma | Anderson Fernandes da Silva |
