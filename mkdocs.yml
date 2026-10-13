@@ -88,7 +88,7 @@ nav:
       - "8. Requisitos de Software": requisitos.md
       - "9. Priorização e MVP": mvp.md
       - "10. Backlog": backlog.md
-      - "DoR e DoD": dor_dod.md
-      - "11. Lições Aprendidas": licoes-aprendidas.md
+      - "11. DoR e DoD": dor_dod.md
+      - "12. Lições Aprendidas": licoes-aprendidas.md
   - Entregas: entregas.md
   - Reuniões: reunioes.md
