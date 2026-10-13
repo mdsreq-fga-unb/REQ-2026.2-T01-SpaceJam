@@ -151,9 +151,9 @@ Considerando o escopo preliminar do MVP, as tecnologias propostas, a possibilida
 
 ### Detalhamento das Matrizes de Engenharia de Requisitos e Esforço Técnico
 
-Para fundamentar empiricamente a viabilidade do projeto e orientar a priorização das sprints do MVP, a equipe elaborou uma matriz quantitativa unificada de Engenharia de Requisitos:
+Para fundamentar empiricamente a viabilidade do projeto e orientar a priorização por ciclos do MVP, a equipe elaborou uma matriz quantitativa unificada de Engenharia de Requisitos:
 
-- **Tabela 1 (Rastreabilidade e Valor de Negócio):** Associa cada Requisito Funcional aos Objetivos Estratégicos (ex.: `OE1 - CP1`), definindo seu escopo e quantificando o **Valor de Negócio** para garantir foco nas entregas de maior impacto.
+- **Tabela 1 (Rastreabilidade e Valor de Negócio):** Associa cada Requisito Funcional aos Objetivos Específicos (ex.: `OE1 - CP1`), definindo seu escopo e quantificando o **Valor de Negócio** para garantir foco nas entregas de maior impacto.
 - **Tabela 2 (Avaliação Individual de Esforço Técnico):** Consolida a estimativa de esforço atribuída individualmente pelos 6 integrantes (*Anderson, Júlia, Thiago, Guilherme, Luiz e Paulo*), calculando a média (`Média1`) para alinhar a complexidade real do código à capacidade do grupo.
 - **Tabela 3 (Avaliação de Critério Técnico):** Pondera o nível de risco arquitetural e complexidade de domínio de cada funcionalidade segundo a pontuação de cada membro da equipe, servindo de subsídio direto para o planejamento do projeto e mitigação de riscos no cronograma.
 
