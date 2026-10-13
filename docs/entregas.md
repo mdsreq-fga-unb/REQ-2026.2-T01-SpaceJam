@@ -2,7 +2,7 @@
 
 <p class="sj-delivery-eyebrow">REGISTRO DE ENTREGA · SPACE JAM</p>
 
-# Entregas
+# Unidade 1
 
 <p class="sj-delivery-lead"><strong>Primeira entrega.</strong> A visão inicial do produto e do projeto, a apresentação da equipe e os caminhos para consultar cada artefato em um só lugar.</p>
 
@@ -50,7 +50,7 @@ A apresentação reúne o contexto do cliente, a proposta inicial e o planejamen
   <summary>Ver a prévia incorporada nesta página</summary>
   <div class="sj-delivery-video">
     <iframe
-      src="https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/preview"
+      src="https://drive.google.com/file/d/1Qd5QdBdoyjUshkh5y5cjSQzzW_FRtJOV/preview"
       title="Apresentação da primeira entrega do Space Jam"
       loading="lazy"
       allow="autoplay; fullscreen"
@@ -59,6 +59,74 @@ A apresentação reúne o contexto do cliente, a proposta inicial e o planejamen
   </div>
 </details>
 
-## Documento publicado
 
 O documento da entrega é esta própria documentação navegável. Comece por [Cenário Atual](cenario_atual.md) e avance pelas seções da visão. As [Lições Aprendidas](licoes-aprendidas.md) registram a retrospectiva e as ações de melhoria da primeira entrega.
+
+
+
+<div class="sj-delivery-hero" markdown="1">
+
+<p class="sj-delivery-eyebrow">REGISTRO DE ENTREGA · SPACE JAM</p>
+
+# Unidade 2
+
+<p class="sj-delivery-lead"><strong>Segunda entrega.</strong> O aprofundamento dos requisitos do produto, a definição do escopo priorizado e do MVP, e a organização das evidências de desenvolvimento, rastreabilidade e acompanhamento do projeto em um só lugar.</p>
+
+<div class="sj-delivery-facts">
+  <div><span>Documento</span><strong>Visão de Produto e Projeto atualizada</strong></div>
+  <div><span>Conteúdo</span><strong>Requisitos, MVP, DoR/DoD e rastreabilidade</strong></div>
+  <div><span>Formato</span><strong>Pages navegável e vídeo de apresentação</strong></div>
+</div>
+</div>
+
+## Escopo da entrega
+
+A entrega da Unidade 2 contempla o detalhamento e a atualização da Visão de Produto e Projeto, incluindo a especificação dos requisitos funcionais e não funcionais, a definição e priorização do escopo do produto, a delimitação do MVP e os critérios de Definition of Ready (DoR) e Definition of Done (DoD). Também serão apresentadas evidências da execução dos processos de Engenharia de Software (ESw) e Engenharia de Requisitos (ER), a rastreabilidade entre o problema, os objetivos, as características do produto e os requisitos, além das evidências de cumprimento e das atualizações realizadas no cronograma.
+
+### O que foi produzido
+
+<div class="sj-delivery-docs">
+  <section>
+    <span>01 · REVISAR</span>
+    <h4>Atualizações da Unidade 1</h4>
+    <p>
+      Reúne as revisões realizadas na Visão de Produto e Projeto a partir dos
+      feedbacks recebidos, incluindo ajustes no contexto, nos stakeholders,
+      nas características do produto, na estratégia de desenvolvimento e no
+      planejamento do projeto.
+    </p>
+  </section>
+
+  <section>
+    <span>02 · ESPECIFICAR</span>
+    <h4>Requisitos e escopo</h4>
+    <p>
+      Apresenta os requisitos funcionais e não funcionais, o backlog priorizado,
+      a definição do MVP e os critérios de DoR e DoD, orientando o desenvolvimento
+      das funcionalidades previstas.
+    </p>
+  </section>
+
+  <section>
+    <span>03 · VALIDAR</span>
+    <h4>Requisitos e entregas da Unidade 2</h4>
+    <p>
+      Reúne também as evidências de execução dos processos de Engenharia de Software e Engenharia de Requisitos, a rastreabilidade entre problema, objetivos, características do produto e requisitos, além das evidências de cumprimento e atualização do cronograma.
+    </p>
+  </section>
+</div>
+
+## Vídeo da apresentação
+
+<details class="sj-delivery-video-details">
+  <summary>Ver a prévia incorporada nesta página</summary>
+  <div class="sj-delivery-video">
+    <iframe
+      src="https://drive.google.com/file/d/1Db0uSL7nl3-gG5qx_3P_SCFZ4sYx2ieX/preview"
+      title="Apresentação da primeira entrega do Space Jam"
+      loading="lazy"
+      allow="autoplay; fullscreen"
+      allowfullscreen>
+    </iframe>
+  </div>
+</details>
