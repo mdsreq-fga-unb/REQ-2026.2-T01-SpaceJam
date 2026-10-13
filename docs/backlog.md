@@ -19,24 +19,24 @@ O catálogo a seguir consolida os requisitos funcionais (RFs) elicitados para a 
 | RF01105 | CP1 | **Excluir usuário:** Permitir a exclusão de um atleta desvinculado. | Treinador | Won't Have |
 | RF01106 | CP1 | **Criar senha aleatória:** Gerar senha temporária automática para o primeiro acesso do usuário. | Sistema | Won't Have |
 | RF01107 | CP1 | **Trocar senha:** Exigir e permitir a redefinição de senha com critérios de segurança (obrigatório no 1º acesso). | Usuário | Must Have |
-| RF01201 | CP2 | **Consultar dificuldade:** Permitir que o treinador consulte as dificuldades registradas para os treinos. | Treinador | Should Have |
-| RF01202 | CP2 | **Registrar dificuldade:** Permitir que o atleta avalie a dificuldade do exercício (escala 1 a 5). | Atleta | Must Have |
-| RF01203 | CP2 | **Editar dificuldade:** Permitir que o atleta modifique a dificuldade registrada enquanto o treino estiver disponível. | Atleta | Must Have |
-| RF01204 | CP2 | **Editar status exercícios:** Permitir ao treinador alterar o status ("Concluído", "A fazer", "Corrigir"). | Treinador | Should Have |
-| RF01205 | CP2 | **Adicionar testes:** Acrescentar testes de aptidão física. | Treinador | Won't Have |
-| RF01206 | CP2 | **Remover testes:** Excluir testes de aptidão física. | Treinador | Won't Have |
+| RF01208 | CP2 | **Consultar dificuldade:** Permitir que o treinador consulte as dificuldades registradas para os treinos. | Treinador | Should Have |
+| RF01209 | CP2 | **Registrar dificuldade:** Permitir que o atleta avalie a dificuldade do exercício (escala 1 a 5). | Atleta | Must Have |
+| RF01210 | CP2 | **Editar dificuldade:** Permitir que o atleta modifique a dificuldade registrada enquanto o treino estiver disponível. | Atleta | Must Have |
+| RF01211 | CP2 | **Editar status exercícios:** Permitir ao treinador alterar o status ("Concluído", "A fazer", "Corrigir"). | Treinador | Should Have |
+| RF01212 | CP2 | **Adicionar testes:** Acrescentar testes de aptidão física. | Treinador | Won't Have |
+| RF01213 | CP2 | **Remover testes:** Excluir testes de aptidão física. | Treinador | Won't Have |
 | RF02301 | CP3 | **Cadastrar planejamento:** Registrar o planejamento de treinamento de cada atleta. | Treinador | Must Have |
 | RF02302 | CP3 | **Editar planejamento:** Alterar o planejamento de treinamento de cada atleta. | Treinador | Must Have |
 | RF02303 | CP3 | **Associar treino a objetivo:** Vincular cada treino planejado aos objetivos macro do atleta. | Treinador | Could Have |
 | RF02304 | CP3 | **Consultar histórico de planejamento:** Visualizar o histórico de alterações nos planejamentos de treinamento. | Treinador | Should Have |
 | RF02305 | CP3 | **Comparar treinamentos:** Gerar relatório comparativo entre treinos planejados e realizados pelo atleta. | Treinador | Should Have |
 | RF02306 | CP3 | **Consultar status de treino:** Identificar o estado do treino (não iniciado, em andamento, concluído). | Treinador | Must Have |
-| RF02401 | CP4 | **Cadastrar exercício:** Cadastrar exercícios na biblioteca com objetivo, fundamento e orientações. | Treinador | Must Have |
-| RF02402 | CP4 | **Filtrar exercícios por fundamento:** Filtrar a biblioteca de acordo com o fundamento esportivo. | Treinador | Could Have |
-| RF02403 | CP4 | **Associar exercício a objetivo:** Vincular exercícios da biblioteca a objetivos de treinamento. | Treinador | Won't Have |
-| RF02404 | CP4 | **Documentar erros e orientações:** Associar erros comuns e correções aos exercícios cadastrados. | Treinador | Must Have |
-| RF02405 | CP4 | **Gerar thumbnail de vídeo base:** Fazer upload de miniatura personalizada ou gerar frame automático. | Treinador | Could Have |
-| RF02406 | CP4 | **Cadastrar informações do vídeo:** Cadastrar título e descrição breve associados ao vídeo base do exercício. | Treinador | Must Have |
+| RF02407 | CP4 | **Cadastrar exercício:** Cadastrar exercícios na biblioteca com objetivo, fundamento e orientações. | Treinador | Must Have |
+| RF02408 | CP4 | **Filtrar exercícios por fundamento:** Filtrar a biblioteca de acordo com o fundamento esportivo. | Treinador | Could Have |
+| RF02409 | CP4 | **Associar exercício a objetivo:** Vincular exercícios da biblioteca a objetivos de treinamento. | Treinador | Won't Have |
+| RF02410 | CP4 | **Documentar erros e orientações:** Associar erros comuns e correções aos exercícios cadastrados. | Treinador | Must Have |
+| RF02411 | CP4 | **Gerar thumbnail de vídeo base:** Fazer upload de miniatura personalizada ou gerar frame automático. | Treinador | Could Have |
+| RF02412 | CP4 | **Cadastrar informações do vídeo:** Cadastrar título e descrição breve associados ao vídeo base do exercício. | Treinador | Must Have |
 | RF03501 | CP5 | **Enviar vídeo de execução:** Gravar/selecionar vídeo e enviar vinculado a um exercício específico. | Atleta | Must Have |
 | RF03502 | CP5 | **Substituir vídeo enviado:** Substituir vídeo antes do registro de feedback pelo treinador. | Atleta | Must Have |
 | RF03503 | CP5 | **Excluir vídeo enviado:** Excluir vídeo antes do registro de feedback pelo treinador. | Atleta | Won't Have |
@@ -45,16 +45,16 @@ O catálogo a seguir consolida os requisitos funcionais (RFs) elicitados para a 
 | RF03603 | CP6 | **Excluir feedback:** Excluir feedback registrado anteriormente pelo próprio treinador. | Treinador | Won't Have |
 | RF03604 | CP6 | **Notificar atleta sobre feedback:** Disparar notificação quando um feedback for registrado ou editado. | Sistema | Should Have |
 | RF04701 | CP7 | **Consultar atletas acompanhados:** Listar atletas vinculados à carteira do treinador autenticado. | Treinador | Should Have |
-| RF04801 | CP8 | **Consultar próprios dados cadastrais:** Consultar os dados da própria conta com isolamento estrito. | Atleta | Must Have |
-| RF04802 | CP8 | **Consultar próprios resultados de testes:** Consultar resultados de testes associados à própria conta. | Atleta | Should Have |
-| RF04803 | CP8 | **Consultar próprios vídeos enviados:** Visualizar os vídeos de execução enviados no histórico. | Atleta | Should Have |
-| RF04804 | CP8 | **Consultar vídeos de atleta acompanhado:** Visualizar os vídeos de execução enviados pelos atletas vinculados. | Treinador | Must Have |
-| RF04805 | CP8 | **Consultar feedback recebido:** Acessar feedbacks individuais registrados pelo treinador. | Atleta | Must Have |
-| RF04806 | CP8 | **Consultar próprio histórico de treinos:** Visualizar histórico completo de treinos próprios. | Atleta | Should Have |
-| RF04807 | CP8 | **Consultar próprios objetivos:** Visualizar objetivos macro definidos para o próprio atleta. | Atleta | Should Have |
-| RF04808 | CP8 | **Consultar próprio planejamento de treinos:** Visualizar os treinos atualmente planejados e disponíveis. | Atleta | Should Have |
-| RF04809 | CP8 | **Consultar perfil de atleta acompanhado:** Visualizar perfil e métricas clínicas dos atletas vinculados. | Treinador | Must Have |
-| RF04810 | CP8 | **Consultar resultados de testes de atleta acompanhado:** Avaliar histórico de testes dos atletas vinculados. | Treinador | Must Have |
+| RF04802 | CP8 | **Consultar próprios dados cadastrais:** Consultar os dados da própria conta com isolamento estrito. | Atleta | Must Have |
+| RF04803 | CP8 | **Consultar próprios resultados de testes:** Consultar resultados de testes associados à própria conta. | Atleta | Should Have |
+| RF04804 | CP8 | **Consultar próprios vídeos enviados:** Visualizar os vídeos de execução enviados no histórico. | Atleta | Should Have |
+| RF04805 | CP8 | **Consultar vídeos de atleta acompanhado:** Visualizar os vídeos de execução enviados pelos atletas vinculados. | Treinador | Must Have |
+| RF04806 | CP8 | **Consultar feedback recebido:** Acessar feedbacks individuais registrados pelo treinador. | Atleta | Must Have |
+| RF04807 | CP8 | **Consultar próprio histórico de treinos:** Visualizar histórico completo de treinos próprios. | Atleta | Should Have |
+| RF04808 | CP8 | **Consultar próprios objetivos:** Visualizar objetivos macro definidos para o próprio atleta. | Atleta | Should Have |
+| RF04809 | CP8 | **Consultar próprio planejamento de treinos:** Visualizar os treinos atualmente planejados e disponíveis. | Atleta | Should Have |
+| RF04810 | CP8 | **Consultar perfil de atleta acompanhado:** Visualizar perfil e métricas clínicas dos atletas vinculados. | Treinador | Must Have |
+| RF04811 | CP8 | **Consultar resultados de testes de atleta acompanhado:** Avaliar histórico de testes dos atletas vinculados. | Treinador | Must Have |
 
 #### 10.1.2 Catálogo Consolidado de Requisitos Não Funcionais
 
@@ -116,25 +116,25 @@ A coluna **RNFs Relacionados** estabelece a rastreabilidade entre as histórias 
 | **RF01105** | **US05** — Como treinador, quero excluir o perfil de um atleta desvinculado, para manter a base de dados da minha carteira limpa e atualizada. | RNF15 |
 | **RF01106** | **US06** — Como sistema, quero gerar uma senha temporária automática para o primeiro acesso do usuário, para garantir um processo de integração (*onboarding*) ágil e seguro. | RNF15 |
 | **RF01107** | **US07** — Como aluno, quero trocar a senha após o primeiro acesso, para conseguir acessar o site novamente de forma segura e pessoal. | RNF15 |
-| **RF01201** | **US08** — Como treinador, quero consultar a dificuldade que os alunos registraram após o treino, para ser assertivo com as orientações e registro de treinos posteriores. | RNF11 |
-| **RF01202** | **US09** — Como aluno, quero registrar a dificuldade que senti na execução do exercício, para o treinador entender em quais momentos e cargas tive mais dificuldade. | RNF15 |
-| **RF01203** | **US10** — Como aluno, quero modificar a dificuldade que registrei enquanto o treino estiver vigente, para ser assertivo e corrigir avaliações precipitadas. | RNF15 |
-| **RF01204** | **US11a** — Como aluno, quero modificar o status do meu próprio exercício para "Concluído" ou "A fazer", para registrar e sinalizar o meu progresso durante a execução do treino. | RNF11 |
-| **RF01205** | **US11b** — Como treinador, quero modificar o status dos exercícios dos meus alunos para "Concluído" ou "Corrigir", para auditar e validar o progresso deles após analisar a execução. | RNF11 |
-**RF01206** | **US12** — Como treinador, quero adicionar testes de aptidão física, para avaliar formalmente o desempenho e a evolução atlética dos meus alunos. | RNF15 |
-| **RF01207** | **US13** — Como treinador, quero remover testes de aptidão física previamente cadastrados, para corrigir equívocos ou atualizar a matriz de avaliação da carteira. | RNF15 |
+| **RF01208** | **US08** — Como treinador, quero consultar a dificuldade que os alunos registraram após o treino, para ser assertivo com as orientações e registro de treinos posteriores. | RNF11 |
+| **RF01209** | **US09** — Como aluno, quero registrar a dificuldade que senti na execução do exercício, para o treinador entender em quais momentos e cargas tive mais dificuldade. | RNF15 |
+| **RF01210** | **US10** — Como aluno, quero modificar a dificuldade que registrei enquanto o treino estiver vigente, para ser assertivo e corrigir avaliações precipitadas. | RNF15 |
+| **RF01211** | **US11a** — Como aluno, quero modificar o status do meu próprio exercício para "Concluído" ou "A fazer", para registrar e sinalizar o meu progresso durante a execução do treino. | RNF11 |
+| **RF01211** | **US11b** — Como treinador, quero modificar o status dos exercícios dos meus alunos para "Concluído" ou "Corrigir", para auditar e validar o progresso deles após analisar a execução. | RNF11 |
+**RF01212** | **US12** — Como treinador, quero adicionar testes de aptidão física, para avaliar formalmente o desempenho e a evolução atlética dos meus alunos. | RNF15 |
+| **RF01213** | **US13** — Como treinador, quero remover testes de aptidão física previamente cadastrados, para corrigir equívocos ou atualizar a matriz de avaliação da carteira. | RNF15 |
 | **RF02301** | **US14** — Como treinador, quero registrar o planejamento de cada aluno na minha carteira, para que eles possam acompanhar e executar as rotinas de treino propostas. | RNF15 |
 | **RF02302** | **US15** — Como treinador, quero modificar o planejamento de treino já cadastrado, para corrigir possíveis erros ou realizar ajustes de carga. | RNF15 |
 | **RF02303** | **US16** — Como treinador, quero vincular um treino planejado aos macro-objetivos do atleta, para manter a coerência da prescrição a longo prazo. | RNF15 |
 | **RF02304** | **US17** — Como treinador, quero consultar o histórico de planejamentos de treinos de cada aluno, para aprimorar e embasar o acompanhamento longitudinal do atleta. | RNF11 |
 | **RF02305** | **US18** — Como treinador, quero gerar um relatório comparativo entre o treino planejado e o efetivamente realizado, para analisar a adesão e o rendimento do atleta. | RNF11 |
 | **RF02306** | **US19** — Como treinador, quero consultar o andamento e status do treino em tempo real, para aprimorar o acompanhamento da execução diária de cada aluno. | RNF11 |
-| **RF02401** | **US20** — Como treinador, quero cadastrar um exercício na biblioteca, para que o aluno saiba exatamente quais movimentos precisa realizar no seu treino. | RNF12, RNF15 |
-| **RF02402** | **US21** — Como treinador, quero filtrar a biblioteca de exercícios por fundamento esportivo, para encontrar rapidamente os movimentos adequados na hora de montar o treino. | RNF12 |
-| **RF02403** | **US22** — Como treinador, quero vincular exercícios da biblioteca a objetivos específicos, para padronizar e agilizar futuras prescrições. | RNF15 |
-| **RF02404** | **US23** — Como treinador, quero documentar erros comuns e orientações aos exercícios cadastrados, para alertar o aluno e evitar que ele cometa as falhas frequentes relacionadas àquele movimento. | RNF15 |
-| **RF02405** | **US24** — Como treinador, quero gerar uma miniatura (*thumbnail*) para o vídeo base, para facilitar a identificação visual do exercício na biblioteca pelo atleta. | RNF06 |
-| **RF02406** | **US25** — Como treinador, quero cadastrar título e/ou descrições detalhadas nos vídeos base do exercício, para que o aluno entenda completamente a forma e a execução correta. | RNF15 |
+| **RF02407** | **US20** — Como treinador, quero cadastrar um exercício na biblioteca, para que o aluno saiba exatamente quais movimentos precisa realizar no seu treino. | RNF12, RNF15 |
+| **RF02408** | **US21** — Como treinador, quero filtrar a biblioteca de exercícios por fundamento esportivo, para encontrar rapidamente os movimentos adequados na hora de montar o treino. | RNF12 |
+| **RF02409** | **US22** — Como treinador, quero vincular exercícios da biblioteca a objetivos específicos, para padronizar e agilizar futuras prescrições. | RNF15 |
+| **RF02410** | **US23** — Como treinador, quero documentar erros comuns e orientações aos exercícios cadastrados, para alertar o aluno e evitar que ele cometa as falhas frequentes relacionadas àquele movimento. | RNF15 |
+| **RF02411** | **US24** — Como treinador, quero gerar uma miniatura (*thumbnail*) para o vídeo base, para facilitar a identificação visual do exercício na biblioteca pelo atleta. | RNF06 |
+| **RF02412** | **US25** — Como treinador, quero cadastrar título e/ou descrições detalhadas nos vídeos base do exercício, para que o aluno entenda completamente a forma e a execução correta. | RNF15 |
 | **RF03501** | **US26** — Como aluno, quero mandar um vídeo da execução do exercício, para que o treinador veja como está a minha forma e consiga dar um feedback mais assertivo. | RNF06, RNF07, RNF13, RNF14, RNF16 |
 | **RF03502** | **US27** — Como aluno, quero trocar o vídeo da execução do exercício que foi enviado, para corrigir o envio de um arquivo errado antes que o treinador avalie a mídia. | RNF06, RNF07, RNF13, RNF14, RNF16 |
 | **RF03503** | **US28** — Como aluno, quero excluir um vídeo de execução enviado, para cancelar uma submissão feita por engano antes da avaliação do treinador. | RNF15 |
@@ -143,16 +143,16 @@ A coluna **RNFs Relacionados** estabelece a rastreabilidade entre as histórias 
 | **RF03603** | **US31** — Como treinador, quero excluir um feedback previamente registrado, para remover anotações indevidas ou equivocadas da plataforma. | RNF15 |
 | **RF03604** | **US32** — Como aluno, quero ser notificado no sistema quando o treinador registrar ou editar um feedback, para saber exatamente quando o meu vídeo foi avaliado e visualizá-lo. | RNF11 |
 | **RF04701** | **US33** — Como treinador, quero acessar a lista de dados exclusivamente dos alunos da minha carteira, para aprimorar o acompanhamento e gerenciar o volume de treinos. | RNF09 |
-| **RF04801** | **US34** — Como aluno, quero consultar unicamente os meus próprios dados cadastrais, para ter ciência dos dados armazenados e saber se necessitam de correção. | RNF05, RNF10, RNF11 |
-| **RF04802** | **US35** — Como aluno, quero consultar exclusivamente os resultados dos meus próprios testes de aptidão, para monitorar a minha performance sem acessar dados de terceiros. | RNF05, RNF10, RNF11 |
-| **RF04803** | **US36** — Como aluno, quero consultar unicamente os vídeos de execução que eu mesmo enviei, para rever a minha forma e garantir que a mídia submetida foi a correta. | RNF05, RNF10, RNF11 |
-| **RF04804** | **US37** — Como treinador, quero consultar os vídeos de execução enviados pelos alunos sob meu acompanhamento, para avaliar tecnicamente a execução de cada exercício de forma assíncrona. | RNF09, RNF10, RNF11 |
-| **RF04805** | **US38** — Como aluno, quero consultar exclusivamente o feedback que o treinador registrou nos meus exercícios realizados, para compreensão de erros e correção de postura. | RNF05, RNF10, RNF11 |
-| **RF04806** | **US39** — Como aluno, quero consultar o meu próprio histórico de treinos já realizados, para acessar rotinas antigas e acompanhar a progressão de cargas. | RNF05, RNF10, RNF11 |
-| **RF04807** | **US40** — Como aluno, quero consultar exclusivamente os meus próprios objetivos definidos pelo treinador, para ter ciência de que as rotinas de treino são coerentes com as minhas metas. | RNF05, RNF10, RNF11 |
-| **RF04808** | **US41** — Como aluno, quero consultar exclusivamente o meu próprio planejamento de treino diário/semanal, para entender a organização e a sequência dos exercícios prescritos. | RNF05, RNF10, RNF11 |
-| **RF04809** | **US42** — Como treinador, quero consultar o perfil completo dos alunos sob minha responsabilidade, para analisar dados pessoais atualizados e embasar avaliações clínicas. | RNF09, RNF10, RNF11 |
-| **RF04810** | **US43** — Como treinador, quero consultar o histórico de resultados dos testes de aptidão física da minha carteira de alunos, para analisar a evolução atlética e definir quais os treinos adequados para os próximos ciclos. | RNF09, RNF10, RNF11 |
+| **RF04802** | **US34** — Como aluno, quero consultar unicamente os meus próprios dados cadastrais, para ter ciência dos dados armazenados e saber se necessitam de correção. | RNF05, RNF10, RNF11 |
+| **RF04803** | **US35** — Como aluno, quero consultar exclusivamente os resultados dos meus próprios testes de aptidão, para monitorar a minha performance sem acessar dados de terceiros. | RNF05, RNF10, RNF11 |
+| **RF04804** | **US36** — Como aluno, quero consultar unicamente os vídeos de execução que eu mesmo enviei, para rever a minha forma e garantir que a mídia submetida foi a correta. | RNF05, RNF10, RNF11 |
+| **RF04805** | **US37** — Como treinador, quero consultar os vídeos de execução enviados pelos alunos sob meu acompanhamento, para avaliar tecnicamente a execução de cada exercício de forma assíncrona. | RNF09, RNF10, RNF11 |
+| **RF04806** | **US38** — Como aluno, quero consultar exclusivamente o feedback que o treinador registrou nos meus exercícios realizados, para compreensão de erros e correção de postura. | RNF05, RNF10, RNF11 |
+| **RF04807** | **US39** — Como aluno, quero consultar o meu próprio histórico de treinos já realizados, para acessar rotinas antigas e acompanhar a progressão de cargas. | RNF05, RNF10, RNF11 |
+| **RF04808** | **US40** — Como aluno, quero consultar exclusivamente os meus próprios objetivos definidos pelo treinador, para ter ciência de que as rotinas de treino são coerentes com as minhas metas. | RNF05, RNF10, RNF11 |
+| **RF04809** | **US41** — Como aluno, quero consultar exclusivamente o meu próprio planejamento de treino diário/semanal, para entender a organização e a sequência dos exercícios prescritos. | RNF05, RNF10, RNF11 |
+| **RF04810** | **US42** — Como treinador, quero consultar o perfil completo dos alunos sob minha responsabilidade, para analisar dados pessoais atualizados e embasar avaliações clínicas. | RNF09, RNF10, RNF11 |
+| **RF04811** | **US43** — Como treinador, quero consultar o histórico de resultados dos testes de aptidão física da minha carteira de alunos, para analisar a evolução atlética e definir quais os treinos adequados para os próximos ciclos. | RNF09, RNF10, RNF11 |
 
 > **Nota de rastreabilidade:** O desmembramento de requisitos complexos (como Cadastro de Usuário e Edição de Perfil) em *User Stories* atômicas (ex: US01a e US01b) foi realizado para garantir a cobertura individual de testes e regras de negócio para as visões e permissões específicas de Treinador e Atleta.
 
