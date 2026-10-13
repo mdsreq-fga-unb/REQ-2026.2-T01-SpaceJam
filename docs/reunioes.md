@@ -17,11 +17,22 @@ Esta página reúne as atas das reuniões do projeto Space Jam. Os encaminhament
 
 ## Evidências de ESW e ER
 
+### Reunião de alinhamento com o brainstorm
+
+![Print da validação](imagens/Reunião_de_brainstorm.png)
+
+### Validação do protótipo inicial
+
 <iframe
   src="https://embed.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864&embed-host=share"
   style="display: block; width: 100%; max-width: 800px; height: 450px; margin: 16px auto; border: 0;"
   allowfullscreen>
 </iframe>
+
+O protótipo de baixa fidelidade acima foi validado via WhatsApp: 
+
+![Print da validação](imagens/Validação.png)
+
 
 ??? abstract "Histórico de revisão"
 
