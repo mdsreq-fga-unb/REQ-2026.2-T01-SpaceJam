@@ -1,94 +1,180 @@
 site_name: Space Jam
+
 site_description: Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB
+
 site_author: Equipe Space Jam
+
 site_url: https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/
+
 repo_url: https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+
 repo_name: mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+
 edit_uri: edit/docs/docs/
+
 copyright: Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
 
+
+
 theme:
+
   name: material
+
   custom_dir: overrides
+
   language: pt
+
   favicon: imagens/space-jam-logo.svg
+
   logo: imagens/space-jam-logo.svg
+
   icon:
+
     logo: material/basketball
+
     repo: fontawesome/brands/github
 
+
+
   palette:
+
     - scheme: slate
+
       primary: deep purple
+
       accent: purple
+
       toggle:
+
         icon: material/weather-sunny
+
         name: Modo claro
 
+
+
     - scheme: default
+
       primary: deep purple
+
       accent: purple
+
       toggle:
+
         icon: material/weather-night
+
         name: Modo escuro
 
+
+
   font:
+
     text: Inter
+
     code: JetBrains Mono
 
+
+
   features:
+
     - navigation.top
+
     - navigation.indexes
+
     - navigation.footer
+
     - toc.follow
+
     - search.highlight
+
     - search.suggest
+
     - content.action.edit
+
     - content.code.copy
 
+
+
 extra_css:
+
   - stylesheets/extra.css
+  - stylesheets/catalogo.css
+
+
 
 extra_javascript:
+
   - javascripts/sj-navigation.js
+
   - javascripts/sj-tables.js
+  - javascripts/sj-catalog.js
+
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
+
+
 markdown_extensions:
+
   - pymdownx.arithmatex:
+
       generic: true
+
   - admonition
+
   - attr_list
+
   - md_in_html
+
   - tables
+
   - pymdownx.superfences
+
   - pymdownx.details
+
   - pymdownx.highlight
+
   - toc:
+
       permalink: true
+
       title: Nesta página
 
+      toc_depth: 2-3
+
+
+
+hooks:
+  - hooks/catalog_context.py
+
 plugins:
+
   - search:
+
       lang: pt
 
+
+
 exclude_docs: |
+
   /unidade-2.md
+
+
 
 nav:
   - Início: index.md
-  - Visão do Produto e Projeto:
+  - Visão do produto e projeto:
       - "1. Cenário Atual": cenario_atual.md
       - "2. Solução Proposta": solucao.md
       - "3. Intervenção Social": intervencao_social.md
       - "4. Estratégias de Engenharia de Software": estrategia.md
-      - "5. Engenharia de Requisitos": engenharia_requisitos.md
+  - Engenharia de Requisitos:
+      - "5. Atividades e técnicas de ER": engenharia_requisitos.md
+      - "8. Catálogo de requisitos": requisitos.md
+      - "9. Definição do MVP": mvp.md
+      - "10. Backlog e priorização": backlog.md
+      - "11. DoR e DoD": dor_dod.md
+  - Acompanhamento e entregas:
       - "6. Cronograma e Entregas": cronograma.md
       - "7. Interação entre Equipe e Cliente": interacao_equipe_cliente.md
-      - "8. Requisitos de Software": requisitos.md
-      - "9. Priorização e MVP": mvp.md
-      - "10. Backlog": backlog.md
-      - "11. DoR e DoD": dor_dod.md
+      - Reuniões: reunioes.md
+      - Entregas: entregas.md
       - "12. Lições Aprendidas": licoes-aprendidas.md
-  - Entregas: entregas.md
-  - Reuniões: reunioes.md
