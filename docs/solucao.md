@@ -17,7 +17,7 @@ A figura a seguir representa exclusivamente o cenário futuro apoiado pela solu�
 mantendo a descrição do cenário atual restrita à Seção 1.
 
 
-![Rich Picture do cenário futuro apoiado pela solução proposta](imagens/rich_picture_cenario_futuro.png)
+![Rich Picture do cenário futuro apoiado pela solução proposta](imagens/rich_picture_cenario_futuro.png){:  width="667" height="365" }
 
 
 *Figura 4 — Rich Picture do cenário futuro apoiado pela solução proposta.*
@@ -72,13 +72,13 @@ O treinador poderá utilizar computadores e smartphones para gerenciamento dos a
 
 Para o desenvolvimento da interface, propõe-se a utilização do **React**, permitindo a construção de componentes reutilizáveis e de uma interface organizada e responsiva.
 
-No desenvolvimento do back-end, será utilizada a linguagem **Python**, responsável pela implementação das regras de negócio, gerenciamento das requisições, autenticação dos usuários e comunicação com o banco de dados. A definição do framework a ser utilizado em Python poderá ser realizada durante a etapa de implementação, considerando as necessidades do projeto e o conhecimento técnico da equipe.
+No desenvolvimento do back-end, será utilizada a linguagem **Python**, responsável pela implementação das regras de negócio, gerenciamento das requisições, autenticação dos usuários e comunicação com o banco de dados. A stack documentada utiliza Django / Django REST Framework, conforme o [RNF02](requisitos_nao_funcionais.md#rnf02). Essa especificação orienta a implementação; não comprova que o ambiente já esteja construído.
 
 Para o armazenamento dos dados, será utilizado o **PostgreSQL**, um banco de dados relacional que permitirá estruturar informações referentes aos atletas, testes, exercícios, planejamentos, treinos, vídeos e feedbacks.
 
 Caso o compartilhamento de vídeos seja validado e incorporado à solução, os arquivos de mídia deverão ser armazenados separadamente dos dados estruturados da aplicação, utilizando uma solução apropriada de armazenamento de arquivos. A definição da tecnologia específica deverá considerar fatores como custo, capacidade disponível, segurança, integração com a aplicação e facilidade de gerenciamento.
 
-Também deverão ser definidos, antes da implementação definitiva desse recurso, aspectos relacionados a:
+Os formatos e limites de mídia já declarados estão em [RNF06](requisitos_nao_funcionais.md#rnf06) e [RNF14](requisitos_nao_funcionais.md#rnf14). Sua confirmação e verificação permanecem pendentes. Antes da implementação definitiva, também é necessário revisar os seguintes aspectos:
 
 - tamanho máximo dos arquivos;
 - duração máxima dos vídeos;
@@ -164,15 +164,15 @@ Para fundamentar empiricamente a viabilidade do projeto e orientar a priorizaç�
 
 A viabilidade de execução do MVP no prazo restrito da disciplina fundamenta-se na alocação estratégica e na complementaridade das competências técnicas dos 6 integrantes do grupo (*Anderson, Júlia, Thiago, Guilherme, Luiz e Paulo*):
 
-- **Domínio da Stack Tecnológica:** A equipe conta com experiência prévia na construção de aplicações web utilizando a arquitetura proposta (API REST desacoplada em Python/Django, Frontend SPA com React/TypeScript e SGBD PostgreSQL). A vivência prática prévia dos membros com o ecossistema Django (ORM, autenticação e controle de permissões DRF) e integração com React reduz drasticamente a curva de aprendizado e mitiga riscos de falhas arquiteturais na implementação do controle de acesso (*RBAC*), isolamento multi-tenant e consumo de APIs.
-- **Capacidade Operacional e Distribuição de Carga:** A equipe é composta por 6 desenvolvedores com disponibilidade dedicada à disciplina. A divisão de trabalho foi estruturada em duplas/frentes independentes (Autenticação/Perfis, Gestão de Treinos/Exercícios, Histórico/Evolução e Mídias/Feedbacks). Essa organização em frentes paralelas garante redundância de conhecimento, permitindo que a ausência ou gargalo individual de um membro não comprometa a continuidade das *sprints*.
+- **Domínio da Stack Tecnológica:** A equipe conta com experiência prévia na construção de aplicações web utilizando a arquitetura proposta (API REST desacoplada em Python/Django, Frontend SPA com React/TypeScript e SGBD PostgreSQL). A experiência técnica declarada pela equipe pode apoiar a implementação. A viabilidade ainda depende da disponibilidade dos integrantes e da verificação dos fluxos de autenticação, permissões, isolamento de dados e integração.
+- **Capacidade Operacional e Distribuição de Carga:** A equipe é composta por seis integrantes. A distribuição documentada de frentes, responsáveis e apoios está na [Seção 7](interacao_equipe_cliente.md#71-composicao-e-responsabilidades). Essa organização busca compartilhar conhecimento e reduzir impedimentos nos ciclos; a capacidade de execução precisa ser acompanhada com atividades e evidências.
 
 ### 2.6.2 Análise de Dependência e Envolvimento do Cliente (Lucas) e dos Atletas
 
 Para assegurar que o projeto não seja paralisado por restrições externas de agenda, as dependências do contexto real foram mapeadas com estratégias claras de mitigação:
 
 - **Disponibilidade e Dependência do Treinador (Lucas Cordeiro):** Como cliente e especialista de domínio, a dependência do treinador concentra-se no refinamento de regras de negócio, fornecimento do catálogo inicial de exercícios e homologação do fluxo presencial. Para evitar gargalos provocados pela rotina intensa de treinos do Lucas, a comunicação é mantida prioritariamente de forma assíncrona (WhatsApp e reuniões virtuais curtas no Teams), restringindo a necessidade de validação síncrona a marcos específicos (final de iteração/Review).
-- **Dependência e Engajamento dos Atletas:** Os atletas (e seus respectivos responsáveis legais) atuam como usuários finais de consulta e envio opcional de vídeos. Para evitar que a viabilidade do software dependa de uma adesão imediata ou massiva dos alunos, a solução foi projetada de forma modular: a entrega principal de valor no MVP foca na organização e consulta realizada pelo próprio treinador. O engajamento dos atletas para teste de usabilidade será intermediado de forma assistida pelo próprio Lucas durante os treinos presenciais, eliminando o risco de rejeição ou atrasos por falta de adesão inicial.
+- **Dependência e Engajamento dos Atletas:** Os atletas (e responsáveis legais, quando aplicável) são previstos como usuários finais de consulta e envio opcional de vídeos. Para evitar que a viabilidade do software dependa de uma adesão imediata ou massiva dos alunos, a solução foi projetada de forma modular: a entrega principal de valor no MVP foca na organização e consulta realizada pelo próprio treinador. O engajamento dos atletas para teste de usabilidade será intermediado de forma assistida pelo próprio Lucas durante os treinos presenciais, buscando reduzir dificuldades de participação. A adesão dos atletas e a realização desses testes ainda precisam ser confirmadas e registradas.
 
 
 ## 2.7 Benefícios Esperados

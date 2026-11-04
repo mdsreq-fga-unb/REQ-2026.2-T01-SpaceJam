@@ -180,7 +180,7 @@ if (initialized.attrs['aria-expanded'] !== 'false') throw Error('toggle no longe
                 "Sidebar still renders fixed sections instead of collapsible groups",
             )
 
-    def test_sidebar_unit_groups_start_open_without_losing_native_collapse(self):
+    def test_sidebar_groups_expand_the_active_section_and_support_keyboard(self):
         if shutil.which("node") is None:
             self.skipTest("Node.js is needed to exercise the navigation script")
 
@@ -191,14 +191,28 @@ if (initialized.attrs['aria-expanded'] !== 'false') throw Error('toggle no longe
 const fs = require('fs');
 const vm = require('vm');
 const code = fs.readFileSync(process.argv[1], 'utf8');
-function fixture(desktop) {
-  const groups = [0, 1].map(() => {
+function fixture(desktop, activeIndex) {
+  const groups = [0, 1].map((index) => {
     const attrs = { 'aria-expanded': 'false' };
-    const nav = { setAttribute: (name, value) => { attrs[name] = value; } };
+    const listeners = {};
+    const label = {
+      dataset: {},
+      setAttribute: (name, value) => { attrs[name] = value; },
+      addEventListener: (name, listener) => { listeners['label:' + name] = listener; }
+    };
+    const nav = {};
     return {
+      id: 'section-' + index,
       checked: false,
-      parentElement: { querySelector: selector => selector === 'nav.md-nav' ? nav : null },
-      attrs
+      parentElement: { querySelector: selector => {
+        if (selector === ':scope > nav.md-nav') return nav;
+        if (selector === ':scope > label.md-nav__link') return label;
+        if (selector === 'a.md-nav__link--active') return index === activeIndex ? {} : null;
+        return null;
+      } },
+      addEventListener: (name, listener) => { listeners[name] = listener; },
+      dispatchEvent: event => listeners[event.type]?.(event),
+      attrs, listeners
     };
   });
   const document = {
@@ -207,15 +221,31 @@ function fixture(desktop) {
     addEventListener: () => {}
   };
   const window = { matchMedia: () => ({ matches: desktop }) };
-  vm.runInNewContext(code, { document, window });
+  vm.runInNewContext(code, { document, window, Event: class {
+    constructor(type) { this.type = type; }
+  } });
   return groups;
 }
-const desktop = fixture(true);
-if (!desktop.every(group => group.checked && group.attrs['aria-expanded'] === 'true'))
-  throw Error('desktop groups did not open accessibly');
-const mobile = fixture(false);
-if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'false'))
-  throw Error('mobile groups must keep the root drawer visible');
+for (const desktop of [true, false]) {
+  const groups = fixture(desktop, 0);
+  if (!groups[0].checked || groups[1].checked)
+    throw Error('only the active section should start expanded');
+  for (const group of groups) {
+    if (group.attrs.role !== 'button' || group.attrs.tabindex !== '0' ||
+        group.attrs['aria-controls'] !== group.id + '-items' ||
+        group.attrs['aria-expanded'] !== String(group.checked))
+      throw Error('section control is not accessible');
+  }
+  const active = groups[0];
+  for (const key of ['Enter', ' ']) {
+    const previous = active.checked;
+    active.listeners['label:keydown']({ key, preventDefault() {}, stopPropagation() {} });
+    if (active.checked === previous || active.attrs['aria-expanded'] !== String(active.checked))
+      throw Error('keyboard action did not toggle the section');
+  }
+}
+if (fixture(true, null).some(group => group.checked))
+  throw Error('home page should not expand an unrelated document section');
 """
             result = subprocess.run(
                 ["node", "-e", script, str(script_path)],
@@ -253,7 +283,7 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             output = Path(output_dir)
             homepage = (output / "index.html").read_text(encoding="utf-8")
 
-            self.assertIn("Visão do Produto e Projeto", homepage)
+            self.assertIn("Visão do produto e projeto", homepage)
             self.assertIn('href="requisitos/"', homepage)
             self.assertIn('href="entregas/"', homepage)
             self.assertNotIn("Unidade 1", homepage)
@@ -282,7 +312,9 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             self.assertIn("<h1", page)
             self.assertIn("Entregas", page)
             self.assertIn("Primeira entrega", page)
-            self.assertIn("drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/preview", page)
+            for video in ("1Qd5QdBdoyjUshkh5y5cjSQzzW_FRtJOV", "1Db0uSL7nl3-gG5qx_3P_SCFZ4sYx2ieX"):
+                self.assertIn(f'drive.google.com/file/d/{video}/preview', page)
+                self.assertIn(f'drive.google.com/file/d/{video}/view', page)
             self.assertIn('href="../cenario_atual/"', page)
 
     def test_deliveries_page_connects_the_presentation_to_the_documented_scope(self):
@@ -292,7 +324,7 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             page = (Path(output_dir) / "entregas" / "index.html").read_text(encoding="utf-8")
             for section in (
                 "Escopo da entrega", "O que foi produzido", "Validação e acompanhamento",
-                "Vídeo da apresentação", "Documento publicado",
+                "Vídeo da apresentação", "O documento da entrega",
             ):
                 self.assertIn(section, page)
             cards = page.split('<div class="sj-delivery-docs">', 1)[1].split('</div>', 1)[0]
@@ -302,7 +334,7 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             ):
                 self.assertIn(f'href="../{target}/"', cards)
             self.assertIn(
-                'href="https://drive.google.com/file/d/1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view"',
+                'href="https://drive.google.com/file/d/1Qd5QdBdoyjUshkh5y5cjSQzzW_FRtJOV/view"',
                 page,
             )
 
@@ -328,8 +360,12 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
 
             homepage = (Path(output_dir) / "index.html").read_text(encoding="utf-8")
 
-            self.assertEqual(homepage.count('class="sj-reading-card"'), 8)
-            self.assertIn('href="intervencao_social/"', homepage)
+            cards = re.findall(r'<a class="sj-reading-card" href="([^"]+)"', homepage)
+            self.assertCountEqual(cards, [
+                "cenario_atual/", "solucao/", "intervencao_social/", "engenharia_requisitos/",
+                "cronograma/", "interacao_equipe_cliente/", "requisitos/", "mvp/",
+                "backlog/", "dor_dod/", "licoes-aprendidas/", "reunioes/",
+            ])
 
     def test_editorial_home_keeps_identity_people_and_all_reading_links(self):
         with tempfile.TemporaryDirectory() as output_dir:
@@ -340,7 +376,7 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
             self.assertIn('class="sj-home-court"', homepage)
             self.assertIn('class="sj-client-feature"', homepage)
             self.assertIn('class="sj-team-grid"', homepage)
-            self.assertEqual(homepage.count('class="sj-reading-card"'), 8)
+            self.assertEqual(homepage.count('class="sj-reading-card"'), 12)
             self.assertIn('src="imagens/lucas-cordeiro.png"', homepage)
             self.assertIn("Avatar do GitHub de Guilherme", homepage)
             self.assertIn('href="requisitos/"', homepage)
@@ -387,9 +423,9 @@ if (!mobile.every(group => !group.checked && group.attrs['aria-expanded'] === 'f
 
             self.assertTrue(lessons_page.is_file())
             self.assertIn('href="licoes-aprendidas/"', homepage)
-            self.assertIn("11. Lições Aprendidas", homepage)
+            self.assertIn("12. Lições Aprendidas", homepage)
             self.assertIn(
-                "11.1 Unidade 1",
+                "12.1 Unidade 1",
                 lessons_page.read_text(encoding="utf-8"),
             )
 

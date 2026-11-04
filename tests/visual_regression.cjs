@@ -53,23 +53,23 @@ async function pixel(page, x, y) {
             .map((link) => ({ text: link.textContent.trim(), href: link.getAttribute("href") })),
         };
       });
-      assert.deepEqual(navigation.groups, ["Visão do Produto e Projeto"]);
-      assert.ok(navigation.links.some((link) => link.text === "8. Requisitos de Software" &&
+      assert.deepEqual(navigation.groups, ["Visão do produto e projeto", "Engenharia de Requisitos", "Acompanhamento e entregas"]);
+      assert.ok(navigation.links.some((link) => link.text === "8. Catálogo de requisitos" &&
         link.href.includes("requisitos/")));
       assert.ok(navigation.links.some((link) => link.text === "Entregas" &&
         link.href.includes("entregas/")));
       assert.ok(navigation.links.every((link) => !/^Unidade [12]$/.test(link.text)));
     });
-    await check("sidebar links do not overlap", async () => {
-      const links = await page.evaluate(() => [...document.querySelectorAll(".md-sidebar--primary a.md-nav__link")]
-        .filter((link) => ["8. Requisitos de Software", "Reuniões"].includes(link.textContent.trim()))
-        .map((link) => ({ text: link.textContent.trim(), top: link.getBoundingClientRect().top,
-          bottom: link.getBoundingClientRect().bottom })));
-      const requirements = links.find((link) => link.text === "8. Requisitos de Software");
-      const meetings = links.find((link) => link.text === "Reuniões");
-      assert.ok(requirements && meetings, "both navigation links must exist");
-      assert.ok(meetings.top >= requirements.bottom,
-        `Reuniões starts at ${meetings.top}, before Requisitos ends at ${requirements.bottom}`);
+    await check("visible sidebar links do not overlap", async () => {
+      const links = await page.locator(".md-sidebar--primary a.md-nav__link").evaluateAll((elements) =>
+        elements.map((link) => link.getBoundingClientRect()).filter((rect) => rect.width && rect.height)
+          .map(({ top, bottom, left, right }) => ({ top, bottom, left, right })));
+      assert.ok(links.length > 1, "visible navigation is missing");
+      for (let i = 0; i < links.length; i++) for (const other of links.slice(i + 1)) {
+        assert.ok(Math.min(links[i].bottom, other.bottom) - Math.max(links[i].top, other.top) <= 1 ||
+          Math.min(links[i].right, other.right) - Math.max(links[i].left, other.left) <= 1,
+          "navigation links overlap");
+      }
     });
 
     await check("document titles center while section headings follow the reading column", async () => {
@@ -86,11 +86,11 @@ async function pixel(page, x, y) {
               left: rect.left, right: rect.right, top: rect.top, bottom: rect.bottom };
           };
           const paragraph = [...article.children].find((element) => element.tagName === "P" &&
-            !element.querySelector("img"));
+            !element.querySelector("img") && element.getBoundingClientRect().height > 0);
           const list = [...article.children].find((element) => ["UL", "OL"].includes(element.tagName));
           const section = article.querySelector(":scope > h2");
           const subsection = article.querySelector(":scope > h3");
-          return { article: box(article), title: box(article.querySelector(":scope > h1")),
+          return { wideCatalog: Boolean(article.querySelector(".sj-cp-index")), article: box(article), title: box(article.querySelector(":scope > h1")),
             titleAlign: getComputedStyle(article.querySelector(":scope > h1")).textAlign,
             section: box(section), sectionAlign: section && getComputedStyle(section).textAlign,
             sectionRule: section && parseFloat(getComputedStyle(section).borderBottomWidth),
@@ -108,11 +108,11 @@ async function pixel(page, x, y) {
         if (layout.subsection) assert.equal(layout.subsectionAlign, "left", `${name}: ${JSON.stringify(layout)}`);
         for (const block of [layout.section, layout.subsection].filter(Boolean)) {
           assert.ok(Math.abs(block.center - layout.article.center) <= 2 &&
-            block.width <= layout.article.width - 40, `${name}: ${JSON.stringify(layout)}`);
+            block.width <= layout.article.width - (layout.wideCatalog ? 0 : 40) + 1, `${name}: ${JSON.stringify(layout)}`);
         }
         for (const block of [layout.paragraph, layout.list].filter(Boolean)) {
           assert.ok(Math.abs(block.center - layout.article.center) <= 2 &&
-            block.width <= layout.article.width - 40, `${name}: ${JSON.stringify(layout)}`);
+            block.width <= layout.article.width - (layout.wideCatalog ? 0 : 40) + 1, `${name}: ${JSON.stringify(layout)}`);
         }
         if (layout.section && layout.paragraph) {
           assert.ok(Math.abs(layout.section.left - layout.paragraph.left) <= 2,
@@ -149,7 +149,7 @@ async function pixel(page, x, y) {
         const center = (rect) => (rect.left + rect.right) / 2;
         const reading = box(".md-content__inner");
         const hero = box(".sj-delivery-hero");
-        const heading = document.querySelector(".md-content__inner > h2");
+        const heading = document.querySelector(".md-content__inner > h3");
         const paragraph = box(".md-content__inner > p");
         const action = box(".sj-delivery-watch");
         return { readingCenter: center(reading), readingWidth: reading.width,
@@ -167,28 +167,28 @@ async function pixel(page, x, y) {
     });
     await check("delivery overview uses aligned cards without leaving the page", async () => {
       const layout = await page.evaluate(() => {
-        const cards = [...document.querySelectorAll(".sj-delivery-docs section")]
-          .map((section) => section.getBoundingClientRect());
-        const content = document.querySelector(".md-content").getBoundingClientRect();
-        return { cards: cards.map(({ left, right, top, bottom }) => ({ left, right, top, bottom })),
-          content: { left: content.left, right: content.right },
-          pageOverflow: document.documentElement.scrollWidth - innerWidth };
+        const groups = [...document.querySelectorAll(".sj-delivery-docs")].map((group) =>
+          [...group.querySelectorAll("section")].map((section) => {
+            const { left, right, top } = section.getBoundingClientRect();
+            return { left, right, top };
+          }));
+        const { left, right } = document.querySelector(".md-content").getBoundingClientRect();
+        return { groups, left, right, overflow: document.documentElement.scrollWidth - innerWidth };
       });
-      assert.equal(layout.cards.length, 3);
-      assert.equal(layout.pageOverflow, 0);
-      assert.ok(layout.cards.every((card) => card.left >= layout.content.left &&
-        card.right <= layout.content.right), JSON.stringify(layout));
-      assert.ok(layout.cards.every((card) => Math.abs(card.top - layout.cards[0].top) < 2),
-        `delivery cards are not aligned in one desktop row: ${JSON.stringify(layout.cards)}`);
-      assert.ok(layout.cards[0].right + 8 <= layout.cards[1].left &&
-        layout.cards[1].right + 8 <= layout.cards[2].left,
-        `delivery cards overlap: ${JSON.stringify(layout.cards)}`);
+      assert.equal(layout.groups.length, 2);
+      assert.equal(layout.overflow, 0);
+      for (const cards of layout.groups) {
+        assert.equal(cards.length, 3);
+        assert.ok(cards.every((card) => card.left >= layout.left && card.right <= layout.right));
+        assert.ok(cards.every((card) => Math.abs(card.top - cards[0].top) < 2));
+        assert.ok(cards[0].right + 8 <= cards[1].left && cards[1].right + 8 <= cards[2].left);
+      }
     });
     await check("delivery video has a visible exit when its embed cannot load", async () => {
-      const directLink = page.locator('.md-content a[href$="1ySRDJSQ_FC6vnDdUjZx5q-eJDFyM_ZM1/view"]').first();
+      const directLink = page.locator('.md-content a[href$="1Qd5QdBdoyjUshkh5y5cjSQzzW_FRtJOV/view"]').first();
       assert.ok(await directLink.isVisible());
-      const preview = page.locator("details.sj-delivery-video-details");
-      assert.equal(await preview.count(), 1);
+      assert.equal(await page.locator("details.sj-delivery-video-details").count(), 2);
+      const preview = page.locator("details.sj-delivery-video-details").first();
       assert.equal(await preview.getAttribute("open"), null);
       const summaryLayout = await preview.locator("summary").evaluate((summary) => ({
         leadingIcon: getComputedStyle(summary, "::before").display,
@@ -263,36 +263,21 @@ async function pixel(page, x, y) {
 
     await page.locator(".sj-sidebar-toggle").click();
     await open("cronograma/");
-    await check("wide tables become readable cards without horizontal scrolling", async () => {
-      const geometry = await page.evaluate(() => {
-        const article = document.querySelector(".md-content__inner").getBoundingClientRect();
-        const table = document.querySelector("table.sj-data-cards");
-        const box = table.getBoundingClientRect();
-        return { articleLeft: article.left, articleRight: article.right,
-          left: box.left, right: box.right, client: table.clientWidth,
-          scroll: table.scrollWidth, tableWidth: box.width,
-          cardCount: table.querySelectorAll("tbody tr").length,
-          labeledCells: table.querySelectorAll("tbody td[data-label]").length,
-          cellCount: table.querySelectorAll("tbody td").length,
-          hasLink: Boolean(table.querySelector('tbody a[href*="cenario_atual"]')),
-          pageWidth: document.documentElement.scrollWidth };
-      });
-      assert.ok(geometry.left >= geometry.articleLeft - 1 && geometry.right <= geometry.articleRight + 1,
-        `cards protrude from article: ${JSON.stringify(geometry)}`);
-      assert.ok(geometry.scroll <= geometry.client + 1,
-        `table still needs horizontal scrolling: ${JSON.stringify(geometry)}`);
-      assert.ok(geometry.tableWidth <= geometry.client + 1,
-        `table is wider than its reading column: ${JSON.stringify(geometry)}`);
-      assert.equal(geometry.labeledCells, geometry.cellCount,
-        `card fields lost their labels: ${JSON.stringify(geometry)}`);
-      assert.ok(geometry.cardCount === 2 && geometry.hasLink,
-        `cycle content or links disappeared: ${JSON.stringify(geometry)}`);
-      assert.ok(geometry.pageWidth <= 1366, `whole page scrolls horizontally: ${JSON.stringify(geometry)}`);
+    await check("schedule cycles preserve details and open on demand", async () => {
+      const cycles = page.locator("details.sj-cycle");
+      assert.equal(await cycles.count(), 11);
+      assert.equal(await page.locator(".sj-cycle summary > span, .sj-cycle dl dd").count(), 85);
+      assert.equal(await page.locator(".sj-cycle a").count(), 5);
+      assert.equal(await cycles.first().getAttribute("open"), null);
+      await cycles.first().locator("summary").press("Enter");
+      assert.ok(await cycles.first().locator("dl").isVisible());
+      assert.ok(await cycles.first().locator('a[href*="cenario_atual"]').count());
     });
 
-    for (const routeName of ["cronograma/", "engenharia_requisitos/", "solucao/"]) {
+    for (const routeName of ["engenharia_requisitos/", "solucao/"]) {
       await open(routeName);
-      await check(`all wide tables fit without scrolling on ${routeName}`, async () => {
+      if (routeName === "engenharia_requisitos/") await page.locator("details.sj-document-details > summary").click();
+      await check(`record tables fit without scrolling on ${routeName}`, async () => {
         const tables = await page.evaluate(() => [...document.querySelectorAll("table.sj-data-cards")]
           .map((table) => ({ client: table.clientWidth, scroll: table.scrollWidth,
             labels: table.querySelectorAll("tbody td[data-label]").length,
@@ -304,12 +289,13 @@ async function pixel(page, x, y) {
     }
 
     await open("engenharia_requisitos/");
-    await check("cards repeat the group name when the source table leaves it blank", async () => {
+    await page.locator("details.sj-document-details > summary").click();
+    await check("cards preserve the requirement-planning group", async () => {
       const groups = await page.evaluate(() => [...document.querySelectorAll(
         "table.sj-data-cards:first-of-type tbody tr"
       )].slice(0, 3).map((row) => row.cells[0].textContent.trim()));
-      assert.deepEqual(groups, ["Planejamento da Release", "Planejamento da Release",
-        "Planejamento da Release"]);
+      assert.deepEqual(groups, ["Planejamento de Requisitos", "Planejamento de Requisitos",
+        "Planejamento de Requisitos"]);
     });
 
     await check("table frame has no empty inset", async () => {
