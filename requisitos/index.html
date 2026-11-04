@@ -1,0 +1,3120 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe Space Jam">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/requisitos/">
+      
+      
+        <link rel="prev" href="../engenharia_requisitos/">
+      
+      
+        <link rel="next" href="../mvp/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../imagens/space-jam-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>8. Catálogo de requisitos - Space Jam</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/catalogo.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cp1" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Space Jam" class="md-header__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Space Jam
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. Catálogo de requisitos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Space Jam" class="md-nav__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    Space Jam
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão do produto e projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visão do produto e projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cenario_atual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Cenário Atual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solucao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Solução Proposta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervencao_social/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervenção Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estrategia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Estratégias de Engenharia de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engenharia de Requisitos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engenharia_requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Atividades e técnicas de ER
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Catálogo de requisitos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Catálogo de requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cp1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP1 Gestão das informações do atleta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP2 Acompanhamento da evolução
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP3 Planejamento e acompanhamento dos treinos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP4 Biblioteca de exercícios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP5 Envio privado de vídeos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP6 Feedback privado do treinador
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP7 Perfis distintos de acesso
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP8 Privacidade de dados, vídeos e feedbacks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identificacao-dos-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identificação e correspondências
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Definição do MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Backlog e priorização
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dor_dod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. DoR e DoD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acompanhamento e entregas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Acompanhamento e entregas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cronograma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Cronograma e Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacao_equipe_cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Interação entre Equipe e Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reunioes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entregas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licoes-aprendidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Lições Aprendidas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#cp1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP1 Gestão das informações do atleta
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP2 Acompanhamento da evolução
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP3 Planejamento e acompanhamento dos treinos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP4 Biblioteca de exercícios
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP5 Envio privado de vídeos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP6 Feedback privado do treinador
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP7 Perfis distintos de acesso
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CP8 Privacidade de dados, vídeos e feedbacks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#identificacao-dos-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identificação e correspondências
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/requisitos.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<p><span id="requisitos-de-software"></span></p>
+<h1 id="catalogo-de-requisitos">Catálogo de requisitos<a class="headerlink" href="#catalogo-de-requisitos" title="Permanent link">&para;</a></h1>
+<div class="sj-catalog-intro"><p class="sj-catalog-kicker">REQUISITOS E ESCOPO</p><p class="sj-catalog-lead">Um registro por requisito. Uma consulta ao escopo.</p><p>Escolha uma característica e abra a ficha do requisito. Histórias, critérios e condições relacionados podem ser consultados a partir dela.</p><div class="sj-catalog-links"><a href="../requisitos_nao_funcionais/">RNFs</a><a href="../regras_negocio/">Regras</a><a href="../criterios_aceitacao/">Critérios por história</a></div></div>
+
+<p class="sj-catalog-status"><strong>Escopo em revisão.</strong> O MVP reflete o recorte documentado. Confirmação e implementação precisam de evidências por item.</p>
+
+<nav id="guia-do-catalogo" class="sj-cp-index" aria-label="Consultar por característica">
+<p class="sj-cp-index-title">Escolha uma característica</p>
+<div class="sj-cp-index-grid">
+<a href="#cp1"><span>CP1</span><strong>Gestão das informações do atleta</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp2"><span>CP2</span><strong>Acompanhamento da evolução</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp3"><span>CP3</span><strong>Planejamento e acompanhamento dos treinos</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp4"><span>CP4</span><strong>Biblioteca de exercícios</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp5"><span>CP5</span><strong>Envio privado de vídeos</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp6"><span>CP6</span><strong>Feedback privado do treinador</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp7"><span>CP7</span><strong>Perfis distintos de acesso</strong><span aria-hidden="true">↓</span></a>
+<a href="#cp8"><span>CP8</span><strong>Privacidade de dados, vídeos e feedbacks</strong><span aria-hidden="true">↓</span></a>
+</div></nav>
+
+<details id="indice-mvp" class="sj-mvp-index"><summary>Localizar os requisitos do MVP</summary><p>Índice de acesso às fichas identificadas com o selo MVP. O conteúdo e a seleção são mantidos nas próprias fichas.</p><div id="sj-mvp-links" class="sj-mvp-link-list" hidden></div><noscript><p>Consulte as características acima e o selo MVP nas fichas. Todos os requisitos continuam disponíveis sem JavaScript.</p></noscript></details>
+
+<section aria-labelledby="cp1" class="sj-catalog-group">
+<h2 id="cp1"><span>CP1</span> Gestão das informações do atleta<a class="headerlink" href="#cp1" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Centralizar informações de perfil, objetivos, histórico de lesões e resultados de testes de cada atleta. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf01101">
+<summary><span class="sj-requirement-id">RF01101</span><span class="sj-requirement-name">Cadastrar usuário</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o usuário se cadastre no sistema, com informações: dados do usuário como nome, sobrenome, apelido, contato, altura, peso, envergadura, foto de perfil, senha, frequencia da realização da atividade física, objetivos, histórico de lesões, histórico de aptidão física e resultado de treinos</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us01a"><strong>US01a</strong> Como aluno/atleta, quero cadastrar um perfil validando o código do meu treinador, para ter acesso aos meus treinos e ingressar na carteira dele.</p>
+<p class="sj-story" id="us01b"><strong>US01b</strong> Como treinador, quero solicitar o cadastro de uma conta de treinador na plataforma, para poder gerenciar meus atletas e prescrever treinos após a aprovação da administração.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Atleta / Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn10">RN10 · Aprovação de contas de treinador</a> · <a class="sj-condition-link" href="../regras_negocio/#rn11">RN11 · Cadastro de atleta por convite do treinador</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US01a</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Vínculo Obrigatório):</strong> Dado que um novo atleta preenche o formulário de cadastro, Quando ele insere um Código Único de Treinador válido, Então o sistema cria a conta e o vincula automática e exclusivamente à carteira desse treinador (<a class="sj-condition-link" href="../regras_negocio/#rn11">RN11 · Cadastro de atleta por convite do treinador</a>).</p>
+</div>
+<div class="sj-criterion">
+<p><strong>CA02 (Validação de Dados):</strong> Dado que o usuário tenta enviar o formulário, Quando faltam dados obrigatórios ou os formatos são inválidos (ex: e-mail incorreto), Então o sistema exibe alertas na interface e bloqueia a submissão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us01a">Abrir registro por história</a></p></div>
+</details>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US01b</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Aprovação Restrita):</strong> Dado que um treinador finaliza o seu cadastro, Quando ele tenta fazer o login inicial, Então o sistema exibe uma mensagem informando que a conta aguarda autorização da administração e bloqueia o acesso (<a class="sj-condition-link" href="../regras_negocio/#rn10">RN10 · Aprovação de contas de treinador</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us01b">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,33</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01102">
+<summary><span class="sj-requirement-id">RF01102</span><span class="sj-requirement-name">Logar usuário</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que usuários cadastrados se autentiquem por apelido e senha, identificando o perfil associado à conta autenticada (treinador ou atleta).</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us02"><strong>US02</strong> Como usuário do site, quero logar com conta própria utilizando meu apelido e senha, para acessar a plataforma de forma segura.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1; OE4 - CP7</a><br>Usuário</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US02</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (RBAC):</strong> Dado que o usuário insere credenciais ativas e corretas, Quando aciona o login, Então o sistema o autentica e redireciona para a <em>dashboard</em> correspondente ao seu perfil de acesso (Treinador ou Atleta) (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us02">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 1,67</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01103">
+<summary><span class="sj-requirement-id">RF01103</span><span class="sj-requirement-name">Deslogar usuário</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o usuário possa deslogar do seu perfil</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us03"><strong>US03</strong> Como usuário autenticado, quero deslogar da minha conta, para encerrar a sessão de forma segura em dispositivos compartilhados.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Usuário</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US03</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Encerramento de Sessão):</strong> Dado que o usuário está autenticado, Quando clica em &quot;Sair&quot;, Então o sistema invalida o token de sessão e redireciona para a tela de login inicial (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us03">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 1,17</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01104">
+<summary><span class="sj-requirement-id">RF01104</span><span class="sj-requirement-name">Editar informações do perfil</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o aluno edite seus dados pessoais por exemplo nome, sobrenome, apelido, contato, altura, peso, envergadura e foto de perfil. Já as informações que envolvem análise do treinador como resultados dos treinos, objetivos, histórico de lesões, histórico de aptidão física, só poderão ser editadas pelo treinador</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us04a"><strong>US04a</strong> Como aluno, quero editar as minhas informações pessoais e corporais básicas (nome, contato, peso, altura), para manter o meu cadastro atualizado.</p>
+<p class="sj-story" id="us04b"><strong>US04b</strong> Como treinador, quero editar o histórico de lesões, objetivos e dados de aptidão física no perfil dos meus alunos, para manter a avaliação clínica deles atualizada e segura.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Atleta / Trein.</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn02">RN02 · Permissões para editar dados do atleta</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US04a</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Restrição de Escrita):</strong> Dado que o atleta acessa a edição de perfil, Quando visualiza os campos disponíveis, Então o sistema permite a alteração apenas de nome, contato, peso, altura e envergadura, mantendo o histórico de lesões e aptidão bloqueados em modo leitura (<a class="sj-condition-link" href="../regras_negocio/#rn02">RN02 · Permissões para editar dados do atleta</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us04a">Abrir registro por história</a></p></div>
+</details>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US04b</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privilégio Clínico):</strong> Dado que o treinador acessa o perfil de um aluno da sua carteira, Quando edita as informações, Então ele possui permissão exclusiva para alterar o histórico de lesões, objetivos e dados de aptidão física (<a class="sj-condition-link" href="../regras_negocio/#rn02">RN02 · Permissões para editar dados do atleta</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us04b">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,25</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01105">
+<summary><span class="sj-requirement-id">RF01105</span><span class="sj-requirement-name">Excluir usuário</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que apenas o treinador exclua usuário que não são mais atletas do treinador</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us05"><strong>US05</strong> Como treinador, quero excluir o perfil de um atleta desvinculado, para manter a base de dados da minha carteira limpa e atualizada.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn04">RN04 · Exclusão de perfis de atletas</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US05</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Exclusão por Vínculo):</strong> Dado que o treinador gerencia a sua carteira, Quando seleciona um atleta e confirma a exclusão, Então o sistema inativa a conta do atleta, sendo esta ação permitida apenas ao treinador que o acompanha (<a class="sj-condition-link" href="../regras_negocio/#rn04">RN04 · Exclusão de perfis de atletas</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us05">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01106">
+<summary><span class="sj-requirement-id">RF01106</span><span class="sj-requirement-name">Criar senha aleatória</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve criar uma senha aleatória com letras, números e caracteres e mandar para o email vinculado ao usuário para primeiro acesso</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us06"><strong>US06</strong> Como sistema, quero gerar uma senha temporária automática para o primeiro acesso do usuário, para garantir um processo de integração (<em>onboarding</em>) ágil e seguro.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Sistema</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US06</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Onboarding):</strong> Dado que uma conta de atleta é criada com sucesso, Quando o processo finaliza, Então o sistema gera uma senha provisória criptografada e envia para o e-mail cadastrado.</p>
+</div>
+<p class="sj-record-note">Revisão pendente do fluxo de primeiro acesso. O RNF15 trata de validação de formulários e não fundamenta a geração ou o envio de senha.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us06">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,17</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01107">
+<summary><span class="sj-requirement-id">RF01107</span><span class="sj-requirement-name">Trocar senha</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir o usuário de mudar senha, sendo após o primeiro acesso de quesito obrigatório, seguindo os critérios de aceite: mínimo 6 caracteres, mínimo um caracter especial e mínimo um número</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us07"><strong>US07</strong> Como aluno, quero trocar a senha após o primeiro acesso, para conseguir acessar o site novamente de forma segura e pessoal.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Usuário</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US07</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Obrigatoriedade no 1º Acesso):</strong> Dado que o usuário realiza o login com uma senha provisória, Quando a autenticação ocorre, Então o sistema redireciona obrigatoriamente para a tela de troca de senha .</p>
+</div>
+<div class="sj-criterion">
+<p><strong>CA02 (Políticas de Segurança):</strong> Dado que o usuário define uma nova senha, Quando o texto possui menos de 6 caracteres, não contém números ou caracteres especiais, Então o sistema recusa a alteração e exibe as regras de formatação .</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us07">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 1,83</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div>
+<p class="sj-record-label">Dependências</p>
+<p>Depende de: <a href="../requisitos/#rf01106">RF01106</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp2" class="sj-catalog-group">
+<h2 id="cp2"><span>CP2</span> Acompanhamento da evolução<a class="headerlink" href="#cp2" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Reunir informações históricas de testes e treinos para apoiar a consulta da evolução individual dos atletas. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf01208">
+<summary><span class="sj-requirement-id">RF01208</span><span class="sj-requirement-name">Consultar dificuldade</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador consulte as dificuldades dos respectivos treinos orientados</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us08"><strong>US08</strong> Como treinador, quero consultar a dificuldade que os alunos registraram após o treino, para ser assertivo com as orientações e registro de treinos posteriores.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US08</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Restrição de Visualização):</strong> Dado que o treinador consulta as métricas de treino, Quando os gráficos de dificuldade (1 a 5) são gerados, Então os dados refletem exclusivamente os atletas da sua carteira (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us08">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,25</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01209">
+<summary><span class="sj-requirement-id">RF01209</span><span class="sj-requirement-name">Registrar dificuldade</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta registre o nível de dificuldade em uma escala de 1 a 5 que sentiu ao realizar o exercício</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us09"><strong>US09</strong> Como aluno, quero registrar a dificuldade que senti na execução do exercício, para o treinador entender em quais momentos e cargas tive mais dificuldade.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn07">RN07 · Escala de dificuldade de 1 a 5</a> · <a class="sj-condition-link" href="../regras_negocio/#rn09">RN09 · Alteração de dificuldade em treino disponível</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US09 / US10</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Escala Fixa):</strong> Dado que o atleta avalia a dificuldade de um exercício, Quando interage com o seletor, Então o sistema restringe a nota a valores inteiros entre 1 e 5 (<a class="sj-condition-link" href="../regras_negocio/#rn07">RN07 · Escala de dificuldade de 1 a 5</a>).</p>
+</div>
+<div class="sj-criterion">
+<p><strong>CA02 (Vigência):</strong> Dado que o atleta tenta alterar uma dificuldade previamente registrada, Quando o status do planejamento já estiver como &quot;Expirado/Indisponível&quot;, Então o sistema bloqueia a edição da nota (<a class="sj-condition-link" href="../regras_negocio/#rn09">RN09 · Alteração de dificuldade em treino disponível</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us09-us10">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,50</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01210">
+<summary><span class="sj-requirement-id">RF01210</span><span class="sj-requirement-name">Editar dificuldade</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta modifique o nível de dificuldade da escala de 1 a 5 que sentiu ao realizar o exercício, enquanto o treino passado estiver disponível para o atleta</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us10"><strong>US10</strong> Como aluno, quero modificar a dificuldade que registrei enquanto o treino estiver vigente, para ser assertivo e corrigir avaliações precipitadas.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn07">RN07 · Escala de dificuldade de 1 a 5</a> · <a class="sj-condition-link" href="../regras_negocio/#rn09">RN09 · Alteração de dificuldade em treino disponível</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US09 / US10</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Escala Fixa):</strong> Dado que o atleta avalia a dificuldade de um exercício, Quando interage com o seletor, Então o sistema restringe a nota a valores inteiros entre 1 e 5 (<a class="sj-condition-link" href="../regras_negocio/#rn07">RN07 · Escala de dificuldade de 1 a 5</a>).</p>
+</div>
+<div class="sj-criterion">
+<p><strong>CA02 (Vigência):</strong> Dado que o atleta tenta alterar uma dificuldade previamente registrada, Quando o status do planejamento já estiver como &quot;Expirado/Indisponível&quot;, Então o sistema bloqueia a edição da nota (<a class="sj-condition-link" href="../regras_negocio/#rn09">RN09 · Alteração de dificuldade em treino disponível</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us09-us10">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,75</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01211">
+<summary><span class="sj-requirement-id">RF01211</span><span class="sj-requirement-name">Editar status exercícios</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador modifique os status dos exercícios (&quot;Concluído&quot;, &quot;A fazer&quot;, &quot;Corrigir&quot;) de acordo com a análise presencial do treinador ou vídeo enviado pelo atleta, quando houver, o atleta também poderá modificar o status do próprio exercício para &quot;Concluído&quot; ou &quot;A Fazer&quot;.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us11a"><strong>US11a</strong> Como aluno, quero modificar o status do meu próprio exercício para &quot;Concluído&quot; ou &quot;A fazer&quot;, para registrar e sinalizar o meu progresso durante a execução do treino.</p>
+<p class="sj-story" id="us11b"><strong>US11b</strong> Como treinador, quero modificar o status dos exercícios dos meus alunos para &quot;Concluído&quot; ou &quot;Corrigir&quot;, para auditar e validar o progresso deles após analisar a execução.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Atleta / Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br><a class="sj-condition-link" href="../regras_negocio/#rn06">RN06 · Estados e refazimento dos exercícios</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US11a / US11b</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Autonomia do Atleta):</strong> Dado que o atleta está executando o treino, Quando interage com o botão de status, Então ele só possui permissão para alternar entre &quot;A fazer&quot; e &quot;Concluído&quot; (<a class="sj-condition-link" href="../regras_negocio/#rn06">RN06 · Estados e refazimento dos exercícios</a>).</p>
+</div>
+<div class="sj-criterion">
+<p><strong>CA02 (Auditoria do Treinador):</strong> Dado que o atleta marcou um exercício como &quot;Concluído&quot;, Quando o treinador analisa o vídeo e identifica falhas, Então o treinador tem a prerrogativa de sobrepor esse status e alterá-lo para &quot;Corrigir/Refazer&quot; (<a class="sj-condition-link" href="../regras_negocio/#rn06">RN06 · Estados e refazimento dos exercícios</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us11a-us11b">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,17</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01212">
+<summary><span class="sj-requirement-id">RF01212</span><span class="sj-requirement-name">Adicionar testes</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador acrescente testes de aptidão física</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us12"><strong>US12</strong> Como treinador, quero adicionar testes de aptidão física, para avaliar formalmente o desempenho e a evolução atlética dos meus alunos.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US12</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Prerrogativa de Gestão):</strong> Dado que o treinador acessa a aba de testes do perfil de um aluno da sua carteira, Quando ele preenche os dados de uma nova avaliação física e salva, Então o sistema registra o teste e o vincula permanentemente ao histórico daquele atleta (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us12">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf01213">
+<summary><span class="sj-requirement-id">RF01213</span><span class="sj-requirement-name">Remover testes</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador exclua testes de aptidão física</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us13"><strong>US13</strong> Como treinador, quero remover testes de aptidão física previamente cadastrados, para corrigir equívocos ou atualizar a matriz de avaliação da carteira.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US13</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Controle de Erros):</strong> Dado que o treinador visualiza os testes registados no perfil do aluno, Quando ele seleciona um registo incorreto e aciona a exclusão, Então o sistema remove o teste do histórico, sendo esta uma ação restrita exclusivamente ao treinador vinculado (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us13">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp3" class="sj-catalog-group">
+<h2 id="cp3"><span>CP3</span> Planejamento e acompanhamento dos treinos<a class="headerlink" href="#cp3" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Apoiar o registro, a organização e a consulta do planejamento e dos treinos realizados pelos atletas. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf02301">
+<summary><span class="sj-requirement-id">RF02301</span><span class="sj-requirement-name">Cadastrar planejamento</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador registre o planejamento de treinamento de cada atleta.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us14"><strong>US14</strong> Como treinador, quero registrar o planejamento de cada aluno na minha carteira, para que eles possam acompanhar e executar as rotinas de treino propostas.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US14 / US15</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Filtro de Destinatários):</strong> Dado que o treinador cria um treino, Quando abre a lista de seleção de alunos, Então o sistema exibe estritamente os atletas vinculados à sua carteira (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us14-us15">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,67</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02302">
+<summary><span class="sj-requirement-id">RF02302</span><span class="sj-requirement-name">Editar planejamento</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador altere o planejamento de treinamento de cada atleta.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us15"><strong>US15</strong> Como treinador, quero modificar o planejamento de treino já cadastrado, para corrigir possíveis erros ou realizar ajustes de carga.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US14 / US15</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Filtro de Destinatários):</strong> Dado que o treinador cria um treino, Quando abre a lista de seleção de alunos, Então o sistema exibe estritamente os atletas vinculados à sua carteira (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us14-us15">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,75</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02303">
+<summary><span class="sj-requirement-id">RF02303</span><span class="sj-requirement-name">Associar treino a objetivo</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Could Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador associe cada treino planejado aos respectivos objetivos do atleta.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us16"><strong>US16</strong> Como treinador, quero vincular um treino planejado aos macro-objetivos do atleta, para manter a coerência da prescrição a longo prazo.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US16</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Rastreabilidade de Metas):</strong> Dado que o treinador finaliza um planejamento, Quando ele seleciona a opção de vínculo, Então o sistema permite associar aquele conjunto de exercícios a um objetivo de longo prazo previamente definido no perfil do aluno.</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us16">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Could Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02304">
+<summary><span class="sj-requirement-id">RF02304</span><span class="sj-requirement-name">Consultar histórico de planejamento</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador consulte o histórico das alterações realizadas nos planejamentos de treinamento.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us17"><strong>US17</strong> Como treinador, quero consultar o histórico de planejamentos de treinos de cada aluno, para aprimorar e embasar o acompanhamento longitudinal do atleta.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US17 / US18 / US19</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Performance de Carregamento):</strong> Dado que o treinador solicita o histórico ou status de treinos de um aluno, Quando a requisição é feita, Então o sistema compila e exibe a interface de dados em no máximo 5 segundos (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us17-us18-us19">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 1,83</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02305">
+<summary><span class="sj-requirement-id">RF02305</span><span class="sj-requirement-name">Comparar treinamentos</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador visualize um relatório comparativo entre os treinos planejados e os realizados por cada atleta, para que seja analisado os resultados do treinamento do atleta.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us18"><strong>US18</strong> Como treinador, quero gerar um relatório comparativo entre o treino planejado e o efetivamente realizado, para analisar a adesão e o rendimento do atleta.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US17 / US18 / US19</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Performance de Carregamento):</strong> Dado que o treinador solicita o histórico ou status de treinos de um aluno, Quando a requisição é feita, Então o sistema compila e exibe a interface de dados em no máximo 5 segundos (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us17-us18-us19">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Fora do MVP documentado<br>CT registrada: 3,08</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02306">
+<summary><span class="sj-requirement-id">RF02306</span><span class="sj-requirement-name">Consultar status de treino</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador identifique o estado de cada treino planejado, como não iniciado, em andamento ou concluído.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us19"><strong>US19</strong> Como treinador, quero consultar o andamento e status do treino em tempo real, para aprimorar o acompanhamento da execução diária de cada aluno.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US17 / US18 / US19</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Performance de Carregamento):</strong> Dado que o treinador solicita o histórico ou status de treinos de um aluno, Quando a requisição é feita, Então o sistema compila e exibe a interface de dados em no máximo 5 segundos (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us17-us18-us19">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,50</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp4" class="sj-catalog-group">
+<h2 id="cp4"><span>CP4</span> Biblioteca de exercícios<a class="headerlink" href="#cp4" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Organizar exercícios por objetivos e fundamentos, incluindo orientações, erros comuns e materiais demonstrativos. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf02407">
+<summary><span class="sj-requirement-id">RF02407</span><span class="sj-requirement-name">Cadastrar exercício</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador cadastre um exercício informando seu objetivo, fundamento e orientações para sua execução.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us20"><strong>US20</strong> Como treinador, quero cadastrar um exercício na biblioteca, para que o aluno saiba exatamente quais movimentos precisa realizar no seu treino.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf12">RNF12 · Integridade na Catalogação de Exercícios</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US20 / US21 / US22</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Integridade Referencial):</strong> Dado que o treinador preenche os metadados de um novo exercício, Quando tenta adicionar fundamentos ou objetivos, Então ele só pode escolher opções já validadas e existentes no catálogo global da plataforma .</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us20-us21-us22">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 1,75</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02408">
+<summary><span class="sj-requirement-id">RF02408</span><span class="sj-requirement-name">Filtrar exercícios por fundamento</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Could Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador filtre os exercícios da biblioteca de acordo com o fundamento esportivo associado.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us21"><strong>US21</strong> Como treinador, quero filtrar a biblioteca de exercícios por fundamento esportivo, para encontrar rapidamente os movimentos adequados na hora de montar o treino.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf12">RNF12 · Integridade na Catalogação de Exercícios</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US20 / US21 / US22</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Integridade Referencial):</strong> Dado que o treinador preenche os metadados de um novo exercício, Quando tenta adicionar fundamentos ou objetivos, Então ele só pode escolher opções já validadas e existentes no catálogo global da plataforma .</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us20-us21-us22">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Could Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02409">
+<summary><span class="sj-requirement-id">RF02409</span><span class="sj-requirement-name">Associar exercício a objetivo</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador associe um exercício a um ou mais objetivos de treinamento.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us22"><strong>US22</strong> Como treinador, quero vincular exercícios da biblioteca a objetivos específicos, para padronizar e agilizar futuras prescrições.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US20 / US21 / US22</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Integridade Referencial):</strong> Dado que o treinador preenche os metadados de um novo exercício, Quando tenta adicionar fundamentos ou objetivos, Então ele só pode escolher opções já validadas e existentes no catálogo global da plataforma .</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us20-us21-us22">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02410">
+<summary><span class="sj-requirement-id">RF02410</span><span class="sj-requirement-name">Documentar erros e orientações</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador associe erros comuns e respectivas orientações corretivas aos exercícios cadastrados.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us23"><strong>US23</strong> Como treinador, quero documentar erros comuns e orientações aos exercícios cadastrados, para alertar o aluno e evitar que ele cometa as falhas frequentes relacionadas àquele movimento.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US23 / US24 / US25</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Suporte Visual):</strong> Dado que o treinador cadastra um vídeo base de demonstração, Quando o arquivo é anexado, Então o sistema disponibiliza campos obrigatórios para título, descrição textual da execução e registro de erros comuns.</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us23-us24-us25">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 3,00</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02411">
+<summary><span class="sj-requirement-id">RF02411</span><span class="sj-requirement-name">Gerar thumbnail de vídeo base</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Could Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador faça o upload de uma imagem em miniatura (thumbnail) personalizada para o vídeo base do exercício ou, caso não seja enviada, deve gerar e exibir uma miniatura automaticamente a partir de um frame do arquivo de vídeo cadastrado.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us24"><strong>US24</strong> Como treinador, quero gerar uma miniatura (<em>thumbnail</em>) para o vídeo base, para facilitar a identificação visual do exercício na biblioteca pelo atleta.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf06">RNF06 · Compatibilidade de Vídeo</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US23 / US24 / US25</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Suporte Visual):</strong> Dado que o treinador cadastra um vídeo base de demonstração, Quando o arquivo é anexado, Então o sistema disponibiliza campos obrigatórios para título, descrição textual da execução e registro de erros comuns.</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us23-us24-us25">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Could Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf02412">
+<summary><span class="sj-requirement-id">RF02412</span><span class="sj-requirement-name">Cadastrar informações complementares do vídeo base</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve disponibilizar campos de texto para que o treinador cadastre um título e uma descrição breve associados a cada vídeo base da biblioteca, permitindo que atletas e treinadores visualizem essas informações durante a consulta.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us25"><strong>US25</strong> Como treinador, quero cadastrar título e/ou descrições detalhadas nos vídeos base do exercício, para que o aluno entenda completamente a forma e a execução correta.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US23 / US24 / US25</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Suporte Visual):</strong> Dado que o treinador cadastra um vídeo base de demonstração, Quando o arquivo é anexado, Então o sistema disponibiliza campos obrigatórios para título, descrição textual da execução e registro de erros comuns.</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us23-us24-us25">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,00</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp5" class="sj-catalog-group">
+<h2 id="cp5"><span>CP5</span> Envio privado de vídeos<a class="headerlink" href="#cp5" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Permitir que o atleta envie, de forma opcional, um vídeo relacionado à execução de um exercício. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf03501">
+<summary><span class="sj-requirement-id">RF03501</span><span class="sj-requirement-name">Enviar vídeo de execução</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>Permitir que o atleta grave ou selecione um vídeo do dispositivo e o envie vinculado a um exercício específico do seu treino</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us26"><strong>US26</strong> Como aluno, quero mandar um vídeo da execução do exercício, para que o treinador veja como está a minha forma e consiga dar um feedback mais assertivo.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP5</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf06">RNF06 · Compatibilidade de Vídeo</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf07">RNF07 · Feedback Visual de Upload</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf13">RNF13 · Resiliência e Armazenamento Protegido de Mídias</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf14">RNF14 · Restrição de Duração e Tamanho de Mídias</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf16">RNF16 · Gerenciamento Pré-Envio de Mídia</a><br><a class="sj-condition-link" href="../regras_negocio/#rn05">RN05 · Um vídeo por submissão</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US26</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Restrições de Submissão):</strong> Dado que o atleta tenta realizar o <em>upload</em>, Quando o arquivo ultrapassa 100MB, excede 60 segundos ou possui extensão diferente de .mp4/.mov, Então o sistema barra a ação e exibe um erro de formato (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf06">RNF06 · Compatibilidade de Vídeo</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf14">RNF14 · Restrição de Duração e Tamanho de Mídias</a>).</p>
+</div>
+<div class="sj-criterion">
+<p><strong>CA02 (Progresso Visual):</strong> Dado que o arquivo cumpre as regras técnicas, Quando o upload é iniciado rumo à nuvem criptografada, Então uma barra de progresso numérica (1% a 99%) é exibida na interface (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf07">RNF07 · Feedback Visual de Upload</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf13">RNF13 · Resiliência e Armazenamento Protegido de Mídias</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us26">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 3,75</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf03502">
+<summary><span class="sj-requirement-id">RF03502</span><span class="sj-requirement-name">Substituir vídeo enviado</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>Permitir que o atleta substitua o vídeo vinculado a um exercício, desde que o treinador ainda não tenha registrado feedback sobre ele.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us27"><strong>US27</strong> Como aluno, quero trocar o vídeo da execução do exercício que foi enviado, para corrigir o envio de um arquivo errado antes que o treinador avalie a mídia.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP5</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf06">RNF06 · Compatibilidade de Vídeo</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf07">RNF07 · Feedback Visual de Upload</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf13">RNF13 · Resiliência e Armazenamento Protegido de Mídias</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf14">RNF14 · Restrição de Duração e Tamanho de Mídias</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf16">RNF16 · Gerenciamento Pré-Envio de Mídia</a><br><a class="sj-condition-link" href="../regras_negocio/#rn03">RN03 · Alteração de vídeos antes do feedback</a> · <a class="sj-condition-link" href="../regras_negocio/#rn05">RN05 · Um vídeo por submissão</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US27 / US28</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Bloqueio por Avaliação):</strong> Dado que o atleta deseja excluir ou substituir um vídeo submetido, Quando o treinador já tiver publicado um <em>feedback</em> atrelado àquela mídia, Então os botões de exclusão e substituição ficam inativos (<a class="sj-condition-link" href="../regras_negocio/#rn03">RN03 · Alteração de vídeos antes do feedback</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us27-us28">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 3,75</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div>
+<p class="sj-record-label">Dependências</p>
+<p>Depende de: <a href="../requisitos/#rf03501">RF03501</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf03503">
+<summary><span class="sj-requirement-id">RF03503</span><span class="sj-requirement-name">Excluir vídeo enviado</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>Permitir que o atleta exclua um vídeo já enviado, desde que o treinador ainda não tenha registrado feedback sobre ele.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us28"><strong>US28</strong> Como aluno, quero excluir um vídeo de execução enviado, para cancelar uma submissão feita por engano antes da avaliação do treinador.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP5</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn03">RN03 · Alteração de vídeos antes do feedback</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US27 / US28</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Bloqueio por Avaliação):</strong> Dado que o atleta deseja excluir ou substituir um vídeo submetido, Quando o treinador já tiver publicado um <em>feedback</em> atrelado àquela mídia, Então os botões de exclusão e substituição ficam inativos (<a class="sj-condition-link" href="../regras_negocio/#rn03">RN03 · Alteração de vídeos antes do feedback</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us27-us28">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div>
+<p class="sj-record-label">Dependências</p>
+<p>Depende de: <a href="../requisitos/#rf03501">RF03501</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp6" class="sj-catalog-group">
+<h2 id="cp6"><span>CP6</span> Feedback privado do treinador<a class="headerlink" href="#cp6" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Permitir que o treinador registre um feedback vinculado ao vídeo e ao exercício enviado pelo atleta. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf03601">
+<summary><span class="sj-requirement-id">RF03601</span><span class="sj-requirement-name">Registrar feedback</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>Permitir que o treinador registre um feedback textual vinculado ao vídeo e ao exercício enviado por um atleta sob seu acompanhamento.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us29"><strong>US29</strong> Como treinador, quero registrar um feedback textual na mídia do exercício analisado, para que o aluno compreenda os seus erros e acertos de execução.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf08">RNF08 · Interface de Feedback Anotado</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US29</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Vínculo de Mídia):</strong> Dado que o treinador assiste à evidência do aluno, Quando ele salva suas anotações, Então o texto fica permanentemente anexado àquele exercício específico do planejamento.</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us29">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,67</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf03602">
+<summary><span class="sj-requirement-id">RF03602</span><span class="sj-requirement-name">Editar feedback</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>Permitir que o treinador edite um feedback que ele mesmo registrou anteriormente.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us30"><strong>US30</strong> Como treinador, quero modificar um feedback previamente analisado e registrado, para corrigir ou complementar a orientação dada ao aluno.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn08">RN08 · Edição e exclusão do próprio feedback</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US30 / US31</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Autoria):</strong> Dado que o treinador tenta editar uma avaliação passada, Quando a requisição é validada, Então o sistema só permite a modificação se o autor original do <em>feedback</em> for o próprio usuário logado (<a class="sj-condition-link" href="../regras_negocio/#rn08">RN08 · Edição e exclusão do próprio feedback</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us30-us31">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,67</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div>
+<p class="sj-record-label">Dependências</p>
+<p>Depende de: <a href="../requisitos/#rf03601">RF03601</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf03603">
+<summary><span class="sj-requirement-id">RF03603</span><span class="sj-requirement-name">Excluir feedback</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>Permitir que o treinador exclua um feedback que ele mesmo registrou anteriormente.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us31"><strong>US31</strong> Como treinador, quero excluir um feedback previamente registrado, para remover anotações indevidas ou equivocadas da plataforma.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf15">RNF15 · Assistência e Validação no Preenchimento de Dados</a><br><a class="sj-condition-link" href="../regras_negocio/#rn08">RN08 · Edição e exclusão do próprio feedback</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US30 / US31</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Autoria):</strong> Dado que o treinador tenta editar uma avaliação passada, Quando a requisição é validada, Então o sistema só permite a modificação se o autor original do <em>feedback</em> for o próprio usuário logado (<a class="sj-condition-link" href="../regras_negocio/#rn08">RN08 · Edição e exclusão do próprio feedback</a>).</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us30-us31">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div>
+<p class="sj-record-label">Dependências</p>
+<p>Depende de: <a href="../requisitos/#rf03601">RF03601</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf03604">
+<summary><span class="sj-requirement-id">RF03604</span><span class="sj-requirement-name">Notificar atleta sobre feedback</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve notificar o atleta quando um feedback for registrado ou editado pelo treinador para um vídeo enviado por ele.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us32"><strong>US32</strong> Como aluno, quero ser notificado no sistema quando o treinador registrar ou editar um feedback, para saber exatamente quando o meu vídeo foi avaliado e visualizá-lo.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Sistema</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US32</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Gatilho de Notificação):</strong> Dado que o treinador publica ou altera um feedback, Quando a ação é salva, Então o sistema envia imediatamente um alerta visual para o painel do atleta correspondente.</p>
+</div><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us32">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Fora do MVP documentado<br>CT registrada: 3,00</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div>
+<p class="sj-record-label">Dependências</p>
+<p>Depende de: <a href="../requisitos/#rf03601">RF03601</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp7" class="sj-catalog-group">
+<h2 id="cp7"><span>CP7</span> Perfis distintos de acesso<a class="headerlink" href="#cp7" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Diferenciar os acessos e permissões entre treinador e atleta. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf04701">
+<summary><span class="sj-requirement-id">RF04701</span><span class="sj-requirement-name">Consultar atletas acompanhados</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador autenticado consulte a lista dos atletas vinculados ao seu acompanhamento, sem listar atletas sem vínculo autorizado. A consulta às informações de perfil de um atleta selecionado é descrita em <a href="../requisitos/#rf04810">RF04810</a>.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us33"><strong>US33</strong> Como treinador, quero acessar a lista de dados exclusivamente dos alunos da minha carteira, para aprimorar o acompanhamento e gerenciar o volume de treinos.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP7</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US33 / US37 / US42 / US43</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Isolamento de Carteira - Treinador):</strong> Dado que o treinador visualiza listas de alunos, perfis clínicos, vídeos submetidos ou resultados de aptidão, Quando a interface é carregada, Então o sistema injeta um filtro de banco de dados que retorna rigorosamente os atletas que possuam o seu ID de vínculo, ocultando totalmente o resto da base de utilizadores (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,42</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<section aria-labelledby="cp8" class="sj-catalog-group">
+<h2 id="cp8"><span>CP8</span> Privacidade de dados, vídeos e feedbacks<a class="headerlink" href="#cp8" title="Permanent link">&para;</a></h2>
+<p class="sj-catalog-group-lead">Restringir o acesso aos dados, vídeos e feedbacks individuais de cada atleta. <a href="../solucao/#23-caracteristicas-do-produto">Consultar origem na solução</a>.</p>
+<details class="sj-requirement" id="rf04802">
+<summary><span class="sj-requirement-id">RF04802</span><span class="sj-requirement-name">Consultar próprios dados cadastrais</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte seus próprios dados cadastrais, sem acessar os dados cadastrais de outro atleta.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us34"><strong>US34</strong> Como aluno, quero consultar unicamente os meus próprios dados cadastrais, para ter ciência dos dados armazenados e saber se necessitam de correção.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 1,83</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04803">
+<summary><span class="sj-requirement-id">RF04803</span><span class="sj-requirement-name">Consultar próprios resultados de testes</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Won&#x27;t Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte os resultados de testes associados à sua conta, sem acessar resultados de outros atletas.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us35"><strong>US35</strong> Como aluno, quero consultar exclusivamente os resultados dos meus próprios testes de aptidão, para monitorar a minha performance sem acessar dados de terceiros.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Won&#x27;t Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04804">
+<summary><span class="sj-requirement-id">RF04804</span><span class="sj-requirement-name">Consultar próprios vídeos enviados</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte os vídeos de execução que enviou, vinculados aos respectivos exercícios, sem acessar vídeos enviados por outros atletas.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us36"><strong>US36</strong> Como aluno, quero consultar unicamente os vídeos de execução que eu mesmo enviei, para rever a minha forma e garantir que a mídia submetida foi a correta.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,67</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04805">
+<summary><span class="sj-requirement-id">RF04805</span><span class="sj-requirement-name">Consultar vídeos de atleta acompanhado</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador autenticado consulte os vídeos de execução enviados pelos atletas sob seu acompanhamento, no contexto dos respectivos exercícios.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us37"><strong>US37</strong> Como treinador, quero consultar os vídeos de execução enviados pelos alunos sob meu acompanhamento, para avaliar tecnicamente a execução de cada exercício de forma assíncrona.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US33 / US37 / US42 / US43</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Isolamento de Carteira - Treinador):</strong> Dado que o treinador visualiza listas de alunos, perfis clínicos, vídeos submetidos ou resultados de aptidão, Quando a interface é carregada, Então o sistema injeta um filtro de banco de dados que retorna rigorosamente os atletas que possuam o seu ID de vínculo, ocultando totalmente o resto da base de utilizadores (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,75</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04806">
+<summary><span class="sj-requirement-id">RF04806</span><span class="sj-requirement-name">Consultar feedback recebido</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte os feedbacks individuais registrados pelo treinador para seus vídeos e exercícios, mantendo a associação ao conteúdo avaliado e sem acessar feedbacks destinados a outros atletas.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us38"><strong>US38</strong> Como aluno, quero consultar exclusivamente o feedback que o treinador registrou nos meus exercícios realizados, para compreensão de erros e correção de postura.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,67</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04807">
+<summary><span class="sj-requirement-id">RF04807</span><span class="sj-requirement-name">Consultar próprio histórico de treinos</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte seu histórico de treinos, sem acessar o histórico de outros atletas.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us39"><strong>US39</strong> Como aluno, quero consultar o meu próprio histórico de treinos já realizados, para acessar rotinas antigas e acompanhar a progressão de cargas.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,58</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04808">
+<summary><span class="sj-requirement-id">RF04808</span><span class="sj-requirement-name">Consultar próprios objetivos</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte os objetivos registrados para ele, sem acessar os objetivos de outros atletas.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us40"><strong>US40</strong> Como aluno, quero consultar exclusivamente os meus próprios objetivos definidos pelo treinador, para ter ciência de que as rotinas de treino são coerentes com as minhas metas.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,42</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04809">
+<summary><span class="sj-requirement-id">RF04809</span><span class="sj-requirement-name">Consultar próprio planejamento de treinos</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o atleta autenticado consulte os treinos planejados para ele, sem acessar o planejamento de outros atletas.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us41"><strong>US41</strong> Como aluno, quero consultar exclusivamente o meu próprio planejamento de treino diário/semanal, para entender a organização e a sequência dos exercícios prescritos.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br>Regra específica a confirmar.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US34 / US35 / US36 / US38 / US39 / US40 / US41</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf05">RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Should Have · Incluído no MVP documentado<br>CT registrada: 2,33</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04810">
+<summary><span class="sj-requirement-id">RF04810</span><span class="sj-requirement-name">Consultar perfil de atleta acompanhado</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador autenticado consulte as informações de perfil de um atleta selecionado entre os que estão vinculados ao seu acompanhamento, sem acessar o perfil de atletas sem vínculo autorizado.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us42"><strong>US42</strong> Como treinador, quero consultar o perfil completo dos alunos sob minha responsabilidade, para analisar dados pessoais atualizados e embasar avaliações clínicas.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US33 / US37 / US42 / US43</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Isolamento de Carteira - Treinador):</strong> Dado que o treinador visualiza listas de alunos, perfis clínicos, vídeos submetidos ou resultados de aptidão, Quando a interface é carregada, Então o sistema injeta um filtro de banco de dados que retorna rigorosamente os atletas que possuam o seu ID de vínculo, ocultando totalmente o resto da base de utilizadores (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Must Have · Incluído no MVP documentado<br>CT registrada: 2,42</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+<details class="sj-requirement" id="rf04811">
+<summary><span class="sj-requirement-id">RF04811</span><span class="sj-requirement-name">Consultar resultados de testes de atleta acompanhado</span><span class="sj-requirement-tags"><span class="sj-tag ">Posterior</span><span class="sj-tag">Could Have</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full">
+<p class="sj-record-label">Comportamento esperado</p>
+<p>O sistema deve permitir que o treinador autenticado consulte os resultados de testes dos atletas sob seu acompanhamento.</p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Intenção e valor</p>
+<p class="sj-story" id="us43"><strong>US43</strong> Como treinador, quero consultar o histórico de resultados dos testes de aptidão física da minha carteira de alunos, para analisar a evolução atlética e definir quais os treinos adequados para os próximos ciclos.</p>
+</div>
+<div>
+<p class="sj-record-label">Origem e perfis</p>
+<p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p>
+</div>
+<div>
+<p class="sj-record-label">Condições relacionadas</p>
+<p><a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a> · <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf11">RNF11 · Desempenho no Carregamento do Histórico</a><br><a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a></p>
+</div>
+<div class="sj-record-full">
+<p class="sj-record-label">Critérios de aceitação</p>
+<details class="sj-inline-criteria">
+<summary>Ver critérios · US33 / US37 / US42 / US43</summary>
+<div class="sj-inline-criteria-body">
+<div class="sj-criterion">
+<p><strong>CA01 (Isolamento de Carteira - Treinador):</strong> Dado que o treinador visualiza listas de alunos, perfis clínicos, vídeos submetidos ou resultados de aptidão, Quando a interface é carregada, Então o sistema injeta um filtro de banco de dados que retorna rigorosamente os atletas que possuam o seu ID de vínculo, ocultando totalmente o resto da base de utilizadores (<a class="sj-condition-link" href="../regras_negocio/#rn01">RN01 · Acesso aos atletas vinculados</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf09">RNF09 · Controle de Acesso Baseado em Funções (RBAC)</a>, <a class="sj-condition-link" href="../requisitos_nao_funcionais/#rnf10">RNF10 · Isolamento Multi-inquilino de Dados</a>).</p>
+</div>
+<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p><p class="sj-source-link"><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">Abrir registro por história</a></p></div>
+</details>
+</div>
+<div>
+<p class="sj-record-label">Prioridade e recorte</p>
+<p>Could Have · Fora do MVP documentado</p>
+<p><a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Consultar método e justificativa do recorte</a></p>
+</div>
+<div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
+</div>
+</details>
+</section>
+<h2 id="identificacao-dos-requisitos">Identificação e correspondências<a class="headerlink" href="#identificacao-dos-requisitos" title="Permanent link">&para;</a></h2>
+<p>Cada requisito mantém seu identificador ao mudar de prioridade ou associação. A correspondência histórica pode ser consultada abaixo.</p>
+<details class="sj-document-details">
+<summary>Consultar histórico dos identificadores</summary>
+<table>
+<thead>
+<tr>
+<th>Código na antiga página Requisitos</th>
+<th>Identificador atual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RF01201</td>
+<td><a href="#rf01208">RF01208 · Consultar dificuldade</a></td>
+</tr>
+<tr>
+<td>RF01202</td>
+<td><a href="#rf01209">RF01209 · Registrar dificuldade</a></td>
+</tr>
+<tr>
+<td>RF01203</td>
+<td><a href="#rf01210">RF01210 · Editar dificuldade</a></td>
+</tr>
+<tr>
+<td>RF01204</td>
+<td><a href="#rf01211">RF01211 · Editar status exercícios</a></td>
+</tr>
+<tr>
+<td>RF01205</td>
+<td><a href="#rf01212">RF01212 · Adicionar testes</a></td>
+</tr>
+<tr>
+<td>RF01206</td>
+<td><a href="#rf01213">RF01213 · Remover testes</a></td>
+</tr>
+<tr>
+<td>RF02401</td>
+<td><a href="#rf02407">RF02407 · Cadastrar exercício</a></td>
+</tr>
+<tr>
+<td>RF02402</td>
+<td><a href="#rf02408">RF02408 · Filtrar exercícios por fundamento</a></td>
+</tr>
+<tr>
+<td>RF02403</td>
+<td><a href="#rf02409">RF02409 · Associar exercício a objetivo</a></td>
+</tr>
+<tr>
+<td>RF02404</td>
+<td><a href="#rf02410">RF02410 · Documentar erros e orientações</a></td>
+</tr>
+<tr>
+<td>RF02405</td>
+<td><a href="#rf02411">RF02411 · Gerar thumbnail de vídeo base</a></td>
+</tr>
+<tr>
+<td>RF02406</td>
+<td><a href="#rf02412">RF02412 · Cadastrar informações complementares do vídeo base</a></td>
+</tr>
+<tr>
+<td>RF04801</td>
+<td><a href="#rf04802">RF04802 · Consultar próprios dados cadastrais</a></td>
+</tr>
+<tr>
+<td>RF04802</td>
+<td><a href="#rf04803">RF04803 · Consultar próprios resultados de testes</a></td>
+</tr>
+<tr>
+<td>RF04803</td>
+<td><a href="#rf04804">RF04804 · Consultar próprios vídeos enviados</a></td>
+</tr>
+<tr>
+<td>RF04804</td>
+<td><a href="#rf04805">RF04805 · Consultar vídeos de atleta acompanhado</a></td>
+</tr>
+<tr>
+<td>RF04805</td>
+<td><a href="#rf04806">RF04806 · Consultar feedback recebido</a></td>
+</tr>
+<tr>
+<td>RF04806</td>
+<td><a href="#rf04807">RF04807 · Consultar próprio histórico de treinos</a></td>
+</tr>
+<tr>
+<td>RF04807</td>
+<td><a href="#rf04808">RF04808 · Consultar próprios objetivos</a></td>
+</tr>
+<tr>
+<td>RF04808</td>
+<td><a href="#rf04809">RF04809 · Consultar próprio planejamento de treinos</a></td>
+</tr>
+<tr>
+<td>RF04809</td>
+<td><a href="#rf04810">RF04810 · Consultar perfil de atleta acompanhado</a></td>
+</tr>
+<tr>
+<td>RF04810</td>
+<td><a href="#rf04811">RF04811 · Consultar resultados de testes de atleta acompanhado</a></td>
+</tr>
+</tbody>
+</table>
+<p><span id="requisitos-funcionais"></span>
+<span id="requisitos-nao-funcionais"></span></p>
+<p>Os <a href="../requisitos_nao_funcionais/">RNFs</a> possuem registros próprios. A classificação de MVP de cada RF é mantida em sua ficha; as páginas de consulta não mantêm cópias das listas.</p>
+</details>
+<p><span id="referencia-da-consolidacao"></span></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../engenharia_requisitos/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 5. Atividades e técnicas de ER">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                5. Atividades e técnicas de ER
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../mvp/" class="md-footer__link md-footer__link--next" aria-label="Próximo: 9. Definição do MVP">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                9. Definição do MVP
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.indexes", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.action.edit", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+        <script src="../javascripts/sj-navigation.js"></script>
+      
+        <script src="../javascripts/sj-tables.js"></script>
+      
+        <script src="../javascripts/sj-catalog.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
