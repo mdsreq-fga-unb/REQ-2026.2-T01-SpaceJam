@@ -41,7 +41,7 @@ condições adequadas de espaço, equipamentos, tempo, auxílio de outras pessoa
 A Rich Picture a seguir representa somente o cenário atual: contato por WhatsApp e Instagram, organização em Samsung Notes, Word e caderno, treinos e testes presenciais, adaptação individual e dificuldades de histórico e comparação.
 
 
-![Rich Picture do cenário atual do acompanhamento dos atletas](imagens/Rich_Picture_cenario_atual.png)
+![Rich Picture do cenário atual do acompanhamento dos atletas](imagens/Rich_Picture_cenario_atual.png){:  width="524" height="290" }
 
 
 *Figura 1 — Rich Picture do cenário atual do acompanhamento dos atletas.*
@@ -80,7 +80,7 @@ Notes, Word e caderno, consolidação manual, comparação longitudinal pouco ef
 nas condições de realização dos testes.
 
 
-![Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente](imagens/diagrama-ishikawa.png)
+![Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente](imagens/diagrama-ishikawa.png){:  width="702" height="399" }
 
 
 *Figura 2 — Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente.*
@@ -155,7 +155,7 @@ operação do produto, sem confundi-lo com os atores que já atuam hoje.
 Além das partes interessadas do negócio, o docente e o monitor da disciplina acompanham e avaliam o
 projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e do processo.
 
-![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens/mapa_stakeholders.jpg){: width="720" }
+![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens/mapa_stakeholders.jpg){:  width="2400" height="1792" }
 
 
 *Figura 3 — Mapa de stakeholders do cenário atual do acompanhamento dos atletas.*
@@ -165,11 +165,12 @@ projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e
 **Atores e stakeholders**
 
 - **Treinador (Lucas Cordeiro):** atua no centro da gestão pedagógica dos treinos.
-- **Atleta (menor de idade):** à esquerda, vincula-se diretamente aos seus **Responsáveis**
-  (pais/tutores legais).
+- **Atleta e responsáveis:** a figura representa o atleta como menor de idade e o vincula aos responsáveis. Essa condição é uma hipótese da representação; a faixa etária precisa ser confirmada com Lucas.
 - **Ausência de profissionais de apoio:** fisioterapeutas, preparadores físicos e demais
   profissionais de saúde **não aparecem no diagrama**, pois não participam do fluxo de informações
   no cenário atual.
+
+**Limites da representação.** Os símbolos sobre consentimento, perda de vídeos e vínculo com feedback representam riscos ou hipóteses que precisam de confirmação. Não constituem, por si só, evidência de ocorrência na rotina de Lucas. A figura também menciona Excel; o contexto textual descreve Word e Samsung Notes, e essa divergência precisa ser revisada na imagem.
 
 **Legenda da notação visual**
 
@@ -187,11 +188,9 @@ projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e
     - **Restrições físicas:** desafios operacionais do contexto (espaço, equipamentos e auxílio em
       testes) que impactam a rotina presencial.
     - **Informações dispersas e histórico fragmentado:** registros divididos entre papel, Samsung
-      Notes e Excel, inviabilizando a análise contínua da evolução dos atletas.
+      Notes e documentos Word, dificultando a consulta contínua da evolução dos atletas.
 
-Dessa forma, o mapa permite distinguir o que já faz parte da rotina de Lucas do que ainda depende de
-validação, evitando tratar como confirmadas as necessidades dos atletas apresentadas apenas pela
-ótica do treinador.
+O mapa deve ser lido junto às ressalvas acima e à tabela de stakeholders. As hipóteses da figura não substituem a confirmação com Lucas e a participação dos atletas.
 
 
 ## 1.7 Segmentação de "Clientes" (Usuários da Plataforma)

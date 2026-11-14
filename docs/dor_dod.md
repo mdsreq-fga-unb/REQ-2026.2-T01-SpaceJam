@@ -73,7 +73,7 @@ A equipe inicia o item quando atende ao DoR aplicável e o conclui quando atende
 
 A equipe revisa estes critérios quando o processo ou o contexto mudar e registra a versão adotada. Para usá-los como acordo de trabalho, os integrantes precisam conhecer os critérios e combinar sua aplicação. A publicação do documento não comprova aprovação coletiva nem cumprimento do DoR/DoD pelos itens do backlog.
 
-A [área de DoR/DoD no Miro](https://miro.com/app/board/uXjVHrFoSVo=/) apresenta o resumo visual destes critérios. A documentação reúne as orientações detalhadas; atualizações devem manter os dois registros coerentes.
+A [área de DoR/DoD no Miro](https://miro.com/app/board/uXjVHrFoSVo=/) apresenta o resumo visual destes critérios. A documentação reúne as orientações detalhadas; atualizações devem manter os dois registros coerentes. A correspondência do resumo no Miro com a versão 1.0 ainda precisa ser confirmada; o link não comprova sua atualização.
 
 ## Referências
 
@@ -81,7 +81,6 @@ A [área de DoR/DoD no Miro](https://miro.com/app/board/uXjVHrFoSVo=/) apresenta
 - George Marsicano. Materiais da Unidade 2: *Verificação e Validação - Técnicas*, páginas 10-12, 33-52 e 55; *Declaração de Requisitos - Temas, Épicos e US*, páginas 5-13; *Organização e Atualização - Backlog de Requisitos*, páginas 15-18, 30, 34-36 e 52-54. Paginação do PDF.
 - Agile Alliance: [Definition of Ready](https://agilealliance.org/glossary/definition-of-ready/) e [Definition of Done](https://agilealliance.org/glossary/definition-of-done/).
 - IBM: [Rapid application development](https://www.ibm.com/think/topics/rapid-application-development).
-- Referências de organização consultadas: [WaveON — DoR e DoD](https://mdsreq-fga-unb.github.io/2025.2-T01-WaveOn/visao_produto/dod_dor/) e NutriPlanner — [DoR](https://mdsreq-fga-unb.github.io/2023.2-NutriPlanner/produto/dor/dor/) e [DoD](https://mdsreq-fga-unb.github.io/2023.2-NutriPlanner/produto/dod/dod/). A estrutura foi adaptada ao Space Jam, sem importar ferramentas ou exigências específicas desses projetos.
 
 ??? abstract "Histórico de revisão"
 

@@ -1,10 +1,10 @@
-# 5. ENGENHARIA DE REQUISITOS
+# 5. Engenharia de Requisitos {#5-engenharia-de-requisitos}
 
 No projeto **Space Jam**, o processo de Engenharia de Requisitos (ER) está organizado de forma integrada às quatro fases do modelo *Rapid Application Development* (RAD): **Planejamento de Requisitos**, **Design do Usuário**, **Construção** e **Cutover**. Essas fases orientam as atividades de elicitação, análise, especificação, representação, verificação, validação e atualização dos requisitos. O processo considera a elaboração de protótipos e a validação dos fluxos de treino junto ao treinador Lucas Cordeiro e aos atletas, conforme a disponibilidade dos envolvidos.
 
 ## 5.1 Atividades e Técnicas de ER
 
-A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos relacionadas às quatro fases do RAD. Durante o planejamento e o design, a equipe utiliza o Miro para organizar os artefatos de requisitos. Para acompanhar o desenvolvimento, utiliza o GitHub Projects, conforme descrito na [Seção 7](interacao_equipe_cliente.md). O quadro do Miro é um recurso de organização, sem adoção formal do framework Kanban.
+A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos relacionadas às quatro fases do RAD. O Miro reúne artefatos visuais de apoio ao planejamento e ao design. A manutenção do escopo textual está centralizada no [catálogo](requisitos.md), com as [orientações de atualização do backlog](backlog.md#atualizacao-do-backlog). O GitHub Projects é a ferramenta prevista para acompanhar o desenvolvimento na [Seção 7](interacao_equipe_cliente.md); o endereço do quadro efetivamente utilizado e suas evidências de atualização ainda precisam ser identificados. O quadro do Miro é um recurso de organização, sem adoção formal do framework Kanban.
 
 ### Planejamento de Requisitos
 
@@ -58,7 +58,7 @@ A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos r
 
 #### Organização e Atualização
 
-- **Atualização dos artefatos no Miro:** manutenção dos vínculos entre requisitos, histórias de usuário e elementos de interface, utilizando o quadro visual como apoio à organização e à rastreabilidade.
+- **Atualização dos registros e modelos:** manutenção dos vínculos entre requisitos, histórias e interfaces nas fichas do [catálogo](requisitos.md). O Miro é um apoio visual; sua correspondência com a versão textual precisa ser conferida antes de ser apresentada como evidência atual.
 
 ### Construção
 
@@ -73,7 +73,7 @@ A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos r
 
 #### Organização e Atualização
 
-- **Acompanhamento do desenvolvimento no GitHub Projects:** durante a construção, as histórias de usuário e tarefas são registradas como Issues e organizadas no GitHub Projects, que apoia o acompanhamento de status, responsáveis, prioridades e impedimentos. Quando aplicável, as Issues são vinculadas a branches, PRs e testes por meio de referências e links, mantendo a rastreabilidade entre requisitos e implementação.
+- **Acompanhamento do desenvolvimento no GitHub Projects:** durante a construção, a equipe prevê registrar as histórias de usuário e tarefas como Issues e organizá-las no GitHub Projects, que apoia o acompanhamento de status, responsáveis, prioridades e impedimentos. Quando aplicável, as Issues são vinculadas a branches, PRs e testes por meio de referências e links, mantendo a rastreabilidade entre requisitos e implementação.
 
 ### Cutover
 
@@ -93,7 +93,7 @@ A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos r
 
 ## 5.2 Estrutura do Processo de ER: Dimensão Temporal e Atividades
 
-O processo de Engenharia de Requisitos do Space Jam considera duas dimensões complementares: a **dimensão temporal**, representada pelas fases do ciclo de vida RAD, e a **dimensão funcional**, formada pelas atividades de Engenharia de Requisitos. O Miro organiza os artefatos elaborados durante o planejamento e o design; o GitHub Projects acompanha as tarefas de desenvolvimento.
+O processo de Engenharia de Requisitos do Space Jam considera duas dimensões complementares: a **dimensão temporal**, representada pelas fases do ciclo de vida RAD, e a **dimensão funcional**, formada pelas atividades de Engenharia de Requisitos. O catálogo centraliza a manutenção do escopo textual; o Miro apoia a representação visual. O GitHub Projects é o recurso previsto para acompanhar as tarefas de desenvolvimento.
 
 ### Cadeia de Rastreabilidade
 
@@ -101,9 +101,14 @@ A rastreabilidade proposta relaciona as necessidades do negócio aos artefatos d
 
 **Problema → Objetivo Específico (OE) → Característica do Produto (CP) → RF/RNF e Regra de Negócio (RN) → História de Usuário (US) → Protótipo (Figma) → Issue no GitHub Projects → Código/PR → Teste → Feedback**
 
-Essa cadeia depende da manutenção dos vínculos entre os artefatos, por meio de referências e links. A ferramenta, por si só, não garante rastreabilidade automática.
+Essa cadeia depende da manutenção dos vínculos entre os artefatos, por meio de referências e links. A ferramenta, por si só, não garante rastreabilidade automática. A cadeia acima descreve a relação pretendida; não comprova a existência de código, testes ou feedback para todos os requisitos. Os vínculos disponíveis e as lacunas estão identificados nas fichas do [catálogo](requisitos.md).
 
 ### Mapeamento das atividades de ER às fases do RAD
+
+Os registros abaixo descrevem técnicas e **resultados esperados**, sem comprovar sua execução. Abra o detalhamento para consultar a relação entre atividades e fases.
+
+<details class="sj-document-details" markdown="1">
+<summary>Consultar o mapeamento completo das atividades de ER</summary>
 
 | Fase do RAD | Momento do ciclo | Atividade de ER | Técnica ou prática | Resultado esperado |
 | :--- | :--- | :--- | :--- | :--- |
@@ -124,6 +129,8 @@ Essa cadeia depende da manutenção dos vínculos entre os artefatos, por meio d
 | **Cutover** | Preparação da versão para entrega | Verificação e Validação | Testes de aceitação e homologação com o cliente | Evidências de aceitação registradas, quando a validação tiver sido realizada. |
 | **Cutover** | Preparação da entrega | Declaração de Requisitos | Notas de versão e orientações de uso | Documentação correspondente à versão disponibilizada. |
 | **Cutover** | Fechamento e planejamento futuro | Organização e Atualização | Atualização do GitHub Projects e registro de demandas futuras | Itens concluídos e melhorias pendentes identificados. |
+
+</details>
 
 ---
 

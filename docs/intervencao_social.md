@@ -8,7 +8,7 @@ Entre os **impactos pretendidos**, destacam-se:
 * Autonomia e Orientação: Incentivar a autonomia dos atletas na execução de fundamentos e rotinas de treinos passados pelo treinador;
 * Centralizar o histórico de desempenho e evolução dos atletas, substituindo anotações informais e descentralizadas;
 * Transparência na Comunicação: Aumentar a clareza no envio de orientações, metas e feedbacks de treinos;
-Apoio ao Acompanhamento Físico: Promover a conscientização sobre a rotina de exercícios e hábitos saudáveis, servindo como suporte organizacional ao planejamento de treinos (sem caráter de avaliação clínica ou diagnóstico preventivo);
+* Apoio ao Acompanhamento Físico: Promover a conscientização sobre a rotina de exercícios e hábitos saudáveis, servindo como suporte organizacional ao planejamento de treinos (sem caráter de avaliação clínica ou diagnóstico preventivo);
 * Tecnologia como Suporte à Rotina: Fortalecer o uso da tecnologia como ferramenta de apoio à gestão dos treinos, incentivando a conscientização física e a prática esportiva estruturada;
 * Segurança da Informação: Estabelecer diretrizes claras para o armazenamento seguro de dados cadastrais e registro de métricas dos praticantes.
 
