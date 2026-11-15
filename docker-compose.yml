@@ -1,0 +1,48 @@
+# Ambiente de desenvolvimento completo:
+#   docker compose up --build
+# Front:  http://localhost:5173
+# API:    http://localhost:8000/api/health/
+# Admin:  http://localhost:8000/admin/
+
+services:
+  db:
+    image: postgres:16-alpine
+    env_file: .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"   # para abrir o banco no DBeaver/pgAdmin pela sua máquina
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build: ./backend
+    env_file: .env
+    environment:
+      POSTGRES_HOST: db   # dentro da rede do compose o banco se chama "db"
+    volumes:
+      - ./backend:/app    # editar o código na sua máquina recarrega o servidor
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_PROXY_TARGET: http://backend:8000
+      CHOKIDAR_USEPOLLING: ${CHOKIDAR_USEPOLLING:-false}
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # node_modules fica só no container (evita conflito Windows/Linux)
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:

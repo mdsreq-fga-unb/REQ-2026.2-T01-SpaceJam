@@ -1,0 +1,57 @@
+:root {
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: #1f2328;
+  background: #f4f5f7;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.08);
+  width: min(360px, 90vw);
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+label {
+  display: grid;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+input {
+  padding: 0.6rem;
+  border: 1px solid #c9ccd1;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.7rem;
+  border: 0;
+  border-radius: 6px;
+  background: #e8590c;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+.erro {
+  color: #c92a2a;
+  margin: 0;
+}
