@@ -2,7 +2,10 @@
 from pathlib import Path
 from html.parser import HTMLParser
 import html
+import logging
 import re
+
+log = logging.getLogger('mkdocs.plugins.catalog_context')
 
 REFERENCES = {
     'requisitos_nao_funcionais.md': 'requisitos_nao_funcionais',
@@ -21,10 +24,13 @@ def records(markdown):
 def render_catalog(markdown, docs_dir):
     docs_dir = Path(docs_dir)
     criteria = records((docs_dir/'criterios_aceitacao.md').read_text(encoding='utf-8'))
+    missing = []
     def include(match):
         key,label = match[1],match[2]
         if key not in criteria:
-            raise ValueError('Critério sem registro de origem: '+key)
+            # Critério ainda não cadastrado em criterios_aceitacao.md: avisa no build em vez de interromper.
+            missing.append(key)
+            return '<p class="sj-record-note">Critérios de aceitação de '+html.escape(label)+' a definir.</p>'
         _,body = criteria[key]
         # O endereço canônico fica na consulta por história. A ficha é uma visualização.
         body = re.sub(r'\s+id="[^"]+"','',body)
@@ -39,6 +45,9 @@ def render_catalog(markdown, docs_dir):
         return match[1].replace(' · ','')
     markdown = re.sub(r'<p>(.*?)</p>',paragraph,markdown,flags=re.S)
     markdown = re.sub(criteria_link,include,markdown)
+    if missing:
+        log.warning('Critérios sem registro em criterios_aceitacao.md (%d): %s',
+                    len(set(missing)), ', '.join(sorted(set(missing))))
     # Os nomes das condições acompanham a declaração, sem outra lista de títulos.
     for filename,route in list(REFERENCES.items())[:2]:
         if '../'+route+'/#' not in markdown:continue
