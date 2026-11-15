@@ -8,7 +8,7 @@ Este documento organiza a **sequência de execução por iteração, dependênci
 
 ---
 
-## 10.1 Visão Geral de Prontidão e Resolução de Conflitos {#101-prontidao}
+## 10.1 Visão Geral de Prontidão e Resolução de Conflitos
 
 Os **62 requisitos funcionais** do catálogo e a tarefa estrutural de ambiente estão distribuídos em **5 iterações de entrega do MVP** (09/nov a 14/dez) mais o **backlog posterior** de evolução, com a equipe organizada em revezamento entre **Backend** (**Guilherme** e **Thiago**) e **Frontend** (**Anderson**, **Júlia**, **Luiz** e **Paulo**):
 
@@ -30,7 +30,7 @@ Os conflitos apontados entre versões anteriores da documentação e a lista fin
 
 ---
 
-## 10.2 Cadeia de Dependências Críticas {#102-dependencias}
+## 10.2 Cadeia de Dependências Críticas
 
 A distribuição dos itens entre as iterações obedece a três cadeias de dependência estrutural:
 
@@ -46,7 +46,7 @@ A distribuição dos itens entre as iterações obedece a três cadeias de depen
 
 ---
 
-## 10.3 Plano de Execução por Iteração (Sincronizado com o Miro) {#103-plano-execucao}
+## 10.3 Plano de Execução por Iteração (Sincronizado com o Miro)
 
 Cada item utiliza os estados operacionais do fluxo da equipe: **`A fazer`**, **`Em andamento`**, **`Em revisão`**, **`Em validação`**, **`Bloqueado`** e **`Concluído`**.
 
@@ -159,7 +159,7 @@ Cada item utiliza os estados operacionais do fluxo da equipe: **`A fazer`**, **`
 
 <span id="102-priorizacao-do-backlog-geral-e-mvp"></span>
 
-## 10.4 Critérios de Priorização e Governança {#104-governanca}
+## 10.4 Critérios de Priorização e Governança
 
 ### Regra de Corte do MVP
 

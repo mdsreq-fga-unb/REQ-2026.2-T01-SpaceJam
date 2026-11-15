@@ -2,13 +2,15 @@
 
 # Mínimo Produto Viável — Space Jam
 
-O MVP concentra o fluxo essencial entre treinador e atleta: autenticação e vínculo privado, biblioteca de exercícios, prescrição e acompanhamento de treinos, registro de execução/dificuldade e envio de vídeo com feedback assíncrono. O recorte consolidado reúne **46 Requisitos Funcionais** — distribuídos nas 5 iterações do [Plano de Execução](backlog.md#103-plano-execucao) — e os requisitos não funcionais aplicáveis mantidos em [requisitos_nao_funcionais.md](requisitos_nao_funcionais.md).
+O MVP concentra o fluxo essencial entre treinador e atleta: autenticação e vínculo privado, biblioteca de exercícios, prescrição e acompanhamento de treinos, registro de execução/dificuldade e envio de vídeo com feedback assíncrono. O recorte consolidado reúne **46 Requisitos Funcionais** — distribuídos nas 5 iterações do [Plano de Execução](backlog.md#103-plano-de-execucao-por-iteracao-sincronizado-com-o-miro) — e os requisitos não funcionais aplicáveis mantidos em [requisitos_nao_funcionais.md](requisitos_nao_funcionais.md).
 
 [Explorar requisitos do MVP](requisitos.md#indice-mvp) · [Catálogo funcional](requisitos.md) · [Backlog e iterações](backlog.md) · [Catálogo de RNFs](requisitos_nao_funcionais.md) · [DoR e DoD](dor_dod.md)
 
 ---
 
-## 1. Objetivo do Incremento {#1-visao-geral-do-mvp}
+<span id="1-visao-geral-do-mvp"></span>
+
+## 1. Objetivo do Incremento
 
 Comprovar, em ambiente funcional e com isolamento de dados por vínculo treinador–atleta, que:
 
@@ -17,7 +19,9 @@ Comprovar, em ambiente funcional e com isolamento de dados por vínculo treinado
 
 ---
 
-## 2. Linha de Corte e Critérios Consolidados {#2-linha-de-corte-do-mvp}
+<span id="2-linha-de-corte-do-mvp"></span>
+
+## 2. Linha de Corte e Critérios Consolidados
 
 A seleção do MVP cruza **Valor de Negócio (VB / MoSCoW)** e **Complexidade Técnica (CT)** sobre os **62 Requisitos Funcionais** do catálogo.
 
@@ -65,9 +69,11 @@ Integram o MVP todos os requisitos **Must Have ($\text{VB} = 5$)** e os requisit
 
 ---
 
-## 3. Composição Funcional e Decisões Conciliadas {#3-requisitos-funcionais-do-mvp}
+<span id="3-requisitos-funcionais-do-mvp"></span>
 
-A composição detalhada dos **46 RFs do MVP** está centralizada no [Índice do MVP](requisitos.md#indice-mvp), enquanto o sequenciamento por sprint, responsáveis e o catálogo completo de itens adiados são mantidos no [Backlog](backlog.md#103-plano-execucao).
+## 3. Composição Funcional e Decisões Conciliadas
+
+A composição detalhada dos **46 RFs do MVP** está centralizada no [Índice do MVP](requisitos.md#indice-mvp), enquanto o sequenciamento por sprint, responsáveis e o catálogo completo de itens adiados são mantidos no [Backlog](backlog.md#103-plano-de-execucao-por-iteracao-sincronizado-com-o-miro).
 
 ### 3.1 Registro de Decisão sobre Testes de Aptidão Física
 
@@ -75,17 +81,21 @@ Na reunião de elicitação de **08/10**, a consulta aos resultados de testes f�
 
 * **Justificativa:** O cadastro e edição de testes ([RF1216](requisitos.md#rf1216) e [RF1217](requisitos.md#rf1217)) foram classificados como *Won't Have* ($\text{VB} = 2$) para priorizar o núcleo de prescrição e acompanhamento de treinos dentro do prazo. Como [RF4811](requisitos.md#rf4811) depende da existência de testes registrados no sistema, mantê-lo no MVP geraria uma consulta vazia sem entrada correspondente. Por isso, [RF4811](requisitos.md#rf4811) foi reclassificado para *Could Have* ($\text{VB} = 3$), permanecendo pronto para a primeira onda evolutiva após validação do formato de avaliação física com o cliente.
 
-### 3.2 Confronto de Viabilidade: Capacidade, Dependências e Validação {#requisitos-fora-do-mvp}
+<span id="requisitos-fora-do-mvp"></span>
 
-Para assegurar que os **46 RFs** caibam no horizonte de **5 semanas** definido no [Plano de Execução](backlog.md#103-plano-execucao), o recorte foi confrontado com três restrições operacionais:
+### 3.2 Confronto de Viabilidade: Capacidade, Dependências e Validação
+
+Para assegurar que os **46 RFs** caibam no horizonte de **5 semanas** definido no [Plano de Execução](backlog.md#103-plano-de-execucao-por-iteracao-sincronizado-com-o-miro), o recorte foi confrontado com três restrições operacionais:
 
 * **Capacidade da equipe:** Com **6 desenvolvedores** (2 Backend e 4 Frontend), a carga média é de **9,2 RFs por iteração** (~1,5 RF por pessoa/semana), concentrada majoritariamente em operações CRUD de baixa complexidade (37 itens em Q1 com $\text{CT} < 3{,}00$).
-* **Diluição de risco técnico:** Os 9 itens de maior esforço (Q2) foram distribuídos entre as Iterações 2 a 5 e ordenados conforme a [Cadeia de Dependências Críticas](backlog.md#102-dependencias), evitando gargalos na sprint final.
+* **Diluição de risco técnico:** Os 9 itens de maior esforço (Q2) foram distribuídos entre as Iterações 2 a 5 e ordenados conforme a [Cadeia de Dependências Críticas](backlog.md#102-cadeia-de-dependencias-criticas), evitando gargalos na sprint final.
 * **Tempo de verificação e aceite:** Nenhum item é contabilizado como entregue apenas pela codificação; cada entrega passa por revisão de código por pares e validação contra os cenários de [criterios_aceitacao.md](criterios_aceitacao.md) e o [DoD](dor_dod.md) dentro da própria iteração.
 
 ---
 
-## 4. Condições Não Funcionais e Acessibilidade no MVP {#4-requisitos-nao-funcionais-rnfs-essenciais-para-o-mvp}
+<span id="4-requisitos-nao-funcionais-rnfs-essenciais-para-o-mvp"></span>
+
+## 4. Condições Não Funcionais e Acessibilidade no MVP
 
 <span id="obrigatorios-para-o-mvp"></span>
 <span id="associados-a-rfs-do-mvp"></span>
