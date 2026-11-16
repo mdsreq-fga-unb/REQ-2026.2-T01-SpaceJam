@@ -175,21 +175,70 @@ As telas de consulta de histórico, perfil e gráficos de evolução do atleta d
 - [ ] A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro sem gerar erros ou referências quebradas
 - [ ] Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes sem duplicidades
 
-## RNF13 · Resiliência e Armazenamento Protegido de Mídias {#rnf13}
+## RNF13 · Armazenamento Isolado e Proteção de Mídias {#rnf13}
 
-O upload dos vídeos enviados pelos atletas deve ser processado e persistido de forma isolada em armazenamento em nuvem com criptografia em repouso (AES-256).
+**Categoria:** Confiabilidade / Segurança
 
-**Categoria registrada:** Confiabilidade / Segurança. **Escopo:** CP5, CP8.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** Os vídeos enviados pelos atletas devem ser armazenados de forma isolada em armazenamento de objetos em nuvem (externo ao contêiner da aplicação), com criptografia em repouso (AES-256 / SSE) e controle de acesso restrito aos usuários vinculados ao treino. No **MVP (piso mínimo obrigatório)**, toda mídia trafega via HTTPS/TLS, é persistida em bucket privado sem URLs públicas permanentes e acessada apenas mediante requisição autenticada ou URL assinada de curta duração; recursos avançados como chaves gerenciadas pelo cliente (KMS/CMK), marca d'água (watermark) e transcodificação adaptativa permanecem como **escopo evolutivo pós-MVP**.
 
-## RNF14 · Restrição de Duração e Tamanho de Mídias {#rnf14}
+**Origem e perfis:**
 
-Os vídeos de execução enviados pelos atletas devem possuir duração máxima de 60 segundos e limite de tamanho de até 100 MB.
+- CP5, CP8
+- Aluno (Atleta) e Professor
 
-**Categoria registrada:** Suportabilidade / Usabilidade. **Escopo:** CP5.
+**Regras de negócio associadas:**
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+- [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% dos vídeos enviados são gravados em object storage externo com criptografia AES-256 habilitada; 0 URLs públicas permanentes expostas; 100% das tentativas de acesso por usuários sem vínculo retornam HTTP 403; e 0 bytes permanecem recuperáveis após solicitação de exclusão (RN05).
+- **Validação (Justificativa):** Garante o piso obrigatório de confidencialidade e isolamento das mídias desde a primeira versão do MVP, separando-o claramente de evoluções futuras de criptografia avançada e processamento de vídeo.
+
+**Checklist estruturado:**
+
+- [ ] Os vídeos enviados são armazenados em object storage externo ao contêiner da aplicação, com criptografia em repouso (AES-256) ativa
+- [ ] Nenhum arquivo de vídeo é acessível por URL pública estática (somente via endpoint autenticado ou URL assinada temporária)
+- [ ] Requisições de acesso feitas por usuários sem vínculo ativo aluno-professor são bloqueadas com HTTP 403
+- [ ] A exclusão da conta ou solicitação do titular remove definitivamente o arquivo do storage em nuvem
+
+## RNF14 · Limites de Duração e Tamanho no Envio de Vídeos {#rnf14}
+
+**Categoria:** Suportabilidade / Usabilidade
+
+**MVP:** Associado a RFs do MVP
+
+**Descrição:** Os vídeos de execução técnica enviados pelos atletas devem respeitar o teto máximo global de 60 segundos de duração e 100 MB de tamanho por arquivo, garantindo estabilidade no upload em redes móveis, previsibilidade de armazenamento e reprodução fluida para avaliação pelo professor.
+
+**Origem e perfis:**
+
+- CP5
+- Aluno (Atleta)
+
+**Regras de negócio associadas:**
+
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+
+**Decisão de projeto (Justificativa técnica):**
+
+- **Dimensionamento do teto (60 s / 100 MB):** Adotou-se como referência de gravação móvel o padrão Full HD (`1080p` a `30 fps`, codecs H.264/HEVC), cuja taxa média de bits varia entre `8 e 12 Mbps` (`~60 a 90 MB` por minuto). O limite de **100 MB** acomoda uma gravação completa de **60 segundos** nesse padrão com margem de segurança, dispensando compressão prévia pelo atleta e evitando estouros de memória ou timeout em conexões móveis. Gravações acima desse teto (como `4K` ou `60 fps` prolongados) devem ser rejeitadas antes do envio (ver RNF16).
+- **Adoção de limite único no MVP:** Embora o domínio admita execuções de durações distintas conforme o exercício (conforme esclarecido por Lucas / ata de 26/09), decidiu-se manter um **teto único global de 60 s no MVP** — suficiente para cobrir a execução completa de qualquer exercício individual sem adicionar complexidade de configuração por exercício no cadastro da biblioteca —, deixando a parametrização de duração máxima por exercício como evolução futura pós-MVP.
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% dos arquivos com duração `> 60 s` ou tamanho `> 100 MB` são bloqueados antes da conclusão do upload, enquanto 100% dos vídeos válidos em `1080p @ 30 fps` (`≤ 60 s` e `≤ 100 MB`) são aceitos e persistidos sem necessidade de reprocessamento manual.
+- **Validação (Justificativa):** Documenta formalmente o critério técnico por trás dos parâmetros numéricos e registra a decisão de escopo do MVP, tornando o requisito reproduzível e auditável.
+
+**Checklist estruturado:**
+
+- [ ] Vídeos com duração superior a 60 segundos são rejeitados com feedback claro ao aluno
+- [ ] Arquivos com tamanho superior a 100 MB são bloqueados antes de consumir banda completa de upload
+- [ ] Vídeos gravados em dispositivos móveis no padrão 1080p a 30 fps com até 60 segundos (≤ 100 MB) são enviados e reproduzidos sem falhas
+- [ ] A decisão técnica sobre o teto único (60 s / 100 MB) e o adiamento da duração variável por exercício pós-MVP está registrada e vinculada à RN09
 
 ## RNF15 · Assistência e Validação no Preenchimento de Dados {#rnf15}
 
@@ -258,10 +307,32 @@ O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrig
 - [ ] O histórico da escolha (data, hora e o que foi autorizado) fica registrado no sistema
 - [ ] O usuário consegue alterar ou cancelar sua permissão posteriormente a qualquer momento
 
-## RNF18 · Persistência de Dados {#rnf18}
+## RNF18 · Persistência Durável de Dados e Mídias {#rnf18}
 
-O sistema deve garantir que as informações cadastradas e os vídeos dos treinadores permaneçam armazenadas após reinicializações ou atualizações do sistema.
+**Categoria:** Confiabilidade
 
-**Categoria registrada:** Confiabilidade. **Escopo:** Global.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** O sistema deve garantir a persistência durável de todos os dados estruturados (cadastros, exercícios, planejamentos, treinos e feedbacks) em banco de dados relacional (PostgreSQL) e dos arquivos de mídia (vídeos-base da biblioteca do professor e vídeos de execução dos atletas) em armazenamento de objetos externo à imagem dos contêineres da aplicação. No **MVP (piso mínimo obrigatório)**, os dados e vídeos devem sobreviver integralmente a reinicializações, atualizações e redeploys do ambiente sem perda ou quebra de integridade referencial; mecanismos avançados como backups automáticos *point-in-time* (PITR), replicação multi-região e plano formal de recuperação de desastres (DR) ficam como **escopo evolutivo pós-MVP**.
+
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Regras de negócio associadas:**
+
+- [RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios](regras_negocio.md#rn13)
+- [RN14 · Gestão da Biblioteca de Exercícios](regras_negocio.md#rn14)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Após ciclo controlado de reinicialização e redeploy dos serviços da aplicação, 0 registros estruturados são perdidos no PostgreSQL (`100%` de retenção), `100%` dos vídeos-base e de execução permanecem acessíveis no storage e 0 referências quebradas ocorrem após operações de exclusão (RN13).
+- **Validação (Justificativa):** Elimina o risco de perda de estado em ambientes containerizados no MVP, formalizando o requisito mínimo de continuidade operacional e conectando-o aos fluxos de biblioteca e execução.
+
+**Checklist estruturado:**
+
+- [ ] Dados estruturados (usuários, treinos, feedbacks e catálogo) permanecem íntegros no PostgreSQL após reinicialização ou redeploy dos contêineres
+- [ ] Vídeos-base cadastrados pelo professor na biblioteca (RN14) e vídeos enviados pelos atletas permanecem recuperáveis após reinicializações
+- [ ] A aplicação de migrações de banco de dados preserva os registros existentes sem perda de dados
+- [ ] Operações de exclusão mantêm a integridade referencial do histórico conforme a RN13

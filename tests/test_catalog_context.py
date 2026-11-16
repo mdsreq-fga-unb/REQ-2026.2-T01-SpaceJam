@@ -67,6 +67,21 @@ class CatalogContextTests(unittest.TestCase):
         self.assertNotIn('RF3501',result)
         self.assertIn('<ul class="sj-rnf-checklist"><li>Item um</li><li>Item dois</li></ul>',result)
 
+    def test_structured_rnf_card_renders_project_decision_block(self):
+        self.assertIsNotNone(self.api,'Consulta contextual ainda não implementada')
+        body=('**Descrição:** Texto local.\n\n'
+              '**Regras de negócio associadas:**\n- [RN09 · Limite](regras_negocio.md#rn09)\n\n'
+              '**Decisão de projeto (Justificativa técnica):**\n'
+              '- **Teto de 60 s:** padrão `1080p` a `30 fps`.\n')
+        fields=self.api.rnf_record(body)
+        self.assertIsNotNone(fields)
+        self.assertIn('RN09',fields['Regras de negócio associadas'])
+        self.assertNotIn('Decisão',fields['Regras de negócio associadas'])
+        result=self.api.render_rnf_record('RNF14 · Limites','rnf14',fields)
+        self.assertIn('<p class="sj-record-label">Decisão de projeto (Justificativa técnica)</p>',result)
+        self.assertIn('<strong>Teto de 60 s:</strong>',result)
+        self.assertIn('<code>1080p</code>',result)
+
     def test_structured_rnf_card_includes_global_related_footer(self):
         self.assertIsNotNone(self.api,'Consulta contextual ainda não implementada')
         catalog='<details class="sj-requirement" id="rf3501"><summary><span class="sj-requirement-name">Enviar vídeo</span></summary><a href="../requisitos_nao_funcionais/#rnf16">RNF16</a></details>'

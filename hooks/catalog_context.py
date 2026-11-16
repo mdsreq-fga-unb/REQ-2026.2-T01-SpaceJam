@@ -89,8 +89,8 @@ def related_requirements(catalog, route, key):
 
 
 RNF_LABELS = ('Categoria', 'MVP', 'Descrição', 'Origem e perfis',
-              'Regras de negócio associadas', 'Verificação e validação',
-              'Checklist estruturado')
+              'Regras de negócio associadas', 'Decisão de projeto (Justificativa técnica)',
+              'Verificação e validação', 'Checklist estruturado')
 RNF_FIELD = re.compile(r'^\*\*([^:*]+):\*\*[ \t]?(.*)$')
 
 
@@ -123,6 +123,7 @@ def md_href(url):
 def md_inline(text):
     text = html.escape(text, quote=False)
     text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
     return re.sub(r'\[([^\]]+)\]\(([^)]+)\)', lambda m: '<a href="'+md_href(m[2])+'">'+m[1]+'</a>', text)
 
 
@@ -160,6 +161,10 @@ def render_rnf_record(title, key, fields, catalog='', route=''):
     if rules:
         blocks.append('<div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas">'
                       + ''.join('<li>' + md_inline(item) + '</li>' for item in rules) + '</ul></div>')
+    decisions = md_list(fields.get('Decisão de projeto (Justificativa técnica)', ''))
+    if decisions:
+        blocks.append('<div class="sj-record-full"><p class="sj-record-label">Decisão de projeto (Justificativa técnica)</p><ul>'
+                      + ''.join('<li>' + md_inline(item) + '</li>' for item in decisions) + '</ul></div>')
     checks = md_list(fields.get('Verificação e validação', ''))
     if checks:
         blocks.append('<div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul>'
