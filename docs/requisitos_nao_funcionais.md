@@ -28,13 +28,30 @@ O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no fronte
 
 **Tratamento registrado para o MVP:** Obrigatórios para o MVP.
 
-## RNF03 · Estabilidade em Navegadores Padrão {#rnf03}
+## RNF03 · Suporte a Navegadores Web {#rnf03}
 
-O sistema deve operar sem falhas críticas (erros bloqueantes de navegação ou persistência) nas versões mais atuais dos navegadores ao longo do desenvolvimento: Chrome, Firefox, Edge, Safari e Opera.
+**Categoria:** Suportabilidade
 
-**Categoria registrada:** Suportabilidade. **Escopo:** Global.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** A aplicação web deve operar sem falhas críticas todos os fluxos essenciais (autenticação, cadastro, prescrição, envio e visualização de vídeos e acompanhamento de métricas) sem erros bloqueantes de interface, layout ou persistência de dados nas versões mínimas de referência estabelecidas: em desktop (Windows, macOS e Linux), Google Chrome ≥ 130, Mozilla Firefox ≥ 131, Microsoft Edge ≥ 130, Apple Safari ≥ 17.5 (macOS) e Opera ≥ 114; em dispositivos móveis, Google Chrome ≥ 130 (Android) e Apple Safari ≥ 17.5 (iOS/iPadOS), bem como nas versões estáveis subsequentes lançadas durante o ciclo do projeto.
+
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Execução bem-sucedida de 100% da suíte E2E / checklist de fluxos críticos com 0 erros não tratados no console (`Uncaught Error` ou falhas de persistência) e 0 quebras de layout bloqueantes nas versões mínimas de referência desktop (Chrome 130+, Firefox 131+, Edge 130+, Safari 17.5+, Opera 114+) e mobile (Chrome 130+ Android, Safari 17.5+ iOS/iPadOS).
+- **Validação (Justificativa):** Fixa uma linha de base reproduzível de navegadores, versões mínimas e sistemas operacionais para auditoria e testes de regressão, eliminando a ambiguidade de "versões mais atuais".
+
+**Checklist estruturado:**
+
+- [ ] Os fluxos críticos de autenticação, cadastro, treino e envio de vídeo operam sem bloqueios nas versões mínimas definidas em desktop e mobile
+- [ ] Não ocorrem erros de JavaScript não tratados no console durante a navegação nos navegadores homologados
+- [ ] Componentes visuais, formulários e players de vídeo mantêm legibilidade e funcionamento íntegro sem sobreposição ou corte
+- [ ] A persistência de dados e o armazenamento de sessão funcionam corretamente em todas as plataformas de referência
 
 ## RNF04 · Acessibilidade Digital {#rnf04}
 
@@ -129,13 +146,34 @@ As telas de consulta de histórico, perfil e gráficos de evolução do atleta d
 
 **Tratamento registrado para o MVP:** Evolutivos.
 
-## RNF12 · Integridade na Catalogação de Exercícios {#rnf12}
+## RNF12 · Integridade e Consistência na Catalogação de Exercícios {#rnf12}
 
-A base da biblioteca de exercícios deve suportar consultas por filtros combinados (objetivos, fundamentos e materiais) sem inconsistência de índices.
+**Categoria:** Confiabilidade (Integridade de Dados)
 
-**Categoria registrada:** Confiabilidade. **Escopo:** CP4.
+**MVP:** Associado a RFs do MVP
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+**Descrição:** O sistema deve manter os resultados de busca e filtragem da biblioteca de exercícios (por nome e por fundamento) sempre atualizados após cadastros, edições ou exclusões, evitando que exercícios removidos ou dados desatualizados apareçam nas consultas.
+
+**Origem e perfis:**
+
+- CP4
+- Aluno e Professor
+
+**Regras de negócio associadas:**
+
+- [RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios](regras_negocio.md#rn13)
+- [RN14 · Gestão da Biblioteca de Exercícios](regras_negocio.md#rn14)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 0 exercícios removidos ou dados desatualizados exibidos nas buscas por nome e filtros por fundamento imediatamente após operações de cadastro, edição ou exclusão (100% de consistência dos resultados em ≤ 1,0 s).
+- **Validação (Justificativa):** Elimina a divergência com os Requisitos Funcionais (que não contemplam filtros combinados nem o atributo de materiais) e garante que professores e alunos consultem apenas exercícios ativos e atualizados.
+
+**Checklist estruturado:**
+
+- [ ] Após cadastrar ou editar um exercício, os dados atualizados (nome, objetivo e fundamento) refletem imediatamente nas consultas
+- [ ] A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro sem gerar erros ou referências quebradas
+- [ ] Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes sem duplicidades
 
 ## RNF13 · Resiliência e Armazenamento Protegido de Mídias {#rnf13}
 

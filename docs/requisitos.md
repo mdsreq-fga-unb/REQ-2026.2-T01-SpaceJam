@@ -609,7 +609,7 @@
 <p id="us38" class="sj-story"><strong>US38</strong> Como treinador, quero consultar os detalhes de um exercício da biblioteca, para revisar suas especificações técnicas e orientações.</p>
 </div>
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p>RNF a confirmar.<br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us38">US38</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,52</p></div>
  
@@ -654,7 +654,7 @@
 <p id="us41" class="sj-story"><strong>US41</strong> Como treinador, quero pesquisar um exercício específico pelo nome, para encontrá-los rapidamente.</p>
 </div>
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p>RNF a confirmar.<br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us41">US41</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 3,27</p></div>
  
