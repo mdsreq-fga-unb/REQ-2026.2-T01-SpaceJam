@@ -168,6 +168,8 @@ Esse trecho não é a decisão inicial de liberar coletivamente as oito históri
 
 **Origem:** Microsoft Teams/SharePoint da equipe Space Jam - Requisitos. **Registro:** Reunião Semanal de 16/11/2026, gravação iniciada às 10h35, duração de 47min04s. A transcrição completa foi consultada no ambiente institucional; **não está publicada no GitHub**.
 
+Em 16/11/2026, às 19h35 de Brasília, foi recuperada uma exportação oficial completa em DOCX, com início e encerramento da transcrição e falas até 47:01 em um registro de 47min04s. O conteúdo textual coincide com o documento anteriormente fornecido; a cópia permanece fora do repositório público, sem validação integral pelo áudio.
+
 **Consulta por contas já autorizadas:** no Teams, abrir **Space Jam - Requisitos → Geral → Compartilhado → General → Recordings** e o arquivo **Reunião Semanal-20261116_103543-Gravação de Reunião.mp4**; selecionar **Ler a transcrição**. Também é possível abrir **Reunião Semanal → Recapitulação → 16/11/2026** e consultar a transcrição dessa ocorrência.
 
 **Trechos de referência:** em 35:16, Júlia identifica o trabalho de Luiz no frontend de US01–US05; em 35:41–35:44, Guilherme e Thiago tratam do backend. Em 44:17, Guilherme identifica cadastro/login como sua parte; em 45:28, Thiago orienta a revisão de Luiz e a continuidade de Guilherme. Os trechos de 35:16, 35:41 e 45:28 foram localizados na transcrição original exibida no Teams e conciliados com o documento fornecido. Não individualizam todas as tarefas de backend nem comprovam a decisão inicial coletiva ou o DoR06.
