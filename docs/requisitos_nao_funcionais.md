@@ -23,8 +23,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Professor)
-
+- Todos os utilizadores (Visitante, Aluno e Treinador)
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Inspeção responsiva dos fluxos essenciais em viewports a partir de `360px` de largura (ex.: `360×800 px`, `390×844 px` e `1280×720 px`) com `0` barras de rolagem horizontal indesejadas, `0` sobreposições de elementos interativos e `100%` dos botões e formulários legíveis e acionáveis.
@@ -73,8 +72,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Professor)
-
+- Todos os utilizadores (Visitante, Aluno e Treinador)
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Execução bem-sucedida de 100% da suíte E2E / checklist de fluxos críticos com 0 erros não tratados no console (`Uncaught Error` ou falhas de persistência) e 0 quebras de layout bloqueantes nas versões mínimas de referência desktop (Chrome 130+, Firefox 131+, Edge 130+, Safari 17.5+, Opera 114+) e mobile (Chrome 130+ Android, Safari 17.5+ iOS/iPadOS).
@@ -98,8 +96,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Professor)
-
+- Todos os utilizadores (Visitante, Aluno e Treinador)
 **Pendência de decisão:**
 
 - A classificação anterior deixa acessibilidade fora do MVP. A classificação foi preservada para revisão, sem retirar as metas já declaradas nem afirmar que essa opção foi confirmada.
@@ -391,8 +388,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - CP1, CP3
-- Todos os utilizadores (Visitante, Aluno e Professor)
-
+- Todos os utilizadores (Visitante, Aluno e Treinador)
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Testes funcionais e automatizados de interface nos formulários de cadastro, perfil, testes físicos, planejamentos, exercícios e feedbacks comprovando que `100%` dos campos formatáveis aplicam máscara em tempo real durante a digitação, `100%` dos campos obrigatórios exibem indicação visual clara e `0` requisições de submissão são disparadas ao backend enquanto houver campos obrigatórios vazios ou formatos inválidos.
@@ -446,8 +442,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global / CP8
-- Todos os utilizadores (Visitante, Aluno e Professor)
-
+- Todos os utilizadores (Visitante, Aluno e Treinador)
 **Regras de negócio associadas:**
 
 - [RN15 · Obrigatoriedade de Aceite dos Termos e Privacidade](regras_negocio.md#rn15)
@@ -475,8 +470,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Professor)
-
+- Todos os utilizadores (Visitante, Aluno e Treinador)
 **Regras de negócio associadas:**
 
 - [RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios](regras_negocio.md#rn13)
