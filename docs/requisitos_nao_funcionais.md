@@ -205,13 +205,39 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF08 · Interface de Feedback Anotado {#rnf08}
 
-A interface do treinador deve permitir a associação de notas e observações textuais diretamente vinculadas à linha do tempo dos vídeos enviados pelos atletas.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP6.
+**MVP:** Evolutivos
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** A interface do treinador deve permitir a associação de notas e observações textuais diretamente vinculadas à linha do tempo dos vídeos enviados pelos atletas.
 
-**Pendência de escopo:** o requisito de feedback textual e a anotação vinculada à linha do tempo têm abrangências diferentes. Confirmar o comportamento que será exigido no incremento.
+**Origem e perfis:**
+
+- CP6
+- Professor (Treinador)
+
+**Regras de negócio associadas:**
+
+- [RN10 · Imutabilidade de Vídeo Após Feedback](regras_negocio.md#rn10)
+- [RN11 · Autoria Exclusiva de Feedback](regras_negocio.md#rn11)
+
+**Pendência de escopo:**
+
+- O MVP entrega o feedback textual do [RF3604](requisitos.md#rf3604), vinculado ao vídeo e ao exercício, sem exigência de marcação por timestamp.
+- A anotação diretamente vinculada à linha do tempo descrita neste RNF permanece como evolução pós-MVP e depende de confirmação do cliente sobre a forma de apresentação (ver [ata de 08/10/2026](../atas/2026-10-08-lucas/#pontos-a-esclarecer)).
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** `100%` das anotações salvas com timestamp válido dentro da duração do vídeo (`0 s` até o fim), `0` anotações órfãs ou fora do intervalo e edição/exclusão restrita ao autor original (RN11), com persistência e reexibição correta após recarregar o vídeo.
+- **Validação (Justificativa):** Permite ao treinador apontar erros e acertos em momentos específicos da execução, complementando o feedback textual geral do RF3604 sem alterar o escopo já entregue no MVP.
+
+**Checklist estruturado:**
+
+- [ ] O treinador consegue criar notas textuais associadas a um timestamp válido do vídeo
+- [ ] As anotações são persistidas e reexibidas nos pontos corretos após recarregar o vídeo
+- [ ] Apenas o autor original pode editar ou excluir a anotação (RN11)
+- [ ] Anotações sem timestamp ou fora da duração do vídeo são bloqueadas
+- [ ] A implementação da linha do tempo foi formalmente confirmada com o cliente antes do incremento
 
 ## RNF09 · Controle de Acesso Baseado em Funções (RBAC) {#rnf09}
 
