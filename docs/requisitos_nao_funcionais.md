@@ -14,148 +14,484 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF01 · Responsividade Mobile {#rnf01}
 
-A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** Global.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones.
+
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Atleta e Treinador)
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Inspeção responsiva dos fluxos essenciais em viewports a partir de `360px` de largura (ex.: `360×800 px`, `390×844 px` e `1280×720 px`) com `0` barras de rolagem horizontal indesejadas, `0` sobreposições de elementos interativos e `100%` dos botões e formulários legíveis e acionáveis.
+- **Validação (Justificativa):** Garante que os atletas em conjunto com o treinador consigam acessar treinos, enviar vídeos e registrar feedbacks diretamente pelo smartphone em quadra ou ginásio sem perda de usabilidade.
+
+**Checklist estruturado:**
+
+- [ ] Todas as telas principais renderizam sem rolagem horizontal em largura mínima de 360px
+- [ ] Textos, formulários, botões e players de vídeo permanecem legíveis e clicáveis sem corte ou sobreposição em smartphones
+- [ ] A navegação principal e ações críticas são facilmente acessíveis em telas móveis (mobile-first)
+- [ ] O layout mantém proporção, legibilidade e funcionalidade sem rolagem horizontal (overflow-x) nas resoluções de tablet (768 × 1024 px) e desktop (1280 × 720 px e 1920 × 1080 px) no DevTools
 
 ## RNF02 · Arquitetura e Stack Tecnológica {#rnf02}
 
-O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional.
+**Categoria:** Requisitos de Implementação
 
-**Categoria registrada:** Requisitos de Implementação. **Escopo:** Global.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional.
 
-## RNF03 · Estabilidade em Navegadores Padrão {#rnf03}
+**Origem e perfis:**
 
-O sistema deve operar sem falhas críticas (erros bloqueantes de navegação ou persistência) nas versões mais atuais dos navegadores ao longo do desenvolvimento: Chrome, Firefox, Edge, Safari e Opera.
+- Global
+- Equipe de Desenvolvimento / Todos os utilizadores (Atleta e Treinador)
 
-**Categoria registrada:** Suportabilidade. **Escopo:** Global.
+**Verificação e validação:**
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+- **Verificação (Métrica):** Inspeção dos arquivos de dependências e ambiente (`package.json`, `requirements.txt`/`pyproject.toml` e configuração do banco) confirmando `React >= 18` com `TypeScript`, `Python >= 3.11` com `Django` / `djangorestframework` e instância ativa de `PostgreSQL >= 15` (`100%` de aderência às versões mínimas declaradas).
+- **Validação (Justificativa):** Padroniza a stack tecnológica do projeto, assegurando tipagem estática no frontend, produtividade e maturidade na API REST, além da integridade relacional na persistência dos dados.
+
+**Checklist estruturado:**
+
+- [ ] O frontend está estruturado em React (v18+) com TypeScript ativo no build e checagem de tipos
+- [ ] O backend está implementado em Python (3.11+) utilizando Django e Django REST Framework
+- [ ] A camada de persistência relacional opera sobre PostgreSQL (v15+)
+- [ ] Os arquivos de configuração e dependências do repositório refletem as versões mínimas homologadas
+
+## RNF03 · Suporte a Navegadores Web {#rnf03}
+
+**Categoria:** Suportabilidade
+
+**MVP:** Obrigatório
+
+**Descrição:** A aplicação web deve operar sem falhas críticas todos os fluxos essenciais (autenticação, cadastro, prescrição, envio e visualização de vídeos e acompanhamento de métricas) sem erros bloqueantes de interface, layout ou persistência de dados nas versões mínimas de referência estabelecidas: em desktop (Windows, macOS e Linux), Google Chrome ≥ 130, Mozilla Firefox ≥ 131, Microsoft Edge ≥ 130, Apple Safari ≥ 17.5 (macOS) e Opera ≥ 114; em dispositivos móveis, Google Chrome ≥ 130 (Android) e Apple Safari ≥ 17.5 (iOS/iPadOS), bem como nas versões estáveis subsequentes lançadas durante o ciclo do projeto.
+
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Atleta e Treinador)
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Execução bem-sucedida de 100% da suíte E2E / checklist de fluxos críticos com 0 erros não tratados no console (`Uncaught Error` ou falhas de persistência) e 0 quebras de layout bloqueantes nas versões mínimas de referência desktop (Chrome 130+, Firefox 131+, Edge 130+, Safari 17.5+, Opera 114+) e mobile (Chrome 130+ Android, Safari 17.5+ iOS/iPadOS).
+- **Validação (Justificativa):** Fixa uma linha de base reproduzível de navegadores, versões mínimas e sistemas operacionais para auditoria e testes de regressão, eliminando a ambiguidade de "versões mais atuais".
+
+**Checklist estruturado:**
+
+- [ ] Os fluxos críticos de autenticação, cadastro, treino e envio de vídeo operam sem bloqueios nas versões mínimas definidas em desktop e mobile
+- [ ] Não ocorrem erros de JavaScript não tratados no console durante a navegação nos navegadores homologados
+- [ ] Componentes visuais, formulários e players de vídeo mantêm legibilidade e funcionamento íntegro, com todos os botões e controles visíveis e clicáveis nas resoluções testadas (sem cortes ou sobreposição)
+- [ ] A persistência de dados e o armazenamento de sessão funcionam corretamente em todas as plataformas de referência
 
 ## RNF04 · Acessibilidade Digital {#rnf04}
 
-A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** Global.
+**MVP:** Evolutivos
 
-**Tratamento registrado para o MVP:** Não aplicáveis ao MVP.
+**Descrição:** A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.
 
-**Pendência de decisão:** a classificação anterior deixa acessibilidade fora do MVP. A classificação foi preservada para revisão, sem retirar as metas já declaradas nem afirmar que essa opção foi confirmada.
+**Origem e perfis:**
 
-## RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD {#rnf05}
+- Global
+- Todos os utilizadores (Atleta e Treinador)
 
-O sistema deve garantir a privacidade e proteção dos dados dos usuários em conformidade parcial com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º.
+**Decisão:**
 
-**Categoria registrada:** Confiabilidade. **Escopo:** Global / CP8.
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+- A acessibilidade está fora do MVP. O requisito foi classificado como evolutivo, após validação com o treinador titular (Lucas), que informou não atender atualmente atletas com demandas específicas de acessibilidade assistiva. A priorização concentra o esforço do MVP nas funcionalidades centrais de treino e acompanhamento, mantendo a conformidade WCAG planejada para evolução futura conforme a base de usuários crescer, essa necessidade pode surgir. [Registro de Comprovacao](https://drive.google.com/file/d/1LWxClNWmC8qAXfHdUrpBi9BGzdvGj5v1/view?usp=sharing)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Auditoria automatizada e inspeção visual das telas principais (via Lighthouse Accessibility / axe DevTools) comprovando relação de contraste `≥ 4.5:1` em `100%` dos textos normais (WCAG 2.1 AA - Critério 1.4.3) e `0` estados críticos (erros, status de treino ou alertas) comunicados exclusivamente por cor (sem ícone, rótulo ou padrão textual complementar).
+- **Validação (Justificativa):** Assegura legibilidade e compreensão inequívoca da interface para usuários com daltonismo ou baixa visão, evitando barreiras visuais na leitura de métricas, feedbacks e status de exercícios.
+
+**Checklist estruturado:**
+
+- [ ] Todos os textos e componentes interativos atendem ao contraste mínimo de 4.5:1 conforme WCAG 2.1 AA (Critério 1.4.3)
+- [ ] Mensagens de erro, validações de formulário e status de execução utilizam ícones ou textos descritivos além da diferenciação por cor
+- [ ] Gráficos, indicadores de progresso e feedbacks visuais permanecem distinguíveis em simulação de daltonismo (protanopia, deuteranopia e tritanopia)
+- [ ] A decisão de escopo (inclusão no MVP ou manutenção no pós-MVP) foi formalmente revisada e confirmada pela equipe
+
+## RNF05 · Proteção de Dados Pessoais e Direitos do Titular (LGPD) {#rnf05}
+
+**Categoria:** Segurança (Privacidade / LGPD)
+
+**MVP:** Obrigatório
+
+**Descrição:** O sistema deve assegurar a proteção e a privacidade dos dados pessoais em conformidade com a LGPD (Lei nº 13.709/2018, com destaque para os arts. 5º, 14, 18 e 46), coletando e armazenando exclusivamente os dados estritamente necessários ao acompanhamento esportivo (dados cadastrais, métricas de desempenho, vídeos de execução e feedbacks). O acesso a essas informações deve ser restrito apenas ao próprio atleta e ao treinador atualmente vinculado ao seu perfil, mantendo-se a retenção somente enquanto houver vínculo ativo de acompanhamento ou enquanto a conta permanecer ativa. Por fim, o sistema deve garantir a eliminação definitiva e irreversível dos dados pessoais, vídeos e feedbacks mediante solicitação do titular, encerramento da conta ou desvinculação pelo treinador, ressalvadas as hipóteses de anonimização de registros históricos ou guarda obrigatória por força de lei, conforme previsto no art. 16 da referida lei.
+
+**Origem e perfis:**
+
+- Global / CP8
+- Atleta e Treinador
+
+**Regras de negócio associadas:**
+
+- [RN02 · Vínculo Obrigatório do Aluno pelo Código do Treinador](regras_negocio.md#rn02)
+- [RN03 · Isolamento de Dados e Carteira do Treinador](regras_negocio.md#rn03)
+- [RN04 · Segregação de Edição Cadastral e Clínica](regras_negocio.md#rn04)
+- [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
+- [RN16 · Consentimento Legal para Atletas Menores de Idade](regras_negocio.md#rn16)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% dos dados pessoais, métricas e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio de acesso (HTTP 403) para usuários sem vínculo ativo; mediante solicitação do atleta, encerramento da conta ou desvinculação pelo treinador, os registros e arquivos elegíveis são removidos definitivamente do banco de dados e do storage (ou anonimizados quando houver obrigação legal de retenção), com revogação imediata de acesso e geração de protocolo de confirmação em ≤ 500 ms.
+**Validação (Justificativa):** Traduz a conformidade com a LGPD em critérios verificáveis de minimização, finalidade explícita, controle de acesso, retenção e direitos do titular, assegurando a privacidade dos usuários sem comprometer a integridade do acompanhamento esportivo nem as obrigações legais de guarda ou anonimização de registros históricos.
+
+**Checklist estruturado:**
+
+- [ ] A coleta restringe-se aos dados estritamente necessários ao acompanhamento esportivo, com finalidade explícita
+- [ ] Apenas o aluno(atleta) titular e o treinador(professor) vinculado possuem acesso aos dados e vídeos de execução
+- [ ] Os dados pessoais são mantidos apenas enquanto a conta do usuário permanecer ativa
+- [ ] Mediante solicitação do titular, encerramento da conta ou desvinculação pelo treinador, os registros e vídeos elegíveis são eliminados definitivamente (ressalvadas as obrigações legais de retenção ou anonimização de registros históricos)
 
 ## RNF06 · Compatibilidade de Vídeo {#rnf06}
 
-O sistema deve aceitar e processar submissões de ficheiros de vídeo nos formatos .mp4 e .mov.
+**Categoria:** Suportabilidade
 
-**Categoria registrada:** Suportabilidade. **Escopo:** CP5, CP6.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+**Descrição:** O sistema deve aceitar e processar submissões de arquivos de vídeo nos formatos .mp4 e .mov.
+
+**Origem e perfis:**
+
+- CP5, CP6
+- Aluno (Atleta) e Professor (Treinador)
+
+**Regras de negócio associadas:**
+
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes automatizados e manuais de upload comprovando que `100%` dos arquivos válidos nos contêineres `.mp4` (H.264/HEVC) e `.mov` (QuickTime/iOS) dentro dos limites estabelecidos (RNF13) são aceitos e reproduzidos corretamente, enquanto `100%` dos formatos não suportados (ex.: `.avi`, `.mkv`, `.wmv`, `.exe`) são rejeitados antes do envio (RNF15).
+- **Validação (Justificativa):** Garante compatibilidade nativa com os formatos padrão de gravação de smartphones Android (`.mp4`) e iOS/iPhone (`.mov`), evitando que o atleta precise converter o vídeo manualmente antes de enviá-lo.
+
+**Checklist estruturado:**
+
+- [ ] Vídeos gravados e exportados no formato `.mp4` são aceitos, armazenados e reproduzidos corretamente na plataforma
+- [ ] Vídeos gravados nativamente em dispositivos iOS no formato `.mov` são aceitos, armazenados e reproduzidos corretamente
+- [ ] Arquivos com extensões ou MIME types fora da lista permitida (`.mp4` e `.mov`) são bloqueados com feedback claro antes do upload (RNF15)
+- [ ] Os players web de avaliação do treinador reproduzem ambos os formatos sem exigir plugins externos
 
 ## RNF07 · Feedback Visual de Upload {#rnf07}
 
-A aplicação web deve exibir um indicador visual de progresso dinâmico (com porcentagem de 1% a 99%) durante a submissão do vídeo, informando o estado em tempo real até ao término (100%).
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP5.
+**MVP:** Evolutivos
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** A aplicação web deve exibir um indicador visual de progresso dinâmico (com porcentagem de 1% a 99%) durante a submissão do vídeo, informando o estado em tempo real até ao término (100%).
 
-## RNF08 · Interface de Feedback Anotado {#rnf08}
+**Origem e perfis:**
 
-A interface do treinador deve permitir a associação de notas e observações textuais diretamente vinculadas à linha do tempo dos vídeos enviados pelos atletas.
+- CP5
+- Aluno (Atleta)
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP6.
+**Verificação e validação:**
 
-**Tratamento registrado para o MVP:** Evolutivos.
+- **Verificação (Métrica):** Testes funcionais e de simulação de rede (throttling 3G/4G) no envio de vídeos válidos (até 100 MB), comprovando a atualização contínua da barra/percentual de progresso de `1%` a `99%` durante a transferência e transição para `100%` (confirmação de conclusão) em `≤ 1,0 s` após o término do upload.
+- **Validação (Justificativa):** Evita que o atleta feche a aba, recarregue a página ou reenvie o vídeo duplicado por falta de retorno visual durante o envio de arquivos maiores em conexões móveis.
 
-**Pendência de escopo:** o requisito de feedback textual e a anotação vinculada à linha do tempo têm abrangências diferentes. Confirmar o comportamento que será exigido no incremento.
+**Checklist estruturado:**
 
-## RNF09 · Controle de Acesso Baseado em Funções (RBAC) {#rnf09}
+- [ ] Um indicador visual de progresso é exibido logo após iniciar o upload do vídeo
+- [ ] O percentual é atualizado dinamicamente de 1% a 99% acompanhando os bytes transferidos (eventos de progresso da requisição)
+- [ ] Ao concluir o envio e persistência, o indicador atinge 100% e exibe confirmação clara de sucesso para o usuário (atleta)
+- [ ] Em caso de queda de conexão ou falha durante o upload, o progresso é interrompido e uma mensagem de erro clara é exibida
 
-O sistema deve aplicar controle de acesso rígido (Role-Based Access Control), garantindo que endpoints e visões referentes ao perfil Treinador não sejam acessíveis por Atletas.
+## RNF08 · Controle de Acesso Baseado em Funções (RBAC) {#rnf08}
 
-**Categoria registrada:** Confiabilidade / Segurança. **Escopo:** CP7.
+**Categoria:** Confiabilidade / Segurança
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**MVP:** Obrigatório
 
-## RNF10 · Isolamento Multi-inquilino de Dados {#rnf10}
+**Descrição:** O sistema deve aplicar controle de acesso rígido baseado em papéis (RBAC) e em vínculo de cadastro, garantindo que endpoints e visões referentes ao perfil Professor (Treinador) não sejam acessíveis por Alunos (Atletas), e assegurando que cada aluno acesse exclusivamente seus próprios dados, treinos e mídias, enquanto cada treinador visualize e gerencie apenas os registros dos alunos vinculados à sua própria carteira.
 
-O acesso aos vídeos, dados de histórico e feedbacks de um atleta deve ser restrito exclusivamente ao próprio atleta e aos treinadores devidamente vinculados a ele.
+**Origem e perfis:**
 
-**Categoria registrada:** Confiabilidade / Segurança. **Escopo:** CP8.
+- CP7
+- Aluno (Atleta) e Professor (Treinador)
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Regras de negócio associadas:**
 
-## RNF11 · Desempenho no Carregamento do Histórico {#rnf11}
+- [RN03 · Isolamento de Dados da Carteira do Treinador](regras_negocio.md#rn03)
 
-As telas de consulta de histórico, perfil e gráficos de evolução do atleta devem carregar completamente em até 5 segundos sob simulação de limitação de rede (throttling em perfil Fast 4G no DevTools dos navegadores homologados) e sob carga nominal de até 50 requisições simultâneas ao servidor.
+**Verificação e validação:**
 
-**Categoria registrada:** Desempenho. **Escopo:** CP1, CP2.
+- **Verificação (Métrica):** Testes automatizados de autorização e segurança de API/rotas comprovando que 100% das tentativas de acesso indevido retornam HTTP 403 Forbidden — incluindo Atletas acessando endpoints de Treinador, Atletas acessando registros de outros Atletas e Treinadores acessando dados de alunos fora da sua carteira — além de HTTP 401 Unauthorized para requisições não autenticadas, com 0 rotas restritas acessíveis via navegação direta no frontend por Atletas.
 
-**Tratamento registrado para o MVP:** Evolutivos.
+- **Validação (Justificativa):** Protege as funcionalidades exclusivas de gestão do treinador e garante a privacidade dos registros individuais, impedindo tanto o acesso de atletas a recursos administrativos quanto o vazamento de dados entre contas de diferentes alunos ou carteiras de diferentes treinadores.
 
-## RNF12 · Integridade na Catalogação de Exercícios {#rnf12}
+**Checklist estruturado:**
 
-A base da biblioteca de exercícios deve suportar consultas por filtros combinados (objetivos, fundamentos e materiais) sem inconsistência de índices.
+- [ ] Todos os endpoints exclusivos do perfil Professor (Treinador) validam o papel (role) no backend e bloqueiam acessos de Alunos (Atletas) com HTTP 403
 
-**Categoria registrada:** Confiabilidade. **Escopo:** CP4.
+- [ ] Todos os endpoints de consulta e edição validam o vínculo de cadastro no backend, bloqueando com HTTP 403 o acesso a registros de outros alunos ou de carteiras de outros treinadores
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+- [ ] Requisições sem autenticação válida recebem HTTP 401 antes de acessar rotas protegidas
 
-## RNF13 · Resiliência e Armazenamento Protegido de Mídias {#rnf13}
+- [ ] As rotas e componentes de interface exclusivos do Professor (Treinador) são ocultados e bloqueados no roteamento do frontend para usuários com perfil Aluno (Atleta)
 
-O upload dos vídeos enviados pelos atletas deve ser processado e persistido de forma isolada em armazenamento em nuvem com criptografia em repouso (AES-256).
+- [ ] Testes automatizados cobrem tentativas de acesso indevido entre perfis distintos e entre contas do mesmo perfil nas operações críticas do MVP
 
-**Categoria registrada:** Confiabilidade / Segurança. **Escopo:** CP5, CP8.
+## RNF09 · Isolamento Multi-inquilino de Dados {#rnf09}
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Categoria:** Confiabilidade / Segurança
 
-## RNF14 · Restrição de Duração e Tamanho de Mídias {#rnf14}
+**MVP:** Obrigatório
 
-Os vídeos de execução enviados pelos atletas devem possuir duração máxima de 60 segundos e limite de tamanho de até 100 MB.
+**Descrição:** O acesso aos vídeos, dados de histórico, feedbacks e treinos/planejamentos de um atleta deve ser restrito exclusivamente ao próprio atleta e ao treinador devidamente vinculado a ele.
 
-**Categoria registrada:** Suportabilidade / Usabilidade. **Escopo:** CP5.
+**Origem e perfis:**
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+- CP8
+- Aluno (Atleta) e Professor (Treinador)
 
-## RNF15 · Assistência e Validação no Preenchimento de Dados {#rnf15}
+**Regras de negócio associadas:**
 
-O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrigatórios e validar formatos antes do envio do formulário, prevenindo erros de digitação.
+- [RN03 · Isolamento de Dados da Carteira do Treinador](regras_negocio.md#rn03)
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP1, CP3.
+**Verificação e validação:**
 
-**Tratamento registrado para o MVP:** Evolutivos.
+- **Verificação (Métrica):** Testes automatizados de autorização por propriedade/vínculo (IDOR / isolamento multi-tenant) comprovando que `100%` das tentativas de consulta ou download de vídeos, histórico de treinos, testes físicos e feedbacks de um atleta realizadas por outro atleta ou por um treinador sem vínculo ativo retornam `HTTP 403 Forbidden` (ou `404` sem vazar existência), com `0` registros cruzados retornados nas listagens.
+- **Validação (Justificativa):** Previne vazamento horizontal de dados pessoais, métricas físicas e vídeos de treino entre usuários da plataforma, garantindo confidencialidade no modelo multi-inquilino.
 
-## RNF16 · Gerenciamento Pré-Envio de Mídia {#rnf16}
+**Checklist estruturado:**
 
-A interface deve limitar a seleção de arquivos a 1 único arquivo por vez no campo de upload, apresentando botão de remoção/substituição antes da confirmação do envio.
+- [ ] Consultas de histórico, perfil, testes físicos, vídeos e feedbacks filtram estritamente pelo ID do próprio atleta ou pelos atletas com vínculo ativo ao treinador autenticado
+- [ ] Requisições diretas por ID (IDOR) a recursos de atletas não vinculados são bloqueadas no backend com HTTP 403
+- [ ] Treinadores sem vínculo ativo com o atleta não visualizam nem acessam seus vídeos, planejamentos ou feedbacks
+- [ ] Testes automatizados validam o isolamento de dados entre dois atletas distintos e entre dois treinadores com carteiras separadas
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP5.
+## RNF10 · Desempenho no Carregamento do Histórico {#rnf10}
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+**Categoria:** Desempenho
 
-## RNF17 · Consentimento de Cookies {#rnf17}
+**MVP:** Evolutivos
 
-A aplicação web deve apresentar um aviso de consentimento de cookies no primeiro acesso, permitindo ao utilizador escolher entre "Aceitar Todos" ou "Apenas Essenciais" (LGPD Art. 7º e 8º).
+**Descrição:** As telas de consulta de histórico, perfil e gráficos de evolução do atleta devem carregar completamente em até 5 segundos sob simulação de limitação de rede (throttling em perfil Fast 4G no DevTools dos navegadores homologados) e sob carga nominal de até 50 requisições simultâneas ao servidor.
 
-**Categoria registrada:** Confiabilidade. **Escopo:** Global / CP8.
+**Origem e perfis:**
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+- CP1, CP2
+- Aluno (Atleta) e Professor (Treinador)
 
-## RNF18 · Persistência de Dados {#rnf18}
+**Verificação e validação:**
 
-O sistema deve garantir que as informações cadastradas e os vídeos dos treinadores permaneçam armazenadas após reinicializações ou atualizações do sistema.
+- **Verificação (Métrica):** Testes de desempenho combinando simulação de rede em perfil `Fast 4G` no DevTools dos navegadores homologados (RNF03) e teste de carga com `50` requisições simultâneas (ex.: k6/Locust), comprovando tempo total de carregamento completo (`Load` / renderização dos dados e gráficos) `≤ 5,0 s` no percentil 95 (`p95`) e `0%` de erros HTTP `5xx`.
+- **Validação (Justificativa):** Assegura que consultas frequentes de histórico, perfil e evolução física permaneçam responsivas mesmo em conexões móveis e durante picos simultâneos de uso em horários de treino.
 
-**Categoria registrada:** Confiabilidade. **Escopo:** Global.
+**Checklist estruturado:**
 
-**Tratamento registrado para o MVP:** Evolutivos.
+- [ ] As telas de histórico, perfil e gráficos de evolução carregam completamente em até 5 segundos sob perfil Fast 4G nos navegadores homologados (RNF03)
+- [ ] A API mantém tempo de resposta dentro do orçamento e sem falhas HTTP 5xx sob carga nominal de 50 requisições simultâneas
+- [ ] Consultas de histórico e métricas de evolução utilizam paginação ou agregação otimizada para evitar gargalos de payload e banco de dados
+- [ ] Os parâmetros e resultados dos testes de desempenho (Fast 4G e 50 req/s) estão documentados e reproduzíveis
+
+## RNF11 · Integridade e Consistência na Catalogação de Exercícios {#rnf11}
+
+**Categoria:** Confiabilidade (Integridade de Dados)
+
+**MVP:** Associado a RFs do MVP
+
+**Descrição:** O sistema deve manter os resultados de busca e filtragem da biblioteca de exercícios (por nome e por fundamento) imediatamente atualizados após operações de cadastro, edição ou exclusão realizadas pelo treinador, impedindo que exercícios removidos ou orientações desatualizadas apareçam nas consultas de novas prescrições, sem comprometer os registros históricos já vinculados aos treinos realizados.
+
+**Origem e perfis:**
+
+- CP4
+- Atleta e Treinador
+
+**Regras de negócio associadas:**
+
+- [RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios](regras_negocio.md#rn13)
+- [RN14 · Gestão da Biblioteca de Exercícios](regras_negocio.md#rn14)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes funcionais e de integração comprovando 0 exercícios removidos ou dados desatualizados exibidos nas buscas por nome e filtros por fundamento após operações de cadastro, edição ou exclusão (100% de atualização dos resultados em ≤ 1,0 s), mantendo 100% dos registros de treinos passados íntegros após a exclusão de um exercício.
+- **Validação (Justificativa):** Garante que o treinador prescreva apenas exercícios ativos e com orientações corretivas atualizadas, evitando falhas de sincronização ou cache desatualizado na interface sem perder a rastreabilidade dos treinos já executados pelos atletas.
+
+**Checklist estruturado:**
+
+- [ ] Após o treinador cadastrar ou editar um exercício (nome, objetivo, fundamento, vídeo-base, erros comuns e orientações), os dados atualizados refletem imediatamente nas consultas
+- [ ] A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro para novas prescrições, preservando intactos os treinos históricos onde ele foi utilizado
+- [ ] Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes, sem duplicidades ou referências quebradas
+
+## RNF12 · Armazenamento Isolado e Proteção de Mídias {#rnf12}
+
+**Categoria:** Confiabilidade / Segurança
+
+**MVP:** Obrigatório
+
+**Descrição:** Os vídeos enviados pelos atletas devem ser armazenados de forma isolada em armazenamento de objetos em nuvem (externo ao contêiner da aplicação), com criptografia em repouso (AES-256 / SSE) e controle de acesso restrito aos usuários vinculados ao treino. No **MVP (piso mínimo obrigatório)**, toda mídia trafega via HTTPS/TLS, é persistida em bucket privado sem URLs públicas permanentes e acessada apenas mediante requisição autenticada ou URL assinada de curta duração; recursos avançados como chaves gerenciadas pelo cliente (KMS/CMK), marca d'água (watermark) e transcodificação adaptativa permanecem como **escopo evolutivo pós-MVP**.
+
+**Origem e perfis:**
+
+- CP5, CP8
+- Atleta e Treinador
+
+**Regras de negócio associadas:**
+
+- [RN03 · Isolamento de Dados da Carteira do Treinador](regras_negocio.md#rn03)
+- [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% dos vídeos enviados são gravados em object storage externo com criptografia AES-256 habilitada; 0 URLs públicas permanentes expostas; 100% das tentativas de acesso por usuários sem vínculo retornam HTTP 403; e 0 bytes permanecem recuperáveis após solicitação de exclusão (RN05).
+- **Validação (Justificativa):** Garante o piso obrigatório de confidencialidade e isolamento das mídias desde a primeira versão do MVP, separando-o claramente de evoluções futuras de criptografia avançada e processamento de vídeo.
+
+**Checklist estruturado:**
+
+- [ ] Os vídeos enviados são armazenados em object storage externo ao contêiner da aplicação, com criptografia em repouso (AES-256) ativa
+- [ ] Nenhum arquivo de vídeo é acessível por URL pública estática (somente via endpoint autenticado ou URL assinada temporária)
+- [ ] Requisições de acesso feitas por usuários sem vínculo ativo atleta-treinador são bloqueadas com HTTP 403
+- [ ] A exclusão da conta ou solicitação do titular remove definitivamente o arquivo do storage em nuvem
+
+## RNF13 · Limites de Duração e Tamanho no Envio de Vídeos {#rnf13}
+
+**Categoria:** Suportabilidade / Usabilidade
+
+**MVP:** Associado a RFs do MVP
+
+**Descrição:** Os vídeos de execução técnica enviados pelos atletas devem respeitar o teto máximo global de 60 segundos de duração e 100 MB de tamanho por arquivo, garantindo estabilidade no upload em redes móveis, previsibilidade de armazenamento e reprodução fluida para avaliação do treinador.
+
+**Origem e perfis:**
+
+- CP5
+- Atleta
+
+**Regras de negócio associadas:**
+
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+
+**Decisão de projeto (Justificativa técnica):**
+
+- **Dimensionamento do teto (60 s / 100 MB):** Adotou-se como referência de gravação móvel o padrão Full HD (`1080p` a `30 fps`, codecs H.264/HEVC), cuja taxa média de bits varia entre `8 e 12 Mbps` (`~60 a 90 MB` por minuto). O limite de **100 MB** acomoda uma gravação completa de **60 segundos** nesse padrão com margem de segurança, dispensando compressão prévia pelo atleta e evitando estouros de memória ou timeout em conexões móveis. Gravações acima desse teto (como `4K` ou `60 fps` prolongados) devem ser rejeitadas antes do envio (ver RNF15).
+- **Adoção de limite único no MVP:** Embora o domínio admita execuções de durações distintas conforme o exercício (conforme esclarecido por Lucas / ata de 26/09), decidiu-se manter um **teto único global de 60 s no MVP** — suficiente para cobrir a execução completa de qualquer exercício individual sem adicionar complexidade de configuração por exercício no cadastro da biblioteca —, deixando a parametrização de duração máxima por exercício como evolução futura pós-MVP.
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% dos arquivos com duração `> 60 s` ou tamanho `> 100 MB` são bloqueados antes da conclusão do upload, enquanto 100% dos vídeos válidos em `1080p @ 30 fps` (`≤ 60 s` e `≤ 100 MB`) são aceitos e persistidos sem necessidade de reprocessamento manual.
+- **Validação (Justificativa):** Documenta formalmente o critério técnico por trás dos parâmetros numéricos e registra a decisão de escopo do MVP, tornando o requisito reproduzível e auditável.
+
+**Checklist estruturado:**
+
+- [ ] Vídeos com duração superior a 60 segundos são rejeitados com feedback claro ao atleta
+- [ ] Arquivos com tamanho superior a 100 MB são bloqueados imediatamente no aplicativo/navegador antes do início do envio, além de serem rejeitados pelo servidor caso enviados diretamente à API, onde será feita validação redundante no servidor (segurança):
+- [ ] Vídeos gravados em dispositivos móveis no padrão 1080p a 30 fps com até 60 segundos (≤ 100 MB) são enviados e reproduzidos sem falhas
+- [ ] A decisão técnica sobre o teto único (60 s / 100 MB) e o adiamento da duração variável por exercício pós-MVP está registrada e vinculada à RN09
+
+## RNF14 · Assistência e Validação no Preenchimento de Dados {#rnf14}
+
+**Categoria:** Usabilidade
+
+**MVP:** Evolutivos
+
+**Descrição:** O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrigatórios e validar formatos antes do envio do formulário, prevenindo erros de digitação.
+
+**Origem e perfis:**
+
+- CP1, CP3
+- Todos os utilizadores (Atleta e Treinador)
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes funcionais e automatizados de interface nos formulários de cadastro, perfil, testes físicos, planejamentos, exercícios e feedbacks comprovando que `100%` dos campos formatáveis aplicam máscara em tempo real durante a digitação, `100%` dos campos obrigatórios exibem indicação visual clara e `0` requisições de submissão são disparadas ao backend enquanto houver campos obrigatórios vazios ou formatos inválidos.
+- **Validação (Justificativa):** Reduz erros de digitação, evita chamadas desnecessárias à API e orienta imediatamente o usuário sobre o preenchimento esperado antes da submissão.
+
+**Checklist estruturado:**
+
+- [ ] Campos com padrão específico (como datas, contatos, durações ou métricas numéricas) aplicam máscara de entrada em tempo real durante a digitação
+- [ ] Todos os campos obrigatórios possuem destaque visual explícito antes mesmo da tentativa de envio
+- [ ] A validação client-side bloqueia o envio do formulário e exibe mensagens específicas junto ao campo quando há dados ausentes ou em formato inválido
+- [ ] Ao corrigir o campo inválido, o alerta de erro é removido imediatamente sem perda dos demais dados já preenchidos
+
+## RNF15 · Feedback e Prevenção de Erros no Pré-Envio de Mídia {#rnf15}
+
+**Categoria:** Usabilidade
+
+**MVP:** Obrigatório
+
+**Descrição:** O processamento da prévia e a manipulação da mídia (vídeo) selecionada devem ocorrer no navegador (lado do cliente), garantindo feedback visual para o usuário e impedindo qualquer transmissão de dados ao servidor antes da confirmação explícita de envio feita pelo usuário.
+
+**Origem e perfis:**
+
+- OE3 - CP5
+- Atleta
+
+**Regras de negócio associadas:**
+
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+- [RN10 · Imutabilidade de Vídeo Após Feedback](regras_negocio.md#rn10)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Prévia/troca local em ≤ 1,0s (até 100 MB) e 0 bytes enviados ao servidor antes da confirmação final.
+- **Validação (Justificativa):** Evita o envio acidental de vídeos incorretos (que ficariam imutáveis após o registro de feedback pelo treinador, conforme a RN10), poupa o pacote de dados móveis do atleta e elimina custos com armazenamento temporário de rascunhos no servidor.
+
+**Checklist estruturado:**
+
+- [ ] A prévia local do arquivo é exibida em até 1,0s após a seleção
+- [ ] Nenhuma requisição de upload é disparada antes da confirmação
+- [ ] A troca ou remoção limpa o estado anterior sem recarregar a tela
+- [ ] Arquivos inválidos exibem feedback imediato antes do envio
+
+## RNF16 · Conformidade de Privacidade e Consentimento de Cookies {#rnf16}
+
+**Categoria:** Segurança (Privacidade / LGPD)
+
+**MVP:** Obrigatório
+
+**Descrição:** O sistema deve garantir o registro auditável e imutável do consentimento do usuário em conformidade com a LGPD (Arts. 7º e 8º), bloqueando o acesso às funcionalidades da plataforma enquanto não houver aceite expresso da versão vigente dos Termos de Uso e da Política de Privacidade (com gravação de identificador do usuário, data, hora e número da versão aceita). Adicionalmente, a aplicação web não deve salvar cookies opcionais (estatísticas ou monitoramento) nem disparar scripts de telemetria antes da autorização explícita do usuário, permitindo alterar ou revogar essa permissão de cookies a qualquer momento.
+
+**Origem e perfis:**
+
+- Global / CP8
+- Todos os utilizadores (Atleta e Treinador)
+**Regras de negócio associadas:**
+
+- [RN15 · Obrigatoriedade de Aceite dos Termos e Privacidade](regras_negocio.md#rn15)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% das requisições a funcionalidades protegidas bloqueadas (HTTP 403 ou redirecionamento obrigatório) para usuários sem aceite na versão vigente dos termos; 100% dos aceites persistidos com timestamp e versão; 0 cookies opcionais gravados e 0 scripts de monitoramento disparados antes do consentimento explícito, com registro salvo em ≤ 500 ms.
+- **Validação (Justificativa):** Assegura validade jurídica e rastreabilidade do consentimento exigidos pela LGPD (Arts. 7º e 8º), garantindo prova auditável de aceite dos termos vigentes e impedindo coleta indevida de dados de navegação sem autorização.
+**Checklist estruturado:**
+
+- [ ] O sistema impede o acesso às funcionalidades da plataforma caso o usuário não tenha aceitado a versão vigente dos Termos de Uso e da Política de Privacidade
+- [ ] Cada aceite registra de forma auditável o usuário, a data/hora e a versão exata dos documentos aceitos, exigindo novo aceite após atualizações
+- [ ] Nenhum cookie opcional é salvo e nenhum script de estatística ou monitoramento é carregado no primeiro acesso antes da escolha expressa do usuário
+- [ ] O usuário consegue consultar, alterar ou revogar suas preferências de cookies opcionais a qualquer momento
+
+## RNF17 · Persistência Durável de Dados e Mídias {#rnf17}
+
+**Categoria:** Confiabilidade
+
+**MVP:** Obrigatório
+
+**Descrição:** O sistema deve garantir a persistência durável de todos os dados estruturados (cadastros, exercícios, planejamentos, treinos e feedbacks) em banco de dados relacional (PostgreSQL) e dos arquivos de mídia (vídeos-base da biblioteca do professor e vídeos de execução dos atletas) em armazenamento de objetos externo à imagem dos contêineres da aplicação. No **MVP (piso mínimo obrigatório)**, os dados e vídeos devem sobreviver integralmente a reinicializações, atualizações e redeploys do ambiente sem perda ou quebra de integridade referencial; mecanismos avançados como backups automáticos *point-in-time* (PITR), replicação multi-região e plano formal de recuperação de desastres (DR) ficam como **escopo evolutivo pós-MVP**.
+
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Atleta e Treinador)
+**Regras de negócio associadas:**
+
+- [RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios](regras_negocio.md#rn13)
+- [RN14 · Gestão da Biblioteca de Exercícios](regras_negocio.md#rn14)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Após ciclo controlado de reinicialização e redeploy dos serviços da aplicação, 0 registros estruturados são perdidos no PostgreSQL (`100%` de retenção), `100%` dos vídeos-base e de execução permanecem acessíveis no storage e 0 referências quebradas ocorrem após operações de exclusão (RN13).
+- **Validação (Justificativa):** Elimina o risco de perda de estado em ambientes containerizados no MVP, formalizando o requisito mínimo de continuidade operacional e conectando-o aos fluxos de biblioteca e execução.
+
+**Checklist estruturado:**
+
+- [ ] Dados estruturados (usuários, treinos, feedbacks e catálogo) permanecem íntegros no PostgreSQL após reinicialização ou redeploy dos contêineres
+- [ ] Vídeos-base cadastrados pelo treinador na biblioteca (RN14) e vídeos enviados pelos atletas permanecem recuperáveis após reinicializações
+- [ ] A aplicação de migrações de banco de dados preserva os registros existentes sem perda de dados
+- [ ] A exclusão de exercícios da biblioteca ou de planejamentos de treino preserva intactos o histórico e os registros de treinos já realizados pelos atletas, impedindo apenas sua utilização em novas prescrições (RN13)
+

@@ -88,9 +88,108 @@ def related_requirements(catalog, route, key):
     return '<details class="sj-related-requirements"><summary>Requisitos relacionados · '+str(len(links))+'</summary><div>'+''.join(links)+'</div></details>'
 
 
+RNF_LABELS = ('Categoria', 'MVP', 'Descrição', 'Origem e perfis',
+              'Regras de negócio associadas', 'Decisão de projeto (Justificativa técnica)',
+              'Verificação e validação', 'Checklist estruturado')
+RNF_FIELD = re.compile(r'^\*\*([^:*]+):\*\*[ \t]?(.*)$')
+
+
+def rnf_record(body):
+    fields = {}
+    current = None
+    for line in body.splitlines():
+        match = RNF_FIELD.match(line)
+        label = match[1].strip() if match else None
+        if label in RNF_LABELS:
+            current = label
+            fields[current] = [match[2].strip()] if match[2].strip() else []
+        elif current is not None:
+            fields[current].append(line)
+    if 'Descrição' not in fields:
+        return None
+    return {label: '\n'.join(lines).strip() for label, lines in fields.items()}
+
+
+def md_href(url):
+    match = re.match(r'^([\w-]+)\.md(?:#(.+))?$', url.strip())
+    if not match:
+        return url.strip()
+    href = '../' + match[1] + '/'
+    if match[2]:
+        href += '#' + match[2]
+    return href
+
+
+def md_inline(text):
+    text = html.escape(text, quote=False)
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
+    return re.sub(r'\[([^\]]+)\]\(([^)]+)\)', lambda m: '<a href="'+md_href(m[2])+'">'+m[1]+'</a>', text)
+
+
+def md_list(text):
+    return [line[2:].strip() for line in text.splitlines() if line.strip().startswith('- ')]
+
+
+def md_checklist(text):
+    items = []
+    for line in text.splitlines():
+        item = line.strip()
+        if item.startswith('- [ ]') or item.startswith('- [x]') or item.startswith('- [X]'):
+            items.append(item[5:].strip())
+    return items
+
+
+def render_rnf_record(title, key, fields, catalog='', route=''):
+    code, _, name = title.partition(' · ')
+    tags = []
+    if fields.get('Categoria', '').strip():
+        tags.append('<span class="sj-tag">' + html.escape(fields['Categoria'].strip()) + '</span>')
+    if fields.get('MVP', '').strip():
+        tags.append('<span class="sj-tag sj-tag-mvp">MVP: ' + html.escape(fields['MVP'].strip()) + '</span>')
+    blocks = ['<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>'
+              + md_inline(fields.get('Descrição', '')) + '</p></div>']
+    if fields.get('Origem e perfis', '').strip():
+        profiles = md_list(fields['Origem e perfis'])
+        if profiles:
+            blocks.append('<div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis">'
+                          + ''.join('<li>' + md_inline(item) + '</li>' for item in profiles) + '</ul></div>')
+        else:
+            blocks.append('<div><p class="sj-record-label">Origem e perfis</p><p>'
+                          + md_inline(fields['Origem e perfis']) + '</p></div>')
+    rules = md_list(fields.get('Regras de negócio associadas', ''))
+    if rules:
+        blocks.append('<div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas">'
+                      + ''.join('<li>' + md_inline(item) + '</li>' for item in rules) + '</ul></div>')
+    decisions = md_list(fields.get('Decisão de projeto (Justificativa técnica)', ''))
+    if decisions:
+        blocks.append('<div class="sj-record-full"><p class="sj-record-label">Decisão de projeto (Justificativa técnica)</p><ul>'
+                      + ''.join('<li>' + md_inline(item) + '</li>' for item in decisions) + '</ul></div>')
+    checks = md_list(fields.get('Verificação e validação', ''))
+    if checks:
+        blocks.append('<div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul>'
+                      + ''.join('<li>' + md_inline(item) + '</li>' for item in checks) + '</ul></div>')
+    checklist = md_checklist(fields.get('Checklist estruturado', ''))
+    if checklist:
+        blocks.append('<div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p>'
+                      '<ul class="sj-rnf-checklist">'
+                      + ''.join('<li>' + md_inline(item) + '</li>' for item in checklist) + '</ul></div>')
+    footer = related_requirements(catalog, route, key) if route else ''
+    return ('<details class="sj-requirement sj-rnf" id="' + key + '">\n'
+            '<summary><span class="sj-requirement-id">' + html.escape(code) + '</span>'
+            '<span class="sj-requirement-name">' + html.escape(name or title) + '</span>'
+            '<span class="sj-requirement-tags">' + ''.join(tags) + '</span></summary>\n'
+            '<div class="sj-requirement-body">\n' + ''.join(blocks) + '\n</div>\n'
+            + footer + '</details>\n\n')
+
+
 def render_reference(markdown, route, catalog):
     def render(title,key,body):
         body=body.strip()
+        if key.startswith('rnf'):
+            fields=rnf_record(body)
+            if fields is not None:
+                return render_rnf_record(title,key,fields,catalog,route)
         if key.startswith('ca-'):
             code,_,name=title.partition(' — ')
             stories=re.findall(r'US\d+[ab]?',code)
