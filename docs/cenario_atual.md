@@ -132,7 +132,7 @@ quem já atua hoje e quem ainda não existe.
 | --- | --- | --- | --- | --- |
 | **Lucas Cordeiro** | Treinador/professor autônomo e cliente; centraliza o planejamento e o acompanhamento. | Alto | Alta | Atua diretamente e é a principal fonte de informação sobre o negócio. |
 | **Atletas** | Praticantes de basquete acompanhados, em diferentes níveis de experiência. | Alto | Alta | Não haverá participação direta nos testes de implementações. |
-| **Pais ou responsáveis** | Responsáveis legais por atletas menores de idade. | Alto | Alta | **Condicional:** passam a integrar o mapa apenas se existirem atletas menores de 18 anos. |
+| **Pais ou responsáveis** | Responsáveis legais por atletas menores de idade. | Alto | Alta |
 | **Equipe de desenvolvimento** | Equipe "Stakeholders Anônimos" (seis integrantes). | Alto | Alta | Responsável pela elicitação, documentação e validação junto ao cliente. |
 | **Administrador futuro da plataforma** | Papel previsto para a operação do produto, com responsabilidades de gestão de contas, permissões e privacidade. | Médio | Baixa no contexto atual | **Não existe no cenário atual**; antecipado para as evoluções da solução. |
 | **Profissionais de apoio** | Fisioterapeuta, preparador físico ou avaliador de testes ou lesões. | — | — | **Não participam** do cenário atual nem do fluxo de informações; não integram o diagrama. |
@@ -140,8 +140,7 @@ quem já atua hoje e quem ainda não existe.
 É importante registrar que as necessidades atribuídas aos atletas — consultar planejamento, histórico
 e exercícios, além de enviar vídeos — foram levantadas principalmente a partir da visão do treinador.
 
-Os **pais ou responsáveis** passam a integrar o mapa somente na hipótese de existirem atletas menores
-de idade. Nesse caso, o consentimento para uso de imagem e a proteção de dados de menores tornam-se
+O consentimento dos **pais ou respnsáveis** para uso de imagem e a proteção de dados de menores tornam-se
 elementos centrais do contexto e exigem atenção à LGPD.
 
 O **administrador futuro da plataforma** ainda não existe no cenário atual. Sua inclusão antecipa as
@@ -151,7 +150,7 @@ operação do produto, sem confundi-lo com os atores que já atuam hoje.
 Além das partes interessadas do negócio, o docente e o monitor da disciplina acompanham e avaliam o
 projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e do processo.
 
-![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens/mapa_stakeholders.jpg){:  width="2400" height="1792" }
+![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens\Fluxo_de_Comunicação_e_Desafios_no_Treinamento.png){:  width="2400" height="1792" }
 
 
 *Figura 3 — Mapa de stakeholders do cenário atual do acompanhamento dos atletas.*
@@ -216,4 +215,4 @@ peso, envergadura, standing reach, jump height, histórico de lesões e objetivo
 familiaridade básica com mensagens, reprodução e envio de vídeos.
 
 
-**Informações disponíveis:** Todos são menores de idade, atualmente há 5 atletas ativos, usam mais smartphones e nenhum deles necessitam de acessiblidade.
+**Informações disponíveis:** todos são menores de idade, atualmente há 5 atletas ativos, usam mais smartphones e nenhum deles necessita de acessibilidade.
