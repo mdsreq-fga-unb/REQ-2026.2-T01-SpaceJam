@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Navigate } from 'react-router'
 import type { Papel } from '../types/usuario'
 import { useAuth } from './useAuth'
+import { CarregandoSessao } from '../components/CarregandoSessao'
 
 /**
  * Bloqueia a rota para quem não está logado e, opcionalmente, para quem
@@ -12,7 +13,7 @@ import { useAuth } from './useAuth'
  */
 export function RotaProtegida({ children, papel }: { children: ReactNode; papel?: Papel }) {
   const { usuario, carregando } = useAuth()
-  if (carregando) return <p>Carregando…</p>
+  if (carregando) return <CarregandoSessao />
   if (!usuario) return <Navigate to="/login" replace />
   if (papel && usuario.papel !== papel) return <Navigate to="/" replace />
   return children
