@@ -3,6 +3,7 @@ import { AuthProvider } from './auth/AuthContext'
 import { RotaProtegida } from './auth/RotaProtegida'
 import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
+import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 
 export default function App() {
   return (
@@ -18,8 +19,16 @@ export default function App() {
               </RotaProtegida>
             }
           />
+          <Route
+            path="/exercicios"
+            element={
+            
+              <BibliotecaExercicios />
+            
+            }
+          />
           {/* Novas telas: crie em src/features/<area>/ e registre aqui */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/exercicios" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
