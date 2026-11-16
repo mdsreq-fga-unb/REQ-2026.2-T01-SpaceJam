@@ -136,13 +136,35 @@ O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrig
 
 **Tratamento registrado para o MVP:** Evolutivos.
 
-## RNF16 · Gerenciamento Pré-Envio de Mídia {#rnf16}
+## RNF16 · Feedback e Prevenção de Erros no Pré-Envio de Mídia {#rnf16}
 
-A interface deve limitar a seleção de arquivos a 1 único arquivo por vez no campo de upload, apresentando botão de remoção/substituição antes da confirmação do envio.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP5.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+**Descrição:** O processamento da prévia e a manipulação da mídia (vídeo) selecionada devem ocorrer no navegador (lado do cliente), garantindo feedback visual para o usuário e impedindo qualquer transmissão de dados ao servidor antes da confirmação explícita de envio feita pelo utilizador.
+
+**Origem e perfis:**
+
+- OE3 - CP5
+- Aluno
+
+**Regras de negócio associadas:**
+
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+- [RN10 · Imutabilidade de Vídeo Após Feedback](regras_negocio.md#rn10)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Prévia/troca local em ≤ 1,0s (até 100 MB) e 0 bytes enviados ao servidor antes da confirmação final.
+- **Validação (Justificativa):** Evita envio acidental de vídeo errado, poupa dados móveis e reduz custo de armazenamento temporário.
+
+**Checklist estruturado:**
+
+- [ ] A prévia local do arquivo é exibida em até 1,0s após a seleção
+- [ ] Nenhuma requisição de upload é disparada antes da confirmação
+- [ ] A troca ou remoção limpa o estado anterior sem recarregar a tela
+- [ ] Arquivos inválidos exibem feedback imediato antes do envio
 
 ## RNF17 · Consentimento de Cookies {#rnf17}
 

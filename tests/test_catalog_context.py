@@ -46,4 +46,39 @@ class CatalogContextTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.api.render_catalog('<a href="../criterios_aceitacao/#ca-missing">Critério</a>',root)
 
+    def test_structured_rnf_card_renders_labelled_blocks(self):
+        self.assertIsNotNone(self.api,'Consulta contextual ainda não implementada')
+        body=('**Categoria:** Usabilidade\n\n**MVP:** Obrigatório\n\n'
+              '**Descrição:** Texto local.\n\n'
+              '**Origem e perfis:**\n\n- OE3 - CP5\n- Aluno\n\n'
+              '**Regras de negócio associadas:**\n- [RN09 · Limite](regras_negocio.md#rn09)\n- [RN10 · Imutabilidade](regras_negocio.md#rn10)\n\n'
+              '**Verificação e validação:**\n- **Verificação (Métrica):** 0 bytes.\n\n'
+              '**Checklist estruturado:**\n- [ ] Item um\n- [x] Item dois\n')
+        fields=self.api.rnf_record(body)
+        self.assertIsNotNone(fields)
+        result=self.api.render_rnf_record('RNF16 · Feedback','rnf16',fields)
+        self.assertIn('class="sj-requirement sj-rnf"',result)
+        self.assertIn('id="rnf16"',result)
+        self.assertIn('<span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span>',result)
+        self.assertIn('<ul class="sj-rnf-perfis"><li>OE3 - CP5</li><li>Aluno</li></ul>',result)
+        self.assertIn('<p class="sj-record-label">Regras de negócio associadas</p>',result)
+        self.assertIn('<a href="../regras_negocio/#rn09">RN09 · Limite</a>',result)
+        self.assertIn('<a href="../regras_negocio/#rn10">RN10 · Imutabilidade</a>',result)
+        self.assertNotIn('RF3501',result)
+        self.assertIn('<ul class="sj-rnf-checklist"><li>Item um</li><li>Item dois</li></ul>',result)
+
+    def test_structured_rnf_card_includes_global_related_footer(self):
+        self.assertIsNotNone(self.api,'Consulta contextual ainda não implementada')
+        catalog='<details class="sj-requirement" id="rf3501"><summary><span class="sj-requirement-name">Enviar vídeo</span></summary><a href="../requisitos_nao_funcionais/#rnf16">RNF16</a></details>'
+        fields=self.api.rnf_record('**Descrição:** x\n')
+        result=self.api.render_rnf_record('RNF16 · Feedback','rnf16',fields,catalog,'requisitos_nao_funcionais')
+        self.assertIn('sj-related-requirements',result)
+        self.assertIn('Requisitos relacionados · 1',result)
+        self.assertIn('href="../requisitos/#rf3501"',result)
+
+    def test_legacy_rnf_without_description_stays_unstructured(self):
+        self.assertIsNotNone(self.api,'Consulta contextual ainda não implementada')
+        legacy='**Categoria registrada:** Usabilidade. **Escopo:** CP5.\n\n**Tratamento registrado para o MVP:** Associados a RFs do MVP.'
+        self.assertIsNone(self.api.rnf_record(legacy))
+
 if __name__=='__main__':unittest.main()
