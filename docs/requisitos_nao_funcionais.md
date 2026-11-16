@@ -119,16 +119,16 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O sistema deve garantir a privacidade e a proteção dos dados dos usuários em conformidade com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º, na qual esses dados devem ser restritos exclusivamente ao mínimo necessário para a finalidade explícita de acompanhamento esportivo (cadastro, métricas e vídeos de execução), com acesso limitado ao próprio titular e ao seu professor vinculado, retenção restrita ao período em que a conta permanecer ativa e eliminação definitiva e irreversível após a conclusão da análise pelo professor, mediante encerramento da conta ou solicitação do titular.
+**Descrição:** O sistema deve garantir a privacidade e a proteção dos dados dos usuários em conformidade com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º, na qual esses dados devem ser restritos exclusivamente ao mínimo necessário para a finalidade explícita de acompanhamento esportivo (cadastro, métricas e vídeos de execução), com acesso limitado ao próprio titular e ao seu treinador vinculado, retenção restrita ao período em que a conta permanecer ativa e eliminação definitiva e irreversível após a conclusão da análise pelo treinador, mediante encerramento da conta ou solicitação do titular.
 
 **Origem e perfis:**
 
 - Global / CP8
-- Aluno e Professor
+- Aluno e Treinador
 
 **Regras de negócio associadas:**
 
-- [RN02 · Vínculo Obrigatório de Atleta por Convite/Código](regras_negocio.md#rn02)
+- [RN02 · Vínculo Obrigatório do Aluno pelo Código do Treinador](regras_negocio.md#rn02)
 - [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
 - [RN04 · Segregação de Edição Cadastral e Clínica](regras_negocio.md#rn04)
 - [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
@@ -136,15 +136,15 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** 100% dos dados pessoais e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio (HTTP 403) para usuários sem vínculo; após a conclusão da análise pelo professor e solicitação do titular/encerramento, os registros e arquivos são removidos definitivamente do banco e do storage, com protocolo gerado em ≤ 500 ms.
+- **Verificação (Métrica):** 100% dos dados pessoais e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio (HTTP 403) para usuários sem vínculo; após a conclusão da análise pelo treinador e solicitação do titular/encerramento, os registros e arquivos são removidos definitivamente do banco e do storage, com protocolo gerado em ≤ 500 ms.
 - **Validação (Justificativa):** Traduz a conformidade com a LGPD em critérios verificáveis de minimização, finalidade explícita, controle de acesso, retenção e direitos do titular, respeitando a integridade do processo de avaliação pedagógica.
 
 **Checklist estruturado:**
 
 - [ ] A coleta restringe-se aos dados estritamente necessários ao acompanhamento esportivo, com finalidade explícita
-- [ ] Apenas o aluno titular e o professor vinculado possuem acesso aos dados e vídeos de execução
+- [ ] Apenas o aluno titular e o treinador vinculado possuem acesso aos dados e vídeos de execução
 - [ ] Os dados pessoais são mantidos apenas enquanto a conta do usuário permanecer ativa
-- [ ] Após a conclusão da análise pelo professor, o encerramento da conta ou solicitação do titular resulta na eliminação definitiva dos registros e vídeos
+- [ ] Após a conclusão da análise pelo treinador, o encerramento da conta ou solicitação do titular resulta na eliminação definitiva dos registros e vídeos
 
 ## RNF06 · Compatibilidade de Vídeo {#rnf06}
 
