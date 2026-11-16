@@ -101,7 +101,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Decisão:**
 
 
-- A acessibilidade está fora do MVP. O requisito foi classificado como evolutivo, após validação com o treinador titular (Lucas), que informou não atender atualmente atletas com demandas específicas de acessibilidade assistiva. A priorização concentra o esforço do MVP nas funcionalidades centrais de treino e acompanhamento, mantendo a conformidade WCAG planejada para evolução futura conforme a base de usuários crescer, essa necessidade pode surgir. ([Registro de Comprovacao](https://drive.google.com/file/d/1LWxClNWmC8qAXfHdUrpBi9BGzdvGj5v1/view?usp=sharing){ target="_blank" })
+- A acessibilidade está fora do MVP. O requisito foi classificado como evolutivo, após validação com o treinador titular (Lucas), que informou não atender atualmente atletas com demandas específicas de acessibilidade assistiva. A priorização concentra o esforço do MVP nas funcionalidades centrais de treino e acompanhamento, mantendo a conformidade WCAG planejada para evolução futura conforme a base de usuários crescer, essa necessidade pode surgir. [Registro de Comprovacao](https://drive.google.com/file/d/1LWxClNWmC8qAXfHdUrpBi9BGzdvGj5v1/view?usp=sharing)
 
 **Verificação e validação:**
 
@@ -121,7 +121,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O sistema deve garantir a privacidade e a proteção dos dados dos usuários em conformidade com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º, na qual esses dados devem ser restritos exclusivamente ao mínimo necessário para a finalidade explícita de acompanhamento esportivo (cadastro, métricas e vídeos de execução), com acesso limitado ao próprio titular e ao seu professor vinculado, retenção restrita ao período em que a conta permanecer ativa e eliminação definitiva e irreversível após a conclusão da análise pelo professor, mediante encerramento da conta ou solicitação do titular.
+**Descrição:** O sistema deve assegurar a proteção e a privacidade dos dados pessoais em conformidade com a LGPD (Lei nº 13.709/2018, com destaque para os arts. 5º, 14, 18 e 46), coletando e armazenando exclusivamente os dados estritamente necessários ao acompanhamento esportivo (dados cadastrais, métricas de desempenho, vídeos de execução e feedbacks). O acesso a essas informações deve ser restrito apenas ao próprio atleta e ao treinador atualmente vinculado ao seu perfil, mantendo-se a retenção somente enquanto houver vínculo ativo de acompanhamento ou enquanto a conta permanecer ativa. Por fim, o sistema deve garantir a eliminação definitiva e irreversível dos dados pessoais, vídeos e feedbacks mediante solicitação do titular, encerramento da conta ou desvinculação pelo treinador, ressalvadas as hipóteses de anonimização de registros históricos ou guarda obrigatória por força de lei, conforme previsto no art. 16 da referida lei.
 
 **Origem e perfis:**
 
@@ -131,35 +131,35 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Regras de negócio associadas:**
 
 - [RN02 · Vínculo Obrigatório do Aluno pelo Código do Treinador](regras_negocio.md#rn02)
-- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+- [RN03 · Isolamento de Dados e Carteira do Treinador](regras_negocio.md#rn03)
 - [RN04 · Segregação de Edição Cadastral e Clínica](regras_negocio.md#rn04)
 - [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
 - [RN16 · Consentimento Legal para Atletas Menores de Idade](regras_negocio.md#rn16)
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** 100% dos dados pessoais e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio (HTTP 403) para usuários sem vínculo; após a conclusão da análise pelo professor e solicitação do titular/encerramento, os registros e arquivos são removidos definitivamente do banco e do storage, com protocolo gerado em ≤ 500 ms.
-- **Validação (Justificativa):** Traduz a conformidade com a LGPD em critérios verificáveis de minimização, finalidade explícita, controle de acesso, retenção e direitos do titular, respeitando a integridade do processo de avaliação pedagógica.
+- **Verificação (Métrica):** 100% dos dados pessoais, métricas e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio de acesso (HTTP 403) para usuários sem vínculo ativo; mediante solicitação do atleta, encerramento da conta ou desvinculação pelo treinador, os registros e arquivos elegíveis são removidos definitivamente do banco de dados e do storage (ou anonimizados quando houver obrigação legal de retenção), com revogação imediata de acesso e geração de protocolo de confirmação em ≤ 500 ms.
+**Validação (Justificativa):** Traduz a conformidade com a LGPD em critérios verificáveis de minimização, finalidade explícita, controle de acesso, retenção e direitos do titular, assegurando a privacidade dos usuários sem comprometer a integridade do acompanhamento esportivo nem as obrigações legais de guarda ou anonimização de registros históricos.
 
 **Checklist estruturado:**
 
 - [ ] A coleta restringe-se aos dados estritamente necessários ao acompanhamento esportivo, com finalidade explícita
 - [ ] Apenas o aluno(atleta) titular e o treinador(professor) vinculado possuem acesso aos dados e vídeos de execução
 - [ ] Os dados pessoais são mantidos apenas enquanto a conta do usuário permanecer ativa
-- [ ] Após a conclusão da análise pelo treinador, o encerramento da conta ou solicitação do titular resulta na eliminação definitiva dos registros e vídeos
+- [ ] Mediante solicitação do titular, encerramento da conta ou desvinculação pelo treinador, os registros e vídeos elegíveis são eliminados definitivamente (ressalvadas as obrigações legais de retenção ou anonimização de registros históricos)
 
 ## RNF06 · Compatibilidade de Vídeo {#rnf06}
 
 **Categoria:** Suportabilidade
 
-**MVP:** Associado a RFs do MVP
+**MVP:** Obrigatório
 
-**Descrição:** O sistema deve aceitar e processar submissões de ficheiros de vídeo nos formatos .mp4 e .mov.
+**Descrição:** O sistema deve aceitar e processar submissões de arquivos de vídeo nos formatos .mp4 e .mov.
 
 **Origem e perfis:**
 
 - CP5, CP6
-- Aluno (Atleta) e Professor(Treinador)
+- Aluno (Atleta) e Professor (Treinador)
 
 **Regras de negócio associadas:**
 
@@ -175,7 +175,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Vídeos gravados e exportados no formato `.mp4` são aceitos, armazenados e reproduzidos corretamente na plataforma
 - [ ] Vídeos gravados nativamente em dispositivos iOS no formato `.mov` são aceitos, armazenados e reproduzidos corretamente
 - [ ] Arquivos com extensões ou MIME types fora da lista permitida (`.mp4` e `.mov`) são bloqueados com feedback claro antes do upload (RNF15)
-- [ ] Os players web de avaliação do professor reproduzem ambos os formatos sem exigir plugins externos
+- [ ] Os players web de avaliação do treinador reproduzem ambos os formatos sem exigir plugins externos
 
 ## RNF07 · Feedback Visual de Upload {#rnf07}
 
@@ -199,7 +199,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 - [ ] Um indicador visual de progresso é exibido logo após iniciar o upload do vídeo
 - [ ] O percentual é atualizado dinamicamente de 1% a 99% acompanhando os bytes transferidos (eventos de progresso da requisição)
-- [ ] Ao concluir o envio e persistência, o indicador atinge 100% e exibe confirmação clara de sucesso
+- [ ] Ao concluir o envio e persistência, o indicador atinge 100% e exibe confirmação clara de sucesso para o usuário (atleta)
 - [ ] Em caso de queda de conexão ou falha durante o upload, o progresso é interrompido e uma mensagem de erro clara é exibida
 
 ## RNF08 · Controle de Acesso Baseado em Funções (RBAC) {#rnf08}
@@ -208,7 +208,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O sistema deve aplicar controle de acesso rígido (Role-Based Access Control), garantindo que endpoints e visões referentes ao perfil Treinador não sejam acessíveis por Atletas.
+**Descrição:** O sistema deve aplicar controle de acesso rígido baseado em papéis (RBAC) e em vínculo de cadastro, garantindo que endpoints e visões referentes ao perfil Professor (Treinador) não sejam acessíveis por Alunos (Atletas), e assegurando que cada aluno acesse exclusivamente seus próprios dados, treinos e mídias, enquanto cada treinador visualize e gerencie apenas os registros dos alunos vinculados à sua própria carteira.
 
 **Origem e perfis:**
 
@@ -217,19 +217,25 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Regras de negócio associadas:**
 
-- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+- [RN03 · Isolamento de Dados da Carteira do Treinador](regras_negocio.md#rn03)
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** Testes automatizados de autorização e segurança de API/rotas comprovando que `100%` dos endpoints administrativos e de gestão do perfil Treinador retornam `HTTP 403 Forbidden` quando requisitados com token de Atleta (e `HTTP 401 Unauthorized` para requisições não autenticadas), e `0` rotas restritas ao Treinador são renderizadas ou acessíveis via navegação direta no frontend por Atletas.
-- **Validação (Justificativa):** Protege funcionalidades exclusivas de gestão e avaliação do treinador contra escalonamento horizontal/vertical de privilégios por contas de atletas.
+- **Verificação (Métrica):** Testes automatizados de autorização e segurança de API/rotas comprovando que 100% das tentativas de acesso indevido retornam HTTP 403 Forbidden — incluindo Atletas acessando endpoints de Treinador, Atletas acessando registros de outros Atletas e Treinadores acessando dados de alunos fora da sua carteira — além de HTTP 401 Unauthorized para requisições não autenticadas, com 0 rotas restritas acessíveis via navegação direta no frontend por Atletas.
+
+- **Validação (Justificativa):** Protege as funcionalidades exclusivas de gestão do treinador e garante a privacidade dos registros individuais, impedindo tanto o acesso de atletas a recursos administrativos quanto o vazamento de dados entre contas de diferentes alunos ou carteiras de diferentes treinadores.
 
 **Checklist estruturado:**
 
-- [ ] Todos os endpoints exclusivos do perfil Treinador validam o papel (role) no backend e bloqueiam acessos de Atletas com HTTP 403
+- [ ] Todos os endpoints exclusivos do perfil Professor (Treinador) validam o papel (role) no backend e bloqueiam acessos de Alunos (Atletas) com HTTP 403
+
+- [ ] Todos os endpoints de consulta e edição validam o vínculo de cadastro no backend, bloqueando com HTTP 403 o acesso a registros de outros alunos ou de carteiras de outros treinadores
+
 - [ ] Requisições sem autenticação válida recebem HTTP 401 antes de acessar rotas protegidas
-- [ ] As rotas e componentes de interface exclusivos do Treinador são ocultados e bloqueados no roteamento do frontend para usuários com perfil Atleta
-- [ ] Testes automatizados cobrem tentativas de acesso cruzado entre perfis em todas as operações críticas do MVP
+
+- [ ] As rotas e componentes de interface exclusivos do Professor (Treinador) são ocultados e bloqueados no roteamento do frontend para usuários com perfil Aluno (Atleta)
+
+- [ ] Testes automatizados cobrem tentativas de acesso indevido entre perfis distintos e entre contas do mesmo perfil nas operações críticas do MVP
 
 ## RNF09 · Isolamento Multi-inquilino de Dados {#rnf09}
 
@@ -237,7 +243,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O acesso aos vídeos, dados de histórico e feedbacks de um atleta deve ser restrito exclusivamente ao próprio atleta e aos treinadores devidamente vinculados a ele.
+**Descrição:** O acesso aos vídeos, dados de histórico, feedbacks e treinos/planejamentos de um atleta deve ser restrito exclusivamente ao próprio atleta e ao treinador devidamente vinculado a ele.
 
 **Origem e perfis:**
 
@@ -246,7 +252,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Regras de negócio associadas:**
 
-- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+- [RN03 · Isolamento de Dados da Carteira do Treinador](regras_negocio.md#rn03)
 
 **Verificação e validação:**
 
@@ -291,7 +297,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Associado a RFs do MVP
 
-**Descrição:** O sistema deve manter os resultados de busca e filtragem da biblioteca de exercícios (por nome e por fundamento) sempre atualizados após cadastros, edições ou exclusões, evitando que exercícios removidos ou dados desatualizados apareçam nas consultas.
+**Descrição:** O sistema deve manter os resultados de busca e filtragem da biblioteca de exercícios (por nome e por fundamento) imediatamente atualizados após operações de cadastro, edição ou exclusão realizadas pelo treinador, impedindo que exercícios removidos ou orientações desatualizadas apareçam nas consultas de novas prescrições, sem comprometer os registros históricos já vinculados aos treinos realizados.
 
 **Origem e perfis:**
 
@@ -305,14 +311,14 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** 0 exercícios removidos ou dados desatualizados exibidos nas buscas por nome e filtros por fundamento imediatamente após operações de cadastro, edição ou exclusão (100% de consistência dos resultados em ≤ 1,0 s).
-- **Validação (Justificativa):** Elimina a divergência com os Requisitos Funcionais (que não contemplam filtros combinados nem o atributo de materiais) e garante que o treinador e os atletas vinculados a ele consultem apenas exercícios ativos e atualizados.
+- **Verificação (Métrica):** Testes funcionais e de integração comprovando 0 exercícios removidos ou dados desatualizados exibidos nas buscas por nome e filtros por fundamento após operações de cadastro, edição ou exclusão (100% de atualização dos resultados em ≤ 1,0 s), mantendo 100% dos registros de treinos passados íntegros após a exclusão de um exercício.
+- **Validação (Justificativa):** Garante que o treinador prescreva apenas exercícios ativos e com orientações corretivas atualizadas, evitando falhas de sincronização ou cache desatualizado na interface sem perder a rastreabilidade dos treinos já executados pelos atletas.
 
 **Checklist estruturado:**
 
-- [ ] Após cadastrar ou editar um exercício, os dados atualizados (nome, objetivo e fundamento) refletem imediatamente nas consultas
-- [ ] A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro sem gerar erros ou referências quebradas
-- [ ] Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes sem duplicidades
+- [ ] Após o treinador cadastrar ou editar um exercício (nome, objetivo, fundamento, vídeo-base, erros comuns e orientações), os dados atualizados refletem imediatamente nas consultas
+- [ ] A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro para novas prescrições, preservando intactos os treinos históricos onde ele foi utilizado
+- [ ] Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes, sem duplicidades ou referências quebradas
 
 ## RNF12 · Armazenamento Isolado e Proteção de Mídias {#rnf12}
 
@@ -329,7 +335,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Regras de negócio associadas:**
 
-- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+- [RN03 · Isolamento de Dados da Carteira do Treinador](regras_negocio.md#rn03)
 - [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
 - [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
 
@@ -351,7 +357,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Associado a RFs do MVP
 
-**Descrição:** Os vídeos de execução técnica enviados pelos atletas devem respeitar o teto máximo global de 60 segundos de duração e 100 MB de tamanho por arquivo, garantindo estabilidade no upload em redes móveis, previsibilidade de armazenamento e reprodução fluida para avaliação pelo professor.
+**Descrição:** Os vídeos de execução técnica enviados pelos atletas devem respeitar o teto máximo global de 60 segundos de duração e 100 MB de tamanho por arquivo, garantindo estabilidade no upload em redes móveis, previsibilidade de armazenamento e reprodução fluida para avaliação do treinador.
 
 **Origem e perfis:**
 
@@ -375,7 +381,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Checklist estruturado:**
 
 - [ ] Vídeos com duração superior a 60 segundos são rejeitados com feedback claro ao atleta
-- [ ] Arquivos com tamanho superior a 100 MB são bloqueados antes de consumir banda completa de upload
+- [ ] Arquivos com tamanho superior a 100 MB são bloqueados imediatamente no aplicativo/navegador antes do início do envio, além de serem rejeitados pelo servidor caso enviados diretamente à API, onde será feita validação redundante no servidor (segurança):
 - [ ] Vídeos gravados em dispositivos móveis no padrão 1080p a 30 fps com até 60 segundos (≤ 100 MB) são enviados e reproduzidos sem falhas
 - [ ] A decisão técnica sobre o teto único (60 s / 100 MB) e o adiamento da duração variável por exercício pós-MVP está registrada e vinculada à RN09
 
@@ -409,7 +415,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O processamento da prévia e a manipulação da mídia (vídeo) selecionada devem ocorrer no navegador (lado do cliente), garantindo feedback visual para o usuário e impedindo qualquer transmissão de dados ao servidor antes da confirmação explícita de envio feita pelo utilizador.
+**Descrição:** O processamento da prévia e a manipulação da mídia (vídeo) selecionada devem ocorrer no navegador (lado do cliente), garantindo feedback visual para o usuário e impedindo qualquer transmissão de dados ao servidor antes da confirmação explícita de envio feita pelo usuário.
 
 **Origem e perfis:**
 
@@ -424,7 +430,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Prévia/troca local em ≤ 1,0s (até 100 MB) e 0 bytes enviados ao servidor antes da confirmação final.
-- **Validação (Justificativa):** Evita envio acidental de vídeo errado, poupa dados móveis e reduz custo de armazenamento temporário.
+- **Validação (Justificativa):** Evita o envio acidental de vídeos incorretos (que ficariam imutáveis após o registro de feedback pelo treinador, conforme a RN10), poupa o pacote de dados móveis do atleta e elimina custos com armazenamento temporário de rascunhos no servidor.
 
 **Checklist estruturado:**
 
@@ -439,7 +445,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** A aplicação web não deve salvar nem enviar cookies opcionais (como os usados para estatísticas ou monitoramento) antes que o usuário autorize expressamente. Além disso, o sistema deve guardar um histórico da escolha feita e permitir que o usuário mude ou cancele essa permissão a qualquer momento, respeitando a LGPD (Arts. 7º e 8º).
+**Descrição:** O sistema deve garantir o registro auditável e imutável do consentimento do usuário em conformidade com a LGPD (Arts. 7º e 8º), bloqueando o acesso às funcionalidades da plataforma enquanto não houver aceite expresso da versão vigente dos Termos de Uso e da Política de Privacidade (com gravação de identificador do usuário, data, hora e número da versão aceita). Adicionalmente, a aplicação web não deve salvar cookies opcionais (estatísticas ou monitoramento) nem disparar scripts de telemetria antes da autorização explícita do usuário, permitindo alterar ou revogar essa permissão de cookies a qualquer momento.
 
 **Origem e perfis:**
 
@@ -451,15 +457,14 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** 0 cookies opcionais gravados no navegador e 0 requisições a scripts de monitoramento disparadas antes da autorização explícita, com registro da escolha salvo em ≤ 500 ms.
-- **Validação (Justificativa):** Garante conformidade com a LGPD (Arts. 7º e 8º), evita coleta indevida de dados pessoais sem consentimento e protege o projeto contra riscos jurídicos.
-
+- **Verificação (Métrica):** 100% das requisições a funcionalidades protegidas bloqueadas (HTTP 403 ou redirecionamento obrigatório) para usuários sem aceite na versão vigente dos termos; 100% dos aceites persistidos com timestamp e versão; 0 cookies opcionais gravados e 0 scripts de monitoramento disparados antes do consentimento explícito, com registro salvo em ≤ 500 ms.
+- **Validação (Justificativa):** Assegura validade jurídica e rastreabilidade do consentimento exigidos pela LGPD (Arts. 7º e 8º), garantindo prova auditável de aceite dos termos vigentes e impedindo coleta indevida de dados de navegação sem autorização.
 **Checklist estruturado:**
 
-- [ ] Nenhum cookie opcional é salvo no primeiro acesso antes da escolha do usuário
-- [ ] A opção "Apenas Essenciais" bloqueia o carregamento de scripts de estatísticas e monitoramento
-- [ ] O histórico da escolha (data, hora e o que foi autorizado) fica registrado no sistema
-- [ ] O usuário consegue alterar ou cancelar sua permissão posteriormente a qualquer momento
+- [ ] O sistema impede o acesso às funcionalidades da plataforma caso o usuário não tenha aceitado a versão vigente dos Termos de Uso e da Política de Privacidade
+- [ ] Cada aceite registra de forma auditável o usuário, a data/hora e a versão exata dos documentos aceitos, exigindo novo aceite após atualizações
+- [ ] Nenhum cookie opcional é salvo e nenhum script de estatística ou monitoramento é carregado no primeiro acesso antes da escolha expressa do usuário
+- [ ] O usuário consegue consultar, alterar ou revogar suas preferências de cookies opcionais a qualquer momento
 
 ## RNF17 · Persistência Durável de Dados e Mídias {#rnf17}
 
@@ -486,14 +491,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Checklist estruturado:**
 
 - [ ] Dados estruturados (usuários, treinos, feedbacks e catálogo) permanecem íntegros no PostgreSQL após reinicialização ou redeploy dos contêineres
-- [ ] Vídeos-base cadastrados pelo professor na biblioteca (RN14) e vídeos enviados pelos atletas permanecem recuperáveis após reinicializações
+- [ ] Vídeos-base cadastrados pelo treinador na biblioteca (RN14) e vídeos enviados pelos atletas permanecem recuperáveis após reinicializações
 - [ ] A aplicação de migrações de banco de dados preserva os registros existentes sem perda de dados
-- [ ] Operações de exclusão mantêm a integridade referencial do histórico conforme a RN13
+- [ ] A exclusão de exercícios da biblioteca ou de planejamentos de treino preserva intactos o histórico e os registros de treinos já realizados pelos atletas, impedindo apenas sua utilização em novas prescrições (RN13)
 
-<details class="sj-document-details"><summary>Histórico de atualizações</summary>
-
-| Data | Antes | Depois |
-| --- | --- | --- |
-| 16/11/2026 | **RNF08 · Interface de Feedback Anotado:** mantido como requisito evolutivo na sequência RNF01–RNF18. | **RNF08 · Interface de Feedback Anotado:** removido do catálogo de RNFs e renumerada a sequência subsequente de RNF09–RNF18 para RNF08–RNF17. |
-
-</details>
