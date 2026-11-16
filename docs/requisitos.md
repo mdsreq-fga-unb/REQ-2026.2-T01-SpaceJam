@@ -957,7 +957,7 @@
 <p id="us60" class="sj-story"><strong>US60</strong> Como usuário, quero aceitar os termos de uso e a política de privacidade no meu cadastro ou primeiro acesso, para utilizar a plataforma ciente das condições de uso e tratamento de dados.</p>
 </div>
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Usuário</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p>RNF a confirmar.<br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf17">RNF17</a><br><a href="../regras_negocio/#rn15">RN15</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us60">US60</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,42</p></div>
  

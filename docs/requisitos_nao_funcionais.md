@@ -166,13 +166,34 @@ O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrig
 - [ ] A troca ou remoção limpa o estado anterior sem recarregar a tela
 - [ ] Arquivos inválidos exibem feedback imediato antes do envio
 
-## RNF17 · Consentimento de Cookies {#rnf17}
+## RNF17 · Conformidade de Privacidade e Consentimento de Cookies {#rnf17}
 
-A aplicação web deve apresentar um aviso de consentimento de cookies no primeiro acesso, permitindo ao utilizador escolher entre "Aceitar Todos" ou "Apenas Essenciais" (LGPD Art. 7º e 8º).
+**Categoria:** Segurança (Privacidade / LGPD)
 
-**Categoria registrada:** Confiabilidade. **Escopo:** Global / CP8.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** A aplicação web não deve salvar nem enviar cookies opcionais (como os usados para estatísticas ou monitoramento) antes que o usuário autorize expressamente. Além disso, o sistema deve guardar um histórico da escolha feita e permitir que o usuário mude ou cancele essa permissão a qualquer momento, respeitando a LGPD (Arts. 7º e 8º).
+
+**Origem e perfis:**
+
+- Global / CP8
+- Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Regras de negócio associadas:**
+
+- [RN15 · Obrigatoriedade de Aceite dos Termos e Privacidade](regras_negocio.md#rn15)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 0 cookies opcionais gravados no navegador e 0 requisições a scripts de monitoramento disparadas antes da autorização explícita, com registro da escolha salvo em ≤ 500 ms.
+- **Validação (Justificativa):** Garante conformidade com a LGPD (Arts. 7º e 8º), evita coleta indevida de dados pessoais sem consentimento e protege o projeto contra riscos jurídicos.
+
+**Checklist estruturado:**
+
+- [ ] Nenhum cookie opcional é salvo no primeiro acesso antes da escolha do usuário
+- [ ] A opção "Apenas Essenciais" bloqueia o carregamento de scripts de estatísticas e monitoramento
+- [ ] O histórico da escolha (data, hora e o que foi autorizado) fica registrado no sistema
+- [ ] O usuário consegue alterar ou cancelar sua permissão posteriormente a qualquer momento
 
 ## RNF18 · Persistência de Dados {#rnf18}
 
