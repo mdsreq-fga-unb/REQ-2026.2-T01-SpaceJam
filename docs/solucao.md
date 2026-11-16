@@ -126,8 +126,8 @@ A comparação deverá considerar critérios comuns às soluções analisadas, e
 | Organização de treinos | Sim | Parcial | Sim | Sim |
 | Biblioteca de exercícios | Sim | Não é o foco | Sim | Sim |
 | Vídeos demonstrativos | Sim | Sim | Sim | Sim |
-| Compartilhamento/análise de vídeos | Sim | Sim | Sim | A validar |
-| Feedback individual | Sim | Sim | Sim | A validar |
+| Compartilhamento/análise de vídeos | Sim | Sim | Sim | Sim|
+| Feedback individual | Sim | Sim | Sim | Sim |
 | Histórico e acompanhamento | Sim | Sim | Sim | Sim |
 | Personalização segundo o método do treinador | Não é o foco principal | Não é o foco principal | Não é o foco principal | Sim |
 | Integração entre perfil, testes, planejamento e histórico | Parcial | Parcial | Parcial | Sim |
@@ -143,7 +143,7 @@ O produto possui uma estrutura que pode ser dividida em módulos relativamente i
 
 As tecnologias propostas são amplamente utilizadas no desenvolvimento de aplicações web, o que reduz os riscos relacionados à implementação. Além disso, a arquitetura proposta permite que funcionalidades mais complexas sejam deixadas para etapas futuras sem comprometer o funcionamento do MVP.
 
-Outro fator favorável é a possibilidade de contato com o cliente durante o desenvolvimento. A participação do treinador permitirá validar se as funcionalidades desenvolvidas correspondem ao seu método de trabalho e às necessidades dos atletas.
+Outro fator favorável é a possibilidade de contato com o cliente durante o desenvolvimento. A participação do treinador permitirá validar se as funcionalidades desenvolvidas correspondem ao seu método de trabalho.
 
 O principal risco está relacionado ao prazo da disciplina, especialmente no desenvolvimento do fluxo de vídeos e no gerenciamento adequado dos dados. Por esse motivo, em consonância com o escopo delimitado no item 2.3, funcionalidades de maior complexidade (como análise automática de vídeos, métricas avançadas, rankings e suporte a múltiplas turmas) foram mantidas fora do MVP inicial.
 
