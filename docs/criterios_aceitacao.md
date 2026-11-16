@@ -1,16 +1,12 @@
 # Critérios de aceitação
 
-Os critérios também podem ser consultados dentro das fichas do catálogo. Esta página reúne seus registros de forma individualizada por história de usuário, eliminando agrupamentos e garantindo rastreabilidade BDD dedicada.
+Os critérios também podem ser consultados dentro das fichas do catálogo. Esta página reúne seus registros de forma individualizada por história de usuário e eliminando agrupamentos.
 
 [Voltar ao catálogo](requisitos.md) · [Regras de negócio](regras_negocio.md)
 
 <p class="sj-reference-status">Em revisão: critérios de acesso, desempenho e privacidade complementados pelos cenários funcionais de cada consulta.</p>
 
 <details class="sj-document-details" markdown="1"><summary>Como ler os critérios e seus vínculos</summary>
-
-## Uso das representações
-
-A história expressa ator, intenção e valor. O cenário BDD delimita condições, ação e resultado verificável. Casos de uso complementam fluxos e exceções quando necessário, sem duplicação desnecessária.
 
 <span id="referencias-conciliadas"></span>
 
@@ -40,7 +36,7 @@ A história expressa ator, intenção e valor. O cenário BDD delimita condiçõ
 <div id="ca-us06-01" class="sj-criterion"><p><strong>CA01 (Exclusão por Vínculo):</strong> Dado que o treinador gerencia sua carteira, Quando seleciona um atleta e confirma a exclusão, Então o sistema inativa a conta e remove os dados (<a href="../regras_negocio/#rn05">RN05</a>).</p></div>
 
 ## US07 — Editar informações corporais e básicas (Atleta) {#ca-us07}
-<div id="ca-us07-01" class="sj-criterion"><p><strong>CA01 (Restrição de Escrita do Atleta):</strong> Dado que o atleta acessa a edição de perfil, Quando altera nome, contato, peso, altura ou envergadura, Então o sistema salva as alterações permitidas mantendo dados clínicos bloqueados (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
+<div id="ca-us07-01" class="sj-criterion"><p><strong>CA01 (Restrição de Escrita do Atleta):</strong> Dado que o atleta acessa a edição de perfil, Quando altera nome, contato, peso, altura, envergadura ou objetivos, Então o sistema salva as alterações permitidas mantendo histórico de lesões e testes de aptidão bloqueados (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
 
 ## US08 — Trocar senha {#ca-us08}
 <div id="ca-us08-01" class="sj-criterion"><p><strong>CA01 (Políticas de Segurança):</strong> Dado que o usuário define uma nova senha, Quando o texto atende aos requisitos mínimos de complexidade, Então o sistema atualiza a credencial com sucesso (<a href="../regras_negocio/#rn12">RN12</a>).</p></div>
@@ -106,7 +102,7 @@ A história expressa ator, intenção e valor. O cenário BDD delimita condiçõ
 <div id="ca-us28-01" class="sj-criterion"><p><strong>CA01 (Evolução Longitudinal):</strong> Dado que o treinador consulta o histórico de treinos do aluno, Quando a listagem é gerada, Então exibe todas as execuções passadas validadas.</p></div>
 
 ## US29 — Registrar status do treino {#ca-us29}
-<div id="ca-us29-01" class="sj-criterion"><p><strong>CA01 (Autonomia de Conclusão):</strong> Dado que o atleta finaliza o treino, Quando marca o status como concluído, Então o sistema atualiza o registro para acompanhamento do treinador (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us29-01" class="sj-criterion"><p><strong>CA01 (Sinalização de Execução):</strong> Dado que o atleta realizou o treino, Quando marca o status como "Feito", Então o sistema atualiza o registro e o treino fica aguardando a validação do treinador, sem passar para "Concluído" (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
 
 ## US30 — Cadastrar exercício {#ca-us30}
 <div id="ca-us30-01" class="sj-criterion"><p><strong>CA01 (Integridade do Catálogo):</strong> Dado que o treinador cadastra um exercício na biblioteca, Quando informa objetivo, fundamento e orientações, Então o item fica disponível para prescrição (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
@@ -166,44 +162,61 @@ A história expressa ator, intenção e valor. O cenário BDD delimita condiçõ
 ## US48 — Notificar atleta sobre feedback {#ca-us48}
 <div id="ca-us48-01" class="sj-criterion"><p><strong>CA01 (Gatilho de Alerta):</strong> Dado que o treinador publica um feedback, Quando a ação é salva, Então o sistema envia imediatamente um alerta visual ao atleta.</p></div>
 
-## US49 — Consultar alunos acompanhados {#ca-us49}
-<div id="ca-us49-01" class="sj-criterion"><p><strong>CA01 (Lista de Alunos):</strong> Dado que o treinador acessa sua carteira, Quando a tela carrega, Então visualiza estritamente os alunos vinculados (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+## US49 — Registrar feedback do aluno {#ca-us49}
+<div id="ca-us49-01" class="sj-criterion"><p><strong>CA01 (Validação do Texto):</strong> Dado que o aluno tenta salvar o feedback, Quando o campo está vazio, só com espaços ou acima de 1.000 caracteres, Então o sistema mostra um alerta e bloqueia o envio (<a href="../regras_negocio/#rn19">RN19</a>, <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a>).</p></div>
+<div id="ca-us49-02" class="sj-criterion"><p><strong>CA02 (Registro Único):</strong> Dado que o aluno já registrou feedback no exercício, Quando abre o exercício de novo, Então o sistema mostra o feedback existente com a opção de editar, sem abrir um novo campo de registro (<a href="../regras_negocio/#rn17">RN17</a>).</p></div>
+<div id="ca-us49-03" class="sj-criterion"><p><strong>CA03 (Privacidade):</strong> Dado que um feedback de aluno foi registrado, Quando outro aluno tenta acessá-lo pela API, Então o sistema retorna erro de acesso (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../regras_negocio/#rn18">RN18</a>, <a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>, <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
 
-## US50 — Consultar próprios dados cadastrais {#ca-us50}
-<div id="ca-us50-01" class="sj-criterion"><p><strong>CA01 (Privacidade do Atleta):</strong> Dado que o atleta consulta seus dados, Quando tenta forçar ID de outro usuário na URL, Então a API retorna Erro 403 (<a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>, <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+## US50 — Editar feedback do aluno {#ca-us50}
+<div id="ca-us50-01" class="sj-criterion"><p><strong>CA01 (Edição na Vigência):</strong> Dado que o aluno é o autor do feedback e o treino não está "Concluído", Quando altera o texto e salva, Então o sistema substitui o conteúdo e mostra a indicação "editado" (<a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+<div id="ca-us50-02" class="sj-criterion"><p><strong>CA02 (Bloqueio Após Conclusão):</strong> Dado que o treino está "Concluído", Quando o aluno abre o feedback, Então a opção de editar não aparece e a API recusa qualquer alteração (<a href="../regras_negocio/#rn20">RN20</a>, <a href="../regras_negocio/#rn21">RN21</a>).</p></div>
+<div id="ca-us50-03" class="sj-criterion"><p><strong>CA03 (Autoria Exclusiva):</strong> Dado que um feedback de aluno existe, Quando outro aluno tenta editá-lo, Então o sistema retorna erro de acesso (<a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+<div id="ca-us50-04" class="sj-criterion"><p><strong>CA04 (Validação na Edição):</strong> Dado que o aluno edita o feedback, Quando apaga todo o texto ou passa de 1.000 caracteres, Então o sistema bloqueia o salvamento e mantém o texto anterior (<a href="../regras_negocio/#rn19">RN19</a>, <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a>).</p></div>
 
-## US51 — Consultar próprios testes de aptidão física {#ca-us51}
-<div id="ca-us51-01" class="sj-criterion"><p><strong>CA01 (Isolamento de Testes):</strong> Dado que o atleta consulta seus testes físicos, Quando a listagem abre, Então visualiza apenas seus próprios resultados.</p></div>
+## US51 — Consultar feedback do aluno {#ca-us51}
+<div id="ca-us51-01" class="sj-criterion"><p><strong>CA01 (Visão por Exercício):</strong> Dado que o treinador abre um exercício de um aluno da sua carteira, Quando existe feedback registrado, Então o sistema mostra o texto e a indicação "editado", se houver (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us51-02" class="sj-criterion"><p><strong>CA02 (Somente Leitura):</strong> Dado que o treinador está vendo um feedback de aluno, Quando a tela carrega, Então não há opção de editar nem de excluir (<a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+<div id="ca-us51-03" class="sj-criterion"><p><strong>CA03 (Histórico Preservado):</strong> Dado que o treino do aluno está "Concluído", Quando o treinador consulta o histórico, Então os feedbacks do aluno continuam disponíveis (<a href="../regras_negocio/#rn21">RN21</a>).</p></div>
+<div id="ca-us51-04" class="sj-criterion"><p><strong>CA04 (Desempenho):</strong> Dado que o treinador consulta os feedbacks de um aluno, Quando a listagem é pedida, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf11">RNF11</a>).</p></div>
 
-## US52 — Consultar próprios vídeos enviados {#ca-us52}
-<div id="ca-us52-01" class="sj-criterion"><p><strong>CA01 (Acesso Restrito a Mídias):</strong> Dado que o atleta consulta seus vídeos, Quando a requisição é feita, Então exibe apenas as mídias enviadas por sua conta.</p></div>
+## US52 — Consultar alunos acompanhados {#ca-us52}
+<div id="ca-us52-01" class="sj-criterion"><p><strong>CA01 (Lista de Alunos):</strong> Dado que o treinador acessa sua carteira, Quando a tela carrega, Então visualiza estritamente os alunos vinculados (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
 
-## US53 — Consultar vídeos de alunos {#ca-us53}
-<div id="ca-us53-01" class="sj-criterion"><p><strong>CA01 (Visão do Treinador):</strong> Dado que o treinador consulta vídeos, Quando abre o exercício do aluno, Então acessa a mídia enviada pelos atletas da sua carteira (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+## US53 — Consultar próprios dados cadastrais {#ca-us53}
+<div id="ca-us53-01" class="sj-criterion"><p><strong>CA01 (Privacidade do Atleta):</strong> Dado que o atleta consulta seus dados, Quando tenta forçar ID de outro usuário na URL, Então a API retorna Erro 403 (<a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>, <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
 
-## US54 — Consultar feedback recebido {#ca-us54}
-<div id="ca-us54-01" class="sj-criterion"><p><strong>CA01 (Visualização de Avaliações):</strong> Dado que o atleta consulta feedbacks, Quando abre o exercício, Então visualiza exclusivamente as notas e orientações do seu treinador.</p></div>
+## US54 — Consultar próprios testes de aptidão física {#ca-us54}
+<div id="ca-us54-01" class="sj-criterion"><p><strong>CA01 (Isolamento de Testes):</strong> Dado que o atleta consulta seus testes físicos, Quando a listagem abre, Então visualiza apenas seus próprios resultados.</p></div>
 
-## US55 — Consultar próprio histórico de treinos {#ca-us55}
-<div id="ca-us55-01" class="sj-criterion"><p><strong>CA01 (Histórico Individual):</strong> Dado que o atleta consulta seu histórico, Quando a página carrega, Então exibe suas execuções anteriores sem exposição a terceiros.</p></div>
+## US55 — Consultar próprios vídeos enviados {#ca-us55}
+<div id="ca-us55-01" class="sj-criterion"><p><strong>CA01 (Acesso Restrito a Mídias):</strong> Dado que o atleta consulta seus vídeos, Quando a requisição é feita, Então exibe apenas as mídias enviadas por sua conta.</p></div>
 
-## US56 — Consultar próprios objetivos do aluno {#ca-us56}
-<div id="ca-us56-01" class="sj-criterion"><p><strong>CA01 (Metas Pessoais):</strong> Dado que o atleta consulta seus objetivos, Quando acessa o painel, Então visualiza as metas definidas pelo seu treinador.</p></div>
+## US56 — Consultar vídeos de alunos {#ca-us56}
+<div id="ca-us56-01" class="sj-criterion"><p><strong>CA01 (Visão do Treinador):</strong> Dado que o treinador consulta vídeos, Quando abre o exercício do aluno, Então acessa a mídia enviada pelos atletas da sua carteira (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
 
-## US57 — Consultar próprio planejamento de treinos {#ca-us57}
-<div id="ca-us57-01" class="sj-criterion"><p><strong>CA01 (Rotina Vigente):</strong> Dado que o atleta consulta seu planejamento, Quando abre a agenda, Então visualiza apenas os treinos prescritos para si.</p></div>
+## US57 — Consultar feedback recebido {#ca-us57}
+<div id="ca-us57-01" class="sj-criterion"><p><strong>CA01 (Visualização de Avaliações):</strong> Dado que o atleta consulta feedbacks, Quando abre o exercício, Então visualiza exclusivamente as notas e orientações do seu treinador.</p></div>
 
-## US58 — Consultar perfil de aluno acompanhado {#ca-us58}
-<div id="ca-us58-01" class="sj-criterion"><p><strong>CA01 (Dados Clínicos e Corporais):</strong> Dado que o treinador consulta o perfil do aluno, Quando o painel abre, Então visualiza dados completos do atleta vinculado (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+## US58 — Consultar próprio histórico de treinos {#ca-us58}
+<div id="ca-us58-01" class="sj-criterion"><p><strong>CA01 (Histórico Individual):</strong> Dado que o atleta consulta seu histórico, Quando a página carrega, Então exibe suas execuções anteriores sem exposição a terceiros.</p></div>
 
-## US59 — Consultar resultados de testes físicos de aluno {#ca-us59}
-<div id="ca-us59-01" class="sj-criterion"><p><strong>CA01 (Evolução Esportiva):</strong> Dado que o treinador consulta os testes do aluno, Quando a tabela é gerada, Então exibe o histórico de avaliações físicas.</p></div>
+## US59 — Consultar próprios objetivos do aluno {#ca-us59}
+<div id="ca-us59-01" class="sj-criterion"><p><strong>CA01 (Metas Pessoais):</strong> Dado que o atleta consulta seus objetivos, Quando acessa o painel, Então visualiza as metas definidas pelo seu treinador.</p></div>
 
-## US60 — Aceitar termos de uso e política de privacidade {#ca-us60}
-<div id="ca-us60-01" class="sj-criterion"><p><strong>CA01 (Consentimento Obrigatório):</strong> Dado que o usuário realiza o primeiro acesso, Quando visualiza os termos, Então o sistema exige aceite explícito registrando data e versão (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
+## US60 — Consultar próprio planejamento de treinos {#ca-us60}
+<div id="ca-us60-01" class="sj-criterion"><p><strong>CA01 (Rotina Vigente):</strong> Dado que o atleta consulta seu planejamento, Quando abre a agenda, Então visualiza apenas os treinos prescritos para si.</p></div>
 
-## US61 — Solicitar exclusão dos próprios dados {#ca-us61}
-<div id="ca-us61-01" class="sj-criterion"><p><strong>CA01 (Direito ao Esquecimento - LGPD):</strong> Dado que o titular solicita exclusão, Quando aciona o comando, Então o sistema processa a remoção ou anonimização de dados conforme art. 18 da LGPD (<a href="../regras_negocio/#rn05">RN05</a>).</p></div>
+## US61 — Consultar perfil de aluno acompanhado {#ca-us61}
+<div id="ca-us61-01" class="sj-criterion"><p><strong>CA01 (Dados Clínicos e Corporais):</strong> Dado que o treinador consulta o perfil do aluno, Quando o painel abre, Então visualiza dados completos do atleta vinculado (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
 
-## US62 — Registrar consentimento de responsável por aluno menor {#ca-us62}
-<div id="ca-us62-01" class="sj-criterion"><p><strong>CA01 (Proteção de Menores):</strong> Dado que o aluno possui menos de 18 anos, Quando realiza o cadastro, Então o sistema exige o registro prévio do consentimento do responsável legal (<a href="../regras_negocio/#rn16">RN16</a>).</p></div>
+## US62 — Consultar resultados de testes físicos de aluno {#ca-us62}
+<div id="ca-us62-01" class="sj-criterion"><p><strong>CA01 (Evolução Esportiva):</strong> Dado que o treinador consulta os testes do aluno, Quando a tabela é gerada, Então exibe o histórico de avaliações físicas.</p></div>
+
+## US63 — Aceitar termos de uso e política de privacidade {#ca-us63}
+<div id="ca-us63-01" class="sj-criterion"><p><strong>CA01 (Consentimento Obrigatório):</strong> Dado que o usuário realiza o primeiro acesso, Quando visualiza os termos, Então o sistema exige aceite explícito registrando data e versão (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
+
+## US64 — Solicitar exclusão dos próprios dados {#ca-us64}
+<div id="ca-us64-01" class="sj-criterion"><p><strong>CA01 (Direito ao Esquecimento - LGPD):</strong> Dado que o titular solicita exclusão, Quando aciona o comando, Então o sistema processa a remoção ou anonimização de dados conforme art. 18 da LGPD (<a href="../regras_negocio/#rn05">RN05</a>).</p></div>
+
+## US65 — Registrar consentimento de responsável por aluno menor {#ca-us65}
+<div id="ca-us65-01" class="sj-criterion"><p><strong>CA01 (Proteção de Menores):</strong> Dado que o aluno possui menos de 18 anos, Quando realiza o cadastro, Então o sistema exige o registro prévio do consentimento do responsável legal (<a href="../regras_negocio/#rn16">RN16</a>).</p></div>
