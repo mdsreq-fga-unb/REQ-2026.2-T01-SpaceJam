@@ -1,74 +1,34 @@
-# Mínimo Produto Viável (MVP) — Projeto Space Jam
+<span id="minimo-produto-viavel-mvp-projeto-space-jam"></span>
 
-Este documento define o escopo do **Mínimo Produto Viável (MVP)** para o sistema *Space Jam*, estabelecendo o núcleo essencial de funcionalidades necessárias para disponibilizar a primeira versão funcional da plataforma aos utilizadores (atletas e treinadores).
+# Mínimo Produto Viável — Space Jam
 
----
+O MVP documentado concentra o fluxo entre treinador e atleta: organizar exercícios e planejamentos, consultar treinos e orientações, registrar dificuldade e apoiar envio de vídeo e feedback privado. O recorte deve ser revisado à luz da capacidade real e do retorno dos usuários; a inclusão de um item não comprova sua entrega.
 
-## 1. Visão Geral do MVP
+## 1. Objetivo do incremento {#1-visao-geral-do-mvp}
 
-O MVP do Space Jam concentra-se em resolver a dor principal da prescrição e acompanhamento de treinos desportivos de forma remota e assíncrona, garantindo:
-1. **Controle de Acesso e Isolamento:** Autenticação segura via perfis (RBAC) e proteção estrita de dados por carteira de alunos (*multi-tenant*).
-2. **Ciclo de Treino Essencial:** Cadastro de exercícios, criação de planejamentos de treino, execução pelo atleta com feedback de dificuldade, e submissão/avaliação de vídeos de execução.
-3. **Conformidade Básica:** Adequação aos requisitos essenciais de segurança, usabilidade mobile e LGPD.
+Demonstrar que o treinador consegue prescrever e acompanhar treinos de seus atletas e que o atleta consegue consultar a prescrição e participar do acompanhamento, com controle de acesso às informações individuais.
 
----
+## 2. Linha de corte documentada {#2-linha-de-corte-do-mvp}
 
-## 2. Requisitos Funcionais do MVP (Classificação MoSCoW)
+A regra registrada combina MoSCoW com complexidade técnica: todos os Must Have e os Should Have com CT inferior a 3 compõem o recorte. O [Backlog](backlog.md#102-priorizacao-do-backlog-geral-e-mvp) apresenta escalas e método. A justificativa e os atributos de cada requisito são mantidos na ficha correspondente.
 
-A seleção dos Requisitos Funcionais (RFs) que compõem o núcleo do MVP foi baseada na priorização **MoSCoW**, focando em itens classificados como **Must Have** (indispensáveis para o funcionamento do produto) e incluindo estrategicamente o item de substituição de mídia como essencial para a experiência inicial.
+Os ajustes declarados no histórico de 13/10 foram conciliados no catálogo. Prioridade, dependências e participação no MVP devem ser revistas conjuntamente quando o entendimento mudar.
 
-| **MoSCoW** | **Código** | **Nome** |
-| :--- | :--- | :--- |
-| Must Have | **RF01101** | Cadastrar usuário |
-| Must Have | **RF01102** | Logar usuário |
-| Must Have | **RF01104** | Editar informações do perfil |
-| Must Have | **RF01107** | Trocar senha |
-| Should Have | **RF01208** | Consultar dificuldade |
-| Must Have | **RF01209** | Registrar dificuldade |
-| Must Have | **RF01210** | Editar dificuldade |
-| Should Have | **RF01211** | Editar status exercícios |
-| Must Have | **RF02301** | Cadastrar planejamento |
-| Must Have | **RF02302** | Editar planejamento |
-| Should Have | **RF02304** | Consultar histórico de planejamento |
-| Must Have | **RF02306** | Consultar status de treino |
-| Must Have | **RF02407** | Cadastrar exercício |
-| Must Have | **RF02410** | Documentar erros e orientações |
-| Must Have | **RF02412** | Cadastrar informações complementares do vídeo base |
-| Must Have | **RF03501** | Enviar vídeo de execução |
-| Must Have | **RF03502** | Substituir vídeo enviado |
-| Must Have | **RF03601** | Registrar feedback |
-| Must Have | **RF03602** | Editar feedback |
-| Should Have | **RF04701** | Consultar atletas acompanhados |
-| Must Have | **RF04802** | Consultar próprios dados cadastrais |
-| Should Have | **RF04803** | Consultar próprios resultados de testes |
-| Should Have | **RF04804** | Consultar próprios vídeos enviados |
-| Must Have | **RF04805** | Consultar vídeos de atleta acompanhado |
-| Must Have | **RF04806** | Consultar feedback recebido |
-| Should Have | **RF04807** | Consultar próprio histórico de treinos |
-| Should Have | **RF04808** | Consultar próprios objetivos |
-| Should Have | **RF04809** | Consultar próprio planejamento de treinos |
-| Must Have | **RF04810** | Consultar perfil de atleta acompanhado |
-| Must Have | **RF04811** | Consultar resultados de testes de atleta acompanhado |
+## 3. Consultar a composição {#3-requisitos-funcionais-do-mvp}
 
----
+<div class="sj-catalog-links"><a href="../requisitos/#indice-mvp">Abrir requisitos do MVP</a><a href="../requisitos/#guia-do-catalogo">Explorar por característica</a><a href="../requisitos/">Consultar todo o escopo</a></div>
 
-## 3. Requisitos Não Funcionais (RNFs) Essenciais para o MVP
+O link do MVP abre um índice de acesso gerado a partir das fichas que têm o selo MVP. Os hiperlinks levam ao registro completo; não há uma segunda lista manual de prioridades, estimativas ou seleção.
 
-Para que o MVP entregue uma experiência estável, segura e em conformidade legal, os seguintes Requisitos Não Funcionais são mandatórios nesta primeira versão:
+### Evolução posterior {#requisitos-fora-do-mvp}
 
-### Obrigatórios para o MVP
-* **RNF01:** Responsividade Mobile
-* **RNF02:** Arquitetura e Stack Tecnológica (React, Django, PostgreSQL)
-* **RNF03:** Estabilidade em Navegadores Padrão
-* **RNF05:** Proteção e Privacidade de Dados (LGPD)
-* **RNF09:** Controle de Acesso Baseado em Funções (RBAC)
-* **RNF10:** Isolamento Multi-inquilino de Dados
-* **RNF17:** Consentimento de Cookies
-### Associados a RFs do MVP
+Itens fora do recorte permanecem identificados no catálogo; sua permanência não representa compromisso de entrega. Uma mudança na seleção exige analisar seus efeitos em critérios, dependências e planejamento.
 
-* **RNF06:** Compatibilidade de Vídeo
-* **RNF12:** Integridade na Catalogação de Exercícios
-* **RNF14:** Restrição de Duração (60s) e Tamanho (100MB) de Mídias  
-* **RNF16:** Gerenciamento Pré-Envio de Mídia
----
+## 4. Condições para avaliar o incremento {#4-requisitos-nao-funcionais-rnfs-essenciais-para-o-mvp}
 
+O tratamento de cada RNF está mantido no [registro não funcional](requisitos_nao_funcionais.md). Os grupos Obrigatórios e Associados expressam o tratamento documentado para o MVP. Classificações controversas, como acessibilidade fora do recorte e feedback anotado evolutivo, permanecem sinalizadas para revisão.
+
+<span id="obrigatorios-para-o-mvp"></span>
+<span id="associados-a-rfs-do-mvp"></span>
+
+Para demonstrar o incremento, selecionar percursos reais, verificar os critérios das fichas, registrar versão e resultado e aplicar o [DoD](dor_dod.md). As [orientações de atualização do backlog](backlog.md#atualizacao-do-backlog) distinguem proposta, decisão e resultado comprovado. Esta consolidação documental não constitui uma nova validação integral do MVP com o cliente.

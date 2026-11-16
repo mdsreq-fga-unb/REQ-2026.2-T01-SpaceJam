@@ -28,7 +28,7 @@ Retorno de Lucas na reunião de 08/10 (ata registrada na página de Reuniões):
 - apontou o envio de vídeos e a correção do treinador como diferencial do produto;
 - discutiu cuidados com a imagem e os vídeos dos atletas;
 - aceitou o esquema visual apresentado como possibilidade, citando vermelho escuro e preto como alternativa;
-- discutiu a priorização: consulta de resultados de testes físicos pelo treinador (RF4811) com valor 5; status do treino (RF2306) e próprios testes (RF4803) com valor 3; propostas de reduzir a comparação de treinos (RF2305) para 3 e retirar a edição de dificuldade (RF1214) do recorte inicial.
+- discutiu a priorização, registrada na [ata de 08/10](atas/2026-10-08-lucas.md#priorizacao-discutida): consulta de resultados de testes físicos pelo treinador (RF4811) com valor 5; status do treino (RF2306) e próprios testes (RF4803) com valor 3; propostas de reduzir a comparação de treinos (RF2305) para 3 e retirar a edição de dificuldade (RF1214) do recorte inicial.
 
 A priorização foi depois consolidada na matriz MoSCoW da página do MVP, que prevalece sobre os valores dessa ata. Por exemplo, os testes físicos ficaram fora do MVP e a edição de dificuldade ficou dentro.
 
