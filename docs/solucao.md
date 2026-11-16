@@ -78,7 +78,7 @@ Para o armazenamento dos dados, será utilizado o **PostgreSQL**, um banco de da
 
 Caso o compartilhamento de vídeos seja validado e incorporado à solução, os arquivos de mídia deverão ser armazenados separadamente dos dados estruturados da aplicação, utilizando uma solução apropriada de armazenamento de arquivos. A definição da tecnologia específica deverá considerar fatores como custo, capacidade disponível, segurança, integração com a aplicação e facilidade de gerenciamento.
 
-Os formatos e limites de mídia já declarados estão em [RNF06](requisitos_nao_funcionais.md#rnf06) e [RNF14](requisitos_nao_funcionais.md#rnf14). Sua confirmação e verificação permanecem pendentes. Antes da implementação definitiva, também é necessário revisar os seguintes aspectos:
+Os formatos e limites de mídia já declarados estão em [RNF06](requisitos_nao_funcionais.md#rnf06) e [RNF13](requisitos_nao_funcionais.md#rnf13). Sua confirmação e verificação permanecem pendentes. Antes da implementação definitiva, também é necessário revisar os seguintes aspectos:
 
 - tamanho máximo dos arquivos;
 - duração máxima dos vídeos;

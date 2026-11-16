@@ -168,14 +168,14 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** Testes automatizados e manuais de upload comprovando que `100%` dos arquivos válidos nos contêineres `.mp4` (H.264/HEVC) e `.mov` (QuickTime/iOS) dentro dos limites estabelecidos (RNF14) são aceitos e reproduzidos corretamente, enquanto `100%` dos formatos não suportados (ex.: `.avi`, `.mkv`, `.wmv`, `.exe`) são rejeitados antes do envio (RNF16).
+- **Verificação (Métrica):** Testes automatizados e manuais de upload comprovando que `100%` dos arquivos válidos nos contêineres `.mp4` (H.264/HEVC) e `.mov` (QuickTime/iOS) dentro dos limites estabelecidos (RNF13) são aceitos e reproduzidos corretamente, enquanto `100%` dos formatos não suportados (ex.: `.avi`, `.mkv`, `.wmv`, `.exe`) são rejeitados antes do envio (RNF15).
 - **Validação (Justificativa):** Garante compatibilidade nativa com os formatos padrão de gravação de smartphones Android (`.mp4`) e iOS/iPhone (`.mov`), evitando que o atleta precise converter o vídeo manualmente antes de enviá-lo.
 
 **Checklist estruturado:**
 
 - [ ] Vídeos gravados e exportados no formato `.mp4` são aceitos, armazenados e reproduzidos corretamente na plataforma
 - [ ] Vídeos gravados nativamente em dispositivos iOS no formato `.mov` são aceitos, armazenados e reproduzidos corretamente
-- [ ] Arquivos com extensões ou MIME types fora da lista permitida (`.mp4` e `.mov`) são bloqueados com feedback claro antes do upload (RNF16)
+- [ ] Arquivos com extensões ou MIME types fora da lista permitida (`.mp4` e `.mov`) são bloqueados com feedback claro antes do upload (RNF15)
 - [ ] Os players web de avaliação do professor reproduzem ambos os formatos sem exigir plugins externos
 
 ## RNF07 · Feedback Visual de Upload {#rnf07}
@@ -203,43 +203,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Ao concluir o envio e persistência, o indicador atinge 100% e exibe confirmação clara de sucesso
 - [ ] Em caso de queda de conexão ou falha durante o upload, o progresso é interrompido e uma mensagem de erro clara é exibida
 
-## RNF08 · Interface de Feedback Anotado {#rnf08}
-
-**Categoria:** Usabilidade
-
-**MVP:** Evolutivos
-
-**Descrição:** A interface do treinador deve permitir a associação de notas e observações textuais diretamente vinculadas à linha do tempo dos vídeos enviados pelos atletas.
-
-**Origem e perfis:**
-
-- CP6
-- Professor (Treinador)
-
-**Regras de negócio associadas:**
-
-- [RN10 · Imutabilidade de Vídeo Após Feedback](regras_negocio.md#rn10)
-- [RN11 · Autoria Exclusiva de Feedback](regras_negocio.md#rn11)
-
-**Pendência de escopo:**
-
-- O MVP entrega o feedback textual do [RF3604](requisitos.md#rf3604), vinculado ao vídeo e ao exercício, sem exigência de marcação por timestamp.
-- A anotação diretamente vinculada à linha do tempo descrita neste RNF permanece como evolução pós-MVP e depende de confirmação do cliente sobre a forma de apresentação (ver [ata de 08/10/2026](../atas/2026-10-08-lucas/#pontos-a-esclarecer)).
-
-**Verificação e validação:**
-
-- **Verificação (Métrica):** `100%` das anotações salvas com timestamp válido dentro da duração do vídeo (`0 s` até o fim), `0` anotações órfãs ou fora do intervalo e edição/exclusão restrita ao autor original (RN11), com persistência e reexibição correta após recarregar o vídeo.
-- **Validação (Justificativa):** Permite ao treinador apontar erros e acertos em momentos específicos da execução, complementando o feedback textual geral do RF3604 sem alterar o escopo já entregue no MVP.
-
-**Checklist estruturado:**
-
-- [ ] O treinador consegue criar notas textuais associadas a um timestamp válido do vídeo
-- [ ] As anotações são persistidas e reexibidas nos pontos corretos após recarregar o vídeo
-- [ ] Apenas o autor original pode editar ou excluir a anotação (RN11)
-- [ ] Anotações sem timestamp ou fora da duração do vídeo são bloqueadas
-- [ ] A implementação da linha do tempo foi formalmente confirmada com o cliente antes do incremento
-
-## RNF09 · Controle de Acesso Baseado em Funções (RBAC) {#rnf09}
+## RNF08 · Controle de Acesso Baseado em Funções (RBAC) {#rnf08}
 
 **Categoria:** Confiabilidade / Segurança
 
@@ -268,7 +232,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] As rotas e componentes de interface exclusivos do Treinador são ocultados e bloqueados no roteamento do frontend para usuários com perfil Atleta
 - [ ] Testes automatizados cobrem tentativas de acesso cruzado entre perfis em todas as operações críticas do MVP
 
-## RNF10 · Isolamento Multi-inquilino de Dados {#rnf10}
+## RNF09 · Isolamento Multi-inquilino de Dados {#rnf09}
 
 **Categoria:** Confiabilidade / Segurança
 
@@ -297,7 +261,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Treinadores sem vínculo ativo com o atleta não visualizam nem acessam seus vídeos, planejamentos ou feedbacks
 - [ ] Testes automatizados validam o isolamento de dados entre dois atletas distintos e entre dois treinadores com carteiras separadas
 
-## RNF11 · Desempenho no Carregamento do Histórico {#rnf11}
+## RNF10 · Desempenho no Carregamento do Histórico {#rnf10}
 
 **Categoria:** Desempenho
 
@@ -322,7 +286,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Consultas de histórico e métricas de evolução utilizam paginação ou agregação otimizada para evitar gargalos de payload e banco de dados
 - [ ] Os parâmetros e resultados dos testes de desempenho (Fast 4G e 50 req/s) estão documentados e reproduzíveis
 
-## RNF12 · Integridade e Consistência na Catalogação de Exercícios {#rnf12}
+## RNF11 · Integridade e Consistência na Catalogação de Exercícios {#rnf11}
 
 **Categoria:** Confiabilidade (Integridade de Dados)
 
@@ -351,7 +315,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro sem gerar erros ou referências quebradas
 - [ ] Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes sem duplicidades
 
-## RNF13 · Armazenamento Isolado e Proteção de Mídias {#rnf13}
+## RNF12 · Armazenamento Isolado e Proteção de Mídias {#rnf12}
 
 **Categoria:** Confiabilidade / Segurança
 
@@ -382,7 +346,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Requisições de acesso feitas por usuários sem vínculo ativo aluno-professor são bloqueadas com HTTP 403
 - [ ] A exclusão da conta ou solicitação do titular remove definitivamente o arquivo do storage em nuvem
 
-## RNF14 · Limites de Duração e Tamanho no Envio de Vídeos {#rnf14}
+## RNF13 · Limites de Duração e Tamanho no Envio de Vídeos {#rnf13}
 
 **Categoria:** Suportabilidade / Usabilidade
 
@@ -401,7 +365,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Decisão de projeto (Justificativa técnica):**
 
-- **Dimensionamento do teto (60 s / 100 MB):** Adotou-se como referência de gravação móvel o padrão Full HD (`1080p` a `30 fps`, codecs H.264/HEVC), cuja taxa média de bits varia entre `8 e 12 Mbps` (`~60 a 90 MB` por minuto). O limite de **100 MB** acomoda uma gravação completa de **60 segundos** nesse padrão com margem de segurança, dispensando compressão prévia pelo atleta e evitando estouros de memória ou timeout em conexões móveis. Gravações acima desse teto (como `4K` ou `60 fps` prolongados) devem ser rejeitadas antes do envio (ver RNF16).
+- **Dimensionamento do teto (60 s / 100 MB):** Adotou-se como referência de gravação móvel o padrão Full HD (`1080p` a `30 fps`, codecs H.264/HEVC), cuja taxa média de bits varia entre `8 e 12 Mbps` (`~60 a 90 MB` por minuto). O limite de **100 MB** acomoda uma gravação completa de **60 segundos** nesse padrão com margem de segurança, dispensando compressão prévia pelo atleta e evitando estouros de memória ou timeout em conexões móveis. Gravações acima desse teto (como `4K` ou `60 fps` prolongados) devem ser rejeitadas antes do envio (ver RNF15).
 - **Adoção de limite único no MVP:** Embora o domínio admita execuções de durações distintas conforme o exercício (conforme esclarecido por Lucas / ata de 26/09), decidiu-se manter um **teto único global de 60 s no MVP** — suficiente para cobrir a execução completa de qualquer exercício individual sem adicionar complexidade de configuração por exercício no cadastro da biblioteca —, deixando a parametrização de duração máxima por exercício como evolução futura pós-MVP.
 
 **Verificação e validação:**
@@ -416,7 +380,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Vídeos gravados em dispositivos móveis no padrão 1080p a 30 fps com até 60 segundos (≤ 100 MB) são enviados e reproduzidos sem falhas
 - [ ] A decisão técnica sobre o teto único (60 s / 100 MB) e o adiamento da duração variável por exercício pós-MVP está registrada e vinculada à RN09
 
-## RNF15 · Assistência e Validação no Preenchimento de Dados {#rnf15}
+## RNF14 · Assistência e Validação no Preenchimento de Dados {#rnf14}
 
 **Categoria:** Usabilidade
 
@@ -441,7 +405,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] A validação client-side bloqueia o envio do formulário e exibe mensagens específicas junto ao campo quando há dados ausentes ou em formato inválido
 - [ ] Ao corrigir o campo inválido, o alerta de erro é removido imediatamente sem perda dos demais dados já preenchidos
 
-## RNF16 · Feedback e Prevenção de Erros no Pré-Envio de Mídia {#rnf16}
+## RNF15 · Feedback e Prevenção de Erros no Pré-Envio de Mídia {#rnf15}
 
 **Categoria:** Usabilidade
 
@@ -471,7 +435,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] A troca ou remoção limpa o estado anterior sem recarregar a tela
 - [ ] Arquivos inválidos exibem feedback imediato antes do envio
 
-## RNF17 · Conformidade de Privacidade e Consentimento de Cookies {#rnf17}
+## RNF16 · Conformidade de Privacidade e Consentimento de Cookies {#rnf16}
 
 **Categoria:** Segurança (Privacidade / LGPD)
 
@@ -500,7 +464,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] O histórico da escolha (data, hora e o que foi autorizado) fica registrado no sistema
 - [ ] O usuário consegue alterar ou cancelar sua permissão posteriormente a qualquer momento
 
-## RNF18 · Persistência Durável de Dados e Mídias {#rnf18}
+## RNF17 · Persistência Durável de Dados e Mídias {#rnf17}
 
 **Categoria:** Confiabilidade
 
@@ -529,3 +493,11 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 - [ ] Vídeos-base cadastrados pelo professor na biblioteca (RN14) e vídeos enviados pelos atletas permanecem recuperáveis após reinicializações
 - [ ] A aplicação de migrações de banco de dados preserva os registros existentes sem perda de dados
 - [ ] Operações de exclusão mantêm a integridade referencial do histórico conforme a RN13
+
+<details class="sj-document-details"><summary>Histórico de atualizações</summary>
+
+| Data | Antes | Depois |
+| --- | --- | --- |
+| 16/11/2026 | **RNF08 · Interface de Feedback Anotado:** mantido como requisito evolutivo na sequência RNF01–RNF18. | **RNF08 · Interface de Feedback Anotado:** removido do catálogo de RNFs e renumerada a sequência subsequente de RNF09–RNF18 para RNF08–RNF17. |
+
+</details>
