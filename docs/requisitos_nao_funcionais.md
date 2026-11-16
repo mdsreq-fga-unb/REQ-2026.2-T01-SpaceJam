@@ -180,11 +180,28 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF07 · Feedback Visual de Upload {#rnf07}
 
-A aplicação web deve exibir um indicador visual de progresso dinâmico (com porcentagem de 1% a 99%) durante a submissão do vídeo, informando o estado em tempo real até ao término (100%).
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP5.
+**MVP:** Evolutivos
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** A aplicação web deve exibir um indicador visual de progresso dinâmico (com porcentagem de 1% a 99%) durante a submissão do vídeo, informando o estado em tempo real até ao término (100%).
+
+**Origem e perfis:**
+
+- CP5
+- Aluno (Atleta)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes funcionais e de simulação de rede (throttling 3G/4G) no envio de vídeos válidos (até 100 MB), comprovando a atualização contínua da barra/percentual de progresso de `1%` a `99%` durante a transferência e transição para `100%` (confirmação de conclusão) em `≤ 1,0 s` após o término do upload.
+- **Validação (Justificativa):** Evita que o atleta feche a aba, recarregue a página ou reenvie o vídeo duplicado por falta de retorno visual durante o envio de arquivos maiores em conexões móveis.
+
+**Checklist estruturado:**
+
+- [ ] Um indicador visual de progresso é exibido logo após iniciar o upload do vídeo
+- [ ] O percentual é atualizado dinamicamente de 1% a 99% acompanhando os bytes transferidos (eventos de progresso da requisição)
+- [ ] Ao concluir o envio e persistência, o indicador atinge 100% e exibe confirmação clara de sucesso
+- [ ] Em caso de queda de conexão ou falha durante o upload, o progresso é interrompido e uma mensagem de erro clara é exibida
 
 ## RNF08 · Interface de Feedback Anotado {#rnf08}
 
