@@ -23,18 +23,18 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Treinador)
+- Todos os utilizadores (Atleta e Treinador)
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Inspeção responsiva dos fluxos essenciais em viewports a partir de `360px` de largura (ex.: `360×800 px`, `390×844 px` e `1280×720 px`) com `0` barras de rolagem horizontal indesejadas, `0` sobreposições de elementos interativos e `100%` dos botões e formulários legíveis e acionáveis.
-- **Validação (Justificativa):** Garante que atletas e treinadores consigam acessar treinos, enviar vídeos e registrar feedbacks diretamente pelo smartphone em quadra ou ginásio sem perda de usabilidade.
+- **Validação (Justificativa):** Garante que os atletas em conjunto com o treinador consigam acessar treinos, enviar vídeos e registrar feedbacks diretamente pelo smartphone em quadra ou ginásio sem perda de usabilidade.
 
 **Checklist estruturado:**
 
 - [ ] Todas as telas principais renderizam sem rolagem horizontal em largura mínima de 360px
 - [ ] Textos, formulários, botões e players de vídeo permanecem legíveis e clicáveis sem corte ou sobreposição em smartphones
 - [ ] A navegação principal e ações críticas são facilmente acessíveis em telas móveis (mobile-first)
-- [ ] O layout mantém proporção e funcionalidade adequadas também em telas maiores (tablets e desktops)
+- [ ] O layout mantém proporção, legibilidade e funcionalidade sem rolagem horizontal (overflow-x) nas resoluções de tablet (768 × 1024 px) e desktop (1280 × 720 px e 1920 × 1080 px) no DevTools
 
 ## RNF02 · Arquitetura e Stack Tecnológica {#rnf02}
 
@@ -47,12 +47,12 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Equipe de Desenvolvimento / Todos os utilizadores (Visitante, Aluno e Professor)
+- Equipe de Desenvolvimento / Todos os utilizadores (Atleta e Treinador)
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** Inspeção dos manifestos de dependências e ambiente (`package.json`, `requirements.txt`/`pyproject.toml` e configuração do banco) confirmando `React >= 18` com `TypeScript`, `Python >= 3.11` com `Django` / `djangorestframework` e instância ativa de `PostgreSQL >= 15` (`100%` de aderência às versões mínimas declaradas).
-- **Validação (Justificativa):** Padroniza a stack tecnológica do projeto, assegurando tipagem estática no frontend, produtividade e maturidade na API REST e integridade relacional na persistência dos dados.
+- **Verificação (Métrica):** Inspeção dos arquivos de dependências e ambiente (`package.json`, `requirements.txt`/`pyproject.toml` e configuração do banco) confirmando `React >= 18` com `TypeScript`, `Python >= 3.11` com `Django` / `djangorestframework` e instância ativa de `PostgreSQL >= 15` (`100%` de aderência às versões mínimas declaradas).
+- **Validação (Justificativa):** Padroniza a stack tecnológica do projeto, assegurando tipagem estática no frontend, produtividade e maturidade na API REST, além da integridade relacional na persistência dos dados.
 
 **Checklist estruturado:**
 
@@ -72,7 +72,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Treinador)
+- Todos os utilizadores (Atleta e Treinador)
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Execução bem-sucedida de 100% da suíte E2E / checklist de fluxos críticos com 0 erros não tratados no console (`Uncaught Error` ou falhas de persistência) e 0 quebras de layout bloqueantes nas versões mínimas de referência desktop (Chrome 130+, Firefox 131+, Edge 130+, Safari 17.5+, Opera 114+) e mobile (Chrome 130+ Android, Safari 17.5+ iOS/iPadOS).
@@ -82,24 +82,26 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 - [ ] Os fluxos críticos de autenticação, cadastro, treino e envio de vídeo operam sem bloqueios nas versões mínimas definidas em desktop e mobile
 - [ ] Não ocorrem erros de JavaScript não tratados no console durante a navegação nos navegadores homologados
-- [ ] Componentes visuais, formulários e players de vídeo mantêm legibilidade e funcionamento íntegro sem sobreposição ou corte
+- [ ] Componentes visuais, formulários e players de vídeo mantêm legibilidade e funcionamento íntegro, com todos os botões e controles visíveis e clicáveis nas resoluções testadas (sem cortes ou sobreposição)
 - [ ] A persistência de dados e o armazenamento de sessão funcionam corretamente em todas as plataformas de referência
 
 ## RNF04 · Acessibilidade Digital {#rnf04}
 
 **Categoria:** Usabilidade
 
-**MVP:** Não aplicáveis ao MVP
+**MVP:** Evolutivos
 
 **Descrição:** A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.
 
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Treinador)
-**Pendência de decisão:**
+- Todos os utilizadores (Atleta e Treinador)
 
-- A classificação anterior deixa acessibilidade fora do MVP. A classificação foi preservada para revisão, sem retirar as metas já declaradas nem afirmar que essa opção foi confirmada.
+**Decisão:**
+
+
+- A acessibilidade está fora do MVP. O requisito foi classificado como evolutivo, após validação com o treinador titular (Lucas), que informou não atender atualmente atletas com demandas específicas de acessibilidade assistiva. A priorização concentra o esforço do MVP nas funcionalidades centrais de treino e acompanhamento, mantendo a conformidade WCAG planejada para evolução futura conforme a base de usuários crescer, essa necessidade pode surgir. ([Registro de Comprovacao](https://drive.google.com/file/d/1LWxClNWmC8qAXfHdUrpBi9BGzdvGj5v1/view?usp=sharing){ target="_blank" })
 
 **Verificação e validação:**
 
@@ -119,12 +121,12 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O sistema deve garantir a privacidade e a proteção dos dados dos usuários em conformidade com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º, na qual esses dados devem ser restritos exclusivamente ao mínimo necessário para a finalidade explícita de acompanhamento esportivo (cadastro, métricas e vídeos de execução), com acesso limitado ao próprio titular e ao seu treinador vinculado, retenção restrita ao período em que a conta permanecer ativa e eliminação definitiva e irreversível após a conclusão da análise pelo treinador, mediante encerramento da conta ou solicitação do titular.
+**Descrição:** O sistema deve garantir a privacidade e a proteção dos dados dos usuários em conformidade com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º, na qual esses dados devem ser restritos exclusivamente ao mínimo necessário para a finalidade explícita de acompanhamento esportivo (cadastro, métricas e vídeos de execução), com acesso limitado ao próprio titular e ao seu professor vinculado, retenção restrita ao período em que a conta permanecer ativa e eliminação definitiva e irreversível após a conclusão da análise pelo professor, mediante encerramento da conta ou solicitação do titular.
 
 **Origem e perfis:**
 
 - Global / CP8
-- Aluno e Treinador
+- Atleta e Treinador
 
 **Regras de negócio associadas:**
 
@@ -136,13 +138,13 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Verificação e validação:**
 
-- **Verificação (Métrica):** 100% dos dados pessoais e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio (HTTP 403) para usuários sem vínculo; após a conclusão da análise pelo treinador e solicitação do titular/encerramento, os registros e arquivos são removidos definitivamente do banco e do storage, com protocolo gerado em ≤ 500 ms.
+- **Verificação (Métrica):** 100% dos dados pessoais e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio (HTTP 403) para usuários sem vínculo; após a conclusão da análise pelo professor e solicitação do titular/encerramento, os registros e arquivos são removidos definitivamente do banco e do storage, com protocolo gerado em ≤ 500 ms.
 - **Validação (Justificativa):** Traduz a conformidade com a LGPD em critérios verificáveis de minimização, finalidade explícita, controle de acesso, retenção e direitos do titular, respeitando a integridade do processo de avaliação pedagógica.
 
 **Checklist estruturado:**
 
 - [ ] A coleta restringe-se aos dados estritamente necessários ao acompanhamento esportivo, com finalidade explícita
-- [ ] Apenas o aluno titular e o treinador vinculado possuem acesso aos dados e vídeos de execução
+- [ ] Apenas o aluno(atleta) titular e o treinador(professor) vinculado possuem acesso aos dados e vídeos de execução
 - [ ] Os dados pessoais são mantidos apenas enquanto a conta do usuário permanecer ativa
 - [ ] Após a conclusão da análise pelo treinador, o encerramento da conta ou solicitação do titular resulta na eliminação definitiva dos registros e vídeos
 
@@ -157,7 +159,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - CP5, CP6
-- Aluno (Atleta) e Professor
+- Aluno (Atleta) e Professor(Treinador)
 
 **Regras de negócio associadas:**
 
@@ -294,7 +296,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - CP4
-- Aluno e Professor
+- Atleta e Treinador
 
 **Regras de negócio associadas:**
 
@@ -304,7 +306,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Verificação e validação:**
 
 - **Verificação (Métrica):** 0 exercícios removidos ou dados desatualizados exibidos nas buscas por nome e filtros por fundamento imediatamente após operações de cadastro, edição ou exclusão (100% de consistência dos resultados em ≤ 1,0 s).
-- **Validação (Justificativa):** Elimina a divergência com os Requisitos Funcionais (que não contemplam filtros combinados nem o atributo de materiais) e garante que professores e alunos consultem apenas exercícios ativos e atualizados.
+- **Validação (Justificativa):** Elimina a divergência com os Requisitos Funcionais (que não contemplam filtros combinados nem o atributo de materiais) e garante que o treinador e os atletas vinculados a ele consultem apenas exercícios ativos e atualizados.
 
 **Checklist estruturado:**
 
@@ -323,7 +325,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - CP5, CP8
-- Aluno (Atleta) e Professor
+- Atleta e Treinador
 
 **Regras de negócio associadas:**
 
@@ -340,7 +342,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 - [ ] Os vídeos enviados são armazenados em object storage externo ao contêiner da aplicação, com criptografia em repouso (AES-256) ativa
 - [ ] Nenhum arquivo de vídeo é acessível por URL pública estática (somente via endpoint autenticado ou URL assinada temporária)
-- [ ] Requisições de acesso feitas por usuários sem vínculo ativo aluno-professor são bloqueadas com HTTP 403
+- [ ] Requisições de acesso feitas por usuários sem vínculo ativo atleta-treinador são bloqueadas com HTTP 403
 - [ ] A exclusão da conta ou solicitação do titular remove definitivamente o arquivo do storage em nuvem
 
 ## RNF13 · Limites de Duração e Tamanho no Envio de Vídeos {#rnf13}
@@ -354,7 +356,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - CP5
-- Aluno (Atleta)
+- Atleta
 
 **Regras de negócio associadas:**
 
@@ -372,7 +374,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **Checklist estruturado:**
 
-- [ ] Vídeos com duração superior a 60 segundos são rejeitados com feedback claro ao aluno
+- [ ] Vídeos com duração superior a 60 segundos são rejeitados com feedback claro ao atleta
 - [ ] Arquivos com tamanho superior a 100 MB são bloqueados antes de consumir banda completa de upload
 - [ ] Vídeos gravados em dispositivos móveis no padrão 1080p a 30 fps com até 60 segundos (≤ 100 MB) são enviados e reproduzidos sem falhas
 - [ ] A decisão técnica sobre o teto único (60 s / 100 MB) e o adiamento da duração variável por exercício pós-MVP está registrada e vinculada à RN09
@@ -388,7 +390,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - CP1, CP3
-- Todos os utilizadores (Visitante, Aluno e Treinador)
+- Todos os utilizadores (Atleta e Treinador)
 **Verificação e validação:**
 
 - **Verificação (Métrica):** Testes funcionais e automatizados de interface nos formulários de cadastro, perfil, testes físicos, planejamentos, exercícios e feedbacks comprovando que `100%` dos campos formatáveis aplicam máscara em tempo real durante a digitação, `100%` dos campos obrigatórios exibem indicação visual clara e `0` requisições de submissão são disparadas ao backend enquanto houver campos obrigatórios vazios ou formatos inválidos.
@@ -412,7 +414,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - OE3 - CP5
-- Aluno
+- Atleta
 
 **Regras de negócio associadas:**
 
@@ -442,7 +444,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global / CP8
-- Todos os utilizadores (Visitante, Aluno e Treinador)
+- Todos os utilizadores (Atleta e Treinador)
 **Regras de negócio associadas:**
 
 - [RN15 · Obrigatoriedade de Aceite dos Termos e Privacidade](regras_negocio.md#rn15)
@@ -470,7 +472,7 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 **Origem e perfis:**
 
 - Global
-- Todos os utilizadores (Visitante, Aluno e Treinador)
+- Todos os utilizadores (Atleta e Treinador)
 **Regras de negócio associadas:**
 
 - [RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios](regras_negocio.md#rn13)
