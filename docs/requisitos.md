@@ -47,13 +47,13 @@
 <summary><span class="sj-requirement-id">RF1102</span><span class="sj-requirement-name">Cadastrar treinador</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador se cadastre no sistema com informações: nome, sobrenome, apelido, telefone, senha e email.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador se cadastre no sistema com informações: nome, sobrenome, apelido, telefone, senha e email, mediante o código de ativação definido na implantação. Ao concluir o cadastro, o sistema gera o código do treinador, exibido no perfil dele, que os alunos usam para se cadastrar.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário </p>
 <p id="us02" class="sj-story"><strong>US02</strong> Como treinador, quero cadastrar minha conta de treinador na plataforma, para poder gerenciar meus alunos, prescrever treinos e avaliar os desempenhos dos alunos.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn02">RN02</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us02">US02</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,33</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
@@ -421,7 +421,7 @@
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP3</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn14">RN14</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn14">RN14</a> · <a href="../regras_negocio/#rn23">RN23</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us24">US24</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 3,00</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
@@ -519,13 +519,13 @@
 <summary><span class="sj-requirement-id">RF2413</span><span class="sj-requirement-name">Cadastrar exercício</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador cadastre um exercício na biblioteca de exercícios informando o objetivo do exercício, fundamento e orientações para sua execução.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador cadastre um exercício na biblioteca de exercícios informando o nome, objetivo do exercício, fundamento (obrigatórios) e orientações para sua execução(opcional).</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário </p>
 <p id="us30" class="sj-story"><strong>US30</strong> Como treinador, quero cadastrar um exercício na biblioteca, para usá-los para montar os treinos.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a> · <a href="../regras_negocio/#rn22">RN22</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us30">US30</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 1,75</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
@@ -647,15 +647,16 @@
 <summary><span class="sj-requirement-id">RF2421</span><span class="sj-requirement-name">Consultar exercício da biblioteca</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador consulte os detalhes de um exercício da biblioteca: objetivo do exercício, fundamento, orientações, erros comuns e vídeo base, se possuir.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador consulte os detalhes de um exercício da biblioteca: nome, objetivo do exercício, fundamento, orientações, erros comuns e vídeo base, se possuir.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário </p>
 <p id="us38" class="sj-story"><strong>US38</strong> Como treinador, quero consultar os detalhes de um exercício da biblioteca, para revisar suas especificações técnicas e orientações.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us38">US38</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,52</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2413">RF2413</a></p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
@@ -663,15 +664,16 @@
 <summary><span class="sj-requirement-id">RF2422</span><span class="sj-requirement-name">Editar exercício</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador edite as informações de um exercício cadastrado na biblioteca.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador edite as informações de um exercício cadastrado na biblioteca. Treinos já prescritos mantêm a versão do exercício vigente no momento da prescrição.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário </p>
 <p id="us39" class="sj-story"><strong>US39</strong> Como treinador, quero editar as informações de um exercício cadastrado na biblioteca, para corrigir eventuais erros ou atualizar seus dados.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a> · <a href="../regras_negocio/#rn22">RN22</a> · <a href="../regras_negocio/#rn23">RN23</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us39">US39</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,37</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2413">RF2413</a></p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
