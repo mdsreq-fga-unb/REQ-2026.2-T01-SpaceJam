@@ -89,13 +89,32 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF04 · Acessibilidade Digital {#rnf04}
 
-A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** Global.
+**MVP:** Não aplicáveis ao MVP
 
-**Tratamento registrado para o MVP:** Não aplicáveis ao MVP.
+**Descrição:** A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.
 
-**Pendência de decisão:** a classificação anterior deixa acessibilidade fora do MVP. A classificação foi preservada para revisão, sem retirar as metas já declaradas nem afirmar que essa opção foi confirmada.
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Pendência de decisão:**
+
+- A classificação anterior deixa acessibilidade fora do MVP. A classificação foi preservada para revisão, sem retirar as metas já declaradas nem afirmar que essa opção foi confirmada.
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Auditoria automatizada e inspeção visual das telas principais (via Lighthouse Accessibility / axe DevTools) comprovando relação de contraste `≥ 4.5:1` em `100%` dos textos normais (WCAG 2.1 AA - Critério 1.4.3) e `0` estados críticos (erros, status de treino ou alertas) comunicados exclusivamente por cor (sem ícone, rótulo ou padrão textual complementar).
+- **Validação (Justificativa):** Assegura legibilidade e compreensão inequívoca da interface para usuários com daltonismo ou baixa visão, evitando barreiras visuais na leitura de métricas, feedbacks e status de exercícios.
+
+**Checklist estruturado:**
+
+- [ ] Todos os textos e componentes interativos atendem ao contraste mínimo de 4.5:1 conforme WCAG 2.1 AA (Critério 1.4.3)
+- [ ] Mensagens de erro, validações de formulário e status de execução utilizam ícones ou textos descritivos além da diferenciação por cor
+- [ ] Gráficos, indicadores de progresso e feedbacks visuais permanecem distinguíveis em simulação de daltonismo (protanopia, deuteranopia e tritanopia)
+- [ ] A decisão de escopo (inclusão no MVP ou manutenção no pós-MVP) foi formalmente revisada e confirmada pela equipe
 
 ## RNF05 · Proteção de Dados Pessoais e Direitos do Titular (LGPD) {#rnf05}
 
