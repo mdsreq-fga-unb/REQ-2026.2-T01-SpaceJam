@@ -222,3 +222,146 @@ class ConsultarExercicioTests(APITestCase):
             resposta.status_code, status.HTTP_405_METHOD_NOT_ALLOWED
         )
         self.assertTrue(Exercicio.objects.filter(pk=self.completo.pk).exists())
+
+
+class EditarExercicioTests(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.aluno = Usuario.objects.create_user(
+            username="aluno1",
+            email="aluno1@exemplo.com",
+            password="senha-forte-123",
+            papel="ALUNO",
+            treinador=cls.treinador,
+        )
+        cls.exercicio = Exercicio.objects.create(
+            nome="Passe de peito",
+            objetivo="Melhorar a precisão do passe",
+            fundamento="PASSE",
+            orientacoes="Cotovelos fechados e passo à frente.",
+            criado_por=cls.treinador,
+        )
+        cls.outro = Exercicio.objects.create(
+            nome="Arremesso livre",
+            objetivo="Aumentar o aproveitamento",
+            fundamento="ARREMESSO",
+            criado_por=cls.treinador,
+        )
+        cls.url = reverse("exercicio-detail", args=[cls.exercicio.pk])
+
+    def assert_exercicio_intacto(self):
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.nome, "Passe de peito")
+        self.assertEqual(self.exercicio.objetivo, "Melhorar a precisão do passe")
+        self.assertEqual(self.exercicio.fundamento, "PASSE")
+        self.assertEqual(
+            self.exercicio.orientacoes, "Cotovelos fechados e passo à frente."
+        )
+
+    def test_treinador_edita_e_a_biblioteca_mostra_a_nova_versao(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.patch(
+            self.url, {"nome": "Passe de peito em dupla", "fundamento": "DRIBLE"}
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        consulta = self.client.get(self.url)
+        self.assertEqual(consulta.data["nome"], "Passe de peito em dupla")
+        self.assertEqual(consulta.data["fundamento_nome"], "Drible")
+        self.assertEqual(consulta.data["objetivo"], "Melhorar a precisão do passe")
+
+    def test_edicao_completa_com_put(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.put(
+            self.url,
+            {
+                "nome": "Passe picado",
+                "objetivo": "Passar sob marcação",
+                "fundamento": "PASSE",
+                "orientacoes": "Quicar a dois terços da distância.",
+            },
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.nome, "Passe picado")
+        self.assertEqual(
+            self.exercicio.orientacoes, "Quicar a dois terços da distância."
+        )
+
+    def test_edicao_altera_somente_o_exercicio_editado(self):
+        self.client.force_authenticate(self.treinador)
+        self.client.patch(self.url, {"nome": "Passe de peito em dupla"})
+        self.outro.refresh_from_db()
+        self.assertEqual(self.outro.nome, "Arremesso livre")
+        self.assertEqual(Exercicio.objects.count(), 2)
+
+    def test_apagar_campo_obrigatorio_bloqueia_e_mantem_os_dados(self):
+        self.client.force_authenticate(self.treinador)
+        for campo in ["nome", "objetivo", "fundamento"]:
+            for valor in ["", "   "]:
+                with self.subTest(campo=campo, valor=valor):
+                    resposta = self.client.patch(self.url, {campo: valor})
+                    self.assertEqual(
+                        resposta.status_code, status.HTTP_400_BAD_REQUEST
+                    )
+                    self.assertIn(campo, resposta.data)
+                    self.assert_exercicio_intacto()
+
+    def test_put_sem_campo_obrigatorio_bloqueia_e_mantem_os_dados(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.put(
+            self.url, {"nome": "Passe picado", "fundamento": "PASSE"}
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("objetivo", resposta.data)
+        self.assert_exercicio_intacto()
+
+    def test_fundamento_fora_da_lista_e_recusado(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.patch(self.url, {"fundamento": "Enterrada"})
+        self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("fundamento", resposta.data)
+        self.assert_exercicio_intacto()
+
+    def test_orientacoes_pode_ser_apagada(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.patch(self.url, {"orientacoes": ""})
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.orientacoes, "")
+
+    def test_autoria_e_data_de_criacao_nao_mudam(self):
+        self.client.force_authenticate(self.treinador)
+        criado_em = self.exercicio.criado_em
+        resposta = self.client.patch(
+            self.url, {"nome": "Passe picado", "criado_por": self.aluno.pk}
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.criado_por, self.treinador)
+        self.assertEqual(self.exercicio.criado_em, criado_em)
+        self.assertGreaterEqual(self.exercicio.atualizado_em, criado_em)
+
+    def test_aluno_recebe_403(self):
+        self.client.force_authenticate(self.aluno)
+        for metodo in [self.client.patch, self.client.put]:
+            with self.subTest(metodo=metodo.__name__):
+                resposta = metodo(self.url, {"nome": "Invadido"})
+                self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+                self.assert_exercicio_intacto()
+
+    def test_sem_login_recebe_401(self):
+        resposta = self.client.patch(self.url, {"nome": "Invadido"})
+        self.assertEqual(resposta.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assert_exercicio_intacto()
+
+    def test_exercicio_inexistente_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+        url = reverse("exercicio-detail", args=[999999])
+        resposta = self.client.patch(url, {"nome": "Fantasma"})
+        self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)

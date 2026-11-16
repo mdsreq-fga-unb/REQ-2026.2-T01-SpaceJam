@@ -13,6 +13,7 @@ class ExercicioViewSet(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
     viewsets.GenericViewSet,
     ):
     queryset = Exercicio.objects.all()

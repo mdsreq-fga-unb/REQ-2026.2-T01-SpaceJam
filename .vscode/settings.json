@@ -1,4 +1,5 @@
 {
     "python.terminal.useEnvFile": true,
-    "postman.settings.dotenv-detection-notification-visibility": false
+    "postman.settings.dotenv-detection-notification-visibility": false,
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }
