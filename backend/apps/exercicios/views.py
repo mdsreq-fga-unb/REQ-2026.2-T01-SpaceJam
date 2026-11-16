@@ -9,7 +9,12 @@ from .models import Exercicio, Fundamento
 from .serializers import ExercicioSerializer
 
 
-class ExercicioViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+class ExercicioViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
+    ):
     queryset = Exercicio.objects.all()
     serializer_class = ExercicioSerializer
     permission_classes = [IsAuthenticated, IsTreinador]
