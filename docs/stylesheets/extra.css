@@ -1756,20 +1756,7 @@
 }
 .sj-table-hint[hidden] { display: none; }
 
-/* O retorno ao topo fica fora da faixa dos títulos também no computador. */
-.md-top {
-  top: auto !important;
-  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-  right: 1.25rem;
-  left: auto;
-  margin: 0;
-  transform: none;
-}
-.md-top:focus-visible { outline: 3px solid var(--sj-nav-accent); outline-offset: 3px; }
-
 @media screen and (max-width: 40rem) {
-  .md-top { top: auto !important; bottom: calc(.85rem + env(safe-area-inset-bottom, 0px)); right: .85rem; left: auto; width: 2.25rem; height: 2.25rem; margin: 0; padding: .55rem; transform: none; font-size: 0; }
-  .md-top svg { display: block; width: 1.15rem; height: 1.15rem; margin: 0; }
   .md-typeset table.sj-checklist-table { display: block; min-width: 0; width: 100%; }
   .md-typeset table.sj-checklist-table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .md-typeset table.sj-checklist-table tbody { display: block; }
