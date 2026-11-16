@@ -1,25 +1,138 @@
+from datetime import date, timedelta
+
+from django.conf import settings
 from rest_framework.test import APITestCase
 
 from .models import Usuario
 
 
-class LoginTests(APITestCase):
+class ContasUS01aUS05Tests(APITestCase):
     def setUp(self):
-        Usuario.objects.create_user(username="joaozinho", password="SenhaForte#2026", papel="ALUNO")
+        self.dados_treinador = {
+            "codigo_ativacao": settings.COACH_ACTIVATION_CODE,
+            "nome": "Carlos",
+            "sobrenome": "Silva",
+            "apelido": "coach_carlos",
+            "email": "carlos@basquete.com",
+            "telefone": "61999990000",
+            "senha": "SenhaForte#2026",
+            "aceite_termos": True,
+        }
 
-    def test_login_por_apelido_retorna_token(self):
-        r = self.client.post("/api/auth/login/", {"username": "joaozinho", "password": "SenhaForte#2026"})
-        self.assertEqual(r.status_code, 200)
-        self.assertIn("access", r.data)
+    # --- US02: Cadastrar Treinador ---
+    def test_us02_cadastrar_treinador_valido_e_bloquear_segundo_treinador(self):
+        r = self.client.post("/api/auth/cadastro/treinador/", self.dados_treinador, format="json")
+        self.assertEqual(r.status_code, 201)
+        self.assertEqual(r.data["papel"], "TREINADOR")
+        self.assertTrue(r.data["codigo_convite"].startswith("TRN-"))
 
-    def test_me_exige_login(self):
-        self.assertEqual(self.client.get("/api/auth/me/").status_code, 401)
+        # CA03 / RN01: Não permite cadastrar segundo treinador
+        segundo = {**self.dados_treinador, "apelido": "outro_coach", "email": "outro@basquete.com"}
+        r2 = self.client.post("/api/auth/cadastro/treinador/", segundo, format="json")
+        self.assertEqual(r2.status_code, 400)
 
-    def test_me_retorna_papel(self):
-        token = self.client.post(
-            "/api/auth/login/", {"username": "joaozinho", "password": "SenhaForte#2026"}
-        ).data["access"]
-        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
-        r = self.client.get("/api/auth/me/")
+    def test_us02_codigo_ativacao_invalido(self):
+        invalido = {**self.dados_treinador, "codigo_ativacao": "ERRADO"}
+        r = self.client.post("/api/auth/cadastro/treinador/", invalido, format="json")
+        self.assertEqual(r.status_code, 400)
+
+    # --- US01: Cadastrar Aluno ---
+    def _criar_treinador(self):
+        r = self.client.post("/api/auth/cadastro/treinador/", self.dados_treinador, format="json")
+        return r.data
+
+    def _payload_aluno(self, codigo_convite, maior_idade=True, consentimento=False):
+        nasc = date.today() - timedelta(days=365 * 20 if maior_idade else 365 * 15)
+        return {
+            "codigo_treinador": codigo_convite,
+            "nome": "Lucas",
+            "sobrenome": "Oliveira",
+            "apelido": "lucao10",
+            "email": "lucas@aluno.com",
+            "telefone": "61988887777",
+            "data_nascimento": nasc.isoformat(),
+            "altura": "1.88",
+            "peso": "82.50",
+            "envergadura": "1.95",
+            "frequencia_semanal": 4,
+            "objetivos": "Melhorar arremesso de 3 pontos",
+            "senha": "SenhaAluno#2026",
+            "aceite_termos": True,
+            "consentimento_responsavel": consentimento,
+        }
+
+    def test_us01_cadastrar_aluno_maior_de_idade_com_vinculo(self):
+        treinador = self._criar_treinador()
+        payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=True)
+        r = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
+        self.assertEqual(r.status_code, 201)
         self.assertEqual(r.data["papel"], "ALUNO")
-        self.assertEqual(r.data["apelido"], "joaozinho")
+        self.assertEqual(r.data["treinador"], treinador["id"])
+
+    def test_us01_bloquear_menor_sem_consentimento_responsavel(self):
+        treinador = self._criar_treinador()
+        payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=False, consentimento=False)
+        r = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
+        self.assertEqual(r.status_code, 400)
+        self.assertIn("consentimento_responsavel", r.data)
+
+        # Com consentimento do responsável deve permitir
+        payload["consentimento_responsavel"] = True
+        r_ok = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
+        self.assertEqual(r_ok.status_code, 201)
+
+    # --- US04: Logar Aluno ---
+    def test_us04_login_aluno_valido_e_invalido(self):
+        treinador = self._criar_treinador()
+        self.client.post("/api/auth/cadastro/aluno/", self._payload_aluno(treinador["codigo_convite"]), format="json")
+
+        r_ok = self.client.post(
+            "/api/auth/login/aluno/", {"apelido": "lucao10", "senha": "SenhaAluno#2026"}, format="json"
+        )
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertIn("access", r_ok.data)
+
+        # CA02: Mensagem exata sem diferenciar apelido ou senha
+        r_erro = self.client.post(
+            "/api/auth/login/aluno/", {"apelido": "lucao10", "senha": "errada"}, format="json"
+        )
+        self.assertEqual(r_erro.status_code, 401)
+        self.assertEqual(r_erro.data["detail"], "Apelido ou senha inválidos")
+
+    # --- US05: Logar Treinador ---
+    def test_us05_login_treinador_por_email_e_mensagem_erro(self):
+        self._criar_treinador()
+
+        r_ok = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "SenhaForte#2026"},
+            format="json",
+        )
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertIn("access", r_ok.data)
+
+        # CA02: Mensagem exata sem diferenciar e-mail ou senha
+        r_erro = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "errada"},
+            format="json",
+        )
+        self.assertEqual(r_erro.status_code, 401)
+        self.assertEqual(r_erro.data["detail"], "E-mail ou senha inválidos")
+
+    # --- US03: Deslogar da Conta ---
+    def test_us03_logout_invalida_refresh_token(self):
+        self._criar_treinador()
+        login = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login['access']}")
+        r_logout = self.client.post("/api/auth/logout/", {"refresh": login["refresh"]}, format="json")
+        self.assertEqual(r_logout.status_code, 200)
+
+        # Tentar renovar token após logout deve retornar 401 (CA01)
+        r_refresh = self.client.post("/api/auth/refresh/", {"refresh": login["refresh"]}, format="json")
+        self.assertEqual(r_refresh.status_code, 401)
