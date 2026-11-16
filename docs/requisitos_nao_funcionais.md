@@ -46,13 +46,38 @@ A interface web deve garantir acessibilidade visual focada em daltonismo e baixa
 
 **Pendência de decisão:** a classificação anterior deixa acessibilidade fora do MVP. A classificação foi preservada para revisão, sem retirar as metas já declaradas nem afirmar que essa opção foi confirmada.
 
-## RNF05 · Proteção e Privacidade de Dados - Conformidade parcial com LGPD {#rnf05}
+## RNF05 · Proteção de Dados Pessoais e Direitos do Titular (LGPD) {#rnf05}
 
-O sistema deve garantir a privacidade e proteção dos dados dos usuários em conformidade parcial com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º.
+**Categoria:** Segurança (Privacidade / LGPD)
 
-**Categoria registrada:** Confiabilidade. **Escopo:** Global / CP8.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** O sistema deve garantir a privacidade e a proteção dos dados dos usuários em conformidade com a LGPD (Lei nº 13.709/2018), com foco nos artigos 5º, 14º, 18º e 46º, na qual esses dados devem ser restritos exclusivamente ao mínimo necessário para a finalidade explícita de acompanhamento esportivo (cadastro, métricas e vídeos de execução), com acesso limitado ao próprio titular e ao seu professor vinculado, retenção restrita ao período em que a conta permanecer ativa e eliminação definitiva e irreversível após a conclusão da análise pelo professor, mediante encerramento da conta ou solicitação do titular.
+
+**Origem e perfis:**
+
+- Global / CP8
+- Aluno e Professor
+
+**Regras de negócio associadas:**
+
+- [RN02 · Vínculo Obrigatório de Atleta por Convite/Código](regras_negocio.md#rn02)
+- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+- [RN04 · Segregação de Edição Cadastral e Clínica](regras_negocio.md#rn04)
+- [RN05 · Política de Exclusão de Conta e Dados (LGPD)](regras_negocio.md#rn05)
+- [RN16 · Consentimento Legal para Atletas Menores de Idade](regras_negocio.md#rn16)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** 100% dos dados pessoais e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio (HTTP 403) para usuários sem vínculo; após a conclusão da análise pelo professor e solicitação do titular/encerramento, os registros e arquivos são removidos definitivamente do banco e do storage, com protocolo gerado em ≤ 500 ms.
+- **Validação (Justificativa):** Traduz a conformidade com a LGPD em critérios verificáveis de minimização, finalidade explícita, controle de acesso, retenção e direitos do titular, respeitando a integridade do processo de avaliação pedagógica.
+
+**Checklist estruturado:**
+
+- [ ] A coleta restringe-se aos dados estritamente necessários ao acompanhamento esportivo, com finalidade explícita
+- [ ] Apenas o aluno titular e o professor vinculado possuem acesso aos dados e vídeos de execução
+- [ ] Os dados pessoais são mantidos apenas enquanto a conta do usuário permanecer ativa
+- [ ] Após a conclusão da análise pelo professor, o encerramento da conta ou solicitação do titular resulta na eliminação definitiva dos registros e vídeos
 
 ## RNF06 · Compatibilidade de Vídeo {#rnf06}
 
