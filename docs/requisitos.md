@@ -31,15 +31,16 @@
 <summary><span class="sj-requirement-id">RF1101</span><span class="sj-requirement-name">Cadastrar aluno</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno se cadastre no sistema, com informações: dados pessoais como nome, sobrenome, apelido, contato, altura, peso, envergadura, senha, frequência da realização da atividade física e objetivos do aluno.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno se cadastre informando o código do treinador e os dados: nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência semanal de atividade física, objetivos e senha.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário </p>
 <p id="us01" class="sj-story"><strong>US01</strong> Como aluno, quero cadastrar um perfil validando o código do meu treinador, para ter acesso aos meus treinos e ingressar na carteira dele.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Aluno</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn02">RN02</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn16">RN16</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn02">RN02</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn16">RN16</a> · <a href="../regras_negocio/#rn24">RN24</a> · <a href="../regras_negocio/#rn25">RN25</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us01">US01</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,33</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1102">RF1102</a> (código do treinador)</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
@@ -53,7 +54,7 @@
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn02">RN02</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn02">RN02</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn24">RN24</a> · <a href="../regras_negocio/#rn25">RN25</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us02">US02</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,33</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
@@ -85,9 +86,10 @@
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Aluno</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn24">RN24</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us04">US04</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 1,67</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1101">RF1101</a></p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
@@ -101,9 +103,10 @@
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn24">RN24</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us05">US05</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 1,67</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1102">RF1102</a></p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 

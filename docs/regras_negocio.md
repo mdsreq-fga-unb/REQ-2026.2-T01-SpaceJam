@@ -53,9 +53,9 @@ O aluno pode substituir ou excluir um vídeo de execução enviado exclusivament
 Somente o treinador pode registrar, editar ou excluir o feedback (textual ou anotado na linha do tempo do vídeo) dado a um aluno. O aluno pode apenas consultá-lo.
  
 ## RN12 · Política de Recuperação de Senha {#rn12}
- 
-A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova credencial atenda aos critérios mínimos de segurança da plataforma.
- 
+
+A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova senha atenda à política de senha da [RN24](#rn24).
+
 ## RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios {#rn13}
  
 A exclusão de um exercício da biblioteca ou de um planejamento de treino deve preservar intactos o histórico e os registros de treinos já realizados pelos atletas, impedindo apenas sua utilização em novas prescrições.
@@ -99,4 +99,11 @@ Todo exercício da biblioteca deve ter nome, fundamento e objetivo preenchidos. 
 ## RN23 · Preservação do Exercício Prescrito {#rn23}
  
 Ao ser incluído em um treino, o exercício é registrado no treino com os dados vigentes naquele momento. A edição posterior do exercício na biblioteca vale apenas para novas prescrições e não altera treinos já prescritos, em andamento ou concluídos.
- 
+
+## RN24 · Credenciais e Unicidade de Identificadores {#rn24}
+
+A senha de qualquer usuário deve ter no mínimo 6 caracteres. O aluno entra com apelido e senha; o treinador entra com e-mail e senha. O apelido e o e-mail são únicos no sistema. Em caso de falha no login, a mensagem não informa qual dos dois dados está incorreto.
+
+## RN25 · Dados Obrigatórios de Cadastro {#rn25}
+
+O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura (cm), peso (kg), envergadura (cm), frequência de atividade física (dias por semana, de 1 a 7), objetivos e senha. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos ([RN15](#rn15)) é obrigatório.
