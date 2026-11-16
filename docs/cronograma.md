@@ -2,81 +2,78 @@
 
 O cronograma do **Space Jam** organiza a evolução do produto em ciclos curtos. A equipe adotou uma **abordagem híbrida**, com ciclo de vida **iterativo e incremental** e processo **RAD**. O planejamento considera o período de **07/09/2026 a 08/12/2026**.
 
-Os ciclos representam períodos de trabalho, e não sprints do Scrum. Em cada período, a equipe pode trabalhar com requisitos, protótipos, construção e validação em intensidades diferentes. A ordem das funcionalidades futuras ainda poderá mudar depois da definição e priorização do MVP.
+Os ciclos representam períodos de trabalho, e não sprints do Scrum. Em cada período, a equipe pode trabalhar com requisitos, protótipos, construção e validação em intensidades diferentes.
+
+O escopo do MVP é o definido na página do MVP (matriz MoSCoW, com a linha de corte). Este cronograma distribui esse escopo nos ciclos e registra o que foi realizado. Quando o escopo mudar, a alteração é feita primeiro na página do MVP e depois refletida aqui, sem apagar o histórico das decisões anteriores.
 
 ## 6.1 Ciclos realizados e em andamento
 
-Os primeiros ciclos registram o trabalho que de fato ocorreu, em vez de apresentar funcionalidades ainda não implementadas.
+Os ciclos abaixo registram o trabalho que de fato ocorreu, em vez de apresentar funcionalidades ainda não implementadas.
 
 | Ciclo | Período | Situação | Atividade RAD predominante | Trabalho realizado | Evidência ou resultado | Retorno do cliente e revisão |
 |---|---|---|---|---|---|---|
 | C1 | 07/09 a 13/09 | Concluído | Planejamento de Requisitos | Revisão da visão inicial do produto e análise dos pontos que precisavam de correção ou confirmação com o cliente | Artefatos da visão revisados no Pages, com histórico registrado em [Cenário Atual](cenario_atual.md), [Solução Proposta](solucao.md) e [Intervenção Social](intervencao_social.md) | Os pontos que precisavam de correção ou confirmação com o cliente levaram à conversa de diagnóstico com Lucas, realizada no C2 |
 | C2 | 14/09 a 20/09 | Concluído | Planejamento de Requisitos | Alinhamento do processo RAD, preparação e realização da conversa de diagnóstico com Lucas (17/09, pelo Teams) e início do levantamento dos requisitos | Tópico de [Engenharia de Requisitos](engenharia_requisitos.md) reorganizado; ata de 17/09 registrada na página de [Reuniões](reunioes.md); lista inicial de RFs e RNFs | Lucas reconheceu o valor de centralizar as informações dos atletas, descreveu o fluxo que liga exercício, vídeo-base, vídeo de execução e feedback e recomendou começar pelo funcionamento básico. A equipe passou a priorizar o básico e a manter essa associação. Os pontos a esclarecer (campos de cadastro, permissões, formato das correções e cuidados com dados e vídeos) seguiram para o C3 |
 | C3 | 21/09 a 27/09 | Concluído com pendências | Planejamento de Requisitos | Apresentação dos requisitos a Lucas, avaliação do valor de negócio em escala de 1 a 5 e esclarecimento dos fluxos de cadastro, treinos, vídeos e feedback (reunião de 26/09) | Ata de 26/09, com notas de valor de negócio revisadas e encaminhamentos | Lucas pediu que o atleta possa fazer o próprio cadastro, com autorização do treinador, e que o perfil inclua a frequência de atividade física. Esclareceu que os testes físicos são presenciais e apenas têm os resultados registrados no sistema, que o atleta pode registrar conclusão ou dificuldades sem enviar vídeo e que a duração do vídeo depende do exercício (30 segundos foi só um exemplo). As observações entram na revisão dos requisitos. Pendências: avaliação dos RNFs, fluxo de autorização do cadastro e recorte do MVP |
+| C4 | 12/10 a 18/10 | Concluído | Design do Usuário | Protótipo de baixa fidelidade do fluxo principal e apresentação ao Lucas, na semana de 11/10 | Protótipo de baixa fidelidade (link a inserir) | Lucas aprovou o protótipo, sem ajustes pendentes |
+| C5 | 19/10 a 25/10 | Não executado conforme o planejado | Planejamento de Requisitos | A base técnica prevista (ambiente, modelo de dados e acesso) não foi iniciada. O período foi usado para ajustar a documentação a partir dos feedbacks do professor | Ajustes na documentação (link a inserir) | Sem validação com o cliente neste ciclo. A base técnica foi replanejada para o C8 |
+| C6 | 26/10 a 01/11 | Concluído | Design do Usuário | Protótipo de alta fidelidade e apresentação ao Lucas em 29/10; correção das issues abertas pelo professor no repositório | Protótipo de alta fidelidade e issues corrigidas (links a inserir) | Lucas aprovou tudo e disse que o protótipo estava como ele imaginava. Os testes físicos saíram do MVP (matriz MoSCoW), e o cadastro previsto para este ciclo foi replanejado para o C8 |
+| C7 | 02/11 a 08/11 | Concluído | Planejamento de Requisitos | Melhoria da documentação e da rastreabilidade: hiperlinks, tabelas de requisitos mais enxutas, consulta de entregas e condições dos requisitos, evidências rastreáveis, evolução com justificativa, reorganização do menu do Pages e correção das issues do professor | Páginas de requisitos, RNFs e backlog atualizadas (links a inserir) | Sem validação com o cliente neste ciclo. A revisão veio do professor e foi tratada por issues |
+| C8 | 09/11 a 15/11 | Em andamento | Construção | Ambiente de desenvolvimento do back-end e do front-end (Docker, Django, ReactJS e Postgres), escrita das user stories e organização dos RFs em iterações | Ambiente configurado e quadro de iterações (links a inserir) | A registrar ao fim do ciclo |
 
-Os ciclos C4 e C5, previstos para 28/09 a 11/10, não chegaram a ser executados nessas datas e foram replanejados para as semanas seguintes (veja o registro do replanejamento no item 6.2). Nesse intervalo, a equipe revisou a priorização com Lucas na reunião de 08/10 (ata registrada na página de Reuniões) e planejou a demonstração inicial do protótipo, prevista para 11/10, com horário a combinar.
-
-Retorno de Lucas na reunião de 08/10, que alimenta o C4:
+Retorno de Lucas na reunião de 08/10 (ata registrada na página de Reuniões):
 
 - destacou o uso pelo celular durante os exercícios (Chrome e Safari);
 - considerou a explicação do exercício e seus pontos de atenção mais importante do que um título para cada vídeo;
 - apontou o envio de vídeos e a correção do treinador como diferencial do produto;
 - discutiu cuidados com a imagem e os vídeos dos atletas;
 - aceitou o esquema visual apresentado como possibilidade, citando vermelho escuro e preto como alternativa;
-- priorização discutida: RF04812 com valor 5; RF02306 e RF04804 com valor 3; proposta de reduzir RF02305 para 3 e de retirar RF01211 do recorte inicial, ainda a confirmar.
+- discutiu a priorização: consulta de resultados de testes físicos pelo treinador (RF4811) com valor 5; status do treino (RF2306) e próprios testes (RF4803) com valor 3; propostas de reduzir a comparação de treinos (RF2305) para 3 e retirar a edição de dificuldade (RF1214) do recorte inicial.
 
-Pendências desta reunião: consolidar a priorização, definir critérios de aceitação de status, feedback e vínculo entre contas, e esclarecer regras de acesso, visibilidade e consentimento.
+A priorização foi depois consolidada na matriz MoSCoW da página do MVP, que prevalece sobre os valores dessa ata. Por exemplo, os testes físicos ficaram fora do MVP e a edição de dificuldade ficou dentro.
 
-## 6.2 Planejamento dos próximos ciclos
+## 6.2 Planejamento dos ciclos C8 a C12 {#62-planejamento-dos-proximos-ciclos}
 
-Os ciclos seguintes representam uma previsão inicial. A sequência poderá ser ajustada depois da revisão dos RFs, RNFs, dependências e prioridades do MVP.
+!!! note "Leitura do planejamento"
+    Os RFs previstos nos ciclos abaixo são os do MVP definido na página do MVP. Os testes físicos (RF1216, RF1217, RF4803 e RF4811) estão fora do MVP. O vínculo entre atleta e treinador é feito por **código de convite** (RN11 e US01a). Os períodos encerrados só contam como ciclos concluídos quando houver evidência registrada em 6.1.
 
 Em cada ciclo, a equipe percorre as quatro etapas do RAD. O que muda de um ciclo para outro é a intensidade de cada etapa: o texto em **negrito** indica a atividade predominante do ciclo.
 
 | Ciclo | Período | Objetivo | Planejamento de Requisitos | Design do Usuário | Construção | Cutover | Resultado esperado |
 |---|---|---|---|---|---|---|---|
-| C4 | 12/10 a 18/10 | Projetar o fluxo principal entre treinador e atleta e refiná-lo com o retorno do cliente | Registro do retorno da demonstração inicial, consolidação da priorização do MVP, esclarecimento das ambiguidades dos requisitos e revisão dos requisitos ligados ao fluxo treinador–atleta | **Protótipo navegável do acompanhamento do atleta, da organização do treino e da consulta das orientações, refinado com o retorno de Lucas (apresentação do feedback e esquema visual)** | Preparação técnica para o C5 (ambiente e modelo de dados) | Definição do ambiente de homologação que será usado a partir do C5 | Protótipo navegável do acompanhamento do atleta, organização do treino e consulta das orientações, ajustado conforme o retorno do cliente |
-| C5 | 19/10 a 25/10 | Preparar a base técnica e o acesso ao sistema | Revisão dos requisitos de acesso e permissões | Ajuste do fluxo de acesso conforme o protótipo avaliado | **Ambiente integrado, modelo inicial de dados e primeiro fluxo de acesso, funcionando no celular (Chrome e Safari)** | Primeira disponibilização do acesso em homologação | Ambiente integrado, modelo inicial de dados e primeiro fluxo de acesso necessário ao MVP |
-| C6 | 26/10 a 01/11 | Implementar o cadastro e o acompanhamento básico dos atletas | Detalhamento do fluxo de autorização do cadastro, das permissões de edição e dos campos do perfil, incluindo a frequência de atividade física | **Protótipo do cadastro pelo atleta com autorização do treinador, do perfil e do registro dos testes físicos** | **Cadastro e consulta dos dados esportivos, vínculo entre atleta e treinador (por aceite ou código, a definir) e registro dos resultados dos testes físicos feitos presencialmente** | Liberação em homologação para validação do fluxo com o treinador | Cadastro e consulta dos dados esportivos, perfil com frequência de atividade física e registro dos testes físicos, com consulta dos resultados pelo treinador, conforme o recorte do MVP |
-| C7 | 02/11 a 08/11 | Organizar exercícios e planos de treino | Definição dos dados do exercício (explicação e pontos de atenção) e dos planos de treino | **Protótipo do cadastro de exercícios e da montagem de treinos** | **Fluxo para cadastrar exercícios com explicação e pontos de atenção, montar treinos e associá-los aos atletas** | Liberação em homologação para demonstração da rotina de montagem de treino | Fluxo para cadastrar exercícios, montar treinos e associá-los aos atletas |
-| C8 | 09/11 a 15/11 | Disponibilizar o treino para o atleta | Definição do registro de execução (conclusão, dificuldades e relato do atleta, distinto do feedback do treinador) e dos estados do treino | **Protótipo da interface do atleta para uso pelo celular durante o exercício** | **Interface para consultar as orientações do exercício, registrar a conclusão ou as dificuldades e acompanhar o status do treino** | Liberação em homologação para teste de usabilidade treinador–atleta, com a opinião dos atletas colhida por Lucas | Interface para consultar as orientações e registrar a execução do treino, com status e relato do atleta, conforme o recorte do MVP |
-| C9 | 16/11 a 22/11 | Construir o fluxo de vídeo e feedback técnico, com privacidade das mídias | Definição da duração dos vídeos por exercício, do formato e das regras de acesso, visibilidade e consentimento para imagem e vídeos | **Protótipo do envio do vídeo de execução e do retorno do treinador (correções ou repetições), com as telas de consentimento** | **Vídeo-base e vídeo de execução (envio opcional) associados ao exercício, feedback do treinador e controles de acesso e visibilidade dos vídeos** | Liberação em homologação para validação do fluxo completo com o cliente | Vídeos associados ao exercício, feedback do treinador, controles de acesso e visibilidade, termos de consentimento e revisão dos RNFs de segurança e LGPD relacionados às mídias |
-| C10 | 23/11 a 29/11 | Integrar e homologar o MVP | Fechamento dos critérios de aceitação, revisão final dos RNFs (incluindo segurança e LGPD) e das correções prioritárias | Ajustes de usabilidade a partir dos testes, inclusive no celular | **Integração dos fluxos do MVP, consolidação da privacidade e correções prioritárias** | **Preparação do ambiente e homologação assistida com o treinador** | Fluxos do MVP integrados, privacidade e permissões consolidadas, correções prioritárias, ambiente de homologação e resultados dos testes |
-| C11 | 30/11 a 08/12 | Disponibilizar a versão acordada e acompanhar o uso inicial | Registro das limitações conhecidas e das evoluções futuras (como ranking, destaques e recompensas, citados por Lucas) | Ajustes finais de tela, se necessário | Correções críticas encontradas na homologação | **Implantação, documentação mínima de uso e monitoramento** | Implantação, documentação mínima de uso, monitoramento e registro das limitações conhecidas |
+| C8 | 09/11 a 15/11 | Preparar a base técnica, o acesso e a biblioteca de exercícios | Escrita das user stories e organização dos RFs do MVP em iterações | Reaproveitamento do protótipo de alta fidelidade aprovado em 29/10 | **Ambiente integrado, cadastro e login, e biblioteca de exercícios (cadastro, edição e consulta)** | Definição do ambiente de homologação usado a partir do C9 | Ambiente funcionando, acesso ao sistema e biblioteca de exercícios, funcionando no celular (Chrome e Safari) |
+| C9 | 16/11 a 22/11 | Construir perfil, acompanhamento dos alunos e início do planejamento de treinos | **Fechamento das decisões de privacidade, consentimento e acesso aos vídeos e dos critérios de aceitação dos RFs do ciclo** | Telas de termos de uso, política de privacidade e aviso de cookies, conforme o protótipo aprovado | **Perfil do aluno, consulta de alunos acompanhados, planejamento e criação de treino com exercícios** | Liberação em homologação para o Lucas validar o fluxo de acompanhamento e de criação de treino | Perfil, acompanhamento e criação de treinos funcionando, com aceite dos termos e decisões de privacidade registradas |
+| C10 | 23/11 a 29/11 | Disponibilizar o treino ao atleta e construir o fluxo de vídeo e feedback | Revisão dos critérios de aceitação do fluxo de vídeo e feedback com as decisões fechadas no C9 | Ajustes de usabilidade no celular das telas de treino e de envio de vídeo | **Execução do treino pelo atleta, envio e consulta de vídeos e feedback do treinador** | Liberação em homologação para validação do fluxo completo (vídeo e feedback) com o Lucas | Fluxo exercício, vídeo e feedback privado funcionando, com status e conclusão do treino |
+| C11 | 30/11 a 06/12 | Concluir os complementos do MVP e tratar as correções | Detalhamento dos itens restantes e priorização das correções registradas nos ciclos anteriores | Ajustes finais de tela | **Dificuldade do treino, históricos, feedback recebido pelo atleta, notificação, recuperação de senha, exclusão de dados e correções** | Liberação do MVP completo em homologação, para teste de usabilidade treinador e atleta, com a opinião dos atletas colhida por Lucas | MVP completo em homologação, com correções dos ciclos anteriores |
+| C12 | 07/12 a 08/12 | Homologar e implantar a versão acordada | Registro das limitações conhecidas e das evoluções futuras (como ranking, destaques e recompensas, citados por Lucas) | Ajustes finais de tela, se necessário | Correções críticas encontradas na homologação | **Homologação assistida com o treinador, implantação, documentação mínima de uso e monitoramento inicial** | Versão implantada, documentação mínima de uso e registro das limitações conhecidas |
 
-### Registro do replanejamento (reuniões de 17/09, 26/09 e 08/10)
+### 6.2.1 Registro do replanejamento
 
-Os ciclos C4 e C5 não foram executados nas datas previstas (28/09 a 11/10): o período foi ocupado pela revisão da priorização e pelo planejamento da demonstração ao cliente. A equipe manteve o conteúdo dos ciclos e deslocou o calendário, preservando a data final do projeto (08/12/2026). Para isso, o cronograma passou de 12 para 11 ciclos: a privacidade deixou de ter ciclo próprio e foi incorporada ao fluxo de vídeo e à homologação.
+A previsão registrada em 12/10 foi atualizada com o que de fato ocorreu e com a redistribuição dos RFs. A data final do projeto (08/12/2026) foi mantida, e o cronograma passou a ter 12 ciclos (C12 é a homologação e implantação).
 
-| Item | Ciclo e período anteriores | Novo ciclo e período | Motivo |
-|---|---|---|---|
-| Protótipo navegável do fluxo principal | C4 (28/09 a 04/10) | C4 (12/10 a 18/10) | Ciclo não executado na data prevista; o período foi dedicado à priorização e ao planejamento da demonstração ao cliente |
-| Base técnica e acesso | C5 (05/10 a 11/10) | C5 (19/10 a 25/10) | Ciclo não executado na data prevista, pelo mesmo motivo |
-| Cadastro e acompanhamento básico dos atletas | C6 (12/10 a 18/10) | C6 (26/10 a 01/11) | Deslocamento de duas semanas; inclui os pedidos de 26/09 (cadastro com autorização do treinador e frequência de atividade física) |
-| Exercícios e planos de treino | C7 (19/10 a 25/10) | C7 (02/11 a 08/11) | Deslocamento de duas semanas |
-| Treino disponibilizado ao atleta | C8 (26/10 a 01/11) | C8 (09/11 a 15/11) | Deslocamento de duas semanas; inclui o relato e o registro de dificuldades sem vídeo |
-| Vídeo e feedback técnico | C9 (02/11 a 08/11) | C9 (16/11 a 22/11) | Deslocamento de duas semanas; passa a incluir a privacidade das mídias |
-| Privacidade, consentimento e proteção dos dados | C10 (09/11 a 15/11) | C9 (mídias) e C10 (consolidação) | O calendário restante comporta oito ciclos para nove itens. As regras de acesso aos vídeos devem ser definidas junto com o fluxo de vídeo (Lucas indicou cuidado com a imagem dos atletas), e a revisão geral fica junto da homologação |
-| Integração e homologação do MVP | C11 (16/11 a 22/11) | C10 (23/11 a 29/11) | Deslocamento de uma semana |
-| Implantação e acompanhamento inicial | C12 (23/11 a 08/12) | C11 (30/11 a 08/12) | Último ciclo, mantendo a data final do projeto |
+| Previsão de 12/10 | O que aconteceu ou novo plano | Motivo |
+|---|---|---|
+| C4 (12/10 a 18/10): protótipo navegável do fluxo principal | Concluído com protótipo de baixa fidelidade, aprovado pelo Lucas | Ciclo executado |
+| C5 (19/10 a 25/10): base técnica e acesso | Não executado; período usado para ajustar a documentação. A base técnica passou para o C8 | A equipe ficou sem direção por causa dos feedbacks do professor e priorizou a documentação |
+| C6 (26/10 a 01/11): cadastro, perfil e testes físicos | Protótipo de alta fidelidade aprovado em 29/10; cadastro passou para o C8; testes físicos saíram do MVP | Matriz MoSCoW da página do MVP |
+| C7 (02/11 a 08/11): exercícios e planos de treino | Ciclo de documentação e rastreabilidade; exercícios passaram para os C8 e C9; planos de treino para o C9 | Correção das issues e melhoria da rastreabilidade |
+| C8 (09/11 a 15/11): treino disponibilizado ao atleta | Ambiente, acesso e biblioteca de exercícios; o treino do atleta passou para o C10 | A base técnica ainda não existia |
+| C9 (16/11 a 22/11): vídeo e feedback técnico | Perfil, acompanhamento, planejamento e decisões de privacidade; vídeo e feedback passaram para o C10 | As decisões de privacidade e consentimento precisam preceder o fluxo de vídeo |
+| C10 (23/11 a 29/11): integração e homologação | Vídeo e feedback, execução do treino | Redistribuição dos RFs |
+| C11 (30/11 a 08/12): implantação | Complementos do MVP e correções (30/11 a 06/12) | Redistribuição dos RFs |
+| (não previsto) | C12 (07/12 a 08/12): homologação assistida e implantação | Manter a data final do projeto |
 
-### Verificação, validação e retorno do cliente por ciclo
+### 6.2.2 Verificação, validação e retorno do cliente por ciclo
 
 Cada ciclo termina com uma avaliação. O retorno do cliente pode gerar uma revisão que volta ao Planejamento de Requisitos ou ao Design do Usuário do ciclo seguinte.
 
 | Ciclo | Verificação e validação | Retorno esperado do cliente | Revisão que o retorno pode gerar |
 |---|---|---|---|
-| C4 | Avaliação do protótipo com Lucas antes da implementação e registro dos ajustes solicitados | Ajustes solicitados por Lucas no protótipo | Protótipo revisado antes de seguir para a construção |
-| C5 | Testes de acesso e permissões, inclusive pelo celular em Chrome e Safari; demonstração do fluxo conforme os critérios de aceitação | Avaliação da demonstração do fluxo de acesso | Correção no próprio ciclo ou replanejamento no C6 |
-| C6 | Verificação dos campos, regras e permissões; validação do fluxo com o treinador | Avaliação do treinador sobre o cadastro, a autorização, os campos e as permissões | Ajuste dos campos e das regras; itens não concluídos voltam ao Planejamento do C7 |
-| C7 | Testes dos critérios de aceitação e demonstração de uma rotina de montagem de treino | Avaliação da rotina de montagem de treino | Ajuste do fluxo de montagem; pendências seguem para o C8 |
-| C8 | Teste de usabilidade do fluxo treinador–atleta e registro dos ajustes necessários | Resultado do teste de usabilidade e opinião dos atletas, colhida por Lucas | Ajustes registrados e priorizados para o ciclo seguinte |
-| C9 | Verificação de formato, acesso e associação do vídeo; testes de permissões e privacidade; validação do fluxo completo com o cliente; revisão das regras com o cliente e demais stakeholders envolvidos | Validação do fluxo de vídeo e feedback e revisão das regras de privacidade | Ajuste de formato, acesso, associação e regras de visibilidade e consentimento; pendências críticas seguem para o C10 |
-| C10 | Testes ponta a ponta, usabilidade, permissões e RNFs; homologação assistida com o treinador | Resultado da homologação assistida | Correções antes da implantação; itens não críticos viram evoluções futuras |
-| C11 | Validação do funcionamento com o cliente, coleta de feedback e registro das evoluções futuras | Feedback sobre o uso inicial | Registro das evoluções futuras e das limitações conhecidas |
-
-!!! note "Planejamento em evolução"
-    A partir do C4, os objetivos e resultados representam uma previsão inicial. Eles deverão ser atualizados quando a equipe concluir a priorização dos requisitos e do MVP, sem apagar o histórico das decisões anteriores.
+| C8 | Testes de cadastro, login e permissões, inclusive pelo celular em Chrome e Safari; verificação do ambiente | Avaliação do fluxo de acesso e da biblioteca de exercícios | Correção no próprio ciclo ou replanejamento no C9 |
+| C9 | Verificação dos campos, regras e permissões; revisão das decisões de privacidade e consentimento com o cliente e demais stakeholders; validação do fluxo de criação de treino com o treinador | Avaliação do treinador sobre perfil, acompanhamento e treinos, e validação das regras de privacidade | Ajuste dos campos, regras e telas de termos; itens não concluídos voltam ao Planejamento do C10 |
+| C10 | Verificação de formato, duração, tamanho, acesso e associação do vídeo; testes de permissões e privacidade; validação do fluxo completo de vídeo e feedback com o cliente | Validação do fluxo de vídeo e feedback e da execução do treino pelo atleta | Ajuste de formato, acesso, associação e regras de visibilidade; pendências críticas seguem para o C11 |
+| C11 | Testes dos critérios de aceitação, usabilidade treinador e atleta, permissões e RNFs; MVP completo em homologação | Resultado do teste de usabilidade e opinião dos atletas, colhida por Lucas | Ajustes registrados e priorizados para a homologação final |
+| C12 | Testes ponta a ponta, usabilidade, permissões e RNFs; homologação assistida com o treinador | Resultado da homologação assistida e feedback sobre o uso inicial | Correções críticas antes da implantação; itens não críticos viram evoluções futuras |
 
 ## 6.3 Como os ciclos serão conduzidos
 
@@ -128,7 +125,7 @@ Algumas atividades acompanharão todo o desenvolvimento:
 - considerar o uso pelo celular (Chrome e Safari) nos fluxos usados durante os exercícios;
 - considerar permissões e proteção dos dados desde o cadastro dos atletas;
 - definir o acesso aos vídeos e às informações de acompanhamento antes da implementação desses fluxos;
-- atualizar o MVP e o cronograma quando houver mudança de prioridade, indisponibilidade do cliente ou dificuldade técnica.
+- atualizar o cronograma quando a página do MVP mudar, quando houver indisponibilidade do cliente ou dificuldade técnica.
 
 Quando um item precisar mudar de ciclo, a equipe registrará o motivo, a decisão tomada e o novo período previsto.
 
@@ -136,6 +133,7 @@ Quando um item precisar mudar de ciclo, a equipe registrará o motivo, a decisã
 
     | Data | Versão | Descrição | Autor(es) |
     | :---: | :---: | --- | --- |
+    | 15/11/2026 | 0.5 | Alinhamento do cronograma ao escopo da página do MVP, registro do realizado nos ciclos C4 a C8 e redistribuição do planejamento nos ciclos C8 a C12 | Paulo Sérgio Rabelo Santana Rios |
     | 12/10/2026 | 0.4 | Atualização das fases RAD por ciclo, retorno do cliente e replanejamento do cronograma | Paulo Sérgio Rabelo Santana Rios |
     | 19/09/2026 | 0.3 | Complementação do cronograma com o trabalho realizado nos ciclos iniciais, forma de validação, evidências e regra de atualização | Luiz Henrique Pessato da Mota |
     | 18/09/2026 | 0.2 | Ajuste dos ciclos e alinhamento do cronograma ao processo RAD | Paulo Sérgio Rabelo Santana Rios |
