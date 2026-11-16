@@ -52,11 +52,15 @@ A equipe refina os itens conforme a prioridade; o backlog inteiro não precisa c
 
 Para histórias de usuário, a equipe usa **INVEST** como apoio à revisão: independência possível, negociação, valor, possibilidade de estimar, tamanho compatível com a iteração e possibilidade de testar. Dependências inevitáveis têm encaminhamento registrado. RFs e RNFs precisam de declaração adequada ao contexto; a equipe não precisa transformar todo requisito em história de usuário.
 
+Um protótipo concluído não comprova implementação da funcionalidade. Uma revisão interna não comprova validação pelo cliente.
+
+Na validação de RFs/RNFs, o cliente confirma a necessidade e o comportamento esperado, inclusive restrições e níveis de qualidade que afetem o uso. A equipe complementa esse retorno com a verificação técnica. Pode concluir uma tarefa delimitada de elaboração de rascunho, mas mantém os requisitos identificados como **pendentes de validação** até registrar o retorno do cliente.
+
 Para incorporar um protótipo com código ao produto, aplicar as verificações de testes e integração do DoD. Os RNFs de proteção e acesso se aplicam sempre que forem utilizados dados reais.
 
 ## Uso na construção
 
-Antes de começar uma história, a equipe confere a versão do requisito, dos aceites e das regras. Registra os responsáveis pelo backend e pelo frontend, a estimativa das tarefas e as dependências.
+Antes de começar uma história, a equipe confere a versão do requisito, dos aceites e das regras. Registra o responsável pelo item, a estimativa de esforço e as dependências. Quando o item for dividido em tarefas de backend e frontend, indica os respectivos executores.
 
 As tarefas de backend e frontend podem ser revisadas separadamente. A conclusão da história exige o fluxo integrado e o atendimento aos critérios de aceitação aplicáveis.
 
@@ -76,7 +80,7 @@ As tarefas de backend e frontend podem ser revisadas separadamente. A conclusão
 Registrar a conferência na issue ou tarefa da história, com:
 
 1. **Item e versão:** RF, história, tipo de entrega e versão dos documentos ou do código consultados.
-2. **Preparação:** responsáveis, estimativa por tarefa, dependências e resultado de DoR01 a DoR06, com evidência ou motivo.
+2. **Preparação:** responsável e estimativa de esforço do item, ou das tarefas em que foi dividido, dependências e resultado de DoR01 a DoR06, com evidência ou motivo.
 3. **Decisão de início:** iniciar ou manter pendente, quem decidiu, data e condições ainda não atendidas.
 4. **Conferência da entrega:** resultado de DoD01 a DoD06, testes e demais evidências, revisor e pendências.
 5. **Decisão de conclusão:** concluído ou pendente, com o motivo. Registrar separadamente o retorno do cliente quando necessário.
@@ -91,7 +95,9 @@ O responsável registra a conferência no item do backlog, na issue ou em evidê
 
 A equipe inicia o item quando atende ao DoR aplicável e o conclui quando atende ao DoD aplicável. Se houver bloqueio, registra a pendência e seu encaminhamento. A equipe combina mudanças de escopo e aceite; quando alteram necessidades, regras ou resultados esperados do produto, confirma a decisão com o cliente. Registra os participantes, a decisão e os artefatos afetados. Esclarecimentos que preservam o comportamento previsto são refinamentos e ficam registrados junto ao item. Uma pendência não deve ser retirada apenas para marcar o item como concluído.
 
-[Consultar o resumo de DoR/DoD no Miro](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686745506649).
+A equipe revisa estes critérios quando o processo ou o contexto mudar e registra a versão adotada. Para usá-los como acordo de trabalho, os integrantes precisam conhecer os critérios e combinar sua aplicação. A publicação do documento não comprova aprovação coletiva nem cumprimento do DoR/DoD pelos itens do backlog.
+
+[Consultar o resumo de DoR/DoD no Miro](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686745506649). O resumo consultado ainda indica v1.0; sua atualização para esta revisão documental não foi presumida.
 
 ## Referências
 
@@ -105,3 +111,4 @@ A equipe inicia o item quando atende ao DoR aplicável e o conclui quando atende
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | :--- | :--- |
     | 11/10/2026 | 1.0 | Consolidação do DoR/DoD e conferência com o template de Visão do Produto e Projeto e os materiais da Unidade 2. | Equipe Space Jam |
+    | 16/11/2026 | 1.1 | Inclusão dos registros de aplicação e das orientações de construção; restauração das ressalvas sobre aprovação e validação; esclarecimento do registro de esforço, sem alterar os critérios centrais. | Luiz Henrique Pessato da Mota |

@@ -2,7 +2,24 @@
 
 Os registros distinguem preparação, execução, revisão e validação. Um critério sem comprovação permanece **Não atendido**; a justificativa de **Não se aplica** vale apenas para o tipo de entrega indicado.
 
-[Definições e critérios](dor_dod.md){data-sj-nav-parent="true"} · [Análise documental de 08/11](analise_upload_desempenho.md)
+[Definições e critérios](dor_dod.md) · [Análise documental de 08/11](analise_upload_desempenho.md)
+
+## Aplicação ao Backlog e ao MVP {#aplicacao-backlog-mvp}
+
+**Artefatos:** [Backlog](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md) e [MVP](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/mvp.md), commit `56497c32cbe6d376ef5093123a666d477c744e29`, no [PR #68](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68). **Revisor identificado:** Heitor (`HeitorM50`). **Conferência deste registro:** 16/11/2026.
+
+A [revisão formal](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68#pullrequestreview-5914462128) foi registrada como `COMMENTED` em 15/11, às 23h44 de Brasília (16/11, às 02h44 UTC). Os [achados publicados](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68#issuecomment-6906143763) e a [correção posterior sobre RN01](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68#issuecomment-6926603105) não constituem aprovação da entrega.
+
+| Critério | Resultado e evidência |
+| --- | --- |
+| DoD01 | Não atendido: o documento registra 62 RFs/46 no MVP; o catálogo comparado tem 65/49. Faltam RF3608–RF3610 no planejamento e a revisão da capacidade do recorte. |
+| DoD02 | Não atendido: há revisão pública identificada, mas as correções bloqueantes e sua verificação continuam pendentes. Confirmar com Heitor/equipe se a revisão do monitor satisfaz o requisito de revisão por outro integrante. |
+| DoD03 | Não atendido integralmente: há verificação documental executada e registrada nos achados sobre contagens, requisitos ausentes, capacidade e consentimento. A cobertura das demais verificações de regras, RNFs e vínculos da entrega não está comprovada; a revisão publicada não foi tratada como prova de todas elas. |
+| DoD04 | Não atendido: conciliar códigos, responsáveis, escopo, consentimento de menores e a regra de treinador único com as versões dos requisitos. |
+| DoD05 | Não atendido nesta conferência: a versão está disponível no PR para consulta, mas o local previsto para a entrega documental final precisa ser confirmado; não foi presumida publicação no Pages. |
+| DoD06 | Não atendido para apresentar este recorte como validado pelo cliente: os comentários apontam decisões de escopo sem retorno da versão examinada vinculado. As atas anteriores não confirmam automaticamente as mudanças posteriores. |
+
+**Resultado:** artefatos avaliados com revisão e achados verificáveis, ainda pendentes pelo DoD. Guilherme precisa tratar os ajustes do Backlog/MVP com os responsáveis pelos requisitos; a análise abaixo de 08/11 permanece como caso histórico complementar.
 
 ## Caso histórico: análise documental de 08/11
 
@@ -31,54 +48,90 @@ O registro de preparação datado de 08/11 informa que antecedeu o levantamento.
 | DoD02 | Não atendido: falta outro integrante conferir a versão, registrar achados e verificar as correções bloqueantes. |
 | DoD03 | Atendido para a análise: trechos, códigos e vínculos confrontados com as fontes preservadas. A integridade das 16 fontes e do diff foi reconferida em 16/11. Não houve teste do produto. |
 | DoD04 | Atendido no recorte histórico: fontes por versão e códigos da época preservados. A consolidação dos demais documentos continua separada. |
-| DoD05 | Não atendido no registro de 16/11: a entrega ainda não possui confirmação de disponibilização à equipe. Conferir o endereço e a versão efetivamente disponibilizados quando isso ocorrer. |
+| DoD05 | Não atendido nesta conferência: o [PR #74](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74) disponibiliza o material, e o [comentário do Heitor](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74#issuecomment-6926601650) comprova sua consulta. Falta confirmar se o PR é o local previsto para esta entrega ou se a publicação no Pages é necessária. |
 | DoD06 | Não se aplica à análise delimitada: ela não altera compromissos nem apresenta requisitos como validados. Qualquer decisão posterior de escopo exige o retorno pertinente. |
 
 **Resultado:** entrega documental executada, com conclusão pelo DoD pendente de revisão e disponibilidade. A existência deste registro não comprova aprovação da equipe ou aceite do cliente.
 
 ## Conferência atual {#conferencia-atual}
 
-**Data:** 16/11/2026. As fontes abaixo estão em revisão e não foram presumidas integradas à documentação publicada:
+**Data:** 16/11/2026. As versões examinadas abaixo não foram presumidas integradas entre si ou publicadas no Pages.
 
 | Fonte | Versão examinada |
 | --- | --- |
-| RFs, histórias, regras e aceites | [Requisitos e regras](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/f242d6b2ff6cde190934d38b238ba1ee7624f00b/docs), commit `f242d6b`. |
-| RNFs | [Declarações e verificações](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/8548c55d7b88a4de0b7e7697b4c64db3da09942d/docs/requisitos_nao_funcionais.md), commit `8548c55`. |
-| Backlog | [Plano consultado](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md), commit `56497c3`. |
-| API disponível | [Rotas de contas](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/urls.py) e [modelo](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/models.py), commit `6e66cf4`. |
-
-### Mudanças desde as conferências anteriores
-
-- O cadastro do aluno agora declara e-mail e nascimento; RN24/RN25 definem senha mínima de seis caracteres e frequência semanal de 1 a 7.
-- A aprovação administrativa de treinadores foi substituída por treinador único com código de ativação. Não repetir a aprovação administrativa como regra vigente nessa versão.
-- Os aceites de US01–US05 foram ampliados. A divergência antiga entre nome e e-mail na declaração do treinador foi corrigida; a API disponível ainda aceita apelido.
-- RNF07 e RNF11 passaram a ter métricas e checklists detalhados. Ambos continuam classificados como evolutivos; US42 exige barra percentual e US21/US51 exigem cinco segundos. A conciliação do compromisso do incremento permanece necessária.
+| RFs, histórias, regras e aceites | [Documentação de requisitos](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/36dce72a771daabce8cb5017d2431baac97568b4/docs), commit `36dce72`. |
+| RNFs e aceites do PR #70 | [RNFs](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/c0c98224dc7adf17f7cd17a302506718284c0843/docs/requisitos_nao_funcionais.md) e [aceites](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/c0c98224dc7adf17f7cd17a302506718284c0843/docs/criterios_aceitacao.md), commit `c0c9822`. |
+| Backlog e MVP | [Versão do PR #68](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/56497c32cbe6d376ef5093123a666d477c744e29/docs), commit `56497c3`. |
+| API disponível | [Rotas de contas](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/urls.py) e [modelo](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/models.py), commit `6e66cf4`, integrado em `develop` pelo PR #76. |
+| Frontend de acesso | [Código publicado](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/29397ddd21f181020f4cb58e11c74f77df4acc3c/frontend), commit `29397dd`, no Draft PR #77. |
 
 ### DoR de US01–US05
 
-Avaliação das histórias completas, não apenas de seus formulários. **Encaminhamento da frente de interface:** Luiz, conforme divisão informada. **Decisão coletiva de início:** não registrada nesta conferência.
+Esta conferência trata das histórias completas. A equipe informou uma avaliação anterior de Thiago para a Iteração 1; seu registro e sua versão precisam ser vinculados para conciliar os resultados. Esta leitura não substitui nem invalida essa avaliação. Sem a fonte original, não é possível afirmar quais resultados dela foram afetados pelas mudanças posteriores.
+
+**Executor do frontend:** Luiz, identificado nos commits e no escopo do [PR #77](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77), para US01–US05. A divisão de tarefas de interface não comprova liberação das histórias integradas. **Decisão coletiva de início, responsável pela decisão e data:** não comprovados nas fontes vinculadas nesta conferência; localizar o registro original com Thiago/equipe, sem reconstruir aprovação passada.
 
 | Critério | US01 — aluno | US02 — treinador | US03 — saída | US04 — acesso aluno | US05 — acesso treinador |
 | --- | --- | --- | --- | --- | --- |
 | DoR01 | Atendido nas fontes | Atendido nas fontes | Atendido para saída do aluno | Atendido nas fontes | Atendido nas fontes |
 | DoR02 | Atendido nas referências identificadas | Atendido nas referências identificadas | Atendido nas referências identificadas | Atendido nas referências identificadas | Atendido nas referências identificadas |
 | DoR03 | Atendido para os cenários declarados | Atendido para os cenários declarados | Atendido para os cenários declarados | Atendido para os cenários declarados | Atendido para os cenários declarados |
-| DoR04 | Não atendido: termos/versionamento e consentimento a vincular | Não atendido: termos/versionamento e fluxo de ativação a vincular | Atendido para o comportamento de saída declarado | Não atendido: fluxo de aceite dos termos a vincular | Não atendido: fluxo de aceite dos termos a vincular |
-| DoR05 | Não atendido: API de cadastro e vínculo ausentes na versão consultada | Não atendido: API de cadastro, ativação e geração do código ausentes | Não atendido: invalidação de token no servidor sem contrato disponível | Não atendido: destino final e restrições integradas não comprovados | Não atendido: API de login por e-mail e destino final não disponíveis |
-| DoR06 | Não atendido para a história completa | Não atendido para a história completa | Não atendido para a história completa | Não atendido para a história completa | Não atendido para a história completa |
+| DoR04 | Não atendido: termos/versionamento e consentimento de menores a conciliar | Não atendido: termos/versionamento e fluxo de ativação a vincular | Atendido para a saída declarada | Não atendido: fluxo de aceite dos termos a vincular | Não atendido: fluxo de aceite dos termos a vincular |
+| DoR05 | Não atendido: API de cadastro e vínculo ausentes | Não atendido: API de cadastro, ativação e geração do código ausentes | Não atendido: revogação do token sem contrato | Não atendido: destino final e restrições integradas não comprovados | Não atendido: API por e-mail e destino final ausentes |
+| DoR06 | Não atendido: frontend identificado; esforço e demais executores a confirmar | Não atendido: frontend identificado; esforço e demais executores a confirmar | Não atendido: frontend identificado; esforço e demais executores a confirmar | Não atendido: frontend identificado; esforço e demais executores a confirmar | Não atendido: frontend identificado; esforço e demais executores a confirmar |
 
-DoR06 requer a estimativa das tarefas e a disponibilidade dos responsáveis. CT e nomes no plano não substituem essa comprovação. A avaliação não confirma o estado operacional do Miro nem libera as histórias por decisão dos responsáveis.
+DoR06 exige responsável e estimativa de esforço do item compatível com a disponibilidade na iteração; não exige uma unidade específica nem necessariamente horas. O [Backlog consultado](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md) contém responsáveis previstos que precisam ser conciliados com a divisão atual. A [planilha de avaliações](https://docs.google.com/spreadsheets/d/1NsXu36v7VtNlYdEkkLuny1TRThPGN5gy7tsmaVyjv-Y/edit#gid=0) possui notas de esforço e de critério técnico, mas ainda usa requisitos antigos: por exemplo, RF01102 significa login genérico, não o cadastro de treinador do RF1102 atual. Não transferir as notas automaticamente; confirmar item, versão, executor e capacidade. CT não substitui a estimativa de esforço.
 
-Uma tarefa delimitada de interface pode avançar com campos e validações definidos nas fontes, sem simular cadastro ou inventar contratos. Essa preparação não cumpre o DoR da funcionalidade integrada.
+Na [área de DoR/DoD do Miro](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686745506649), o exemplo consultado continua identificado como ilustrativo. Os cartões de US01–US05 no [mapa de iterações](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764690473149812) não exibiram responsável e esforço nessa consulta. Isso não prova ausência de registros em outros locais: falta vincular a avaliação original e os dados atuais por item.
 
-### RF3501 — envio de vídeo
+Uma tarefa delimitada de interface pode avançar com campos e validações definidos, sem inventar contratos. Essa preparação não cumpre o DoR da história integrada nem cria uma decisão coletiva de início.
 
-RF3501/US42 conserva identificação, prioridade e aceites verificáveis nas fontes acima. O DoR completo continua não comprovado: conciliar CA02 com o tratamento evolutivo de RNF07, comprovar recursos e dependências de envio, confirmar responsáveis e estimativas. O Backlog consultado ainda registra dependências e bloqueio; isso não confirma a situação operacional atual.
+### RF3501 — conciliação de upload e desempenho
 
-### Estado de conclusão das histórias
+RF3501/US42 possui aceites na versão consultada, mas a conciliação de seus compromissos continua pendente, inclusive no [comentário de revisão do PR #70](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/70#issuecomment-6926600139).
 
-Nenhuma das cinco histórias foi declarada concluída. Em US01/US02, faltam cadastro persistido, códigos verificados, unicidade e aceite dos termos. Em US03, a saída no navegador não comprova invalidação do token no servidor. US04/US05 exigem destinos, termos e permissões integrados; US05 exige acesso por e-mail.
+| Relação nas fontes identificadas | Divergência e encaminhamento |
+| --- | --- |
+| RNF07 / US42 CA02, em `c0c9822` | RNF07 é evolutivo e exige progresso de 1% a 99%, término em 100% e confirmação em até 1 s. O aceite já exige barra de 1% a 99%. Definir o piso obrigatório do incremento e a conclusão do indicador; alinhar classificação e aceite. |
+| RNF11 / US21 CA01 e US51 CA04, em `c0c9822` | Os aceites exigem cinco segundos; RNF11 é evolutivo e especifica Fast 4G, até 50 requisições simultâneas, p95 e zero erros 5xx. Conciliar obrigatoriedade, abrangência e condições de medição. |
+| Condição de carga de RNF11 | A declaração usa 50 requisições simultâneas; o último item do checklist menciona 50 req/s. São condições diferentes, a corrigir pelo responsável. |
+| Correspondência de versões | O desempenho é RNF11 no PR #70, mas RNF10 na branch `36dce72`, onde RNF11 trata da integridade da biblioteca. Conciliar os vínculos; manter RNF11 nas fontes históricas de 08/11. |
 
-A preparação da interface em 16/11 foi conferida por 38 testes, compilação e análise de código. Os testes usam requisições simuladas e não comprovam os fluxos completos. A [identificação da versão examinada](arquivos/verificacao-interface-2026-11-16.json) registra a base e os hashes dos arquivos, com revisão e integração pendentes.
+**Responsáveis a consultar:** Anderson, Thiago e Guilherme, nas frentes de RNFs, requisitos e planejamento. Quando a decisão mudar o comportamento ou o nível de serviço combinado, confirmar com Lucas. Não foi escolhida unilateralmente uma meta, retirado um aceite ou executado teste de upload/carga. O DoR completo de RF3501 também depende de recursos, contratos, responsáveis e esforço identificados.
 
-Para o DoD das histórias, DoD01/DoD03/DoD04 estão parciais, DoD02 e DoD05 permanecem sem comprovação e DoD06 precisa ser avaliado conforme a validação exigida para cada entrega. Não foi registrado aceite de Lucas ou aprovação de outro integrante.
+### Retornos do cliente e DoD06
+
+As atas preservam retornos do cliente nas datas registradas. A correspondência abaixo é por significado; não constitui aceite de todas as condições das fichas atuais.
+
+| Item relacionado | Retorno documentado | Alcance e pendência |
+| --- | --- | --- |
+| RF1101 — cadastro do aluno | [26/09](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-09-26-lucas.md): autocadastro sujeito à autorização do treinador e frequência de atividade física. | Confirma a demanda discutida, não automaticamente o código de vínculo, todos os campos e os aceites posteriores. |
+| RF3501 — vídeo e RF3608 — relato do aluno | [26/09](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-09-26-lucas.md): vídeo opcional e utilidade do relato textual do aluno. [08/10](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-10-08-lucas.md): avaliação e correção pelo treinador. | Não comprova os limites de mídia, o percentual de progresso ou todas as regras posteriores do feedback do aluno. |
+| RNF01/RNF03 — uso móvel e navegadores | [08/10](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-10-08-lucas.md): uso pelo celular e menção a Chrome/Safari. | Não confirma automaticamente 360 px nem a baseline completa de versões e sistemas do PR #70. |
+| RN01/US02 — treinador único e ativação | Regra definida nas versões consultadas; o [PR #70](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/70#issuecomment-6926600139) pede o registro do cliente ou identificação como proposta. | Confirmação específica da versão atual por Lucas não localizada nas atas examinadas. |
+| RNF07 e desempenho — RNF11 histórico/RNF10 na branch RF | Metas identificadas nos documentos e aceites, com divergências acima. | Retorno de Lucas sobre os compromissos atuais não localizado nas fontes vinculadas. |
+
+Não foi localizada uma relação completa de requisitos atuais confirmados por Lucas, com versões e decisões. A confirmação interna dos 65 RFs não a substitui. Quem acompanhou as validações precisa vincular os registros existentes; mudanças ainda não confirmadas permanecem pendentes. Não classificar todos como aprovados nem todos como rejeitados por ausência desse vínculo.
+
+### Disponibilidade e estado das histórias
+
+O [PR #74](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74) disponibiliza esta contribuição desde 16/11, às 12h59 de Brasília; o [comentário do Heitor](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74#issuecomment-6926601650), às 16h20, comprova a consulta. Isso não representa aprovação ou publicação no Pages. Confirmar com Heitor/equipe se o PR satisfaz o local previsto para esta entrega documental ou se é necessária sua integração no site.
+
+Nenhuma das cinco histórias foi declarada concluída. Em US01/US02 faltam persistência, códigos, unicidade e termos; o consentimento de menores em RN16 precisa ser conciliado com RF4814, atualmente fora do MVP. US03 não comprova revogação no servidor. US04/US05 precisam de destinos, termos e permissões integrados; US05 ainda depende da API por e-mail.
+
+O frontend foi disponibilizado para revisão no [Draft PR #77](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77), commit `29397ddd21f181020f4cb58e11c74f77df4acc3c`. A execução local dessa versão em 16/11, às 16h51 de Brasília, aprovou 54 testes Vitest, lint e build. Os testes usam requisições simuladas e não comprovam integração com API e banco. A [identificação da versão examinada](arquivos/verificacao-interface-2026-11-16.json) contém os 22 hashes, comandos, ambiente e trechos das saídas reais. A execução anterior de 38 testes pertence a um registro histórico local, sem commit público correspondente, e não é usada como evidência desta versão.
+
+Para o DoD das histórias, DoD01/DoD03/DoD04 têm comprovação parcial; DoD02 e DoD05 não estão atendidos, e DoD06 depende da validação pertinente ao objetivo da entrega. O PR #77 comprova disponibilidade para revisão do código, não integração nem conclusão. A revisão independente das USs continua pendente.
+
+### Pendências para concluir as issues
+
+| Pendência | Encaminhamento |
+| --- | --- |
+| Avaliação original e decisão de início da Iteração 1 | Thiago/equipe: vincular versão, item, decisão, quem decidiu e data. Não reconstruir aprovação anterior. |
+| DoR06 dos itens atuais | Thiago/executores: confirmar responsáveis, esforço e capacidade na iteração, com consulta direta. |
+| DoD02 e correções do Backlog/MVP | Guilherme e revisor: corrigir os achados e registrar sua conferência; Heitor/equipe: confirmar o enquadramento da revisão externa. |
+| Confirmações de requisitos | Lucas e participantes: vincular retornos por versão; confirmar mudanças não abrangidas pelas atas anteriores. |
+| Upload e desempenho | Anderson, Thiago e Guilherme: conciliar RNFs, aceites e recorte, com decisão registrada. |
+| DoD05 da entrega documental | Heitor/equipe: confirmar o local previsto e a disponibilidade exigida; não presumir que abrir PR conclui o critério. |
+
+As issues #59 e #60 continuam abertas enquanto faltarem essas comprovações. As pendências não impedem publicar correções factuais já verificadas, mas impedem declarar o DoR/DoD integralmente cumprido.
