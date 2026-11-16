@@ -241,11 +241,32 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF09 · Controle de Acesso Baseado em Funções (RBAC) {#rnf09}
 
-O sistema deve aplicar controle de acesso rígido (Role-Based Access Control), garantindo que endpoints e visões referentes ao perfil Treinador não sejam acessíveis por Atletas.
+**Categoria:** Confiabilidade / Segurança
 
-**Categoria registrada:** Confiabilidade / Segurança. **Escopo:** CP7.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** O sistema deve aplicar controle de acesso rígido (Role-Based Access Control), garantindo que endpoints e visões referentes ao perfil Treinador não sejam acessíveis por Atletas.
+
+**Origem e perfis:**
+
+- CP7
+- Aluno (Atleta) e Professor (Treinador)
+
+**Regras de negócio associadas:**
+
+- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes automatizados de autorização e segurança de API/rotas comprovando que `100%` dos endpoints administrativos e de gestão do perfil Treinador retornam `HTTP 403 Forbidden` quando requisitados com token de Atleta (e `HTTP 401 Unauthorized` para requisições não autenticadas), e `0` rotas restritas ao Treinador são renderizadas ou acessíveis via navegação direta no frontend por Atletas.
+- **Validação (Justificativa):** Protege funcionalidades exclusivas de gestão e avaliação do treinador contra escalonamento horizontal/vertical de privilégios por contas de atletas.
+
+**Checklist estruturado:**
+
+- [ ] Todos os endpoints exclusivos do perfil Treinador validam o papel (role) no backend e bloqueiam acessos de Atletas com HTTP 403
+- [ ] Requisições sem autenticação válida recebem HTTP 401 antes de acessar rotas protegidas
+- [ ] As rotas e componentes de interface exclusivos do Treinador são ocultados e bloqueados no roteamento do frontend para usuários com perfil Atleta
+- [ ] Testes automatizados cobrem tentativas de acesso cruzado entre perfis em todas as operações críticas do MVP
 
 ## RNF10 · Isolamento Multi-inquilino de Dados {#rnf10}
 
