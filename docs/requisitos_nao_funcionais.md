@@ -151,11 +151,32 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF06 · Compatibilidade de Vídeo {#rnf06}
 
-O sistema deve aceitar e processar submissões de ficheiros de vídeo nos formatos .mp4 e .mov.
+**Categoria:** Suportabilidade
 
-**Categoria registrada:** Suportabilidade. **Escopo:** CP5, CP6.
+**MVP:** Associado a RFs do MVP
 
-**Tratamento registrado para o MVP:** Associados a RFs do MVP.
+**Descrição:** O sistema deve aceitar e processar submissões de ficheiros de vídeo nos formatos .mp4 e .mov.
+
+**Origem e perfis:**
+
+- CP5, CP6
+- Aluno (Atleta) e Professor
+
+**Regras de negócio associadas:**
+
+- [RN09 · Limite de Mídia por Submissão de Exercício](regras_negocio.md#rn09)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes automatizados e manuais de upload comprovando que `100%` dos arquivos válidos nos contêineres `.mp4` (H.264/HEVC) e `.mov` (QuickTime/iOS) dentro dos limites estabelecidos (RNF14) são aceitos e reproduzidos corretamente, enquanto `100%` dos formatos não suportados (ex.: `.avi`, `.mkv`, `.wmv`, `.exe`) são rejeitados antes do envio (RNF16).
+- **Validação (Justificativa):** Garante compatibilidade nativa com os formatos padrão de gravação de smartphones Android (`.mp4`) e iOS/iPhone (`.mov`), evitando que o atleta precise converter o vídeo manualmente antes de enviá-lo.
+
+**Checklist estruturado:**
+
+- [ ] Vídeos gravados e exportados no formato `.mp4` são aceitos, armazenados e reproduzidos corretamente na plataforma
+- [ ] Vídeos gravados nativamente em dispositivos iOS no formato `.mov` são aceitos, armazenados e reproduzidos corretamente
+- [ ] Arquivos com extensões ou MIME types fora da lista permitida (`.mp4` e `.mov`) são bloqueados com feedback claro antes do upload (RNF16)
+- [ ] Os players web de avaliação do professor reproduzem ambos os formatos sem exigir plugins externos
 
 ## RNF07 · Feedback Visual de Upload {#rnf07}
 
