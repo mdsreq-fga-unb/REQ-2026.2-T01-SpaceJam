@@ -270,19 +270,57 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF10 · Isolamento Multi-inquilino de Dados {#rnf10}
 
-O acesso aos vídeos, dados de histórico e feedbacks de um atleta deve ser restrito exclusivamente ao próprio atleta e aos treinadores devidamente vinculados a ele.
+**Categoria:** Confiabilidade / Segurança
 
-**Categoria registrada:** Confiabilidade / Segurança. **Escopo:** CP8.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** O acesso aos vídeos, dados de histórico e feedbacks de um atleta deve ser restrito exclusivamente ao próprio atleta e aos treinadores devidamente vinculados a ele.
+
+**Origem e perfis:**
+
+- CP8
+- Aluno (Atleta) e Professor (Treinador)
+
+**Regras de negócio associadas:**
+
+- [RN03 · Isolamento de Dados e Carteira (Multi-tenant)](regras_negocio.md#rn03)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes automatizados de autorização por propriedade/vínculo (IDOR / isolamento multi-tenant) comprovando que `100%` das tentativas de consulta ou download de vídeos, histórico de treinos, testes físicos e feedbacks de um atleta realizadas por outro atleta ou por um treinador sem vínculo ativo retornam `HTTP 403 Forbidden` (ou `404` sem vazar existência), com `0` registros cruzados retornados nas listagens.
+- **Validação (Justificativa):** Previne vazamento horizontal de dados pessoais, métricas físicas e vídeos de treino entre usuários da plataforma, garantindo confidencialidade no modelo multi-inquilino.
+
+**Checklist estruturado:**
+
+- [ ] Consultas de histórico, perfil, testes físicos, vídeos e feedbacks filtram estritamente pelo ID do próprio atleta ou pelos atletas com vínculo ativo ao treinador autenticado
+- [ ] Requisições diretas por ID (IDOR) a recursos de atletas não vinculados são bloqueadas no backend com HTTP 403
+- [ ] Treinadores sem vínculo ativo com o atleta não visualizam nem acessam seus vídeos, planejamentos ou feedbacks
+- [ ] Testes automatizados validam o isolamento de dados entre dois atletas distintos e entre dois treinadores com carteiras separadas
 
 ## RNF11 · Desempenho no Carregamento do Histórico {#rnf11}
 
-As telas de consulta de histórico, perfil e gráficos de evolução do atleta devem carregar completamente em até 5 segundos sob simulação de limitação de rede (throttling em perfil Fast 4G no DevTools dos navegadores homologados) e sob carga nominal de até 50 requisições simultâneas ao servidor.
+**Categoria:** Desempenho
 
-**Categoria registrada:** Desempenho. **Escopo:** CP1, CP2.
+**MVP:** Evolutivos
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** As telas de consulta de histórico, perfil e gráficos de evolução do atleta devem carregar completamente em até 5 segundos sob simulação de limitação de rede (throttling em perfil Fast 4G no DevTools dos navegadores homologados) e sob carga nominal de até 50 requisições simultâneas ao servidor.
+
+**Origem e perfis:**
+
+- CP1, CP2
+- Aluno (Atleta) e Professor (Treinador)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes de desempenho combinando simulação de rede em perfil `Fast 4G` no DevTools dos navegadores homologados (RNF03) e teste de carga com `50` requisições simultâneas (ex.: k6/Locust), comprovando tempo total de carregamento completo (`Load` / renderização dos dados e gráficos) `≤ 5,0 s` no percentil 95 (`p95`) e `0%` de erros HTTP `5xx`.
+- **Validação (Justificativa):** Assegura que consultas frequentes de histórico, perfil e evolução física permaneçam responsivas mesmo em conexões móveis e durante picos simultâneos de uso em horários de treino.
+
+**Checklist estruturado:**
+
+- [ ] As telas de histórico, perfil e gráficos de evolução carregam completamente em até 5 segundos sob perfil Fast 4G nos navegadores homologados (RNF03)
+- [ ] A API mantém tempo de resposta dentro do orçamento e sem falhas HTTP 5xx sob carga nominal de 50 requisições simultâneas
+- [ ] Consultas de histórico e métricas de evolução utilizam paginação ou agregação otimizada para evitar gargalos de payload e banco de dados
+- [ ] Os parâmetros e resultados dos testes de desempenho (Fast 4G e 50 req/s) estão documentados e reproduzíveis
 
 ## RNF12 · Integridade e Consistência na Catalogação de Exercícios {#rnf12}
 
@@ -380,11 +418,28 @@ As telas de consulta de histórico, perfil e gráficos de evolução do atleta d
 
 ## RNF15 · Assistência e Validação no Preenchimento de Dados {#rnf15}
 
-O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrigatórios e validar formatos antes do envio do formulário, prevenindo erros de digitação.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** CP1, CP3.
+**MVP:** Evolutivos
 
-**Tratamento registrado para o MVP:** Evolutivos.
+**Descrição:** O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrigatórios e validar formatos antes do envio do formulário, prevenindo erros de digitação.
+
+**Origem e perfis:**
+
+- CP1, CP3
+- Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Testes funcionais e automatizados de interface nos formulários de cadastro, perfil, testes físicos, planejamentos, exercícios e feedbacks comprovando que `100%` dos campos formatáveis aplicam máscara em tempo real durante a digitação, `100%` dos campos obrigatórios exibem indicação visual clara e `0` requisições de submissão são disparadas ao backend enquanto houver campos obrigatórios vazios ou formatos inválidos.
+- **Validação (Justificativa):** Reduz erros de digitação, evita chamadas desnecessárias à API e orienta imediatamente o usuário sobre o preenchimento esperado antes da submissão.
+
+**Checklist estruturado:**
+
+- [ ] Campos com padrão específico (como datas, contatos, durações ou métricas numéricas) aplicam máscara de entrada em tempo real durante a digitação
+- [ ] Todos os campos obrigatórios possuem destaque visual explícito antes mesmo da tentativa de envio
+- [ ] A validação client-side bloqueia o envio do formulário e exibe mensagens específicas junto ao campo quando há dados ausentes ou em formato inválido
+- [ ] Ao corrigir o campo inválido, o alerta de erro é removido imediatamente sem perda dos demais dados já preenchidos
 
 ## RNF16 · Feedback e Prevenção de Erros no Pré-Envio de Mídia {#rnf16}
 
