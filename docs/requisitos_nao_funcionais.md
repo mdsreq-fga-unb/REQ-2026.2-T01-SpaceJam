@@ -39,11 +39,28 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF02 · Arquitetura e Stack Tecnológica {#rnf02}
 
-O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional.
+**Categoria:** Requisitos de Implementação
 
-**Categoria registrada:** Requisitos de Implementação. **Escopo:** Global.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional.
+
+**Origem e perfis:**
+
+- Global
+- Equipe de Desenvolvimento / Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Inspeção dos manifestos de dependências e ambiente (`package.json`, `requirements.txt`/`pyproject.toml` e configuração do banco) confirmando `React >= 18` com `TypeScript`, `Python >= 3.11` com `Django` / `djangorestframework` e instância ativa de `PostgreSQL >= 15` (`100%` de aderência às versões mínimas declaradas).
+- **Validação (Justificativa):** Padroniza a stack tecnológica do projeto, assegurando tipagem estática no frontend, produtividade e maturidade na API REST e integridade relacional na persistência dos dados.
+
+**Checklist estruturado:**
+
+- [ ] O frontend está estruturado em React (v18+) com TypeScript ativo no build e checagem de tipos
+- [ ] O backend está implementado em Python (3.11+) utilizando Django e Django REST Framework
+- [ ] A camada de persistência relacional opera sobre PostgreSQL (v15+)
+- [ ] Os arquivos de configuração e dependências do repositório refletem as versões mínimas homologadas
 
 ## RNF03 · Suporte a Navegadores Web {#rnf03}
 
