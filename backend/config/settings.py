@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Terceiros
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",  # Necessário para US03 (Logout)
     # Apps do projeto (uma por grupo de características do catálogo)
     "apps.contas",      # CP1, CP7 — cadastro, login, papéis aluno/treinador
     "apps.exercicios",  # CP4 — biblioteca de exercícios
@@ -111,4 +112,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
+
+# Regras de Negócio (US01, US02, US04, US05)
+COACH_ACTIVATION_CODE = os.environ.get("COACH_ACTIVATION_CODE", "TREINADOR-MVP-2026")
+TERMOS_VERSAO_ATUAL = os.environ.get("TERMOS_VERSAO_ATUAL", "1.0")
