@@ -106,3 +106,119 @@ class CadastrarExercicioTests(APITestCase):
         )
         self.client.force_authenticate(self.aluno)
         self.assertEqual(self.client.get(url).status_code, status.HTTP_403_FORBIDDEN)
+
+class ConsultarExercicioTests(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.aluno = Usuario.objects.create_user(
+            username="aluno1",
+            email="aluno1@exemplo.com",
+            password="senha-forte-123",
+            papel="ALUNO",
+            treinador=cls.treinador,
+        )
+        cls.completo = Exercicio.objects.create(
+            nome="Passe de peito",
+            objetivo="Melhorar a precisão do passe",
+            fundamento="PASSE",
+            orientacoes="Cotovelos fechados e passo à frente.",
+            criado_por=cls.treinador,
+        )
+        cls.minimo = Exercicio.objects.create(
+            nome="Arremesso livre",
+            objetivo="Aumentar o aproveitamento",
+            fundamento="ARREMESSO",
+            criado_por=cls.treinador,
+        )
+        cls.url_lista = reverse("exercicio-list")
+
+    def url_detalhe(self, pk):
+        return reverse("exercicio-detail", args=[pk])
+
+    def itens(self, resposta):
+        dados = resposta.data
+        return dados["results"] if isinstance(dados, dict) else dados
+
+    def test_detalhe_mostra_os_dados_do_exercicio(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.get(self.url_detalhe(self.completo.pk))
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["nome"], "Passe de peito")
+        self.assertEqual(resposta.data["objetivo"], "Melhorar a precisão do passe")
+        self.assertEqual(resposta.data["fundamento"], "PASSE")
+        self.assertEqual(resposta.data["fundamento_nome"], "Passe")
+        self.assertEqual(
+            resposta.data["orientacoes"], "Cotovelos fechados e passo à frente."
+        )
+        self.assertIn("erros_comuns", resposta.data)
+        self.assertIn("video_base", resposta.data)
+
+    def test_campos_nao_preenchidos_vem_vazios_sem_erro(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.get(self.url_detalhe(self.minimo.pk))
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["orientacoes"], "")
+        self.assertIsNone(resposta.data["erros_comuns"])
+        self.assertIsNone(resposta.data["video_base"])
+
+    def test_exercicio_inexistente_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+        for pk in [999999, "abc"]:
+            with self.subTest(pk=pk):
+                resposta = self.client.get(self.url_detalhe(pk))
+                self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_aluno_recebe_403_na_lista_e_no_detalhe(self):
+        self.client.force_authenticate(self.aluno)
+        for url in [self.url_lista, self.url_detalhe(self.completo.pk)]:
+            with self.subTest(url=url):
+                resposta = self.client.get(url)
+                self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_sem_login_recebe_401(self):
+        for url in [self.url_lista, self.url_detalhe(self.completo.pk)]:
+            with self.subTest(url=url):
+                resposta = self.client.get(url)
+                self.assertEqual(
+                    resposta.status_code, status.HTTP_401_UNAUTHORIZED
+                )
+
+    def test_lista_traz_a_biblioteca_em_ordem_de_nome(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.get(self.url_lista)
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            [item["nome"] for item in self.itens(resposta)],
+            ["Arremesso livre", "Passe de peito"],
+        )
+
+    def test_cadastro_aparece_na_consulta_imediatamente(self):
+        self.client.force_authenticate(self.treinador)
+        criado = self.client.post(
+            self.url_lista,
+            {
+                "nome": "Corta-luz",
+                "objetivo": "Liberar o companheiro",
+                "fundamento": "DEFESA",
+            },
+        )
+        self.assertEqual(criado.status_code, status.HTTP_201_CREATED)
+        detalhe = self.client.get(self.url_detalhe(criado.data["id"]))
+        self.assertEqual(detalhe.status_code, status.HTTP_200_OK)
+        self.assertEqual(detalhe.data["nome"], "Corta-luz")
+        lista = self.client.get(self.url_lista)
+        self.assertIn("Corta-luz", [item["nome"] for item in self.itens(lista)])
+
+    def test_exclusao_nao_esta_disponivel(self):
+        self.client.force_authenticate(self.treinador)
+        resposta = self.client.delete(self.url_detalhe(self.completo.pk))
+        self.assertEqual(
+            resposta.status_code, status.HTTP_405_METHOD_NOT_ALLOWED
+        )
+        self.assertTrue(Exercicio.objects.filter(pk=self.completo.pk).exists())
