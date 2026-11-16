@@ -65,11 +65,13 @@ O registro de preparação datado de 08/11 informa que antecedeu o levantamento.
 | API disponível | [Rotas de contas](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/urls.py) e [modelo](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/models.py), commit `6e66cf4`, integrado em `develop` pelo PR #76. |
 | Frontend de acesso | [Código publicado](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/29397ddd21f181020f4cb58e11c74f77df4acc3c/frontend), commit `29397dd`, no Draft PR #77. |
 
-### DoR de US01–US05
+### Conferência técnica anterior de US01–US05
 
-Esta conferência trata das histórias completas. A equipe informou uma avaliação anterior de Thiago para a Iteração 1; seu registro e sua versão precisam ser vinculados para conciliar os resultados. Esta leitura não substitui nem invalida essa avaliação. Sem a fonte original, não é possível afirmar quais resultados dela foram afetados pelas mudanças posteriores.
+A [conferência encaminhada por Thiago em 16/11](arquivos/conferencia-dor-iteracao1-2026-11-16.pdf) foi localizada após a leitura técnica abaixo. Ela cobre DoR01–DoR05 de US01–US05, US30, US38 e US39 e exclui expressamente DoR06. Seus resultados e ressalvas estão preservados na [complementação da Iteração 1](#conferencia-iteracao1). A tabela abaixo mantém a leitura técnica anterior, focada nas dependências da implementação; não substitui a avaliação documental do PDF. Implementação ausente não comprova, por si só, falta de prontidão para começar a construção.
 
-**Executor do frontend:** Luiz, identificado nos commits e no escopo do [PR #77](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77), para US01–US05. A divisão de tarefas de interface não comprova liberação das histórias integradas. **Decisão coletiva de início, responsável pela decisão e data:** não comprovados nas fontes vinculadas nesta conferência; localizar o registro original com Thiago/equipe, sem reconstruir aprovação passada.
+**Executor do frontend:** Luiz, identificado nos commits e no escopo do [PR #77](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77), para US01–US05. Isso comprova contribuição executada, não atribuição formal anterior. A transcrição da reunião de 16/11 contém um encaminhamento de continuidade para Luiz/Guilherme, descrito abaixo com seus limites; não foi localizada uma decisão coletiva anterior de liberar as oito histórias com os seis critérios conferidos.
+
+<details class="sj-document-details" markdown="1"><summary>Consultar a leitura técnica anterior à conferência do Thiago</summary>
 
 | Critério | US01 — aluno | US02 — treinador | US03 — saída | US04 — acesso aluno | US05 — acesso treinador |
 | --- | --- | --- | --- | --- | --- |
@@ -82,9 +84,64 @@ Esta conferência trata das histórias completas. A equipe informou uma avaliaç
 
 DoR06 exige responsável e estimativa de esforço do item compatível com a disponibilidade na iteração; não exige uma unidade específica nem necessariamente horas. O [Backlog consultado](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md) contém responsáveis previstos que precisam ser conciliados com a divisão atual. A [planilha de avaliações](https://docs.google.com/spreadsheets/d/1NsXu36v7VtNlYdEkkLuny1TRThPGN5gy7tsmaVyjv-Y/edit#gid=0) possui notas de esforço e de critério técnico, mas ainda usa requisitos antigos: por exemplo, RF01102 significa login genérico, não o cadastro de treinador do RF1102 atual. Não transferir as notas automaticamente; confirmar item, versão, executor e capacidade. CT não substitui a estimativa de esforço.
 
-Na [área de DoR/DoD do Miro](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686745506649), o exemplo consultado continua identificado como ilustrativo. Os cartões de US01–US05 no [mapa de iterações](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764690473149812) não exibiram responsável e esforço nessa consulta. Isso não prova ausência de registros em outros locais: falta vincular a avaliação original e os dados atuais por item.
+Na [área de DoR/DoD do Miro](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686745506649), o exemplo consultado continua identificado como ilustrativo. A consulta somente leitura de 16/11 foi ampliada às oito histórias da Iteração 1, às tabelas de histórias, esforço e MVP e aos quadros de tarefas, conforme as fontes e limites da complementação abaixo. O PDF original agora está disponível; continuam faltando dados atuais de esforço e capacidade por item.
 
 Uma tarefa delimitada de interface pode avançar com campos e validações definidos, sem inventar contratos. Essa preparação não cumpre o DoR da história integrada nem cria uma decisão coletiva de início.
+
+</details>
+
+### Complementação da Iteração 1 {#conferencia-iteracao1}
+
+**Conferência documental:** Luiz, em 16/11/2026. **Finalidade:** vincular a avaliação existente e procurar os elementos de DoR06 e da decisão de início, sem refazer DoR01–DoR05.
+
+#### Avaliação original localizada
+
+O [PDF original, com nove páginas](arquivos/conferencia-dor-iteracao1-2026-11-16.pdf), foi fornecido nesta revisão como a conferência do Thiago. Em consulta somente leitura, foi confirmado o envio por ele de um documento com esse título e nove páginas ao grupo de evidências em 16/11, às 17h02 de Brasília. A cópia foi preservada integralmente, com SHA-256 `0d78163df7f6a93ba943b0fdf283a457c813033b09968e7f16760da3c0995272`. O documento informa consulta nessa data a requisitos, aceites, regras, DoR/DoD v1.0 e RNFs no Miro; não identifica os commits dessas fontes. Não foi atribuída retroativamente a ele a versão `36dce72`.
+
+| US / RF | Resultado registrado no PDF para DoR01–DoR05 |
+| --- | --- |
+| US01 / RF1101 | Não pronta: DoR04 não atendido pelo comportamento indefinido do consentimento de menores, RN16. |
+| US02 / RF1102 | Pronta. |
+| US03 / RF1103 | Pronta, com observações de escopo e regra específica no corpo do documento. |
+| US04 / RF1104 | Pronta após registro: dependência de termos/versionamento, RF4812. |
+| US05 / RF1105 | Pronta após registro: dependência de RF4812 e autenticação do treinador por e-mail. |
+| US30 / RF2413 | Pronta. |
+| US38 / RF2421 | Pronta. |
+| US39 / RF2422 | Pronta após registro: dependência do CA02 com RF2307/US24. O checklist da página 8 já assinala esse registro como realizado. |
+
+As ressalvas e marcações das páginas 8–9 permanecem no original. A marcação de uma providência no PDF não comprova sua integração nas branches atuais. A expressão “pronta” acima reproduz o alcance da conferência de cinco critérios: **não atesta atendimento do DoR06 nem dos seis critérios em conjunto**. A exclusão de DoR06, atribuída pelo PDF à equipe, não modifica o acordo oficial.
+
+#### Fontes para complementar DoR06
+
+- **F1 — Proposta de planejamento em revisão:** [Backlog do PR #68, linhas 53–67](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md#L53-L67). Há nomes por RF e frente, mas não estimativa por item; a distribuição diverge da divisão atual informada para o frontend.
+- **F2 — Miro, consulta somente leitura em 16/11:** [Iteração 1, 09 a 16/nov](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764690472698622), com setup e oito cartões de US; [histórias](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764690194521193), com código, descrição e RNFs; [escala de esforço](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764685043486898), com níveis 1–5; [entregas](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686839425108), com responsáveis por documentos e estimativas vazias nos registros examinados. Os cartões da iteração não exibiram executor ou estimativa. A escala sozinha não atribui uma nota a cada US. Não foram localizados dados de disponibilidade por executor nesses recortes; isso não afirma que inexistam em toda a conta.
+- **F3 — Reunião de 16/11, transcrição automática fornecida à equipe:** em 34:50–35:44, Júlia identifica Luiz no frontend de US01–US05 e Guilherme fala do backend; em 44:17–45:28, Guilherme identifica cadastro/login como sua parte e Thiago orienta Luiz a revisar e Guilherme a prosseguir. O documento original foi conferido pelo SHA-256 `759a33f7983810ba7f3c3f2728d0f4f486512931a04e3416b10e666c9a092550`. Fonte disponível para conferência local, sem link público e sem confirmação pelo áudio nesta análise: comprovação parcial, sem publicar transcrição ou gravação. Não individualiza todas as tarefas de backend.
+- **F4 — Execução disponível:** [PR #77, frontend de US01–US05](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77), em `29397dd`, e [commit de Thiago na branch de US30](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/commit/ac1c207ea8cde6d5981649e23bcca7f67e1ad1f4), com alterações no backend. Identificam contribuição e versão, não a atribuição formal no planejamento nem o atendimento do DoD.
+
+A divisão comunicada entre Luiz, no acesso, e Júlia, na biblioteca, precisa ser conciliada com F1. O relato posterior de Thiago sobre uma divisão anterior de back/front não localiza seu registro original, a estimativa ou a capacidade. Não foi convertido em decisão formal por US.
+
+#### Resultado por história
+
+**Classificação das fontes:** Comprovada quando o registro sustenta a informação delimitada; Parcialmente comprovada quando faltam elementos ou consulta pública; Desatualizada quando a distribuição diverge da comunicada; Não localizada quando o dado não apareceu nas fontes examinadas. A situação do critério exige os três elementos juntos: responsável, esforço e compatibilidade com a disponibilidade.
+
+| US | Responsável: registro e alcance | Estimativa | Disponibilidade | Evidência | Situação do DoR06 |
+| --- | --- | --- | --- | --- | --- |
+| US01 | F1: Thiago (Back) / Anderson (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; backend de cadastro relatado por Guilherme, sem atribuição individual conciliada. | Não localizada para a versão atual. | Janela da iteração registrada; capacidade individual não localizada. | F1–F4. | Parcialmente comprovada; não atendido integralmente. |
+| US02 | F1: Guilherme (Back) / Júlia (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; relato de Guilherme abrange cadastro/login. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1–F4. | Parcialmente comprovada; não atendido integralmente. |
+| US03 | F1: Guilherme (Back) / Júlia (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; responsável atual da revogação a confirmar. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1–F4. | Parcialmente comprovada; não atendido integralmente. |
+| US04 | F1: Guilherme (Back) / Paulo (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; relato de Guilherme abrange cadastro/login. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1–F4. | Parcialmente comprovada; não atendido integralmente. |
+| US05 | F1: Thiago (Back) / Luiz (Front). Front de Luiz identificado; backend a conciliar com o relato de Guilherme sobre cadastro/login. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1–F4. | Parcialmente comprovada; não atendido integralmente. |
+| US30 | F1: Thiago (Back) / Anderson (Front). Há atividade de Thiago no Back em F4; Júlia foi indicada para a biblioteca na divisão comunicada, a vincular ao item. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1/F2/F4; divisão comunicada. | Parcialmente comprovada; não atendido integralmente. |
+| US38 | F1: Guilherme (Back) / Paulo (Front). Distribuição a conciliar com Júlia no Front da biblioteca; atribuição atual por item não localizada. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1/F2; divisão comunicada. | Parcialmente comprovada; não atendido integralmente. |
+| US39 | F1: Thiago (Back) / Luiz (Front). Distribuição a conciliar com Júlia no Front da biblioteca; atribuição atual por item não localizada. | Não localizada para a versão atual. | Capacidade individual não localizada. | F1/F2; divisão comunicada. | Parcialmente comprovada; não atendido integralmente. |
+
+Os nomes previstos em F1 são comprovados como conteúdo daquela versão; sua vigência atual não foi presumida. CT e quadrante de priorização não substituem a estimativa. Notas dos RFs antigos dependem de correspondência de código e escopo antes de serem usadas. Não se exige unidade em horas. O calendário de 09–16/nov e o relato de que as atividades caberiam no prazo não demonstram a capacidade individual nem a compatibilidade da soma dos itens com o ciclo.
+
+#### Decisão de início e encaminhamento localizado
+
+A transcrição F3 contém um encaminhamento identificável de **continuidade**: em 45:28, Thiago orienta a revisão de Luiz e a continuidade de Guilherme, no contexto de cadastro/login. Há data, interlocutor e recorte, mas faltam versão específica, confirmação por item e elementos do DoR06. A fonte é automática e ainda sem consulta pública; o encaminhamento fica parcialmente comprovado, sujeito à conferência do registro.
+
+Esse trecho não é a decisão inicial de liberar coletivamente as oito histórias. O PDF comprova uma avaliação documental existente; a divisão de tarefas e o código publicado comprovam outros fatos. Nenhuma dessas fontes foi tratada isoladamente como aprovação coletiva ou como dispensa do DoR06. Falta vincular a decisão original, se existente, com data, participantes, itens e tratamento dos bloqueios; uma confirmação feita agora deve manter sua data real.
 
 ### RF3501 — conciliação de upload e desempenho
 
@@ -127,8 +184,8 @@ Para o DoD das histórias, DoD01/DoD03/DoD04 têm comprovação parcial; DoD02 e
 
 | Pendência | Encaminhamento |
 | --- | --- |
-| Avaliação original e decisão de início da Iteração 1 | Thiago/equipe: vincular versão, item, decisão, quem decidiu e data. Não reconstruir aprovação anterior. |
-| DoR06 dos itens atuais | Thiago/executores: confirmar responsáveis, esforço e capacidade na iteração, com consulta direta. |
+| Avaliação e decisão de início da Iteração 1 | PDF original localizado e vinculado, preservando DoR01–DoR05. Falta identificar os commits das fontes dele e o registro da decisão inicial; a continuidade encontrada na transcrição não comprova liberação coletiva. Thiago/equipe: conferir esses vínculos. |
+| DoR06 dos oito itens | Conferência parcial acima: conciliar nomes do Backlog com a divisão atual, vincular estimativa por US e demonstrar compatibilidade com a capacidade. Thiago/executores: fornecer o registro existente ou completar o planejamento com a data real. |
 | DoD02 e correções do Backlog/MVP | Guilherme e revisor: corrigir os achados e registrar sua conferência; Heitor/equipe: confirmar o enquadramento da revisão externa. |
 | Confirmações de requisitos | Lucas e participantes: vincular retornos por versão; confirmar mudanças não abrangidas pelas atas anteriores. |
 | Upload e desempenho | Anderson, Thiago e Guilherme: conciliar RNFs, aceites e recorte, com decisão registrada. |
