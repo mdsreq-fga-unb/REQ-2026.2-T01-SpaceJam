@@ -14,11 +14,28 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 ## RNF01 · Responsividade Mobile {#rnf01}
 
-A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones.
+**Categoria:** Usabilidade
 
-**Categoria registrada:** Usabilidade. **Escopo:** Global.
+**MVP:** Obrigatório
 
-**Tratamento registrado para o MVP:** Obrigatórios para o MVP.
+**Descrição:** A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones.
+
+**Origem e perfis:**
+
+- Global
+- Todos os utilizadores (Visitante, Aluno e Professor)
+
+**Verificação e validação:**
+
+- **Verificação (Métrica):** Inspeção responsiva dos fluxos essenciais em viewports a partir de `360px` de largura (ex.: `360×800 px`, `390×844 px` e `1280×720 px`) com `0` barras de rolagem horizontal indesejadas, `0` sobreposições de elementos interativos e `100%` dos botões e formulários legíveis e acionáveis.
+- **Validação (Justificativa):** Garante que atletas e treinadores consigam acessar treinos, enviar vídeos e registrar feedbacks diretamente pelo smartphone em quadra ou ginásio sem perda de usabilidade.
+
+**Checklist estruturado:**
+
+- [ ] Todas as telas principais renderizam sem rolagem horizontal em largura mínima de 360px
+- [ ] Textos, formulários, botões e players de vídeo permanecem legíveis e clicáveis sem corte ou sobreposição em smartphones
+- [ ] A navegação principal e ações críticas são facilmente acessíveis em telas móveis (mobile-first)
+- [ ] O layout mantém proporção e funcionalidade adequadas também em telas maiores (tablets e desktops)
 
 ## RNF02 · Arquitetura e Stack Tecnológica {#rnf02}
 
