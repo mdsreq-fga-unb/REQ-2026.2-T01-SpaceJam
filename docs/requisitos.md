@@ -2,7 +2,7 @@
 
 # Catálogo de requisitos
 
-<div class="sj-catalog-intro"><p class="sj-catalog-kicker">REQUISITOS E ESCOPO</p><p class="sj-catalog-lead">Um registro por requisito. Uma consulta ao escopo.</p><p>O catálogo reúne os 65 requisitos funcionais, suas histórias de usuário, critérios e condições vinculadas. Escolha uma característica e abra a ficha do requisito para consultar a seleção do <a href="../mvp/">Mínimo Produto Viável</a> e a distribuição no <a href="../plano_execucao/">Plano de execução</a>.</p><div class="sj-catalog-links"><a href="../requisitos_nao_funcionais/">RNFs</a><a href="../regras_negocio/">Regras</a><a href="../criterios_aceitacao/">Critérios por história</a><a href="#identificacao-dos-requisitos">Histórico de identificadores</a></div></div>
+<div class="sj-catalog-intro"><p class="sj-catalog-kicker">REQUISITOS E ESCOPO</p><p class="sj-catalog-lead">Um registro por requisito. Uma consulta ao escopo.</p><p>O catálogo reúne os 65 requisitos funcionais, suas histórias de usuário, critérios e condições vinculadas. Escolha uma característica e abra a ficha do requisito para consultar a seleção do <a href="../mvp/">Mínimo Produto Viável</a> e a distribuição no <a href="../backlog/#103-plano-de-execucao-por-iteracao-sincronizado-com-o-miro">Plano de execução</a>.</p><div class="sj-catalog-links"><a href="../requisitos_nao_funcionais/">RNFs</a><a href="../regras_negocio/">Regras</a><a href="../criterios_aceitacao/">Critérios por história</a><a href="#identificacao-dos-requisitos">Histórico de identificadores</a></div></div>
 
 <p class="sj-catalog-status"><strong>Escopo em revisão.</strong> O MVP reflete o recorte documentado. Confirmação e implementação precisam de evidências por item.</p>
 

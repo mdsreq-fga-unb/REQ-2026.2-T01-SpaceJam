@@ -21,7 +21,7 @@ A coleta de dados iniciais e a validação da proposta foram realizadas exclusiv
 
 ### **Ações de melhoria para unidade 2**
 
-As ações abaixo foram formuladas para serem verificáveis. A coluna de evidência indica o registro esperado, sem comprovar que a ação foi concluída. O [processo de ER](engenharia_requisitos.md) descreve o quadro como apoio visual, sem adoção formal do framework Kanban.
+As ações abaixo foram formuladas para serem verificáveis. A coluna de evidência indica o registro esperado, sem comprovar que a ação foi concluída. A equipe utiliza o [quadro no Miro](interacao_equipe_cliente.md#quadro-de-acompanhamento) para acompanhar as atividades, sem adoção formal do framework Kanban.
 
 | Ação | Responsável | Prazo | Evidência de conclusão |
 | --- | --- | --- | --- |

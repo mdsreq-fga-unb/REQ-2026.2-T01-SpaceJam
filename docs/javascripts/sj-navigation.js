@@ -4,13 +4,18 @@
   const toggle = document.querySelector(".sj-sidebar-toggle");
 
   const desktopLayout = window.matchMedia("(min-width: 76.25em)");
-  // As consultas complementares pertencem ao catálogo, sem outro nível no menu.
-  if (document.querySelector('.sj-context-return')) {
-    const catalogPath = new URL('../requisitos/', location.href).pathname;
-    const catalogLink = [...document.querySelectorAll('.md-sidebar--primary a.md-nav__link')]
-      .find((link) => new URL(link.href).pathname === catalogPath);
-    catalogLink?.classList.add('md-nav__link--active');
-    catalogLink?.setAttribute('aria-current', 'location');
+  // Consultas complementares mantêm a seção de origem destacada no menu.
+  const parentLink = document.querySelector('a[data-sj-nav-parent]');
+  const parentPath = parentLink
+    ? new URL(parentLink.href, location.href).pathname
+    : document.querySelector('.sj-context-return')
+      ? new URL('../requisitos/', location.href).pathname
+      : null;
+  if (parentPath) {
+    const navigationLink = [...document.querySelectorAll('.md-sidebar--primary a.md-nav__link')]
+      .find((link) => new URL(link.href).pathname === parentPath);
+    navigationLink?.classList.add('md-nav__link--active');
+    navigationLink?.setAttribute('aria-current', 'location');
   }
   const syncUnitGroups = () => {
     document.querySelectorAll(".md-sidebar--primary .md-nav__item--nested > .md-nav__toggle")
