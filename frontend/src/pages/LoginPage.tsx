@@ -11,12 +11,11 @@ export function LoginPage() {
 }
 
 function FormularioLogin({ treinador }: { treinador: boolean }) {
-  const { usuario, carregando, login } = useAuth()
+  const { usuario, carregando, login, avisoSessao } = useAuth()
   const [identificador, setIdentificador] = useState('')
   const [senha, setSenha] = useState('')
   const [mostrarSenha, setMostrarSenha] = useState(false)
   const [erro, setErro] = useState('')
-  const [avisoTreinador, setAvisoTreinador] = useState(false)
   const [camposComErro, setCamposComErro] = useState<'identificador' | 'credenciais' | null>(null)
   const campoIdentificador = useRef<HTMLInputElement>(null)
   const [enviando, setEnviando] = useState(false)
@@ -36,19 +35,16 @@ function FormularioLogin({ treinador }: { treinador: boolean }) {
     }
     setErro('')
     setCamposComErro(null)
-    if (treinador) {
-      setAvisoTreinador(true)
-      return
-    }
     envioPendente.current = true
     setEnviando(true)
     try {
-      await login(identificador.trim(), senha)
+      if (treinador) await login(identificador.trim(), senha, 'TREINADOR')
+      else await login(identificador.trim(), senha)
     } catch (falha) {
       const credenciaisInvalidas = falha instanceof ApiError && [400, 401].includes(falha.status)
       setCamposComErro(credenciaisInvalidas ? 'credenciais' : null)
       setErro(credenciaisInvalidas
-        ? 'Apelido ou senha inválidos'
+        ? treinador ? 'E-mail ou senha inválidos' : 'Apelido ou senha inválidos'
         : 'Não foi possível acessar o serviço. Confira sua conexão e tente novamente.')
     } finally {
       envioPendente.current = false
@@ -123,7 +119,7 @@ function FormularioLogin({ treinador }: { treinador: boolean }) {
             </div>
           </div>
           {erro && <p className="erro" id="erro-acesso" role="alert">{erro}</p>}
-          {avisoTreinador && <p className="aviso-cadastro" role="status">O acesso do treinador está temporariamente indisponível. Tente novamente mais tarde.</p>}
+          {avisoSessao && <p className="aviso-cadastro" role="status">{avisoSessao}</p>}
           <button className="botao-entrar" type="submit" disabled={enviando}>
             {enviando ? 'Entrando…' : 'Entrar'}
           </button>

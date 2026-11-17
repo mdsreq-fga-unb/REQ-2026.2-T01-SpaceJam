@@ -1,9 +1,11 @@
 import { useAuth } from '../auth/useAuth'
+import { AtualizarTermos } from '../components/AtualizarTermos'
 import { Marca } from '../components/Marca'
 
 export function InicioPage() {
   const { usuario, logout } = useAuth()
   if (!usuario) return null
+  if (usuario.termos_pendentes) return <AtualizarTermos />
   const nome = [usuario.first_name, usuario.last_name].filter(Boolean).join(' ') || usuario.apelido
 
   return (

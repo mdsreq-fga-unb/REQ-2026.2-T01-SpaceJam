@@ -179,3 +179,8 @@ dd { margin: 0; font-size: 20px; overflow-wrap: anywhere; }
   .cartao-conta { padding: 22px; }
   dl { grid-template-columns: 1fr; }
 }
+
+.aceite-termos { display: grid; gap: 16px; width: 100%; font-size: 16px; line-height: 1.5; }
+.aceite-termos label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+.aceite-termos input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 3px; accent-color: var(--texto); }
+.aceite-termos a { color: inherit; text-underline-offset: 3px; }

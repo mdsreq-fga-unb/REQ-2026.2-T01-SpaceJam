@@ -7,5 +7,7 @@ export interface Usuario {
   last_name: string
   email: string
   telefone: string
+  termos_pendentes?: boolean
+  codigo_convite?: string | null
   papel: Papel
 }

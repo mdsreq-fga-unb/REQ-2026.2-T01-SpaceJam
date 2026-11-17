@@ -1,11 +1,13 @@
 import { createContext } from 'react'
-import type { Usuario } from '../types/usuario'
+import type { Papel, Usuario } from '../types/usuario'
 
 export interface AuthState {
   usuario: Usuario | null
   carregando: boolean
-  login: (apelido: string, senha: string) => Promise<void>
-  logout: () => void
+  login: (identificador: string, senha: string, papel?: Papel) => Promise<void>
+  logout: () => void | Promise<void>
+  aceitarTermos?: () => Promise<void>
+  avisoSessao?: string
 }
 
 export const AuthContext = createContext<AuthState | null>(null)

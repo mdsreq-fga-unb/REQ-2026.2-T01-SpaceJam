@@ -79,3 +79,26 @@ export function validarCadastro(perfil: Papel, dados: DadosCadastro): ErrosCadas
   }
   return erros
 }
+
+export function dadosParaApi(perfil: Papel, dados: DadosCadastro, aceite: boolean) {
+  const texto = (campo: CampoCadastro) => dados[campo]?.trim() ?? ''
+  const identidade = {
+    nome: texto('nome'), sobrenome: texto('sobrenome'), apelido: texto('apelido'),
+    email: texto('email'), senha: dados.senha ?? '', aceite_termos: aceite,
+  }
+  if (perfil === 'TREINADOR') return { ...identidade, telefone: texto('telefone'), codigo_ativacao: texto('codigoAtivacao') }
+  return {
+    ...identidade, codigo_treinador: texto('codigoTreinador'), data_nascimento: texto('dataNascimento'),
+    altura: String(Number(texto('altura').replace(',', '.')) / 100),
+    peso: texto('peso').replace(',', '.'),
+    envergadura: String(Number(texto('envergadura').replace(',', '.')) / 100),
+    frequencia_semanal: Number(texto('frequencia')), objetivos: texto('objetivos'),
+  }
+}
+
+export const camposDaApi: Record<string, CampoCadastro> = {
+  nome: 'nome', sobrenome: 'sobrenome', apelido: 'apelido', email: 'email', telefone: 'telefone',
+  senha: 'senha', codigo_treinador: 'codigoTreinador', codigo_ativacao: 'codigoAtivacao',
+  data_nascimento: 'dataNascimento', altura: 'altura', peso: 'peso', envergadura: 'envergadura',
+  frequencia_semanal: 'frequencia', objetivos: 'objetivos',
+}

@@ -57,7 +57,7 @@ describe('formulários de cadastro', () => {
     expect(email.value).toBe('email-sem-arroba')
   })
 
-  it('não envia nem anuncia cadastro concluído enquanto não existe integração', async () => {
+  it('não envia nem anuncia cadastro sem aceite dos termos', async () => {
     const requisicao = vi.fn()
     vi.stubGlobal('fetch', requisicao)
     const pessoa = abrir('/cadastro/treinador')
@@ -69,7 +69,7 @@ describe('formulários de cadastro', () => {
       await pessoa.type(screen.getByLabelText(campo, { exact: true }), valor)
     }
     await pessoa.click(screen.getByRole('button', { name: 'Cadastre-se', exact: true }))
-    expect(screen.getByRole('status').textContent).toMatch(/indisponível/i)
+    expect(screen.getByText(/consulte e aceite/i)).toBeTruthy()
     expect(screen.queryByText(/cadastrado com sucesso/i)).toBeNull()
     expect(requisicao).not.toHaveBeenCalled()
     expect(localStorage.length).toBe(0)

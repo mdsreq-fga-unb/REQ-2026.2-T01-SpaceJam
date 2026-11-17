@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { api, TOKEN_KEY, tokenStorage } from '../api/client'
-import type { Usuario } from '../types/usuario'
+import type { Papel, Usuario } from '../types/usuario'
 import { AuthContext } from './contexto'
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -8,6 +8,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // Só há o que carregar se já existe um token salvo de um login anterior.
   const [carregando, setCarregando] = useState(() => tokenStorage.get() !== null)
   const versaoSessao = useRef(0)
+  const [avisoSessao, setAvisoSessao] = useState('')
 
   // Ao abrir a página, se já existe token, busca quem é o usuário.
   useEffect(() => {
@@ -43,14 +44,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  async function login(apelido: string, senha: string) {
+  async function login(identificador: string, senha: string, papel: Papel = 'ALUNO') {
     const versao = ++versaoSessao.current
-    const { access } = await api<{ access: string }>('/auth/login/', {
+    setAvisoSessao('')
+    const treinador = papel === 'TREINADOR'
+    const { access, refresh } = await api<{ access: string; refresh: string }>(treinador ? '/auth/login/treinador/' : '/auth/login/aluno/', {
       method: 'POST',
-      body: JSON.stringify({ username: apelido, password: senha }),
-    })
+      body: JSON.stringify(treinador ? { email: identificador, senha } : { apelido: identificador, senha }),
+    }, false)
     if (versao !== versaoSessao.current) return
-    tokenStorage.set(access)
+    tokenStorage.set(access, refresh)
     try {
       const perfil = await api<Usuario>('/auth/me/')
       if (versao === versaoSessao.current) setUsuario(perfil)
@@ -65,16 +68,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  // RF1103 — deslogar
-  function logout() {
-    ++versaoSessao.current
+  async function logout() {
+    const versao = ++versaoSessao.current
+    const access = tokenStorage.get()
+    const refresh = tokenStorage.getRefresh()
     tokenStorage.clear()
     setUsuario(null)
     setCarregando(false)
+    setAvisoSessao('')
+    try {
+      if (!access || !refresh) throw new Error('Sessão sem credenciais para revogação')
+      await api('/auth/logout/', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${access}` },
+        body: JSON.stringify({ refresh }),
+      }, false)
+    } catch {
+      if (versao === versaoSessao.current) {
+        setAvisoSessao('Você saiu deste dispositivo, mas não foi possível confirmar o encerramento no servidor.')
+      }
+    }
+  }
+
+  async function aceitarTermos() {
+    const versao = versaoSessao.current
+    const perfil = await api<Usuario>('/auth/aceitar-termos/', {
+      method: 'POST', body: JSON.stringify({ aceite_termos: true }),
+    })
+    if (versao === versaoSessao.current) setUsuario(perfil)
   }
 
   return (
-    <AuthContext.Provider value={{ usuario, carregando, login, logout }}>
+    <AuthContext.Provider value={{ usuario, carregando, login, logout, aceitarTermos, avisoSessao }}>
       {children}
     </AuthContext.Provider>
   )
