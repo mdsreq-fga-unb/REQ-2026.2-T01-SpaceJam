@@ -42,7 +42,7 @@ Após a comparação entre os processos **RAD** e **XP**, optou-se pelo **Rapid 
 
 - **Cronograma apertado:** o RAD aparece como uma opção para projetos com cronograma curto, o que favorece sua consideração diante do tempo limitado disponível para o desenvolvimento acadêmico.
 
-- **Testes:** os testes serão considerados parte do desenvolvimento e planejados de acordo com os requisitos e riscos do sistema. A equipe poderá utilizar práticas como testes automatizados e integração contínua quando forem relevantes para a qualidade do produto.
+- **Testes:** os testes serão considerados parte do desenvolvimento e planejados de acordo com os requisitos e riscos do sistema. A equipe utilizar práticas como testes automatizados e integração contínua quando forem relevantes para a qualidade do produto.
 
 - **Abordagem híbrida:** a abordagem híbrida permite combinar a flexibilidade e a adaptação do RAD com práticas mais estruturadas de documentação, testes, revisão e acompanhamento quando necessárias, adequando o processo às restrições do projeto.
 

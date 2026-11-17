@@ -186,6 +186,22 @@ Para encerrar as dúvidas levantadas nas reuniões de **26/09/2026** e **08/10/2
 
 ### 4. Protótipo de alta fidelidade e fluxos de interação navegáveis
 
+No dia 31 de outubro foi realizado uma reunião com o Lucas para validar o protótipo de alta fidelidade. 
+
+[Assistir à gravação da reunião](https://teams.microsoft.com/l/meetingrecap?driveId=b%218yflCIcNW0a2rV5Uzn_iiLDK00RBOotClfNoAKd0gslYYkODNZ_wQYoFyAoacbpV&driveItemId=01XGJQ4C3TDMCA2NRNEVA2ZN722QEI3MPD&sitePath=https%3A%2F%2Funbbr.sharepoint.com%2Fsites%2FSpaceJam-Requisitos%2FDocumentos+Compartilhados%2FGeneral%2FRecordings%2FReuni%C3%A3o+com+Lucas-20261031_190507-Grava%C3%A7%C3%A3o+de+Reuni%C3%A3o.mp4%3Fweb%3D1&fileUrl=https%3A%2F%2Funbbr.sharepoint.com%2Fsites%2FSpaceJam-Requisitos%2FDocumentos+Compartilhados%2FGeneral%2FRecordings%2FReuni%C3%A3o+com+Lucas-20261031_190507-Grava%C3%A7%C3%A3o+de+Reuni%C3%A3o.mp4%3Fweb%3D1&threadId=19%3AeA1GzX5VWGlKX1CizuHjNRpc6ii12B8JRQdMtd36U9E1%40thread.tacv2&organizerId=3c3e99c1-8904-4b8c-92c2-a6ba66ffa9f6&tenantId=ec359ba1-630b-4d2b-b833-c8e6d48f8059&callId=49b4f240-a546-4c9e-ab30-5951124015ab&threadType=space&meetingType=MeetNow&organizerGroupId=17da893d-773d-4d5d-b685-d5fa59cf1d9a&channelType=Standard&replyChainId=1793483970000&subType=RecapSharingLink_RecapCore&recapType=RecordingAndTranscript)
+
+![Apresentação do protótipo de alta fidelidade com fluxos](imagens/print_prot_alta.png)
+
+Foram apresentados os fluxos mais genéricos:
+
+- **Como atleta**: Logar como atleta abriria a tela com o próprio treinamento, ele teria a opção de selecionar o tipo de treino, arremesso, drible, por exemplo, como foi mencionado no feedback do protótipo de baixa fidelidade. Estaria visível as opções: enviar vídeo, selecionar a dificuldade que teve com o exercício e escrever essas dificuldades caso necessário.
+
+- **Como treinador**: Logar como treinador abriria uma página que mostra todos seus alunos ativos, ele poderá acessar o perfil de cada aluno e verificar as informações (testes físicos, nome, idade e etc) e, em outra aba, modificar os treinos.
+
+#### Feeback do Lucas
+
+Está disponível na gravação da reunião, mas em geral foi: "É, primeiro eu gostei da cor, ficou bem legal e as informações estão bem organizadinhas, eu acho que tipo. Depois que abre, eu acho que fica bem bem explicativo para a pessoa entender esse caramba aqui é o vídeo, é aqui que eu coloco o feedback, é aqui onde eu coloco a dificuldade e tals, tá ligado? Eu acho que ficou bom por causa disso, é mais pela organização e tipo, não simplicidade, mas tipo, é fácil de entender, tá ligado? Que que tem, que que precisa ser feito? [...] por mim pode manter o jeito que estiver mesmo, que está pra mim assim está bom."
+
 [Abrir protótipo interativo de alta fidelidade no Figma](https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=168-1123&t=A0Cp6Y2IzX1Yzgec-0)
 
 <details class="sj-delivery-video-details sj-artifact-preview">
@@ -205,6 +221,13 @@ Para encerrar as dúvidas levantadas nas reuniões de **26/09/2026** e **08/10/2
 - **Distinção conceitual:** um diagrama formal de interação (como diagramas de sequência ou de atividades) modela a troca estática de mensagens e regras de controle entre componentes, enquanto um **fluxo de interação navegável** representa a transição dinâmica entre telas, botões e estados sob a perspectiva de uso.
 - **Opção adotada pela equipe:** alinhada à abordagem iterativa do **RAD (Rapid Application Development)**, a equipe optou por **não confeccionar diagramas estáticos separados de fluxo de interação**, substituindo-os diretamente pelo protótipo navegável de alta fidelidade no Figma.
 - **Cobertura funcional:** o protótipo permite percorrer ponta a ponta os fluxos do treinador e do atleta (autenticação, gestão de perfil e métricas, biblioteca de exercícios, montagem de treinos, envio de vídeos e registro de feedback), cumprindo o objetivo de comunicar e validar os fluxos operacionais antes e durante a construção.
+
+#### Atualização
+
+No dia 16 de novembro, apesar do protótipo de alta fidelidade ter sido validado, foi mandado um print para o Lucas de como estaria o andamento das implementações e ele o achou simples, então talvez vamos mudar o protótipo de alta fidelidade e o front na próxima iteração.
+
+![Apresentação do protótipo de alta fidelidade com fluxos](imagens/simples.jpeg)
+
 
 
 
@@ -271,7 +294,78 @@ O registro abaixo mostra o envio de um vídeo explicativo do protótipo de baixa
 
 ![Mensagem de envio do vídeo explicativo do protótipo e reação positiva no WhatsApp](imagens/Validação.png){:  width="859" height="298" }
 
-Para completar a rastreabilidade desta rodada de validação, permanece pendente o registro detalhado da data de envio, versão específica do protótipo avaliada, critérios verificados e ajustes resultantes.
+
+#### Registro da apresentação do protótipo inicial
+
+A equipe encaminhou ao treinador Lucas Cordeiro um vídeo explicativo do protótipo de baixa fidelidade desenvolvido no Figma. A captura da conversa no WhatsApp registra uma reação positiva ao material apresentado.
+
+Entretanto, essa manifestação não constitui, isoladamente, uma validação formal dos fluxos funcionais ou dos critérios de aceitação do produto.
+
+| Campo | Registro |
+|---|---|
+| Artefato apresentado | Protótipo de baixa fidelidade |
+| Ferramenta | Figma |
+| Forma de apresentação | Vídeo explicativo encaminhado pelo WhatsApp |
+| Participante externo | Lucas Cordeiro |
+| Evidência | Captura da conversa |
+| Resultado observado | Reação positiva ao material apresentado |
+| Fluxos avaliados individualmente | - **Como atleta**: Logar como atleta abriria a tela com o próprio treinamento, ele teria a opção de selecionar o treino atual ou visualizar um treino antigo. Estaria visível as opções: enviar vídeo, selecionar a dificuldade que teve com o exercício e escrever essas dificuldades caso necessário.- **Como treinador**: Logar como treinador abriria uma página que mostra todos seus alunos ativos, ele poderá acessar o perfil de cada aluno e verificar as informações (testes físicos, nome, idade e etc) e, em outra aba, modificar os treinos. |
+| Critérios de aceitação verificados | Não documentados |
+| Ajustes solicitados pelo cliente | Pediu para que os treinos fossem separados por fundamento |
+| Situação | Apresentação registrada; validação detalhada pendente |
+
+A equipe reconhece que a reação positiva não demonstra aprovação integral do protótipo. Para caracterizar a conclusão de uma rodada de validação, serão necessários registros que identifiquem os fluxos avaliados, as observações do treinador, as decisões resultantes e os ajustes aplicados.
+
+
+
+### 8. Rastreabilidade dos Ciclos de Prototipação, Avaliação e Refinamento
+
+A metodologia RAD (Rapid Application Development) orienta o desenvolvimento incremental do Space Jam, por meio de ciclos de prototipação, avaliação e refinamento da solução.
+
+Para demonstrar a aplicação dessa abordagem, a equipe relaciona os artefatos apresentados, os registros de avaliação, as decisões tomadas e os ajustes realizados. Essa rastreabilidade permite distinguir atividades concluídas, refinamentos em andamento e validações ainda pendentes.
+
+#### 8.1 Registro das etapas de prototipação e refinamento
+
+| Etapa | Artefato ou atividade | Evidência disponível | Situação |
+|---|---|---|---|
+| Prototipação inicial | Protótipo de baixa fidelidade | [Protótipo no Figma](https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864) e registro de envio pelo WhatsApp | Apresentação documentada; avaliação detalhada pendente |
+| Refinamento dos requisitos | Discussões sobre permissões, visibilidade de informações e consentimento | [Ata de 26/09](atas/2026-09-26-lucas.md), [ata de 08/10](atas/2026-10-08-lucas.md) e matriz de permissões | Decisões documentadas; vínculo com alterações do protótipo a complementar |
+| Prototipação de alta fidelidade | Protótipo navegável com fluxos do treinador e atleta | [Protótipo de alta fidelidade](https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=168-1123) | Artefato disponível; avaliação formal a identificar |
+| Revisão técnica | Revisão dos requisitos e incrementos de frontend e backend | [Revisão por pares](#revisao-por-pares) | Correções e pendências registradas |
+| Construção incremental | Implementação de funcionalidades de cadastro, autenticação e biblioteca de exercícios | [Registro de 16/11](#reuniao-equipe-2026-11-16) e revisão por pares | Implementação parcial documentada |
+
+#### 8.2 Rastreabilidade das mudanças entre versões
+
+Para caracterizar uma rodada completa de RAD, cada ciclo deverá relacionar:
+
+1. A versão do protótipo ou incremento apresentada.
+2. Os fluxos e critérios efetivamente avaliados.
+3. O feedback recebido do treinador.
+4. As decisões de manutenção ou alteração.
+5. Os ajustes realizados e suas evidências.
+6. A versão revisada resultante.
+
+| Rodada | Versão apresentada | Avaliação recebida | Ajustes realizados | Versão revisada | Situação |
+|---|---|---|---|---|---|
+| Prototipação inicial | Protótipo de baixa fidelidade | Reação positiva registrada no WhatsApp, sem critérios específicos documentados | Não identificados na evidência disponível | Protótipo de alta fidelidade disponível, sem vínculo causal comprovado com o feedback | Rastreabilidade incompleta |
+| Refinamento de permissões | Requisitos e regras discutidos com Lucas | Dúvidas sobre visibilidade, edição e acesso aos dados | Consolidação das regras na matriz de permissões | Matriz consolidada de permissões e acessos | Refinamento de requisitos documentado; alteração correspondente no protótipo a identificar |
+| Revisão técnica | Incrementos de cadastro, autenticação e biblioteca de exercícios | Problemas e melhorias identificados na revisão por pares | Correções e pendências registradas | Novas versões de implementação ainda precisam ser vinculadas às correções | Refinamento técnico parcialmente documentado |
+
+A existência de versões de protótipos, reuniões e registros de revisão não é considerada, isoladamente, comprovação de ciclos completos de RAD. As relações entre feedback, modificação e nova versão serão registradas conforme as evidências forem identificadas.
+
+#### 8.3 Estratégia de validação
+
+A validação do produto durante esta etapa será realizada diretamente com Lucas Cordeiro, treinador e cliente do projeto.
+
+Os atletas permanecem como usuários finais previstos, mas não participarão diretamente dos testes e das atividades de validação da equipe. As necessidades e os fluxos destinados a esse perfil serão avaliados a partir da perspectiva de Lucas.
+
+Essa estratégia permite realizar o refinamento junto ao especialista do domínio, mas apresenta como limitação a ausência de avaliação direta da usabilidade pelos atletas.
+
+As decisões resultantes das avaliações com Lucas deverão ser registradas nas atas e vinculadas às alterações realizadas no protótipo ou na implementação.
+
+
+
+
 
 ---
 
