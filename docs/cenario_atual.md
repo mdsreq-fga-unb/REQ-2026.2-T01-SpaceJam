@@ -41,7 +41,7 @@ condições adequadas de espaço, equipamentos, tempo, auxílio de outras pessoa
 A Rich Picture a seguir representa somente o cenário atual: contato por WhatsApp e Instagram, organização em Samsung Notes, Word e caderno, treinos e testes presenciais, adaptação individual e dificuldades de histórico e comparação.
 
 
-![Rich Picture do cenário atual do acompanhamento dos atletas](imagens/Rich_Picture_cenario_atual.png){:  width="524" height="290" }
+![Rich Picture do cenário atual do acompanhamento dos atletas](imagens/Rich_Picture_Atual.png){:  width="524" height="290" }
 
 
 *Figura 1 — Rich Picture do cenário atual do acompanhamento dos atletas.*
@@ -53,21 +53,22 @@ A Rich Picture a seguir representa somente o cenário atual: contato por WhatsAp
 ### Problema central
 
 
-Os registros de planejamento, perfil e resultados de testes ficam distribuídos entre Samsung Notes,
-Word e caderno, o que torna menos eficiente manter o histórico e comparar a evolução dos atletas.
+**Problema central**
+
+O treinador enfrenta dificuldades para acompanhar continuamente o desenvolvimento individual dos atletas, especialmente fora dos encontros presenciais, e para visualizar e comparar sua evolução ao longo do tempo. Embora as informações de planejamento, testes e desempenho sejam registradas principalmente no Samsung Notes, a ausência de recursos integrados para organizar o histórico, relacionar resultados e acompanhar a execução dos exercícios limita a análise do progresso e a identificação de necessidades de adaptação dos treinamentos.
+
+**Evolução do entendimento do problema**
+
+Inicialmente, a equipe identificou a dispersão dos registros como o principal problema do negócio. Entretanto, após novas interações com Lucas, verificou-se que as informações são mantidas principalmente no Samsung Notes e que a necessidade mais relevante está relacionada ao acompanhamento da evolução individual dos atletas, inclusive à distância. Dessa forma, a organização e a centralização das informações passaram a ser compreendidas como meios para solucionar o problema mais amplo de acompanhamento contínuo, e não como objetivos isolados.
 
 
 ### Problemas observados
 
-
-- **Registros distribuídos:** planejamento, dados do atleta e resultados dos testes são mantidos
-em ferramentas distintas.
-- **Histórico fragmentado:** a consulta da trajetória de cada atleta depende da reunião manual
-dos registros.
-- **Comparação menos eficiente:** acompanhar mudanças nas medidas e nos resultados ao
-longo do tempo exige consolidação manual.
-- **Restrição operacional dos testes:** a qualidade dos testes presenciais depende de
-espaço, equipamentos, tempo, auxílio e padronização adequados.
+- **Acompanhamento à distância:** a dificuldade de monitorar os atletas fora dos encontros presenciais limita a percepção do treinador sobre seu desenvolvimento durante a rotina de treinos.
+- **Visualização da evolução:** a ausência de recursos que permitam observar e comparar o desempenho ao longo do tempo dificulta identificar avanços e pontos que precisam de melhoria.
+- **Falta de recursos integrados:** vídeos, testes físicos, avaliações e registros de desempenho são ferramentas complementares para compreender o desenvolvimento dos atletas. Reuni-los em uma única plataforma amplia as possibilidades de acompanhamento e facilita a análise do progresso individual.
+- **Adaptação dos treinamentos:** identificar as necessidades específicas de cada atleta é fundamental para orientar ajustes nos exercícios e nas estratégias de treinamento de acordo com sua evolução.
+- **Restrição operacional dos testes:** a realização de testes presenciais depende de espaço, equipamentos, tempo, auxílio e condições adequadas de padronização. 
 
 
 ### Análise das causas
@@ -80,7 +81,7 @@ Notes, Word e caderno, consolidação manual, comparação longitudinal pouco ef
 nas condições de realização dos testes.
 
 
-![Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente](imagens/diagrama-ishikawa.png){:  width="702" height="399" }
+![Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente](imagens/ishikawa_atletas_contraste_melhorado.png){:  width="702" height="399" }
 
 
 *Figura 2 — Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente.*
@@ -131,22 +132,16 @@ quem já atua hoje e quem ainda não existe.
 | Parte interessada | Relação com o contexto | Interesse | Influência | Situação no cenário atual |
 | --- | --- | --- | --- | --- |
 | **Lucas Cordeiro** | Treinador/professor autônomo e cliente; centraliza o planejamento e o acompanhamento. | Alto | Alta | Atua diretamente e é a principal fonte de informação sobre o negócio. |
-| **Atletas** | Praticantes de basquete acompanhados, em diferentes níveis de experiência. | Alto | Alta | A participação direta ainda depende de validação; ver observações abaixo e a Seção 1.7. |
-| **Pais ou responsáveis** | Responsáveis legais por atletas menores de idade. | Alto | Média | **Condicional:** passam a integrar o mapa apenas se existirem atletas menores. |
+| **Atletas** | Praticantes de basquete acompanhados, em diferentes níveis de experiência. | Alto | Alta | Não haverá participação direta nos testes de implementações. |
+| **Pais ou responsáveis** | Responsáveis legais por atletas menores de idade. | Alto | Alta | Não haverá participação direta nos testes de implementações. |
 | **Equipe de desenvolvimento** | Equipe "Stakeholders Anônimos" (seis integrantes). | Alto | Alta | Responsável pela elicitação, documentação e validação junto ao cliente. |
 | **Administrador futuro da plataforma** | Papel previsto para a operação do produto, com responsabilidades de gestão de contas, permissões e privacidade. | Médio | Baixa no contexto atual | **Não existe no cenário atual**; antecipado para as evoluções da solução. |
 | **Profissionais de apoio** | Fisioterapeuta, preparador físico ou avaliador de testes ou lesões. | — | — | **Não participam** do cenário atual nem do fluxo de informações; não integram o diagrama. |
 
 É importante registrar que as necessidades atribuídas aos atletas — consultar planejamento, histórico
 e exercícios, além de enviar vídeos — foram levantadas principalmente a partir da visão do treinador.
-Elas **não devem ser tratadas como confirmadas** enquanto não houver evidência direta de participação
-dos atletas na elicitação e na validação. A equipe reconhece que faixa etária, quantidade de atletas,
-dispositivos mais utilizados e necessidades de acessibilidade ainda dependem de validação, tema
-detalhado na Seção 1.7.
 
-Os **pais ou responsáveis** passam a integrar o mapa somente na hipótese de existirem atletas menores
-de idade. Nesse caso, o consentimento para uso de imagem e a proteção de dados de menores tornam-se
-elementos centrais do contexto e exigem atenção à LGPD.
+O consentimento dos **pais ou respnsáveis** para uso de imagem e a proteção de dados de menores tornam-se elementos centrais do contexto e exigem atenção à LGPD.
 
 O **administrador futuro da plataforma** ainda não existe no cenário atual. Sua inclusão antecipa as
 responsabilidades de gestão de contas, permissões de acesso e privacidade que poderão surgir na
@@ -155,7 +150,7 @@ operação do produto, sem confundi-lo com os atores que já atuam hoje.
 Além das partes interessadas do negócio, o docente e o monitor da disciplina acompanham e avaliam o
 projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e do processo.
 
-![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens/mapa_stakeholders.jpg){:  width="2400" height="1792" }
+![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens/stakeholders.png){:  width="2400" height="1792" }
 
 
 *Figura 3 — Mapa de stakeholders do cenário atual do acompanhamento dos atletas.*
@@ -165,12 +160,16 @@ projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e
 **Atores e stakeholders**
 
 - **Treinador (Lucas Cordeiro):** atua no centro da gestão pedagógica dos treinos.
-- **Atleta e responsáveis:** a figura representa o atleta como menor de idade e o vincula aos responsáveis. Essa condição é uma hipótese da representação; a faixa etária precisa ser confirmada com Lucas.
+- **Atletas e responsáveis legais:** conforme informações fornecidas pelo treinador, atualmente são acompanhados cinco atletas ativos, todos menores de idade. Dessa forma, os pais ou responsáveis legais são considerados partes interessadas relevantes, especialmente em questões relacionadas ao consentimento, à privacidade e ao tratamento de dados pessoais e vídeos.
+
+A participação dos responsáveis na operação da plataforma, bem como os procedimentos de autorização e consentimento aplicáveis, deverão ser definidos e validados antes da utilização de dados reais dos atletas, considerando as exigências da LGPD.
+
+As necessidades dos atletas foram levantadas principalmente a partir da perspectiva do treinador, não tendo sido diretamente validadas com os usuários finais nesta etapa. 
 - **Ausência de profissionais de apoio:** fisioterapeutas, preparadores físicos e demais
   profissionais de saúde **não aparecem no diagrama**, pois não participam do fluxo de informações
   no cenário atual.
 
-**Limites da representação.** Os símbolos sobre consentimento, perda de vídeos e vínculo com feedback representam riscos ou hipóteses que precisam de confirmação. Não constituem, por si só, evidência de ocorrência na rotina de Lucas. A figura também menciona Excel; o contexto textual descreve Word e Samsung Notes, e essa divergência precisa ser revisada na imagem.
+**Limites da representação.** Os símbolos sobre consentimento, perda de vídeos e vínculo com feedback representam riscos ou hipóteses que precisam de confirmação. Não constituem, por si só, evidência de ocorrência na rotina de Lucas. 
 
 **Legenda da notação visual**
 
@@ -181,10 +180,9 @@ projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e
   recebidos via WhatsApp que perdem o vínculo com o feedback registrado pelo treinador.
 - **Símbolo de alerta bege — ponto de atrito:** destaca os gargalos operacionais e os riscos do
   cenário atual:
-    - **Sem consentimento dos pais (LGPD):** ausência de um fluxo formal para autorização do
-      tratamento de dados e vídeos de atletas menores de idade.
-    - **Vídeos perdidos:** falta de rastreabilidade entre os exercícios enviados e as correções do
-      treinador.
+    - **Consentimento e proteção de dados (LGPD):** risco relacionado à necessidade de estabelecer procedimentos adequados de autorização e tratamento dos dados pessoais e vídeos de atletas menores de idade.
+
+    - **Rastreabilidade dos vídeos:** possível dificuldade de manter a associação entre exercícios, vídeos compartilhados e feedbacks fornecidos pelo treinador, ainda pendente de confirmação.
     - **Restrições físicas:** desafios operacionais do contexto (espaço, equipamentos e auxílio em
       testes) que impactam a rotina presencial.
     - **Informações dispersas e histórico fragmentado:** registros divididos entre papel, Samsung
@@ -203,9 +201,7 @@ O mapa deve ser lido junto às ressalvas acima e à tabela de stakeholders. As h
 observar a execução e fornecer correções individualizadas.
 
 
-**Perfil tecnológico considerado:** utiliza smartphone, WhatsApp e Instagram para contato, além de
-Samsung Notes, Word e caderno para organizar treinos e informações. A proposta deve exigir
-operações simples de cadastro, consulta, registro, comparação e compartilhamento de conteúdo.
+**Perfil tecnológico considerado:** utiliza smartphone, WhatsApp e Instagram para contato, sendo o WhatsApp também utilizado para fornecer feedbacks, além de Samsung Notes para organizar treinos e informações. A proposta deve exigir operações simples de cadastro, consulta, registro, comparação e compartilhamento de conteúdo.
 
 
 ### Atletas
@@ -220,6 +216,4 @@ peso, envergadura, standing reach, jump height, histórico de lesões e objetivo
 familiaridade básica com mensagens, reprodução e envio de vídeos.
 
 
-**Limites das informações disponíveis:** faixa etária predominante, quantidade de atletas,
-dispositivos mais utilizados e necessidades específicas de acessibilidade ainda dependem de
-validação com Lucas.
+**Informações disponíveis:** todos são menores de idade, atualmente há 5 atletas ativos, usam mais smartphones e nenhum deles necessita de acessibilidade.
