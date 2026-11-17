@@ -19,12 +19,12 @@ export default function App() {
               </RotaProtegida>
             }
           />
-          <Route
+                    <Route
             path="/exercicios"
             element={
-            
-              <BibliotecaExercicios />
-            
+              <RotaProtegida papel="TREINADOR">
+                <BibliotecaExercicios />
+              </RotaProtegida>
             }
           />
           {/* Novas telas: crie em src/features/<area>/ e registre aqui */}

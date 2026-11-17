@@ -11,6 +11,7 @@ export const FUNDAMENTOS = [
 export type Fundamento = (typeof FUNDAMENTOS)[number];
 
 export interface Exercicio {
+  id?: number;
   nome: string;
   fundamento: Fundamento;
   objetivo: string;

@@ -1,10 +1,20 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './BibliotecaExercicios.module.css';
 import logoSpaceJam from '../imagens/logo_space_jam.png';
 import type { Exercicio } from '../../types/exercicio';
 import ExerciseForm from './components/ExerciseForm';
 import ExerciseDetails from './components/ExerciseDetails';
+import {
+  atualizarExercicio as atualizarNaApi,
+  criarExercicio,
+  listarExercicios,
+  mensagemDeErro,
+} from './exerciciosApi';
+
+function ordenarPorNome(lista: Exercicio[]) {
+  return [...lista].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'));
+}
 
 export default function BibliotecaExercicios() {
   const [busca, setBusca] = useState('');
@@ -15,34 +25,75 @@ export default function BibliotecaExercicios() {
     useState<Exercicio | null>(null);
 
   const [exercicios, setExercicios] = useState<Exercicio[]>([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState('');
 
-  function adicionarExercicio(novoExercicio: Exercicio) {
-    setExercicios((listaAtual) => [...listaAtual, novoExercicio]);
-    setMostrarFormulario(false);
+  useEffect(() => {
+    let ativo = true;
+
+    listarExercicios()
+      .then((lista) => {
+        if (ativo) setExercicios(ordenarPorNome(lista));
+      })
+      .catch((falha) => {
+        if (ativo) setErro(mensagemDeErro(falha));
+      })
+      .finally(() => {
+        if (ativo) setCarregando(false);
+      });
+
+    return () => {
+      ativo = false;
+    };
+  }, []);
+
+  async function adicionarExercicio(novoExercicio: Exercicio) {
+    setErro('');
+
+    try {
+      const criado = await criarExercicio(novoExercicio);
+      setExercicios((listaAtual) => ordenarPorNome([...listaAtual, criado]));
+      setMostrarFormulario(false);
+    } catch (falha) {
+      setErro(mensagemDeErro(falha));
+    }
   }
 
   function iniciarEdicao() {
+    setErro('');
     setModoEdicao(true);
     setMostrarFormulario(true);
   }
 
-  function atualizarExercicio(exercicioAtualizado: Exercicio) {
-    if (!exercicioSelecionado) return;
+  async function atualizarExercicio(exercicioEditado: Exercicio) {
+    if (!exercicioSelecionado || exercicioSelecionado.id === undefined) return;
 
-    setExercicios((listaAtual) =>
-      listaAtual.map((exercicio) =>
-        exercicio === exercicioSelecionado
-          ? exercicioAtualizado
-          : exercicio
-      )
-    );
+    setErro('');
 
-    setExercicioSelecionado(exercicioAtualizado);
-    setMostrarFormulario(false);
-    setModoEdicao(false);
+    try {
+      const atualizado = await atualizarNaApi(
+        exercicioSelecionado.id,
+        exercicioEditado
+      );
+
+      setExercicios((listaAtual) =>
+        ordenarPorNome(
+          listaAtual.map((exercicio) =>
+            exercicio.id === atualizado.id ? atualizado : exercicio
+          )
+        )
+      );
+
+      setExercicioSelecionado(atualizado);
+      setMostrarFormulario(false);
+      setModoEdicao(false);
+    } catch (falha) {
+      setErro(mensagemDeErro(falha));
+    }
   }
 
   function cancelarFormulario() {
+    setErro('');
     setMostrarFormulario(false);
     setModoEdicao(false);
   }
@@ -87,6 +138,7 @@ export default function BibliotecaExercicios() {
         <button
           className={styles.botaoAdicionar}
           onClick={() => {
+            setErro('');
             setExercicioSelecionado(null);
             setModoEdicao(false);
             setMostrarFormulario(true);
@@ -95,6 +147,12 @@ export default function BibliotecaExercicios() {
           <span>Adicionar exercício</span>
           <span className={styles.iconeMais}>+</span>
         </button>
+
+        {erro && (
+          <p role="alert" className="mensagemErro">
+            {erro}
+          </p>
+        )}
 
         {mostrarFormulario && (
           <ExerciseForm
@@ -110,10 +168,10 @@ export default function BibliotecaExercicios() {
 
         {!mostrarFormulario && (
           <section className={styles.listaExercicios}>
-            {exerciciosFiltrados.map((exercicio, index) => (
+            {exerciciosFiltrados.map((exercicio) => (
               <button
                 className={styles.exercicio}
-                key={index}
+                key={exercicio.id}
                 onClick={() => {
                   setExercicioSelecionado(exercicio);
                   setMostrarFormulario(false);
@@ -125,13 +183,18 @@ export default function BibliotecaExercicios() {
           </section>
         )}
 
-        {!mostrarFormulario && exerciciosFiltrados.length === 0 && (
-          <p>
-            {exercicios.length === 0
-              ? 'Nenhum exercício cadastrado.'
-              : 'Nenhum exercício encontrado.'}
-          </p>
-        )}
+        {!mostrarFormulario && carregando && <p>Carregando exercícios...</p>}
+
+        {!mostrarFormulario &&
+          !carregando &&
+          !erro &&
+          exerciciosFiltrados.length === 0 && (
+            <p>
+              {exercicios.length === 0
+                ? 'Nenhum exercício cadastrado.'
+                : 'Nenhum exercício encontrado.'}
+            </p>
+          )}
 
         {exercicioSelecionado && !mostrarFormulario && (
           <ExerciseDetails

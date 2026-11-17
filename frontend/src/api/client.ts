@@ -8,9 +8,11 @@ export const tokenStorage = {
 
 export class ApiError extends Error {
   status: number
-  constructor(status: number, message: string) {
+  dados: unknown
+  constructor(status: number, message: string, dados: unknown = null) {
     super(message)
     this.status = status
+    this.dados = dados
   }
 }
 
@@ -25,7 +27,7 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
   const resp = await fetch(`/api${path}`, { ...options, headers })
   if (!resp.ok) {
     const corpo = await resp.json().catch(() => ({}))
-    throw new ApiError(resp.status, corpo.detail ?? `Erro ${resp.status}`)
+    throw new ApiError(resp.status, corpo.detail ?? `Erro ${resp.status}`, corpo)
   }
   return resp.status === 204 ? (undefined as T) : resp.json()
 }
