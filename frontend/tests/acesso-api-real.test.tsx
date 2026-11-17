@@ -83,9 +83,9 @@ grupo('HTTP real pelo proxy do frontend', () => {
     expect(encerrado.status).toBe(401)
     expect(localStorage.getItem('refresh_token')).toBeNull()
     expect(tokenStorage.get()).toBeNull()
-    // Limitação verificada do servidor: o access antigo ainda funciona até expirar.
+    // O access usado no logout também deve ser rejeitado pelo servidor.
     const anterior = await fetch(`${base}/auth/me/`, { headers: { Authorization: `Bearer ${access}` } })
-    expect(anterior.status).toBe(200)
+    expect(anterior.status).toBe(401)
   })
   it('rejeita credenciais inválidas sem criar sessão local', async () => {
     const { pessoa } = abrir('/login')

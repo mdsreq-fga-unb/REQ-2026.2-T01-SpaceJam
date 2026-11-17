@@ -1,6 +1,6 @@
 # Frontend de acesso
 
-Implementação de US01–US05 em React/Vite, preparada para o contrato de contas da branch `backend-acesso`, commit `8ec011743d39e252f923130fd915b2453cb00f9c`.
+Implementação de US01–US05 em React/Vite, preparada para o contrato de contas da branch `backend-acesso`, commit `8628d27886ff83152a68f53ca80f5409422bf4e1`.
 
 ## Configuração
 
@@ -26,14 +26,13 @@ Todas as variáveis `VITE_` ficam visíveis no navegador. Não coloque nelas sen
 
 A interface recebe altura e envergadura em centímetros e converte para metros, sem arredondamento silencioso. Peso continua em kg. O servidor decide intervalos e precisão válidos; erros de validação são exibidos junto aos campos. O cadastro não inicia sessão automaticamente. O código de convite retornado ao treinador é mostrado após o cadastro.
 
-O login conserva os tokens access e refresh e confirma o perfil pelo servidor. A saída elimina a sessão local imediatamente e tenta revogar o refresh. Se a revogação falhar, a interface informa que o encerramento no servidor não foi confirmado. A restauração da sessão consulta `/auth/me/`; não foi acrescentada renovação automática do access token.
+O login conserva os tokens access e refresh e confirma o perfil pelo servidor. A saída elimina a sessão local imediatamente e envia o refresh com o access no cabeçalho. O backend revoga o refresh, rejeita o access usado no logout e recusa refresh de outro usuário. Se o encerramento falhar, a interface informa que ele não foi confirmado no servidor. A restauração da sessão consulta `/auth/me/`; não foi acrescentada renovação automática do access token.
 
 ## Pendências para o incremento
 
 - Disponibilizar os documentos oficiais e confirmar sua correspondência com `TERMOS_VERSAO_ATUAL`. Configurar uma URL não comprova conteúdo, disponibilidade ou validação do documento.
 - Definir com os responsáveis o fluxo comprovável de consentimento de menores (RN16). O backend aceita uma marcação booleana; o frontend não a apresenta como consentimento verificado e mantém esses cadastros bloqueados.
-- Resolver no backend a revogação do access token no logout. A versão examinada revoga apenas o refresh; o access continua utilizável até expirar (30 minutos).
-- Conferir a vinculação do refresh ao usuário que solicita logout: a view examinada não compara os dois usuários.
+- Garantir a preservação das revogações de access no ambiente de entrega. O backend usa `LocMemCache`, restrito ao processo: perda ou remoção da entrada permite reutilizar o access ainda não expirado; outros processos não compartilham essas revogações. A revogação do refresh é registrada no banco.
 - Confirmar ativação/treinador único no ambiente de entrega, destinos finais após login e executar os fluxos no PostgreSQL/Docker previsto pela equipe. A tela de conta existente foi mantida; a biblioteca de exercícios não foi incorporada.
 
 ## Verificações
