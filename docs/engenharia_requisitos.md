@@ -4,7 +4,7 @@ No projeto **Space Jam**, o processo de Engenharia de Requisitos (ER) está orga
 
 ## 5.1 Atividades e Técnicas de ER
 
-A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos relacionadas às quatro fases do RAD. O Miro reúne artefatos visuais de apoio ao planejamento e ao design. A manutenção do escopo textual está centralizada no [catálogo](requisitos.md), com as [orientações de atualização do backlog](backlog.md#atualizacao-do-backlog). O GitHub Projects é a ferramenta prevista para acompanhar o desenvolvimento na [Seção 7](interacao_equipe_cliente.md); o endereço do quadro efetivamente utilizado e suas evidências de atualização ainda precisam ser identificados. O quadro do Miro é um recurso de organização, sem adoção formal do framework Kanban.
+A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos relacionadas às quatro fases do RAD. O Miro reúne artefatos visuais de apoio ao planejamento e ao design. A manutenção do escopo textual está centralizada no [catálogo](requisitos.md), com as [orientações de atualização do backlog](backlog.md#historico-de-revisao). O GitHub Projects é a ferramenta prevista para acompanhar o desenvolvimento na [Seção 7](interacao_equipe_cliente.md); o endereço do quadro efetivamente utilizado e suas evidências de atualização ainda precisam ser identificados. O quadro do Miro é um recurso de organização, sem adoção formal do framework Kanban.
 
 ### Planejamento de Requisitos
 

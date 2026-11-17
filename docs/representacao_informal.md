@@ -109,10 +109,10 @@ Garantir que todo o ciclo essencial funcione perfeitamente no celular e no compu
 | Seção deste Documento | Técnicas de Representação Informal Utilizadas | Grupos de Requisitos Relacionados |
 | :--- | :--- | :--- |
 | **1. Visão Geral por Áreas** | Mapa de Afinidades e Agrupamento Conceitual | [CP1](requisitos.md#cp1) (Perfil Básico), [CP2](requisitos.md#cp2) (Evolução), [CP3](requisitos.md#cp3) (Treinos), [CP4](requisitos.md#cp4) (Biblioteca), [CP5](requisitos.md#cp5)/[CP6](requisitos.md#cp6) (Vídeos e Feedback) |
-| **2. Histórias do Dia a Dia** | Narrativas Descritivas e Cenários de Uso | [RF1104](requisitos.md#RF1104), [RF2410](requisitos.md#RF2410), [RF2412](requisitos.md#RF2412), [RF2301](requisitos.md#RF2301), [RF3501](requisitos.md#RF3501), [RF3502](requisitos.md#RF3502), [RF3601](requisitos.md#RF3601) |
+| **2. Histórias do Dia a Dia** | Narrativas Descritivas e Cenários de Uso | [RF1104](requisitos.md#rf1104), [RF2416](requisitos.md#rf2416), [RF2418](requisitos.md#rf2418), [RF2301](requisitos.md#rf2301), [RF3501](requisitos.md#rf3501), [RF3502](requisitos.md#rf3502), [RF3604](requisitos.md#rf3604) |
 | **3. Passo a Passo da Experiência** | Storyboard Descritivo | Fluxo operacional completo do MVP ([RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07), [RNF04](requisitos_nao_funcionais.md#rnf04)) |
 | **4. Como as Telas Vão se Organizar** | Mockups Conceituais Estruturados | Responsividade Mobile ([RNF02](requisitos_nao_funcionais.md#rnf02)) e Usabilidade |
-| **5. O Que Fica para a Próxima Etapa** | Alinhamento de Escopo e Roadmap | Módulo de Testes Físicos ([RF1212](requisitos.md#RF1212), [RF1213](requisitos.md#RF1213), [RF4803](requisitos.md#RF4803), [RF4811](requisitos.md#RF4811)) e [RF2305](requisitos.md#RF2305) |
+| **5. O Que Fica para a Próxima Etapa** | Alinhamento de Escopo e Roadmap | Módulo de Testes Físicos ([RF1212](requisitos.md#rf1212), [RF1213](requisitos.md#rf1213), [RF4803](requisitos.md#rf4803), [RF4811](requisitos.md#rf4811)) e [RF2305](requisitos.md#rf2305) |
 
 ---
 

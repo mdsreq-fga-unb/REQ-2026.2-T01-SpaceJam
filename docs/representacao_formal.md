@@ -28,7 +28,7 @@ Todo usuário registrado em \(U\) possui obrigatoriamente um único perfil de ac
 
 ### 1.2 Carteira e vínculo privado
 
-**Rastreabilidade:** [RF1101](requisitos.md#RF1101), [RNF10](requisitos_nao_funcionais.md#rnf10), [RN03](regras_negocio.md#rn03), [RN11](regras_negocio.md#rn11).
+**Rastreabilidade:** [RF1101](requisitos.md#rf1101), [RNF10](requisitos_nao_funcionais.md#rnf10), [RN03](regras_negocio.md#rn03), [RN11](regras_negocio.md#rn11).
 
 \[
 V \subseteq
@@ -41,7 +41,7 @@ V \subseteq
 
 ### 1.3 Dados do atleta
 
-**Rastreabilidade:** [RF1104](requisitos.md#RF1104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02).
+**Rastreabilidade:** [RF1104](requisitos.md#rf1104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02).
 
 \[
 \begin{aligned}
@@ -87,7 +87,7 @@ As propriedades abaixo devem permanecer verdadeiras antes e após qualquer trans
 
 ### INV-01 — Autenticação, Aprovação Administrativa e RBAC
 
-**Rastreabilidade:** [RF1101](requisitos.md#RF1101), [RF1102](requisitos.md#RF1102), [RF1107](requisitos.md#RF1107), [RNF09](requisitos_nao_funcionais.md#rnf09), [RN10](regras_negocio.md#rn10).
+**Rastreabilidade:** [RF1101](requisitos.md#rf1101), [RF1102](requisitos.md#rf1102), [RF1107](requisitos.md#rf1107), [RNF09](requisitos_nao_funcionais.md#rnf09), [RN10](regras_negocio.md#rn10).
 
 **Especificação formal:**
 
@@ -107,7 +107,7 @@ As propriedades abaixo devem permanecer verdadeiras antes e após qualquer trans
 
 ### INV-02 — Vínculo Obrigatório do Atleta por Convite Privado
 
-**Rastreabilidade:** [RF1101](requisitos.md#RF1101), [RN11](regras_negocio.md#rn11).
+**Rastreabilidade:** [RF1101](requisitos.md#rf1101), [RN11](regras_negocio.md#rn11).
 
 **Especificação formal:**
 
@@ -207,7 +207,7 @@ As propriedades abaixo devem permanecer verdadeiras antes e após qualquer trans
 
 **Operação:** \(\text{EditarPerfil}(u,a,\Delta D_{\text{pessoal}},\Delta D_{\text{clinico}})\).
 
-**Rastreabilidade:** [RF1104](requisitos.md#RF1104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02).
+**Rastreabilidade:** [RF1104](requisitos.md#rf1104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02).
 
 **Pré-condição:**
 
@@ -304,7 +304,7 @@ M'=M\setminus\{m\}
 
 ### OP-04 — Inativação/Exclusão de Atleta com Retenção Histórica
 
-**Rastreabilidade:** [RF1105](requisitos.md#RF1105), [RN01](regras_negocio.md#rn01), [RN04](regras_negocio.md#rn04), [RN13](regras_negocio.md).
+**Rastreabilidade:** [RF1105](requisitos.md#rf1105), [RN01](regras_negocio.md#rn01), [RN04](regras_negocio.md#rn04), [RN13](regras_negocio.md).
 
 **Pré-condição:**
 

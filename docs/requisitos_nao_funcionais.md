@@ -2,7 +2,7 @@
 
 Metas de qualidade e restrições técnicas do produto. Abra um item para consultar a declaração, sua aplicação no MVP e os requisitos relacionados.
 
-[Catálogo funcional](requisitos.md) · [Método de priorização](backlog.md#1026-priorizacao-dos-requisitos-nao-funcionais)
+[Catálogo funcional](requisitos.md) · [Método de priorização](backlog.md#102-priorizacao-do-backlog-geral-e-mvp)
 
 ## Condições gerais {#rnfs-gerais}
 

@@ -23,14 +23,14 @@ Retorno de Lucas na reunião de 08/10, que alimenta o C4:
 - apontou o envio de vídeos e a correção do treinador como diferencial do produto;
 - discutiu cuidados com a imagem e os vídeos dos atletas;
 - aceitou o esquema visual apresentado como possibilidade, citando vermelho escuro e preto como alternativa;
-- priorização discutida na [ata de 08/10](atas/2026-10-08-lucas.md#priorizacao-discutida): consulta de resultados pelo treinador (hoje [RF04811](requisitos.md#rf04811)) com valor 5; status do treino ([RF02306](requisitos.md#rf02306)) e próprios resultados (hoje [RF04803](requisitos.md#rf04803)) com valor 3; propostas de reduzir a comparação de treinos ([RF02305](requisitos.md#rf02305)) para 3 e retirar a edição de dificuldade (hoje [RF01210](requisitos.md#rf01210)) do recorte inicial, ainda a confirmar.
+- priorização discutida na [ata de 08/10](atas/2026-10-08-lucas.md#priorizacao-discutida): consulta de resultados pelo treinador (hoje [RF4811](requisitos.md#rf4811)) com valor 5; status do treino ([RF2306](requisitos.md#rf2306)) e próprios resultados (hoje [RF4803](requisitos.md#rf4803)) com valor 3; propostas de reduzir a comparação de treinos ([RF2305](requisitos.md#rf2305)) para 3 e retirar a edição de dificuldade (hoje [RF1214](requisitos.md#rf1214)) do recorte inicial, ainda a confirmar.
 
 Pendências desta reunião: consolidar a priorização, definir critérios de aceitação de status, feedback e vínculo entre contas, e esclarecer regras de acesso, visibilidade e consentimento.
 
 ## 6.2 Planejamento registrado dos ciclos C4–C11 {#62-planejamento-dos-proximos-ciclos}
 
 !!! note "Leitura do planejamento e do escopo"
-    As datas e atividades abaixo preservam a previsão registrada em 12/10. A execução posterior precisa ser atualizada com evidências; períodos encerrados não significam ciclos concluídos. O C6 prevê testes físicos, mas [RF01212](requisitos.md#rf01212), [RF04803](requisitos.md#rf04803) e [RF04811](requisitos.md#rf04811) ficaram fora do recorte documental do MVP consolidado em 13/10. Essa divergência precisa de revisão pela equipe antes de assumir um novo compromisso.
+    As datas e atividades abaixo preservam a previsão registrada em 12/10. A execução posterior precisa ser atualizada com evidências; períodos encerrados não significam ciclos concluídos. O C6 prevê testes físicos, mas [RF1212](requisitos.md#rf1212), [RF4803](requisitos.md#rf4803) e [RF4811](requisitos.md#rf4811) ficaram fora do recorte documental do MVP consolidado em 13/10. Essa divergência precisa de revisão pela equipe antes de assumir um novo compromisso.
 
 Os ciclos seguintes representam uma previsão inicial. A sequência poderá ser ajustada depois da revisão dos RFs, RNFs, dependências e prioridades do MVP.
 
