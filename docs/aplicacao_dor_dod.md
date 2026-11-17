@@ -11,7 +11,7 @@ Os registros distinguem preparação, execução, revisão e validação. Um cri
 | Entrega ou histórias | Resultado documentado | O que falta |
 | --- | --- | --- |
 | [Análise documental de 08/11](#caso-historico) | DoR histórico registrado para a análise delimitada. No [DoD da análise](#dod-documental), DoD01/03/04 atendidos nesse recorte; DoD06 não se aplica. | DoD02 e DoD05 não atendidos: revisão por integrante diferente do autor e publicação final conferida. |
-| [Backlog/MVP, PR #68, `56497c3`](#aplicacao-backlog-mvp) | DoD03 parcialmente comprovado. DoD01/02/04/05/06 não atendidos. Há feedback externo do monitor, que não cumpre DoD02. | Correções de escopo e vínculos, revisão independente da equipe, publicação e confirmações do cliente. |
+| [Backlog/MVP, PR #68, `56497c3` e `b91dd82`](#aplicacao-backlog-mvp) | DoD03 parcialmente comprovado. DoD01/02/04/05/06 não atendidos. Há feedback externo do monitor, que não cumpre DoD02. | Correções de escopo e vínculos, revisão independente da equipe, publicação e confirmações do cliente. |
 | [US01–US05, US30, US38 e US39](#conferencia-iteracao1) | No PDF de DoR01–DoR05: US01 não pronta; US02/03/30/38 prontas nos critérios avaliados; US04/05/39 com os registros e ressalvas indicados. | DoR06 parcialmente comprovado nas oito: estimativas, disponibilidade e responsáveis atuais a conciliar. Decisão inicial coletiva não comprovada; RN16 bloqueia US01. |
 | [Frontend de US01–US05, PR #77, `29397dd`](#disponibilidade-historias) | DoD01/03/04 com comprovação parcial; DoD02/05 não atendidos; DoD06 depende do objetivo de validação. Os 54 testes locais usam respostas simuladas. | Integração, critérios de aceitação restantes e revisão independente. As histórias não estão concluídas. |
 | [Upload e desempenho](#conciliacao-rnfs) | Divergências de RNF07/RNF11 e aceites identificadas por versão. | Conciliar obrigatoriedade e condições de medição; não há decisão unilateral ou teste de produto neste registro. |
@@ -20,7 +20,7 @@ Os registros distinguem preparação, execução, revisão e validação. Um cri
 
 **Cliente:** vincular os retornos de Lucas à versão examinada e confirmar mudanças ainda não cobertas, incluindo consentimento de menores e os compromissos de produto aplicáveis. As atas históricas não aprovam automaticamente os requisitos atuais. [Consultar retornos e limites](#retornos-cliente).
 
-A [fonte completa da reunião de 16/11](#fonte-reuniao) permanece no ambiente institucional restrito; esta página informa sua localização, sem publicar gravação, transcrição completa ou link restrito.
+O [registro de consulta da reunião de 16/11](reunioes.md#reuniao-equipe-2026-11-16) reúne os encaminhamentos utilizados nesta análise. A [fonte integral](#fonte-reuniao) permanece no ambiente institucional restrito; não foi localizada ata formal dessa ocorrência.
 
 ## Aplicação ao Backlog e ao MVP {#aplicacao-backlog-mvp}
 
@@ -41,6 +41,8 @@ Esse registro de feedback externo não cumpre o DoD02. A revisão exigida deve s
 **Registro necessário após os ajustes de Guilherme:** nome do integrante revisor, data, versão ou commit examinado, apontamentos, correções verificadas e resultado. Não há revisão de equipe concluída atribuída ao monitor.
 
 **Resultado:** artefatos com feedback externo e achados verificáveis, ainda pendentes pelo DoD e sem revisão independente comprovada de integrante da equipe. Guilherme precisa tratar os ajustes do Backlog/MVP com os responsáveis pelos requisitos; a análise abaixo de 08/11 permanece como caso histórico complementar.
+
+**Reavaliação do PR #68 em 16/11 — versão posterior `b91dd82`:** o commit integra a branch de requisitos, e o PR #78 foi mesclado nessa branch. Os arquivos [Backlog](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/b91dd82c2d889a2dc95d23defd468c8452ba3d5b/docs/backlog.md) e [MVP](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/b91dd82c2d889a2dc95d23defd468c8452ba3d5b/docs/mvp.md) permanecem idênticos aos de `56497c3`. Continuam as contagens 62/46, a ausência de RF3608–RF3610 no planejamento e a conclusão de capacidade baseada em 9,2 RFs por iteração. O Backlog ainda exige aprovação administrativa de treinador, enquanto a RN01 agora presente nessa versão define treinador único com código de ativação. Esses apontamentos continuam pendentes. Não foi localizada revisão independente de integrante da equipe registrada para a versão posterior; o merge não atende automaticamente ao DoD02.
 
 ## Caso histórico: análise documental de 08/11 {#caso-historico}
 
@@ -82,7 +84,8 @@ O registro de preparação datado de 08/11 informa que antecedeu o levantamento.
 | --- | --- |
 | RFs, histórias, regras e aceites | [Documentação de requisitos](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/36dce72a771daabce8cb5017d2431baac97568b4/docs), commit `36dce72`. |
 | RNFs e aceites do PR #70 | [RNFs](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/c0c98224dc7adf17f7cd17a302506718284c0843/docs/requisitos_nao_funcionais.md) e [aceites](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/c0c98224dc7adf17f7cd17a302506718284c0843/docs/criterios_aceitacao.md), commit `c0c9822`. |
-| Backlog e MVP | [Versão do PR #68](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/56497c32cbe6d376ef5093123a666d477c744e29/docs), commit `56497c3`. |
+| Backlog e MVP — avaliação inicial | [Versão do PR #68](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/56497c32cbe6d376ef5093123a666d477c744e29/docs), commit `56497c3`. |
+| Backlog e MVP — reavaliação posterior | [Versão atualizada do PR #68](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/b91dd82c2d889a2dc95d23defd468c8452ba3d5b/docs), commit `b91dd82`; os dois arquivos avaliados não mudaram. |
 | API disponível | [Rotas de contas](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/urls.py) e [modelo](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/models.py), commit `6e66cf4`, integrado em `develop` pelo PR #76. |
 | Frontend de acesso | [Código publicado](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/29397ddd21f181020f4cb58e11c74f77df4acc3c/frontend), commit `29397dd`, no Draft PR #77. |
 
@@ -139,7 +142,7 @@ As ressalvas e marcações das páginas 8–9 permanecem no original. A marcaç�
 - **F3 — Reunião de 16/11:** a [referência à fonte completa e aos minutos conferidos](#fonte-reuniao) indica como consultar a gravação e a transcrição no ambiente institucional, com as permissões existentes. O documento fornecido foi conferido pelo SHA-256 `759a33f7983810ba7f3c3f2728d0f4f486512931a04e3416b10e666c9a092550`. A leitura continua parcial para atribuição formal por item e decisão inicial, sem validação integral pelo áudio.
 - **F4 — Execução disponível:** [PR #77, frontend de US01–US05](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77), em `29397dd`, e [commit de Thiago na branch de US30](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/commit/ac1c207ea8cde6d5981649e23bcca7f67e1ad1f4), com alterações no backend. Identificam contribuição e versão, não a atribuição formal no planejamento nem o atendimento do DoD.
 
-A divisão comunicada entre Luiz, no acesso, e Júlia, na biblioteca, precisa ser conciliada com F1. O relato posterior de Thiago sobre uma divisão anterior de back/front não localiza seu registro original, a estimativa ou a capacidade. Não foi convertido em decisão formal por US.
+A divisão comunicada entre Luiz, no acesso, e Júlia, na biblioteca, precisa ser conciliada com F1. O relato posterior de Thiago sobre uma divisão anterior de back/front não identifica estimativa ou capacidade por item. Seu relato sobre o início informal da implementação está registrado abaixo, sem ser convertido em decisão formal por US.
 
 #### Resultado por história
 
@@ -162,13 +165,17 @@ Os nomes previstos em F1 são comprovados como conteúdo daquela versão; sua vi
 
 A transcrição F3 contém um encaminhamento identificável de **continuidade**: em 45:28, Thiago orienta a revisão de Luiz e a continuidade de Guilherme, no contexto de cadastro/login. Há data, interlocutor e recorte, mas faltam versão específica, confirmação por item e elementos do DoR06. A transcrição original foi consultada no Teams, com acesso restrito, conforme a referência abaixo; não foi validada integralmente pelo áudio. O encaminhamento continua parcialmente comprovado para fins da decisão de início.
 
-Esse trecho não é a decisão inicial de liberar coletivamente as oito histórias. O PDF comprova uma avaliação documental existente; a divisão de tarefas e o código publicado comprovam outros fatos. Nenhuma dessas fontes foi tratada isoladamente como aprovação coletiva ou como dispensa do DoR06. Falta vincular a decisão original, se existente, com data, participantes, itens e tratamento dos bloqueios; uma confirmação feita agora deve manter sua data real.
+Esse trecho não é a decisão inicial de liberar coletivamente as oito histórias. O PDF comprova uma avaliação documental existente; a divisão de tarefas e o código publicado comprovam outros fatos. Nenhuma dessas fontes foi tratada isoladamente como aprovação coletiva ou como dispensa do DoR06.
+
+**Relato posterior de Thiago, informado em 16/11:** ele e Guilherme decidiram informalmente iniciar a implementação, sem registro formal contemporâneo dessa decisão. O relato não identifica a data original, o conjunto de histórias liberado nem o tratamento dos bloqueios. Ele foi acrescentado como relato posterior, sem comprovar aprovação coletiva ou completar o DoR06. A regularização do planejamento e qualquer decisão atual de continuidade devem manter a data real, os responsáveis, as estimativas e as condições ainda pendentes.
 
 ### Fonte completa da reunião de 16/11 {#fonte-reuniao}
 
+**Registro na seção de reuniões:** [Reunião da equipe de 16/11 — registro de consulta](reunioes.md#reuniao-equipe-2026-11-16). A página identifica a origem, as minutagens e os limites dos trechos usados, com os [excertos literais da transcrição automática](reunioes.md#trechos-transcricao-2026-11-16) como evidência complementar. Não foi localizada uma ata formal para comparar com as falas; o registro foi preparado posteriormente a partir da transcrição automática.
+
 **Origem:** Microsoft Teams/SharePoint da equipe Space Jam - Requisitos. **Registro:** Reunião Semanal de 16/11/2026, gravação iniciada às 10h35, duração de 47min04s. A transcrição completa foi consultada no ambiente institucional; **não está publicada no GitHub**.
 
-Em 16/11/2026, às 19h35 de Brasília, foi recuperada uma exportação oficial completa em DOCX, com início e encerramento da transcrição e falas até 47:01 em um registro de 47min04s. O conteúdo textual coincide com o documento anteriormente fornecido; a cópia permanece fora do repositório público, sem validação integral pelo áudio.
+Em 16/11/2026, às 19h35 de Brasília, foi recuperada uma exportação oficial completa em DOCX, com início e encerramento da transcrição e falas até 47:01 em um registro de 47min04s. O DOCX fornecido inicialmente, identificado em F3 pelo SHA-256 `759a33f7983810ba7f3c3f2728d0f4f486512931a04e3416b10e666c9a092550`, e a exportação oficial, identificada em Reuniões pelo SHA-256 `ccc86925d2ff53a378978ad496268c887743c9d61c04907381c6b7ce4dc6e359`, têm texto principal e imagens idênticos. Os hashes dos arquivos diferem porque os metadados e as relações internas dos pacotes DOCX são diferentes. As cópias integrais permanecem fora do repositório público, sem validação integral pelo áudio.
 
 **Consulta por contas já autorizadas:** no Teams, abrir **Space Jam - Requisitos → Geral → Compartilhado → General → Recordings** e o arquivo **Reunião Semanal-20261116_103543-Gravação de Reunião.mp4**; selecionar **Ler a transcrição**. Também é possível abrir **Reunião Semanal → Recapitulação → 16/11/2026** e consultar a transcrição dessa ocorrência.
 
@@ -236,7 +243,7 @@ O build e a conferência locais não substituem a execução do deploy nem a abe
 
 | Pendência | Encaminhamento |
 | --- | --- |
-| Avaliação e decisão de início da Iteração 1 | PDF original localizado e vinculado, preservando DoR01–DoR05. Falta identificar os commits das fontes dele e o registro da decisão inicial; a continuidade encontrada na transcrição não comprova liberação coletiva. Thiago/equipe: conferir esses vínculos. |
+| Avaliação e decisão de início da Iteração 1 | PDF original localizado e vinculado, preservando DoR01–DoR05. Falta identificar os commits das fontes dele. Thiago relata posteriormente início informal com Guilherme, sem registro formal contemporâneo; a transcrição comprova continuidade, não liberação coletiva. A equipe precisa registrar o planejamento e a decisão atual com data real, sem reconstruir aprovação anterior. |
 | DoR06 dos oito itens | Conferência parcial acima: conciliar nomes do Backlog com a divisão atual, vincular estimativa por US e demonstrar compatibilidade com a capacidade. Thiago/executores: fornecer o registro existente ou completar o planejamento com a data real. |
 | DoD02 e correções do Backlog/MVP | Guilherme: corrigir os achados. Outro integrante, diferente do autor: registrar nome, data, versão/commit, apontamentos, correções verificadas e resultado. O monitor fornece feedback externo e não substitui essa revisão. |
 | Confirmações de requisitos | Lucas e participantes: vincular retornos por versão; confirmar mudanças não abrangidas pelas atas anteriores. |
