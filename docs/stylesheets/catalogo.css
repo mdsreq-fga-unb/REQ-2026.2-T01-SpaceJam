@@ -65,6 +65,21 @@
   .sj-requirement-body > .sj-record-full { grid-column: 1; }
 }
 
+.md-typeset details.sj-rnf > summary { grid-template-columns: 4.25rem minmax(0,1fr) .6rem; grid-template-rows: auto auto; row-gap: .35rem; }
+.md-typeset details.sj-rnf > summary .sj-requirement-id { grid-column: 1; grid-row: 1/3; align-self: start; padding-top: .1rem; }
+.md-typeset details.sj-rnf > summary .sj-requirement-name { grid-column: 2; grid-row: 1; }
+.md-typeset details.sj-rnf > summary .sj-requirement-tags { grid-column: 2; grid-row: 2; justify-content: flex-start; }
+.md-typeset details.sj-rnf > summary::after { grid-column: 3; grid-row: 1/3; }
+.md-typeset .sj-rnf .sj-requirement-body > div:last-child { border-bottom: 0; }
+.md-typeset .sj-rnf-relacionadas { margin: .2rem 0 0; padding: 0; list-style: none; }
+.md-typeset .sj-rnf-relacionadas li { margin: .15rem 0; }
+.md-typeset .sj-rnf-perfis { margin: .2rem 0 0; padding: 0; list-style: none; }
+.md-typeset .sj-rnf-perfis li { margin: .15rem 0; }
+.md-typeset .sj-rnf-checklist { margin: .2rem 0 0; padding: 0; list-style: none; }
+.md-typeset .sj-rnf-checklist li { position: relative; margin: .25rem 0; padding-left: 1.35rem; }
+.md-typeset .sj-rnf-checklist li::before { position: absolute; left: 0; top: .05rem; content: "\2610"; color: var(--sj-purple-700); font-size: .8rem; }
+.md-typeset .sj-rnf > .sj-related-requirements { margin: 0; padding: 0 1rem .5rem; }
+
 @media print {
   .sj-requirement, .sj-catalog-group { display:block !important; }
   details.sj-requirement > .sj-requirement-body { display:grid !important; }
