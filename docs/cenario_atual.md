@@ -81,7 +81,7 @@ Notes, Word e caderno, consolidação manual, comparação longitudinal pouco ef
 nas condições de realização dos testes.
 
 
-![Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente](imagens\ishikawa_atletas_contraste_melhorado.png){:  width="702" height="399" }
+![Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente](imagens/ishikawa_atletas_contraste_melhorado.png){:  width="702" height="399" }
 
 
 *Figura 2 — Diagrama de Ishikawa das causas da fragmentação dos registros e da comparação menos eficiente.*
@@ -150,7 +150,7 @@ operação do produto, sem confundi-lo com os atores que já atuam hoje.
 Além das partes interessadas do negócio, o docente e o monitor da disciplina acompanham e avaliam o
 projeto em seu contexto acadêmico, contribuindo para a revisão dos artefatos e do processo.
 
-![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens\stakeholders.png){:  width="2400" height="1792" }
+![Mapa de stakeholders do cenário atual do acompanhamento dos atletas](imagens/stakeholders.png){:  width="2400" height="1792" }
 
 
 *Figura 3 — Mapa de stakeholders do cenário atual do acompanhamento dos atletas.*
