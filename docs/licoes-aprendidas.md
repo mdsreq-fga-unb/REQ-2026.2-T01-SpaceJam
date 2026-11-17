@@ -61,12 +61,32 @@ Estas são ações planejadas. Sua conclusão depende das evidências vinculadas
 | Aplicar os critérios de DoR e DoD às entregas do projeto | Todos | Durante cada ciclo | Checklist atualizado no quadro de acompanhamento |
 | Revisar o cronograma conforme o andamento e as validações realizadas | Júlia Amanda | Semanalmente e diante de mudanças relevantes | Cronograma atualizado e versionado |
 
+## 12.3 Unidade 3
+
+### Desenvolvimento e dificuldades enfrentadas
+
+A Unidade 3 aproximou a revisão dos requisitos da construção do sistema. As mudanças nos RFs, RNFs, regras e aceites exigiram ajustes no Backlog, no MVP e no cronograma enquanto acesso e biblioteca eram implementados em paralelo. As [contribuições de cada integrante](entregas.md#contribuicoes-da-equipe) estão reunidas na entrega da unidade.
+
+A integração ficou concentrada perto do prazo. Houve dúvidas sobre a divisão das histórias, as branches de destino e os contratos entre frontend e backend. A criação da `develop` definiu um destino comum para o código, mas não concluiu a integração dos módulos. A gravação foi adiada para aguardar as implementações e o vídeo não foi produzido.
+
+### Aprendizados e próximos ajustes
+
+As inspeções complementaram os testes automatizados, apontando melhorias na apresentação das medidas e do aceite de termos no cadastro. Os [registros de DoR/DoD](aplicacao_dor_dod.md) também mostraram a necessidade de identificar versões, responsáveis e estimativas antes do início das histórias. Código implementado, teste aprovado e validação pelo cliente precisam de evidências próprias.
+
+Para a próxima unidade, os ajustes propostos são:
+
+- Confirmar responsáveis, estimativas, dependências e contratos de API antes de implementar cada história.
+- Integrar e revisar os módulos durante a iteração, reservando tempo para testes no ambiente previsto.
+- Atualizar requisitos e artefatos relacionados na mesma mudança, mantendo a origem das decisões e as pendências de validação.
+- Preparar a apresentação com antecedência, mesmo quando houver funcionalidades pendentes, mostrando o estado real da entrega.
+
 <span id="historico-de-versao"></span>
 
 ??? abstract "Histórico de revisão"
 
     | Data | Versão | Descrição | Autor |
     | --- | --- | --- | --- |
+    | 17/11/2026 | 0.7 | Registro dos aprendizados da Unidade 3 e dos ajustes propostos para integração, planejamento e apresentação | Luiz Henrique Pessato da Mota |
     | 13/10/2026 | 0.6 | Integração das revisões das Unidades 1 e 2, preservando as correções da documentação e as autorias anteriores | Equipe Space Jam |
     | 12/10/2026 | 0.5 | Modificando responsáveis das ações de melhorias | Júlia Amanda Silva Lima |
     | 01/10/2026 | 0.4 | Modificando responsáveis das ações de melhorias | Thiago Alencar de Oliveira |

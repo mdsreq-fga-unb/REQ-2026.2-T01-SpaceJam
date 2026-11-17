@@ -136,3 +136,43 @@ A entrega da Unidade 2 contempla o detalhamento e a atualização da Visão de P
     </iframe>
   </div>
 </details>
+
+
+<div class="sj-delivery-hero" markdown="1">
+
+<p class="sj-delivery-eyebrow">REGISTRO DE ENTREGA · SPACE JAM</p>
+
+## Unidade 3
+
+<p class="sj-delivery-lead"><strong>Terceira entrega.</strong> A revisão e representação dos requisitos, a aplicação de DoR e DoD e o início da construção dos fluxos de acesso e da biblioteca de exercícios.</p>
+
+<div class="sj-delivery-facts">
+  <div><span>Documento</span><strong>Requisitos e evidências de construção</strong></div>
+  <div><span>Conteúdo</span><strong>Representação, revisão e implementação inicial</strong></div>
+  <div><span>Formato</span><strong>Registro textual e artefatos do projeto</strong></div>
+</div>
+
+</div>
+
+### Escopo da entrega
+
+Na Unidade 3, a equipe revisou requisitos, regras e aceites, atualizou o Backlog, o MVP e o cronograma e reuniu representações formais, informais e protótipos. As evidências estão em [Engenharia de Requisitos](engenharia_requisitos.md) e [Reuniões](reunioes.md).
+
+A construção concentrou-se nas oito histórias da primeira iteração: cadastro, login e logout (US01–US05) e cadastro, consulta e edição de exercícios (US30, US38 e US39). Foram implementados ambiente, interfaces e endpoints, com testes e inspeções. A [aplicação de DoR e DoD](aplicacao_dor_dod.md) registra os critérios ainda pendentes.
+
+### Contribuições da equipe
+
+| Integrante | Contribuições nesta unidade |
+| --- | --- |
+| Thiago Alencar de Oliveira | Ambiente de desenvolvimento, RFs, regras e aceites; conferência do DoR; backend da biblioteca ([PR #80](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/80), [PR #82](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/82)). |
+| Guilherme Ferreira Mendes | Backlog, MVP, processo de ER e representações de requisitos; backend de acesso e apoio à integração com o frontend ([PR #78](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/78), [PR #81](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/81), [PR #83](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/83) e branch `backend-acesso`). |
+| Júlia Amanda Silva Lima | Revisão do cenário e da solução, atualização do protótipo, articulação com o cliente e frontend da biblioteca de exercícios ([PR #69](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/69), [PR #79](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/79)). |
+| Anderson Fernandes | Revisão dos RNFs e seus vínculos com as regras; inspeção técnica do acesso e da biblioteca, com registro de problemas e melhorias ([PR #70](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/70) e [revisão por pares](reunioes.md#revisao-por-pares)). |
+| Paulo Sérgio | Atualização do cronograma e dos vínculos com evidências; conferência do frontend e participação nas verificações da equipe ([PR #72](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/72)). |
+| Luiz Henrique Pessato da Mota | Pages, matrizes históricas, reuniões e aplicação de DoR/DoD; frontend de acesso e integração HTTP com o backend ([PR #74](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74), [PR #75](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/75), [PR #77](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77)). |
+
+### Estado da entrega
+
+O frontend de acesso está na `develop`; o backend compatível e a biblioteca permanecem em branches próprias. Os testes HTTP de acesso com SQLite não comprovam integração completa em PostgreSQL/Docker ou aceite do cliente. Faltam consolidar os módulos, disponibilizar os termos oficiais e definir o consentimento de menores, além das pendências do DoR/DoD.
+
+Não foi produzido vídeo de apresentação da Unidade 3. Este registro reúne o trabalho realizado e suas limitações; os aprendizados estão em [Lições Aprendidas — Unidade 3](licoes-aprendidas.md#123-unidade-3).
