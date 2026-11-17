@@ -1,9 +1,32 @@
-
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import type { Exercicio } from '../../../types/exercicio';
 
 import BibliotecaExercicios from '../BibliotecaExercicios';
+
+let banco: Exercicio[] = [];
+let proximoId = 1;
+
+vi.mock('../exerciciosApi', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../exerciciosApi')>()),
+  listarExercicios: vi.fn(async () => [...banco]),
+  criarExercicio: vi.fn(async (ex: Exercicio) => {
+    const criado = { ...ex, id: proximoId++ };
+    banco.push(criado);
+    return criado;
+  }),
+  atualizarExercicio: vi.fn(async (id: number, ex: Exercicio) => {
+    const atualizado = { ...ex, id };
+    banco = banco.map((e) => (e.id === id ? atualizado : e));
+    return atualizado;
+  }),
+}));
+
+beforeEach(() => {
+  banco = [];
+  proximoId = 1;
+});
 
 describe('BibliotecaExercicios', () => {
   // Função auxiliar para cadastrar exercícios nos testes
@@ -36,16 +59,14 @@ describe('BibliotecaExercicios', () => {
   }
 
   // TESTE 11: Exibição inicial da biblioteca
-  it('deve exibir a mensagem quando não existem exercícios cadastrados', () => {
+  it('deve exibir a mensagem quando não existem exercícios cadastrados', async () => {
     render(<BibliotecaExercicios />);
 
     expect(
       screen.getByRole('heading', { name: /biblioteca de exercícios/i })
     ).toBeInTheDocument();
 
-    expect(
-      screen.getByText('Nenhum exercício cadastrado.')
-    ).toBeInTheDocument();
+    expect(await screen.findByText('Nenhum exercício cadastrado.')).toBeInTheDocument();
   });
 
   // TESTE 12: Abrir cadastro
@@ -72,7 +93,7 @@ describe('BibliotecaExercicios', () => {
     await cadastrarExercicio(usuario, 'Arremesso de bandeja');
 
     expect(
-      screen.getByRole('button', { name: 'Arremesso de bandeja' })
+      await screen.findByRole('button', { name: 'Arremesso de bandeja' })
     ).toBeInTheDocument();
 
     expect(
@@ -94,7 +115,7 @@ describe('BibliotecaExercicios', () => {
     await usuario.type(campoBusca, 'Arremesso');
 
     expect(
-      screen.getByRole('button', { name: 'Arremesso de bandeja' })
+      await screen.findByRole('button', { name: 'Arremesso de bandeja' })
     ).toBeInTheDocument();
 
     expect(
@@ -111,11 +132,11 @@ describe('BibliotecaExercicios', () => {
     await cadastrarExercicio(usuario, 'Arremesso de bandeja');
 
     await usuario.click(
-      screen.getByRole('button', { name: 'Arremesso de bandeja' })
+      await screen.findByRole('button', { name: 'Arremesso de bandeja' })
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Arremesso de bandeja' })
+      await screen.findByRole('heading', { name: 'Arremesso de bandeja' })
     ).toBeInTheDocument();
 
     expect(
@@ -132,7 +153,7 @@ describe('BibliotecaExercicios', () => {
     await cadastrarExercicio(usuario, 'Arremesso de bandeja');
 
     await usuario.click(
-      screen.getByRole('button', { name: 'Arremesso de bandeja' })
+      await screen.findByRole('button', { name: 'Arremesso de bandeja' })
     );
 
     await usuario.click(
@@ -153,7 +174,7 @@ describe('BibliotecaExercicios', () => {
     );
 
     expect(
-      screen.getByRole('heading', { name: 'Arremesso de três pontos' })
+      await screen.findByRole('heading', { name: 'Arremesso de três pontos' })
     ).toBeInTheDocument();
   });
 
