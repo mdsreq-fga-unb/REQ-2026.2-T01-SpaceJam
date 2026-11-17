@@ -6,9 +6,11 @@
 
 O objetivo geral do produto é tornar mais eficiente o acompanhamento individual dos atletas de Lucas, por meio de uma aplicação web responsiva capaz de centralizar informações de perfil, resultados de testes, planejamento, exercícios, treinos e histórico de evolução.
 
-A solução busca reduzir a dispersão das informações utilizadas no acompanhamento dos atletas, facilitando o acesso aos dados relevantes para o treinador e permitindo que cada atleta consulte seus exercícios, orientações e histórico de forma organizada.
+A solução busca centralizar os recursos de acompanhamento dos atletas em uma única plataforma, facilitando o monitoramento à distância e a análise de seu desenvolvimento ao longo do tempo. O treinador poderá acompanhar o progresso individual e identificar necessidades de melhoria e adaptar os treinamentos. Os atletas, por sua vez, poderão consultar suas atividades e acompanhar a própria evolução de forma organizada.
 
-Como recurso complementar aos encontros presenciais, a solução também permitirá o envio privado e opcional de vídeos vinculados aos exercícios, possibilitando que o treinador forneça feedback individualizado ao atleta. Esse recurso não tem como objetivo substituir a análise presencial do treinador, mas complementar o acompanhamento realizado durante os treinos.
+Como recurso complementar aos encontros presenciais, o MVP contemplará a funcionalidade de envio privado de vídeos vinculados aos exercícios, permitindo que o treinador forneça feedback individualizado. O envio de vídeos será opcional para o atleta, mas a disponibilização desse recurso integra o escopo previsto para a primeira versão do produto. Os critérios de aceitação, limites de armazenamento e procedimentos de privacidade serão refinados e validados ao longo das iterações com o cliente.
+
+Esse recurso não substituirá a análise presencial do treinador, mas ampliará as possibilidades de acompanhamento individual fora dos encontros presenciais.
 
 Dessa forma, o produto pretende oferecer um ambiente único para organização, acompanhamento e comunicação entre treinador e atleta, respeitando as particularidades e necessidades individuais de cada usuário.
 
@@ -57,7 +59,9 @@ As características apresentadas a seguir foram definidas considerando os objeti
 
 Nesta etapa do projeto, foram identificadas como capacidades prioritárias da solução a gestão das informações dos atletas, o planejamento e acompanhamento dos treinos, a biblioteca de exercícios, o acompanhamento da evolução e os mecanismos de comunicação e feedback individual.
 
-A delimitação preliminar do MVP já está estabelecida com base nas capacidades prioritárias identificadas (CP1 a CP8) e na matriz de esforço e valor de negócio, garantindo o alinhamento entre o valor gerado e a viabilidade técnica. O detalhamento fino dessas funcionalidades e seus critérios de aceitação serão continuamente validados e ajustados junto ao cliente ao longo das iterações do projeto.
+O escopo preliminar do MVP contempla as capacidades CP1 a CP8, incluindo a gestão das informações dos atletas, o acompanhamento da evolução, o planejamento dos treinos, a biblioteca de exercícios, o envio privado de vídeos, o feedback individual e os mecanismos de controle de acesso e privacidade.
+
+A seleção dessas capacidades foi fundamentada na análise de valor de negócio e esforço técnico realizada pela equipe. Ao longo das iterações do RAD, serão refinados os requisitos, as regras de negócio e os critérios de aceitação de cada funcionalidade, sem que esse refinamento represente, por si só, indefinição sobre sua inclusão no escopo inicial.
 
 Entre as possibilidades consideradas para a solução estão o gerenciamento do perfil dos atletas, registro de testes, planejamento individual, organização de exercícios, histórico de treinos e comunicação entre treinador e atleta.
 
@@ -68,7 +72,7 @@ Funcionalidades mais complexas, como análise automática de vídeo, ranking por
 
 A solução será desenvolvida como uma aplicação web responsiva, acessível por computadores, smartphones e tablets. A interface deverá se adaptar a diferentes tamanhos de tela, considerando os diferentes contextos de utilização dos usuários.
 
-O treinador poderá utilizar computadores e smartphones para gerenciamento dos atletas, consulta das informações, organização do planejamento, acompanhamento dos treinos e comunicação com os atletas. Para os atletas, o smartphone será considerado o principal dispositivo de acesso, especialmente para consulta de exercícios, orientações, planejamento e, caso a funcionalidade seja validada, envio de vídeos relacionados aos exercícios.
+O treinador poderá utilizar computadores e smartphones para gerenciamento dos atletas, consulta das informações, organização do planejamento, acompanhamento dos treinos e comunicação com os atletas. Para os atletas, o smartphone será considerado o principal dispositivo de acesso, especialmente para consulta de exercícios, orientações, planejamento e envio opcional de vídeos relacionados aos exercícios.
 
 Para o desenvolvimento da interface, propõe-se a utilização do **React**, permitindo a construção de componentes reutilizáveis e de uma interface organizada e responsiva.
 
@@ -76,7 +80,7 @@ No desenvolvimento do back-end, será utilizada a linguagem **Python**, respons�
 
 Para o armazenamento dos dados, será utilizado o **PostgreSQL**, um banco de dados relacional que permitirá estruturar informações referentes aos atletas, testes, exercícios, planejamentos, treinos, vídeos e feedbacks.
 
-Caso o compartilhamento de vídeos seja validado e incorporado à solução, os arquivos de mídia deverão ser armazenados separadamente dos dados estruturados da aplicação, utilizando uma solução apropriada de armazenamento de arquivos. A definição da tecnologia específica deverá considerar fatores como custo, capacidade disponível, segurança, integração com a aplicação e facilidade de gerenciamento.
+Considerando que o envio privado de vídeos integra o escopo preliminar do MVP, os arquivos de mídia serão armazenados separadamente dos dados estruturados da aplicação, utilizando uma solução apropriada de armazenamento de arquivos. A tecnologia específica ainda será definida pela equipe, considerando custo, capacidade, segurança, integração e facilidade de gerenciamento.
 
 Os formatos e limites de mídia já declarados estão em [RNF06](requisitos_nao_funcionais.md#rnf06) e [RNF13](requisitos_nao_funcionais.md#rnf13). Sua confirmação e verificação permanecem pendentes. Antes da implementação definitiva, também é necessário revisar os seguintes aspectos:
 
@@ -89,7 +93,7 @@ Os formatos e limites de mídia já declarados estão em [RNF06](requisitos_nao_
 - custos de armazenamento;
 - regras de acesso aos conteúdos individuais;
 - necessidade de consentimento para o armazenamento e compartilhamento dos vídeos;
-- procedimentos aplicáveis ao acesso de responsáveis, quando houver atletas menores de idade.
+- procedimentos de autorização, consentimento quando aplicável e eventual acesso dos responsáveis legais, considerando a participação de atletas menores de idade.
 
 O controle de versão do projeto será realizado utilizando **Git**, possibilitando o desenvolvimento colaborativo, o acompanhamento das alterações e a organização do código produzido pela equipe.
 
@@ -126,8 +130,8 @@ A comparação deverá considerar critérios comuns às soluções analisadas, e
 | Organização de treinos | Sim | Parcial | Sim | Sim |
 | Biblioteca de exercícios | Sim | Não é o foco | Sim | Sim |
 | Vídeos demonstrativos | Sim | Sim | Sim | Sim |
-| Compartilhamento/análise de vídeos | Sim | Sim | Sim | A validar |
-| Feedback individual | Sim | Sim | Sim | A validar |
+| Compartilhamento/análise de vídeos | Sim | Sim | Sim | Sim |
+| Feedback individual | Sim | Sim | Sim | Sim |
 | Histórico e acompanhamento | Sim | Sim | Sim | Sim |
 | Personalização segundo o método do treinador | Não é o foco principal | Não é o foco principal | Não é o foco principal | Sim |
 | Integração entre perfil, testes, planejamento e histórico | Parcial | Parcial | Parcial | Sim |
@@ -143,7 +147,11 @@ O produto possui uma estrutura que pode ser dividida em módulos relativamente i
 
 As tecnologias propostas são amplamente utilizadas no desenvolvimento de aplicações web, o que reduz os riscos relacionados à implementação. Além disso, a arquitetura proposta permite que funcionalidades mais complexas sejam deixadas para etapas futuras sem comprometer o funcionamento do MVP.
 
-Outro fator favorável é a possibilidade de contato com o cliente durante o desenvolvimento. A participação do treinador permitirá validar se as funcionalidades desenvolvidas correspondem ao seu método de trabalho e às necessidades dos atletas.
+Outro fator favorável é a possibilidade de contato com o cliente durante o desenvolvimento. A participação do treinador permitirá validar se as funcionalidades desenvolvidas correspondem ao seu método de trabalho.
+
+O recorte do MVP foi definido para enfrentar a dificuldade de acompanhamento contínuo da evolução individual dos atletas, identificada durante a elicitação com o treinador. Para isso, a solução combina a centralização das informações de perfil, testes e histórico com recursos de planejamento, acompanhamento de exercícios e comunicação remota.
+
+A organização dos registros constitui a base para a consulta e comparação do desempenho, enquanto o planejamento e o fluxo de vídeos e feedback permitem ampliar o acompanhamento para além dos encontros presenciais. Dessa forma, essas funcionalidades são complementares e contribuem para o mesmo objetivo: tornar o acompanhamento esportivo mais organizado, contínuo e individualizado.
 
 O principal risco está relacionado ao prazo da disciplina, especialmente no desenvolvimento do fluxo de vídeos e no gerenciamento adequado dos dados. Por esse motivo, em consonância com o escopo delimitado no item 2.3, funcionalidades de maior complexidade (como análise automática de vídeos, métricas avançadas, rankings e suporte a múltiplas turmas) foram mantidas fora do MVP inicial.
 
@@ -172,7 +180,11 @@ A viabilidade de execução do MVP no prazo restrito da disciplina fundamenta-se
 Para assegurar que o projeto não seja paralisado por restrições externas de agenda, as dependências do contexto real foram mapeadas com estratégias claras de mitigação:
 
 - **Disponibilidade e Dependência do Treinador (Lucas Cordeiro):** Como cliente e especialista de domínio, a dependência do treinador concentra-se no refinamento de regras de negócio, fornecimento do catálogo inicial de exercícios e homologação do fluxo presencial. Para evitar gargalos provocados pela rotina intensa de treinos do Lucas, a comunicação é mantida prioritariamente de forma assíncrona (WhatsApp e reuniões virtuais curtas no Teams), restringindo a necessidade de validação síncrona a marcos específicos (final de iteração/Review).
-- **Dependência e Engajamento dos Atletas:** Os atletas (e responsáveis legais, quando aplicável) são previstos como usuários finais de consulta e envio opcional de vídeos. Para evitar que a viabilidade do software dependa de uma adesão imediata ou massiva dos alunos, a solução foi projetada de forma modular: a entrega principal de valor no MVP foca na organização e consulta realizada pelo próprio treinador. O engajamento dos atletas para teste de usabilidade será intermediado de forma assistida pelo próprio Lucas durante os treinos presenciais, buscando reduzir dificuldades de participação. A adesão dos atletas e a realização desses testes ainda precisam ser confirmadas e registradas.
+- **Dependência e Engajamento dos Atletas:** Os atletas são considerados usuários finais da plataforma, especialmente para consulta de treinamentos, acompanhamento da própria evolução e envio opcional de vídeos. Entretanto, a equipe definiu que eles não participarão diretamente dos testes e das atividades de validação durante o desenvolvimento do projeto.
+
+A validação das funcionalidades será realizada junto ao treinador Lucas Cordeiro, que atuará como representante do contexto de uso e principal responsável por fornecer feedback sobre os requisitos e as entregas realizadas ao longo das iterações do RAD.
+
+Essa estratégia reduz a dependência da disponibilidade dos atletas durante o desenvolvimento, mas apresenta como limitação a ausência de validação direta com os usuários finais. Dessa forma, a avaliação da usabilidade e da adequação das funcionalidades às necessidades dos atletas ficará restrita à perspectiva do treinador nesta etapa do projeto.
 
 
 ## 2.7 Benefícios Esperados

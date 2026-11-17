@@ -1,0 +1,4 @@
+.md-typeset .sj-artifact-preview { scroll-margin-top: 5rem; }
+.md-typeset .sj-artifact-capture { display: block; margin: .55rem .8rem; padding: .4rem; border: 1px solid var(--sj-border); border-radius: .4rem; background: #fff; cursor: zoom-in; }
+.md-typeset .sj-artifact-capture img { display: block; width: 100%; height: auto; max-height: min(55vh, 28rem); object-fit: contain; margin: 0; }
+.md-typeset .sj-artifact-capture:focus-visible { outline: 3px solid var(--sj-purple-600); outline-offset: 2px; }
