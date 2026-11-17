@@ -1574,12 +1574,14 @@
   outline-offset: -3px;
 }
 
+
 .sj-artifact-frame iframe {
   display: block;
   width: 100%;
   height: clamp(16rem, 55vh, 30rem);
   border: 0;
 }
+
 
 /* Leitura documental: proporções comuns sem perder a identidade do projeto. */
 .md-typeset :is(h1, h2, h3, h4, h5) {
@@ -1731,6 +1733,7 @@
 }
 .md-typeset table.sj-readable-table:has(th:nth-child(4)) { min-width: 40rem; }
 .md-typeset table.sj-readable-table:has(th:nth-child(6)) { min-width: 48rem; }
+.md-typeset table.sj-checklist-table { min-width: 0; }
 .md-typeset table.sj-readable-table :is(th, td) {
   padding: .6rem .7rem;
   border-bottom: 1px solid var(--sj-border);
@@ -1752,6 +1755,19 @@
   font-size: .65rem;
 }
 .sj-table-hint[hidden] { display: none; }
+
+@media screen and (max-width: 40rem) {
+  .md-typeset table.sj-checklist-table { display: block; min-width: 0; width: 100%; }
+  .md-typeset table.sj-checklist-table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .md-typeset table.sj-checklist-table tbody { display: block; }
+  .md-typeset table.sj-checklist-table tbody tr { display: grid; grid-template-columns: 3.3rem minmax(0, 1fr); gap: .35rem .6rem; padding: .65rem; border-bottom: 1px solid var(--sj-border); }
+  .md-typeset table.sj-checklist-table tbody tr:last-child { border-bottom: 0; }
+  .md-typeset table.sj-checklist-table tbody td { display: block; min-width: 0; padding: 0; border: 0; overflow-wrap: anywhere; }
+  .md-typeset table.sj-checklist-table tbody td:first-child { color: var(--sj-purple-800); font-weight: 700; white-space: nowrap; }
+  .md-typeset table.sj-checklist-table tbody td:nth-child(2) { font-weight: 600; }
+  .md-typeset table.sj-checklist-table tbody td:last-child { grid-column: 1 / -1; }
+  .md-typeset table.sj-checklist-table tbody td:last-child::before { content: attr(data-label); display: block; margin-bottom: .2rem; color: var(--sj-muted); font-size: .65rem; font-weight: 650; }
+}
 
 /* Consulta por ciclo: o resumo permanece visível e o detalhe abre sob demanda. */
 .sj-cycle-list { margin: 1rem 0 1.4rem; }

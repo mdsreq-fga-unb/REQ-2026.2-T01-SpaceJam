@@ -41,6 +41,13 @@
       return;
     }
     table.classList.add(useRecords ? "sj-data-cards" : "sj-readable-table");
+    const isCriteriaChecklist = normalizedHeadings[0] === "id"
+      && normalizedHeadings[1] === "criterio"
+      && normalizedHeadings[2] === "como conferir";
+    if ((normalizedHeadings[0] === "criterio" && normalizedHeadings[1] === "resultado")
+      || isCriteriaChecklist) {
+      table.classList.add("sj-checklist-table");
+    }
     if (useRecords) table.classList.add("sj-records");
     const region = document.createElement("div");
     const previous = table.previousElementSibling;
