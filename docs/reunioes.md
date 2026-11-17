@@ -50,6 +50,22 @@ O registro abaixo mostra o envio de um vídeo explicativo do protótipo de baixa
 Para documentar a rodada de validação, ainda é necessário identificar a data, a versão apresentada, os fluxos e critérios avaliados, o retorno recebido e os ajustes decorrentes. O arquivo do Figma acima é uma referência navegável; seu estado atual não identifica, por si só, a versão apresentada nessa conversa.
 
 
+## Registros complementares de outubro e novembro
+
+Os documentos abaixo complementam as atas anteriores. As sínteses mantêm os encaminhamentos de cada encontro; os registros sem conteúdo recuperado identificam somente a realização da chamada.
+
+| Data | Encontro | Ata ou registro |
+| --- | --- | --- |
+| 07/10/2026 | Chamada da equipe no canal Geral | [Consultar registro](atas/2026-10-07-equipe.md) |
+| 12/10/2026 | Reunião semanal da equipe | [Consultar ata](atas/2026-10-12-equipe.md) |
+| 12–13/10/2026 | Preparação e gravação das apresentações | [Consultar registro](atas/2026-10-12-13-apresentacoes.md) |
+| 15/10/2026 | Reunião com Lucas | [Consultar ata](atas/2026-10-15-lucas.md) |
+| 31/10/2026 | Reunião com Lucas | [Consultar ata](atas/2026-10-31-lucas.md) |
+| 09/11/2026 | Chamadas da equipe no canal Geral | [Consultar registro](atas/2026-11-09-equipe.md) |
+| 16/11/2026 | Reunião semanal da equipe | [Consultar registro existente no PR #74](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/8c314a0a229de565583c61e2887e297b0171642e/docs/reunioes.md#L22) |
+
+O registro de consulta de 16/11 integra a documentação de aplicação do DoR/DoD no [PR #74](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74). A referência acima permite consultá-lo na versão identificada, sem reproduzir seu conteúdo.
+
 ??? abstract "Histórico de revisão"
 
     | Data | Versão | Descrição | Autor |
