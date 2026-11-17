@@ -50,8 +50,8 @@ O aluno pode substituir ou excluir um vídeo de execução enviado exclusivament
  
 ## RN11 · Exclusividade do Treinador sobre o Feedback {#rn11}
  
-Somente o treinador pode registrar, editar ou excluir o feedback (textual ou anotado na linha do tempo do vídeo) dado a um aluno. O aluno pode apenas consultá-lo.
- 
+Somente o treinador pode registrar, editar ou excluir o feedback textual dado a um aluno. O aluno pode apenas consultá-lo.
+
 ## RN12 · Política de Recuperação de Senha {#rn12}
 
 A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova senha atenda à política de senha da [RN24](#rn24).

@@ -82,7 +82,7 @@ Para o armazenamento dos dados, será utilizado o **PostgreSQL**, um banco de da
 
 Considerando que o envio privado de vídeos integra o escopo preliminar do MVP, os arquivos de mídia serão armazenados separadamente dos dados estruturados da aplicação, utilizando uma solução apropriada de armazenamento de arquivos. A tecnologia específica ainda será definida pela equipe, considerando custo, capacidade, segurança, integração e facilidade de gerenciamento.
 
-Os formatos e limites de mídia estão especificados nos requisitos [RNF06](requisitos_nao_funcionais.md#rnf06) e [RNF14](requisitos_nao_funcionais.md#rnf14), mas sua confirmação e verificação permanecem pendentes. Durante o refinamento dos requisitos, deverão ser definidos e validados os procedimentos relacionados ao armazenamento, autenticação, controle de acesso, retenção, exclusão e proteção dos vídeos, considerando também os custos envolvidos e as exigências de privacidade aplicáveis aos atletas menores de idade. Antes da implementação definitiva, também é necessário revisar os seguintes aspectos:
+Os formatos e limites de mídia já declarados estão em [RNF06](requisitos_nao_funcionais.md#rnf06) e [RNF13](requisitos_nao_funcionais.md#rnf13). Sua confirmação e verificação permanecem pendentes. Antes da implementação definitiva, também é necessário revisar os seguintes aspectos:
 
 - tamanho máximo dos arquivos;
 - duração máxima dos vídeos;
