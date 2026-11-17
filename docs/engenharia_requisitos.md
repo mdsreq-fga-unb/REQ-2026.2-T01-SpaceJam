@@ -4,14 +4,14 @@ No projeto **Space Jam**, o processo de Engenharia de Requisitos (ER) está orga
 
 ## 5.1 Atividades e Técnicas de ER
 
-A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos aplicadas ao longo das quatro fases do RAD, bem como suas respectivas evidências e situação atual no projeto. A manutenção do escopo textual está centralizada no [catálogo](requisitos.md), com as [orientações de atualização do backlog](backlog.md#atualizacao-do-backlog). Para organizar as interações da equipe, visualizar o fluxo de trabalho e acompanhar o andamento das entregas, a equipe utiliza exclusivamente um **quadro Kanban no [Miro](https://miro.com/app/board/uXjVHrFoSVo=/)**, descontinuando o uso previsto anteriormente do GitHub Projects.
+A seguir, são descritas as atividades e técnicas de Engenharia de Requisitos aplicadas ao longo das quatro fases do RAD, bem como suas respectivas evidências e situação atual no projeto. A manutenção do escopo textual está centralizada no [catálogo](requisitos.md), com as [orientações de atualização do backlog](backlog.md#historico-de-revisao). Para organizar as interações da equipe, visualizar o fluxo de trabalho e acompanhar o andamento das entregas, a equipe utiliza exclusivamente um **quadro Kanban no [Miro](https://miro.com/app/board/uXjVHrFoSVo=/)**, descontinuando o uso previsto anteriormente do GitHub Projects.
 
 ### Planejamento de Requisitos
 
 #### Elicitação e Descoberta
 
 - **Entrevista com o stakeholder:** entrevistas semiestruturadas com o treinador Lucas Cordeiro para compreender o acompanhamento em quadra, a rotina de treinos e as oportunidades de melhoria, registradas nas atas de [17/09/2026](atas/2026-09-17-lucas.md), [26/09/2026](atas/2026-09-26-lucas.md) e [08/10/2026](atas/2026-10-08-lucas.md).
-- **Brainstorming interno:** reuniões da equipe de desenvolvimento para levantar hipóteses de solução para a biblioteca de exercícios e o acompanhamento de métricas, evidenciada na [reunião de alinhamento com o brainstorm](reunioes.md#reuniao-de-alinhamento-com-o-brainstorm).
+- **Brainstorming interno:** reuniões da equipe de desenvolvimento para levantar hipóteses de solução para a biblioteca de exercícios e o acompanhamento de métricas, evidenciada na [reunião de alinhamento com o brainstorm](reunioes.md#7-reuniao-de-alinhamento-com-o-brainstorm).
 - **Análise documental:** exame dos artefatos reais utilizados pelo treinador — fichas individuais no **Samsung Notes**, planejamentos no **Microsoft Word** e anotações em **caderno físico** — cuja síntese e regras extraídas estão documentadas na [evidência de análise documental](reunioes.md#analise-documental).
 
 #### Análise e Consenso

@@ -147,9 +147,18 @@ Para encerrar as dúvidas levantadas nas reuniões de **26/09/2026** e **08/10/2
 
 ---
 
+<span id="7-reuniao-de-alinhamento-com-o-brainstorm"></span>
+### 7. Reunião de alinhamento com o brainstorm
+
+![Apresentação da problemática do projeto durante reunião da equipe](imagens/Reunião_de_brainstorm.png)
+
+A captura mostra a apresentação da problemática. A data e a ata correspondente ainda precisam ser identificadas para relacioná-la à atividade registrada.
+
+---
+
 <span id="validacao-do-prototipo-inicial"></span>
 
-### 7. Apresentação do protótipo inicial
+### 8. Apresentação do protótipo inicial
 
 [Abrir o protótipo no Figma](https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864)
 
