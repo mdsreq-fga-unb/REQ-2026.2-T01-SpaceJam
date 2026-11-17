@@ -1,0 +1,1251 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe Space Jam">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/requisitos_nao_funcionais/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../imagens/space-jam-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Requisitos não funcionais - Space Jam</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/catalogo.css">
+    
+      <link rel="stylesheet" href="../stylesheets/artefatos-miro.css">
+    
+      <link rel="stylesheet" href="../stylesheets/status-requisitos.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#rnfs-gerais" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Space Jam" class="md-header__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Space Jam
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Requisitos não funcionais
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Space Jam" class="md-nav__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    Space Jam
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão do produto e projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visão do produto e projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cenario_atual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Cenário Atual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solucao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Solução Proposta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervencao_social/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervenção Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estrategia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Estratégias de Engenharia de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engenharia de Requisitos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engenharia_requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Atividades e técnicas de ER
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Catálogo de requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representacao_formal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Formal dos Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representacao_informal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Informal dos Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Definição do MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Backlog e priorização
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../artefatos_miro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrizes do Miro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dor_dod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. DoR e DoD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acompanhamento e entregas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Acompanhamento e entregas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cronograma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Cronograma e Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacao_equipe_cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Interação entre Equipe e Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reunioes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entregas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licoes-aprendidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Lições Aprendidas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rnfs-gerais" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Condições gerais
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consultar-condicoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consultar condições
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/requisitos_nao_funcionais.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="requisitos-nao-funcionais">Requisitos não funcionais<a class="headerlink" href="#requisitos-nao-funcionais" title="Permanent link">&para;</a></h1>
+<nav class="sj-context-return" aria-label="Retomar consulta" hidden></nav>
+
+<p>Metas de qualidade e restrições técnicas do produto. Abra um item para consultar a declaração, sua aplicação no MVP e os requisitos relacionados.</p>
+<p><a href="../requisitos/">Catálogo funcional</a> · <a href="../backlog/#102-priorizacao-do-backlog-geral-e-mvp">Método de priorização</a></p>
+<h2 id="rnfs-gerais">Condições gerais<a class="headerlink" href="#rnfs-gerais" title="Permanent link">&para;</a></h2>
+<p class="sj-reference-status">Metas documentadas, ainda sujeitas a confirmação e verificação. O atendimento de cada RNF precisa de método, ambiente e resultado registrados.</p>
+
+<p>Os itens de escopo Global se aplicam transversalmente. Vínculos específicos por história são consultáveis nas fichas. A aplicação por comportamento precisa ser confirmada durante o refinamento.</p>
+<h2 id="consultar-condicoes">Consultar condições<a class="headerlink" href="#consultar-condicoes" title="Permanent link">&para;</a></h2>
+<details class="sj-requirement sj-rnf" id="rnf01">
+<summary><span class="sj-requirement-id">RNF01</span><span class="sj-requirement-name">Responsividade Mobile</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-usabilidade">Usabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>A interface deve adaptar-se a telas a partir de 360px, priorizando o uso em smartphones.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global</li><li>Todos os utilizadores (Atleta e Treinador)</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Inspeção responsiva dos fluxos essenciais em viewports a partir de <code>360px</code> de largura (ex.: <code>360×800 px</code>, <code>390×844 px</code> e <code>1280×720 px</code>) com <code>0</code> barras de rolagem horizontal indesejadas, <code>0</code> sobreposições de elementos interativos e <code>100%</code> dos botões e formulários legíveis e acionáveis.</li><li><strong>Validação (Justificativa):</strong> Garante que os atletas em conjunto com o treinador consigam acessar treinos, enviar vídeos e registrar feedbacks diretamente pelo smartphone em quadra ou ginásio sem perda de usabilidade.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Todas as telas principais renderizam sem rolagem horizontal em largura mínima de 360px</li><li>Textos, formulários, botões e players de vídeo permanecem legíveis e clicáveis sem corte ou sobreposição em smartphones</li><li>A navegação principal e ações críticas são facilmente acessíveis em telas móveis (mobile-first)</li><li>O layout mantém proporção, legibilidade e funcionalidade sem rolagem horizontal (overflow-x) nas resoluções de tablet (768 × 1024 px) e desktop (1280 × 720 px e 1920 × 1080 px) no DevTools</li></ul></div>
+</div>
+<p class="sj-record-note">Nenhum vínculo específico registrado nas fichas. Conferir a aplicação durante a revisão do escopo.</p></details>
+
+<details class="sj-requirement sj-rnf" id="rnf02">
+<summary><span class="sj-requirement-id">RNF02</span><span class="sj-requirement-name">Arquitetura e Stack Tecnológica</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-implementacao">Requisitos de Implementação</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve ser desenvolvido utilizando React (v18+) com TypeScript no frontend, Python (3.11+) com Django / Django REST Framework no backend e PostgreSQL (v15+) como SGBD relacional.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global</li><li>Equipe de Desenvolvimento / Todos os utilizadores (Atleta e Treinador)</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Inspeção dos arquivos de dependências e ambiente (<code>package.json</code>, <code>requirements.txt</code>/<code>pyproject.toml</code> e configuração do banco) confirmando <code>React &gt;= 18</code> com <code>TypeScript</code>, <code>Python &gt;= 3.11</code> com <code>Django</code> / <code>djangorestframework</code> e instância ativa de <code>PostgreSQL &gt;= 15</code> (<code>100%</code> de aderência às versões mínimas declaradas).</li><li><strong>Validação (Justificativa):</strong> Padroniza a stack tecnológica do projeto, assegurando tipagem estática no frontend, produtividade e maturidade na API REST, além da integridade relacional na persistência dos dados.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>O frontend está estruturado em React (v18+) com TypeScript ativo no build e checagem de tipos</li><li>O backend está implementado em Python (3.11+) utilizando Django e Django REST Framework</li><li>A camada de persistência relacional opera sobre PostgreSQL (v15+)</li><li>Os arquivos de configuração e dependências do repositório refletem as versões mínimas homologadas</li></ul></div>
+</div>
+<p class="sj-record-note">Nenhum vínculo específico registrado nas fichas. Conferir a aplicação durante a revisão do escopo.</p></details>
+
+<details class="sj-requirement sj-rnf" id="rnf03">
+<summary><span class="sj-requirement-id">RNF03</span><span class="sj-requirement-name">Suporte a Navegadores Web</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-suportabilidade">Suportabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>A aplicação web deve operar sem falhas críticas todos os fluxos essenciais (autenticação, cadastro, prescrição, envio e visualização de vídeos e acompanhamento de métricas) sem erros bloqueantes de interface, layout ou persistência de dados nas versões mínimas de referência estabelecidas: em desktop (Windows, macOS e Linux), Google Chrome ≥ 130, Mozilla Firefox ≥ 131, Microsoft Edge ≥ 130, Apple Safari ≥ 17.5 (macOS) e Opera ≥ 114; em dispositivos móveis, Google Chrome ≥ 130 (Android) e Apple Safari ≥ 17.5 (iOS/iPadOS), bem como nas versões estáveis subsequentes lançadas durante o ciclo do projeto.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global</li><li>Todos os utilizadores (Atleta e Treinador)</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Execução bem-sucedida de 100% da suíte E2E / checklist de fluxos críticos com 0 erros não tratados no console (<code>Uncaught Error</code> ou falhas de persistência) e 0 quebras de layout bloqueantes nas versões mínimas de referência desktop (Chrome 130+, Firefox 131+, Edge 130+, Safari 17.5+, Opera 114+) e mobile (Chrome 130+ Android, Safari 17.5+ iOS/iPadOS).</li><li><strong>Validação (Justificativa):</strong> Fixa uma linha de base reproduzível de navegadores, versões mínimas e sistemas operacionais para auditoria e testes de regressão, eliminando a ambiguidade de "versões mais atuais".</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Os fluxos críticos de autenticação, cadastro, treino e envio de vídeo operam sem bloqueios nas versões mínimas definidas em desktop e mobile</li><li>Não ocorrem erros de JavaScript não tratados no console durante a navegação nos navegadores homologados</li><li>Componentes visuais, formulários e players de vídeo mantêm legibilidade e funcionamento íntegro, com todos os botões e controles visíveis e clicáveis nas resoluções testadas (sem cortes ou sobreposição)</li><li>A persistência de dados e o armazenamento de sessão funcionam corretamente em todas as plataformas de referência</li></ul></div>
+</div>
+<p class="sj-record-note">Nenhum vínculo específico registrado nas fichas. Conferir a aplicação durante a revisão do escopo.</p></details>
+
+<details class="sj-requirement sj-rnf" id="rnf04">
+<summary><span class="sj-requirement-id">RNF04</span><span class="sj-requirement-name">Acessibilidade Digital</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-usabilidade">Usabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Evolutivos</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>A interface web deve garantir acessibilidade visual focada em daltonismo e baixa visão, aplicando paleta de cores com contraste mínimo de 4.5:1 (conforme WCAG 2.1 AA - Critério 1.4.3) e independência de cor como único meio de transmitir informação.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global</li><li>Todos os utilizadores (Atleta e Treinador)</li><li>A acessibilidade está fora do MVP. O requisito foi classificado como evolutivo, após validação com o treinador titular (Lucas), que informou não atender atualmente atletas com demandas específicas de acessibilidade assistiva. A priorização concentra o esforço do MVP nas funcionalidades centrais de treino e acompanhamento, mantendo a conformidade WCAG planejada para evolução futura conforme a base de usuários crescer, essa necessidade pode surgir. <a href="https://drive.google.com/file/d/1LWxClNWmC8qAXfHdUrpBi9BGzdvGj5v1/view?usp=sharing">Registro de Comprovacao</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Auditoria automatizada e inspeção visual das telas principais (via Lighthouse Accessibility / axe DevTools) comprovando relação de contraste <code>≥ 4.5:1</code> em <code>100%</code> dos textos normais (WCAG 2.1 AA - Critério 1.4.3) e <code>0</code> estados críticos (erros, status de treino ou alertas) comunicados exclusivamente por cor (sem ícone, rótulo ou padrão textual complementar).</li><li><strong>Validação (Justificativa):</strong> Assegura legibilidade e compreensão inequívoca da interface para usuários com daltonismo ou baixa visão, evitando barreiras visuais na leitura de métricas, feedbacks e status de exercícios.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Todos os textos e componentes interativos atendem ao contraste mínimo de 4.5:1 conforme WCAG 2.1 AA (Critério 1.4.3)</li><li>Mensagens de erro, validações de formulário e status de execução utilizam ícones ou textos descritivos além da diferenciação por cor</li><li>Gráficos, indicadores de progresso e feedbacks visuais permanecem distinguíveis em simulação de daltonismo (protanopia, deuteranopia e tritanopia)</li><li>A decisão de escopo (inclusão no MVP ou manutenção no pós-MVP) foi formalmente revisada e confirmada pela equipe</li></ul></div>
+</div>
+<p class="sj-record-note">Nenhum vínculo específico registrado nas fichas. Conferir a aplicação durante a revisão do escopo.</p></details>
+
+<details class="sj-requirement sj-rnf" id="rnf05">
+<summary><span class="sj-requirement-id">RNF05</span><span class="sj-requirement-name">Proteção de Dados Pessoais e Direitos do Titular (LGPD)</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-seguranca">Segurança (Privacidade / LGPD)</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve assegurar a proteção e a privacidade dos dados pessoais em conformidade com a LGPD (Lei nº 13.709/2018, com destaque para os arts. 5º, 14, 18 e 46), coletando e armazenando exclusivamente os dados estritamente necessários ao acompanhamento esportivo (dados cadastrais, métricas de desempenho, vídeos de execução e feedbacks). O acesso a essas informações deve ser restrito apenas ao próprio atleta e ao treinador atualmente vinculado ao seu perfil, mantendo-se a retenção somente enquanto houver vínculo ativo de acompanhamento ou enquanto a conta permanecer ativa. Por fim, o sistema deve garantir a eliminação definitiva e irreversível dos dados pessoais, vídeos e feedbacks mediante solicitação do titular, encerramento da conta ou desvinculação pelo treinador, ressalvadas as hipóteses de anonimização de registros históricos ou guarda obrigatória por força de lei, conforme previsto no art. 16 da referida lei.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global / CP8</li><li>Atleta e Treinador</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn02">RN02 · Vínculo Obrigatório do Aluno pelo Código do Treinador</a></li><li><a href="../regras_negocio/#rn03">RN03 · Isolamento de Dados e Carteira do Treinador</a></li><li><a href="../regras_negocio/#rn04">RN04 · Segregação de Edição Cadastral e Clínica</a></li><li><a href="../regras_negocio/#rn05">RN05 · Política de Exclusão de Conta e Dados (LGPD)</a></li><li><a href="../regras_negocio/#rn16">RN16 · Consentimento Legal para Atletas Menores de Idade</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> 100% dos dados pessoais, métricas e vídeos trafegam criptografados (HTTPS/TLS) e retornam bloqueio de acesso (HTTP 403) para usuários sem vínculo ativo; mediante solicitação do atleta, encerramento da conta ou desvinculação pelo treinador, os registros e arquivos elegíveis são removidos definitivamente do banco de dados e do storage (ou anonimizados quando houver obrigação legal de retenção), com revogação imediata de acesso e geração de protocolo de confirmação em ≤ 500 ms.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>A coleta restringe-se aos dados estritamente necessários ao acompanhamento esportivo, com finalidade explícita</li><li>Apenas o aluno(atleta) titular e o treinador(professor) vinculado possuem acesso aos dados e vídeos de execução</li><li>Os dados pessoais são mantidos apenas enquanto a conta do usuário permanecer ativa</li><li>Mediante solicitação do titular, encerramento da conta ou desvinculação pelo treinador, os registros e vídeos elegíveis são eliminados definitivamente (ressalvadas as obrigações legais de retenção ou anonimização de registros históricos)</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 23</summary><div><a href="../requisitos/#rf1101">RF1101 · Cadastrar aluno</a><a href="../requisitos/#rf1102">RF1102 · Cadastrar treinador</a><a href="../requisitos/#rf1106">RF1106 · Excluir perfil do aluno</a><a href="../requisitos/#rf1111">RF1111 · Registrar histórico de lesões</a><a href="../requisitos/#rf1216">RF1216 · Registrar teste de aptidão física</a><a href="../requisitos/#rf1217">RF1217 · Editar teste de aptidão física</a><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a><a href="../requisitos/#rf3608">RF3608 · Registrar feedback do aluno</a><a href="../requisitos/#rf3609">RF3609 · Editar feedback do aluno</a><a href="../requisitos/#rf3610">RF3610 · Consultar feedback do aluno</a><a href="../requisitos/#rf4802">RF4802 · Consultar próprios dados cadastrais</a><a href="../requisitos/#rf4803">RF4803 · Consultar próprios testes de aptidão física</a><a href="../requisitos/#rf4804">RF4804 · Consultar próprios vídeos enviados</a><a href="../requisitos/#rf4806">RF4806 · Consultar feedback recebido</a><a href="../requisitos/#rf4807">RF4807 · Consultar próprio histórico de treinos</a><a href="../requisitos/#rf4808">RF4808 · Consultar próprios objetivos do aluno</a><a href="../requisitos/#rf4809">RF4809 · Consultar próprio planejamento de treinos</a><a href="../requisitos/#rf4810">RF4810 · Consultar perfil de aluno acompanhado</a><a href="../requisitos/#rf4811">RF4811 · Consultar resultados de testes físicos de aluno</a><a href="../requisitos/#rf4812">RF4812 · Aceitar termos de uso e política de privacidade</a><a href="../requisitos/#rf4813">RF4813 · Solicitar exclusão dos próprios dados</a><a href="../requisitos/#rf4814">RF4814 · Registrar consentimento de responsável por aluno menor</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf06">
+<summary><span class="sj-requirement-id">RNF06</span><span class="sj-requirement-name">Compatibilidade de Vídeo</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-suportabilidade">Suportabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve aceitar e processar submissões de arquivos de vídeo nos formatos .mp4 e .mov.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP5, CP6</li><li>Aluno (Atleta) e Professor (Treinador)</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn09">RN09 · Limite de Mídia por Submissão de Exercício</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes automatizados e manuais de upload comprovando que <code>100%</code> dos arquivos válidos nos contêineres <code>.mp4</code> (H.264/HEVC) e <code>.mov</code> (QuickTime/iOS) dentro dos limites estabelecidos (RNF13) são aceitos e reproduzidos corretamente, enquanto <code>100%</code> dos formatos não suportados (ex.: <code>.avi</code>, <code>.mkv</code>, <code>.wmv</code>, <code>.exe</code>) são rejeitados antes do envio (RNF15).</li><li><strong>Validação (Justificativa):</strong> Garante compatibilidade nativa com os formatos padrão de gravação de smartphones Android (<code>.mp4</code>) e iOS/iPhone (<code>.mov</code>), evitando que o atleta precise converter o vídeo manualmente antes de enviá-lo.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Vídeos gravados e exportados no formato <code>.mp4</code> são aceitos, armazenados e reproduzidos corretamente na plataforma</li><li>Vídeos gravados nativamente em dispositivos iOS no formato <code>.mov</code> são aceitos, armazenados e reproduzidos corretamente</li><li>Arquivos com extensões ou MIME types fora da lista permitida (<code>.mp4</code> e <code>.mov</code>) são bloqueados com feedback claro antes do upload (RNF15)</li><li>Os players web de avaliação do treinador reproduzem ambos os formatos sem exigir plugins externos</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 4</summary><div><a href="../requisitos/#rf2417">RF2417 · Linkar thumbnail de vídeo base</a><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a><a href="../requisitos/#rf4805">RF4805 · Consultar vídeos de alunos</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf07">
+<summary><span class="sj-requirement-id">RNF07</span><span class="sj-requirement-name">Feedback Visual de Upload</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-usabilidade">Usabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Evolutivos</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>A aplicação web deve exibir um indicador visual de progresso dinâmico (com porcentagem de 1% a 99%) durante a submissão do vídeo, informando o estado em tempo real até ao término (100%).</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP5</li><li>Aluno (Atleta)</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes funcionais e de simulação de rede (throttling 3G/4G) no envio de vídeos válidos (até 100 MB), comprovando a atualização contínua da barra/percentual de progresso de <code>1%</code> a <code>99%</code> durante a transferência e transição para <code>100%</code> (confirmação de conclusão) em <code>≤ 1,0 s</code> após o término do upload.</li><li><strong>Validação (Justificativa):</strong> Evita que o atleta feche a aba, recarregue a página ou reenvie o vídeo duplicado por falta de retorno visual durante o envio de arquivos maiores em conexões móveis.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Um indicador visual de progresso é exibido logo após iniciar o upload do vídeo</li><li>O percentual é atualizado dinamicamente de 1% a 99% acompanhando os bytes transferidos (eventos de progresso da requisição)</li><li>Ao concluir o envio e persistência, o indicador atinge 100% e exibe confirmação clara de sucesso para o usuário (atleta)</li><li>Em caso de queda de conexão ou falha durante o upload, o progresso é interrompido e uma mensagem de erro clara é exibida</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 2</summary><div><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf08">
+<summary><span class="sj-requirement-id">RNF08</span><span class="sj-requirement-name">Controle de Acesso Baseado em Funções (RBAC)</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-confiabilidade">Confiabilidade / Segurança</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve aplicar controle de acesso rígido baseado em papéis (RBAC) e em vínculo de cadastro, garantindo que endpoints e visões referentes ao perfil Professor (Treinador) não sejam acessíveis por Alunos (Atletas), e assegurando que cada aluno acesse exclusivamente seus próprios dados, treinos e mídias, enquanto cada treinador visualize e gerencie apenas os registros dos alunos vinculados à sua própria carteira.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP7</li><li>Aluno (Atleta) e Professor (Treinador)</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn03">RN03 · Isolamento de Dados da Carteira do Treinador</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes automatizados de autorização e segurança de API/rotas comprovando que 100% das tentativas de acesso indevido retornam HTTP 403 Forbidden — incluindo Atletas acessando endpoints de Treinador, Atletas acessando registros de outros Atletas e Treinadores acessando dados de alunos fora da sua carteira — além de HTTP 401 Unauthorized para requisições não autenticadas, com 0 rotas restritas acessíveis via navegação direta no frontend por Atletas.</li><li><strong>Validação (Justificativa):</strong> Protege as funcionalidades exclusivas de gestão do treinador e garante a privacidade dos registros individuais, impedindo tanto o acesso de atletas a recursos administrativos quanto o vazamento de dados entre contas de diferentes alunos ou carteiras de diferentes treinadores.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Todos os endpoints exclusivos do perfil Professor (Treinador) validam o papel (role) no backend e bloqueiam acessos de Alunos (Atletas) com HTTP 403</li><li>Todos os endpoints de consulta e edição validam o vínculo de cadastro no backend, bloqueando com HTTP 403 o acesso a registros de outros alunos ou de carteiras de outros treinadores</li><li>Requisições sem autenticação válida recebem HTTP 401 antes de acessar rotas protegidas</li><li>As rotas e componentes de interface exclusivos do Professor (Treinador) são ocultados e bloqueados no roteamento do frontend para usuários com perfil Aluno (Atleta)</li><li>Testes automatizados cobrem tentativas de acesso indevido entre perfis distintos e entre contas do mesmo perfil nas operações críticas do MVP</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 35</summary><div><a href="../requisitos/#rf1103">RF1103 · Deslogar aluno</a><a href="../requisitos/#rf1104">RF1104 · Logar aluno</a><a href="../requisitos/#rf1105">RF1105 · Logar treinador</a><a href="../requisitos/#rf1106">RF1106 · Excluir perfil do aluno</a><a href="../requisitos/#rf1111">RF1111 · Registrar histórico de lesões</a><a href="../requisitos/#rf1212">RF1212 · Consultar dificuldade</a><a href="../requisitos/#rf1215">RF1215 · Registrar conclusão de treino</a><a href="../requisitos/#rf1216">RF1216 · Registrar teste de aptidão física</a><a href="../requisitos/#rf1217">RF1217 · Editar teste de aptidão física</a><a href="../requisitos/#rf2301">RF2301 · Cadastrar planejamento de treino</a><a href="../requisitos/#rf2302">RF2302 · Editar planejamento de treino</a><a href="../requisitos/#rf2303">RF2303 · Associar planejamento de treino a objetivo do aluno</a><a href="../requisitos/#rf2304">RF2304 · Consultar histórico de planejamentos</a><a href="../requisitos/#rf2306">RF2306 · Consultar status de treino</a><a href="../requisitos/#rf2307">RF2307 · Criar treino com exercícios</a><a href="../requisitos/#rf2308">RF2308 · Editar treino</a><a href="../requisitos/#rf2309">RF2309 · Excluir planejamento</a><a href="../requisitos/#rf2310">RF2310 · Consultar planejamento de aluno acompanhado</a><a href="../requisitos/#rf2312">RF2312 · Registrar status do treino</a><a href="../requisitos/#rf2413">RF2413 · Cadastrar exercício</a><a href="../requisitos/#rf2416">RF2416 · Associar erros e orientações</a><a href="../requisitos/#rf2418">RF2418 · Cadastrar informações complementares do vídeo base</a><a href="../requisitos/#rf2419">RF2419 · Documentar erros e orientações</a><a href="../requisitos/#rf2420">RF2420 · Editar erros e orientações</a><a href="../requisitos/#rf2421">RF2421 · Consultar exercício da biblioteca</a><a href="../requisitos/#rf2422">RF2422 · Editar exercício</a><a href="../requisitos/#rf3604">RF3604 · Registrar feedback</a><a href="../requisitos/#rf3605">RF3605 · Editar feedback</a><a href="../requisitos/#rf3606">RF3606 · Excluir feedback</a><a href="../requisitos/#rf3610">RF3610 · Consultar feedback do aluno</a><a href="../requisitos/#rf4701">RF4701 · Consultar alunos acompanhados</a><a href="../requisitos/#rf4802">RF4802 · Consultar próprios dados cadastrais</a><a href="../requisitos/#rf4805">RF4805 · Consultar vídeos de alunos</a><a href="../requisitos/#rf4810">RF4810 · Consultar perfil de aluno acompanhado</a><a href="../requisitos/#rf4811">RF4811 · Consultar resultados de testes físicos de aluno</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf09">
+<summary><span class="sj-requirement-id">RNF09</span><span class="sj-requirement-name">Isolamento Multi-inquilino de Dados</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-confiabilidade">Confiabilidade / Segurança</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O acesso aos vídeos, dados de histórico, feedbacks e treinos/planejamentos de um atleta deve ser restrito exclusivamente ao próprio atleta e ao treinador devidamente vinculado a ele.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP8</li><li>Aluno (Atleta) e Professor (Treinador)</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn03">RN03 · Isolamento de Dados da Carteira do Treinador</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes automatizados de autorização por propriedade/vínculo (IDOR / isolamento multi-tenant) comprovando que <code>100%</code> das tentativas de consulta ou download de vídeos, histórico de treinos, testes físicos e feedbacks de um atleta realizadas por outro atleta ou por um treinador sem vínculo ativo retornam <code>HTTP 403 Forbidden</code> (ou <code>404</code> sem vazar existência), com <code>0</code> registros cruzados retornados nas listagens.</li><li><strong>Validação (Justificativa):</strong> Previne vazamento horizontal de dados pessoais, métricas físicas e vídeos de treino entre usuários da plataforma, garantindo confidencialidade no modelo multi-inquilino.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Consultas de histórico, perfil, testes físicos, vídeos e feedbacks filtram estritamente pelo ID do próprio atleta ou pelos atletas com vínculo ativo ao treinador autenticado</li><li>Requisições diretas por ID (IDOR) a recursos de atletas não vinculados são bloqueadas no backend com HTTP 403</li><li>Treinadores sem vínculo ativo com o atleta não visualizam nem acessam seus vídeos, planejamentos ou feedbacks</li><li>Testes automatizados validam o isolamento de dados entre dois atletas distintos e entre dois treinadores com carteiras separadas</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 29</summary><div><a href="../requisitos/#rf1106">RF1106 · Excluir perfil do aluno</a><a href="../requisitos/#rf1107">RF1107 · Editar informações do perfil do aluno</a><a href="../requisitos/#rf1111">RF1111 · Registrar histórico de lesões</a><a href="../requisitos/#rf1212">RF1212 · Consultar dificuldade</a><a href="../requisitos/#rf2304">RF2304 · Consultar histórico de planejamentos</a><a href="../requisitos/#rf2305">RF2305 · Comparar treinamentos</a><a href="../requisitos/#rf2310">RF2310 · Consultar planejamento de aluno acompanhado</a><a href="../requisitos/#rf2311">RF2311 · Consultar histórico de treinos de aluno acompanhado</a><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a><a href="../requisitos/#rf3503">RF3503 · Excluir vídeo enviado</a><a href="../requisitos/#rf3604">RF3604 · Registrar feedback</a><a href="../requisitos/#rf3605">RF3605 · Editar feedback</a><a href="../requisitos/#rf3606">RF3606 · Excluir feedback</a><a href="../requisitos/#rf3607">RF3607 · Notificar aluno sobre feedback</a><a href="../requisitos/#rf3608">RF3608 · Registrar feedback do aluno</a><a href="../requisitos/#rf3609">RF3609 · Editar feedback do aluno</a><a href="../requisitos/#rf3610">RF3610 · Consultar feedback do aluno</a><a href="../requisitos/#rf4701">RF4701 · Consultar alunos acompanhados</a><a href="../requisitos/#rf4802">RF4802 · Consultar próprios dados cadastrais</a><a href="../requisitos/#rf4803">RF4803 · Consultar próprios testes de aptidão física</a><a href="../requisitos/#rf4804">RF4804 · Consultar próprios vídeos enviados</a><a href="../requisitos/#rf4805">RF4805 · Consultar vídeos de alunos</a><a href="../requisitos/#rf4806">RF4806 · Consultar feedback recebido</a><a href="../requisitos/#rf4807">RF4807 · Consultar próprio histórico de treinos</a><a href="../requisitos/#rf4808">RF4808 · Consultar próprios objetivos do aluno</a><a href="../requisitos/#rf4809">RF4809 · Consultar próprio planejamento de treinos</a><a href="../requisitos/#rf4810">RF4810 · Consultar perfil de aluno acompanhado</a><a href="../requisitos/#rf4811">RF4811 · Consultar resultados de testes físicos de aluno</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf10">
+<summary><span class="sj-requirement-id">RNF10</span><span class="sj-requirement-name">Desempenho no Carregamento do Histórico</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-desempenho">Desempenho</span><span class="sj-tag sj-tag-mvp">MVP: Evolutivos</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>As telas de consulta de histórico, perfil e gráficos de evolução do atleta devem carregar completamente em até 5 segundos sob simulação de limitação de rede (throttling em perfil Fast 4G no DevTools dos navegadores homologados) e sob carga nominal de até 50 requisições simultâneas ao servidor.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP1, CP2</li><li>Aluno (Atleta) e Professor (Treinador)</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes de desempenho combinando simulação de rede em perfil <code>Fast 4G</code> no DevTools dos navegadores homologados (RNF03) e teste de carga com <code>50</code> requisições simultâneas (ex.: k6/Locust), comprovando tempo total de carregamento completo (<code>Load</code> / renderização dos dados e gráficos) <code>≤ 5,0 s</code> no percentil 95 (<code>p95</code>) e <code>0%</code> de erros HTTP <code>5xx</code>.</li><li><strong>Validação (Justificativa):</strong> Assegura que consultas frequentes de histórico, perfil e evolução física permaneçam responsivas mesmo em conexões móveis e durante picos simultâneos de uso em horários de treino.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>As telas de histórico, perfil e gráficos de evolução carregam completamente em até 5 segundos sob perfil Fast 4G nos navegadores homologados (RNF03)</li><li>A API mantém tempo de resposta dentro do orçamento e sem falhas HTTP 5xx sob carga nominal de 50 requisições simultâneas</li><li>Consultas de histórico e métricas de evolução utilizam paginação ou agregação otimizada para evitar gargalos de payload e banco de dados</li><li>Os parâmetros e resultados dos testes de desempenho (Fast 4G e 50 req/s) estão documentados e reproduzíveis</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 18</summary><div><a href="../requisitos/#rf1212">RF1212 · Consultar dificuldade</a><a href="../requisitos/#rf2304">RF2304 · Consultar histórico de planejamentos</a><a href="../requisitos/#rf2305">RF2305 · Comparar treinamentos</a><a href="../requisitos/#rf2306">RF2306 · Consultar status de treino</a><a href="../requisitos/#rf2310">RF2310 · Consultar planejamento de aluno acompanhado</a><a href="../requisitos/#rf2311">RF2311 · Consultar histórico de treinos de aluno acompanhado</a><a href="../requisitos/#rf3610">RF3610 · Consultar feedback do aluno</a><a href="../requisitos/#rf4701">RF4701 · Consultar alunos acompanhados</a><a href="../requisitos/#rf4802">RF4802 · Consultar próprios dados cadastrais</a><a href="../requisitos/#rf4803">RF4803 · Consultar próprios testes de aptidão física</a><a href="../requisitos/#rf4804">RF4804 · Consultar próprios vídeos enviados</a><a href="../requisitos/#rf4805">RF4805 · Consultar vídeos de alunos</a><a href="../requisitos/#rf4806">RF4806 · Consultar feedback recebido</a><a href="../requisitos/#rf4807">RF4807 · Consultar próprio histórico de treinos</a><a href="../requisitos/#rf4808">RF4808 · Consultar próprios objetivos do aluno</a><a href="../requisitos/#rf4809">RF4809 · Consultar próprio planejamento de treinos</a><a href="../requisitos/#rf4810">RF4810 · Consultar perfil de aluno acompanhado</a><a href="../requisitos/#rf4811">RF4811 · Consultar resultados de testes físicos de aluno</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf11">
+<summary><span class="sj-requirement-id">RNF11</span><span class="sj-requirement-name">Integridade e Consistência na Catalogação de Exercícios</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-confiabilidade">Confiabilidade (Integridade de Dados)</span><span class="sj-tag sj-tag-mvp">MVP: Associado a RFs do MVP</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve manter os resultados de busca e filtragem da biblioteca de exercícios (por nome e por fundamento) imediatamente atualizados após operações de cadastro, edição ou exclusão realizadas pelo treinador, impedindo que exercícios removidos ou orientações desatualizadas apareçam nas consultas de novas prescrições, sem comprometer os registros históricos já vinculados aos treinos realizados.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP4</li><li>Atleta e Treinador</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn13">RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios</a></li><li><a href="../regras_negocio/#rn14">RN14 · Gestão da Biblioteca de Exercícios</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes funcionais e de integração comprovando 0 exercícios removidos ou dados desatualizados exibidos nas buscas por nome e filtros por fundamento após operações de cadastro, edição ou exclusão (100% de atualização dos resultados em ≤ 1,0 s), mantendo 100% dos registros de treinos passados íntegros após a exclusão de um exercício.</li><li><strong>Validação (Justificativa):</strong> Garante que o treinador prescreva apenas exercícios ativos e com orientações corretivas atualizadas, evitando falhas de sincronização ou cache desatualizado na interface sem perder a rastreabilidade dos treinos já executados pelos atletas.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Após o treinador cadastrar ou editar um exercício (nome, objetivo, fundamento, vídeo-base, erros comuns e orientações), os dados atualizados refletem imediatamente nas consultas</li><li>A exclusão de um exercício remove-o imediatamente das listagens de busca e filtro para novas prescrições, preservando intactos os treinos históricos onde ele foi utilizado</li><li>Consultas por nome e filtragem por fundamento retornam exatamente os registros ativos correspondentes, sem duplicidades ou referências quebradas</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 5</summary><div><a href="../requisitos/#rf2413">RF2413 · Cadastrar exercício</a><a href="../requisitos/#rf2414">RF2414 · Filtrar exercícios por fundamento</a><a href="../requisitos/#rf2415">RF2415 · Associar exercício ao objetivo do treino</a><a href="../requisitos/#rf2421">RF2421 · Consultar exercício da biblioteca</a><a href="../requisitos/#rf2424">RF2424 · Pesquisar exercício por nome</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf12">
+<summary><span class="sj-requirement-id">RNF12</span><span class="sj-requirement-name">Armazenamento Isolado e Proteção de Mídias</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-confiabilidade">Confiabilidade / Segurança</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>Os vídeos enviados pelos atletas devem ser armazenados de forma isolada em armazenamento de objetos em nuvem (externo ao contêiner da aplicação), com criptografia em repouso (AES-256 / SSE) e controle de acesso restrito aos usuários vinculados ao treino. No <strong>MVP (piso mínimo obrigatório)</strong>, toda mídia trafega via HTTPS/TLS, é persistida em bucket privado sem URLs públicas permanentes e acessada apenas mediante requisição autenticada ou URL assinada de curta duração; recursos avançados como chaves gerenciadas pelo cliente (KMS/CMK), marca d'água (watermark) e transcodificação adaptativa permanecem como <strong>escopo evolutivo pós-MVP</strong>.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP5, CP8</li><li>Atleta e Treinador</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn03">RN03 · Isolamento de Dados da Carteira do Treinador</a></li><li><a href="../regras_negocio/#rn05">RN05 · Política de Exclusão de Conta e Dados (LGPD)</a></li><li><a href="../regras_negocio/#rn09">RN09 · Limite de Mídia por Submissão de Exercício</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> 100% dos vídeos enviados são gravados em object storage externo com criptografia AES-256 habilitada; 0 URLs públicas permanentes expostas; 100% das tentativas de acesso por usuários sem vínculo retornam HTTP 403; e 0 bytes permanecem recuperáveis após solicitação de exclusão (RN05).</li><li><strong>Validação (Justificativa):</strong> Garante o piso obrigatório de confidencialidade e isolamento das mídias desde a primeira versão do MVP, separando-o claramente de evoluções futuras de criptografia avançada e processamento de vídeo.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Os vídeos enviados são armazenados em object storage externo ao contêiner da aplicação, com criptografia em repouso (AES-256) ativa</li><li>Nenhum arquivo de vídeo é acessível por URL pública estática (somente via endpoint autenticado ou URL assinada temporária)</li><li>Requisições de acesso feitas por usuários sem vínculo ativo atleta-treinador são bloqueadas com HTTP 403</li><li>A exclusão da conta ou solicitação do titular remove definitivamente o arquivo do storage em nuvem</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 5</summary><div><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a><a href="../requisitos/#rf3503">RF3503 · Excluir vídeo enviado</a><a href="../requisitos/#rf4804">RF4804 · Consultar próprios vídeos enviados</a><a href="../requisitos/#rf4805">RF4805 · Consultar vídeos de alunos</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf13">
+<summary><span class="sj-requirement-id">RNF13</span><span class="sj-requirement-name">Limites de Duração e Tamanho no Envio de Vídeos</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-suportabilidade">Suportabilidade / Usabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Associado a RFs do MVP</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>Os vídeos de execução técnica enviados pelos atletas devem respeitar o teto máximo global de 60 segundos de duração e 100 MB de tamanho por arquivo, garantindo estabilidade no upload em redes móveis, previsibilidade de armazenamento e reprodução fluida para avaliação do treinador.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP5</li><li>Atleta</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn09">RN09 · Limite de Mídia por Submissão de Exercício</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Decisão de projeto (Justificativa técnica)</p><ul><li><strong>Dimensionamento do teto (60 s / 100 MB):</strong> Adotou-se como referência de gravação móvel o padrão Full HD (<code>1080p</code> a <code>30 fps</code>, codecs H.264/HEVC), cuja taxa média de bits varia entre <code>8 e 12 Mbps</code> (<code>~60 a 90 MB</code> por minuto). O limite de <strong>100 MB</strong> acomoda uma gravação completa de <strong>60 segundos</strong> nesse padrão com margem de segurança, dispensando compressão prévia pelo atleta e evitando estouros de memória ou timeout em conexões móveis. Gravações acima desse teto (como <code>4K</code> ou <code>60 fps</code> prolongados) devem ser rejeitadas antes do envio (ver RNF15).</li><li><strong>Adoção de limite único no MVP:</strong> Embora o domínio admita execuções de durações distintas conforme o exercício (conforme esclarecido por Lucas / ata de 26/09), decidiu-se manter um <strong>teto único global de 60 s no MVP</strong> — suficiente para cobrir a execução completa de qualquer exercício individual sem adicionar complexidade de configuração por exercício no cadastro da biblioteca —, deixando a parametrização de duração máxima por exercício como evolução futura pós-MVP.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> 100% dos arquivos com duração <code>&gt; 60 s</code> ou tamanho <code>&gt; 100 MB</code> são bloqueados antes da conclusão do upload, enquanto 100% dos vídeos válidos em <code>1080p @ 30 fps</code> (<code>≤ 60 s</code> e <code>≤ 100 MB</code>) são aceitos e persistidos sem necessidade de reprocessamento manual.</li><li><strong>Validação (Justificativa):</strong> Documenta formalmente o critério técnico por trás dos parâmetros numéricos e registra a decisão de escopo do MVP, tornando o requisito reproduzível e auditável.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Vídeos com duração superior a 60 segundos são rejeitados com feedback claro ao atleta</li><li>Arquivos com tamanho superior a 100 MB são bloqueados imediatamente no aplicativo/navegador antes do início do envio, além de serem rejeitados pelo servidor caso enviados diretamente à API, onde será feita validação redundante no servidor (segurança):</li><li>Vídeos gravados em dispositivos móveis no padrão 1080p a 30 fps com até 60 segundos (≤ 100 MB) são enviados e reproduzidos sem falhas</li><li>A decisão técnica sobre o teto único (60 s / 100 MB) e o adiamento da duração variável por exercício pós-MVP está registrada e vinculada à RN09</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 2</summary><div><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf14">
+<summary><span class="sj-requirement-id">RNF14</span><span class="sj-requirement-name">Assistência e Validação no Preenchimento de Dados</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-usabilidade">Usabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Evolutivos</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve aplicar máscaras de entrada em tempo real, destacar campos obrigatórios e validar formatos antes do envio do formulário, prevenindo erros de digitação.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>CP1, CP3</li><li>Todos os utilizadores (Atleta e Treinador)</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Testes funcionais e automatizados de interface nos formulários de cadastro, perfil, testes físicos, planejamentos, exercícios e feedbacks comprovando que <code>100%</code> dos campos formatáveis aplicam máscara em tempo real durante a digitação, <code>100%</code> dos campos obrigatórios exibem indicação visual clara e <code>0</code> requisições de submissão são disparadas ao backend enquanto houver campos obrigatórios vazios ou formatos inválidos.</li><li><strong>Validação (Justificativa):</strong> Reduz erros de digitação, evita chamadas desnecessárias à API e orienta imediatamente o usuário sobre o preenchimento esperado antes da submissão.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Campos com padrão específico (como datas, contatos, durações ou métricas numéricas) aplicam máscara de entrada em tempo real durante a digitação</li><li>Todos os campos obrigatórios possuem destaque visual explícito antes mesmo da tentativa de envio</li><li>A validação client-side bloqueia o envio do formulário e exibe mensagens específicas junto ao campo quando há dados ausentes ou em formato inválido</li><li>Ao corrigir o campo inválido, o alerta de erro é removido imediatamente sem perda dos demais dados já preenchidos</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 27</summary><div><a href="../requisitos/#rf1101">RF1101 · Cadastrar aluno</a><a href="../requisitos/#rf1102">RF1102 · Cadastrar treinador</a><a href="../requisitos/#rf1107">RF1107 · Editar informações do perfil do aluno</a><a href="../requisitos/#rf1108">RF1108 · Trocar senha</a><a href="../requisitos/#rf1109">RF1109 · Editar informações do perfil do treinador</a><a href="../requisitos/#rf1110">RF1110 · Recuperar senha</a><a href="../requisitos/#rf1111">RF1111 · Registrar histórico de lesões</a><a href="../requisitos/#rf1213">RF1213 · Registrar dificuldade</a><a href="../requisitos/#rf1214">RF1214 · Editar dificuldade</a><a href="../requisitos/#rf1216">RF1216 · Registrar teste de aptidão física</a><a href="../requisitos/#rf1217">RF1217 · Editar teste de aptidão física</a><a href="../requisitos/#rf2301">RF2301 · Cadastrar planejamento de treino</a><a href="../requisitos/#rf2302">RF2302 · Editar planejamento de treino</a><a href="../requisitos/#rf2303">RF2303 · Associar planejamento de treino a objetivo do aluno</a><a href="../requisitos/#rf2307">RF2307 · Criar treino com exercícios</a><a href="../requisitos/#rf2308">RF2308 · Editar treino</a><a href="../requisitos/#rf2413">RF2413 · Cadastrar exercício</a><a href="../requisitos/#rf2415">RF2415 · Associar exercício ao objetivo do treino</a><a href="../requisitos/#rf2416">RF2416 · Associar erros e orientações</a><a href="../requisitos/#rf2418">RF2418 · Cadastrar informações complementares do vídeo base</a><a href="../requisitos/#rf2419">RF2419 · Documentar erros e orientações</a><a href="../requisitos/#rf2420">RF2420 · Editar erros e orientações</a><a href="../requisitos/#rf2422">RF2422 · Editar exercício</a><a href="../requisitos/#rf3604">RF3604 · Registrar feedback</a><a href="../requisitos/#rf3605">RF3605 · Editar feedback</a><a href="../requisitos/#rf3608">RF3608 · Registrar feedback do aluno</a><a href="../requisitos/#rf3609">RF3609 · Editar feedback do aluno</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf15">
+<summary><span class="sj-requirement-id">RNF15</span><span class="sj-requirement-name">Feedback e Prevenção de Erros no Pré-Envio de Mídia</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-usabilidade">Usabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O processamento da prévia e a validação prévia do arquivo de mídia (vídeo) selecionado devem ocorrer integralmente no navegador (lado do cliente), garantindo resposta imediata e assegurando que nenhum dado do arquivo seja transmitido ao servidor ou persistido temporariamente antes da confirmação explícita de envio pelo usuário.
+
+&gt; <strong>Nota de Escopo (Distinção RNF15 × RNF16):</strong> Este requisito trata exclusivamente dos <strong>atributos de qualidade da operação local</strong> — desempenho da renderização no cliente, economia de banda e contenção de tráfego de rede antes do envio (prevenindo submissões acidentais irreversíveis). Os elementos visuais, componentes de tela, mensagens de interface e fluxos de interação do usuário são especificados no <strong>RNF16</strong> (Usabilidade/Comportamento de Interface) e nos critérios de aceitação dos requisitos funcionais de envio de mídia.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>OE3 - CP5</li><li>Atleta</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn09">RN09 · Limite de Mídia por Submissão de Exercício</a></li><li><a href="../regras_negocio/#rn10">RN10 · Imutabilidade de Vídeo Após Feedback</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Prévia/troca local em ≤ 1,0s (até 100 MB) e 0 bytes enviados ao servidor antes da confirmação final.</li><li><strong>Validação (Justificativa):</strong> Evita o envio acidental de vídeos incorretos (que ficariam imutáveis após o registro de feedback pelo treinador, conforme a RN10), poupa o pacote de dados móveis do atleta e elimina custos com armazenamento temporário de rascunhos no servidor.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>A prévia local do arquivo é exibida em até 1,0s após a seleção</li><li>Nenhuma requisição de upload é disparada antes da confirmação</li><li>A troca ou remoção limpa o estado anterior sem recarregar a tela</li><li>Arquivos inválidos exibem feedback imediato antes do envio</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 2</summary><div><a href="../requisitos/#rf3501">RF3501 · Enviar vídeo de execução</a><a href="../requisitos/#rf3502">RF3502 · Substituir vídeo enviado</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf16">
+<summary><span class="sj-requirement-id">RNF16</span><span class="sj-requirement-name">Conformidade de Privacidade e Consentimento de Cookies</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-seguranca">Segurança (Privacidade / LGPD)</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve garantir o registro auditável e imutável do consentimento do usuário em conformidade com a LGPD (Arts. 7º e 8º), bloqueando o acesso às funcionalidades da plataforma enquanto não houver aceite expresso da versão vigente dos Termos de Uso e da Política de Privacidade (com gravação de identificador do usuário, data, hora e número da versão aceita). Adicionalmente, a aplicação web não deve salvar cookies opcionais (estatísticas ou monitoramento) nem disparar scripts de telemetria antes da autorização explícita do usuário, permitindo alterar ou revogar essa permissão de cookies a qualquer momento.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global / CP8</li><li>Todos os utilizadores (Atleta e Treinador)</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn15">RN15 · Obrigatoriedade de Aceite dos Termos e Privacidade</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> 100% das requisições a funcionalidades protegidas bloqueadas (HTTP 403 ou redirecionamento obrigatório) para usuários sem aceite na versão vigente dos termos; 100% dos aceites persistidos com timestamp e versão; 0 cookies opcionais gravados e 0 scripts de monitoramento disparados antes do consentimento explícito, com registro salvo em ≤ 500 ms.</li><li><strong>Validação (Justificativa):</strong> Assegura validade jurídica e rastreabilidade do consentimento exigidos pela LGPD (Arts. 7º e 8º), garantindo prova auditável de aceite dos termos vigentes e impedindo coleta indevida de dados de navegação sem autorização.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>O sistema impede o acesso às funcionalidades da plataforma caso o usuário não tenha aceitado a versão vigente dos Termos de Uso e da Política de Privacidade</li><li>Cada aceite registra de forma auditável o usuário, a data/hora e a versão exata dos documentos aceitos, exigindo novo aceite após atualizações</li><li>Nenhum cookie opcional é salvo e nenhum script de estatística ou monitoramento é carregado no primeiro acesso antes da escolha expressa do usuário</li><li>O usuário consegue consultar, alterar ou revogar suas preferências de cookies opcionais a qualquer momento</li></ul></div>
+</div>
+<details class="sj-related-requirements"><summary>Requisitos relacionados · 1</summary><div><a href="../requisitos/#rf4812">RF4812 · Aceitar termos de uso e política de privacidade</a></div></details></details>
+
+<details class="sj-requirement sj-rnf" id="rnf17">
+<summary><span class="sj-requirement-id">RNF17</span><span class="sj-requirement-name">Persistência Durável de Dados e Mídias</span><span class="sj-requirement-tags"><span class="sj-tag sj-classification sj-class-confiabilidade">Confiabilidade</span><span class="sj-tag sj-tag-mvp">MVP: Obrigatório</span></span></summary>
+<div class="sj-requirement-body">
+<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>O sistema deve garantir a persistência durável de todos os dados estruturados (cadastros, exercícios, planejamentos, treinos e feedbacks) em banco de dados relacional (PostgreSQL) e dos arquivos de mídia (vídeos-base da biblioteca do professor e vídeos de execução dos atletas) em armazenamento de objetos externo à imagem dos contêineres da aplicação. No <strong>MVP (piso mínimo obrigatório)</strong>, os dados e vídeos devem sobreviver integralmente a reinicializações, atualizações e redeploys do ambiente sem perda ou quebra de integridade referencial; mecanismos avançados como backups automáticos *point-in-time* (PITR), replicação multi-região e plano formal de recuperação de desastres (DR) ficam como <strong>escopo evolutivo pós-MVP</strong>.</p></div><div><p class="sj-record-label">Origem e perfis</p><ul class="sj-rnf-perfis"><li>Global</li><li>Todos os utilizadores (Atleta e Treinador)</li></ul></div><div><p class="sj-record-label">Regras de negócio associadas</p><ul class="sj-rnf-relacionadas"><li><a href="../regras_negocio/#rn13">RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios</a></li><li><a href="../regras_negocio/#rn14">RN14 · Gestão da Biblioteca de Exercícios</a></li></ul></div><div class="sj-record-full"><p class="sj-record-label">Verificação e validação</p><ul><li><strong>Verificação (Métrica):</strong> Após ciclo controlado de reinicialização e redeploy dos serviços da aplicação, 0 registros estruturados são perdidos no PostgreSQL (<code>100%</code> de retenção), <code>100%</code> dos vídeos-base e de execução permanecem acessíveis no storage e 0 referências quebradas ocorrem após operações de exclusão (RN13).</li><li><strong>Validação (Justificativa):</strong> Elimina o risco de perda de estado em ambientes containerizados no MVP, formalizando o requisito mínimo de continuidade operacional e conectando-o aos fluxos de biblioteca e execução.</li></ul></div><div class="sj-record-full"><p class="sj-record-label">Checklist estruturado (critérios de inspeção)</p><ul class="sj-rnf-checklist"><li>Dados estruturados (usuários, treinos, feedbacks e catálogo) permanecem íntegros no PostgreSQL após reinicialização ou redeploy dos contêineres</li><li>Vídeos-base cadastrados pelo treinador na biblioteca (RN14) e vídeos enviados pelos atletas permanecem recuperáveis após reinicializações</li><li>A aplicação de migrações de banco de dados preserva os registros existentes sem perda de dados</li><li>A exclusão de exercícios da biblioteca ou de planejamentos de treino preserva intactos o histórico e os registros de treinos já realizados pelos atletas, impedindo apenas sua utilização em novas prescrições (RN13)</li></ul></div>
+</div>
+<p class="sj-record-note">Nenhum vínculo específico registrado nas fichas. Conferir a aplicação durante a revisão do escopo.</p></details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.indexes", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.action.edit", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/sj-navigation.js"></script>
+      
+        <script src="../javascripts/sj-tables.js"></script>
+      
+        <script src="../javascripts/sj-catalog.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

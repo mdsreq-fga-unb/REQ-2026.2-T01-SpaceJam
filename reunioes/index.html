@@ -1,0 +1,2191 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe Space Jam">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/reunioes/">
+      
+      
+        <link rel="prev" href="../interacao_equipe_cliente/">
+      
+      
+        <link rel="next" href="../entregas/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../imagens/space-jam-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Reuniões - Space Jam</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/catalogo.css">
+    
+      <link rel="stylesheet" href="../stylesheets/artefatos-miro.css">
+    
+      <link rel="stylesheet" href="../stylesheets/status-requisitos.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#registros" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Space Jam" class="md-header__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Space Jam
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reuniões
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Space Jam" class="md-nav__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    Space Jam
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão do produto e projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visão do produto e projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cenario_atual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Cenário Atual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solucao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Solução Proposta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervencao_social/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervenção Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estrategia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Estratégias de Engenharia de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engenharia de Requisitos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engenharia_requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Atividades e técnicas de ER
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Catálogo de requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representacao_formal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Formal dos Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representacao_informal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Informal dos Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Definição do MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Backlog e priorização
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../artefatos_miro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrizes do Miro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dor_dod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. DoR e DoD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acompanhamento e entregas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Acompanhamento e entregas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cronograma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Cronograma e Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacao_equipe_cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Interação entre Equipe e Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reuniao-equipe-2026-11-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reunião da equipe — 16/11/2026
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuidade-das-decisoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuidade das decisões
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidencias-de-esw-e-er" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidências de ESW e ER
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidências de ESW e ER">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-analise-documental-dos-registros-do-treinador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Análise documental dos registros do treinador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-analise-de-tarefas-cenario-atual-vs-cenario-futuro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Análise de tarefas (Cenário Atual vs. Cenário Futuro)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-modelagem-complementar-matriz-consolidada-de-permissoes-e-acessos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modelagem complementar: Matriz Consolidada de Permissões e Acessos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prototipo-de-alta-fidelidade-e-fluxos-de-interacao-navegaveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Protótipo de alta fidelidade e fluxos de interação navegáveis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-consolidacao-da-revisao-por-pares-e-encerramento-dos-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Consolidação da Revisão por Pares e Encerramento dos RNFs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-reuniao-de-alinhamento-com-o-brainstorm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Reunião de alinhamento com o brainstorm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-apresentacao-do-prototipo-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Apresentação do protótipo inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-rastreabilidade-dos-ciclos-de-prototipacao-avaliacao-e-refinamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Rastreabilidade dos Ciclos de Prototipação, Avaliação e Refinamento
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registros-complementares-de-outubro-e-novembro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registros complementares de outubro e novembro
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entregas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licoes-aprendidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Lições Aprendidas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#registros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registros
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reuniao-equipe-2026-11-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reunião da equipe — 16/11/2026
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#continuidade-das-decisoes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Continuidade das decisões
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#evidencias-de-esw-e-er" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Evidências de ESW e ER
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Evidências de ESW e ER">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-analise-documental-dos-registros-do-treinador" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Análise documental dos registros do treinador
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-analise-de-tarefas-cenario-atual-vs-cenario-futuro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Análise de tarefas (Cenário Atual vs. Cenário Futuro)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-modelagem-complementar-matriz-consolidada-de-permissoes-e-acessos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Modelagem complementar: Matriz Consolidada de Permissões e Acessos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-prototipo-de-alta-fidelidade-e-fluxos-de-interacao-navegaveis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Protótipo de alta fidelidade e fluxos de interação navegáveis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-consolidacao-da-revisao-por-pares-e-encerramento-dos-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Consolidação da Revisão por Pares e Encerramento dos RNFs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-reuniao-de-alinhamento-com-o-brainstorm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Reunião de alinhamento com o brainstorm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-apresentacao-do-prototipo-inicial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Apresentação do protótipo inicial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-rastreabilidade-dos-ciclos-de-prototipacao-avaliacao-e-refinamento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Rastreabilidade dos Ciclos de Prototipação, Avaliação e Refinamento
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registros-complementares-de-outubro-e-novembro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registros complementares de outubro e novembro
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/reunioes.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="reunioes">Reuniões<a class="headerlink" href="#reunioes" title="Permanent link">&para;</a></h1>
+<p>Esta página reúne as atas das reuniões do projeto Space Jam e as evidências das técnicas de Engenharia de Software e Engenharia de Requisitos aplicadas ao longo do ciclo. Os encaminhamentos e as pendências refletem a situação registrada em cada encontro.</p>
+<h2 id="registros">Registros<a class="headerlink" href="#registros" title="Permanent link">&para;</a></h2>
+<p>As atas preservam discussões e encaminhamentos da data de cada encontro. Para consultar o escopo mantido nesta versão, use o <a href="../requisitos/">catálogo</a>; para entender mudanças posteriores, consulte o <a href="../backlog/#historico-de-revisao">histórico do Backlog</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Encontro</th>
+<th>Ata ou registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>14/09/2026</td>
+<td>Reunião da equipe</td>
+<td><a href="../atas/2026-09-14-equipe/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>17/09/2026</td>
+<td>Reunião com Lucas</td>
+<td><a href="../atas/2026-09-17-lucas/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>21/09/2026</td>
+<td>Reunião da equipe</td>
+<td><a href="../atas/2026-09-21-equipe/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>21/09/2026</td>
+<td>Reunião com o monitor Heitor</td>
+<td><a href="../atas/2026-09-21-monitor/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>26/09/2026</td>
+<td>Reunião com Lucas</td>
+<td><a href="../atas/2026-09-26-lucas/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>28/09/2026</td>
+<td>Reunião da equipe</td>
+<td><a href="../atas/2026-09-28-equipe/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>05/10/2026</td>
+<td>Reunião da equipe</td>
+<td><a href="../atas/2026-10-05-equipe/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>08/10/2026</td>
+<td>Reunião com Lucas</td>
+<td><a href="../atas/2026-10-08-lucas/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>16/11/2026</td>
+<td>Reunião da equipe</td>
+<td><a href="#reuniao-equipe-2026-11-16">Consultar registro de consulta</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="reuniao-equipe-2026-11-16">Reunião da equipe — 16/11/2026<a class="headerlink" href="#reuniao-equipe-2026-11-16" title="Permanent link">&para;</a></h2>
+<p><strong>Natureza:</strong> registro de consulta preparado em 16/11/2026 a partir da transcrição automática. Não foi localizada uma ata formal dessa ocorrência; este registro não constitui ata aprovada pela equipe.</p>
+<p><strong>Fonte:</strong> gravação da Reunião Semanal, iniciada às 10h35, com duração de 47min04s e falas transcritas até 47:01. A transcrição não foi integralmente conferida pelo áudio. A fonte integral tem acesso institucional restrito; abaixo estão os encaminhamentos pertinentes à <a href="../aplicacao_dor_dod/#fonte-reuniao">aplicação do DoR/DoD</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Minutagem</th>
+<th>Encaminhamento identificado</th>
+<th>Alcance da evidência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>35:16</td>
+<td>Júlia relata que Luiz adiantou o frontend de US01–US05, referentes a cadastro, login e logout.</td>
+<td>Identifica contribuição executada; não comprova atribuição formal anterior ou conclusão das histórias.</td>
+</tr>
+<tr>
+<td>35:32</td>
+<td>Júlia relata interfaces e validações preparadas, com integração ao backend e ajustes de requisitos ainda pendentes.</td>
+<td>Registra o andamento informado naquele encontro.</td>
+</tr>
+<tr>
+<td>35:41–35:44</td>
+<td>Guilherme informa que fará o backend; Thiago comenta a continuidade das frentes de implementação.</td>
+<td>Não individualiza a responsabilidade de backend de cada US.</td>
+</tr>
+<tr>
+<td>44:17</td>
+<td>Guilherme identifica login e cadastro como sua parte e menciona as chamadas aos endpoints.</td>
+<td>Delimita o escopo relatado, sem comprovar atendimento dos aceites ou integração.</td>
+</tr>
+<tr>
+<td>45:28</td>
+<td>Thiago orienta Luiz a revisar e Guilherme a prosseguir, mantendo a comunicação.</td>
+<td>Comprova encaminhamento de continuidade; não registra a decisão coletiva original de iniciar as oito histórias.</td>
+</tr>
+</tbody>
+</table>
+<p>A tabela acima resume os encaminhamentos; os excertos literais estão no bloco abaixo. Essas falas não demonstram estimativas de esforço nem compatibilidade com a disponibilidade da iteração. A <a href="../aplicacao_dor_dod/#conferencia-iteracao1">conferência da Iteração 1</a> mantém esses pontos pendentes.</p>
+<p><span id="trechos-transcricao-2026-11-16"></span></p>
+<details class="sj-document-details">
+<summary>Ver trechos da transcrição usados no DoR/DoD</summary>
+<p>Excertos da transcrição automática, reproduzidos sem corrigir a redação. A seleção contém somente as falas de projeto utilizadas nesta conferência; não representa a reunião integral nem substitui uma ata aprovada. Não houve validação integral pelo áudio.</p>
+<p>O DOCX agrupa falas consecutivas de um participante. No bloco da Júlia iniciado às <strong>34:50</strong>, a passagem sobre US01–US05 foi localizada às <strong>35:16</strong> no Teams; as duas referências foram preservadas.</p>
+<p><strong>Julia Amanda Silva Lima — 34:50 no DOCX</strong></p>
+<blockquote>
+<p>Aí do front, eu acho que o que o Luiz falou no chat.o ele tá você não consegue ver né Ó Thiaguinho ele adiantou as Oeste 01 a 05 que envolvem cadastro login de aluno e treinador além do logout</p>
+</blockquote>
+<p><strong>Julia Amanda Silva Lima — 35:32 no DOCX</strong></p>
+<blockquote>
+<p>Já tem interfaces, validações e algumas funcionalidades implementadas e testadas, mas ainda faltam integrações com o back-end e alguns ajustes nos requisitos.</p>
+</blockquote>
+<p><strong>Guilherme Ferreira Mendes — 35:41 no DOCX</strong></p>
+<blockquote>
+<p>Eu vou fazer o backend agorinha.</p>
+</blockquote>
+<p><strong>Thiago Alencar de Oliveira — 35:44 no DOCX</strong></p>
+<blockquote>
+<p>Perfeito. O Guilherme está terminando essa parte do backend. Eu também vou terminar minha parte e.</p>
+</blockquote>
+<p><strong>Guilherme Ferreira Mendes — 44:17 no DOCX</strong></p>
+<blockquote>
+<p>mas a parte do a página do meu código é de boa só login cadastro cara só ver os endpoints certinho as chamadas</p>
+</blockquote>
+<p><strong>Thiago Alencar de Oliveira — 45:28 no DOCX</strong></p>
+<blockquote>
+<p>Isso e aí vocês vocês dão uma revisada lá também. Na verdade, o Luiz dá uma revisada e tu pode seguir o Guilherme, porque aí está de boa. Mas é isso, vamos continuar mantendo a comunicação a gente.</p>
+</blockquote>
+</details>
+<p>A exportação oficial consultada tem SHA-256 <code>ccc86925d2ff53a378978ad496268c887743c9d61c04907381c6b7ce4dc6e359</code>. O arquivo integral e a gravação não foram incorporados à documentação pública.</p>
+<hr />
+<h2 id="continuidade-das-decisoes">Continuidade das decisões<a class="headerlink" href="#continuidade-das-decisoes" title="Permanent link">&para;</a></h2>
+<p>Os registros abaixo mostram onde cada discussão foi retomada ou alterada. A revisão de um documento não equivale a uma nova confirmação do cliente.</p>
+<details class="sj-delivery-video-details">
+<summary>Organização do trabalho</summary>
+<div class="sj-reference-body">
+<p>A <a href="../atas/2026-09-14-equipe/">ata de 14/09</a> registra a decisão de utilizar Kanban. A <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/commit/f9eb405e6449e858c66c3e5af567451d0c000525">revisão de ER de 12/10</a> passou a distinguir o quadro visual da adoção do framework.</p>
+<p>O quadro utilizado está identificado na <a href="../interacao_equipe_cliente/#quadro-de-acompanhamento">organização do trabalho</a>.</p>
+</div>
+</details>
+<details class="sj-delivery-video-details">
+<summary>Cadastro, permissões e acompanhamento</summary>
+<div class="sj-reference-body">
+<p>As dúvidas de <a href="../atas/2026-09-17-lucas/">17/09</a> e <a href="../atas/2026-09-21-equipe/">21/09</a> antecedem a avaliação dos requisitos. Lucas detalhou cadastro e edição de dados em <a href="../atas/2026-09-26-lucas/">26/09</a>.</p>
+<p>Status, feedback e vínculo entre contas voltaram à discussão em <a href="../atas/2026-10-08-lucas/#pontos-a-esclarecer">08/10</a>. As atas mantêm as decisões e dúvidas de cada encontro.</p>
+</div>
+</details>
+<details class="sj-delivery-video-details">
+<summary>Priorização e recorte do MVP</summary>
+<div class="sj-reference-body">
+<p>A equipe trabalhou a seleção em <a href="../atas/2026-09-28-equipe/">28/09</a>, retomou os pontos em <a href="../atas/2026-10-05-equipe/">05/10</a> e discutiu o recorte com Lucas em <a href="../atas/2026-10-08-lucas/#priorizacao-discutida">08/10</a>.</p>
+<p>A revisão de 13/10 alterou o recorte documental. As diferenças em relação à conversa com Lucas estão identificadas na <a href="../atas/2026-10-08-lucas/#revisao-documental-posterior">continuação da ata de 08/10</a>, com acesso ao MVP e às revisões correspondentes.</p>
+</div>
+</details>
+<h2 id="evidencias-de-esw-e-er">Evidências de ESW e ER<a class="headerlink" href="#evidencias-de-esw-e-er" title="Permanent link">&para;</a></h2>
+<p><span id="analise-documental"></span></p>
+<h3 id="1-analise-documental-dos-registros-do-treinador">1. Análise documental dos registros do treinador<a class="headerlink" href="#1-analise-documental-dos-registros-do-treinador" title="Permanent link">&para;</a></h3>
+<p>Durante a fase de Planejamento de Requisitos, a equipe examinou os artefatos utilizados pelo treinador Lucas Cordeiro em sua rotina atual: <strong>fichas individuais no Samsung Notes</strong>, <strong>documentos de planejamento de treino no Microsoft Word</strong> e <strong>anotações rápidas em caderno físico</strong>.</p>
+<p><img alt="Captura de tela das anotações de atletas no Samsung Notes do treinador Lucas" src="../imagens/analise-documental-samsung-notes.png" /></p>
+<p><em>Figura 1 — Registro real utilizado pelo treinador no Samsung Notes para controle de dados biométricos, lesões e objetivos dos atletas.</em></p>
+<h4 id="sintese-dos-documentos-examinados-e-regrasrequisitos-extraidos">Síntese dos documentos examinados e regras/requisitos extraídos<a class="headerlink" href="#sintese-dos-documentos-examinados-e-regrasrequisitos-extraidos" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Documento / Artefato Examinado</th>
+<th style="text-align: left;">Informações Observadas no Documento</th>
+<th style="text-align: left;">Regras de Negócio e Requisitos Derivados</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Samsung Notes — Nota "Atletas"</strong></td>
+<td style="text-align: left;">Registros em texto livre contendo: <strong>Nome</strong> (<em>Caio Zapata</em>, <em>João Pedro</em>, <em>Leonardo Carrazza</em>), <strong>Idade</strong> (<em>15</em> e <em>17 anos</em>), <strong>Altura</strong> (<em>1,83m</em> a <em>1,93m</em>), <strong>Peso</strong> (<em>73kg</em> a <em>96kg</em>), <strong>Altura do salto</strong> (<em>34cm</em>, <em>52cm</em>, <em>55cm</em>), <strong>Lesões</strong> (<em>"Derrame ósseo joelho esquerdo / recuperado"</em> ou campo vazio) e <strong>Objetivo</strong> (<em>"jogar como um 3 ou 4"</em> ou campo vazio).</td>
+<td style="text-align: left;"><strong>1. Estruturação cadastral e biométrica:</strong> fundamenta os campos obrigatórios e opcionais do perfil do atleta (<code>RF01104</code>, <code>RN02</code>) e valida a necessidade futura de métricas específicas como salto vertical (<code>RF1216</code>).<br><strong>2. Segregação de edição clínica/tática:</strong> evidencia que dados pessoais básicos convivem com informações clínicas (<em>lesões</em>) e diretrizes técnicas (<em>posição/objetivo</em>), originando a regra que permite ao atleta editar seus dados básicos, mas restringe a edição de histórico clínico e objetivos táticos exclusivamente ao treinador vinculado (<code>RN01</code>, <code>RN02</code>).<br><strong>3. LGPD e menores de idade:</strong> a presença de atletas com <strong>15 e 17 anos</strong> comprova o atendimento a menores de 18 anos, exigindo consentimento legal do responsável e isolamento estrito de acesso (<code>RF4813</code>, <code>RNF05</code>, <code>RNF10</code>, <code>RN15</code>, <code>RN16</code>).<br><strong>4. Tratamento de campos incompletos:</strong> notas sem lesões ou objetivos preenchidos (ex.: <em>João Pedro</em> e <em>Leonardo Carrazza</em>) motivaram a definição de campos opcionais no cadastro inicial sem bloquear a criação da ficha.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Documentos Microsoft Word</strong></td>
+<td style="text-align: left;">Planejamentos de sessões de treino e sequências de exercícios organizados por atleta em arquivos separados.</td>
+<td style="text-align: left;"><strong>1. Biblioteca e prescrição estruturada:</strong> origina o cadastro padronizado de exercícios (<code>RF02412</code>, <code>RF02413</code>) e a montagem de treinos individualizados vinculados ao atleta (<code>RF2307</code>), eliminando a duplicação manual de arquivos.<br><strong>2. Histórico longitudinal:</strong> motiva a consulta cronológica de treinos prescritos e concluídos (<code>RNF10</code>, <code>RNF12</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Caderno físico de quadra</strong></td>
+<td style="text-align: left;">Anotações pontuais de execução, correções técnicas e resultados imediatos coletados durante os treinos presenciais.</td>
+<td style="text-align: left;"><strong>1. Rastreabilidade de execução e feedback:</strong> sustenta o registro de status de conclusão, percepção de dificuldade (<code>1–5</code>), envio de vídeo de execução (<code>RF3501</code>) e feedback avaliativo privado vinculado (<code>RF3604</code>), evitando perda de histórico entre aulas.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><span id="analise-de-tarefas"></span></p>
+<h3 id="2-analise-de-tarefas-cenario-atual-vs-cenario-futuro">2. Análise de tarefas (Cenário Atual vs. Cenário Futuro)<a class="headerlink" href="#2-analise-de-tarefas-cenario-atual-vs-cenario-futuro" title="Permanent link">&para;</a></h3>
+<p>Com base no diagnóstico levantado com o treinador Lucas Cordeiro (registrado no <a href="../cenario_atual/">Cenário Atual</a>) e na modelagem da aplicação Web <strong>Space Jam</strong>, apresenta-se a análise comparativa de como <strong>Treinador</strong> e <strong>Atletas</strong> executam suas principais atividades, detalhando <strong>passos, decisões, dificuldades e exceções</strong>.</p>
+<blockquote>
+<p><strong>Nota metodológica:</strong> As tarefas do perfil <strong>Atleta</strong> no cenário atual foram mapeadas a partir do relato operacional do treinador sobre a rotina compartilhada. Como ainda não houve sessão de validação direta com os atletas, os passos e dificuldades previstos para o cenário futuro serão confrontados diretamente com os alunos na etapa de validação de usabilidade.</p>
+</blockquote>
+<h4 id="21-cenario-atual-rotina-presencial-e-ferramentas-dispersas">2.1 Cenário Atual (Rotina presencial e ferramentas dispersas)<a class="headerlink" href="#21-cenario-atual-rotina-presencial-e-ferramentas-dispersas" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ator</th>
+<th style="text-align: left;">Tarefa Principal</th>
+<th style="text-align: left;">Passos Executados</th>
+<th style="text-align: left;">Decisões Tomadas</th>
+<th style="text-align: left;">Dificuldades Encontradas</th>
+<th style="text-align: left;">Exceções e Contornos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Treinador (Lucas)</strong></td>
+<td style="text-align: left;"><strong>1. Cadastrar e atualizar perfil/evolução do atleta</strong></td>
+<td style="text-align: left;">1. Coleta dados iniciais via WhatsApp ou conversa em quadra.<br>2. Abre o Samsung Notes no celular e cria/edita um bloco de texto com medidas, lesões e objetivos.<br>3. Anota resultados de testes em caderno ou notas separadas.</td>
+<td style="text-align: left;">Decidir quais métricas registrar para cada atleta e quando atualizar o status de recuperação de lesão.</td>
+<td style="text-align: left;">Informações espalhadas entre Samsung Notes, Word e caderno; ausência de histórico temporal (novos valores sobrescrevem antigos); dificuldade para comparar evolução.</td>
+<td style="text-align: left;">Campos como <em>Lesões</em> ou <em>Objetivo</em> ficam em branco quando não há informação no momento; ausência de termo formal de consentimento para menores.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Treinador (Lucas)</strong></td>
+<td style="text-align: left;"><strong>2. Planejar e prescrever treinos individuais</strong></td>
+<td style="text-align: left;">1. Consulta manualmente as anotações do atleta no Samsung Notes.<br>2. Abre um documento no Word para montar a lista de exercícios.<br>3. Demonstra os exercícios presencialmente em quadra ou envia orientações por mensagem.</td>
+<td style="text-align: left;">Definir carga, fundamentos e adaptações conforme histórico de lesões e posição desejada (ex.: ala/pivô — posições 3 ou 4).</td>
+<td style="text-align: left;">Retrabalho para reescrever exercícios recorrentes; falta de padronização na descrição de pontos de atenção e erros comuns.</td>
+<td style="text-align: left;">Alterações de última hora no treino por limitação física ou falta de espaço/equipamento em quadra exigem ajuste verbal sem registro no Word.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Treinador (Lucas)</strong></td>
+<td style="text-align: left;"><strong>3. Avaliar execução e fornecer feedback</strong></td>
+<td style="text-align: left;">1. Observa a execução presencialmente durante a aula ou recebe vídeos soltos pelo WhatsApp.<br>2. Analisa a postura/mecânica do movimento.<br>3. Responde com correções verbais em quadra ou áudios/mensagens no WhatsApp.</td>
+<td style="text-align: left;">Decidir se o atleta pode avançar de exercício ou precisa repetir/corrigir o movimento.</td>
+<td style="text-align: left;">Vídeos se perdem no histórico de conversas do WhatsApp; falta de vínculo direto entre o exercício prescrito, o vídeo enviado e a correção feita.</td>
+<td style="text-align: left;">Quando não há tempo hábil ou espaço para filmagem presencial, o feedback fica restrito à observação imediata sem registro posterior.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Atleta</strong></td>
+<td style="text-align: left;"><strong>4. Consultar treino e registrar execução/dúvidas</strong></td>
+<td style="text-align: left;">1. Recebe orientações presencialmente ou por mensagens no WhatsApp.<br>2. Executa os exercícios em quadra ou por conta própria.<br>3. Grava vídeo pelo celular (quando solicitado) e envia via WhatsApp.</td>
+<td style="text-align: left;">Decidir qual tentativa gravar e enviar ao treinador para avaliação.</td>
+<td style="text-align: left;">Dificuldade para localizar prescrições antigas no chat; falta de referência visual padronizada (vídeo-base e erros comuns) fora do horário de aula.</td>
+<td style="text-align: left;">Em caso de dor, fadiga ou falta de estrutura fora da aula presencial, o atleta interrompe o exercício e avisa informalmente pelo WhatsApp.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="22-cenario-futuro-aplicacao-web-space-jam">2.2 Cenário Futuro (Aplicação Web Space Jam)<a class="headerlink" href="#22-cenario-futuro-aplicacao-web-space-jam" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ator</th>
+<th style="text-align: left;">Tarefa Principal</th>
+<th style="text-align: left;">Passos na Aplicação Web</th>
+<th style="text-align: left;">Decisões no Fluxo</th>
+<th style="text-align: left;">Dificuldades Mitigadas</th>
+<th style="text-align: left;">Exceções Tratadas pelo Sistema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Treinador (Lucas)</strong></td>
+<td style="text-align: left;"><strong>1. Gerenciar carteira e ficha técnica de atletas</strong></td>
+<td style="text-align: left;">1. Acessa a plataforma (após aprovação cadastral pelo Administrador) e gera um <strong>Código de Convite Privado</strong>.<br>2. Compartilha o código com o atleta para estabelecer vínculo ativo.<br>3. Consulta dados biométricos preenchidos pelo atleta e registra histórico de lesões e objetivos táticos.</td>
+<td style="text-align: left;">Validar se o consentimento legal do responsável está ativo (para menores de 18 anos) e definir diretrizes clínicas/táticas do aluno.</td>
+<td style="text-align: left;">Centraliza dados cadastrais, biométricos e clínicos em registro único com isolamento por vínculo (<code>RBAC</code>), eliminando notas dispersas.</td>
+<td style="text-align: left;"><strong>Convite expirado/inválido:</strong> bloqueio de vínculo.<br><strong>Menor sem consentimento:</strong> acesso restringido até validação do responsável (<code>RF4813</code>).<br><strong>Inativação de aluno:</strong> preserva histórico sem excluir registros (<code>RF01105</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Treinador (Lucas)</strong></td>
+<td style="text-align: left;"><strong>2. Estruturar biblioteca e prescrever treinos</strong></td>
+<td style="text-align: left;">1. Cadastra exercícios na <strong>Biblioteca</strong> com vídeo-base, thumbnail, descrição e erros comuns.<br>2. Seleciona um atleta vinculado e cria um planejamento/treino individualizado associando exercícios.<br>3. Disponibiliza o treino no painel do atleta.</td>
+<td style="text-align: left;">Selecionar exercícios adequados aos objetivos e restrições clínicas do atleta; ajustar treinos conforme evolução.</td>
+<td style="text-align: left;">Elimina reescrita no Word e padroniza a explicação técnica e os pontos de atenção dos exercícios.</td>
+<td style="text-align: left;"><strong>Edição após execução:</strong> preserva registros históricos já concluídos pelo atleta.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Treinador (Lucas)</strong></td>
+<td style="text-align: left;"><strong>3. Avaliar vídeos e registrar feedback privado</strong></td>
+<td style="text-align: left;">1. Recebe notificação de vídeo enviado pelo atleta vinculado.<br>2. Assiste ao vídeo diretamente no contexto do exercício prescrito.<br>3. Registra feedback avaliativo privado e define status (aprovado ou <em>Corrigir/Refazer</em>).</td>
+<td style="text-align: left;">Decidir se a execução atende ao critério técnico ou exige nova gravação.</td>
+<td style="text-align: left;">Garante vínculo permanente entre exercício, vídeo enviado e feedback, com privacidade garantida entre treinador e atleta.</td>
+<td style="text-align: left;"><strong>Imutabilidade pós-feedback:</strong> após o treinador registrar o feedback, o vídeo torna-se imutável (<code>RF3502</code>, <code>RF3604</code>), impedindo exclusão ou substituição retroativa.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Atleta</strong></td>
+<td style="text-align: left;"><strong>4. Executar treino, enviar vídeo e acompanhar feedback</strong></td>
+<td style="text-align: left;">1. Cadastra-se via <strong>Código de Convite Privado</strong>, aceita termos de uso e atualiza dados pessoais/biométricos.<br>2. Consulta o treino prescrito e visualiza vídeo-base e erros comuns.<br>3. Marca exercícios como <em>Concluído</em>, informa dificuldade (<code>1–5</code>), relato textual e envia vídeo (<code>.mp4</code>/<code>.mov</code>, até 60s / 100MB).<br>4. Consulta o feedback privado do treinador.</td>
+<td style="text-align: left;">Avaliar dificuldade percebida (<code>1–5</code>), decidir se substitui o vídeo antes da avaliação e revisar execução caso receba status <em>Corrigir/Refazer</em>.</td>
+<td style="text-align: left;">Acesso móvel centralizado (Chrome/Safari) com referência visual clara do exercício e histórico organizado de feedbacks.</td>
+<td style="text-align: left;"><strong>Substituição de vídeo:</strong> permitida apenas enquanto não houver feedback registrado.<br><strong>Arquivo fora do padrão:</strong> rejeição automática de formato inválido, duração &gt; 60s ou tamanho &gt; 100MB (<code>RNF06</code>, <code>RNF14</code>).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><span id="modelagem-permissoes"></span></p>
+<h3 id="3-modelagem-complementar-matriz-consolidada-de-permissoes-e-acessos">3. Modelagem complementar: Matriz Consolidada de Permissões e Acessos<a class="headerlink" href="#3-modelagem-complementar-matriz-consolidada-de-permissoes-e-acessos" title="Permanent link">&para;</a></h3>
+<p>Para encerrar as dúvidas levantadas nas reuniões de <strong>26/09/2026</strong> e <strong>08/10/2026</strong> sobre controle de acesso, visibilidade de dados e consentimento de menores de idade, a equipe consolidou a modelagem de autorização baseada em papéis (<strong>RBAC</strong>) e isolamento multi-inquilino (<strong>Data Isolation</strong>):</p>
+<ul>
+<li><strong>Artefato consolidado:</strong> <a href="https://docs.google.com/document/d/1_6J8LWkFLCoRqjBAPhsyps4IfjCPU20Rf6IHtn7pYzM/edit?tab=t.0#heading=h.scqgboim3nm1">Matriz Consolidada de Permissões e Acessos por Perfil (Google Docs)</a></li>
+<li><strong>Decisões formalizadas:</strong></li>
+<li>Separação explícita entre <strong>Atleta (Próprio)</strong>, <strong>Atleta (Terceiros)</strong>, <strong>Treinador (Vinculado)</strong>, <strong>Treinador (Não Vinculado)</strong> e <strong>Administrador</strong>;</li>
+<li>Bloqueio total (<code>HTTP 403/404</code>) de acesso cruzado entre atletas ou por treinadores sem vínculo ativo via Código de Convite Privado;</li>
+<li>Edição de dados pessoais/biométricos básicos restrita ao próprio atleta, enquanto dados clínicos (lesões) e táticos ficam em modo somente leitura para o atleta e editáveis apenas pelo treinador vinculado;</li>
+<li>Imutabilidade de vídeos após o registro de feedback avaliativo e exigência de consentimento legal para atletas menores de 18 anos.</li>
+</ul>
+<hr />
+<p><span id="prototipo-alta-fidelidade-navegavel"></span></p>
+<h3 id="4-prototipo-de-alta-fidelidade-e-fluxos-de-interacao-navegaveis">4. Protótipo de alta fidelidade e fluxos de interação navegáveis<a class="headerlink" href="#4-prototipo-de-alta-fidelidade-e-fluxos-de-interacao-navegaveis" title="Permanent link">&para;</a></h3>
+<p>No dia 31 de outubro foi realizado uma reunião com o Lucas para validar o protótipo de alta fidelidade. </p>
+<p><a href="https://teams.microsoft.com/l/meetingrecap?driveId=b%218yflCIcNW0a2rV5Uzn_iiLDK00RBOotClfNoAKd0gslYYkODNZ_wQYoFyAoacbpV&amp;driveItemId=01XGJQ4C3TDMCA2NRNEVA2ZN722QEI3MPD&amp;sitePath=https%3A%2F%2Funbbr.sharepoint.com%2Fsites%2FSpaceJam-Requisitos%2FDocumentos+Compartilhados%2FGeneral%2FRecordings%2FReuni%C3%A3o+com+Lucas-20261031_190507-Grava%C3%A7%C3%A3o+de+Reuni%C3%A3o.mp4%3Fweb%3D1&amp;fileUrl=https%3A%2F%2Funbbr.sharepoint.com%2Fsites%2FSpaceJam-Requisitos%2FDocumentos+Compartilhados%2FGeneral%2FRecordings%2FReuni%C3%A3o+com+Lucas-20261031_190507-Grava%C3%A7%C3%A3o+de+Reuni%C3%A3o.mp4%3Fweb%3D1&amp;threadId=19%3AeA1GzX5VWGlKX1CizuHjNRpc6ii12B8JRQdMtd36U9E1%40thread.tacv2&amp;organizerId=3c3e99c1-8904-4b8c-92c2-a6ba66ffa9f6&amp;tenantId=ec359ba1-630b-4d2b-b833-c8e6d48f8059&amp;callId=49b4f240-a546-4c9e-ab30-5951124015ab&amp;threadType=space&amp;meetingType=MeetNow&amp;organizerGroupId=17da893d-773d-4d5d-b685-d5fa59cf1d9a&amp;channelType=Standard&amp;replyChainId=1793483970000&amp;subType=RecapSharingLink_RecapCore&amp;recapType=RecordingAndTranscript">Assistir à gravação da reunião</a></p>
+<p><img alt="Apresentação do protótipo de alta fidelidade com fluxos" src="../imagens/print_prot_alta.png" /></p>
+<p>Foram apresentados os fluxos mais genéricos:</p>
+<ul>
+<li>
+<p><strong>Como atleta</strong>: Logar como atleta abriria a tela com o próprio treinamento, ele teria a opção de selecionar o tipo de treino, arremesso, drible, por exemplo, como foi mencionado no feedback do protótipo de baixa fidelidade. Estaria visível as opções: enviar vídeo, selecionar a dificuldade que teve com o exercício e escrever essas dificuldades caso necessário.</p>
+</li>
+<li>
+<p><strong>Como treinador</strong>: Logar como treinador abriria uma página que mostra todos seus alunos ativos, ele poderá acessar o perfil de cada aluno e verificar as informações (testes físicos, nome, idade e etc) e, em outra aba, modificar os treinos.</p>
+</li>
+</ul>
+<h4 id="feeback-do-lucas">Feeback do Lucas<a class="headerlink" href="#feeback-do-lucas" title="Permanent link">&para;</a></h4>
+<p>Está disponível na gravação da reunião, mas em geral foi: "É, primeiro eu gostei da cor, ficou bem legal e as informações estão bem organizadinhas, eu acho que tipo. Depois que abre, eu acho que fica bem bem explicativo para a pessoa entender esse caramba aqui é o vídeo, é aqui que eu coloco o feedback, é aqui onde eu coloco a dificuldade e tals, tá ligado? Eu acho que ficou bom por causa disso, é mais pela organização e tipo, não simplicidade, mas tipo, é fácil de entender, tá ligado? Que que tem, que que precisa ser feito? [...] por mim pode manter o jeito que estiver mesmo, que está pra mim assim está bom."</p>
+<p><a href="https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=168-1123&amp;t=A0Cp6Y2IzX1Yzgec-0">Abrir protótipo interativo de alta fidelidade no Figma</a></p>
+<details class="sj-delivery-video-details sj-artifact-preview">
+  <summary>Visualizar protótipo navegável de alta fidelidade nesta página</summary>
+  <div class="sj-artifact-frame">
+    <iframe
+      src="https://embed.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=168-1123&embed-host=share"
+      title="Protótipo de alta fidelidade navegável do Space Jam no Figma"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
+</details>
+
+<h4 id="justificativa-metodologica-substituicao-do-diagrama-formal-pelo-fluxo-navegavel">Justificativa metodológica (substituição do diagrama formal pelo fluxo navegável)<a class="headerlink" href="#justificativa-metodologica-substituicao-do-diagrama-formal-pelo-fluxo-navegavel" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Distinção conceitual:</strong> um diagrama formal de interação (como diagramas de sequência ou de atividades) modela a troca estática de mensagens e regras de controle entre componentes, enquanto um <strong>fluxo de interação navegável</strong> representa a transição dinâmica entre telas, botões e estados sob a perspectiva de uso.</li>
+<li><strong>Opção adotada pela equipe:</strong> alinhada à abordagem iterativa do <strong>RAD (Rapid Application Development)</strong>, a equipe optou por <strong>não confeccionar diagramas estáticos separados de fluxo de interação</strong>, substituindo-os diretamente pelo protótipo navegável de alta fidelidade no Figma.</li>
+<li><strong>Cobertura funcional:</strong> o protótipo permite percorrer ponta a ponta os fluxos do treinador e do atleta (autenticação, gestão de perfil e métricas, biblioteca de exercícios, montagem de treinos, envio de vídeos e registro de feedback), cumprindo o objetivo de comunicar e validar os fluxos operacionais antes e durante a construção.</li>
+</ul>
+<h4 id="atualizacao">Atualização<a class="headerlink" href="#atualizacao" title="Permanent link">&para;</a></h4>
+<p>No dia 16 de novembro, apesar do protótipo de alta fidelidade ter sido validado, foi mandado um print para o Lucas de como estaria o andamento das implementações e ele o achou simples, então talvez vamos mudar o protótipo de alta fidelidade e o front na próxima iteração.</p>
+<p><img alt="Apresentação do protótipo de alta fidelidade com fluxos" src="../imagens/simples.jpeg" /></p>
+<hr />
+<p><span id="revisao-por-pares"></span></p>
+<h3 id="5-consolidacao-da-revisao-por-pares-e-encerramento-dos-rnfs">5. Consolidação da Revisão por Pares e Encerramento dos RNFs<a class="headerlink" href="#5-consolidacao-da-revisao-por-pares-e-encerramento-dos-rnfs" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Status:</strong> Rodada de revisão por pares concluída sobre os artefatos de requisitos (RNFs, critérios de aceitação e matriz de permissões), o incremento de acesso e cadastro no frontend (<code>US01</code>–<code>US05</code>) e a auditoria técnica do módulo de biblioteca de exercícios no backend (<code>CP4</code> / <code>US20</code>–<code>US25</code>), consolidando as correções aplicadas, pendências de integração e melhorias mapeadas para os próximos incrementos.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">ID / Artefato Revisado</th>
+<th style="text-align: left;">Problema ou Ambiguidade Identificada</th>
+<th style="text-align: left;">Decisão e Correção Aplicada</th>
+<th style="text-align: left;">Responsável / Revisor</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>RNFs de Acesso, Visibilidade e Consentimento (<code>RNF05</code>, <code>RNF09</code>–<code>RNF17</code>)</strong></td>
+<td style="text-align: left;">Pendências abertas nas atas de 26/09 e 08/10 sobre quem edita dados clínicos, visibilidade de vídeos/feedbacks e tratamento de menores.</td>
+<td style="text-align: left;">Consolidado na <a href="https://docs.google.com/document/d/1_6J8LWkFLCoRqjBAPhsyps4IfjCPU20Rf6IHtn7pYzM/edit?tab=t.0#heading=h.scqgboim3nm1">Matriz Consolidada de Permissões e Acessos por Perfil</a> com regras explícitas de RBAC, isolamento de dados e consentimento legal.</td>
+<td style="text-align: left;">Equipe Space Jam</td>
+<td style="text-align: left;">Concluído</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pré-Envio de Mídia (<code>RNF15</code> × <code>RNF16</code>)</strong></td>
+<td style="text-align: left;">Mistura entre atributos de qualidade operacional/rede (<code>RNF15</code>) e comportamento visual de interface/tela (<code>RNF16</code>).</td>
+<td style="text-align: left;">Adicionada nota de escopo delimitando que o <code>RNF15</code> cobre desempenho local (<span class="arithmatex">\(\le 1,0\text{ s}\)</span>) e zero tráfego antes da confirmação, enquanto interação visual pertence ao <code>RNF16</code> e aos CAs.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Concluído</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Frontend <code>US01</code> / Cadastro de Aluno (Campo Envergadura)</strong></td>
+<td style="text-align: left;">O campo solicita o valor em centímetros (<code>cm</code>), mas exibe o erro de validação do servidor em metros (<code>0.5</code>), além de o termo "envergadura" não ser claro para leigos.</td>
+<td style="text-align: left;">Registrado para traduzir as mensagens de erro para centímetros (<code>50 cm</code> a <code>280 cm</code>) e adicionar texto explicativo/ajuda visual no campo.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Pendente (Próximo Incremento)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Frontend <code>US01</code>–<code>US02</code> / Aceite de Termos (<code>AceiteTermos.tsx</code>)</strong></td>
+<td style="text-align: left;">Quando as URLs dos Termos de Uso e Privacidade não estão configuradas no <code>.env</code>, o aceite fica indisponível sem um aspecto visual claro explicando o motivo.</td>
+<td style="text-align: left;">Registrado para exibir estado visual desabilitado com aviso claro informando a indisponibilidade dos documentos oficiais.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Pendente (Próximo Incremento)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Frontend <code>US02</code> / Tela "Minha Conta" (Treinador)</strong></td>
+<td style="text-align: left;">O código de convite (<code>TRN-XXXXXX</code>) aparece apenas imediatamente após o cadastro; ao acessar "Minha Conta", o treinador não consegue mais vê-lo ou copiá-lo.</td>
+<td style="text-align: left;">Registrado para exibir o código de convite com botão de "Copiar" também na tela "Minha Conta" do perfil treinador.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Pendente (Próximo Incremento)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Frontend <code>US01</code> / Consentimento de Menores (<code>RN16</code>)</strong></td>
+<td style="text-align: left;">O bloqueio de menores de 18 anos informa a exigência de consentimento dos pais, mas não oferece meio prático de contato com o treinador ou modelo de autorização.</td>
+<td style="text-align: left;">Registrado para incluir canal direto de contato (WhatsApp/e-mail) ou acesso ao documento padrão de autorização na mensagem de bloqueio.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Pendente (Próximo Incremento)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Frontend <code>US01</code> / Experiência de Cadastro (UX)</strong></td>
+<td style="text-align: left;">Formulário de aluno concentrado em uma única tela longa, sem ícone para exibir/ocultar senha no cadastro e com digitação livre em objetivos e código do treinador.</td>
+<td style="text-align: left;">Catalogado como melhorias de UX: dividir cadastro em etapas, adicionar botão de visualizar senha, oferecer opções marcáveis de objetivos e suportar link de convite com código automático.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Catalogado (Backlog UX)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Backend <code>CP4</code> / Cadastro e Edição de Exercícios (<code>US23</code>–<code>US25</code>, <code>RF02412</code>)</strong></td>
+<td style="text-align: left;">O modelo contempla apenas a URL do vídeo (<code>video_base</code>), sem campos de título e descrição do vídeo nem obrigatoriedade condicional de <code>erros_comuns</code> exigidos pelo <code>CA01</code>.</td>
+<td style="text-align: left;">Registrado para incluir metadados do vídeo (<code>video_titulo</code>, <code>video_descricao</code>), validação condicional quando houver vídeo e alinhamento do campo <code>objetivo</code>.</td>
+<td style="text-align: left;">Anderson Fernandes</td>
+<td style="text-align: left;">Pendente (Próximo Incremento)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pontos-positivos-validados-na-revisao-do-frontend-us01us05">Pontos Positivos Validados na Revisão do Frontend (<code>US01</code>–<code>US05</code>)<a class="headerlink" href="#pontos-positivos-validados-na-revisao-do-frontend-us01us05" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Escopo isolado e qualidade técnica:</strong> Alterações restritas à pasta <code>frontend/</code>, com 65 testes unitários/contrato e 8 testes HTTP reais aprovados contra PostgreSQL/Docker, sem erros de lint/build e sem credenciais expostas no código.</li>
+<li><strong>Validação de segurança de senha:</strong> O sistema bloqueia senhas curtas ou simples demais (ex.: <code>123456</code>) e exibe os avisos diretamente nos campos correspondentes.</li>
+<li><strong>Conformidade legal preventiva (LGPD / <code>RN16</code>):</strong> Exige clique explícito para aceitar os termos e bloqueia o cadastro de menores de 18 anos enquanto não houver fluxo comprovável de consentimento dos responsáveis.</li>
+<li><strong>Fluxo funcional de ponta a ponta:</strong> Cadastro de treinador gera código de convite (<code>TRN-XXXXXX</code>) que vincula alunos corretamente, diferencia login por perfil (e-mail para treinador, apelido para aluno), preserva a sessão ao recarregar a página (<code>F5</code>) e encerra o acesso ao sair da conta.</li>
+</ul>
+<h4 id="pontos-positivos-validados-no-backend-biblioteca-de-exercicios-cp4">Pontos Positivos Validados no Backend (<code>biblioteca-de-exercicios</code> — <code>CP4</code>)<a class="headerlink" href="#pontos-positivos-validados-no-backend-biblioteca-de-exercicios-cp4" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Núcleo funcional e testado:</strong> Cadastro, listagem, detalhe e edição de exercícios operacionais para treinador, com <code>manage.py check</code> sem problemas e 34 testes automatizados aprovados em container descartável.</li>
+<li><strong>Integridade de autoria e permissões base:</strong> Campos de auditoria e <code>criado_por</code> protegidos como somente leitura no serializer, escrita restrita ao perfil treinador e exclusão bloqueada (HTTP 405) conforme o recorte do MVP.</li>
+</ul>
+<hr />
+<p><span id="6-reuniao-de-alinhamento-com-o-brainstorm"></span></p>
+<h3 id="6-reuniao-de-alinhamento-com-o-brainstorm">6. Reunião de alinhamento com o brainstorm<a class="headerlink" href="#6-reuniao-de-alinhamento-com-o-brainstorm" title="Permanent link">&para;</a></h3>
+<p><img alt="Apresentação da problemática do projeto durante reunião da equipe" src="../imagens/Reuni%C3%A3o_de_brainstorm.png" /></p>
+<p>A captura mostra a apresentação da problemática. A data e a ata correspondente ainda precisam ser identificadas para relacioná-la à atividade registrada.</p>
+<hr />
+<p><span id="validacao-do-prototipo-inicial"></span></p>
+<h3 id="7-apresentacao-do-prototipo-inicial">7. Apresentação do protótipo inicial<a class="headerlink" href="#7-apresentacao-do-prototipo-inicial" title="Permanent link">&para;</a></h3>
+<p><a href="https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864">Abrir o protótipo no Figma</a></p>
+<details class="sj-delivery-video-details sj-artifact-preview">
+  <summary>Ver protótipo de baixa fidelidade nesta página</summary>
+  <div class="sj-artifact-frame">
+    <iframe
+      src="https://embed.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864&embed-host=share"
+      title="Protótipo de baixa fidelidade do Space Jam no Figma"
+      loading="lazy"
+      allowfullscreen>
+    </iframe>
+  </div>
+</details>
+
+<p>O registro abaixo mostra o envio de um vídeo explicativo do protótipo de baixa fidelidade e a reação positiva do treinador Lucas:</p>
+<p><img alt="Mensagem de envio do vídeo explicativo do protótipo e reação positiva no WhatsApp" height="298" src="../imagens/Valida%C3%A7%C3%A3o.png" width="859" /></p>
+<h4 id="registro-da-apresentacao-do-prototipo-inicial">Registro da apresentação do protótipo inicial<a class="headerlink" href="#registro-da-apresentacao-do-prototipo-inicial" title="Permanent link">&para;</a></h4>
+<p>A equipe encaminhou ao treinador Lucas Cordeiro um vídeo explicativo do protótipo de baixa fidelidade desenvolvido no Figma. A captura da conversa no WhatsApp registra uma reação positiva ao material apresentado.</p>
+<p>Entretanto, essa manifestação não constitui, isoladamente, uma validação formal dos fluxos funcionais ou dos critérios de aceitação do produto.</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Artefato apresentado</td>
+<td>Protótipo de baixa fidelidade</td>
+</tr>
+<tr>
+<td>Ferramenta</td>
+<td>Figma</td>
+</tr>
+<tr>
+<td>Forma de apresentação</td>
+<td>Vídeo explicativo encaminhado pelo WhatsApp</td>
+</tr>
+<tr>
+<td>Participante externo</td>
+<td>Lucas Cordeiro</td>
+</tr>
+<tr>
+<td>Evidência</td>
+<td>Captura da conversa</td>
+</tr>
+<tr>
+<td>Resultado observado</td>
+<td>Reação positiva ao material apresentado</td>
+</tr>
+<tr>
+<td>Fluxos avaliados individualmente</td>
+<td>- <strong>Como atleta</strong>: Logar como atleta abriria a tela com o próprio treinamento, ele teria a opção de selecionar o treino atual ou visualizar um treino antigo. Estaria visível as opções: enviar vídeo, selecionar a dificuldade que teve com o exercício e escrever essas dificuldades caso necessário.- <strong>Como treinador</strong>: Logar como treinador abriria uma página que mostra todos seus alunos ativos, ele poderá acessar o perfil de cada aluno e verificar as informações (testes físicos, nome, idade e etc) e, em outra aba, modificar os treinos.</td>
+</tr>
+<tr>
+<td>Critérios de aceitação verificados</td>
+<td>Não documentados</td>
+</tr>
+<tr>
+<td>Ajustes solicitados pelo cliente</td>
+<td>Pediu para que os treinos fossem separados por fundamento</td>
+</tr>
+<tr>
+<td>Situação</td>
+<td>Apresentação registrada; validação detalhada pendente</td>
+</tr>
+</tbody>
+</table>
+<p>A equipe reconhece que a reação positiva não demonstra aprovação integral do protótipo. Para caracterizar a conclusão de uma rodada de validação, serão necessários registros que identifiquem os fluxos avaliados, as observações do treinador, as decisões resultantes e os ajustes aplicados.</p>
+<h3 id="8-rastreabilidade-dos-ciclos-de-prototipacao-avaliacao-e-refinamento">8. Rastreabilidade dos Ciclos de Prototipação, Avaliação e Refinamento<a class="headerlink" href="#8-rastreabilidade-dos-ciclos-de-prototipacao-avaliacao-e-refinamento" title="Permanent link">&para;</a></h3>
+<p>A metodologia RAD (Rapid Application Development) orienta o desenvolvimento incremental do Space Jam, por meio de ciclos de prototipação, avaliação e refinamento da solução.</p>
+<p>Para demonstrar a aplicação dessa abordagem, a equipe relaciona os artefatos apresentados, os registros de avaliação, as decisões tomadas e os ajustes realizados. Essa rastreabilidade permite distinguir atividades concluídas, refinamentos em andamento e validações ainda pendentes.</p>
+<h4 id="81-registro-das-etapas-de-prototipacao-e-refinamento">8.1 Registro das etapas de prototipação e refinamento<a class="headerlink" href="#81-registro-das-etapas-de-prototipacao-e-refinamento" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Artefato ou atividade</th>
+<th>Evidência disponível</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototipação inicial</td>
+<td>Protótipo de baixa fidelidade</td>
+<td><a href="https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864">Protótipo no Figma</a> e registro de envio pelo WhatsApp</td>
+<td>Apresentação documentada; avaliação detalhada pendente</td>
+</tr>
+<tr>
+<td>Refinamento dos requisitos</td>
+<td>Discussões sobre permissões, visibilidade de informações e consentimento</td>
+<td><a href="../atas/2026-09-26-lucas/">Ata de 26/09</a>, <a href="../atas/2026-10-08-lucas/">ata de 08/10</a> e matriz de permissões</td>
+<td>Decisões documentadas; vínculo com alterações do protótipo a complementar</td>
+</tr>
+<tr>
+<td>Prototipação de alta fidelidade</td>
+<td>Protótipo navegável com fluxos do treinador e atleta</td>
+<td><a href="https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=168-1123">Protótipo de alta fidelidade</a></td>
+<td>Artefato disponível; avaliação formal a identificar</td>
+</tr>
+<tr>
+<td>Revisão técnica</td>
+<td>Revisão dos requisitos e incrementos de frontend e backend</td>
+<td><a href="#revisao-por-pares">Revisão por pares</a></td>
+<td>Correções e pendências registradas</td>
+</tr>
+<tr>
+<td>Construção incremental</td>
+<td>Implementação de funcionalidades de cadastro, autenticação e biblioteca de exercícios</td>
+<td><a href="#reuniao-equipe-2026-11-16">Registro de 16/11</a> e revisão por pares</td>
+<td>Implementação parcial documentada</td>
+</tr>
+</tbody>
+</table>
+<h4 id="82-rastreabilidade-das-mudancas-entre-versoes">8.2 Rastreabilidade das mudanças entre versões<a class="headerlink" href="#82-rastreabilidade-das-mudancas-entre-versoes" title="Permanent link">&para;</a></h4>
+<p>Para caracterizar uma rodada completa de RAD, cada ciclo deverá relacionar:</p>
+<ol>
+<li>A versão do protótipo ou incremento apresentada.</li>
+<li>Os fluxos e critérios efetivamente avaliados.</li>
+<li>O feedback recebido do treinador.</li>
+<li>As decisões de manutenção ou alteração.</li>
+<li>Os ajustes realizados e suas evidências.</li>
+<li>A versão revisada resultante.</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Rodada</th>
+<th>Versão apresentada</th>
+<th>Avaliação recebida</th>
+<th>Ajustes realizados</th>
+<th>Versão revisada</th>
+<th>Situação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prototipação inicial</td>
+<td>Protótipo de baixa fidelidade</td>
+<td>Reação positiva registrada no WhatsApp, sem critérios específicos documentados</td>
+<td>Não identificados na evidência disponível</td>
+<td>Protótipo de alta fidelidade disponível, sem vínculo causal comprovado com o feedback</td>
+<td>Rastreabilidade incompleta</td>
+</tr>
+<tr>
+<td>Refinamento de permissões</td>
+<td>Requisitos e regras discutidos com Lucas</td>
+<td>Dúvidas sobre visibilidade, edição e acesso aos dados</td>
+<td>Consolidação das regras na matriz de permissões</td>
+<td>Matriz consolidada de permissões e acessos</td>
+<td>Refinamento de requisitos documentado; alteração correspondente no protótipo a identificar</td>
+</tr>
+<tr>
+<td>Revisão técnica</td>
+<td>Incrementos de cadastro, autenticação e biblioteca de exercícios</td>
+<td>Problemas e melhorias identificados na revisão por pares</td>
+<td>Correções e pendências registradas</td>
+<td>Novas versões de implementação ainda precisam ser vinculadas às correções</td>
+<td>Refinamento técnico parcialmente documentado</td>
+</tr>
+</tbody>
+</table>
+<p>A existência de versões de protótipos, reuniões e registros de revisão não é considerada, isoladamente, comprovação de ciclos completos de RAD. As relações entre feedback, modificação e nova versão serão registradas conforme as evidências forem identificadas.</p>
+<h4 id="83-estrategia-de-validacao">8.3 Estratégia de validação<a class="headerlink" href="#83-estrategia-de-validacao" title="Permanent link">&para;</a></h4>
+<p>A validação do produto durante esta etapa será realizada diretamente com Lucas Cordeiro, treinador e cliente do projeto.</p>
+<p>Os atletas permanecem como usuários finais previstos, mas não participarão diretamente dos testes e das atividades de validação da equipe. As necessidades e os fluxos destinados a esse perfil serão avaliados a partir da perspectiva de Lucas.</p>
+<p>Essa estratégia permite realizar o refinamento junto ao especialista do domínio, mas apresenta como limitação a ausência de avaliação direta da usabilidade pelos atletas.</p>
+<p>As decisões resultantes das avaliações com Lucas deverão ser registradas nas atas e vinculadas às alterações realizadas no protótipo ou na implementação.</p>
+<hr />
+<h2 id="registros-complementares-de-outubro-e-novembro">Registros complementares de outubro e novembro<a class="headerlink" href="#registros-complementares-de-outubro-e-novembro" title="Permanent link">&para;</a></h2>
+<p>Os documentos abaixo complementam as atas anteriores. As sínteses mantêm os encaminhamentos de cada encontro; os registros sem conteúdo recuperado identificam somente a realização da chamada.</p>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Encontro</th>
+<th>Ata ou registro</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>07/10/2026</td>
+<td>Chamada da equipe no canal Geral</td>
+<td><a href="../atas/2026-10-07-equipe/">Consultar registro</a></td>
+</tr>
+<tr>
+<td>12/10/2026</td>
+<td>Reunião semanal da equipe</td>
+<td><a href="../atas/2026-10-12-equipe/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>12–13/10/2026</td>
+<td>Preparação e gravação das apresentações</td>
+<td><a href="../atas/2026-10-12-13-apresentacoes/">Consultar registro</a></td>
+</tr>
+<tr>
+<td>15/10/2026</td>
+<td>Reunião com Lucas</td>
+<td><a href="../atas/2026-10-15-lucas/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>31/10/2026</td>
+<td>Reunião com Lucas</td>
+<td><a href="../atas/2026-10-31-lucas/">Consultar ata</a></td>
+</tr>
+<tr>
+<td>09/11/2026</td>
+<td>Chamadas da equipe no canal Geral</td>
+<td><a href="../atas/2026-11-09-equipe/">Consultar registro</a></td>
+</tr>
+<tr>
+<td>16/11/2026</td>
+<td>Reunião semanal da equipe</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/8c314a0a229de565583c61e2887e297b0171642e/docs/reunioes.md#L22">Consultar registro existente no PR #74</a></td>
+</tr>
+</tbody>
+</table>
+<p>O registro de consulta de 16/11 integra a documentação de aplicação do DoR/DoD no <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74">PR #74</a>. A referência acima permite consultá-lo na versão identificada, sem reproduzir seu conteúdo.</p>
+<details class="abstract">
+<summary>Histórico de revisão</summary>
+<table>
+<thead>
+<tr>
+<th>Data</th>
+<th>Versão</th>
+<th>Descrição</th>
+<th>Autor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16/11/2026</td>
+<td>0.5</td>
+<td>Inclusão do registro de consulta da reunião de 16/11, com fonte, minutagens e limites da evidência; sem ata formal identificada.</td>
+<td>Luiz Henrique Pessato da Mota</td>
+</tr>
+<tr>
+<td>16/11/2026</td>
+<td>0.6</td>
+<td>Inclusão das evidências de Análise Documental (Samsung Notes, Word e caderno), Análise de Tarefas (Cenário Atual e Cenário Futuro), vínculo da Matriz Consolidada de Permissões e estrutura da Revisão por Pares.</td>
+<td>Equipe Space Jam</td>
+</tr>
+<tr>
+<td>10/10/2026</td>
+<td>0.4</td>
+<td>Registro das minutagens para consulta dos trechos relevantes.</td>
+<td>Equipe Space Jam</td>
+</tr>
+<tr>
+<td>10/10/2026</td>
+<td>0.3</td>
+<td>Inclusão das atas disponíveis da equipe, do cliente e do monitor.</td>
+<td>Equipe Space Jam</td>
+</tr>
+<tr>
+<td>10/10/2026</td>
+<td>0.2</td>
+<td>Preparação das atas de 17/09 e 08/10 e do registro parcial de 05/10.</td>
+<td>Equipe Space Jam</td>
+</tr>
+<tr>
+<td>14/09/2026</td>
+<td>0.1</td>
+<td>Criação da página destinada ao registro das reuniões do projeto.</td>
+<td>Equipe Space Jam</td>
+</tr>
+</tbody>
+</table>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Rodapé" >
+        
+          
+          <a href="../interacao_equipe_cliente/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: 7. Interação entre Equipe e Cliente">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                7. Interação entre Equipe e Cliente
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../entregas/" class="md-footer__link md-footer__link--next" aria-label="Próximo: Entregas">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Próximo
+              </span>
+              <div class="md-ellipsis">
+                Entregas
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.indexes", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.action.edit", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/sj-navigation.js"></script>
+      
+        <script src="../javascripts/sj-tables.js"></script>
+      
+        <script src="../javascripts/sj-catalog.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

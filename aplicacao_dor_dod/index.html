@@ -1,0 +1,1811 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Visão de Produto e Projeto — Requisitos de Software (FGA0313) · T01 · 2026.2 · FCTE/UnB">
+      
+      
+        <meta name="author" content="Equipe Space Jam">
+      
+      
+        <link rel="canonical" href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/aplicacao_dor_dod/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../imagens/space-jam-logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Registros de aplicação de DoR e DoD - Space Jam</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
+    
+      <link rel="stylesheet" href="../stylesheets/catalogo.css">
+    
+      <link rel="stylesheet" href="../stylesheets/artefatos-miro.css">
+    
+      <link rel="stylesheet" href="../stylesheets/status-requisitos.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#resumo" class="md-skip">
+          Ir para o conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+  
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Space Jam" class="md-header__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Space Jam
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Registros de aplicação de DoR e DoD
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo claro"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Modo claro" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Modo escuro"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Modo escuro" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando a pesquisa
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+  <button type="button" class="sj-sidebar-toggle" aria-controls="sj-primary-nav" aria-expanded="true" aria-label="Recolher navegação">
+    <span>Navegação</span><span aria-hidden="true">☰</span>
+  </button>
+
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Space Jam" class="md-nav__button md-logo" aria-label="Space Jam" data-md-component="logo">
+      
+  <img src="../imagens/space-jam-logo.svg" alt="logo">
+
+    </a>
+    Space Jam
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam" title="Ir ao repositório" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Início
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visão do produto e projeto
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visão do produto e projeto
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cenario_atual/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Cenário Atual
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../solucao/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Solução Proposta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../intervencao_social/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Intervenção Social
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../estrategia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Estratégias de Engenharia de Software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Engenharia de Requisitos
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Engenharia de Requisitos
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../engenharia_requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Atividades e técnicas de ER
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../requisitos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Catálogo de requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representacao_formal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Formal dos Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../representacao_informal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Representação Informal dos Requisitos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mvp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Definição do MVP
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../backlog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Backlog e priorização
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../artefatos_miro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Matrizes do Miro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dor_dod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. DoR e DoD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Acompanhamento e entregas
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Acompanhamento e entregas
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cronograma/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Cronograma e Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../interacao_equipe_cliente/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Interação entre Equipe e Cliente
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reunioes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reuniões
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entregas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entregas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../licoes-aprendidas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Lições Aprendidas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Nesta página">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Nesta página
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#resumo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resumo da conferência
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aplicacao-backlog-mvp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aplicação ao Backlog e ao MVP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-historico" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caso histórico: análise documental de 08/11
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dod-documental" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DoD da entrega documental
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conferencia-atual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conferência atual
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conferência atual">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#conferencia-tecnica-anterior-de-us01us05" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conferência técnica anterior de US01–US05
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conferencia-iteracao1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complementação da Iteração 1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fonte-reuniao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fonte completa da reunião de 16/11
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conciliacao-rnfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RF3501 — conciliação de upload e desempenho
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retornos-cliente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retornos do cliente e DoD06
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#disponibilidade-historias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Disponibilidade e estado das histórias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dod05-publicacao" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conferência do DoD05 após o merge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pendencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pendências para concluir as issues
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/edit/docs/docs/aplicacao_dor_dod.md" title="Editar esta página" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="registros-de-aplicacao-de-dor-e-dod">Registros de aplicação de DoR e DoD<a class="headerlink" href="#registros-de-aplicacao-de-dor-e-dod" title="Permanent link">&para;</a></h1>
+<p>Os registros distinguem preparação, execução, revisão e validação. Um critério sem comprovação permanece <strong>Não atendido</strong>; a justificativa de <strong>Não se aplica</strong> vale apenas para o tipo de entrega indicado.</p>
+<p><a href="../dor_dod/">Definições e critérios</a> · <a href="../analise_upload_desempenho/">Análise documental de 08/11</a></p>
+<h2 id="resumo">Resumo da conferência<a class="headerlink" href="#resumo" title="Permanent link">&para;</a></h2>
+<p><strong>Entrega em revisão.</strong> Os atendimentos abaixo valem para o recorte e a versão indicados. Comprovação parcial mantém o critério pendente; não significa aprovação nem conclusão.</p>
+<table>
+<thead>
+<tr>
+<th>Entrega ou histórias</th>
+<th>Resultado documentado</th>
+<th>O que falta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#caso-historico">Análise documental de 08/11</a></td>
+<td>DoR histórico registrado para a análise delimitada. No <a href="#dod-documental">DoD da análise</a>, DoD01/03/04 atendidos nesse recorte; DoD06 não se aplica.</td>
+<td>DoD02 e DoD05 não atendidos: revisão por integrante diferente do autor e publicação final conferida.</td>
+</tr>
+<tr>
+<td><a href="#aplicacao-backlog-mvp">Backlog/MVP, PR #68, <code>56497c3</code> e <code>b91dd82</code></a></td>
+<td>DoD03 parcialmente comprovado. DoD01/02/04/05/06 não atendidos. Há feedback externo do monitor, que não cumpre DoD02.</td>
+<td>Correções de escopo e vínculos, revisão independente da equipe, publicação e confirmações do cliente.</td>
+</tr>
+<tr>
+<td><a href="#conferencia-iteracao1">US01–US05, US30, US38 e US39</a></td>
+<td>No PDF de DoR01–DoR05: US01 não pronta; US02/03/30/38 prontas nos critérios avaliados; US04/05/39 com os registros e ressalvas indicados.</td>
+<td>DoR06 parcialmente comprovado nas oito: estimativas, disponibilidade e responsáveis atuais a conciliar. Decisão inicial coletiva não comprovada; RN16 bloqueia US01.</td>
+</tr>
+<tr>
+<td><a href="#disponibilidade-historias">Frontend de US01–US05, PR #77, <code>29397dd</code></a></td>
+<td>DoD01/03/04 com comprovação parcial; DoD02/05 não atendidos; DoD06 depende do objetivo de validação. Os 54 testes locais usam respostas simuladas.</td>
+<td>Integração, critérios de aceitação restantes e revisão independente. As histórias não estão concluídas.</td>
+</tr>
+<tr>
+<td><a href="#conciliacao-rnfs">Upload e desempenho</a></td>
+<td>Divergências de RNF07/RNF11 e aceites identificadas por versão.</td>
+<td>Conciliar obrigatoriedade e condições de medição; não há decisão unilateral ou teste de produto neste registro.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Equipe:</strong> completar os registros de DoR06 e da decisão de início, corrigir Backlog/MVP, executar revisão por integrante diferente do autor e conciliar RNFs/aceites. Após aprovação e merge do PR #74, executar a <a href="#dod05-publicacao">conferência do DoD05 no site</a>. <a href="#pendencias">Consultar encaminhamentos</a>.</p>
+<p><strong>Cliente:</strong> vincular os retornos de Lucas à versão examinada e confirmar mudanças ainda não cobertas, incluindo consentimento de menores e os compromissos de produto aplicáveis. As atas históricas não aprovam automaticamente os requisitos atuais. <a href="#retornos-cliente">Consultar retornos e limites</a>.</p>
+<p>O <a href="../reunioes/#reuniao-equipe-2026-11-16">registro de consulta da reunião de 16/11</a> reúne os encaminhamentos utilizados nesta análise. A <a href="#fonte-reuniao">fonte integral</a> permanece no ambiente institucional restrito; não foi localizada ata formal dessa ocorrência.</p>
+<h2 id="aplicacao-backlog-mvp">Aplicação ao Backlog e ao MVP<a class="headerlink" href="#aplicacao-backlog-mvp" title="Permanent link">&para;</a></h2>
+<p><strong>Artefatos:</strong> <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md">Backlog</a> e <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/mvp.md">MVP</a>, commit <code>56497c32cbe6d376ef5093123a666d477c744e29</code>, no <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68">PR #68</a>. <strong>Feedback externo do monitor:</strong> Heitor (<code>HeitorM50</code>). <strong>Conferência deste registro:</strong> 16/11/2026.</p>
+<p>O <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68#pullrequestreview-5914462128">feedback externo do monitor</a> foi registrado como <code>COMMENTED</code> em 15/11, às 23h44 de Brasília (16/11, às 02h44 UTC). Os <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68#issuecomment-6906143763">achados publicados</a> e a <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/68#issuecomment-6926603105">correção posterior sobre RN01</a> não constituem aprovação da entrega.
+Esse registro de feedback externo não cumpre o DoD02. A revisão exigida deve ser feita por integrante da equipe diferente do autor, com conferência das correções.</p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Resultado e evidência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoD01</td>
+<td>Não atendido: o documento registra 62 RFs/46 no MVP; o catálogo comparado tem 65/49. Faltam RF3608–RF3610 no planejamento e a revisão da capacidade do recorte.</td>
+</tr>
+<tr>
+<td>DoD02</td>
+<td>Não atendido: o feedback externo do monitor não é revisão independente por integrante da equipe. Após Guilherme realizar os ajustes, outro integrante, diferente do autor, deve revisar a versão e verificar as correções bloqueantes.</td>
+</tr>
+<tr>
+<td>DoD03</td>
+<td>Não atendido integralmente: há verificação documental executada e registrada nos achados sobre contagens, requisitos ausentes, capacidade e consentimento. A cobertura das demais verificações de regras, RNFs e vínculos da entrega não está comprovada; o feedback externo não comprova todas elas.</td>
+</tr>
+<tr>
+<td>DoD04</td>
+<td>Não atendido: conciliar códigos, responsáveis, escopo, consentimento de menores e a regra de treinador único com as versões dos requisitos.</td>
+</tr>
+<tr>
+<td>DoD05</td>
+<td>Não atendido: a versão do Backlog/MVP está disponível no PR #68 para consulta, sem evidência de integração e publicação final. A disponibilização destes registros pelo PR #74 também depende de aprovação, merge, deploy e conferência dos links, conforme o procedimento abaixo.</td>
+</tr>
+<tr>
+<td>DoD06</td>
+<td>Não atendido para apresentar este recorte como validado pelo cliente: os comentários apontam decisões de escopo sem retorno da versão examinada vinculado. As atas anteriores não confirmam automaticamente as mudanças posteriores.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Registro necessário após os ajustes de Guilherme:</strong> nome do integrante revisor, data, versão ou commit examinado, apontamentos, correções verificadas e resultado. Não há revisão de equipe concluída atribuída ao monitor.</p>
+<p><strong>Resultado:</strong> artefatos com feedback externo e achados verificáveis, ainda pendentes pelo DoD e sem revisão independente comprovada de integrante da equipe. Guilherme precisa tratar os ajustes do Backlog/MVP com os responsáveis pelos requisitos; a análise abaixo de 08/11 permanece como caso histórico complementar.</p>
+<p><strong>Reavaliação do PR #68 em 16/11 — versão posterior <code>b91dd82</code>:</strong> o commit integra a branch de requisitos, e o PR #78 foi mesclado nessa branch. Os arquivos <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/b91dd82c2d889a2dc95d23defd468c8452ba3d5b/docs/backlog.md">Backlog</a> e <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/b91dd82c2d889a2dc95d23defd468c8452ba3d5b/docs/mvp.md">MVP</a> permanecem idênticos aos de <code>56497c3</code>. Continuam as contagens 62/46, a ausência de RF3608–RF3610 no planejamento e a conclusão de capacidade baseada em 9,2 RFs por iteração. O Backlog ainda exige aprovação administrativa de treinador, enquanto a RN01 agora presente nessa versão define treinador único com código de ativação. Esses apontamentos continuam pendentes. Não foi localizada revisão independente de integrante da equipe registrada para a versão posterior; o merge não atende automaticamente ao DoD02.</p>
+<h2 id="caso-historico">Caso histórico: análise documental de 08/11<a class="headerlink" href="#caso-historico" title="Permanent link">&para;</a></h2>
+<p><strong>Item:</strong> DOC-ANALISE-01. <strong>Encaminhamento:</strong> Luiz. <strong>Resultado esperado:</strong> localizar os compromissos de RNF07/RNF11, comparar seus aceites e registrar divergências e decisões necessárias, sem alterar exigências.</p>
+<p>O registro de preparação datado de 08/11 informa que antecedeu o levantamento. A análise e sua conferência foram preservadas com fontes identificadas. Não foi reconstruído um DoR anterior ao trabalho de 04/11, nem atribuída uma decisão coletiva à preparação individual.</p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Resultado na preparação registrada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoR01</td>
+<td>Atendido: item, objetivo, saída e limites definidos.</td>
+</tr>
+<tr>
+<td>DoR02</td>
+<td>Atendido para a análise: prioridade de examinar a inconsistência apontada na revisão e fontes identificadas. Não reclassifica a prioridade dos RFs.</td>
+</tr>
+<tr>
+<td>DoR03</td>
+<td>Atendido: relatório com trechos verificáveis, vínculos e separação entre constatação e proposta.</td>
+</tr>
+<tr>
+<td>DoR04</td>
+<td>Atendido para analisar documentos; insuficiente para escolher um novo compromisso de produto.</td>
+</tr>
+<tr>
+<td>DoR05</td>
+<td>Atendido: documentos e recursos disponíveis para o levantamento.</td>
+</tr>
+<tr>
+<td>DoR06</td>
+<td>Atendido no registro original para a tarefa delimitada, com encaminhamento de Luiz e três etapas previstas na sessão. Não contém estimativa numérica nem comprova capacidade para implementar os RFs.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decisão registrada em 08/11:</strong> iniciar o levantamento documental delimitado e manter pendente qualquer escolha de nova regra ou meta. A estimativa limitada não foi completada retroativamente.</p>
+<h2 id="dod-documental">DoD da entrega documental<a class="headerlink" href="#dod-documental" title="Permanent link">&para;</a></h2>
+<p><strong>Entrega avaliada:</strong> análise de 08/11 nas fontes do commit <code>89afb0e</code>. <strong>Reavaliação documental:</strong> 16/11/2026. <strong>Revisão por integrante diferente do autor:</strong> pendente.</p>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>Resultado e evidência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoD01</td>
+<td>Atendido no recorte de identificar e descrever as divergências: <a href="../analise_upload_desempenho/">relatório e fontes</a>. Não corresponde a resolver os compromissos dos RFs.</td>
+</tr>
+<tr>
+<td>DoD02</td>
+<td>Não atendido: falta integrante diferente do autor conferir a versão, registrar os apontamentos e verificar as correções bloqueantes. Feedback externo do monitor não substitui essa revisão.</td>
+</tr>
+<tr>
+<td>DoD03</td>
+<td>Atendido para a análise: trechos, códigos e vínculos confrontados com as fontes preservadas. A integridade das 16 fontes e do diff foi reconferida em 16/11. Não houve teste do produto.</td>
+</tr>
+<tr>
+<td>DoD04</td>
+<td>Atendido no recorte histórico: fontes por versão e códigos da época preservados. A consolidação dos demais documentos continua separada.</td>
+</tr>
+<tr>
+<td>DoD05</td>
+<td>Não atendido: o <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74">PR #74</a> permite revisão e foi consultado pelo monitor, mas ainda faltam aprovação e merge em <code>docs</code>, deploy bem-sucedido, conferência manual dos três links publicados e registro da data e do commit. <a href="#dod05-publicacao">Consultar os passos após o merge</a>.</td>
+</tr>
+<tr>
+<td>DoD06</td>
+<td>Não se aplica à análise delimitada: ela não altera compromissos nem apresenta requisitos como validados. Qualquer decisão posterior de escopo exige o retorno pertinente.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Resultado:</strong> entrega documental executada, com conclusão pelo DoD pendente de revisão e disponibilidade. A existência deste registro não comprova aprovação da equipe ou aceite do cliente.</p>
+<h2 id="conferencia-atual">Conferência atual<a class="headerlink" href="#conferencia-atual" title="Permanent link">&para;</a></h2>
+<p><strong>Data:</strong> 16/11/2026. As versões examinadas abaixo não foram presumidas integradas entre si ou publicadas no Pages.</p>
+<table>
+<thead>
+<tr>
+<th>Fonte</th>
+<th>Versão examinada</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RFs, histórias, regras e aceites</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/36dce72a771daabce8cb5017d2431baac97568b4/docs">Documentação de requisitos</a>, commit <code>36dce72</code>.</td>
+</tr>
+<tr>
+<td>RNFs e aceites do PR #70</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/c0c98224dc7adf17f7cd17a302506718284c0843/docs/requisitos_nao_funcionais.md">RNFs</a> e <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/c0c98224dc7adf17f7cd17a302506718284c0843/docs/criterios_aceitacao.md">aceites</a>, commit <code>c0c9822</code>.</td>
+</tr>
+<tr>
+<td>Backlog e MVP — avaliação inicial</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/56497c32cbe6d376ef5093123a666d477c744e29/docs">Versão do PR #68</a>, commit <code>56497c3</code>.</td>
+</tr>
+<tr>
+<td>Backlog e MVP — reavaliação posterior</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/b91dd82c2d889a2dc95d23defd468c8452ba3d5b/docs">Versão atualizada do PR #68</a>, commit <code>b91dd82</code>; os dois arquivos avaliados não mudaram.</td>
+</tr>
+<tr>
+<td>API disponível</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/urls.py">Rotas de contas</a> e <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/6e66cf4f9ac0f85296958039958478a5a8a006e1/backend/apps/contas/models.py">modelo</a>, commit <code>6e66cf4</code>, integrado em <code>develop</code> pelo PR #76.</td>
+</tr>
+<tr>
+<td>Frontend de acesso</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/tree/29397ddd21f181020f4cb58e11c74f77df4acc3c/frontend">Código publicado</a>, commit <code>29397dd</code>, no Draft PR #77.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="conferencia-tecnica-anterior-de-us01us05">Conferência técnica anterior de US01–US05<a class="headerlink" href="#conferencia-tecnica-anterior-de-us01us05" title="Permanent link">&para;</a></h3>
+<p>A <a href="../arquivos/conferencia-dor-iteracao1-2026-11-16.pdf">conferência encaminhada por Thiago em 16/11</a> foi localizada após a leitura técnica abaixo. Ela cobre DoR01–DoR05 de US01–US05, US30, US38 e US39 e exclui expressamente DoR06. Seus resultados e ressalvas estão preservados na <a href="#conferencia-iteracao1">complementação da Iteração 1</a>. A tabela abaixo mantém a leitura técnica anterior, focada nas dependências da implementação; não substitui a avaliação documental do PDF. Implementação ausente não comprova, por si só, falta de prontidão para começar a construção.</p>
+<p><strong>Executor do frontend:</strong> Luiz, identificado nos commits e no escopo do <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77">PR #77</a>, para US01–US05. Isso comprova contribuição executada, não atribuição formal anterior. A transcrição da reunião de 16/11 contém um encaminhamento de continuidade para Luiz/Guilherme, descrito abaixo com seus limites; não foi localizada uma decisão coletiva anterior de liberar as oito histórias com os seis critérios conferidos.</p>
+<details class="sj-document-details">
+<summary>Consultar a leitura técnica anterior à conferência do Thiago</summary>
+<table>
+<thead>
+<tr>
+<th>Critério</th>
+<th>US01 — aluno</th>
+<th>US02 — treinador</th>
+<th>US03 — saída</th>
+<th>US04 — acesso aluno</th>
+<th>US05 — acesso treinador</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DoR01</td>
+<td>Atendido nas fontes</td>
+<td>Atendido nas fontes</td>
+<td>Atendido para saída do aluno</td>
+<td>Atendido nas fontes</td>
+<td>Atendido nas fontes</td>
+</tr>
+<tr>
+<td>DoR02</td>
+<td>Atendido nas referências identificadas</td>
+<td>Atendido nas referências identificadas</td>
+<td>Atendido nas referências identificadas</td>
+<td>Atendido nas referências identificadas</td>
+<td>Atendido nas referências identificadas</td>
+</tr>
+<tr>
+<td>DoR03</td>
+<td>Atendido para os cenários declarados</td>
+<td>Atendido para os cenários declarados</td>
+<td>Atendido para os cenários declarados</td>
+<td>Atendido para os cenários declarados</td>
+<td>Atendido para os cenários declarados</td>
+</tr>
+<tr>
+<td>DoR04</td>
+<td>Não atendido: termos/versionamento e consentimento de menores a conciliar</td>
+<td>Não atendido: termos/versionamento e fluxo de ativação a vincular</td>
+<td>Atendido para a saída declarada</td>
+<td>Não atendido: fluxo de aceite dos termos a vincular</td>
+<td>Não atendido: fluxo de aceite dos termos a vincular</td>
+</tr>
+<tr>
+<td>DoR05</td>
+<td>Não atendido: API de cadastro e vínculo ausentes</td>
+<td>Não atendido: API de cadastro, ativação e geração do código ausentes</td>
+<td>Não atendido: revogação do token sem contrato</td>
+<td>Não atendido: destino final e restrições integradas não comprovados</td>
+<td>Não atendido: API por e-mail e destino final ausentes</td>
+</tr>
+<tr>
+<td>DoR06</td>
+<td>Não atendido: frontend identificado; esforço e demais executores a confirmar</td>
+<td>Não atendido: frontend identificado; esforço e demais executores a confirmar</td>
+<td>Não atendido: frontend identificado; esforço e demais executores a confirmar</td>
+<td>Não atendido: frontend identificado; esforço e demais executores a confirmar</td>
+<td>Não atendido: frontend identificado; esforço e demais executores a confirmar</td>
+</tr>
+</tbody>
+</table>
+<p>DoR06 exige responsável e estimativa de esforço do item compatível com a disponibilidade na iteração; não exige uma unidade específica nem necessariamente horas. O <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md">Backlog consultado</a> contém responsáveis previstos que precisam ser conciliados com a divisão atual. A <a href="https://docs.google.com/spreadsheets/d/1NsXu36v7VtNlYdEkkLuny1TRThPGN5gy7tsmaVyjv-Y/edit#gid=0">planilha de avaliações</a> possui notas de esforço e de critério técnico, mas ainda usa requisitos antigos: por exemplo, RF01102 significa login genérico, não o cadastro de treinador do RF1102 atual. Não transferir as notas automaticamente; confirmar item, versão, executor e capacidade. CT não substitui a estimativa de esforço.</p>
+<p>Na <a href="https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686745506649">área de DoR/DoD do Miro</a>, o exemplo consultado continua identificado como ilustrativo. A consulta somente leitura de 16/11 foi ampliada às oito histórias da Iteração 1, às tabelas de histórias, esforço e MVP e aos quadros de tarefas, conforme as fontes e limites da complementação abaixo. O PDF original agora está disponível; continuam faltando dados atuais de esforço e capacidade por item.</p>
+<p>Uma tarefa delimitada de interface pode avançar com campos e validações definidos, sem inventar contratos. Essa preparação não cumpre o DoR da história integrada nem cria uma decisão coletiva de início.</p>
+</details>
+<h3 id="conferencia-iteracao1">Complementação da Iteração 1<a class="headerlink" href="#conferencia-iteracao1" title="Permanent link">&para;</a></h3>
+<p><strong>Conferência documental:</strong> Luiz, em 16/11/2026. <strong>Finalidade:</strong> vincular a avaliação existente e procurar os elementos de DoR06 e da decisão de início, sem refazer DoR01–DoR05.</p>
+<h4 id="avaliacao-original-localizada">Avaliação original localizada<a class="headerlink" href="#avaliacao-original-localizada" title="Permanent link">&para;</a></h4>
+<p>O <a href="../arquivos/conferencia-dor-iteracao1-2026-11-16.pdf">PDF original, com nove páginas</a>, foi fornecido nesta revisão como a conferência do Thiago. Em consulta somente leitura, foi confirmado o envio por ele de um documento com esse título e nove páginas ao grupo de evidências em 16/11, às 17h02 de Brasília. A cópia foi preservada integralmente, com SHA-256 <code>0d78163df7f6a93ba943b0fdf283a457c813033b09968e7f16760da3c0995272</code>. O documento informa consulta nessa data a requisitos, aceites, regras, DoR/DoD v1.0 e RNFs no Miro; não identifica os commits dessas fontes. Não foi atribuída retroativamente a ele a versão <code>36dce72</code>.</p>
+<table>
+<thead>
+<tr>
+<th>US / RF</th>
+<th>Resultado registrado no PDF para DoR01–DoR05</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US01 / RF1101</td>
+<td>Não pronta: DoR04 não atendido pelo comportamento indefinido do consentimento de menores, RN16.</td>
+</tr>
+<tr>
+<td>US02 / RF1102</td>
+<td>Pronta.</td>
+</tr>
+<tr>
+<td>US03 / RF1103</td>
+<td>Pronta, com observações de escopo e regra específica no corpo do documento.</td>
+</tr>
+<tr>
+<td>US04 / RF1104</td>
+<td>Pronta após registro: dependência de termos/versionamento, RF4812.</td>
+</tr>
+<tr>
+<td>US05 / RF1105</td>
+<td>Pronta após registro: dependência de RF4812 e autenticação do treinador por e-mail.</td>
+</tr>
+<tr>
+<td>US30 / RF2413</td>
+<td>Pronta.</td>
+</tr>
+<tr>
+<td>US38 / RF2421</td>
+<td>Pronta.</td>
+</tr>
+<tr>
+<td>US39 / RF2422</td>
+<td>Pronta após registro: dependência do CA02 com RF2307/US24. O checklist da página 8 já assinala esse registro como realizado.</td>
+</tr>
+</tbody>
+</table>
+<p>As ressalvas e marcações das páginas 8–9 permanecem no original. A marcação de uma providência no PDF não comprova sua integração nas branches atuais. A expressão “pronta” acima reproduz o alcance da conferência de cinco critérios: <strong>não atesta atendimento do DoR06 nem dos seis critérios em conjunto</strong>. A exclusão de DoR06, atribuída pelo PDF à equipe, não modifica o acordo oficial.</p>
+<h4 id="fontes-para-complementar-dor06">Fontes para complementar DoR06<a class="headerlink" href="#fontes-para-complementar-dor06" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>F1 — Proposta de planejamento em revisão:</strong> <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/56497c32cbe6d376ef5093123a666d477c744e29/docs/backlog.md#L53-L67">Backlog do PR #68, linhas 53–67</a>. Há nomes por RF e frente, mas não estimativa por item; a distribuição diverge da divisão atual informada para o frontend.</li>
+<li><strong>F2 — Miro, consulta somente leitura em 16/11:</strong> <a href="https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764690472698622">Iteração 1, 09 a 16/nov</a>, com setup e oito cartões de US; <a href="https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764690194521193">histórias</a>, com código, descrição e RNFs; <a href="https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764685043486898">escala de esforço</a>, com níveis 1–5; <a href="https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764686839425108">entregas</a>, com responsáveis por documentos e estimativas vazias nos registros examinados. Os cartões da iteração não exibiram executor ou estimativa. A escala sozinha não atribui uma nota a cada US. Não foram localizados dados de disponibilidade por executor nesses recortes; isso não afirma que inexistam em toda a conta.</li>
+<li><strong>F3 — Reunião de 16/11:</strong> a <a href="#fonte-reuniao">referência à fonte completa e aos minutos conferidos</a> indica como consultar a gravação e a transcrição no ambiente institucional, com as permissões existentes. O documento fornecido foi conferido pelo SHA-256 <code>759a33f7983810ba7f3c3f2728d0f4f486512931a04e3416b10e666c9a092550</code>. A leitura continua parcial para atribuição formal por item e decisão inicial, sem validação integral pelo áudio.</li>
+<li><strong>F4 — Execução disponível:</strong> <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77">PR #77, frontend de US01–US05</a>, em <code>29397dd</code>, e <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/commit/ac1c207ea8cde6d5981649e23bcca7f67e1ad1f4">commit de Thiago na branch de US30</a>, com alterações no backend. Identificam contribuição e versão, não a atribuição formal no planejamento nem o atendimento do DoD.</li>
+</ul>
+<p>A divisão comunicada entre Luiz, no acesso, e Júlia, na biblioteca, precisa ser conciliada com F1. O relato posterior de Thiago sobre uma divisão anterior de back/front não identifica estimativa ou capacidade por item. Seu relato sobre o início informal da implementação está registrado abaixo, sem ser convertido em decisão formal por US.</p>
+<h4 id="resultado-por-historia">Resultado por história<a class="headerlink" href="#resultado-por-historia" title="Permanent link">&para;</a></h4>
+<p><strong>Classificação das fontes:</strong> Comprovada quando o registro sustenta a informação delimitada; Parcialmente comprovada quando faltam elementos ou consulta pública; Desatualizada quando a distribuição diverge da comunicada; Não localizada quando o dado não apareceu nas fontes examinadas. A situação do critério exige os três elementos juntos: responsável, esforço e compatibilidade com a disponibilidade.</p>
+<table>
+<thead>
+<tr>
+<th>US</th>
+<th>Responsável: registro e alcance</th>
+<th>Estimativa</th>
+<th>Disponibilidade</th>
+<th>Evidência</th>
+<th>Situação do DoR06</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>US01</td>
+<td>F1: Thiago (Back) / Anderson (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; backend de cadastro relatado por Guilherme, sem atribuição individual conciliada.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Janela da iteração registrada; capacidade individual não localizada.</td>
+<td>F1–F4.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US02</td>
+<td>F1: Guilherme (Back) / Júlia (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; relato de Guilherme abrange cadastro/login.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1–F4.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US03</td>
+<td>F1: Guilherme (Back) / Júlia (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; responsável atual da revogação a confirmar.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1–F4.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US04</td>
+<td>F1: Guilherme (Back) / Paulo (Front), distribuição a conciliar. Luiz identificado no Front por F3/F4; relato de Guilherme abrange cadastro/login.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1–F4.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US05</td>
+<td>F1: Thiago (Back) / Luiz (Front). Front de Luiz identificado; backend a conciliar com o relato de Guilherme sobre cadastro/login.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1–F4.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US30</td>
+<td>F1: Thiago (Back) / Anderson (Front). Há atividade de Thiago no Back em F4; Júlia foi indicada para a biblioteca na divisão comunicada, a vincular ao item.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1/F2/F4; divisão comunicada.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US38</td>
+<td>F1: Guilherme (Back) / Paulo (Front). Distribuição a conciliar com Júlia no Front da biblioteca; atribuição atual por item não localizada.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1/F2; divisão comunicada.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+<tr>
+<td>US39</td>
+<td>F1: Thiago (Back) / Luiz (Front). Distribuição a conciliar com Júlia no Front da biblioteca; atribuição atual por item não localizada.</td>
+<td>Não localizada para a versão atual.</td>
+<td>Capacidade individual não localizada.</td>
+<td>F1/F2; divisão comunicada.</td>
+<td>Parcialmente comprovada; não atendido integralmente.</td>
+</tr>
+</tbody>
+</table>
+<p>Os nomes previstos em F1 são comprovados como conteúdo daquela versão; sua vigência atual não foi presumida. CT e quadrante de priorização não substituem a estimativa. Notas dos RFs antigos dependem de correspondência de código e escopo antes de serem usadas. Não se exige unidade em horas. O calendário de 09–16/nov e o relato de que as atividades caberiam no prazo não demonstram a capacidade individual nem a compatibilidade da soma dos itens com o ciclo.</p>
+<h4 id="decisao-de-inicio-e-encaminhamento-localizado">Decisão de início e encaminhamento localizado<a class="headerlink" href="#decisao-de-inicio-e-encaminhamento-localizado" title="Permanent link">&para;</a></h4>
+<p>A transcrição F3 contém um encaminhamento identificável de <strong>continuidade</strong>: em 45:28, Thiago orienta a revisão de Luiz e a continuidade de Guilherme, no contexto de cadastro/login. Há data, interlocutor e recorte, mas faltam versão específica, confirmação por item e elementos do DoR06. A transcrição original foi consultada no Teams, com acesso restrito, conforme a referência abaixo; não foi validada integralmente pelo áudio. O encaminhamento continua parcialmente comprovado para fins da decisão de início.</p>
+<p>Esse trecho não é a decisão inicial de liberar coletivamente as oito histórias. O PDF comprova uma avaliação documental existente; a divisão de tarefas e o código publicado comprovam outros fatos. Nenhuma dessas fontes foi tratada isoladamente como aprovação coletiva ou como dispensa do DoR06.</p>
+<p><strong>Relato posterior de Thiago, informado em 16/11:</strong> ele e Guilherme decidiram informalmente iniciar a implementação, sem registro formal contemporâneo dessa decisão. O relato não identifica a data original, o conjunto de histórias liberado nem o tratamento dos bloqueios. Ele foi acrescentado como relato posterior, sem comprovar aprovação coletiva ou completar o DoR06. A regularização do planejamento e qualquer decisão atual de continuidade devem manter a data real, os responsáveis, as estimativas e as condições ainda pendentes.</p>
+<h3 id="fonte-reuniao">Fonte completa da reunião de 16/11<a class="headerlink" href="#fonte-reuniao" title="Permanent link">&para;</a></h3>
+<p><strong>Registro na seção de reuniões:</strong> <a href="../reunioes/#reuniao-equipe-2026-11-16">Reunião da equipe de 16/11 — registro de consulta</a>. A página identifica a origem, as minutagens e os limites dos trechos usados, com os <a href="../reunioes/#trechos-transcricao-2026-11-16">excertos literais da transcrição automática</a> como evidência complementar. Não foi localizada uma ata formal para comparar com as falas; o registro foi preparado posteriormente a partir da transcrição automática.</p>
+<p><strong>Origem:</strong> Microsoft Teams/SharePoint da equipe Space Jam - Requisitos. <strong>Registro:</strong> Reunião Semanal de 16/11/2026, gravação iniciada às 10h35, duração de 47min04s. A transcrição completa foi consultada no ambiente institucional; <strong>não está publicada no GitHub</strong>.</p>
+<p>Em 16/11/2026, às 19h35 de Brasília, foi recuperada uma exportação oficial completa em DOCX, com início e encerramento da transcrição e falas até 47:01 em um registro de 47min04s. O DOCX fornecido inicialmente, identificado em F3 pelo SHA-256 <code>759a33f7983810ba7f3c3f2728d0f4f486512931a04e3416b10e666c9a092550</code>, e a exportação oficial, identificada em Reuniões pelo SHA-256 <code>ccc86925d2ff53a378978ad496268c887743c9d61c04907381c6b7ce4dc6e359</code>, têm texto principal e imagens idênticos. Os hashes dos arquivos diferem porque os metadados e as relações internas dos pacotes DOCX são diferentes. As cópias integrais permanecem fora do repositório público, sem validação integral pelo áudio.</p>
+<p><strong>Consulta por contas já autorizadas:</strong> no Teams, abrir <strong>Space Jam - Requisitos → Geral → Compartilhado → General → Recordings</strong> e o arquivo <strong>Reunião Semanal-20261116_103543-Gravação de Reunião.mp4</strong>; selecionar <strong>Ler a transcrição</strong>. Também é possível abrir <strong>Reunião Semanal → Recapitulação → 16/11/2026</strong> e consultar a transcrição dessa ocorrência.</p>
+<p><strong>Trechos de referência:</strong> em 35:16, Júlia identifica o trabalho de Luiz no frontend de US01–US05; em 35:41–35:44, Guilherme e Thiago tratam do backend. Em 44:17, Guilherme identifica cadastro/login como sua parte; em 45:28, Thiago orienta a revisão de Luiz e a continuidade de Guilherme. Os trechos de 35:16, 35:41 e 45:28 foram localizados na transcrição original exibida no Teams e conciliados com o documento fornecido. Não individualizam todas as tarefas de backend nem comprovam a decisão inicial coletiva ou o DoR06.</p>
+<p><strong>Acesso e limites:</strong> a consulta depende das permissões existentes no site institucional. O acesso individual do monitor não foi confirmado; se necessário, os responsáveis pelo ambiente devem conferir sua permissão antes de encaminhar a referência no canal autorizado. Não houve criação de link de compartilhamento nem mudança de permissões nesta conferência. A transcrição é automática e não houve validação integral pelo áudio. A gravação, a transcrição completa e a URL restrita permanecem fora do repositório público.</p>
+<h3 id="conciliacao-rnfs">RF3501 — conciliação de upload e desempenho<a class="headerlink" href="#conciliacao-rnfs" title="Permanent link">&para;</a></h3>
+<p>RF3501/US42 possui aceites na versão consultada, mas a conciliação de seus compromissos continua pendente, inclusive no <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/70#issuecomment-6926600139">comentário de revisão do PR #70</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Relação nas fontes identificadas</th>
+<th>Divergência e encaminhamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RNF07 / US42 CA02, em <code>c0c9822</code></td>
+<td>RNF07 é evolutivo e exige progresso de 1% a 99%, término em 100% e confirmação em até 1 s. O aceite já exige barra de 1% a 99%. Definir o piso obrigatório do incremento e a conclusão do indicador; alinhar classificação e aceite.</td>
+</tr>
+<tr>
+<td>RNF11 / US21 CA01 e US51 CA04, em <code>c0c9822</code></td>
+<td>Os aceites exigem cinco segundos; RNF11 é evolutivo e especifica Fast 4G, até 50 requisições simultâneas, p95 e zero erros 5xx. Conciliar obrigatoriedade, abrangência e condições de medição.</td>
+</tr>
+<tr>
+<td>Condição de carga de RNF11</td>
+<td>A declaração usa 50 requisições simultâneas; o último item do checklist menciona 50 req/s. São condições diferentes, a corrigir pelo responsável.</td>
+</tr>
+<tr>
+<td>Correspondência de versões</td>
+<td>O desempenho é RNF11 no PR #70, mas RNF10 na branch <code>36dce72</code>, onde RNF11 trata da integridade da biblioteca. Conciliar os vínculos; manter RNF11 nas fontes históricas de 08/11.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Responsáveis a consultar:</strong> Anderson, Thiago e Guilherme, nas frentes de RNFs, requisitos e planejamento. Quando a decisão mudar o comportamento ou o nível de serviço combinado, confirmar com Lucas. Não foi escolhida unilateralmente uma meta, retirado um aceite ou executado teste de upload/carga. O DoR completo de RF3501 também depende de recursos, contratos, responsáveis e esforço identificados.</p>
+<h3 id="retornos-cliente">Retornos do cliente e DoD06<a class="headerlink" href="#retornos-cliente" title="Permanent link">&para;</a></h3>
+<p>As atas preservam retornos do cliente nas datas registradas. A correspondência abaixo é por significado; não constitui aceite de todas as condições das fichas atuais.</p>
+<table>
+<thead>
+<tr>
+<th>Item relacionado</th>
+<th>Retorno documentado</th>
+<th>Alcance e pendência</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RF1101 — cadastro do aluno</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-09-26-lucas.md">26/09</a>: autocadastro sujeito à autorização do treinador e frequência de atividade física.</td>
+<td>Confirma a demanda discutida, não automaticamente o código de vínculo, todos os campos e os aceites posteriores.</td>
+</tr>
+<tr>
+<td>RF3501 — vídeo e RF3608 — relato do aluno</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-09-26-lucas.md">26/09</a>: vídeo opcional e utilidade do relato textual do aluno. <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-10-08-lucas.md">08/10</a>: avaliação e correção pelo treinador.</td>
+<td>Não comprova os limites de mídia, o percentual de progresso ou todas as regras posteriores do feedback do aluno.</td>
+</tr>
+<tr>
+<td>RNF01/RNF03 — uso móvel e navegadores</td>
+<td><a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/89afb0ef6ebb58d1a7a12bba042ddc671d5bf302/docs/atas/2026-10-08-lucas.md">08/10</a>: uso pelo celular e menção a Chrome/Safari.</td>
+<td>Não confirma automaticamente 360 px nem a baseline completa de versões e sistemas do PR #70.</td>
+</tr>
+<tr>
+<td>RN01/US02 — treinador único e ativação</td>
+<td>Regra definida nas versões consultadas; o <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/70#issuecomment-6926600139">PR #70</a> pede o registro do cliente ou identificação como proposta.</td>
+<td>Confirmação específica da versão atual por Lucas não localizada nas atas examinadas.</td>
+</tr>
+<tr>
+<td>RNF07 e desempenho — RNF11 histórico/RNF10 na branch RF</td>
+<td>Metas identificadas nos documentos e aceites, com divergências acima.</td>
+<td>Retorno de Lucas sobre os compromissos atuais não localizado nas fontes vinculadas.</td>
+</tr>
+</tbody>
+</table>
+<p>Não foi localizada uma relação completa de requisitos atuais confirmados por Lucas, com versões e decisões. A confirmação interna dos 65 RFs não a substitui. Quem acompanhou as validações precisa vincular os registros existentes; mudanças ainda não confirmadas permanecem pendentes. Não classificar todos como aprovados nem todos como rejeitados por ausência desse vínculo.</p>
+<h3 id="disponibilidade-historias">Disponibilidade e estado das histórias<a class="headerlink" href="#disponibilidade-historias" title="Permanent link">&para;</a></h3>
+<p>O <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74">PR #74</a> disponibiliza esta contribuição desde 16/11, às 12h59 de Brasília; o <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/74#issuecomment-6926601650">comentário do Heitor</a>, às 16h20, comprova a consulta. Isso comprova disponibilidade para revisão, sem atender ao DoD05. Conforme a orientação posterior do monitor, a entrega documental depende de aprovação e merge em <code>docs</code>, deploy bem-sucedido e conferência manual dos links publicados, com data e commit registrados.</p>
+<p>Nenhuma das cinco histórias foi declarada concluída. Em US01/US02 faltam persistência, códigos, unicidade e termos; o consentimento de menores em RN16 precisa ser conciliado com RF4814, atualmente fora do MVP. US03 não comprova revogação no servidor. US04/US05 precisam de destinos, termos e permissões integrados; US05 ainda depende da API por e-mail.</p>
+<p>O frontend foi disponibilizado para revisão no <a href="https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/pull/77">Draft PR #77</a>, commit <code>29397ddd21f181020f4cb58e11c74f77df4acc3c</code>. A execução local dessa versão em 16/11, às 16h51 de Brasília, aprovou 54 testes Vitest, lint e build. Os testes usam requisições simuladas e não comprovam integração com API e banco. A <a href="../arquivos/verificacao-interface-2026-11-16.json">identificação da versão examinada</a> contém os 22 hashes, comandos, ambiente e trechos das saídas reais. A execução anterior de 38 testes pertence a um registro histórico local, sem commit público correspondente, e não é usada como evidência desta versão.</p>
+<p>Para o DoD das histórias, DoD01/DoD03/DoD04 têm comprovação parcial; DoD02 e DoD05 não estão atendidos, e DoD06 depende da validação pertinente ao objetivo da entrega. O PR #77 comprova disponibilidade para revisão do código, não integração nem conclusão. A revisão independente das USs continua pendente.</p>
+<h3 id="dod05-publicacao">Conferência do DoD05 após o merge<a class="headerlink" href="#dod05-publicacao" title="Permanent link">&para;</a></h3>
+<p><strong>Situação atual: Não atendido.</strong> O procedimento abaixo registra a orientação do monitor para esta entrega documental; não altera o critério oficial. Nenhuma etapa futura foi marcada como executada.</p>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Evidência necessária</th>
+<th>Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aprovação e merge do PR #74 em <code>docs</code></td>
+<td>Aprovação registrada e commit integrado.</td>
+<td>Pendente.</td>
+</tr>
+<tr>
+<td>Deploy da documentação</td>
+<td>Execução bem-sucedida da publicação correspondente à versão integrada, com referência à execução e ao commit.</td>
+<td>Pendente.</td>
+</tr>
+<tr>
+<td>Conferência manual no site</td>
+<td>Abrir a página de aplicação, o PDF e o JSON publicados; conferir carregamento e correspondência com a versão integrada.</td>
+<td>Pendente.</td>
+</tr>
+<tr>
+<td>Registro da conferência</td>
+<td>Data e hora de Brasília, responsável, commit de <code>docs</code>, commit publicado quando distinto, execução do deploy e resultado de cada link. Registrar e corrigir falhas antes de concluir.</td>
+<td>Pendente.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Destinos para abrir após o deploy:</strong> os links abaixo são alvos da conferência futura, não evidência de publicação desta contribuição.</p>
+<ul>
+<li><a href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/aplicacao_dor_dod/">Página de aplicação do DoR/DoD</a>.</li>
+<li><a href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/arquivos/conferencia-dor-iteracao1-2026-11-16.pdf">PDF da avaliação da Iteração 1</a>.</li>
+<li><a href="https://mdsreq-fga-unb.github.io/REQ-2026.2-T01-SpaceJam/arquivos/verificacao-interface-2026-11-16.json">JSON de evidências da interface</a>.</li>
+</ul>
+<p>O build e a conferência locais não substituem a execução do deploy nem a abertura manual desses destinos publicados. A integração do PR #74 não integra automaticamente o Backlog/MVP do PR #68 nem conclui o DoD desses artefatos.</p>
+<h3 id="pendencias">Pendências para concluir as issues<a class="headerlink" href="#pendencias" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pendência</th>
+<th>Encaminhamento</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Avaliação e decisão de início da Iteração 1</td>
+<td>PDF original localizado e vinculado, preservando DoR01–DoR05. Falta identificar os commits das fontes dele. Thiago relata posteriormente início informal com Guilherme, sem registro formal contemporâneo; a transcrição comprova continuidade, não liberação coletiva. A equipe precisa registrar o planejamento e a decisão atual com data real, sem reconstruir aprovação anterior.</td>
+</tr>
+<tr>
+<td>DoR06 dos oito itens</td>
+<td>Conferência parcial acima: conciliar nomes do Backlog com a divisão atual, vincular estimativa por US e demonstrar compatibilidade com a capacidade. Thiago/executores: fornecer o registro existente ou completar o planejamento com a data real.</td>
+</tr>
+<tr>
+<td>DoD02 e correções do Backlog/MVP</td>
+<td>Guilherme: corrigir os achados. Outro integrante, diferente do autor: registrar nome, data, versão/commit, apontamentos, correções verificadas e resultado. O monitor fornece feedback externo e não substitui essa revisão.</td>
+</tr>
+<tr>
+<td>Confirmações de requisitos</td>
+<td>Lucas e participantes: vincular retornos por versão; confirmar mudanças não abrangidas pelas atas anteriores.</td>
+</tr>
+<tr>
+<td>Upload e desempenho</td>
+<td>Anderson, Thiago e Guilherme: conciliar RNFs, aceites e recorte, com decisão registrada.</td>
+</tr>
+<tr>
+<td>DoD05 da entrega documental</td>
+<td>Após aprovação e merge do PR #74 em <code>docs</code>: confirmar deploy bem-sucedido, conferir manualmente página, PDF e JSON no site e registrar data, responsável e commit. Até lá, Não atendido.</td>
+</tr>
+</tbody>
+</table>
+<p>As issues #59 e #60 continuam abertas enquanto faltarem essas comprovações. As pendências não impedem publicar correções factuais já verificadas, mas impedem declarar o DoR/DoD integralmente cumprido.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Voltar ao topo
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Equipe Space Jam · Engenharia de Software · FCTE/UnB · 2026.2
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.top", "navigation.indexes", "navigation.footer", "toc.follow", "search.highlight", "search.suggest", "content.action.edit", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "Mais 1 nesta p\u00e1gina", "search.result.more.other": "Mais # nesta p\u00e1gina", "search.result.none": "Nenhum resultado encontrado", "search.result.one": "1 resultado encontrado", "search.result.other": "# resultados encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+        <script src="../javascripts/sj-navigation.js"></script>
+      
+        <script src="../javascripts/sj-tables.js"></script>
+      
+        <script src="../javascripts/sj-catalog.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

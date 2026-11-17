@@ -1,0 +1,442 @@
+{
+  "data": "2026-11-16",
+  "versao_catalogo": "26da04ea27b6bd748ea295e4bf80fae3d718370b",
+  "fonte_catalogo": "https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/blob/26da04ea27b6bd748ea295e4bf80fae3d718370b/docs/requisitos.md",
+  "alcance": "Status das declarações dos RFs; não indica implementação, DoR completo, prioridade ou MVP.",
+  "regra_de_manutencao": "Mudança na ficha retira a validação apresentada até nova conciliação. Em refinamento permanece pendente até resolver a observação.",
+  "requisitos": {
+    "RF1101": {
+      "status": "refinar",
+      "sha256_ficha": "9a6a9a759e49fa06c85b6b345faf6d6545ea84baff2c0888df83f29730e6e4f7",
+      "evidencia": null
+    },
+    "RF1102": {
+      "status": "refinar",
+      "sha256_ficha": "dd064838868ee47ec1db9fb3b09e5a526c807015ce9a2062263abe3930fbc8ce",
+      "evidencia": null
+    },
+    "RF1103": {
+      "status": "validado",
+      "sha256_ficha": "c415e13179197672f6478e87ebf45f09b0da656702bca7b7b8e249384ac2a74c",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1103",
+          "nome": "Deslogar aluno",
+          "declaracao": "O sistema deve permitir que o usuário possa deslogar do seu perfil",
+          "origem": "OE1 - CP1"
+        }
+      }
+    },
+    "RF1104": {
+      "status": "validar",
+      "sha256_ficha": "b93b74aefdf815a453c16aca38de6e63a7405f156132cbb02ef534a50caab38a",
+      "evidencia": null
+    },
+    "RF1105": {
+      "status": "refinar",
+      "sha256_ficha": "b8ab8608532c7fbb71c19382c42b89a700f83d449c71d4c1a5e90b0abddbda6d",
+      "evidencia": null
+    },
+    "RF1106": {
+      "status": "refinar",
+      "sha256_ficha": "de1a665116504a1e528e78a65d6fed2247429884b6aecdcdead79eee35b65b61",
+      "evidencia": null
+    },
+    "RF1107": {
+      "status": "refinar",
+      "sha256_ficha": "49e71b4f95a31009a4df453d1c6e794e0719ffadf271e13018053dfe70668c43",
+      "evidencia": null
+    },
+    "RF1108": {
+      "status": "refinar",
+      "sha256_ficha": "c0976056e8eccbe645c1da248571645839c8708f89cc425a6c2fb1316cd7b985",
+      "evidencia": null
+    },
+    "RF1109": {
+      "status": "refinar",
+      "sha256_ficha": "d3ae6327d4ae46c70684fffa4eb054a7bf22d8cf052ee14f3300a5850bf6c95d",
+      "evidencia": null
+    },
+    "RF1110": {
+      "status": "refinar",
+      "sha256_ficha": "e759152063b409362023090b3065734b6cd16980882672b36693cfc1d50e7ab6",
+      "evidencia": null
+    },
+    "RF1111": {
+      "status": "refinar",
+      "sha256_ficha": "7065b2d7eb8b9652c056c6c5fd115861a1f8fc2e3c9c17feec5524166435e3ce",
+      "evidencia": null
+    },
+    "RF1212": {
+      "status": "validado",
+      "sha256_ficha": "04ae191838e2c0c3b32ce0ccba3a7b595f166d64234c188d6cacec0f0e45a777",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1212",
+          "nome": "Consultar dificuldade",
+          "declaracao": "O sistema deve permitir que o treinador consulte a qualquer momento as dificuldades dos respectivos treinos orientados",
+          "origem": "OE1 - CP2"
+        }
+      }
+    },
+    "RF1213": {
+      "status": "validado",
+      "sha256_ficha": "3dfd6a6be65cc18e85b929e1226de1c313f6018f6e48d7a1338afffeb44acdda",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1213",
+          "nome": "Registrar dificuldade",
+          "declaracao": "O sistema deve permitir que o aluno registre o nível de dificuldade em uma escala de 1 a 5 que sentiu ao realizar o exercício",
+          "origem": "OE1 - CP2"
+        }
+      }
+    },
+    "RF1214": {
+      "status": "validado",
+      "sha256_ficha": "1ad97c7e89c3b55cb467a0041cf857ecf7f475f984950dadf7f45e5df2cee024",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1214",
+          "nome": "Editar dificuldade",
+          "declaracao": "O sistema deve permitir que o aluno modifique o nível de dificuldade da escala de 1 a 5 que sentiu ao realizar o exercício, até o momento em que o treino passado não estiver como concluído para o aluno",
+          "origem": "OE1 - CP2"
+        }
+      }
+    },
+    "RF1215": {
+      "status": "validado",
+      "sha256_ficha": "1032e8d159efb16ffceeca05c60b0048dcd9fd59e58f74ba2e376529f433351a",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1215",
+          "nome": "Registrar conclusão de treino",
+          "declaracao": "O sistema deve permitir que o treinador registre a conclusão do treino de acordo com a análise presencial do treinador ou vídeo enviado pelo aluno, quando houver.",
+          "origem": "OE1 - CP2"
+        }
+      }
+    },
+    "RF1216": {
+      "status": "validado",
+      "sha256_ficha": "ee9274ea72bb4a8770bd468eb9bd32366cea65cb92a9b9935c3089a82ccf61c6",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1216",
+          "nome": "Registrar teste de aptidão física",
+          "declaracao": "O sistema deve permitir que o treinador registre o teste de aptidão física do aluno para acompanhamento",
+          "origem": "OE1 - CP2"
+        }
+      }
+    },
+    "RF1217": {
+      "status": "validado",
+      "sha256_ficha": "7d81113b1b935296ef661c695ac7f0013e7c0e82ee153289db05a6757d3bd31f",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF1217",
+          "nome": "Editar teste de aptidão física",
+          "declaracao": "O sistema deve permitir que o treinador edite testes de aptidão física dos alunos.",
+          "origem": "OE1 - CP2"
+        }
+      }
+    },
+    "RF2301": {
+      "status": "refinar",
+      "sha256_ficha": "324f922903dac39e5a67f83a6aed990301ce49430976792ae00b80ebe2c5b6d5",
+      "evidencia": null
+    },
+    "RF2302": {
+      "status": "validado",
+      "sha256_ficha": "0330c291c4ce9dda2bffd8744a94d552abcae07780e15f99bda048948ee9e1eb",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF2302",
+          "nome": "Editar planejamento de treino",
+          "declaracao": "O sistema deve permitir que o treinador edite o planejamento de treino de cada aluno.",
+          "origem": "OE 2 - CP3"
+        }
+      }
+    },
+    "RF2303": {
+      "status": "validado",
+      "sha256_ficha": "c661b644aaa61404c98f1c624b762a15d9f755cbe851fcc28980ab910e39591e",
+      "evidencia": {
+        "tipo": "equipe",
+        "data": "2026-11-16",
+        "origem": "https://miro.com/app/board/uXjVHrFoSVo=/",
+        "registro": "Confirmação interna informada por Luiz em 16/11 a partir de retorno de Guilherme sobre os requisitos do Miro. Conferência parcial do código, nome, declaração e origem com o catálogo identificado.",
+        "limites": "Relato da confirmação interna e consulta de leitura; sem exportação imutável do quadro ou evidência de aprovação de Lucas.",
+        "miro": {
+          "codigo": "RF2303",
+          "nome": "Associar planejamento de treino a objetivo do aluno",
+          "declaracao": "O sistema deve permitir que o treinador associe cada treino planejado aos respectivos objetivos do aluno.",
+          "origem": "OE 2 - CP3"
+        }
+      }
+    },
+    "RF2304": {
+      "status": "refinar",
+      "sha256_ficha": "04e17d48b9b45a7b62d1f672eaae8c4242b45b35aebdf9280c3878ed095c00b0",
+      "evidencia": null
+    },
+    "RF2305": {
+      "status": "validar",
+      "sha256_ficha": "713faa85bf5f205b74524c54a25dff2b729d74016a9d1a65f7863ef6b038f9bb",
+      "evidencia": null
+    },
+    "RF2306": {
+      "status": "validar",
+      "sha256_ficha": "f3d1f2bcc53dbf5de361b2f068006c4bd4118f1dd078478fd88377f94e4a3ec9",
+      "evidencia": null
+    },
+    "RF2307": {
+      "status": "refinar",
+      "sha256_ficha": "c3b887ef72da50cb94cb4de96d0845b247da4b497872f682510a45efaefc6980",
+      "evidencia": null
+    },
+    "RF2308": {
+      "status": "refinar",
+      "sha256_ficha": "2db79b7d97e001926f46247a712818387cea33ab51f67be70dd84b51065738e3",
+      "evidencia": null
+    },
+    "RF2309": {
+      "status": "refinar",
+      "sha256_ficha": "263d734fa4b3efbfcf631bef1f8db0f5d29df16624ec4740e482300bb1955204",
+      "evidencia": null
+    },
+    "RF2310": {
+      "status": "refinar",
+      "sha256_ficha": "90d2d49c5e9ed2c58c68426ea0a9e991cc7e02e827c1838d1646a1fe189a3113",
+      "evidencia": null
+    },
+    "RF2311": {
+      "status": "refinar",
+      "sha256_ficha": "1ad128fff0a53506c121d985b7567b3d5e87f6ae8571401a0368c050f39b5e4c",
+      "evidencia": null
+    },
+    "RF2312": {
+      "status": "refinar",
+      "sha256_ficha": "364f5bffe8c1936e19d66896680ab7cb015bba5c5da32a6204da665468133ee1",
+      "evidencia": null
+    },
+    "RF2413": {
+      "status": "validar",
+      "sha256_ficha": "251e63fc2c01422444fe72ef2c9f54297f37295d52658e8255e523645641f2c5",
+      "evidencia": null
+    },
+    "RF2414": {
+      "status": "validar",
+      "sha256_ficha": "aeeba2b7294576b35a33de6db7e713774b8b5aa481dd09d66cdcf79afe852d80",
+      "evidencia": null
+    },
+    "RF2415": {
+      "status": "validar",
+      "sha256_ficha": "60df350ac6b25bd4d5e50072ee4f4796a676bf979b5e737e17dc74679738fe39",
+      "evidencia": null
+    },
+    "RF2416": {
+      "status": "validar",
+      "sha256_ficha": "2ce4b3a963c38ba45202e54372c4bf2f509ca7bbbe456290b66bfec6dece219c",
+      "evidencia": null
+    },
+    "RF2417": {
+      "status": "validar",
+      "sha256_ficha": "ad7a110db1a4b96b5f5b88c2b0561803899b2fd822873df51ca621947755d55d",
+      "evidencia": null
+    },
+    "RF2418": {
+      "status": "validar",
+      "sha256_ficha": "622646dd74712852f3924c0c76c71a55c5ed09fcf1e9879cb2c768b2ed9e54f3",
+      "evidencia": null
+    },
+    "RF2419": {
+      "status": "refinar",
+      "sha256_ficha": "2cb2237b6ae1dfb21d7a36835e5c0cf7c358fc6382d0e008f31fd3dfd0b0d34f",
+      "evidencia": null
+    },
+    "RF2420": {
+      "status": "refinar",
+      "sha256_ficha": "90170b24d2f5f230d7d942e53efef58dd41095d854e12740e8deae2c41a0bbf5",
+      "evidencia": null
+    },
+    "RF2421": {
+      "status": "refinar",
+      "sha256_ficha": "a80aff242f77f7121d2f7f386a8977f6267972dcb77a400030919a034da53c0b",
+      "evidencia": null
+    },
+    "RF2422": {
+      "status": "refinar",
+      "sha256_ficha": "5b74ed026d9e0ca8c7d50116a335d6968a5cd5e87f1a1ebd14db35c41e51819b",
+      "evidencia": null
+    },
+    "RF2423": {
+      "status": "refinar",
+      "sha256_ficha": "425cc4624ad4a0f49c64fb7d394e30b0b8bfd3cc2ca9459d1ef31691df041d96",
+      "evidencia": null
+    },
+    "RF2424": {
+      "status": "refinar",
+      "sha256_ficha": "786defc98a365c26991a97198d7c1f6a90370fb5bf3c409a276d56c618d3daff",
+      "evidencia": null
+    },
+    "RF3501": {
+      "status": "refinar",
+      "sha256_ficha": "0f5b583bd6fe03334ec99a117c9291a1f0e09348cc2c49c65d6b55d1e0261a01",
+      "evidencia": null
+    },
+    "RF3502": {
+      "status": "validar",
+      "sha256_ficha": "251e0928ec5034e0a8cba82fd5838e11ad46719f905b46a08bf79d8d07e75190",
+      "evidencia": null
+    },
+    "RF3503": {
+      "status": "validar",
+      "sha256_ficha": "bfbb20f66c70f2e56cf1aadab92df69f264628e475c6e33303074a8441e517f8",
+      "evidencia": null
+    },
+    "RF3604": {
+      "status": "validar",
+      "sha256_ficha": "32933e581faa63c2943b183ef06ad2de15fb58c3eda5ab57924cbf8923c03fd6",
+      "evidencia": null
+    },
+    "RF3605": {
+      "status": "validar",
+      "sha256_ficha": "e3291249bd639e5ae44164e7bcb18735a235c4cd3d1b03c9cab5b4c5db3128ab",
+      "evidencia": null
+    },
+    "RF3606": {
+      "status": "validar",
+      "sha256_ficha": "b3f6464750a24db1222917456599ec4c79043354cb44586cd4a67c5ef40ed71b",
+      "evidencia": null
+    },
+    "RF3607": {
+      "status": "validar",
+      "sha256_ficha": "d57467c4e10ae8ec292761e4a5edd3a6c227fbcba38f724bde76f19466ee6230",
+      "evidencia": null
+    },
+    "RF3608": {
+      "status": "refinar",
+      "sha256_ficha": "bf30bf249287d7aebae67f2e385f6eba6ba0432a66433ddc476bd2cf32698599",
+      "evidencia": null
+    },
+    "RF3609": {
+      "status": "refinar",
+      "sha256_ficha": "8d41f34647673acaa732a34be1a2bc392da49723a4afc43fe1e8a757be17666d",
+      "evidencia": null
+    },
+    "RF3610": {
+      "status": "refinar",
+      "sha256_ficha": "94c68bca63829d80e82fec9e134550e78be5215e6ef4666eea8c7dd4cbd02f10",
+      "evidencia": null
+    },
+    "RF4701": {
+      "status": "validar",
+      "sha256_ficha": "67fe8cd1637c49e5eec231e8348dc082eb62090a169f8773a9fbb2f7fc573597",
+      "evidencia": null
+    },
+    "RF4802": {
+      "status": "validar",
+      "sha256_ficha": "1683435dca9f01e89ebd4584d672f28116d357fdd927870560903b9efd71a53a",
+      "evidencia": null
+    },
+    "RF4803": {
+      "status": "validar",
+      "sha256_ficha": "7e82bb52c677b8f878641f9a5f11fceb738b521f54cc8e910574d8a2076e4c1f",
+      "evidencia": null
+    },
+    "RF4804": {
+      "status": "validar",
+      "sha256_ficha": "ff8c0d8ec03226f666ce6f634f5d918bccda6b019ab6897eeda9027396da313f",
+      "evidencia": null
+    },
+    "RF4805": {
+      "status": "validar",
+      "sha256_ficha": "cd8a66e765fccad2142f6fd4b32a4c94805a9fa74c2862800bce8dee9cb79d1d",
+      "evidencia": null
+    },
+    "RF4806": {
+      "status": "validar",
+      "sha256_ficha": "2442f225575019742180426ffc407eb12aa1080f319d6a50ee67d6e2d301d90e",
+      "evidencia": null
+    },
+    "RF4807": {
+      "status": "validar",
+      "sha256_ficha": "c373de873c9fd6ae1527548e998748541995fb3e8fddc831f959bb44d05a2056",
+      "evidencia": null
+    },
+    "RF4808": {
+      "status": "validar",
+      "sha256_ficha": "1bf926a9aae78d1b89b13f409235d6de561ba94d276d82b0df7d946a3efe7528",
+      "evidencia": null
+    },
+    "RF4809": {
+      "status": "validar",
+      "sha256_ficha": "2ec9e1a45a90df2aefebcce48f06c31b1ff605b6c104b83c774636403070280d",
+      "evidencia": null
+    },
+    "RF4810": {
+      "status": "validar",
+      "sha256_ficha": "f3b1658989d28c6a0e87116755661b75efa8faff25641367436bfbbca9c42403",
+      "evidencia": null
+    },
+    "RF4811": {
+      "status": "validar",
+      "sha256_ficha": "d022b895ca803062cd5f90bbaac14fd4757afcdf8cafa1b2127674d130fd0e12",
+      "evidencia": null
+    },
+    "RF4812": {
+      "status": "refinar",
+      "sha256_ficha": "02c99325455162ed72804490d622f5e3d7f70a312b7a4ffb68b34cb160a45d00",
+      "evidencia": null
+    },
+    "RF4813": {
+      "status": "refinar",
+      "sha256_ficha": "768046d7745c0e0dd4206f5c8408a7560b66c457c4536ff699600714c274b656",
+      "evidencia": null
+    },
+    "RF4814": {
+      "status": "refinar",
+      "sha256_ficha": "3d4743f84e37104bba98efd7a9327972d30748aa2b50506d834e8d69f101e969",
+      "evidencia": null
+    }
+  }
+}
