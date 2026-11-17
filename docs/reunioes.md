@@ -118,20 +118,32 @@ Para encerrar as dúvidas levantadas nas reuniões de **26/09/2026** e **08/10/2
 
 > **Status:** A equipe está conduzindo a rodada integrada de revisão por pares dos artefatos de requisitos (catálogo, matriz de permissões, critérios de aceitação e quadro Kanban no Miro) para consolidar problemas encontrados, decisões tomadas e o encerramento formal das pendências de RNFs. Os registros detalhados desta sessão serão anexados abaixo assim que concluídos.
 
+### 5. Consolidação da Revisão por Pares e Encerramento dos RNFs
+
+> **Status:** Rodada de revisão por pares concluída sobre os artefatos de requisitos (RNFs, critérios de aceitação e matriz de permissões), o incremento de acesso e cadastro no frontend (`US01`–`US05`) e a auditoria técnica do módulo de biblioteca de exercícios no backend (`CP4` / `US20`–`US25`), consolidando as correções aplicadas, pendências de integração e melhorias mapeadas para os próximos incrementos.
+
 | ID / Artefato Revisado | Problema ou Ambiguidade Identificada | Decisão e Correção Aplicada | Responsável / Revisor | Status |
 | :--- | :--- | :--- | :--- | :--- |
 | **RNFs de Acesso, Visibilidade e Consentimento (`RNF05`, `RNF09`–`RNF17`)** | Pendências abertas nas atas de 26/09 e 08/10 sobre quem edita dados clínicos, visibilidade de vídeos/feedbacks e tratamento de menores. | Consolidado na [Matriz Consolidada de Permissões e Acessos por Perfil](https://docs.google.com/document/d/1_6J8LWkFLCoRqjBAPhsyps4IfjCPU20Rf6IHtn7pYzM/edit?tab=t.0#heading=h.scqgboim3nm1) com regras explícitas de RBAC, isolamento de dados e consentimento legal. | Equipe Space Jam | Concluído |
-| *Demais achados da revisão por pares* | *Aguardando inserção das evidências da sessão em andamento* | *Aguardando consolidação* | *Equipe Space Jam* | *Em andamento* |
+| **Pré-Envio de Mídia (`RNF15` × `RNF16`)** | Mistura entre atributos de qualidade operacional/rede (`RNF15`) e comportamento visual de interface/tela (`RNF16`). | Adicionada nota de escopo delimitando que o `RNF15` cobre desempenho local ($\le 1,0\text{ s}$) e zero tráfego antes da confirmação, enquanto interação visual pertence ao `RNF16` e aos CAs. | Anderson Fernandes | Concluído |
+| **Frontend `US01` / Cadastro de Aluno (Campo Envergadura)** | O campo solicita o valor em centímetros (`cm`), mas exibe o erro de validação do servidor em metros (`0.5`), além de o termo "envergadura" não ser claro para leigos. | Registrado para traduzir as mensagens de erro para centímetros (`50 cm` a `280 cm`) e adicionar texto explicativo/ajuda visual no campo. | Anderson Fernandes | Pendente (Próximo Incremento) |
+| **Frontend `US01`–`US02` / Aceite de Termos (`AceiteTermos.tsx`)** | Quando as URLs dos Termos de Uso e Privacidade não estão configuradas no `.env`, o aceite fica indisponível sem um aspecto visual claro explicando o motivo. | Registrado para exibir estado visual desabilitado com aviso claro informando a indisponibilidade dos documentos oficiais. | Anderson Fernandes | Pendente (Próximo Incremento) |
+| **Frontend `US02` / Tela "Minha Conta" (Treinador)** | O código de convite (`TRN-XXXXXX`) aparece apenas imediatamente após o cadastro; ao acessar "Minha Conta", o treinador não consegue mais vê-lo ou copiá-lo. | Registrado para exibir o código de convite com botão de "Copiar" também na tela "Minha Conta" do perfil treinador. | Anderson Fernandes | Pendente (Próximo Incremento) |
+| **Frontend `US01` / Consentimento de Menores (`RN16`)** | O bloqueio de menores de 18 anos informa a exigência de consentimento dos pais, mas não oferece meio prático de contato com o treinador ou modelo de autorização. | Registrado para incluir canal direto de contato (WhatsApp/e-mail) ou acesso ao documento padrão de autorização na mensagem de bloqueio. | Anderson Fernandes | Pendente (Próximo Incremento) |
+| **Frontend `US01` / Experiência de Cadastro (UX)** | Formulário de aluno concentrado em uma única tela longa, sem ícone para exibir/ocultar senha no cadastro e com digitação livre em objetivos e código do treinador. | Catalogado como melhorias de UX: dividir cadastro em etapas, adicionar botão de visualizar senha, oferecer opções marcáveis de objetivos e suportar link de convite com código automático. | Anderson Fernandes | Catalogado (Backlog UX) |
+| **Backend `CP4` / Cadastro e Edição de Exercícios (`US23`–`US25`, `RF02412`)** | O modelo contempla apenas a URL do vídeo (`video_base`), sem campos de título e descrição do vídeo nem obrigatoriedade condicional de `erros_comuns` exigidos pelo `CA01`. | Registrado para incluir metadados do vídeo (`video_titulo`, `video_descricao`), validação condicional quando houver vídeo e alinhamento do campo `objetivo`. | Anderson Fernandes | Pendente (Próximo Incremento) |
 
----
+#### Pontos Positivos Validados na Revisão do Frontend (`US01`–`US05`)
 
-<span id="reuniao-de-alinhamento-com-o-brainstorm"></span>
+- **Escopo isolado e qualidade técnica:** Alterações restritas à pasta `frontend/`, com 65 testes unitários/contrato e 8 testes HTTP reais aprovados contra PostgreSQL/Docker, sem erros de lint/build e sem credenciais expostas no código.
+- **Validação de segurança de senha:** O sistema bloqueia senhas curtas ou simples demais (ex.: `123456`) e exibe os avisos diretamente nos campos correspondentes.
+- **Conformidade legal preventiva (LGPD / `RN16`):** Exige clique explícito para aceitar os termos e bloqueia o cadastro de menores de 18 anos enquanto não houver fluxo comprovável de consentimento dos responsáveis.
+- **Fluxo funcional de ponta a ponta:** Cadastro de treinador gera código de convite (`TRN-XXXXXX`) que vincula alunos corretamente, diferencia login por perfil (e-mail para treinador, apelido para aluno), preserva a sessão ao recarregar a página (`F5`) e encerra o acesso ao sair da conta.
 
-### 6. Reunião de alinhamento com o brainstorm
+#### Pontos Positivos Validados no Backend (`biblioteca-de-exercicios` — `CP4`)
 
-![Apresentação da problemática do projeto durante reunião da equipe](imagens/Reunião_de_brainstorm.png){:  width="719" height="396" }
-
-A captura mostra a apresentação da problemática durante reunião interna da equipe. A data exata e a ata correspondente ainda precisam ser vinculadas para rastreabilidade completa.
+- **Núcleo funcional e testado:** Cadastro, listagem, detalhe e edição de exercícios operacionais para treinador, com `manage.py check` sem problemas e 34 testes automatizados aprovados em container descartável.
+- **Integridade de autoria e permissões base:** Campos de auditoria e `criado_por` protegidos como somente leitura no serializer, escrita restrita ao perfil treinador e exclusão bloqueada (HTTP 405) conforme o recorte do MVP.
 
 ---
 
