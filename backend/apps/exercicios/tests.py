@@ -164,8 +164,8 @@ class ConsultarExercicioTests(APITestCase):
         resposta = self.client.get(self.url_detalhe(self.minimo.pk))
         self.assertEqual(resposta.status_code, status.HTTP_200_OK)
         self.assertEqual(resposta.data["orientacoes"], "")
-        self.assertIsNone(resposta.data["erros_comuns"])
-        self.assertIsNone(resposta.data["video_base"])
+        self.assertEqual(resposta.data["erros_comuns"], "")
+        self.assertEqual(resposta.data["video_base"], "")
 
     def test_exercicio_inexistente_retorna_404(self):
         self.client.force_authenticate(self.treinador)
@@ -365,3 +365,61 @@ class EditarExercicioTests(APITestCase):
         url = reverse("exercicio-detail", args=[999999])
         resposta = self.client.patch(url, {"nome": "Fantasma"})
         self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)
+
+class ErrosComunsEVideoBaseTests(APITestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.url_lista = reverse("exercicio-list")
+        cls.dados = {
+            "nome": "Bandeja pela direita",
+            "objetivo": "Melhorar a finalização em movimento",
+            "fundamento": "ARREMESSO",
+            "orientacoes": "Dois passos e quebra de punho.",
+            "erros_comuns": "Não olhar para a cesta.",
+            "video_base": "https://www.youtube.com/watch?v=exemplo",
+        }
+
+    def setUp(self):
+        self.client.force_authenticate(self.treinador)
+
+    def test_cadastro_grava_e_consulta_devolve_os_opcionais(self):
+        criado = self.client.post(self.url_lista, self.dados)
+        self.assertEqual(criado.status_code, status.HTTP_201_CREATED)
+        detalhe = self.client.get(
+            reverse("exercicio-detail", args=[criado.data["id"]])
+        )
+        self.assertEqual(detalhe.data["erros_comuns"], "Não olhar para a cesta.")
+        self.assertEqual(
+            detalhe.data["video_base"], "https://www.youtube.com/watch?v=exemplo"
+        )
+
+    def test_link_de_video_invalido_e_recusado(self):
+        resposta = self.client.post(
+            self.url_lista, {**self.dados, "video_base": "link-invalido"}
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("video_base", resposta.data)
+        self.assertFalse(Exercicio.objects.exists())
+
+    def test_edicao_altera_e_apaga_os_opcionais(self):
+        criado = self.client.post(self.url_lista, self.dados)
+        url = reverse("exercicio-detail", args=[criado.data["id"]])
+        resposta = self.client.put(
+            url, {**self.dados, "erros_comuns": "Pisar na linha.", "video_base": ""}
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        exercicio = Exercicio.objects.get()
+        self.assertEqual(exercicio.erros_comuns, "Pisar na linha.")
+        self.assertEqual(exercicio.video_base, "")
+
+    def test_objetivo_longo_e_aceito(self):
+        resposta = self.client.post(
+            self.url_lista, {**self.dados, "objetivo": "x" * 600}
+        )
+        self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)

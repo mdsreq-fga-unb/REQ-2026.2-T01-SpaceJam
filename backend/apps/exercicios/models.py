@@ -13,11 +13,13 @@ class Fundamento(models.TextChoices):
 
 class Exercicio(models.Model):
     nome = models.CharField(max_length=120)
-    objetivo = models.CharField(max_length=200)
+    objetivo = models.TextField()
     fundamento = models.CharField(
         max_length=30, choices=Fundamento.choices, db_index=True
     )
     orientacoes = models.TextField(blank=True)
+    erros_comuns = models.TextField(blank=True)
+    video_base = models.URLField(max_length=500, blank=True)
     criado_por = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         null=True,
