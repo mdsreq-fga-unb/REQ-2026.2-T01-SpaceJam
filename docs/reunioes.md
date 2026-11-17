@@ -114,10 +114,6 @@ Para encerrar as dúvidas levantadas nas reuniões de **26/09/2026** e **08/10/2
 ---
 <span id="revisao-por-pares"></span>
 
-### 5. Consolidação da Revisão por Pares e Encerramento dos RNFs *(Em andamento)*
-
-> **Status:** A equipe está conduzindo a rodada integrada de revisão por pares dos artefatos de requisitos (catálogo, matriz de permissões, critérios de aceitação e quadro Kanban no Miro) para consolidar problemas encontrados, decisões tomadas e o encerramento formal das pendências de RNFs. Os registros detalhados desta sessão serão anexados abaixo assim que concluídos.
-
 ### 5. Consolidação da Revisão por Pares e Encerramento dos RNFs
 
 > **Status:** Rodada de revisão por pares concluída sobre os artefatos de requisitos (RNFs, critérios de aceitação e matriz de permissões), o incremento de acesso e cadastro no frontend (`US01`–`US05`) e a auditoria técnica do módulo de biblioteca de exercícios no backend (`CP4` / `US20`–`US25`), consolidando as correções aplicadas, pendências de integração e melhorias mapeadas para os próximos incrementos.
@@ -147,8 +143,8 @@ Para encerrar as dúvidas levantadas nas reuniões de **26/09/2026** e **08/10/2
 
 ---
 
-<span id="7-reuniao-de-alinhamento-com-o-brainstorm"></span>
-### 7. Reunião de alinhamento com o brainstorm
+<span id="6-reuniao-de-alinhamento-com-o-brainstorm"></span>
+### 6. Reunião de alinhamento com o brainstorm
 
 ![Apresentação da problemática do projeto durante reunião da equipe](imagens/Reunião_de_brainstorm.png)
 
@@ -158,7 +154,7 @@ A captura mostra a apresentação da problemática. A data e a ata correspondent
 
 <span id="validacao-do-prototipo-inicial"></span>
 
-### 8. Apresentação do protótipo inicial
+### 7. Apresentação do protótipo inicial
 
 [Abrir o protótipo no Figma](https://www.figma.com/design/HJ5ukxYtbpQDmzD2OO7Jw3/Space-Jam?node-id=31-864)
 
