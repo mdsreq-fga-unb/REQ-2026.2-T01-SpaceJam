@@ -415,7 +415,9 @@ Os itens de escopo Global se aplicam transversalmente. Vínculos específicos po
 
 **MVP:** Obrigatório
 
-**Descrição:** O processamento da prévia e a manipulação da mídia (vídeo) selecionada devem ocorrer no navegador (lado do cliente), garantindo feedback visual para o usuário e impedindo qualquer transmissão de dados ao servidor antes da confirmação explícita de envio feita pelo usuário.
+**Descrição:** O processamento da prévia e a validação prévia do arquivo de mídia (vídeo) selecionado devem ocorrer integralmente no navegador (lado do cliente), garantindo resposta imediata e assegurando que nenhum dado do arquivo seja transmitido ao servidor ou persistido temporariamente antes da confirmação explícita de envio pelo usuário.
+
+> **Nota de Escopo (Distinção RNF15 × RNF16):** Este requisito trata exclusivamente dos **atributos de qualidade da operação local** — desempenho da renderização no cliente, economia de banda e contenção de tráfego de rede antes do envio (prevenindo submissões acidentais irreversíveis). Os elementos visuais, componentes de tela, mensagens de interface e fluxos de interação do usuário são especificados no **RNF16** (Usabilidade/Comportamento de Interface) e nos critérios de aceitação dos requisitos funcionais de envio de mídia.
 
 **Origem e perfis:**
 
