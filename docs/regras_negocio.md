@@ -8,46 +8,66 @@ Condições que orientam permissões e comportamentos do produto. Abra uma regra
 
 ## Consultar regras {#consultar-regras}
 
-## RN01 · Acesso aos atletas vinculados {#rn01}
+## RN01 · Autorização e Aprovação de Treinadores {#rn01}
 
-Um treinador tem permissão de acesso e avaliação restrita exclusivamente aos perfis, treinos e vídeos dos atletas que estejam formalmente vinculados à sua carteira de acompanhamento.
+O cadastro de contas com perfil "Treinador" não possui ativação automática; a habilitação do acesso depende obrigatoriamente de análise e aprovação prévia pela administração da plataforma.
 
-## RN02 · Permissões para editar dados do atleta {#rn02}
+## RN02 · Vínculo Obrigatório de Atleta por Convite/Código {#rn02}
 
-A edição de dados de análise clínica e esportiva (histórico de lesões, aptidão física, objetivos e resultados de treinos) é prerrogativa exclusiva do treinador. O atleta possui permissão para editar apenas seus dados cadastrais e métricas corporais primárias (nome, contato, peso, altura e envergadura).
+O cadastro de uma conta com perfil "Atleta" exige uma credencial privada (código ou convite) emitida por um treinador ativo, vinculando o atleta automática e exclusivamente à carteira desse treinador no ato do registro.
 
-## RN03 · Alteração de vídeos antes do feedback {#rn03}
+## RN03 · Isolamento de Dados e Carteira (Multi-tenant) {#rn03}
 
-O atleta só possui permissão para substituir ou excluir um vídeo de execução de exercício caso o treinador ainda não tenha registrado nenhum feedback avaliativo sobre aquela respectiva mídia.
+Um treinador pode visualizar, planejar e avaliar exclusivamente os dados, treinos e mídias dos atletas formalmente vinculados à sua carteira. Um atleta pode acessar exclusivamente os seus próprios registros, sem visibilidade sobre dados de outros atletas.
 
-## RN04 · Exclusão de perfis de atletas {#rn04}
+## RN04 · Segregação de Edição Cadastral e Clínica {#rn04}
 
-**Exclusão de perfis de atletas:** A exclusão de um perfil de atleta somente pode ser realizada pelo treinador ao qual o atleta está formalmente vinculado. A operação deve respeitar as políticas de retenção de dados e preservar os registros históricos que precisem ser mantidos.
+Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do atleta, isso inclui suas métricas corporais primárias (nome, apelido, contato, altura, peso, envergadura e foto). O registro e a edição de histórico de lesões, objetivos e testes de aptidão física são prerrogativas exclusivas do treinador vinculado.
 
-## RN05 · Um vídeo por submissão {#rn05}
+## RN05 · Política de Exclusão de Conta e Dados (LGPD) {#rn05}
 
-**Limite de vídeos por submissão:** Cada submissão de exercício pode conter exatamente um arquivo de vídeo. Não é permitido anexar mais de um vídeo à mesma submissão. Uma nova tentativa de execução poderá gerar uma nova submissão quando o exercício estiver disponível para correção ou refazimento, respeitando as demais regras do sistema.
+O treinador vinculado pode excluir o perfil de um atleta que não esteja mais sob seu acompanhamento. Adicionalmente, qualquer titular de dados (atleta ou treinador) pode solicitar a exclusão de sua própria conta, dados pessoais, vídeos e feedbacks, respeitando-se as obrigações legais de retenção ou anonimização de registros históricos.
 
-## RN06 · Estados e refazimento dos exercícios {#rn06}
+## RN06 · Estrutura e Ciclo de Vida dos Exercícios {#rn06}
 
-**Ciclo de vida dos exercícios:** Todo exercício deve ser criado automaticamente com o status “A fazer”. O atleta pode alterar o status para “Concluído” após executar o exercício. Compete exclusivamente ao treinador responsável alterar o status para “Concluído” ou “Corrigir/Refazer”, conforme sua avaliação. Quando o exercício receber o status “Corrigir/Refazer”, o atleta poderá realizar uma nova tentativa e enviar uma nova submissão, conforme as condições estabelecidas pelo sistema.
+Um planejamento de treinamento é composto por treinos, os quais organizam exercícios selecionados da biblioteca com seus respectivos parâmetros de execução (séries, repetições ou duração). Todo exercício inicia com o estado **"A fazer"**; após a execução, o atleta pode alterá-lo para **"Feito"** (ou retorná-lo para **"A fazer"** enquanto não avaliado), cabendo exclusivamente ao treinador validá-lo como **"Concluído"** ou devolvê-lo como **"Corrigir/Refazer"** para nova tentativa.
 
-## RN07 · Escala de dificuldade de 1 a 5 {#rn07}
+## RN07 · Estados e Conclusão do Treino {#rn07}
 
-O registro da percepção de dificuldade de um exercício pelo atleta deve obedecer obrigatoriamente a uma escala fixa de 1 a 5.
+Enquanto não estiver concluído, o treino permanece com o estado **"Em andamento"**. O atleta pode registrar a conclusão do treino após realizá-lo, e o treinador pode registrar ou confirmar a conclusão formal do treino com base em análise presencial ou dos vídeos enviados.
 
-## RN08 · Edição e exclusão do próprio feedback {#rn08}
+## RN08 · Escala e Vigência da Percepção de Dificuldade {#rn08}
 
-Um treinador possui permissão para editar ou excluir feedbacks de texto ou anotações em vídeo, desde que tenham sido registrados exclusivamente por ele mesmo.
+O registro da percepção de dificuldade de um exercício pelo atleta deve obedecer à escala inteira fixa de **1 a 5**. O atleta pode alterar a nota registrada apenas enquanto o treino correspondente não estiver com o estado **"Concluído"**.
 
-## RN09 · Alteração de dificuldade em treino disponível {#rn09}
+## RN09 · Limite de Mídia por Submissão de Exercício {#rn09}
 
-O atleta possui permissão para alterar o registro de nível de dificuldade (1 a 5) que atribuiu a um exercício, desde que o treino correspondente ainda esteja com o status vigente/disponível.
+Cada submissão de execução permite exatamente **1 (um) arquivo de vídeo**, restrito aos formatos `.mp4` ou `.mov`, com duração máxima de **60 segundos** e tamanho máximo de **100 MB**. Uma nova tentativa só gera nova submissão caso o exercício seja devolvido para correção.
 
-## RN10 · Aprovação de contas de treinador {#rn10}
+## RN10 · Imutabilidade de Vídeo Após Feedback {#rn10}
 
-**Aprovação de Treinadores:** O registro de contas com perfil "Treinador" é restrito e requer validação e autorização prévia por parte da equipe de administração da plataforma.
+O atleta pode substituir ou excluir um vídeo de execução enviado exclusivamente enquanto o treinador ainda não tiver registrado nenhum feedback avaliativo vinculado àquela mídia.
 
-## RN11 · Cadastro de atleta por convite do treinador {#rn11}
+## RN11 · Autoria Exclusiva de Feedback {#rn11}
 
-O registo de uma conta de 'Atleta' exige obrigatoriamente a introdução de um Código de Convite Privado (semelhante a uma senha de acesso) fornecido exclusivamente pelo treinador, servindo como credencial de autorização para a criação do perfil e vinculação imediata à respetiva carteira multi-tenant.
+Apenas o treinador que registrou originalmente um feedback (textual ou anotado na linha do tempo do vídeo) possui permissão para editá-lo ou excluí-lo.
+
+## RN12 · Política de Recuperação de Senha {#rn12}
+
+A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova credencial atenda aos critérios mínimos de segurança da plataforma.
+
+## RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios {#rn13}
+
+A exclusão de um exercício da biblioteca ou de um planejamento de treino deve preservar intactos o histórico e os registros de treinos já realizados pelos atletas, impedindo apenas sua utilização em novas prescrições.
+
+## RN14 · Gestão da Biblioteca de Exercícios {#rn14}
+
+A catalogação e edição de exercícios, vídeos-base, erros comuns e orientações corretivas na biblioteca são restritas a treinadores, assegurando a consistência das orientações exibidas aos atletas nos treinos prescritos.
+
+## RN15 · Obrigatoriedade de Aceite dos Termos e Privacidade {#rn15}
+
+O acesso às funcionalidades da plataforma é condicionado ao aceite expresso dos Termos de Uso e da Política de Privacidade vigentes no cadastro ou primeiro acesso (com registro de data e versão), sendo exigido novo aceite sempre que houver atualização dos termos.
+
+## RN16 · Consentimento Legal para Atletas Menores de Idade {#rn16}
+
+Para atletas com idade inferior a 18 anos, o tratamento de dados pessoais, clínicos e mídias de execução exige o registro prévio do consentimento específico de pelo menos um responsável legal, em conformidade com o art. 14 da LGPD.

@@ -45,7 +45,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Atleta / Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn10">RN10</a> · <a href="../regras_negocio/#rn11">RN11</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn02">RN02</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn16">RN16</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us01a">US01a</a> · <a href="../criterios_aceitacao/#ca-us01b">US01b</a></p></div>
 
@@ -75,7 +75,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1; OE4 - CP7</a><br>Usuário</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn01">RN01</a> · <a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us02">US02</a></p></div>
 
@@ -105,7 +105,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Usuário</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us03">US03</a></p></div>
 
@@ -137,7 +137,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Atleta / Trein.</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn02">RN02</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us04a">US04a</a> · <a href="../criterios_aceitacao/#ca-us04b">US04b</a></p></div>
 
@@ -167,7 +167,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn04">RN04</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn05">RN05</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us05">US05</a></p></div>
 
@@ -265,7 +265,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn08">RN08</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us08">US08</a></p></div>
 
@@ -295,7 +295,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn07">RN07</a> · <a href="../regras_negocio/#rn09">RN09</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn08">RN08</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us09-us10">US09 / US10</a></p></div>
 
@@ -325,7 +325,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn07">RN07</a> · <a href="../regras_negocio/#rn09">RN09</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn08">RN08</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us09-us10">US09 / US10</a></p></div>
 
@@ -357,7 +357,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Atleta / Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn06">RN06</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us11a-us11b">US11a / US11b</a></p></div>
 
@@ -387,7 +387,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us12">US12</a></p></div>
 
@@ -417,7 +417,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us13">US13</a></p></div>
 
@@ -455,7 +455,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us14-us15">US14 / US15</a></p></div>
 
@@ -485,7 +485,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us14-us15">US14 / US15</a></p></div>
 
@@ -515,7 +515,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us16">US16</a></p></div>
 
@@ -545,7 +545,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn13">RN13</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us17-us18-us19">US17 / US18 / US19</a></p></div>
 
@@ -575,7 +575,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn07">RN07</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us17-us18-us19">US17 / US18 / US19</a></p></div>
 
@@ -605,7 +605,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn07">RN07</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us17-us18-us19">US17 / US18 / US19</a></p></div>
 
@@ -643,7 +643,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us20-us21-us22">US20 / US21 / US22</a></p></div>
 
@@ -673,7 +673,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf12">RNF12</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us20-us21-us22">US20 / US21 / US22</a></p></div>
 
@@ -703,7 +703,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us20-us21-us22">US20 / US21 / US22</a></p></div>
 
@@ -733,7 +733,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP4</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us23-us24-us25">US23 / US24 / US25</a></p></div>
 
@@ -763,7 +763,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf06">RNF06</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf06">RNF06</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us23-us24-us25">US23 / US24 / US25</a></p></div>
 
@@ -793,7 +793,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP4</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn14">RN14</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us23-us24-us25">US23 / US24 / US25</a></p></div>
 
@@ -831,7 +831,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP5</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf06">RNF06</a> · <a href="../requisitos_nao_funcionais/#rnf07">RNF07</a> · <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn05">RN05</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf06">RNF06</a> · <a href="../requisitos_nao_funcionais/#rnf07">RNF07</a> · <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn09">RN09</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us26">US26</a></p></div>
 
@@ -861,7 +861,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP5</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf06">RNF06</a> · <a href="../requisitos_nao_funcionais/#rnf07">RNF07</a> · <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn05">RN05</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf06">RNF06</a> · <a href="../requisitos_nao_funcionais/#rnf07">RNF07</a> · <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn09">RN09</a> · <a href="../regras_negocio/#rn10">RN10</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us27-us28">US27 / US28</a></p></div>
 
@@ -891,7 +891,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP5</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn10">RN10</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us27-us28">US27 / US28</a></p></div>
 
@@ -929,7 +929,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn10">RN10</a> · <a href="../regras_negocio/#rn11">RN11</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us29">US29</a></p></div>
 
@@ -959,7 +959,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn08">RN08</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn11">RN11</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us30-us31">US30 / US31</a></p></div>
 
@@ -989,7 +989,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn08">RN08</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf15">RNF15</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn11">RN11</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us30-us31">US30 / US31</a></p></div>
 
@@ -1019,7 +1019,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Sistema</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us32">US32</a></p></div>
 
@@ -1057,7 +1057,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP7</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">US33 / US37 / US42 / US43</a></p></div>
 
@@ -1095,7 +1095,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1125,7 +1125,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1155,7 +1155,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1185,7 +1185,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">US33 / US37 / US42 / US43</a></p></div>
 
@@ -1215,7 +1215,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1245,7 +1245,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn13">RN13</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1275,7 +1275,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1305,7 +1305,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Atleta</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br>Regra específica a confirmar.</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us34-us35-us36-us38-us39-us40-us41">US34 / US35 / US36 / US38 / US39 / US40 / US41</a></p></div>
 
@@ -1335,7 +1335,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">US33 / US37 / US42 / US43</a></p></div>
 
@@ -1365,7 +1365,7 @@
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p></div>
 
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn01">RN01</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a> · <a href="../requisitos_nao_funcionais/#rnf11">RNF11</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
 
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us33-us37-us42-us43">US33 / US37 / US42 / US43</a></p></div>
 
