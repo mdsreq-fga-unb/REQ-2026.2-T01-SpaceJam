@@ -1,4 +1,7 @@
+from datetime import datetime, timezone as dt_timezone
+
 from django.conf import settings
+from django.core.cache import cache
 from django.db import connection
 from django.utils import timezone
 from rest_framework import status
@@ -67,21 +70,37 @@ def login_treinador(request):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def logout_view(request):
-    """US03 — Deslogar da conta invalidando o refresh token (RF1103 / RNF08)."""
+    """US03 — Deslogar da conta invalidando o refresh token e o access token atual (RF1103)."""
     refresh_token = request.data.get("refresh")
     if not refresh_token:
         return Response(
             {"detail": "O campo 'refresh' é obrigatório para encerrar a sessão."},
             status=status.HTTP_400_BAD_REQUEST,
         )
+
     try:
         token = RefreshToken(refresh_token)
+        # Garante que o refresh token pertence ao usuário logado
+        if str(token.payload.get("user_id")) != str(request.user.id):
+            return Response(
+                {"detail": "Este token não pertence ao usuário autenticado."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
         token.blacklist()
     except TokenError:
         return Response(
             {"detail": "Token inválido ou já encerrado."},
             status=status.HTTP_401_UNAUTHORIZED,
         )
+
+    # Invalida imediatamente o access token usado nesta requisição via cache
+    if request.auth:
+        jti = request.auth.get("jti")
+        exp = request.auth.get("exp")
+        if jti and exp:
+            ttl = max(int(exp - datetime.now(dt_timezone.utc).timestamp()), 1)
+            cache.set(f"blacklist_access_{jti}", True, timeout=ttl)
+
     return Response({"detail": "Sessão encerrada com sucesso."}, status=status.HTTP_200_OK)
 
 

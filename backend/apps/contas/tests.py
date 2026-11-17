@@ -121,7 +121,7 @@ class ContasUS01aUS05Tests(APITestCase):
         self.assertEqual(r_erro.data["detail"], "E-mail ou senha inválidos")
 
     # --- US03: Deslogar da Conta ---
-    def test_us03_logout_invalida_refresh_token(self):
+    def test_us03_logout_invalida_access_e_refresh_token(self):
         self._criar_treinador()
         login = self.client.post(
             "/api/auth/login/treinador/",
@@ -133,6 +133,32 @@ class ContasUS01aUS05Tests(APITestCase):
         r_logout = self.client.post("/api/auth/logout/", {"refresh": login["refresh"]}, format="json")
         self.assertEqual(r_logout.status_code, 200)
 
-        # Tentar renovar token após logout deve retornar 401 (CA01)
+        # CA01: O access token anterior deve receber 401 imediatamente
+        r_me = self.client.get("/api/auth/me/")
+        self.assertEqual(r_me.status_code, 401)
+
+        # O refresh token também não pode mais renovar a sessão
         r_refresh = self.client.post("/api/auth/refresh/", {"refresh": login["refresh"]}, format="json")
         self.assertEqual(r_refresh.status_code, 401)
+
+    def test_us03_logout_bloqueia_refresh_token_de_outro_usuario(self):
+        treinador = self._criar_treinador()
+        self.client.post("/api/auth/cadastro/aluno/", self._payload_aluno(treinador["codigo_convite"]), format="json")
+
+        login_treinador = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+        login_aluno = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": "lucao10", "senha": "SenhaAluno#2026"},
+            format="json",
+        ).data
+
+        # Aluno tenta invalidar o refresh token do treinador
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_aluno['access']}")
+        r_forbidden = self.client.post(
+            "/api/auth/logout/", {"refresh": login_treinador["refresh"]}, format="json"
+        )
+        self.assertEqual(r_forbidden.status_code, 403)

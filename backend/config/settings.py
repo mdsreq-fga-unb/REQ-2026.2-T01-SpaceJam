@@ -55,6 +55,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.contrib.auth.middleware.AuthenticationMiddleware",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -101,7 +102,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "apps.contas.authentication.BlacklistableJWTAuthentication",
     ],
     # Fechado por padrão: toda rota exige login, a menos que diga o contrário (CP8).
     "DEFAULT_PERMISSION_CLASSES": [
