@@ -73,6 +73,49 @@ A exportação oficial consultada tem SHA-256 `ccc86925d2ff53a378978ad496268c887
 
 ---
 
+## Continuidade das decisões {#continuidade-das-decisoes}
+
+Os registros abaixo mostram onde cada discussão foi retomada ou alterada. A revisão de um documento não equivale a uma nova confirmação do cliente.
+
+<details markdown="1" class="sj-delivery-video-details">
+<summary>Organização do trabalho</summary>
+
+<div markdown="1" class="sj-reference-body">
+
+A [ata de 14/09](atas/2026-09-14-equipe.md) registra a decisão de utilizar Kanban. A [revisão de ER de 12/10](https://github.com/mdsreq-fga-unb/REQ-2026.2-T01-SpaceJam/commit/f9eb405e6449e858c66c3e5af567451d0c000525) passou a distinguir o quadro visual da adoção do framework.
+
+O quadro utilizado está identificado na [organização do trabalho](interacao_equipe_cliente.md#quadro-de-acompanhamento).
+
+</div>
+
+</details>
+
+<details markdown="1" class="sj-delivery-video-details">
+<summary>Cadastro, permissões e acompanhamento</summary>
+
+<div markdown="1" class="sj-reference-body">
+
+As dúvidas de [17/09](atas/2026-09-17-lucas.md) e [21/09](atas/2026-09-21-equipe.md) antecedem a avaliação dos requisitos. Lucas detalhou cadastro e edição de dados em [26/09](atas/2026-09-26-lucas.md).
+
+Status, feedback e vínculo entre contas voltaram à discussão em [08/10](atas/2026-10-08-lucas.md#pontos-a-esclarecer). As atas mantêm as decisões e dúvidas de cada encontro.
+
+</div>
+
+</details>
+
+<details markdown="1" class="sj-delivery-video-details">
+<summary>Priorização e recorte do MVP</summary>
+
+<div markdown="1" class="sj-reference-body">
+
+A equipe trabalhou a seleção em [28/09](atas/2026-09-28-equipe.md), retomou os pontos em [05/10](atas/2026-10-05-equipe.md) e discutiu o recorte com Lucas em [08/10](atas/2026-10-08-lucas.md#priorizacao-discutida).
+
+A revisão de 13/10 alterou o recorte documental. As diferenças em relação à conversa com Lucas estão identificadas na [continuação da ata de 08/10](atas/2026-10-08-lucas.md#revisao-documental-posterior), com acesso ao MVP e às revisões correspondentes.
+
+</div>
+
+</details>
+
 ## Evidências de ESW e ER
 
 <span id="analise-documental"></span>

@@ -6,7 +6,7 @@
 | Canal | Microsoft Teams — Reunião Semanal |
 | Natureza do material | Teste de gravação e apresentações da entrega. |
 
-[Voltar às reuniões](../reunioes.md)
+[Voltar às reuniões](../reunioes.md){data-sj-nav-parent="reunioes"}
 
 ## Assuntos registrados
 

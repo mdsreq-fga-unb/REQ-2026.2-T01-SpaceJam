@@ -28,13 +28,17 @@ A distribuição inicial das frentes de trabalho é:
 | Privacidade | Guilherme | Luiz | Revisar permissões de acesso, dados e vídeos utilizados pelo sistema e requisitos de consentimento e proteção das informações. |
 | Integração e entrega | Paulo | Júlia | Consolidar as mudanças e conferir testes, navegação, documentação e funcionamento integrado antes de preparar cada entrega. |
 
-A pessoa de referência acompanha e organiza a frente; o trabalho permanece compartilhado. O responsável por executar cada atividade pode ser outro integrante e deve constar no item do GitHub Projects, com data prevista, estado e artefatos relacionados.
+A pessoa de referência acompanha e organiza a frente; o trabalho permanece compartilhado. O responsável por executar cada atividade pode ser outro integrante e deve constar no item do quadro de acompanhamento, com data prevista, estado e artefatos relacionados.
 
 No início de cada iteração, a equipe revisará a distribuição e trocará os apoios conforme a disponibilidade e o trabalho previsto. O apoio anterior repassará atividades em andamento, evidências e pendências ao novo apoio. As referências também poderão mudar mediante ajuste registrado no quadro e na ata do planejamento.
 
-## 7.2 Organização do Trabalho e Acompanhamento
+<span id="72-organizacao-do-trabalho-e-acompanhamento"></span>
 
-O trabalho será organizado em ciclos iterativos e incrementais, seguindo as fases do RAD aplicáveis a cada período: planejamento de requisitos, design do usuário, construção e cutover. O GitHub Projects será utilizado para tornar visível o andamento das atividades e apoiar sua distribuição. Os itens serão acompanhados pelos seguintes estados:
+## 7.2 Organização do Trabalho e Acompanhamento {#quadro-de-acompanhamento}
+
+A equipe utiliza a área [Quadro Kanban no Miro](https://miro.com/app/board/uXjVHrFoSVo=/?moveToWidget=3458764643760014086) para acompanhar as atividades. O board também reúne matrizes e outros artefatos do projeto. O nome da área identifica o quadro visual utilizado, sem adoção formal do framework Kanban.
+
+O planejamento segue os ciclos iterativos e incrementais do RAD: planejamento de requisitos, design do usuário, construção e cutover. Para acompanhar os itens, o fluxo previsto distingue os seguintes estados:
 
 1. **A fazer:** atividade priorizada e ainda não iniciada;
 2. **Em andamento:** atividade em execução por um responsável identificado;
@@ -67,9 +71,8 @@ Planejamento, acompanhamento e revisão poderão ocupar blocos separados do mesm
 | WhatsApp | Comunicação assíncrona, avisos, agendamentos e alinhamentos rápidos. |
 | Microsoft Teams | Reuniões da equipe e encontros síncronos com o cliente. |
 | GitHub | Versionamento dos artefatos e registro das contribuições. |
-| GitHub Projects | Acompanhamento das atividades, responsáveis, prazos e estados. |
 | GitHub Pages | Publicação e atualização da documentação do projeto. |
-| [Miro](https://miro.com/app/board/uXjVHrFoSVo=/) | Construção e discussão colaborativa de modelos e artefatos visuais. |
+| [Miro](#quadro-de-acompanhamento) | Quadro utilizado para organizar artefatos e acompanhar as atividades da equipe. |
 
 As decisões relevantes devem ser sintetizadas na seção de [Reuniões](reunioes.md), informando decisão, responsáveis, prazos e artefatos afetados. Registros brutos podem apoiar a elaboração da ata, mas não substituem a síntese das decisões.
 
@@ -105,7 +108,7 @@ Júlia coordenará a apresentação ao cliente e aos atletas e o registro das de
 2. **Revisão interna:** verificar clareza, consistência e prontidão do material antes de apresentá-lo;
 3. **Apresentação:** realizar a validação com Lucas e, quando aplicável, com atletas, de forma síncrona ou assíncrona;
 4. **Registro:** documentar data, canal, participantes, item do backlog, versão do artefato, critérios avaliados, feedback e estado da decisão como aprovado, rejeitado ou pendente;
-5. **Atualização:** registrar os ajustes, executores e prazos no GitHub Projects e atualizar os vínculos entre objetivos, CPs, RFs/RNFs, declarações de requisitos, protótipos, código, testes e feedbacks que a alteração afetar;
+5. **Atualização:** registrar os ajustes, executores e prazos no quadro de acompanhamento e atualizar os vínculos entre objetivos, CPs, RFs/RNFs, declarações de requisitos, protótipos, código, testes e feedbacks que a alteração afetar;
 6. **Confirmação:** reapresentar alterações relevantes antes de considerar o item concluído.
 
 A equipe não interpretará ausência de resposta como aprovação. O item permanecerá em validação ou bloqueado, com o motivo registrado, até que o cliente ou o perfil de usuário previsto avalie os critérios. A revisão interna não substitui essa avaliação.

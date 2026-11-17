@@ -13,6 +13,14 @@ REFERENCES = {
     'criterios_aceitacao.md': 'criterios_aceitacao',
 }
 HEADING = re.compile(r'^## (.+?) \{#((?:rnf\d+|rn\d+|ca-[\w-]+))\}\s*$', re.M)
+CLASSIFICATION_COLORS = {
+    'Usabilidade': 'usabilidade',
+    'Confiabilidade': 'confiabilidade',
+    'Segurança': 'seguranca',
+    'Desempenho': 'desempenho',
+    'Suportabilidade': 'suportabilidade',
+    'Requisitos de Implementação': 'implementacao',
+}
 
 
 def records(markdown):
@@ -144,7 +152,11 @@ def render_rnf_record(title, key, fields, catalog='', route=''):
     code, _, name = title.partition(' · ')
     tags = []
     if fields.get('Categoria', '').strip():
-        tags.append('<span class="sj-tag">' + html.escape(fields['Categoria'].strip()) + '</span>')
+        category = fields['Categoria'].strip()
+        primary = category.split(' / ', 1)[0].split(' (', 1)[0]
+        color = CLASSIFICATION_COLORS.get(primary, 'neutra')
+        tags.append('<span class="sj-tag sj-classification sj-class-' + color + '">'
+                    + html.escape(category) + '</span>')
     if fields.get('MVP', '').strip():
         tags.append('<span class="sj-tag sj-tag-mvp">MVP: ' + html.escape(fields['MVP'].strip()) + '</span>')
     blocks = ['<div class="sj-record-full"><p class="sj-record-label">Descrição</p><p>'
