@@ -1829,3 +1829,39 @@
   .sj-table-hint { display: none !important; }
   .sj-table-scroll { overflow: visible; }
 }
+
+/* =========================================
+   REPRESENTAÇÃO MATEMÁTICA — MATHJAX
+   ========================================= */
+
+/* Permite rolagem horizontal em fórmulas extensas */
+.arithmatex {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* Equações em bloco */
+mjx-container[display="true"] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.75rem 0;
+}
+
+/* Evita que expressões matemáticas sejam comprimidas */
+mjx-container {
+    max-width: 100%;
+}
+
+/* Espaçamento entre blocos de equações */
+.md-typeset .arithmatex {
+    margin: 1rem 0;
+}
+
+/* Melhor apresentação em telas menores */
+@media screen and (max-width: 768px) {
+    mjx-container[display="true"] {
+        font-size: 0.9em;
+    }
+}

@@ -98,6 +98,7 @@ extra_css:
 
   - stylesheets/extra.css
   - stylesheets/catalogo.css
+  - stylesheets/artefatos-miro.css
 
 
 
@@ -169,8 +170,11 @@ nav:
   - Engenharia de Requisitos:
       - "5. Atividades e técnicas de ER": engenharia_requisitos.md
       - "8. Catálogo de requisitos": requisitos.md
+      - "Representação Formal dos Requisitos": representacao_formal.md
+      - "Representação Informal dos Requisitos": representacao_informal.md
       - "9. Definição do MVP": mvp.md
       - "10. Backlog e priorização": backlog.md
+      - Matrizes do Miro: artefatos_miro.md
       - "11. DoR e DoD": dor_dod.md
   - Acompanhamento e entregas:
       - "6. Cronograma e Entregas": cronograma.md
