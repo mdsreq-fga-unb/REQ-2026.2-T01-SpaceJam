@@ -2,212 +2,99 @@
 
 **Projeto Space Jam**
 
-Em conformidade com a Seção 5.1 da documentação de Engenharia de Requisitos do projeto Space Jam (fase de Design do Usuário — atividade de Declaração e Representação / Modelagem Complementar de Requisitos do ciclo RAD) e com o referencial metodológico de representações formais, este documento consolida a formalização matemática dos requisitos críticos e a matriz tabular de permissões e acessos por perfil. A formalização é aplicada seletivamente aos requisitos críticos de segurança, controle de acesso baseado em funções (RBAC), isolamento multi-inquilino (*multi-tenant*), ciclo de vida e imutabilidade de mídias, segregação de edição clínica e conformidade com a Lei Geral de Proteção de Dados (LGPD).
+Em conformidade com a Seção 5.1 da documentação de Engenharia de Requisitos do projeto Space Jam (fase de *Design do Usuário* — atividade de *Declaração e Representação / Modelagem Complementar de Requisitos* do ciclo RAD) e com o referencial metodológico de representações formais, este documento consolida a formalização matemática dos requisitos críticos e a matriz tabular de permissões e acessos por perfil[cite: 67].
+
+A formalização é aplicada seletivamente aos requisitos críticos de segurança, controle de acesso baseado em funções (RBAC), isolamento multi-inquilino (*multi-tenant*), ciclo de vida e imutabilidade de mídias, segregação de edição clínica e conformidade com a Lei Geral de Proteção de Dados (LGPD)[cite: 67]. Para preservar a comunicabilidade com stakeholders técnicos e não técnicos, cada definição, invariante e contrato apresenta sua **tradução lado a lado em linguagem natural**[cite: 81].
 
 ---
 
-## 1. Representação Formal dos Requisitos Críticos {#1-representacao-formal-dos-requisitos-criticos}
+## 1. Representação Formal dos Requisitos Críticos
 
-A especificação abaixo adota teoria dos conjuntos, lógica de predicados de primeira ordem, invariantes de estado e contratos de pré e pós-condição para eliminar ambiguidades semânticas nas regras de domínio mais críticas do sistema.
+A especificação abaixo adota teoria dos conjuntos, lógica de predicados de primeira ordem, invariantes de estado e contratos de pré e pós-condição para eliminar ambiguidades semânticas nas regras de domínio mais críticas do sistema[cite: 67].
 
-### 1.1 Domínios, Conjuntos e Relações do Estado do Sistema {#11-dominios-conjuntos-e-relacoes}
+### 1.1 Domínios, Conjuntos e Relações do Estado do Sistema
 
-Seja $\Sigma$ o estado válido da plataforma Space Jam em um instante qualquer, definido pelas seguintes estruturas fundamentais:
+Seja $\Sigma$ o estado válido da plataforma Space Jam em um instante qualquer, definido pelas estruturas fundamentais abaixo[cite: 67]:
 
-* **Usuários e Perfis ([CP1](requisitos.md#cp1), [CP7](requisitos.md#cp7), [RNF09](requisitos_nao_funcionais.md#rnf09)):**
-  * $U$: conjunto finito de contas de usuário registradas no sistema.
-  * $P = \{\text{Admin}, \text{Treinador}, \text{Atleta}\}$: conjunto de perfis de acesso do modelo RBAC.
-  * $S_{\text{conta}} = \{\text{Pendente}, \text{Ativo}, \text{Inativo}\}$: conjunto de estados possíveis de uma conta.
-  * $\text{perfil}: U \rightarrow P$ e $\text{status}: U \rightarrow S_{\text{conta}}$: funções totais que associam cada usuário ao seu perfil e situação cadastral.
-
-* **Carteira e Vínculo Privado ([RF01101](requisitos.md#rf01101), [RNF10](requisitos_nao_funcionais.md#rnf10), [RN03](regras_negocio.md#rn03), [RN11](regras_negocio.md#rn11)):**
-  * $V \subseteq \{t \in U \mid \text{perfil}(t) = \text{Treinador}\} \times \{a \in U \mid \text{perfil}(a) = \text{Atleta}\}$: relação de vínculo ativo estabelecida exclusivamente mediante Código de Convite Privado válido.
-
-* **Dados do Atleta ([RF01104](requisitos.md#rf01104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02)):**
-  * $D_{\text{pessoal}}(a)$: tupla de dados cadastrais e biométricos primários de $a$ ($\text{nome}, \text{sobrenome}, \text{apelido}, \text{contato}, \text{altura}, \text{peso}, \text{envergadura}, \text{foto}$).
-  * $D_{\text{clinico}}(a)$: tupla de dados sensíveis e técnicos de $a$ ($\text{historico\_lesoes}, \text{aptidao\_fisica}, \text{objetivos\_taticos}, \text{resultados\_treinos}$).
-
-* **Biblioteca, Treinos, Vídeos e Feedbacks ([CP2](requisitos.md#cp2)–[CP6](requisitos.md#cp6)):**
-  * $E$: conjunto de exercícios catalogados na biblioteca ([CP4](requisitos.md#cp4)).
-  * $T$: conjunto de itens de treino prescritos ([RF02301](requisitos.md#rf02301)), com função de estado $\text{estado\_T}: T \rightarrow \{\text{A\_fazer}, \text{Concluido}, \text{Corrigir\_Refazer}\}$ ([RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07), [RNF04](requisitos_nao_funcionais.md#rnf04)).
-  * $M$: conjunto de vídeos de execução submetidos pelos atletas ([RF03501](requisitos.md#rf03501)).
-  * $F$: conjunto de feedbacks avaliativos registrados pelos treinadores ([RF03601](requisitos.md#rf03601)), relacionados aos vídeos pela função $\text{video}: F \rightarrow M$.
+| Domínio / Rastreabilidade | Notação Formal | Tradução em Linguagem Natural (Como Ler) |
+| :--- | :--- | :--- |
+| **Usuários e Perfis** ([CP1](requisitos.md#cp1), [CP7](requisitos.md#cp7), [RNF09](requisitos_nao_funcionais.md#rnf09)) | $U$: conjunto finito de contas;<br>$P = \{\text{Admin}, \text{Treinador}, \text{Atleta}\}$;<br>$S_{\text{conta}} = \{\text{Pendente}, \text{Ativo}, \text{Inativo}\}$;<br>$\text{perfil}: U \to P$;<br>$\text{status}: U \to S_{\text{conta}}$ | Todo usuário registrado em $U$ possui obrigatoriamente um único perfil de acesso ($P$) e uma única situação cadastral ($S_{\text{conta}}$) em determinado instante[cite: 67]. |
+| **Carteira e Vínculo Privado** ([RF01101](requisitos.md#rf01101), [RNF10](requisitos_nao_funcionais.md#rnf10), [RN03](regras_negocio.md#rn03), [RN11](regras_negocio.md#rn11)) | $V \subseteq \{t \in U \mid \text{perfil}(t) = \text{Treinador}\} \times \{a \in U \mid \text{perfil}(a) = \text{Atleta}\}$ | $V$ representa o conjunto de pares $(t, a)$ em que um treinador $t$ e um atleta $a$ possuem vínculo ativo estabelecido exclusivamente via Código de Convite Privado válido[cite: 67]. |
+| **Dados do Atleta** ([RF01104](requisitos.md#rf01104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02)) | $D_{\text{pessoal}}(a) = (\text{nome}, \text{sobrenome}, \text{apelido}, \text{contato}, \text{altura}, \text{peso}, \text{envergadura}, \text{foto})$;<br>$D_{\text{clinico}}(a) = (\text{historico\_lesoes}, \text{aptidao\_fisica}, \text{objetivos\_taticos}, \text{resultados\_treinos})$ | Os dados de cada atleta $a$ são particionados em dois grupos: dados cadastrais/biométricos primários ($D_{\text{pessoal}}$) e dados técnicos/clínicos sensíveis ($D_{\text{clinico}}$)[cite: 67]. |
+| **Biblioteca e Treinos** ([CP2](requisitos.md#cp2)–[CP4](requisitos.md#cp4), [RF2307](requisitos.md#rf2307), [RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07), [RNF04](requisitos_nao_funcionais.md#rnf04)) | $E$: conjunto de exercícios;<br>$T$: conjunto de treinos prescritos;<br>$\text{estado}_T: T \to \{\text{A\_fazer}, \text{Concluido}, \text{Corrigir\_Refazer}\}$ | Cada item de treino prescrito em $T$ (montado a partir da biblioteca $E$) encontra-se sempre em um dos três estados: *A fazer*, *Concluído* ou *Corrigir/Refazer*[cite: 67]. |
+| **Vídeos e Feedbacks** ([RF3501](requisitos.md#rf3501), [RF3604](requisitos.md#rf3604)) | $M$: conjunto de vídeos enviados;<br>$F$: conjunto de feedbacks;<br>$\text{video}: F \to M$ | Todo feedback avaliativo registrado por um treinador em $F$ está obrigatoriamente vinculado a um vídeo de execução específico enviado em $M$[cite: 68]. |
 
 ---
 
-## 1.2 Invariantes Globais do Sistema (INV)
+### 1.2 Invariantes Globais do Sistema (INV)
 
-As propriedades abaixo devem permanecer verdadeiras antes e após qualquer transição de estado válida em $\Sigma$:
+As propriedades abaixo devem permanecer verdadeiras antes e após qualquer transição de estado válida em $\Sigma$[cite: 68]:
 
-- **INV-01 · Autenticação, Aprovação Administrativa e RBAC** ([RF01101](requisitos.md#rf01101), [RF01102](requisitos.md#rf01102), [RF01107](requisitos.md#rf01107), [RNF09](requisitos_nao_funcionais.md#rnf09), [RN10](regras_negocio.md#rn10)):  
-  Um usuário só pode operar rotas autenticadas se sua conta estiver ativa, com senha definitiva redefinida após o primeiro acesso e, no caso de treinador, após autorização administrativa:
-
-$$
-\begin{aligned}
-\forall u \in U:\; \text{sessao\_ativa}(u) \Rightarrow \Big(& \text{status}(u) = \text{Ativo} \;\land\; \neg\text{senha\_temporaria}(u) \\
-&\land\; (\text{perfil}(u) = \text{Treinador} \Rightarrow \text{aprovado\_admin}(u)) \Big)
-\end{aligned}
-$$
-
-- **INV-02 · Vínculo Obrigatório do Atleta por Convite Privado** ([RF01101](requisitos.md#rf01101), [RN11](regras_negocio.md#rn11)):  
-  Todo atleta cadastrado no sistema está obrigatoriamente vinculado a pelo menos um treinador válido que emitiu o código de convite:
-
-$$
-\begin{aligned}
-\forall a \in U:\; \text{perfil}(a) = \text{Atleta} \Rightarrow \exists t \in U:\; \Big(& \text{perfil}(t) = \text{Treinador} \;\land\; (t, a) \in V \\
-&\land\; \text{codigo\_convite\_valido}(t, a) \Big)
-\end{aligned}
-$$
-
-- **INV-03 · Isolamento Multi-inquilino de Dados** ([RNF10](requisitos_nao_funcionais.md#rnf10), [RNF12](requisitos_nao_funcionais.md#rnf12), [RN03](regras_negocio.md#rn03)):  
-  Para qualquer recurso privado $r \in \text{Recursos}(a)$ pertencente a um atleta $a$ (perfil clínico, histórico de treinos, vídeos $M_a$ e feedbacks $F_a$), o acesso de leitura é restrito estritamente ao próprio atleta e aos treinadores vinculados à sua carteira:
-
-$$
-\begin{aligned}
-\forall u \in U,\; \forall a \in U\; (\text{perfil}(a) = \text{Atleta}),\; \forall r \in \text{Recursos}(a):& \\
-\text{pode\_ler}(u, r) \iff \Big( u = a \;\lor\; (\text{perfil}(u) = \text{Treinador} \;\land\; (u, a) \in V) \Big)&
-\end{aligned}
-$$
-
-- **INV-04 · Conformidade LGPD e Proteção de Menores de Idade** ([RNF05](requisitos_nao_funcionais.md#rnf05), [RNF17](requisitos_nao_funcionais.md#rnf17), [RF4813](requisitos.md#rf4813), [RN15](regras_negocio.md)):  
-  Nenhum atleta menor de 18 anos pode ter dados pessoais ou vídeos processados sem o aceite formal dos termos e o registro de consentimento do responsável legal:
-
-$$
-\begin{aligned}
-\forall a \in U:\; (\text{perfil}(a) = \text{Atleta} \;\land\; \text{idade}(a) < 18) \Rightarrow \Big(& \text{aceite\_termos}(a) \\
-&\land\; \text{consentimento\_responsavel}(a) \Big)
-\end{aligned}
-$$
-
-- **INV-05 · Restrições Técnicas de Mídia no Upload** ([RNF06](requisitos_nao_funcionais.md#rnf06), [RNF14](requisitos_nao_funcionais.md#rnf14), [RN09](regras_negocio.md#rn09)):  
-  Todo vídeo persistido no repositório deve obedecer aos limites de formato, duração (máximo de $60\text{ s}$) e tamanho (máximo de $100\text{ MB}$):
-
-$$
-\forall m \in M:\; \text{formato}(m) \in \{\texttt{.mp4}, \texttt{.mov}\} \;\land\; 0 < \text{duracao}(m) \le 60 \;\land\; 0 < \text{tamanho}(m) \le 100
-$$
-
-- **INV-06 · Imutabilidade do Vídeo Após Feedback Avaliativo** ([RF3502](requisitos.md#rf3502), [RF3604](requisitos.md#rf3604), [RNF16](requisitos_nao_funcionais.md#rnf16), [RN10](regras_negocio.md#rn10)):  
-  A partir do momento em que existe um feedback avaliativo associado a um vídeo de execução, o arquivo torna-se imutável, bloqueando substituição ou exclusão:
-
-$$
-\forall m \in M:\; (\exists f \in F:\; \text{video}(f) = m) \Rightarrow \Big(\neg\text{pode\_substituir}(m) \;\land\; \neg\text{pode\_excluir}(m)\Big)
-$$
+| ID / Rastreabilidade | Especificação Formal | Tradução em Linguagem Natural (Como Ler) |
+| :--- | :--- | :--- |
+| **INV-01**<br>Autenticação, Aprovação Administrativa e RBAC<br>([RF01101](requisitos.md#rf01101), [RF01102](requisitos.md#rf01102), [RF01107](requisitos.md#rf01107), [RNF09](requisitos_nao_funcionais.md#rnf09), [RN10](regras_negocio.md#rn10)) | $$\begin{aligned}\forall u \in U:\; \text{sessao\_ativa}(u) \Rightarrow \Big(& \text{status}(u) = \text{Ativo} \\ &\land\; \neg\text{senha\_temporaria}(u) \\ &\land\; (\text{perfil}(u) = \text{Treinador} \\ &\quad \Rightarrow \text{aprovado\_admin}(u)) \Big)\end{aligned}$$ | Para qualquer usuário $u$, se ele possui uma sessão autenticada ativa, então sua conta está obrigatoriamente **Ativa**, sua **senha temporária já foi trocada** e, caso seja **Treinador**, seu cadastro já recebeu **aprovação do Administrador**[cite: 68]. |
+| **INV-02**<br>Vínculo Obrigatório do Atleta por Convite Privado<br>([RF01101](requisitos.md#rf01101), [RN11](regras_negocio.md#rn11)) | $$\begin{aligned}\forall a \in U:\; \text{perfil}(a) = \text{Atleta} \Rightarrow \exists t \in U:\; \Big(& \text{perfil}(t) = \text{Treinador} \\ &\land\; (t, a) \in V \\ &\land\; \text{codigo\_convite\_valido}(t, a) \Big)\end{aligned}$$ | Todo usuário com perfil **Atleta** cadastrado no sistema está obrigatoriamente vinculado a pelo menos um **Treinador** válido por meio de um **código de convite privado** emitido por esse treinador[cite: 68]. |
+| **INV-03**<br>Isolamento Multi-inquilino de Dados<br>([RNF10](requisitos_nao_funcionais.md#rnf10), [RNF12](requisitos_nao_funcionais.md#rnf12), [RN03](regras_negocio.md#rn03)) | $$\begin{aligned}\forall u \in U,\; \forall a \in U\; (\text{perfil}(a) = \text{Atleta}),\; \forall r \in \text{Recursos}(a):& \\ \text{pode\_ler}(u, r) \iff \Big( u = a \;\lor\; (\text{perfil}(u) = \text{Treinador} \;\land\; (u, a) \in V) \Big)&\end{aligned}$$ | Um usuário $u$ só pode ler os recursos privados de um atleta $a$ (ficha clínica, treinos, vídeos e feedbacks) **se e somente se** $u$ for o próprio atleta ou um treinador ativamente vinculado a ele na carteira $V$[cite: 68]. |
+| **INV-04**<br>Conformidade LGPD e Proteção de Menores de Idade<br>([RNF05](requisitos_nao_funcionais.md#rnf05), [RNF17](requisitos_nao_funcionais.md#rnf17), [RF4813](requisitos.md#rf4813), [RN15](regras_negocio.md)) | $$\begin{aligned}\forall a \in U:\; (\text{perfil}(a) = \text{Atleta} \;\land\; \text{idade}(a) < 18) \Rightarrow \Big(& \text{aceite\_termos}(a) \\ &\land\; \text{consentimento\_responsavel}(a) \Big)\end{aligned}$$ | Nenhum atleta **menor de 18 anos** (como os atletas de 15 anos do escopo) pode ter dados pessoais ou vídeos processados sem que haja o **aceite formal dos termos** e o **consentimento registrado do responsável legal**[cite: 68]. |
+| **INV-05**<br>Restrições Técnicas de Mídia no Upload<br>([RNF06](requisitos_nao_funcionais.md#rnf06), [RNF14](requisitos_nao_funcionais.md#rnf14), [RN09](regras_negocio.md#rn09)) | $$\begin{aligned}\forall m \in M:\; &\text{formato}(m) \in \{\texttt{.mp4}, \texttt{.mov}\} \\ &\land\; 0 < \text{duracao}(m) \le 60 \\ &\land\; 0 < \text{tamanho}(m) \le 100\end{aligned}$$ | Todo vídeo armazenado no sistema deve ter extensão `.mp4` ou `.mov`, duração maior que $0$ e **no máximo $60$ segundos**, e tamanho maior que $0$ e **no máximo $100\text{ MB}$**[cite: 68]. |
+| **INV-06**<br>Imutabilidade do Vídeo Após Feedback Avaliativo<br>([RF3502](requisitos.md#rf3502), [RF3604](requisitos.md#rf3604), [RNF16](requisitos_nao_funcionais.md#rnf16), [RN10](regras_negocio.md#rn10)) | $$\begin{aligned}\forall m \in M:\; (\exists f \in F:\; \text{video}(f) = m) \Rightarrow \Big(& \neg\text{pode\_substituir}(m) \\ &\land\; \neg\text{pode\_excluir}(m) \Big)\end{aligned}$$ | Assim que existir pelo menos um feedback $f$ associado a um vídeo $m$, esse arquivo torna-se **imutável**, ficando bloqueadas tanto a sua **substituição** quanto a sua **exclusão**[cite: 68]. |
 
 ---
 
-## 1.3 Contratos Formais de Operações Críticas (Pré e Pós-Condições)
+### 1.3 Contratos Formais de Operações Críticas (Pré e Pós-Condições)
 
-- **OP-01 · Edição Segregada de Perfil do Atleta** ([RF01104](requisitos.md#rf01104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02)):  
-  Dado um usuário solicitante $u \in U$ e um atleta alvo $a \in U$, a operação $\text{EditarPerfil}(u, a, \Delta D_{\text{pessoal}}, \Delta D_{\text{clinico}})$ obedece ao contrato:
-  - **Pré-condição:**
-
-$$
-\begin{aligned}
-\text{sessao\_ativa}(u) \;\land\; \Big(& (u = a \;\land\; \Delta D_{\text{clinico}} = \emptyset) \\
-&\lor\; (\text{perfil}(u) = \text{Treinador} \;\land\; (u, a) \in V \;\land\; \Delta D_{\text{pessoal}} = \emptyset) \Big)
-\end{aligned}
-$$
-
-  - **Pós-condição:**
-
-$$
-\begin{aligned}
-&\Big( u = a \Rightarrow D'_{\text{pessoal}}(a) = D_{\text{pessoal}}(a) \oplus \Delta D_{\text{pessoal}} \;\land\; D'_{\text{clinico}}(a) = D_{\text{clinico}}(a) \Big) \\
-\land\; &\Big( (u, a) \in V \Rightarrow D'_{\text{clinico}}(a) = D_{\text{clinico}}(a) \oplus \Delta D_{\text{clinico}} \;\land\; D'_{\text{pessoal}}(a) = D_{\text{pessoal}}(a) \Big)
-\end{aligned}
-$$
-
-- **OP-02 · Substituição ou Exclusão de Vídeo Antes da Avaliação** ([RF3501](requisitos.md#rf3501), [RF3502](requisitos.md#rf3502), [RNF16](requisitos_nao_funcionais.md#rnf16)):  
-  Dado um atleta $a \in U$, um vídeo existente $m \in M$ e (no caso de substituição) um novo arquivo $m_{\text{novo}}$:
-  - **Pré-condição:**
-
-$$
-\text{sessao\_ativa}(a) \;\land\; \text{autor}(m) = a \;\land\; \neg\exists f \in F\; (\text{video}(f) = m) \;\land\; \text{satisfaz\_INV05}(m_{\text{novo}})
-$$
-
-  - **Pós-condição:**
-
-$$
-M' = (M \setminus \{m\}) \cup \{m_{\text{novo}}\} \quad \text{(ou } M' = M \setminus \{m\} \text{ na exclusão)}
-$$
-
-- **OP-03 · Registro de Feedback e Transição de Estado do Treino** ([RF3604](requisitos.md#rf3604), [RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07)):  
-  Dado um treinador $t \in U$, um vídeo $m \in M$ vinculado ao item de treino $\tau \in T$ e uma decisão avaliativa $\delta \in \{\text{Aprovado}, \text{Devolvido}\}$:
-  - **Pré-condição:**
-
-$$
-\text{sessao\_ativa}(t) \;\land\; \text{perfil}(t) = \text{Treinador} \;\land\; (t, \text{autor}(m)) \in V \;\land\; m \in M
-$$
-
-  - **Pós-condição:**
-
-$$
-\begin{aligned}
-F' = F \cup \{f_{\text{novo}}\} \;\land\; \text{video}(f_{\text{novo}}) = m &\;\land\; (\delta = \text{Devolvido} \Rightarrow \text{estado}'_T(\tau) = \text{Corrigir\_Refazer}) \\
-&\;\land\; (\delta = \text{Aprovado} \Rightarrow \text{estado}'_T(\tau) = \text{Concluido})
-\end{aligned}
-$$
-
-- **OP-04 · Inativação/Exclusão de Atleta com Retenção Histórica** ([RF01105](requisitos.md#rf01105), [RN01](regras_negocio.md#rn01), [RN04](regras_negocio.md#rn04), [RN13](regras_negocio.md)):  
-  Dado um treinador $t \in U$ e um atleta $a \in U$:
-  - **Pré-condição:**
-
-$$
-\text{sessao\_ativa}(t) \;\land\; \text{perfil}(t) = \text{Treinador} \;\land\; (t, a) \in V
-$$
-
-  - **Pós-condição:**
-
-$$
-\text{status}'(a) = \text{Inativo} \;\land\; \neg\text{sessao\_ativa}'(a) \;\land\; \text{Historico}'(a) = \text{Historico}(a)
-$$
-
+| Operação / Rastreabilidade | Contrato Formal (Pré e Pós-Condição) | Tradução em Linguagem Natural (Como Ler) |
+| :--- | :--- | :--- |
+| **OP-01**<br>Edição Segregada de Perfil do Atleta<br>$\text{EditarPerfil}(u, a, \Delta D_{\text{pessoal}}, \Delta D_{\text{clinico}})$<br>([RF01104](requisitos.md#rf01104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02)) | **Pré-condição:**<br>$$\begin{aligned}\text{sessao\_ativa}(u) \;\land\; \Big(& (u = a \;\land\; \Delta D_{\text{clinico}} = \emptyset) \\ &\lor\; (\text{perfil}(u) = \text{Treinador} \;\land\; (u, a) \in V \\ &\quad \land\; \Delta D_{\text{pessoal}} = \emptyset) \Big)\end{aligned}$$<br>**Pós-condição:**<br>$$\begin{aligned}&\Big( u = a \Rightarrow D'_{\text{pessoal}}(a) = D_{\text{pessoal}}(a) \oplus \Delta D_{\text{pessoal}} \\ &\quad \land\; D'_{\text{clinico}}(a) = D_{\text{clinico}}(a) \Big) \\ \land\; &\Big( (u, a) \in V \Rightarrow D'_{\text{clinico}}(a) = D_{\text{clinico}}(a) \oplus \Delta D_{\text{clinico}} \\ &\quad \land\; D'_{\text{pessoal}}(a) = D_{\text{pessoal}}(a) \Big)\end{aligned}$$ | **Antes:** O solicitante $u$ deve estar logado; se for o próprio atleta ($u=a$), não pode alterar dados clínicos; se for o treinador vinculado, não pode alterar dados pessoais.<br>**Depois:** Apenas o bloco autorizado ao perfil é atualizado, mantendo o outro bloco intacto[cite: 69]. |
+| **OP-02**<br>Substituição ou Exclusão de Vídeo Antes da Avaliação<br>([RF3501](requisitos.md#rf3501), [RF3502](requisitos.md#rf3502), [RNF16](requisitos_nao_funcionais.md#rnf16)) | **Pré-condição:**<br>$$\begin{aligned}&\text{sessao\_ativa}(a) \;\land\; \text{autor}(m) = a \\ &\land\; \neg\exists f \in F\; (\text{video}(f) = m) \\ &\land\; \text{satisfaz\_INV05}(m_{\text{novo}})\end{aligned}$$<br>**Pós-condição:**<br>$$M' = (M \setminus \{m\}) \cup \{m_{\text{novo}}\}$$<br>*(ou $M' = M \setminus \{m\}$ na exclusão)* | **Antes:** O atleta logado deve ser o autor do vídeo $m$, não pode existir nenhum feedback vinculado a $m$ e, em caso de troca, o novo vídeo deve cumprir os limites de formato/duração/tamanho (`INV-05`).<br>**Depois:** O vídeo antigo é removido e (na substituição) o novo passa a integrar o acervo $M'$[cite: 69]. |
+| **OP-03**<br>Registro de Feedback e Transição de Estado do Treino<br>([RF3604](requisitos.md#rf3604), [RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07)) | **Pré-condição:**<br>$$\begin{aligned}&\text{sessao\_ativa}(t) \;\land\; \text{perfil}(t) = \text{Treinador} \\ &\land\; (t, \text{autor}(m)) \in V \;\land\; m \in M\end{aligned}$$<br>**Pós-condição:**<br>$$\begin{aligned}&F' = F \cup \{f_{\text{novo}}\} \;\land\; \text{video}(f_{\text{novo}}) = m \\ &\land\; (\delta = \text{Devolvido} \Rightarrow \text{estado}'_T(\tau) = \text{Corrigir\_Refazer}) \\ &\land\; (\delta = \text{Aprovado} \Rightarrow \text{estado}'_T(\tau) = \text{Concluido})\end{aligned}$$ | **Antes:** O treinador logado deve estar vinculado ao atleta autor do vídeo existente $m$.<br>**Depois:** O feedback é salvo vinculado ao vídeo; se a decisão $\delta$ for *Devolvido*, o treino $\tau$ muda para **Corrigir/Refazer**; se for *Aprovado*, passa para **Concluído**[cite: 69]. |
+| **OP-04**<br>Inativação/Exclusão de Atleta com Retenção Histórica<br>([RF01105](requisitos.md#rf01105), [RN01](regras_negocio.md#rn01), [RN04](regras_negocio.md#rn04), [RN13](regras_negocio.md)) | **Pré-condição:**<br>$$\text{sessao\_ativa}(t) \;\land\; \text{perfil}(t) = \text{Treinador} \;\land\; (t, a) \in V$$<br>**Pós-condição:**<br>$$\begin{aligned}&\text{status}'(a) = \text{Inativo} \;\land\; \neg\text{sessao\_ativa}'(a) \\ &\land\; \text{Historico}'(a) = \text{Historico}(a)\end{aligned}$$ | **Antes:** O treinador logado deve possuir vínculo ativo com o atleta $a$.<br>**Depois:** A conta do atleta torna-se **Inativa**, sua sessão é encerrada, mas todo o seu histórico de treinos e evoluções é preservado integralmente[cite: 69]. |
 
 ---
 
-## 2. Matriz Consolidada de Permissões e Acessos por Perfil {#2-matriz-consolidada-de-permissoes-e-acessos-por-perfil}
+## 2. Matriz Consolidada de Permissões e Acessos por Perfil
 
-A matriz abaixo consolida o modelo de autorização baseado em funções (RBAC — [RNF09](requisitos_nao_funcionais.md#rnf09)/[RNF11](requisitos_nao_funcionais.md#rnf11)) e isolamento multi-inquilino (*Data Isolation* — [RNF10](requisitos_nao_funcionais.md#rnf10)/[RNF12](requisitos_nao_funcionais.md#rnf12)) para todos os perfis e recursos da plataforma.
+A matriz abaixo consolida o modelo de autorização baseado em funções (RBAC — [RNF09](requisitos_nao_funcionais.md#rnf09)/[RNF11](requisitos_nao_funcionais.md#rnf11)) e isolamento multi-inquilino (*Data Isolation* — [RNF10](requisitos_nao_funcionais.md#rnf10)/[RNF12](requisitos_nao_funcionais.md#rnf12)) para todos os perfis e recursos da plataforma[cite: 69].
 
-**Legenda de permissões:**
-
-* **P (Permitido):** Acesso irrestrito ao recurso ou operação dentro do escopo do perfil.
-* **V (Permitido sob Vínculo):** Acesso permitido exclusivamente quando existe vínculo ativo $(t, a) \in V$ entre o treinador e o atleta.
-* **C (Permitido sob Condição):** Acesso sujeito à verificação de pré-condição de estado ou regra de negócio (ex.: código de convite válido, conta aprovada, vídeo sem feedback avaliativo, consentimento legal para menor de 18 anos).
-* **N (Negado):** Operação bloqueada pelo sistema (retorno HTTP `403 Forbidden` ou `404 Not Found` na API).
+### Legenda de Permissões
+- **P (Permitido):** Acesso irrestrito ao recurso ou operação[cite: 69].
+- **V (Permitido sob Vínculo):** Acesso permitido exclusivamente quando existe vínculo ativo $(t, a) \in V$ entre o treinador e o atleta[cite: 69].
+- **C (Permitido sob Condição):** Acesso sujeito à verificação de pré-condição de estado ou regra de negócio (ex.: antes do feedback, conta aprovada, idade $< 18$)[cite: 69].
+- **N (Negado):** Operação bloqueada pelo sistema (retorno HTTP `403 Forbidden` ou `404 Not Found` na API)[cite: 69].
 
 | Módulo / Característica | Recurso / Operação | Atleta (Próprio) | Atleta (Terceiros) | Treinador (Vinculado) | Treinador (Não Vinculado) | Administrador | Rastreabilidade (RF / RNF / RN) |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| **Autenticação e Contas (CP1)** | Solicitar cadastro como Atleta (via Código de Convite Privado) | C (com código válido) | N | P (gera convite) | N | N | RF01101, RN11, RNF15 |
-| **Autenticação e Contas (CP1)** | Solicitar cadastro como Treinador (cria conta pendente) | N | N | C (pendente) | C (pendente) | P (aprova) | RF01101, RN10, RNF15 |
-| **Autenticação e Contas (CP1)** | Autenticar (Login) e encerrar sessão (Logout) | P | N | C (se aprovado) | C (se aprovado) | P | RF01102, RF01103, RNF09, RN10 |
-| **Autenticação e Contas (CP1)** | Trocar senha temporária obrigatória no 1º acesso | P | N | P | P | P | RF01106, RF01107, RNF15 |
-| **Autenticação e Contas (CP1)** | Excluir / inativar conta de atleta (preservando histórico) | N | N | V | N | N | RF01105, RN01, RN04, RN13 |
-| **Perfil do Atleta (CP1)** | Visualizar dados cadastrais, biométricos e clínicos do atleta | P | N | V | N | N | RF01104, RNF10, RNF12, RN03 |
-| **Perfil do Atleta (CP1)** | Editar dados pessoais e biométricos básicos (nome, apelido, contato, altura, peso, envergadura, foto) | P | N | N | N | N | RF01104, RN02, RNF15 |
-| **Perfil do Atleta (CP1)** | Editar dados clínicos e técnicos (histórico de lesões, aptidão física, objetivos táticos, resultados) | N (somente leitura) | N | V | N | N | RF01104, RN01, RN02, RNF15 |
-| **Biblioteca de Exercícios (CP4)** | Cadastrar, editar e gerenciar exercícios (vídeo-base, thumbnail, descrição breve, erros comuns) | N | N | P | P | N | RF02407, RF02410, RF02412, RNF09 |
-| **Biblioteca de Exercícios (CP4)** | Consultar e filtrar exercícios (objetivos, fundamentos, materiais) | P | N | P | P | N | CP4, RNF12, RNF15 |
-| **Planejamento e Treinos (CP2, CP3)** | Criar, estruturar e editar planejamentos e treinos individualizados | N | N | V | N | N | RF02301, RF02302, RNF09, RNF10, RN03 |
-| **Planejamento e Treinos (CP2, CP3)** | Consultar treinos prescritos e histórico de evolução | P | N | V | N | N | RNF10, RNF11, RNF12, RN03 |
-| **Planejamento e Treinos (CP2, CP3)** | Marcar status de execução (A fazer → Concluído), registrar dificuldade (1–5) e relato textual | P | N | N | N | N | RF01209, RF01211, RN06, RN07, RNF04 |
-| **Vídeos de Execução (CP5)** | Enviar vídeo de execução (`.mp4`/`.mov`, $\le 60\text{s}$, $\le 100\text{MB}$) | P | N | N | N | N | RF03501, RNF06, RNF14, RN09 |
-| **Vídeos de Execução (CP5)** | Visualizar vídeo de execução enviado | P | N | V | N | N | RNF10, RNF12, RNF13, RN03 |
-| **Vídeos de Execução (CP5)** | Substituir ou excluir vídeo enviado antes do registro de feedback | C (sem feedback) | N | N | N | N | RF03502, RF03503, RNF16 |
-| **Vídeos de Execução (CP5)** | Substituir ou excluir vídeo enviado após o registro de feedback | N (imutável) | N | N (imutável) | N | N | RF03502, RF03601, RN10 |
-| **Feedback Avaliativo (CP6)** | Registrar feedback privado vinculado ao vídeo e definir devolução (Corrigir/Refazer) | N | N | V | N | N | RF03601, RNF09, RN06, RN07 |
-| **Feedback Avaliativo (CP6)** | Visualizar feedback avaliativo privado | P | N | V | N | N | RNF10, RNF12, RN03 |
-| **Privacidade e LGPD (CP8)** | Aceitar termos de uso, política de privacidade e consentimento de cookies | P | N | P | P | N | RNF05, RNF17, RN15 |
-| **Privacidade e LGPD (CP8)** | Registrar/validar consentimento legal para tratamento de dados e imagem de atleta menor ($< 18$ anos) | C (via responsável) | N | V (verifica) | N | N | RNF05, RN15, RN16 |
+| **Autenticação e Contas (CP1)** | Solicitar cadastro como Atleta (via Código de Convite Privado)[cite: 70] | **C** *(com código válido)*[cite: 70] | **N**[cite: 70] | **P** *(gera convite)*[cite: 70] | **P** *(gera convite)* | **N**[cite: 70] | [RF01101](requisitos.md#rf01101), [RN11](regras_negocio.md#rn11), [RNF15](requisitos_nao_funcionais.md#rnf15)[cite: 70] |
+| **Autenticação e Contas (CP1)** | Solicitar cadastro como Treinador (cria conta pendente)[cite: 70] | **N**[cite: 70] | **N**[cite: 70] | **C** *(pendente)*[cite: 70] | **C** *(pendente)*[cite: 70] | **P** *(aprova)*[cite: 70] | [RF01101](requisitos.md#rf01101), [RN10](regras_negocio.md#rn10), [RNF15](requisitos_nao_funcionais.md#rnf15)[cite: 70] |
+| **Autenticação e Contas (CP1)** | Autenticar (Login) e encerrar sessão (Logout)[cite: 70] | **P**[cite: 70] | **N**[cite: 70] | **C** *(se aprovado)*[cite: 70] | **C** *(se aprovado)*[cite: 70] | **P**[cite: 70] | [RF01102](requisitos.md#rf01102), [RF01103](requisitos.md#rf01103), [RNF09](requisitos_nao_funcionais.md#rnf09), [RN10](regras_negocio.md#rn10)[cite: 70] |
+| **Autenticação e Contas (CP1)** | Trocar senha temporária obrigatória no 1º acesso[cite: 70] | **P**[cite: 70] | **N**[cite: 70] | **P** | **P** | **P**[cite: 70] | [RF01106](requisitos.md#rf01106), [RF01107](requisitos.md#rf01107), [RNF15](requisitos_nao_funcionais.md#rnf15)[cite: 70] |
+| **Autenticação e Contas (CP1)** | Excluir/inativar conta de atleta (preservando histórico)[cite: 70] | **N**[cite: 70] | **N**[cite: 70] | **V** | **N** | **N**[cite: 70] | [RF01105](requisitos.md#rf01105), [RN01](regras_negocio.md#rn01), [RN04](regras_negocio.md#rn04), [RN13](regras_negocio.md)[cite: 70] |
+| **Perfil do Atleta (CP1)** | Visualizar dados cadastrais, biométricos e clínicos do atleta[cite: 70] | **P**[cite: 70] | **N**[cite: 70] | **V** | **N** | **N**[cite: 70] | [RF01104](requisitos.md#rf01104), [RNF10](requisitos_nao_funcionais.md#rnf10), [RNF12](requisitos_nao_funcionais.md#rnf12), [RN03](regras_negocio.md#rn03)[cite: 70] |
+| **Perfil do Atleta (CP1)** | Editar dados pessoais e biométricos básicos (nome, apelido, contato, altura, peso, envergadura, foto)[cite: 70] | **P**[cite: 70] | **N**[cite: 70] | **N** *(somente leitura)* | **N** | **N**[cite: 70] | [RF01104](requisitos.md#rf01104), [RN02](regras_negocio.md#rn02), [RNF15](requisitos_nao_funcionais.md#rnf15)[cite: 70] |
+| **Perfil do Atleta (CP1)** | Editar dados clínicos e técnicos (histórico de lesões, aptidão física, objetivos táticos, resultados)[cite: 70] | **N** *(somente leitura)*[cite: 70] | **N**[cite: 70] | **V** | **N** | **N**[cite: 70] | [RF01104](requisitos.md#rf01104), [RN01](regras_negocio.md#rn01), [RN02](regras_negocio.md#rn02), [RNF15](requisitos_nao_funcionais.md#rnf15)[cite: 70] |
+| **Biblioteca de Exercícios (CP4)** | Cadastrar, editar e gerenciar exercícios (vídeo-base, thumbnail, descrição breve, erros comuns)[cite: 70] | **N**[cite: 70] | **N**[cite: 70] | **P** | **P** | **N**[cite: 70] | [RF02412](requisitos.md#rf02412), [RF02413](requisitos.md#rf02413), [RNF09](requisitos_nao_funcionais.md#rnf09)[cite: 70] |
+| **Biblioteca de Exercícios (CP4)** | Consultar e filtrar exercícios (objetivos, fundamentos, materiais)[cite: 70] | **P**[cite: 70] | **P**[cite: 70] | **P** | **P** | **N**[cite: 70] | [CP4](requisitos.md#cp4), [RNF12](requisitos_nao_funcionais.md#rnf12), [RNF15](requisitos_nao_funcionais.md#rnf15)[cite: 70] |
+| **Planejamento e Treinos (CP2–CP3)** | Criar, estruturar e editar planejamentos e treinos individualizados[cite: 70] | **N**[cite: 70] | **N**[cite: 70] | **V** | **N** | **N**[cite: 70] | [RF2307](requisitos.md#rf2307), [RNF09](requisitos_nao_funcionais.md#rnf09), [RNF10](requisitos_nao_funcionais.md#rnf10), [RN03](regras_negocio.md#rn03)[cite: 70] |
+| **Planejamento e Treinos (CP2–CP3)** | Consultar treinos prescritos e histórico de evolução[cite: 70] | **P** | **N** | **V** | **N** | **N** | [RNF10](requisitos_nao_funcionais.md#rnf10), [RNF11](requisitos_nao_funcionais.md#rnf11), [RNF12](requisitos_nao_funcionais.md#rnf12), [RN03](regras_negocio.md#rn03)[cite: 70] |
+| **Planejamento e Treinos (CP2–CP3)** | Marcar status de execução (*A fazer* $\to$ *Concluído*), registrar dificuldade (1–5) e relato textual[cite: 71] | **P**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07), [RNF04](requisitos_nao_funcionais.md#rnf04)[cite: 71] |
+| **Vídeos de Execução (CP5)** | Enviar vídeo de execução (`.mp4`/`.mov`, $\le 60\text{ s}$, $\le 100\text{ MB}$)[cite: 71] | **P**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RF3501](requisitos.md#rf3501), [RNF06](requisitos_nao_funcionais.md#rnf06), [RNF14](requisitos_nao_funcionais.md#rnf14), [RN09](regras_negocio.md#rn09)[cite: 71] |
+| **Vídeos de Execução (CP5)** | Visualizar vídeo de execução enviado[cite: 71] | **P**[cite: 71] | **N**[cite: 71] | **V**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RNF10](requisitos_nao_funcionais.md#rnf10), [RNF12](requisitos_nao_funcionais.md#rnf12), [RNF13](requisitos_nao_funcionais.md#rnf13), [RN03](regras_negocio.md#rn03)[cite: 71] |
+| **Vídeos de Execução (CP5)** | Substituir ou excluir vídeo enviado **antes** do registro de feedback[cite: 71] | **C** *(sem feedback)*[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RF3502](requisitos.md#rf3502), [RNF16](requisitos_nao_funcionais.md#rnf16)[cite: 71] |
+| **Vídeos de Execução (CP5)** | Substituir ou excluir vídeo enviado **após** o registro de feedback[cite: 71] | **N** *(imutável)*[cite: 71] | **N**[cite: 71] | **N** *(imutável)*[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RF3502](requisitos.md#rf3502), [RF3604](requisitos.md#rf3604), [RN10](regras_negocio.md#rn10)[cite: 71] |
+| **Feedback Avaliativo (CP6)** | Registrar feedback privado vinculado ao vídeo e definir devolução (*Corrigir/Refazer*)[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | **V**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RF3604](requisitos.md#rf3604), [RNF09](requisitos_nao_funcionais.md#rnf09), [RN06](regras_negocio.md#rn06), [RN07](regras_negocio.md#rn07)[cite: 71] |
+| **Feedback Avaliativo (CP6)** | Visualizar feedback avaliativo privado[cite: 71] | **P**[cite: 71] | **N**[cite: 71] | **V**[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RNF10](requisitos_nao_funcionais.md#rnf10), [RNF12](requisitos_nao_funcionais.md#rnf12), [RN03](regras_negocio.md#rn03)[cite: 71] |
+| **Privacidade e LGPD (CP8)** | Aceitar termos de uso, política de privacidade e consentimento de cookies[cite: 71] | **P**[cite: 71] | **N**[cite: 71] | **P**[cite: 71] | **P**[cite: 71] | **N**[cite: 71] | [RNF05](requisitos_nao_funcionais.md#rnf05), [RNF17](requisitos_nao_funcionais.md#rnf17), [RN15](regras_negocio.md)[cite: 71] |
+| **Privacidade e LGPD (CP8)** | Registrar/validar consentimento legal para tratamento de dados e imagem de atleta menor ($< 18$ anos)[cite: 71] | **C** *(via responsável)*[cite: 71] | **N**[cite: 71] | **V** *(verifica)*[cite: 71] | **N**[cite: 71] | **N**[cite: 71] | [RF4813](requisitos.md#rf4813), [RNF05](requisitos_nao_funcionais.md#rnf05), [RN15](regras_negocio.md), [RN16](regras_negocio.md#rn16)[cite: 71] |
 
-> **Nota de Escopo (Módulo de Testes Físicos):** As operações de cadastro, edição e consulta de testes de aptidão física ([RF01212](requisitos.md#rf01212), [RF01213](requisitos.md#rf01213), [RF04803](requisitos.md#rf04803) e [RF04811](requisitos.md#rf04811)) foram adiadas integralmente para o backlog evolutivo pós-MVP e, portanto, não possuem rotas ativas no recorte atual.
+!!! note "Nota de Escopo (Módulo de Testes Físicos)"
+    As operações de cadastro, edição e consulta de testes de aptidão física ([RF1216](requisitos.md#rf1216), [RF1217](requisitos.md#rf1217), [RF4803](requisitos.md#rf4803) e [RF4811](requisitos.md#rf4811)) foram adiadas integralmente para o backlog evolutivo pós-MVP e, portanto, não possuem rotas ativas no recorte atual[cite: 71].
 
 ---
 
-## 3. Rastreabilidade e Registro como Evidência {#3-rastreabilidade-e-registro-como-evidencia}
+## 3. Rastreabilidade e Registro como Evidência
 
-Para incorporação direta na documentação do projeto ([Engenharia de Requisitos](engenharia_requisitos.md) e [Reuniões](reunioes.md)), este artefato conclui os entregáveis pendentes registrados na Seção 5.1 (*Design do Usuário — Modelagem complementar de requisitos*) referentes à matriz tabular consolidada de permissões por perfil e à formalização das regras de controle de acesso, isolamento multi-inquilino e ciclo de vida de mídias.
+Para incorporação direta na documentação do projeto (`engenharia_requisitos.md` e `reunioes.md`), este artefato conclui os entregáveis pendentes registrados na Seção 5.1 (*Design do Usuário — Modelagem complementar de requisitos*) referentes à matriz tabular consolidada de permissões por perfil e à formalização das regras de controle de acesso, isolamento multi-inquilino e ciclo de vida de mídias[cite: 71, 72].
 
 | Data | Versão | Descrição | Autor |
 | :--- | :---: | :--- | :--- |
-| 15/11/2026 | 1.0 | Elaboração da Representação Formal dos Requisitos Críticos (invariantes e contratos de pré/pós-condição) e da Matriz Consolidada de Permissões e Acessos por Perfil (RBAC e isolamento *multi-tenant*) conforme Seção 5.1. | Equipe Space Jam |
+| 15/11/2026 | 1.0 | Elaboração da Representação Formal dos Requisitos Críticos (invariantes e contratos de pré/pós-condição com tradução lado a lado) e da Matriz Consolidada de Permissões e Acessos por Perfil (RBAC e isolamento *multi-tenant*) conforme Seção 5.1[cite: 72, 81]. | Equipe Space Jam[cite: 72] |
