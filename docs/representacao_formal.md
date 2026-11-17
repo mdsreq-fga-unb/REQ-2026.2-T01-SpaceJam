@@ -332,7 +332,7 @@ M'=M\setminus\{m\}
 
 !!! note "Nota de Escopo (Módulo de Testes Físicos)"
 
-    As operações de cadastro, edição e consulta de testes de aptidão física ([RF1216](requisitos.md#rf1216), [RF1217](requisitos.md#rf1217), [RF4803](requisitos.md#rf4803) e [RF4811](requisitos.md#rf4811)) foram adiadas integralmente para o backlog evolutivo pós-MVP e, portanto, não possuem propriedades formalizadas no recorte atual.
+    As operações de cadastro, edição e consulta de testes de aptidão física ([RF1216](requisitos.md#rf1216), [RF1217](requisitos.md#rf1217), [RF4803](requisitos.md#cp8) e [RF4811](requisitos.md#cp8)) foram adiadas integralmente para o backlog evolutivo pós-MVP e, portanto, não possuem propriedades formalizadas no recorte atual.
 
 ---
 
