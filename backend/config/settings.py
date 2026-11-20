@@ -16,6 +16,11 @@ def env_bool(nome, padrao=False):
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-inseguro-troque-no-env")
 DEBUG = env_bool("DJANGO_DEBUG", True)
+if not DEBUG and len(SECRET_KEY) < 50:
+    raise RuntimeError(
+        "Configure DJANGO_SECRET_KEY com uma chave aleatoria "
+        "de pelo menos 50 caracteres antes de executar em producao."
+    )
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,backend").split(",")
 
 INSTALLED_APPS = [
@@ -27,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Terceiros
     "rest_framework",
+    "rest_framework_simplejwt.token_blacklist",  # Necessário para US03 (Logout)
     # Apps do projeto (uma por grupo de características do catálogo)
     "apps.contas",      # CP1, CP7 — cadastro, login, papéis aluno/treinador
     "apps.exercicios",  # CP4 — biblioteca de exercícios
@@ -100,7 +106,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "apps.contas.authentication.BlacklistableJWTAuthentication",
     ],
     # Fechado por padrão: toda rota exige login, a menos que diga o contrário (CP8).
     "DEFAULT_PERMISSION_CLASSES": [
@@ -111,4 +117,18 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
 }
+
+# Regras de Negócio (US01, US02, US04, US05)
+COACH_ACTIVATION_CODE = os.environ.get("COACH_ACTIVATION_CODE", "TREINADOR-MVP-2026")
+TERMOS_VERSAO_ATUAL = os.environ.get("TERMOS_VERSAO_ATUAL", "1.0")
+if not DEBUG and (
+    not COACH_ACTIVATION_CODE.strip()
+    or COACH_ACTIVATION_CODE == "TREINADOR-MVP-2026"
+):
+    raise RuntimeError(
+        "Configure COACH_ACTIVATION_CODE com um codigo privado "
+        "antes de executar em producao."
+    )
