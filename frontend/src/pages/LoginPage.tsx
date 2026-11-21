@@ -3,6 +3,7 @@ import { Link, Navigate, useSearchParams } from 'react-router'
 import { ApiError } from '../api/client'
 import { useAuth } from '../auth/useAuth'
 import { CarregandoSessao } from '../components/CarregandoSessao'
+import './LoginPage.css'
 
 export function LoginPage() {
   const [parametros] = useSearchParams()
@@ -53,48 +54,96 @@ function FormularioLogin({ treinador }: { treinador: boolean }) {
   }
 
   return (
-    <main className="acesso">
-      <section className="cartao-login" aria-labelledby="titulo-acesso">
-        <header className="cabecalho-login">
-          <h1 id="titulo-acesso">Login</h1>
-          <img src="/space-jam-logo.png" alt="Space Jam" width="80" height="80" />
+    <main className="login-v2">
+      <aside className="login-v2__identidade" aria-label="Identidade Space Jam">
+        <picture className="login-v2__logo-desktop">
+          <img src="/space-jam-logo-login-desktop.png" alt="" width="96" height="102" />
+        </picture>
+        <span className="login-v2__nome-marca">SPACE JAM</span>
+        <div className="login-v2__respiro" aria-hidden="true" />
+        <p className="login-v2__apresentacao">
+          <span>Seu espaço</span>
+          <span>de treino.</span>
+        </p>
+        <p className="login-v2__descricao">Planejamento, execução e feedback para acompanhar cada treino.</p>
+        <div className="login-v2__respiro login-v2__respiro--inferior" aria-hidden="true" />
+        <p className="login-v2__rodape">Basquete · Treino · Evolução</p>
+      </aside>
+
+      <section className="login-v2__painel" aria-labelledby="titulo-acesso">
+        <header className="login-v2__cabecalho">
+          <picture className="login-v2__logo-mobile">
+            <img src="/space-jam-logo-login-mobile.png" alt="" width="38" height="40" />
+          </picture>
+          <span className="login-v2__nome-marca">SPACE JAM</span>
         </header>
-        <nav className="perfis-cadastro" aria-label="Tipo de acesso">
-          <Link to="/login" aria-current={!treinador ? 'page' : undefined}
-            aria-disabled={enviando || undefined}
-            onClick={evento => { if (enviando) evento.preventDefault() }}>Aluno</Link>
-          <Link to="/login?perfil=treinador" aria-current={treinador ? 'page' : undefined}
-            aria-disabled={enviando || undefined}
-            onClick={evento => { if (enviando) evento.preventDefault() }}>Treinador</Link>
-        </nav>
-        <form className="formulario-login" onSubmit={onSubmit} aria-busy={enviando}>
-          <div className="campos-login">
-            <div>
-              <label className="sr-only" htmlFor="identificador">{treinador ? 'E-mail' : 'Apelido'}</label>
-              <input
-                ref={campoIdentificador}
-                id="identificador"
-                name={treinador ? 'email' : 'username'}
-                type={treinador ? 'email' : 'text'}
-                placeholder={treinador ? 'E-mail:' : 'Apelido:'}
-                value={identificador}
-                onChange={e => setIdentificador(e.target.value)}
-                autoComplete="username"
-                autoCapitalize="none"
-                spellCheck={false}
-                required
-                disabled={enviando}
-                aria-invalid={camposComErro !== null || undefined}
-                aria-describedby={erro ? 'dica-identificador erro-acesso' : 'dica-identificador'}
-              />
-              <span id="dica-identificador" className="sr-only">{treinador ? 'Use o e-mail cadastrado na sua conta.' : 'Use o apelido cadastrado na sua conta.'}</span>
-            </div>
-            <div className="campo-senha">
-              <label className="sr-only" htmlFor="senha">Senha</label>
+
+        <form className="login-v2__formulario" onSubmit={onSubmit} aria-busy={enviando}>
+          <h1 id="titulo-acesso" className="sr-only">Login</h1>
+          <div className="login-v2__introducao">
+            <p className="login-v2__titulo">Bem-vindo de volta</p>
+            <p className="login-v2__subtitulo">{treinador ? 'Entre para acompanhar seus alunos.' : 'Entre para continuar seus treinos.'}</p>
+          </div>
+
+          <nav className="login-v2__perfis" aria-label="Tipo de acesso">
+            {!treinador ? (
+              <span className="login-v2__perfil login-v2__perfil--ativo" aria-current="page">Aluno</span>
+            ) : (
+              <Link
+                className="login-v2__perfil login-v2__perfil--secundario"
+                to="/login"
+                aria-disabled={enviando || undefined}
+                onClick={evento => { if (enviando) evento.preventDefault() }}
+              >
+                Aluno
+              </Link>
+            )}
+            {treinador ? (
+              <span className="login-v2__perfil login-v2__perfil--ativo" aria-current="page">Treinador</span>
+            ) : (
+              <Link
+                className="login-v2__perfil login-v2__perfil--secundario"
+                to="/login?perfil=treinador"
+                aria-disabled={enviando || undefined}
+                onClick={evento => { if (enviando) evento.preventDefault() }}
+              >
+                Treinador
+              </Link>
+            )}
+          </nav>
+
+          <div className="login-v2__campo">
+            <label className="sr-only" htmlFor="identificador">{treinador ? 'E-mail' : 'Apelido'}</label>
+            <span className="login-v2__campo-label" aria-hidden="true">{treinador ? 'E-mail *' : 'Apelido *'}</span>
+            <input
+              ref={campoIdentificador}
+              id="identificador"
+              name={treinador ? 'email' : 'username'}
+              type={treinador ? 'email' : 'text'}
+              placeholder={treinador ? 'seuemail@exemplo.com' : 'Seu apelido'}
+              value={identificador}
+              onChange={e => setIdentificador(e.target.value)}
+              autoComplete={treinador ? 'email' : 'username'}
+              autoCapitalize="none"
+              spellCheck={false}
+              required
+              disabled={enviando}
+              aria-invalid={camposComErro !== null || undefined}
+              aria-describedby={erro ? 'dica-identificador erro-acesso' : 'dica-identificador'}
+            />
+            <span id="dica-identificador" className="login-v2__campo-ajuda">
+              {treinador ? 'Use o e-mail do cadastro.' : 'Use o apelido criado no cadastro.'}
+            </span>
+          </div>
+
+          <div className="login-v2__campo login-v2__campo--senha">
+            <label className="sr-only" htmlFor="senha">Senha</label>
+            <span className="login-v2__campo-label" aria-hidden="true">Senha *</span>
+            <div className="login-v2__senha-controle">
               <input
                 id="senha"
                 name="password"
-                placeholder="Senha:"
+                placeholder="Sua senha"
                 type={mostrarSenha ? 'text' : 'password'}
                 value={senha}
                 onChange={e => setSenha(e.target.value)}
@@ -107,7 +156,7 @@ function FormularioLogin({ treinador }: { treinador: boolean }) {
               {senha && (
                 <button
                   type="button"
-                  className="mostrar-senha"
+                  className="login-v2__mostrar-senha"
                   onClick={() => setMostrarSenha(!mostrarSenha)}
                   aria-label={mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'}
                   aria-pressed={mostrarSenha}
@@ -118,19 +167,25 @@ function FormularioLogin({ treinador }: { treinador: boolean }) {
               )}
             </div>
           </div>
-          {erro && <p className="erro" id="erro-acesso" role="alert">{erro}</p>}
-          {avisoSessao && <p className="aviso-cadastro" role="status">{avisoSessao}</p>}
-          <button className="botao-entrar" type="submit" disabled={enviando}>
+
+          {erro && <p className="login-v2__erro" id="erro-acesso" role="alert">{erro}</p>}
+          {avisoSessao && <p className="login-v2__aviso" role="status">{avisoSessao}</p>}
+
+          <button className="login-v2__acao login-v2__acao--primaria" type="submit" disabled={enviando}>
             {enviando ? 'Entrando…' : 'Entrar'}
           </button>
+          <p className="login-v2__primeiro-acesso">Primeiro acesso?</p>
           <Link
-            className="botao-criar-conta"
+            className="login-v2__acao login-v2__acao--secundaria"
             to={treinador ? '/cadastro/treinador' : '/cadastro/aluno'}
             aria-disabled={enviando || undefined}
             onClick={evento => { if (enviando) evento.preventDefault() }}
           >
             Criar conta
           </Link>
+          <span className="login-v2__acao login-v2__acao--secundaria login-v2__acao--indisponivel" aria-disabled="true">
+            Esqueci minha senha
+          </span>
           {enviando && <span className="sr-only" role="status">Acessando sua conta. Aguarde.</span>}
         </form>
       </section>
