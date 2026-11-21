@@ -135,8 +135,7 @@ export function PerfilAlunoAcompanhado({
             className="perfil-acompanhado__aviso"
             role="status"
           >
-            Prévia visual: dados fictícios para testar o layout.
-            Nenhuma consulta ao backend foi realizada.
+            Modo de demonstração: dados ilustrativos, não reais.
           </p>
         )}
 
@@ -146,8 +145,7 @@ export function PerfilAlunoAcompanhado({
             className="perfil-acompanhado__aviso"
             role="status"
           >
-            Aguardando integração com a API de alunos acompanhados.
-            Nenhum dado cadastral foi carregado.
+            Os dados deste aluno não estão disponíveis no momento.
           </p>
         )}
 
@@ -217,7 +215,7 @@ export function PerfilAlunoAcompanhado({
                 className="perfil-acompanhado__acao"
                 type="button"
                 disabled
-                title="Funcionalidade pertencente à US11"
+                title="Registro de lesões indisponível no momento"
               >
                 Registrar lesão
               </button>
@@ -234,7 +232,7 @@ export function PerfilAlunoAcompanhado({
                 className="perfil-acompanhado__acao perfil-acompanhado__acao--principal"
                 type="button"
                 disabled
-                title="Aguardando integração dos planejamentos"
+                title="Consulta de planejamento indisponível no momento"
               >
                 Ver planejamento
               </button>
@@ -252,7 +250,7 @@ export function PerfilAlunoAcompanhado({
             className="perfil-acompanhado__voltar"
             type="button"
             disabled
-            title="Aguardando integração com a lista de alunos (US52)"
+            title="Retorno à lista de alunos indisponível no momento"
           >
             <span aria-hidden="true">←</span>
             Voltar aos alunos

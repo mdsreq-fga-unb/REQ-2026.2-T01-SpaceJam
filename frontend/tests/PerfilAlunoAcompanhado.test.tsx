@@ -80,7 +80,7 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
     render(<PerfilAlunoAcompanhado treinador={treinador} />)
 
     expect(
-      screen.getByText(/Aguardando integração com a API/i),
+      screen.getByText('Os dados deste aluno não estão disponíveis no momento.'),
     ).toBeTruthy()
 
     expect(
@@ -106,7 +106,7 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
     ).toBeTruthy()
 
     expect(
-      screen.getByText(/Prévia visual: dados fictícios/i),
+      screen.getByText(/Modo de demonstração: dados ilustrativos/i),
     ).toBeTruthy()
 
     expect(requisicoes).toHaveBeenCalledTimes(1)
@@ -136,7 +136,7 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
     const requisicoes = abrirComSessao('/treinador/alunos/123')
 
     expect(
-      await screen.findByText(/Aguardando integração com a API/i),
+      await screen.findByText('Os dados deste aluno não estão disponíveis no momento.'),
     ).toBeTruthy()
 
     expect(
