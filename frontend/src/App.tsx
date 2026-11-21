@@ -11,6 +11,8 @@ import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 
+import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
+
 export default function App() {
   return (
     <AuthProvider>
@@ -51,6 +53,14 @@ export default function App() {
             element={
               <RotaProtegida papel="TREINADOR">
                 <AlunosAcompanhadosPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinador/alunos/:alunoId"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <PerfilAlunoAcompanhadoPage />
               </RotaProtegida>
             }
           />
