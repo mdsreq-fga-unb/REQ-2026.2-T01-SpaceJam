@@ -67,7 +67,7 @@ describe('US52 — Consultar alunos acompanhados', () => {
 
   it('indica ausência de API sem afirmar que a carteira está vazia', () => {
     componente({ estado: 'aguardando-api', alunos: [] })
-    expect(screen.getByText('Aguardando integração da lista de alunos')).toBeTruthy()
+    expect(screen.getByText('Lista de alunos indisponível')).toBeTruthy()
     expect(screen.queryByText('Nenhum aluno vinculado')).toBeNull()
   })
 

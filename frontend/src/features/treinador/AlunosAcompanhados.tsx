@@ -76,8 +76,8 @@ export function AlunosAcompanhados({
         {marca}
         <nav className="sj52__menu" aria-label="Menu do treinador">
           <span aria-current="page">Alunos</span>
-          <span aria-disabled="true" title="Treinos: funcionalidade ainda não integrada">Treinos</span>
-          <span aria-disabled="true" title="Biblioteca: funcionalidade ainda não integrada">Biblioteca</span>
+          <span aria-disabled="true">Treinos</span>
+          <span aria-disabled="true">Biblioteca</span>
           <Link to="/">Conta</Link>
         </nav>
         <div className="sj52__usuario-lateral">
@@ -116,8 +116,8 @@ export function AlunosAcompanhados({
             <section className="sj52__lista" aria-label="Alunos vinculados">
               {estado === 'aguardando-api' && (
                 <div className="sj52__estado" role="status">
-                  <h2>Aguardando integração da lista de alunos</h2>
-                  <p>A API da US52 ainda não está disponível. Nenhuma carteira real foi consultada.</p>
+                  <h2>Lista de alunos indisponível</h2>
+                  <p>Não é possível consultar os alunos neste momento.</p>
                 </div>
               )}
               {estado === 'carregando' && (
@@ -185,7 +185,7 @@ export function AlunosAcompanhados({
                 className="sj52__copiar"
                 disabled={!podeCopiar}
                 onClick={() => { void copiarCodigo() }}
-                title={demonstracao ? 'Código fictício apenas para prévia' : !codigo ? 'Aguardando código do backend' : undefined}
+                title={demonstracao ? 'Código fictício apenas para prévia' : !codigo ? 'Código de convite indisponível' : undefined}
               >
                 {copiado ? 'Código copiado!' : 'Copiar código'}
               </button>
@@ -199,8 +199,8 @@ export function AlunosAcompanhados({
 
       <nav className="sj52__navegacao-mobile" aria-label="Seções do treinador">
         <span aria-current="page">Alunos</span>
-        <span aria-disabled="true" title="Treinos: funcionalidade ainda não integrada">Treinos</span>
-        <span aria-disabled="true" title="Biblioteca: funcionalidade ainda não integrada">Biblioteca</span>
+        <span aria-disabled="true">Treinos</span>
+        <span aria-disabled="true">Biblioteca</span>
         <Link to="/">Conta</Link>
       </nav>
     </div>
