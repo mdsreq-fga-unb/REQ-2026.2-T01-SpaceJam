@@ -13,7 +13,7 @@ export function InicioPage() {
 
   // US53 — Consultar os próprios dados cadastrais; US07 — navegar para edição.
   if (usuario.papel === 'ALUNO') {
-    return <MinhaContaAluno usuario={usuario} logout={logout} editarDados={() => navegar('/aluno/conta/editar')} />
+    return <MinhaContaAluno usuario={usuario} logout={logout} editarDados={() => navegar('/aluno/conta/editar')} trocarSenha={() => navegar('/conta/senha')} />
   }
 
   const nome =
