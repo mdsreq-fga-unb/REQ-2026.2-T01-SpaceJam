@@ -421,6 +421,17 @@ body:has(.perfil-acompanhado),
   color: #ff9a6c;
   font-size: 16px;
   font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.perfil-acompanhado__retorno-final .perfil-acompanhado__voltar:hover {
+  background: #29292d;
+}
+
+.perfil-acompanhado__retorno-final .perfil-acompanhado__voltar:focus-visible {
+  outline: 3px solid #ff9a6c;
+  outline-offset: 3px;
 }
 
 .perfil-acompanhado__retorno-final .perfil-acompanhado__voltar:disabled {

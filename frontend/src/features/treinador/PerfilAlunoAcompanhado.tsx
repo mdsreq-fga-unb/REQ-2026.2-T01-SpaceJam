@@ -20,6 +20,7 @@ interface PerfilAlunoAcompanhadoProps {
   treinador: Usuario
   aluno?: DadosAlunoAcompanhado | null
   demonstracao?: boolean
+  onVoltar?: () => void
 }
 
 function valorOuIndisponivel(valor?: string | null) {
@@ -69,6 +70,7 @@ export function PerfilAlunoAcompanhado({
   treinador,
   aluno,
   demonstracao = false,
+  onVoltar,
 }: PerfilAlunoAcompanhadoProps) {
   const nomeTreinador = treinador.first_name || treinador.apelido
 
@@ -246,12 +248,7 @@ export function PerfilAlunoAcompanhado({
 
         {/* Navegação de retorno — final da página */}
         <div className="perfil-acompanhado__retorno-final">
-          <button
-            className="perfil-acompanhado__voltar"
-            type="button"
-            disabled
-            title="Retorno à lista de alunos indisponível no momento"
-          >
+          <button className="perfil-acompanhado__voltar" type="button" onClick={onVoltar} disabled={!onVoltar}>
             <span aria-hidden="true">←</span>
             Voltar aos alunos
           </button>

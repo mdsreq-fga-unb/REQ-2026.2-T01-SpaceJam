@@ -1,5 +1,5 @@
 
-import { Navigate, useParams } from 'react-router'
+import { Navigate, useNavigate, useParams } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import { AtualizarTermos } from '../../components/AtualizarTermos'
 import {
@@ -31,6 +31,7 @@ const alunoDemonstracao: DadosAlunoAcompanhado = {
 export function PerfilAlunoAcompanhadoPage() {
   const { usuario } = useAuth()
   const { alunoId } = useParams()
+  const navegar = useNavigate()
 
   if (!usuario) {
     return null
@@ -51,6 +52,7 @@ export function PerfilAlunoAcompanhadoPage() {
       treinador={usuario}
       aluno={rotaDemonstracao ? alunoDemonstracao : null}
       demonstracao={rotaDemonstracao}
+      onVoltar={() => navegar('/treinador/alunos')}
     />
   )
 }
