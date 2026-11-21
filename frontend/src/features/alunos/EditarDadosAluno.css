@@ -1,0 +1,49 @@
+:root:has(.editar-aluno), body:has(.editar-aluno), #root:has(.editar-aluno) { background: #111113; }
+.editar-aluno { min-width: 0; color: #f2f2f2; }
+.editar-aluno__conteudo { min-width: 0; }
+.editar-aluno__pular { position: fixed; top: 8px; left: 8px; z-index: 1000; transform: translateY(-180%); padding: 12px 16px; border-radius: 8px; color: #111113; background: #ffbc99; font-size: 16px; font-weight: 700; text-decoration: none; }
+.editar-aluno__pular:focus-visible { transform: translateY(0); }
+.editar-aluno a:focus-visible, .editar-aluno button:focus-visible, .editar-aluno input:focus-visible, .editar-aluno textarea:focus-visible, .editar-aluno__conteudo:focus-visible { outline: 3px solid #ffbc99; outline-offset: 3px; }
+.editar-aluno__formulario { margin-top: 28px; }
+.editar-aluno__grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 24px; }
+.editar-aluno__campo { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.editar-aluno__campo label { font-size: 16px; font-weight: 500; line-height: 1.4; color: #f2f2f2; }
+.editar-aluno__campo label span { color: #ffa37e; }
+.editar-aluno__campo input, .editar-aluno__campo textarea { width: 100%; min-width: 0; min-height: 48px; padding: 12px 14px; border: 1px solid #5a5a5d; border-radius: 10px; background: #1e1e21; color: #f2f2f2; font: 400 16px/1.5 'Barlow', 'Arial Narrow', sans-serif; color-scheme: dark; }
+.editar-aluno__campo textarea { resize: vertical; min-height: 120px; }
+.editar-aluno__campo input:focus-visible, .editar-aluno__campo textarea:focus-visible { border-color: #ffbc99; }
+.editar-aluno__campo [aria-invalid='true'] { border-color: #ffb9ab; }
+.editar-aluno__campo small { color: #c8c8ca; line-height: 1.4; font-size: 14px; }
+.editar-aluno__erro { margin-top: 0; color: #ffc7be; font-size: 14px; line-height: 1.45; overflow-wrap: anywhere; }
+/* Objetivos é uma seção independente: ocupa toda a largura da grade. */
+.editar-aluno__campo--objetivos { grid-column: 1 / -1; margin-top: 6px; }
+.editar-aluno__campo--objetivos textarea { min-height: 136px; }
+.editar-aluno__aviso-erro, .editar-aluno__aviso-sucesso { max-width: 740px; margin: 18px auto 0; padding: 12px 16px; border-radius: 10px; font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
+.editar-aluno__aviso-erro { border: 1px solid #e9a59b; color: #ffcec5; background: #362021; }
+.editar-aluno__aviso-sucesso { border: 1px solid #8a9d92; color: #e7ffef; background: #1d3328; }
+.editar-aluno__aviso-indisponivel { width: min(100%, 520px); margin: 22px auto 0; color: #ceced1; font-size: 15px; line-height: 1.5; }
+/* Ações agrupadas e centralizadas, em vez de soltas à esquerda. */
+.editar-aluno__acoes { width: min(100%, 520px); margin: 28px auto 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.editar-aluno__acoes .editar-aluno__salvar { grid-column: 1; grid-row: 1; }
+.editar-aluno__acoes .editar-aluno__cancelar { grid-column: 2; grid-row: 1; }
+.editar-aluno__acoes button { min-width: 0; width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 12px; border: 1px solid #5a5a5d; color: #f2f2f2; background: #1e1e21; font: 600 16px/1.4 'Barlow', 'Arial Narrow', sans-serif; }
+.editar-aluno__acoes button:hover:not(:disabled) { background: #303034; }
+.editar-aluno__acoes .editar-aluno__salvar { background: #c33819; color: white; border-color: #c33819; }
+.editar-aluno__acoes .editar-aluno__salvar:hover:not(:disabled) { background: #db4422; }
+.editar-aluno__acoes .editar-aluno__salvar:disabled { opacity: 1; background: #303034; border-color: #55555a; color: #c9c9ce; cursor: not-allowed; }
+.editar-aluno__acoes .editar-aluno__cancelar { color: #ffad87; }
+/* Botão da US53, ativado somente pela US07. Sem mudar os outros botões ou o layout antigo. */
+.conta-aluno__acoes button.conta-aluno__editar:not(:disabled) { border-color: #ba3219; background: linear-gradient(110deg, #791710, #d63f1e); color: #fff; font-weight: 700; }
+.conta-aluno__acoes button.conta-aluno__editar:not(:disabled):hover { filter: brightness(1.12); }
+@media (max-width: 899px) {
+  .editar-aluno__conteudo { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+  .editar-aluno__grade { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .editar-aluno__campo--objetivos { grid-column: 1 / -1; }
+  .editar-aluno__acoes { width: 100%; grid-template-columns: minmax(0, 1fr); }
+  .editar-aluno__acoes .editar-aluno__salvar,
+  .editar-aluno__acoes .editar-aluno__cancelar { grid-column: 1; grid-row: auto; }
+  .editar-aluno__campo input, .editar-aluno__campo textarea { font-size: 16px; }
+}
+@media (max-width: 359px) {
+  .editar-aluno__campo label { font-size: 15px; }
+}
