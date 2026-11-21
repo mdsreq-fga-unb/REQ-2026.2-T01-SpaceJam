@@ -4,6 +4,8 @@ import { RotaProtegida } from './auth/RotaProtegida'
 import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
 import { CadastroPage } from './pages/CadastroPage'
+import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
+import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 
 export default function App() {
   return (
@@ -11,6 +13,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
+          <Route path="/recuperar-senha/redefinir" element={<RedefinirSenhaPage />} />
           <Route path="/cadastro" element={<Navigate to="/cadastro/aluno" replace />} />
           <Route path="/cadastro/aluno" element={<CadastroPage key="aluno" perfil="ALUNO" />} />
           <Route path="/cadastro/treinador" element={<CadastroPage key="treinador" perfil="TREINADOR" />} />
