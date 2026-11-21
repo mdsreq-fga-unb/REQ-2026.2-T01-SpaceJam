@@ -32,7 +32,10 @@ describe('US07 — Editar informações do próprio perfil', () => {
     const { container } = renderizar()
     expect(screen.getByRole('textbox', { name: 'Meus objetivos' }).closest('.editar-aluno__campo--objetivos')).toBeTruthy()
     expect(screen.queryByRole('heading', { name: 'Sobre a atualização dos dados' })).toBeNull()
-    expect((screen.getByRole('button', { name: 'Salvar alterações' }) as HTMLButtonElement).disabled).toBe(true)
+    const salvar = screen.getByRole('button', { name: 'Salvar alterações' }) as HTMLButtonElement
+    expect(salvar.disabled).toBe(true)
+    expect(salvar.getAttribute('aria-describedby')).toBe('us07-salvamento-indisponivel')
+    expect(screen.getByText('A atualização dos dados está indisponível no momento. Nenhuma alteração será salva.')).toBeTruthy()
     expect(container.querySelector('.editar-aluno__acoes')).toBeTruthy()
   })
 

@@ -188,8 +188,13 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
               {mensagem}
             </p>
           )}
+          {!onSalvar && (
+            <p className="editar-aluno__aviso-indisponivel" id="us07-salvamento-indisponivel">
+              A atualização dos dados está indisponível no momento. Nenhuma alteração será salva.
+            </p>
+          )}
           <div className="editar-aluno__acoes">
-            <button type="submit" className="editar-aluno__salvar" disabled={!onSalvar || enviando}>
+            <button type="submit" className="editar-aluno__salvar" disabled={!onSalvar || enviando} aria-describedby={!onSalvar ? 'us07-salvamento-indisponivel' : undefined}>
               {enviando ? 'Salvando…' : 'Salvar alterações'}
             </button>
             <button type="button" className="editar-aluno__cancelar" onClick={onCancelar} disabled={enviando}>Cancelar</button>

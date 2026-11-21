@@ -21,6 +21,7 @@
 .editar-aluno__aviso-erro, .editar-aluno__aviso-sucesso { max-width: 740px; margin: 18px auto 0; padding: 12px 16px; border-radius: 10px; font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
 .editar-aluno__aviso-erro { border: 1px solid #e9a59b; color: #ffcec5; background: #362021; }
 .editar-aluno__aviso-sucesso { border: 1px solid #8a9d92; color: #e7ffef; background: #1d3328; }
+.editar-aluno__aviso-indisponivel { width: min(100%, 520px); margin: 22px auto 0; color: #ceced1; font-size: 15px; line-height: 1.5; }
 /* Ações agrupadas e centralizadas, em vez de soltas à esquerda. */
 .editar-aluno__acoes { width: min(100%, 520px); margin: 28px auto 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .editar-aluno__acoes .editar-aluno__salvar { grid-column: 1; grid-row: 1; }
