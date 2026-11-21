@@ -183,9 +183,14 @@ function FormularioLogin({ treinador }: { treinador: boolean }) {
           >
             Criar conta
           </Link>
-          <span className="login-v2__acao login-v2__acao--secundaria login-v2__acao--indisponivel" aria-disabled="true">
+          <Link
+            className="login-v2__acao login-v2__acao--secundaria"
+            to={treinador ? '/recuperar-senha?perfil=treinador' : '/recuperar-senha'}
+            aria-disabled={enviando || undefined}
+            onClick={evento => { if (enviando) evento.preventDefault() }}
+          >
             Esqueci minha senha
-          </span>
+          </Link>
           {enviando && <span className="sr-only" role="status">Acessando sua conta. Aguarde.</span>}
         </form>
       </section>
