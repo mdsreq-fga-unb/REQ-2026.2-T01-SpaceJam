@@ -18,20 +18,14 @@
 /* Objetivos é uma seção independente: ocupa toda a largura da grade. */
 .editar-aluno__campo--objetivos { grid-column: 1 / -1; margin-top: 6px; }
 .editar-aluno__campo--objetivos textarea { min-height: 136px; }
-.editar-aluno__nota { width: 100%; max-width: 740px; margin: 28px auto 0; padding: 20px 24px; border: 1px solid #454549; border-radius: 12px; background: #1b1b1e; color: #ceced1; font-size: 15px; line-height: 1.55; }
-.editar-aluno__nota p { max-width: 72ch; }
-.editar-aluno__nota h2 { font-size: 18px; line-height: 1.4; margin-bottom: 8px; color: #f2f2f2; }
-.editar-aluno__nota p + p { margin-top: 8px; }
 .editar-aluno__aviso-erro, .editar-aluno__aviso-sucesso { max-width: 740px; margin: 18px auto 0; padding: 12px 16px; border-radius: 10px; font-size: 16px; line-height: 1.5; overflow-wrap: anywhere; }
 .editar-aluno__aviso-erro { border: 1px solid #e9a59b; color: #ffcec5; background: #362021; }
 .editar-aluno__aviso-sucesso { border: 1px solid #8a9d92; color: #e7ffef; background: #1d3328; }
-.editar-aluno__aviso-informacao { max-width: 740px; margin: 18px auto 0; padding: 12px 16px; border: 1px solid #686c78; border-radius: 10px; color: #edf0f8; background: #252932; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.editar-aluno__aviso-indisponivel { width: min(100%, 520px); margin: 22px auto 0; color: #ceced1; font-size: 15px; line-height: 1.5; }
 /* Ações agrupadas e centralizadas, em vez de soltas à esquerda. */
 .editar-aluno__acoes { width: min(100%, 520px); margin: 28px auto 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.editar-aluno__acoes .editar-aluno__conferir { grid-column: 1 / -1; grid-row: 1; border-color: #d63f1e; background: linear-gradient(110deg, #791710, #d63f1e); color: #fff; }
-.editar-aluno__acoes .editar-aluno__conferir:hover:not(:disabled) { background: #9b281b; }
-.editar-aluno__acoes .editar-aluno__salvar { grid-column: 1; grid-row: 2; }
-.editar-aluno__acoes .editar-aluno__cancelar { grid-column: 2; grid-row: 2; }
+.editar-aluno__acoes .editar-aluno__salvar { grid-column: 1; grid-row: 1; }
+.editar-aluno__acoes .editar-aluno__cancelar { grid-column: 2; grid-row: 1; }
 .editar-aluno__acoes button { min-width: 0; width: 100%; min-height: 48px; padding: 12px 16px; border-radius: 12px; border: 1px solid #5a5a5d; color: #f2f2f2; background: #1e1e21; font: 600 16px/1.4 'Barlow', 'Arial Narrow', sans-serif; }
 .editar-aluno__acoes button:hover:not(:disabled) { background: #303034; }
 .editar-aluno__acoes .editar-aluno__salvar { background: #c33819; color: white; border-color: #c33819; }
@@ -46,12 +40,10 @@
   .editar-aluno__grade { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .editar-aluno__campo--objetivos { grid-column: 1 / -1; }
   .editar-aluno__acoes { width: 100%; grid-template-columns: minmax(0, 1fr); }
-  .editar-aluno__acoes .editar-aluno__conferir,
   .editar-aluno__acoes .editar-aluno__salvar,
   .editar-aluno__acoes .editar-aluno__cancelar { grid-column: 1; grid-row: auto; }
   .editar-aluno__campo input, .editar-aluno__campo textarea { font-size: 16px; }
 }
 @media (max-width: 359px) {
-  .editar-aluno__nota { padding: 14px; }
   .editar-aluno__campo label { font-size: 15px; }
 }

@@ -60,7 +60,6 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
       document.getElementById(`us07-${primeiro}`)?.focus()
       return false
     }
-    setMensagem(onSalvar ? 'Preenchimento conferido. Você pode salvar suas alterações.' : 'Dados conferidos. O salvamento ainda não está disponível; nenhuma alteração foi guardada.')
     return true
   }
 
@@ -180,27 +179,22 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
             </div>
           </div>
 
-          {!onSalvar && (
-            <section className="editar-aluno__nota" aria-labelledby="us07-informacoes-edicao">
-              <h2 id="us07-informacoes-edicao">Sobre a atualização dos dados</h2>
-              <p>Você já pode revisar os campos e conferir o preenchimento. Salvar as alterações ainda não está disponível.</p>
-              <p>A foto de perfil será disponibilizada futuramente. O histórico de lesões e as avaliações continuam sob responsabilidade do treinador.</p>
-            </section>
-          )}
           {erroGeral && <p className="editar-aluno__aviso-erro" role="alert">{erroGeral}</p>}
           {mensagem && (
             <p
-              className={mensagem === 'Alterações salvas com sucesso.'
-                ? 'editar-aluno__aviso-sucesso'
-                : 'editar-aluno__aviso-informacao'}
+              className="editar-aluno__aviso-sucesso"
               role="status"
             >
               {mensagem}
             </p>
           )}
+          {!onSalvar && (
+            <p className="editar-aluno__aviso-indisponivel" id="us07-salvamento-indisponivel">
+              A atualização dos dados está indisponível no momento. Nenhuma alteração será salva.
+            </p>
+          )}
           <div className="editar-aluno__acoes">
-            <button type="button" onClick={conferirFormulario} disabled={enviando} className="editar-aluno__conferir">Conferir preenchimento</button>
-            <button type="submit" className="editar-aluno__salvar" disabled={!onSalvar || enviando}>
+            <button type="submit" className="editar-aluno__salvar" disabled={!onSalvar || enviando} aria-describedby={!onSalvar ? 'us07-salvamento-indisponivel' : undefined}>
               {enviando ? 'Salvando…' : 'Salvar alterações'}
             </button>
             <button type="button" className="editar-aluno__cancelar" onClick={onCancelar} disabled={enviando}>Cancelar</button>

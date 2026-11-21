@@ -28,26 +28,29 @@ describe('US07 — Editar informações do próprio perfil', () => {
     expect((screen.getByLabelText(/Meus objetivos/i) as HTMLTextAreaElement).value).toBe('Melhorar o arremesso')
   })
 
-  it('mantém objetivos como seção própria e informa o estado real do salvamento', () => {
+  it('mantém os objetivos separados sem expor avisos internos', () => {
     const { container } = renderizar()
     expect(screen.getByRole('textbox', { name: 'Meus objetivos' }).closest('.editar-aluno__campo--objetivos')).toBeTruthy()
-    expect(screen.getByRole('heading', { name: 'Sobre a atualização dos dados' })).toBeTruthy()
-    expect((screen.getByRole('button', { name: 'Salvar alterações' }) as HTMLButtonElement).disabled).toBe(true)
+    expect(screen.queryByRole('heading', { name: 'Sobre a atualização dos dados' })).toBeNull()
+    const salvar = screen.getByRole('button', { name: 'Salvar alterações' }) as HTMLButtonElement
+    expect(salvar.disabled).toBe(true)
+    expect(salvar.getAttribute('aria-describedby')).toBe('us07-salvamento-indisponivel')
+    expect(screen.getByText('A atualização dos dados está indisponível no momento. Nenhuma alteração será salva.')).toBeTruthy()
     expect(container.querySelector('.editar-aluno__acoes')).toBeTruthy()
   })
 
-  it('não finge que salvou enquanto a API não existe', async () => {
+  it('não apresenta uma confirmação enganosa sem integração de salvamento', () => {
     renderizar()
     expect((screen.getByRole('button', { name: 'Salvar alterações' }) as HTMLButtonElement).disabled).toBe(true)
-    await userEvent.setup().click(screen.getByRole('button', { name: 'Conferir preenchimento' }))
-    expect(await screen.findByRole('status')).toHaveProperty('textContent', expect.stringContaining('nenhuma alteração foi guardada'))
+    expect(screen.queryByRole('button', { name: 'Conferir preenchimento' })).toBeNull()
+    expect(screen.queryByRole('status')).toBeNull()
   })
 
   it('mostra erros de dados incompletos e foca primeiro campo inválido', async () => {
-    renderizar()
+    renderizar(vi.fn())
     const nome = screen.getByRole('textbox', { name: 'Nome' }) as HTMLInputElement
     fireEvent.change(nome, { target: { value: '   ' } })
-    await userEvent.setup().click(screen.getByRole('button', { name: 'Conferir preenchimento' }))
+    await userEvent.setup().click(screen.getByRole('button', { name: 'Salvar alterações' }))
     expect(nome.getAttribute('aria-invalid')).toBe('true')
     expect(document.activeElement).toBe(nome)
     expect(screen.getByRole('alert')).toHaveProperty('textContent', expect.stringContaining('Confira os campos'))
