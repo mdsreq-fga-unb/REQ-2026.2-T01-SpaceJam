@@ -35,6 +35,9 @@ export function InicioPage() {
         <h1>Olá, {usuario.first_name || usuario.apelido}.</h1>
 
         <p className="texto-apoio">Você entrou no Space Jam.</p>
+        <button type="button" className="botao-secundario" onClick={() => navegar('/treinador/alunos')}>
+          Consultar meus alunos
+        </button>
 
         <section className="cartao-conta" aria-labelledby="titulo-conta">
           <div className="titulo-cartao">

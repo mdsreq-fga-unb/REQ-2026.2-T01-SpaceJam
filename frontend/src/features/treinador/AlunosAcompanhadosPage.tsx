@@ -37,8 +37,8 @@ export function AlunosAcompanhadosPage() {
       alunos={previa ? alunosDemonstracao : []}
       estado={previa ? 'pronto' : 'aguardando-api'}
       demonstracao={previa}
-      // US61 é um PR separado e ainda não foi integrado à develop.
-      perfilIntegrado={false}
+      // A navegação para o perfil está disponível na branch integrada.
+      perfilIntegrado={true}
     />
   )
 }
