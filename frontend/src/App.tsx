@@ -5,6 +5,7 @@ import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
 import { CadastroPage } from './pages/CadastroPage'
 import { EditarDadosAlunoPage } from './features/alunos/EditarDadosAlunoPage'
+import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 
 export default function App() {
   return (
@@ -31,7 +32,14 @@ export default function App() {
               </RotaProtegida>
             }
           />
-          {/* Outras telas serão integradas em suas respectivas branches. */}
+          <Route
+            path="/conta/senha"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <TrocarSenhaPage />
+              </RotaProtegida>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
