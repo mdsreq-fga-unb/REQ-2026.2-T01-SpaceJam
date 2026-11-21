@@ -4,6 +4,7 @@ import { RotaProtegida } from './auth/RotaProtegida'
 import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
 import { CadastroPage } from './pages/CadastroPage'
+import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 
 export default function App() {
   return (
@@ -19,6 +20,15 @@ export default function App() {
             element={
               <RotaProtegida>
                 <InicioPage />
+              </RotaProtegida>
+            }
+          />
+          {/* US52 — Carteira de alunos acompanhados pelo treinador */}
+          <Route
+            path="/treinador/alunos"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <AlunosAcompanhadosPage />
               </RotaProtegida>
             }
           />
