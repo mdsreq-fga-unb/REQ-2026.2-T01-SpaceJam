@@ -18,4 +18,6 @@ urlpatterns = [
     # Perfil e Termos
     path("auth/me/", views.me, name="me"),
     path("auth/aceitar-termos/", views.aceitar_termos, name="aceitar-termos"),
+    # US53 — Consultar próprios dados cadastrais do aluno
+    path("contas/me/", views.meus_dados_aluno, name="contas-me-aluno"),
 ]

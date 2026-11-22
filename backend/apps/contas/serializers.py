@@ -248,3 +248,66 @@ class LoginTreinadorSerializer(serializers.Serializer):
             "refresh": str(refresh),
             "usuario": UsuarioSerializer(usuario).data,
         }
+
+class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
+    """US53 (RF4802) — Consulta dos próprios dados cadastrais do aluno (RN25, RN26, sem senha)."""
+
+    apelido = serializers.CharField(source="username", read_only=True)
+    data_nascimento = serializers.DateField(source="perfil_aluno.data_nascimento", read_only=True)
+    altura = serializers.DecimalField(
+        source="perfil_aluno.altura", max_digits=4, decimal_places=2, read_only=True
+    )
+    peso = serializers.DecimalField(
+        source="perfil_aluno.peso", max_digits=5, decimal_places=2, read_only=True
+    )
+    envergadura = serializers.DecimalField(
+        source="perfil_aluno.envergadura", max_digits=4, decimal_places=2, read_only=True
+    )
+    frequencia_semanal = serializers.IntegerField(
+        source="perfil_aluno.frequencia_semanal", read_only=True
+    )
+    objetivos = serializers.SerializerMethodField()
+    treinador_vinculado = serializers.SerializerMethodField()
+    historico_lesoes = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Usuario
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "apelido",
+            "email",
+            "telefone",
+            "data_nascimento",
+            "altura",
+            "peso",
+            "envergadura",
+            "frequencia_semanal",
+            "objetivos",
+            "treinador_vinculado",
+            "historico_lesoes",
+        ]
+        read_only_fields = fields
+
+    def get_objetivos(self, obj):
+        perfil = getattr(obj, "perfil_aluno", None)
+        if not perfil or not perfil.objetivos or not perfil.objetivos.strip():
+            return "Não informado"
+        return perfil.objetivos
+
+    def get_treinador_vinculado(self, obj):
+        if not obj.treinador:
+            return None
+        nome_completo = f"{obj.treinador.first_name} {obj.treinador.last_name}".strip()
+        return {
+            "id": obj.treinador.id,
+            "nome": nome_completo or obj.treinador.username,
+            "codigo_convite": obj.treinador.codigo_convite,
+        }
+
+    def get_historico_lesoes(self, obj):
+        lesoes_rel = getattr(obj, "lesoes", None)
+        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
+            return list(lesoes_rel.values())
+        return []
