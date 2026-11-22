@@ -311,3 +311,19 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
+    
+class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
+    """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador (RN03, RN04, RN25, RN26)."""
+
+    historico_lesoes = serializers.SerializerMethodField()
+
+    class Meta(DadosCadastraisAlunoSerializer.Meta):
+        fields = DadosCadastraisAlunoSerializer.Meta.fields + ["historico_lesoes"]
+        read_only_fields = fields
+
+    def get_historico_lesoes(self, obj):
+        # RN26: exposto em modo somente leitura quando houver vínculo; lista vazia até haver modelo de lesões
+        lesoes_rel = getattr(obj, "lesoes", None)
+        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
+            return list(lesoes_rel.values())
+        return []
