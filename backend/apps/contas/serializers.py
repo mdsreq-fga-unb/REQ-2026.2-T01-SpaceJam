@@ -175,7 +175,6 @@ class CadastroTreinadorSerializer(serializers.Serializer):
         return value
 
     def validate(self, attrs):
-        # Regra do treinador único definida na Conferência do DoR (RN01 / CA03)
         if Usuario.objects.filter(papel=Usuario.Papel.TREINADOR).exists():
             raise serializers.ValidationError(
                 {"detail": "O cadastro de treinador não está disponível pois já existe um treinador registrado."}
@@ -201,7 +200,7 @@ class LoginAlunoSerializer(serializers.Serializer):
     """US04 — Logar com conta própria (Aluno) via apelido e senha."""
 
     apelido = serializers.CharField(required=False)
-    username = serializers.CharField(required=False)  # Compatibilidade com o esqueleto anterior
+    username = serializers.CharField(required=False)
     senha = serializers.CharField(write_only=True, required=False)
     password = serializers.CharField(write_only=True, required=False)
 
@@ -248,6 +247,7 @@ class LoginTreinadorSerializer(serializers.Serializer):
             "refresh": str(refresh),
             "usuario": UsuarioSerializer(usuario).data,
         }
+
 
 class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
     """US53 (RF4802) — Consulta dos próprios dados cadastrais do aluno (RN25, RN26, sem senha)."""
@@ -311,9 +311,10 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
-    
+
+
 class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
-    """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador (RN03, RN04, RN25, RN26)."""
+    """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador."""
 
     historico_lesoes = serializers.SerializerMethodField()
 
@@ -322,14 +323,14 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
         read_only_fields = fields
 
     def get_historico_lesoes(self, obj):
-        # RN26: exposto em modo somente leitura quando houver vínculo; lista vazia até haver modelo de lesões
         lesoes_rel = getattr(obj, "lesoes", None)
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
-    
+
+
 class TrocarSenhaSerializer(serializers.Serializer):
-    """US08 (RF1108) — Troca de senha para usuário autenticado (RN24)."""
+    """US08 (RF1108) — Troca de senha para usuário autenticado."""
 
     senha_atual = serializers.CharField(write_only=True, required=True)
     nova_senha = serializers.CharField(write_only=True, required=True, min_length=6)
@@ -364,7 +365,6 @@ class TrocarSenhaSerializer(serializers.Serializer):
         user.set_password(nova_senha)
         user.save(update_fields=["password"])
 
-        # Invalida refresh tokens ativos do usuário via token_blacklist (quando habilitado)
         try:
             from rest_framework_simplejwt.token_blacklist.models import (
                 BlacklistedToken,
@@ -374,7 +374,130 @@ class TrocarSenhaSerializer(serializers.Serializer):
             for token in OutstandingToken.objects.filter(user=user):
                 BlacklistedToken.objects.get_or_create(token=token)
         except Exception:
-            # Evita quebra caso token_blacklist não esteja ativado no ambiente
             pass
 
         return user
+
+
+class EditarPerfilAlunoSerializer(serializers.Serializer):
+    """US07 — Editar informações pessoais e corporais básicas do aluno (RF1107)."""
+
+    CAMPOS_PERMITIDOS = {
+        "nome",
+        "sobrenome",
+        "apelido",
+        "email",
+        "altura",
+        "peso",
+        "envergadura",
+        "objetivos",
+    }
+
+    nome = serializers.CharField(max_length=150, required=False)
+    sobrenome = serializers.CharField(max_length=150, required=False)
+    apelido = serializers.CharField(max_length=150, required=False)
+    email = serializers.EmailField(required=False)
+    altura = serializers.DecimalField(
+        max_digits=4, decimal_places=2, min_value=0.5, max_value=2.6, required=False
+    )
+    peso = serializers.DecimalField(
+        max_digits=5, decimal_places=2, min_value=20.0, max_value=300.0, required=False
+    )
+    envergadura = serializers.DecimalField(
+        max_digits=4, decimal_places=2, min_value=0.5, max_value=2.6, required=False
+    )
+    objetivos = serializers.CharField(max_length=500, required=False)
+
+    def _usuario_alvo(self):
+        instance = self.instance
+        if isinstance(instance, PerfilAluno):
+            return instance.usuario
+        if isinstance(instance, Usuario):
+            return instance
+        request = self.context.get("request")
+        return getattr(request, "user", None)
+
+    def validate_nome(self, value):
+        nome = value.strip()
+        if not nome:
+            raise serializers.ValidationError("O nome não pode ficar em branco.")
+        return nome
+
+    def validate_sobrenome(self, value):
+        sobrenome = value.strip()
+        if not sobrenome:
+            raise serializers.ValidationError("O sobrenome não pode ficar em branco.")
+        return sobrenome
+
+    def validate_apelido(self, value):
+        apelido = value.strip()
+        if not apelido:
+            raise serializers.ValidationError("O apelido não pode ficar em branco.")
+
+        qs = Usuario.objects.filter(username__iexact=apelido)
+        usuario_alvo = self._usuario_alvo()
+        if usuario_alvo and usuario_alvo.pk:
+            qs = qs.exclude(pk=usuario_alvo.pk)
+        if qs.exists():
+            raise serializers.ValidationError("Este apelido já está em uso.")
+        return apelido
+
+    def validate_email(self, value):
+        email = value.strip().lower()
+        if not email:
+            raise serializers.ValidationError("O e-mail não pode ficar em branco.")
+
+        qs = Usuario.objects.filter(email__iexact=email)
+        usuario_alvo = self._usuario_alvo()
+        if usuario_alvo and usuario_alvo.pk:
+            qs = qs.exclude(pk=usuario_alvo.pk)
+        if qs.exists():
+            raise serializers.ValidationError("Este e-mail já está em uso.")
+        return email
+
+    def validate_objetivos(self, value):
+        objetivos = value.strip()
+        if not objetivos:
+            raise serializers.ValidationError("Os objetivos não podem ficar em branco.")
+        return objetivos
+
+    def validate(self, attrs):
+        if not attrs:
+            raise serializers.ValidationError(
+                "Informe ao menos um campo válido para edição do perfil."
+            )
+        return attrs
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        usuario = self._usuario_alvo()
+        perfil, _ = PerfilAluno.objects.get_or_create(usuario=usuario)
+
+        campos_usuario_atualizados = []
+        if "nome" in validated_data:
+            usuario.first_name = validated_data["nome"]
+            campos_usuario_atualizados.append("first_name")
+        if "sobrenome" in validated_data:
+            usuario.last_name = validated_data["sobrenome"]
+            campos_usuario_atualizados.append("last_name")
+        if "apelido" in validated_data:
+            usuario.username = validated_data["apelido"]
+            campos_usuario_atualizados.append("username")
+        if "email" in validated_data:
+            usuario.email = validated_data["email"]
+            campos_usuario_atualizados.append("email")
+
+        if campos_usuario_atualizados:
+            usuario.save(update_fields=campos_usuario_atualizados)
+
+        campos_perfil_atualizados = []
+        for campo in ("altura", "peso", "envergadura", "objetivos"):
+            if campo in validated_data:
+                setattr(perfil, campo, validated_data[campo])
+                campos_perfil_atualizados.append(campo)
+
+        if campos_perfil_atualizados:
+            perfil.save(update_fields=campos_perfil_atualizados)
+
+        usuario.refresh_from_db()
+        return usuario
