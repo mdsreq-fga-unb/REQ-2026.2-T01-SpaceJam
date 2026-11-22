@@ -25,4 +25,5 @@ urlpatterns = [
         views.consultar_perfil_aluno_acompanhado,
         name="contas-perfil-aluno",
     ),
+    path("auth/trocar-senha/", views.trocar_senha, name="trocar-senha"),
 ]

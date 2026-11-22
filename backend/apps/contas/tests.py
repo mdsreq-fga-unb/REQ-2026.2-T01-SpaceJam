@@ -275,3 +275,87 @@ class ContasUS01aUS05Tests(APITestCase):
 
         r_forbidden = self.client.get(f"/api/contas/alunos/{aluno_id}/")
         self.assertEqual(r_forbidden.status_code, 403)
+        
+    def test_us08_trocar_senha_fluxos_e_bloqueios(self):
+        self._criar_treinador()
+        endpoint = "/api/auth/trocar-senha/"
+
+        # Sem autenticação -> 401
+        self.client.credentials()
+        r_unauth = self.client.post(
+            endpoint,
+            {
+                "senha_atual": "SenhaForte#2026",
+                "nova_senha": "NovaSenha#2026",
+                "confirmacao_senha": "NovaSenha#2026",
+            },
+            format="json",
+        )
+        self.assertEqual(r_unauth.status_code, 401)
+
+        # Autentica treinador
+        login = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login['access']}")
+
+        # Nova senha igual à atual -> 400
+        r_igual = self.client.post(
+            endpoint,
+            {
+                "senha_atual": "SenhaForte#2026",
+                "nova_senha": "SenhaForte#2026",
+                "confirmacao_senha": "SenhaForte#2026",
+            },
+            format="json",
+        )
+        self.assertEqual(r_igual.status_code, 400)
+
+        # Senha atual incorreta -> 400
+        r_atual_errada = self.client.post(
+            endpoint,
+            {
+                "senha_atual": "SenhaErrada#2026",
+                "nova_senha": "NovaSenha#2026",
+                "confirmacao_senha": "NovaSenha#2026",
+            },
+            format="json",
+        )
+        self.assertEqual(r_atual_errada.status_code, 400)
+
+        # Troca válida (6+ caracteres) -> 200
+        r_ok = self.client.post(
+            endpoint,
+            {
+                "senha_atual": "SenhaForte#2026",
+                "nova_senha": "Nova#1",
+                "confirmacao_senha": "Nova#1",
+            },
+            format="json",
+        )
+        self.assertEqual(r_ok.status_code, 200)
+
+        # Refresh token antigo deve ser invalidado após a troca -> 401
+        r_refresh = self.client.post(
+            "/api/auth/refresh/",
+            {"refresh": login["refresh"]},
+            format="json",
+        )
+        self.assertEqual(r_refresh.status_code, 401)
+
+        # Login com senha antiga deve falhar e com nova senha deve funcionar
+        r_login_antiga = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "SenhaForte#2026"},
+            format="json",
+        )
+        self.assertEqual(r_login_antiga.status_code, 401)
+
+        r_login_nova = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": "carlos@basquete.com", "senha": "Nova#1"},
+            format="json",
+        )
+        self.assertEqual(r_login_nova.status_code, 200)
