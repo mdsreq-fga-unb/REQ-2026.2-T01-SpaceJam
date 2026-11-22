@@ -1061,15 +1061,16 @@
 <summary><span class="sj-requirement-id">RF4810</span><span class="sj-requirement-name">Consultar perfil de aluno acompanhado</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador consulte as informações de perfil de um aluno em acompanhamento.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador autenticado consulte o perfil completo de um aluno vinculado à sua carteira, incluindo dados cadastrais, medidas, objetivos e histórico de lesões em modo somente leitura, sem acessar alunos de outros treinadores.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
-<p id="us61" class="sj-story"><strong>US61</strong> Como treinador, quero consultar o perfil completo dos alunos sob minha responsabilidade, para analisar dados pessoais atualizados e embasar prescrição de treinos.</p>
+<p id="us61" class="sj-story"><strong>US61</strong> Como treinador, quero consultar o perfil de um aluno acompanhado por mim, para acompanhar seus dados cadastrais, objetivos e histórico clínico de forma organizada.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a><br><a href="../regras_negocio/#rn03">RN03</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a> · <a href="../regras_negocio/#rn25">RN25</a> · <a href="../regras_negocio/#rn26">RN26</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us61">US61</a></p></div>
-<div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,42</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1101">RF1101</a></p></div>
+<div><p class="sj-record-label">Recorte</p><p>CT registrado: MVP</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
