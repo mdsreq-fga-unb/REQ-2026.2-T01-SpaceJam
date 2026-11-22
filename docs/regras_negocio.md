@@ -54,7 +54,7 @@ Somente o treinador pode registrar, editar ou excluir o feedback textual dado a 
 
 ## RN12 · Política de Recuperação de Senha {#rn12}
 
-A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova senha atenda à política de senha da [RN24](#rn24).
+A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova senha atenda à política de senha da RN24.
 
 ## RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios {#rn13}
  
@@ -90,7 +90,7 @@ Só o aluno que escreveu o feedback pode editá-lo, e apenas enquanto o treino c
  
 ## RN21 · Preservação do Feedback do Aluno no Histórico {#rn21}
  
-O feedback do aluno faz parte do histórico do treino. Depois que o treino é concluído, o feedback fica somente para leitura e continua disponível para consulta do treinador, respeitando o direito de exclusão previsto na [RN05](#rn05).
+O feedback do aluno faz parte do histórico do treino. Depois que o treino é concluído, o feedback fica somente para leitura e continua disponível para consulta do treinador, respeitando o direito de exclusão previsto na RN05.
 
 ## RN22 · Dados Obrigatórios do Exercício {#rn22}
  
@@ -105,7 +105,7 @@ Ao ser incluído em um treino, o exercício é registrado no treino com os dados
 A senha de qualquer usuário deve ter no mínimo 6 caracteres. O aluno entra com apelido e senha; o treinador entra com e-mail e senha. O apelido e o e-mail são únicos no sistema. Em caso de falha no login, a mensagem não informa qual dos dois dados está incorreto.
 
 ## RN25 · Dados Obrigatórios de Cadastro {#rn25}
-O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, de 1 a 7), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, ex.: `1.85`) e peso em quilogramas (`Decimal(5,2)`), cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos ([RN15](#rn15)) é obrigatório.
+O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, de 1 a 7), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, ex.: `1.85`) e peso em quilogramas (`Decimal(5,2)`), cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos é obrigatório.
 
 ## RN26 · Consulta Cadastral do Aluno {#rn26}
-Na consulta de dados cadastrais do aluno — seja pelo próprio aluno ([RF4802](requisitos.md#rf4802)) ou pelo treinador responsável pela sua carteira ([RF4810](requisitos.md#rf4810)) —, o retorno apresenta exclusivamente os dados vinculados à conta do aluno consultado, podendo expor o `historico_lesoes` em modo somente leitura, permanecendo sua criação e edição restritas ao treinador ([RN04](#rn04)). Credenciais de acesso (como senha) nunca são retornadas na consulta.
+Na consulta de dados cadastrais do aluno — seja pelo próprio aluno ou pelo treinador responsável pela sua carteira —, o retorno apresenta exclusivamente os dados vinculados à conta do aluno consultado, podendo expor o `historico_lesoes` em modo somente leitura, permanecendo sua criação e edição restritas ao treinador. Credenciais de acesso (como senha) nunca são retornadas na consulta.
