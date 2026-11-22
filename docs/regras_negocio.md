@@ -90,7 +90,7 @@ Só o aluno que escreveu o feedback pode editá-lo, e apenas enquanto o treino c
  
 ## RN21 · Preservação do Feedback do Aluno no Histórico {#rn21}
  
-O feedback do aluno faz parte do histórico do treino. Depois que o treino é concluído, o feedback fica somente para leitura e continua disponível para consulta do treinador, respeitando o direito de exclusão previsto na.
+O feedback do aluno faz parte do histórico do treino. Depois que o treino é concluído, o feedback fica somente para leitura e continua disponível para consulta do treinador, respeitando o direito de exclusão previsto na RN05.
 
 ## RN22 · Dados Obrigatórios do Exercício {#rn22}
  
