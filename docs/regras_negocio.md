@@ -22,7 +22,7 @@ Os dados, treinos e mídias dos alunos pertencem à carteira do treinador e só 
  
 ## RN04 · Segregação de Edição Cadastral e Clínica {#rn04}
  
-Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do aluno, a edição do próprio perfil ([RF1107](requisitos.md#rf1107)) é restrita aos campos **nome, sobrenome, apelido, e-mail, altura, peso, envergadura e objetivos**, aplicando as mesmas regras de unicidade ([RN24](#rn24)) e os mesmos formatos, unidades e limites definidos para o cadastro ([RN25](#rn25)), desconsiderando o próprio usuário na verificação de duplicidade de apelido e e-mail. Campos protegidos ou de vínculo (`data de nascimento`, `frequência semanal`, `telefone`, `código do treinador`, `papel` e `aceite de termos`) não são alteráveis por essa operação. O treinador também pode registrar e editar os objetivos do aluno, mas não possui permissão para editar os dados pessoais e corporais básicos dele. O registro e a edição de histórico de lesões e testes de aptidão física são prerrogativas exclusivas do treinador.
+Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do aluno, a edição do próprio perfil é restrita aos campos **nome, sobrenome, apelido, e-mail, altura, peso, envergadura e objetivos**, aplicando as mesmas regras de unicidade e os mesmos formatos, unidades e limites definidos para o cadastro, desconsiderando o próprio usuário na verificação de duplicidade de apelido e e-mail. Campos protegidos ou de vínculo (`data de nascimento`, `frequência semanal`, `telefone`, `código do treinador`, `papel` e `aceite de termos`) não são alteráveis por essa operação. O treinador também pode registrar e editar os objetivos do aluno, mas não possui permissão para editar os dados pessoais e corporais básicos dele. O registro e a edição de histórico de lesões e testes de aptidão física são prerrogativas exclusivas do treinador.
  
 ## RN05 · Política de Exclusão de Conta e Dados (LGPD) {#rn05}
  
@@ -90,7 +90,7 @@ Só o aluno que escreveu o feedback pode editá-lo, e apenas enquanto o treino c
  
 ## RN21 · Preservação do Feedback do Aluno no Histórico {#rn21}
  
-O feedback do aluno faz parte do histórico do treino. Depois que o treino é concluído, o feedback fica somente para leitura e continua disponível para consulta do treinador, respeitando o direito de exclusão previsto na [RN05](#rn05).
+O feedback do aluno faz parte do histórico do treino. Depois que o treino é concluído, o feedback fica somente para leitura e continua disponível para consulta do treinador, respeitando o direito de exclusão previsto na RN05.
 
 ## RN22 · Dados Obrigatórios do Exercício {#rn22}
  
@@ -102,12 +102,12 @@ Ao ser incluído em um treino, o exercício é registrado no treino com os dados
 
 ## RN24 · Credenciais e Unicidade de Identificadores {#rn24}
 
-A senha de qualquer usuário deve ter no mínimo 6 caracteres. Na troca de senha ([RF1108](requisitos.md#rf1108)), a nova senha deve ser diferente da senha atual e passar pelas validações de confirmação e credencial atual; o aluno entra com apelido e senha, o treinador entra com e-mail e senha, o apelido e o e-mail são únicos no sistema, e em caso de falha no login a mensagem não informa qual dos dois dados está incorreto.
+A senha de qualquer usuário deve ter no mínimo 6 caracteres. Na troca de senha, a nova senha deve ser diferente da senha atual e passar pelas validações de confirmação e credencial atual; o aluno entra com apelido e senha, o treinador entra com e-mail e senha, o apelido e o e-mail são únicos no sistema, e em caso de falha no login a mensagem não informa qual dos dois dados está incorreto.
 
 ## RN25 · Dados Obrigatórios de Cadastro {#rn25}
 
-O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, inteiro de `1` a `7`), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API — tanto no cadastro ([RF1101](requisitos.md#rf1101)) quanto na edição de perfil ([RF1107](requisitos.md#rf1107)) —, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, entre `0.50` e `2.60`, ex.: `1.85`), peso em quilogramas (`Decimal(5,2)`, entre `20.00` e `300.00`), e o texto de objetivos possui limite máximo de `500` caracteres, cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos ([RN15](#rn15)) é obrigatório.
+O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, inteiro de `1` a `7`), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API — tanto no cadastro quanto na edição de perfil —, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, entre `0.50` e `2.60`, ex.: `1.85`), peso em quilogramas (`Decimal(5,2)`, entre `20.00` e `300.00`), e o texto de objetivos possui limite máximo de `500` caracteres, cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos é obrigatório.
 
 ## RN26 · Consulta Cadastral do Aluno {#rn26}
 
-Na consulta de dados cadastrais do aluno — seja pelo próprio aluno ([RF4802](requisitos.md#rf4802)) ou pelo treinador responsável pela sua carteira ([RF4810](requisitos.md#rf4810)) —, o retorno apresenta exclusivamente os dados vinculados à conta do aluno consultado, podendo expor o `historico_lesoes` em modo somente leitura, permanecendo sua criação e edição restritas ao treinador ([RN04](#rn04)). Credenciais de acesso (como senha) nunca são retornadas na consulta.
+Na consulta de dados cadastrais do aluno — seja pelo próprio aluno  ou pelo treinador responsável pela sua carteira —, o retorno apresenta exclusivamente os dados vinculados à conta do aluno consultado, podendo expor o `historico_lesoes` em modo somente leitura, permanecendo sua criação e edição restritas ao treinador. Credenciais de acesso (como senha) nunca são retornadas na consulta.
