@@ -1,3 +1,11 @@
+import hashlib
+import secrets
+from datetime import timedelta
+
+from django.core.cache import cache
+from django.core.mail import send_mail
+from django.core.signing import BadSignature, SignatureExpired, TimestampSigner
+
 from datetime import date
 
 from django.conf import settings
@@ -500,4 +508,184 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
             perfil.save(update_fields=campos_perfil_atualizados)
 
         usuario.refresh_from_db()
+        return usuario
+
+def _hash_token_recuperacao(token_bruto: str) -> str:
+    return hashlib.sha256(token_bruto.encode("utf-8")).hexdigest()
+
+
+def _obter_validade_segundos() -> int:
+    return int(getattr(settings, "PASSWORD_RESET_TIMEOUT_SECONDS", 3600))
+
+
+def _obter_frontend_url() -> str:
+    return getattr(settings, "FRONTEND_URL", "http://localhost:5173").rstrip("/")
+
+
+class SolicitarRecuperacaoSenhaSerializer(serializers.Serializer):
+    """US10 — Solicitar link temporário de recuperação de senha por e-mail (RF1110 / RN12)."""
+
+    MENSAGEM_GENERICA = (
+        "Se o e-mail informado estiver cadastrado, enviamos um link de recuperação de senha."
+    )
+
+    email = serializers.EmailField(required=True)
+
+    def validate_email(self, value):
+        return value.strip().lower()
+
+    def save(self, **kwargs):
+        email = self.validated_data["email"]
+        usuario = Usuario.objects.filter(email__iexact=email, is_active=True).first()
+
+        # CA02 / RN12: não revela se o e-mail existe na base
+        if not usuario:
+            return {"detail": self.MENSAGEM_GENERICA}
+
+        # CA06 / RN12: invalida tokens de recuperação anteriores ainda não usados
+        # (usa cache ou modelo TokenRecuperacaoSenha se existir; aqui usamos cache por usuário)
+        nonce = secrets.token_urlsafe(24)
+        signer = TimestampSigner(salt="us10-recuperar-senha")
+        token_assinado = signer.sign(f"{usuario.pk}:{nonce}")
+        token_hash = _hash_token_recuperacao(token_assinado)
+        ttl = _obter_validade_segundos()
+
+        cache.set(f"pwd_reset_ativo_user_{usuario.pk}", token_hash, timeout=ttl)
+        cache.set(
+            f"pwd_reset_token_{token_hash}",
+            {"user_id": usuario.pk, "usado": False},
+            timeout=ttl + 60,
+        )
+
+        link_redefinicao = f"{_obter_frontend_url()}/redefinir-senha?token={token_assinado}"
+        assunto = "Recuperação de senha"
+        corpo = (
+            f"Olá, {usuario.first_name or usuario.username}.\n\n"
+            f"Recebemos uma solicitação para redefinir a sua senha.\n"
+            f"Acesse o link abaixo (válido por 1 hora e de uso único):\n"
+            f"{link_redefinicao}\n\n"
+            f"Se você não solicitou essa alteração, ignore este e-mail."
+        )
+        remetente = getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@localhost")
+
+        send_mail(
+            subject=assunto,
+            message=corpo,
+            from_email=remetente,
+            recipient_list=[usuario.email],
+            fail_silently=False,
+        )
+
+        return {"detail": self.MENSAGEM_GENERICA}
+
+
+class RedefinirSenhaRecuperacaoSerializer(serializers.Serializer):
+    """US10 — Redefinir senha a partir de token válido de uso único (RF1110 / RN12 / RN24)."""
+
+    token = serializers.CharField(write_only=True, required=True)
+    nova_senha = serializers.CharField(write_only=True, required=True, min_length=6)
+    confirmacao_senha = serializers.CharField(write_only=True, required=False)
+
+    def _erro_token(self, codigo: str, mensagem: str):
+        raise serializers.ValidationError({"codigo": codigo, "detail": mensagem})
+
+    def _validar_e_inspecionar_token(self, token_bruto: str):
+        if not token_bruto or not token_bruto.strip():
+            self._erro_token("token_invalido", "O link de recuperação é inválido.")
+
+        token_limpo = token_bruto.strip()
+        signer = TimestampSigner(salt="us10-recuperar-senha")
+        ttl = _obter_validade_segundos()
+
+        try:
+            valor_assinado = signer.unsign(token_limpo, max_age=ttl)
+        except SignatureExpired:
+            self._erro_token(
+                "token_expirado",
+                "Este link de recuperação expirou (validade de 1 hora). Solicite um novo link.",
+            )
+        except BadSignature:
+            self._erro_token(
+                "token_invalido",
+                "Este link de recuperação é inválido ou foi adulterado.",
+            )
+
+        if ":" not in valor_assinado:
+            self._erro_token("token_invalido", "Este link de recuperação é inválido.")
+
+        user_id_str, _ = valor_assinado.split(":", 1)
+        token_hash = _hash_token_recuperacao(token_limpo)
+        registro = cache.get(f"pwd_reset_token_{token_hash}")
+
+        if not registro:
+            # Pode ter expirado no cache ou sido revogado por um novo pedido (CA06)
+            self._erro_token(
+                "token_expirado",
+                "Este link de recuperação não é mais válido ou expirou. Solicite um novo link.",
+            )
+
+        if registro.get("usado"):
+            self._erro_token(
+                "token_usado",
+                "Este link de recuperação já foi utilizado. Solicite um novo link.",
+            )
+
+        token_ativo_atual = cache.get(f"pwd_reset_ativo_user_{user_id_str}")
+        if token_ativo_atual and token_ativo_atual != token_hash:
+            self._erro_token(
+                "token_usado",
+                "Um novo link de recuperação foi solicitado e invalidou este link anterior.",
+            )
+
+        usuario = Usuario.objects.filter(pk=registro["user_id"], is_active=True).first()
+        if not usuario:
+            self._erro_token("token_invalido", "Este link de recuperação é inválido.")
+
+        return usuario, token_hash
+
+    def validate(self, attrs):
+        token = attrs.get("token", "")
+        nova_senha = attrs.get("nova_senha", "")
+        confirmacao_senha = attrs.get("confirmacao_senha")
+
+        if confirmacao_senha is not None and nova_senha != confirmacao_senha:
+            raise serializers.ValidationError(
+                {"confirmacao_senha": "A confirmação da nova senha não confere."}
+            )
+
+        usuario, token_hash = self._validar_e_inspecionar_token(token)
+        attrs["_usuario"] = usuario
+        attrs["_token_hash"] = token_hash
+        return attrs
+
+    @transaction.atomic
+    def save(self, **kwargs):
+        usuario = self.validated_data["_usuario"]
+        token_hash = self.validated_data["_token_hash"]
+        nova_senha = self.validated_data["nova_senha"]
+
+        usuario.set_password(nova_senha)
+        usuario.save(update_fields=["password"])
+
+        # CA07 / RN12: invalida o token utilizado e qualquer token ativo do usuário
+        ttl = _obter_validade_segundos()
+        cache.set(
+            f"pwd_reset_token_{token_hash}",
+            {"user_id": usuario.pk, "usado": True},
+            timeout=ttl + 60,
+        )
+        cache.delete(f"pwd_reset_ativo_user_{usuario.pk}")
+
+        # Encerra refresh tokens ativos (mesmo padrão da US08)
+        try:
+            from rest_framework_simplejwt.token_blacklist.models import (
+                BlacklistedToken,
+                OutstandingToken,
+            )
+
+            for token_obj in OutstandingToken.objects.filter(user=usuario):
+                BlacklistedToken.objects.get_or_create(token=token_obj)
+        except Exception:
+            pass
+
         return usuario

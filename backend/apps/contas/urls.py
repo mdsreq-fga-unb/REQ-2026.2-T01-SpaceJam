@@ -32,4 +32,15 @@ urlpatterns = [
         views.editar_perfil_aluno,
         name="contas-aluno-editar",
     ),
+    # US10 — Recuperar senha
+    path(
+        "auth/recuperar-senha/",
+        views.solicitar_recuperacao_senha,
+        name="recuperar-senha",
+    ),
+    path(
+        "auth/redefinir-senha/",
+        views.redefinir_senha_recuperacao,
+        name="redefinir-senha",
+    ),
 ]
