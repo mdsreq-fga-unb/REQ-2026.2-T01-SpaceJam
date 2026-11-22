@@ -22,7 +22,7 @@ Os dados, treinos e mídias dos alunos pertencem à carteira do treinador e só 
  
 ## RN04 · Segregação de Edição Cadastral e Clínica {#rn04}
  
-Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do atleta, isso inclui suas métricas corporais primárias (nome, apelido, contato, altura, peso, envergadura e foto) e seus objetivos. O treinador também pode registrar e editar os objetivos do atleta. O registro e a edição de histórico de lesões e testes de aptidão física são prerrogativas exclusivas do treinador.
+Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do aluno, a edição do próprio perfil ([RF1107](requisitos.md#rf1107)) é restrita aos campos **nome, sobrenome, apelido, e-mail, altura, peso, envergadura e objetivos**, aplicando as mesmas regras de unicidade ([RN24](#rn24)) e os mesmos formatos, unidades e limites definidos para o cadastro ([RN25](#rn25)), desconsiderando o próprio usuário na verificação de duplicidade de apelido e e-mail. Campos protegidos ou de vínculo (`data de nascimento`, `frequência semanal`, `telefone`, `código do treinador`, `papel` e `aceite de termos`) não são alteráveis por essa operação. O treinador também pode registrar e editar os objetivos do aluno, mas não possui permissão para editar os dados pessoais e corporais básicos dele. O registro e a edição de histórico de lesões e testes de aptidão física são prerrogativas exclusivas do treinador.
  
 ## RN05 · Política de Exclusão de Conta e Dados (LGPD) {#rn05}
  
@@ -106,7 +106,7 @@ A senha de qualquer usuário deve ter no mínimo 6 caracteres. Na troca de senha
 
 ## RN25 · Dados Obrigatórios de Cadastro {#rn25}
 
-O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, de 1 a 7), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, ex.: `1.85`) e peso em quilogramas (`Decimal(5,2)`), cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos ([RN15](#rn15)) é obrigatório.
+O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, inteiro de `1` a `7`), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API — tanto no cadastro ([RF1101](requisitos.md#rf1101)) quanto na edição de perfil ([RF1107](requisitos.md#rf1107)) —, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, entre `0.50` e `2.60`, ex.: `1.85`), peso em quilogramas (`Decimal(5,2)`, entre `20.00` e `300.00`), e o texto de objetivos possui limite máximo de `500` caracteres, cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos ([RN15](#rn15)) é obrigatório.
 
 ## RN26 · Consulta Cadastral do Aluno {#rn26}
 
