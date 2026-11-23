@@ -10,13 +10,14 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from .models import Usuario
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     LoginAlunoSerializer,
     LoginTreinadorSerializer,
     UsuarioSerializer,
+    DadosCadastraisAlunoSerializer
 )
 
 
@@ -124,3 +125,23 @@ def aceitar_termos(request):
 def me(request):
     """Dados do usuário logado (usado pelo front logo após o login)."""
     return Response(UsuarioSerializer(request.user).data)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def meus_dados_aluno(request):
+    """US53 — Consultar próprios dados cadastrais do aluno (RF4802, RN03, RN25, RN26, RNF08)."""
+    if request.user.papel != Usuario.Papel.ALUNO:
+        return Response(
+            {
+                "detail": "Apenas alunos podem consultar esta rota. Treinadores devem usar a consulta de alunos."
+            },
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    aluno = (
+        Usuario.objects.select_related("perfil_aluno", "treinador")
+        .filter(pk=request.user.pk)
+        .first()
+    )
+    serializer = DadosCadastraisAlunoSerializer(aluno or request.user)
+    return Response(serializer.data, status=status.HTTP_200_OK)

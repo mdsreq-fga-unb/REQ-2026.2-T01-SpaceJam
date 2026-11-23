@@ -162,3 +162,37 @@ class ContasUS01aUS05Tests(APITestCase):
             "/api/auth/logout/", {"refresh": login_treinador["refresh"]}, format="json"
         )
         self.assertEqual(r_forbidden.status_code, 403)
+
+    def test_us53_consultar_proprios_dados_aluno_e_bloquear_treinador(self):
+        treinador = self._criar_treinador()
+        payload_aluno = self._payload_aluno(treinador["codigo_convite"])
+        self.client.post("/api/auth/cadastro/aluno/", payload_aluno, format="json")
+
+        # Sem autenticação -> 401
+        r_unauth = self.client.get("/api/contas/me/")
+        self.assertEqual(r_unauth.status_code, 401)
+
+        # Aluno autenticado -> 200 com dados cadastrais e sem senha
+        login_aluno = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": payload_aluno["apelido"], "senha": payload_aluno["senha"]},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_aluno['access']}")
+
+        r_ok = self.client.get("/api/contas/me/")
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertEqual(r_ok.data["apelido"], payload_aluno["apelido"])
+        self.assertIn("historico_lesoes", r_ok.data)
+        self.assertNotIn("password", r_ok.data)
+        self.assertNotIn("senha", r_ok.data)
+
+        # Treinador autenticado na rota exclusiva do aluno -> 403
+        login_treinador = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": treinador["email"], "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_treinador['access']}")
+        r_forbidden = self.client.get("/api/contas/me/")
+        self.assertEqual(r_forbidden.status_code, 403)
