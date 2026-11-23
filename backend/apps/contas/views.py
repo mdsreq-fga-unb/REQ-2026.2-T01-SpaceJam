@@ -12,6 +12,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Usuario
 from .serializers import (
+    AlunoAcompanhadoSerializer,
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     LoginAlunoSerializer,
@@ -126,10 +127,13 @@ def me(request):
     """Dados do usuário logado (usado pelo front logo após o login)."""
     return Response(UsuarioSerializer(request.user).data)
 
+# US53 — Consultar próprios dados cadastrais do aluno
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def meus_dados_aluno(request):
-    """US53 — Consultar próprios dados cadastrais do aluno (RF4802, RN03, RN25, RN26, RNF08)."""
+    """Consulta os dados cadastrais do próprio aluno."""
+
+    # Somente alunos podem acessar esta rota.
     if request.user.papel != Usuario.Papel.ALUNO:
         return Response(
             {
@@ -138,10 +142,52 @@ def meus_dados_aluno(request):
             status=status.HTTP_403_FORBIDDEN,
         )
 
+    # Busca os dados do aluno, incluindo seu perfil e treinador.
     aluno = (
         Usuario.objects.select_related("perfil_aluno", "treinador")
         .filter(pk=request.user.pk)
         .first()
     )
+
     serializer = DadosCadastraisAlunoSerializer(aluno or request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+# US52 — Consultar alunos acompanhados pelo treinador
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def alunos_acompanhados(request):
+    """Consulta os alunos vinculados ao treinador autenticado."""
+
+    # CA04 — Somente treinadores podem acessar a carteira.
+    if not request.user.is_treinador:
+        return Response(
+            {"detail": "Apenas treinadores podem consultar seus alunos."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    # CA01 — Busca somente os alunos vinculados ao treinador logado.
+    alunos = (
+        request.user.alunos
+        .filter(papel="ALUNO")
+        .only(
+            "id",
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "telefone",
+        )
+        .order_by("first_name", "last_name")
+    )
+
+    serializer = AlunoAcompanhadoSerializer(alunos, many=True)
+
+    # CA03 — Retorna também o código de convite.
+    return Response(
+        {
+            "alunos": serializer.data,
+            "codigo_convite": request.user.codigo_convite,
+        },
+        status=status.HTTP_200_OK,
+    )
