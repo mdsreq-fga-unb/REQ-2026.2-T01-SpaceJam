@@ -12,6 +12,7 @@ import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
+import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 
 export default function App() {
   return (
@@ -61,6 +62,14 @@ export default function App() {
             element={
               <RotaProtegida papel="TREINADOR">
                 <PerfilAlunoAcompanhadoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId?"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <BibliotecaExercicios />
               </RotaProtegida>
             }
           />

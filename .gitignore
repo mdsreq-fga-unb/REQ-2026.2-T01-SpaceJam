@@ -5,3 +5,4 @@ __pycache__/
 /.worktrees/
 .venv
 .env
+node_modules/
