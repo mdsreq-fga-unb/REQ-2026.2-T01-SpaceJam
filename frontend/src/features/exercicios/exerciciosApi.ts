@@ -89,8 +89,8 @@ export function mensagemDeErro(erro: unknown): string {
     return 'Apenas treinadores podem acessar a biblioteca de exercícios.';
   }
   if (erro.status === 404) return 'Exercício não encontrado.';
-  if (erro.status === 400 && erro.dados && typeof erro.dados === 'object') {
-    const linhas = Object.entries(erro.dados as Record<string, unknown>).map(
+  if (erro.status === 400) {
+    const linhas = Object.entries(erro.campos).map(
       ([campo, mensagens]) =>
         `${NOME_CAMPO[campo] ?? campo}: ${
           Array.isArray(mensagens) ? mensagens.join(' ') : String(mensagens)

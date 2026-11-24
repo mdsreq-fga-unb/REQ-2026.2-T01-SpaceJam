@@ -1,16 +1,12 @@
 # Critérios de aceitação
 
-Os critérios também podem ser consultados dentro das fichas do catálogo. Esta página reúne seus registros por história; grupos compartilhados são mantidos uma única vez.
+Os critérios também podem ser consultados dentro das fichas do catálogo. Esta página reúne seus registros de forma individualizada por história de usuário e eliminando agrupamentos.
 
 [Voltar ao catálogo](requisitos.md) · [Regras de negócio](regras_negocio.md)
 
-<p class="sj-reference-status">Em revisão: critérios de acesso, desempenho e privacidade precisam ser complementados pelos cenários funcionais de cada consulta. Registro documental não comprova implementação.</p>
+<p class="sj-reference-status">Em revisão: critérios de acesso, desempenho e privacidade complementados pelos cenários funcionais de cada consulta.</p>
 
 <details class="sj-document-details" markdown="1"><summary>Como ler os critérios e seus vínculos</summary>
-
-## Uso das representações
-
-A história expressa ator, intenção e valor. O cenário BDD delimita condições, ação e resultado verificável. Casos de uso poderão complementar fluxos e exceções quando houver necessidade; não foram criados casos de uso apenas para repetir as histórias.
 
 <span id="referencias-conciliadas"></span>
 
@@ -18,225 +14,354 @@ A história expressa ator, intenção e valor. O cenário BDD delimita condiçõ
 
 ## Consultar por história {#consultar-por-historia}
 
-## US01a — Cadastrar perfil (Atleta) {#ca-us01a}
+---
 
-Histórias abrangidas: US01a.
+## US01 — Cadastrar perfil (Aluno) {#ca-us01}
+<div id="ca-us01-01" class="sj-criterion"><p><strong>CA01 (Vínculo Obrigatório):</strong> Dado que um novo aluno preenche o formulário de cadastro com todos os dados obrigatórios, Quando insere o código do treinador e aceita os termos, Então o sistema cria a conta e vincula o aluno automaticamente à carteira do treinador (<a href="../regras_negocio/#rn02">RN02</a>, <a href="../regras_negocio/#rn25">RN25</a>).</p></div>
+<div id="ca-us01-02" class="sj-criterion"><p><strong>CA02 (Validação de Dados):</strong> Dado que o aluno preenche o cadastro, Quando deixa algum dado obrigatório vazio ou com formato inválido (e-mail, data de nascimento, medidas ou frequência fora de 1 a 7), Então o sistema destaca os campos pendentes e bloqueia a submissão (<a href="../regras_negocio/#rn25">RN25</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us01-03" class="sj-criterion"><p><strong>CA03 (Código Inválido):</strong> Dado que um novo aluno preenche o formulário de cadastro, Quando insere um código que não corresponde ao do treinador, Então o sistema bloqueia o cadastro e informa que o código é inválido (<a href="../regras_negocio/#rn02">RN02</a>).</p></div>
+<div id="ca-us01-04" class="sj-criterion"><p><strong>CA04 (Identificador Repetido):</strong> Dado que já existe um usuário com o mesmo apelido ou e-mail, Quando o aluno tenta concluir o cadastro, Então o sistema bloqueia e informa qual dos dois já está em uso (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us01-05" class="sj-criterion"><p><strong>CA05 (Senha Curta):</strong> Dado que o aluno preenche a senha, Quando ela tem menos de 6 caracteres, Então o sistema bloqueia o cadastro e informa o tamanho mínimo (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us01-06" class="sj-criterion"><p><strong>CA06 (Termos Não Aceitos):</strong> Dado que o aluno preencheu todos os dados, Quando tenta concluir sem aceitar os termos de uso e a política de privacidade, Então o cadastro não é concluído (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
 
-<div id="ca-us01a-01" class="sj-criterion"><p><strong>CA01 (Vínculo Obrigatório):</strong> Dado que um novo atleta preenche o formulário de cadastro, Quando ele insere um Código Único de Treinador válido, Então o sistema cria a conta e o vincula automática e exclusivamente à carteira desse treinador (<a href="../regras_negocio/#rn11">RN11</a>).</p></div>
-
-<div id="ca-us01a-02" class="sj-criterion"><p><strong>CA02 (Validação de Dados):</strong> Dado que o usuário tenta enviar o formulário, Quando faltam dados obrigatórios ou os formatos são inválidos (ex: e-mail incorreto), Então o sistema exibe alertas na interface e bloqueia a submissão (<a href="../requisitos_nao_funcionais/#rnf15">RNF15</a>).</p></div>
-
-
-
-## US01b — Solicitar cadastro (Treinador) {#ca-us01b}
-
-Histórias abrangidas: US01b.
-
-<div id="ca-us01b-01" class="sj-criterion"><p><strong>CA01 (Aprovação Restrita):</strong> Dado que um treinador finaliza o seu cadastro, Quando ele tenta fazer o login inicial, Então o sistema exibe uma mensagem informando que a conta aguarda autorização da administração e bloqueia o acesso (<a href="../regras_negocio/#rn10">RN10</a>).</p></div>
-
-
-
-## US02 — Logar com conta própria {#ca-us02}
-
-Histórias abrangidas: US02.
-
-<div id="ca-us02-01" class="sj-criterion"><p><strong>CA01 (RBAC):</strong> Dado que o usuário insere credenciais ativas e corretas, Quando aciona o login, Então o sistema o autentica e redireciona para a <em>dashboard</em> correspondente ao seu perfil de acesso (Treinador ou Atleta) (<a href="../regras_negocio/#rn01">RN01</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
-
+## US02 — Cadastrar conta (Treinador) {#ca-us02}
+<div id="ca-us02-01" class="sj-criterion"><p><strong>CA01 (Código de Ativação):</strong> Dado que o treinador preenche o formulário de cadastro com todos os dados obrigatórios, Quando informa o código de ativação válido e aceita os termos, Então o sistema cria a conta de treinador e gera o código do treinador, exibido no perfil dele (<a href="../regras_negocio/#rn01">RN01</a>, <a href="../regras_negocio/#rn02">RN02</a>, <a href="../regras_negocio/#rn25">RN25</a>).</p></div>
+<div id="ca-us02-02" class="sj-criterion"><p><strong>CA02 (Código de Ativação Inválido):</strong> Dado que alguém preenche o cadastro de treinador, Quando informa um código de ativação inválido, Então o sistema bloqueia o cadastro e informa que o código é inválido (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
+<div id="ca-us02-03" class="sj-criterion"><p><strong>CA03 (Cadastro Encerrado):</strong> Dado que já existe um treinador cadastrado, Quando alguém tenta se cadastrar como treinador, Então o sistema informa que o cadastro de treinador não está disponível e não cria a conta (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
+<div id="ca-us02-04" class="sj-criterion"><p><strong>CA04 (Validação de Dados):</strong> Dado que o treinador preenche o cadastro, Quando deixa algum dado obrigatório vazio ou com formato inválido (e-mail ou telefone), Então o sistema destaca os campos pendentes e bloqueia a submissão (<a href="../regras_negocio/#rn25">RN25</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us02-05" class="sj-criterion"><p><strong>CA05 (Identificador Repetido):</strong> Dado que já existe um usuário com o mesmo apelido ou e-mail, Quando o treinador tenta concluir o cadastro, Então o sistema bloqueia e informa qual dos dois já está em uso (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us02-06" class="sj-criterion"><p><strong>CA06 (Senha Curta):</strong> Dado que o treinador preenche a senha, Quando ela tem menos de 6 caracteres, Então o sistema bloqueia o cadastro e informa o tamanho mínimo (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us02-07" class="sj-criterion"><p><strong>CA07 (Termos Não Aceitos):</strong> Dado que o treinador preencheu todos os dados, Quando tenta concluir sem aceitar os termos de uso e a política de privacidade, Então o cadastro não é concluído (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
 
 ## US03 — Deslogar da conta {#ca-us03}
-
-Histórias abrangidas: US03.
-
-<div id="ca-us03-01" class="sj-criterion"><p><strong>CA01 (Encerramento de Sessão):</strong> Dado que o usuário está autenticado, Quando clica em &quot;Sair&quot;, Então o sistema invalida o token de sessão e redireciona para a tela de login inicial (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
-
-
-## US04a — Editar informações corporais (Atleta) {#ca-us04a}
-
-Histórias abrangidas: US04a.
-
-<div id="ca-us04a-01" class="sj-criterion"><p><strong>CA01 (Restrição de Escrita):</strong> Dado que o atleta acessa a edição de perfil, Quando visualiza os campos disponíveis, Então o sistema permite a alteração apenas de nome, contato, peso, altura e envergadura, mantendo o histórico de lesões e aptidão bloqueados em modo leitura (<a href="../regras_negocio/#rn02">RN02</a>).</p></div>
-
-
-
-## US04b — Editar informações clínicas (Treinador) {#ca-us04b}
-
-Histórias abrangidas: US04b.
-
-<div id="ca-us04b-01" class="sj-criterion"><p><strong>CA01 (Privilégio Clínico):</strong> Dado que o treinador acessa o perfil de um aluno da sua carteira, Quando edita as informações, Então ele possui permissão exclusiva para alterar o histórico de lesões, objetivos e dados de aptidão física (<a href="../regras_negocio/#rn02">RN02</a>).</p></div>
-
-
-
-## US05 — Excluir perfil de atleta (Treinador) {#ca-us05}
-
-Histórias abrangidas: US05.
-
-<div id="ca-us05-01" class="sj-criterion"><p><strong>CA01 (Exclusão por Vínculo):</strong> Dado que o treinador gerencia a sua carteira, Quando seleciona um atleta e confirma a exclusão, Então o sistema inativa a conta do atleta, sendo esta ação permitida apenas ao treinador que o acompanha (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
-
-
-
-## US06 — Gerar senha automática (Sistema) {#ca-us06}
-
-Histórias abrangidas: US06.
-
-<div id="ca-us06-01" class="sj-criterion"><p><strong>CA01 (Onboarding):</strong> Dado que uma conta de atleta é criada com sucesso, Quando o processo finaliza, Então o sistema gera uma senha provisória criptografada e envia para o e-mail cadastrado.</p></div>
-
-
-<p class="sj-record-note">Revisão pendente do fluxo de primeiro acesso. O RNF15 trata de validação de formulários e não fundamenta a geração ou o envio de senha.</p>
-
-## US07 — Trocar senha (Atleta/Treinador) {#ca-us07}
-
-Histórias abrangidas: US07.
-
-<div id="ca-us07-01" class="sj-criterion"><p><strong>CA01 (Obrigatoriedade no 1º Acesso):</strong> Dado que o usuário realiza o login com uma senha provisória, Quando a autenticação ocorre, Então o sistema redireciona obrigatoriamente para a tela de troca de senha .</p></div>
-
-<div id="ca-us07-02" class="sj-criterion"><p><strong>CA02 (Políticas de Segurança):</strong> Dado que o usuário define uma nova senha, Quando o texto possui menos de 6 caracteres, não contém números ou caracteres especiais, Então o sistema recusa a alteração e exibe as regras de formatação .</p></div>
-
-
-<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p>
-
-
-## US08 — Consultar dificuldade dos alunos {#ca-us08}
-
-Histórias abrangidas: US08.
-
-<div id="ca-us08-01" class="sj-criterion"><p><strong>CA01 (Restrição de Visualização):</strong> Dado que o treinador consulta as métricas de treino, Quando os gráficos de dificuldade (1 a 5) são gerados, Então os dados refletem exclusivamente os atletas da sua carteira (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
-
-
-
-## US09 e US10 — Registrar e Modificar dificuldade {#ca-us09-us10}
-
-Histórias abrangidas: US09, US10.
-
-<div id="ca-us09-us10-01" class="sj-criterion"><p><strong>CA01 (Escala Fixa):</strong> Dado que o atleta avalia a dificuldade de um exercício, Quando interage com o seletor, Então o sistema restringe a nota a valores inteiros entre 1 e 5 (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
-
-<div id="ca-us09-us10-02" class="sj-criterion"><p><strong>CA02 (Vigência):</strong> Dado que o atleta tenta alterar uma dificuldade previamente registrada, Quando o status do planejamento já estiver como &quot;Expirado/Indisponível&quot;, Então o sistema bloqueia a edição da nota (<a href="../regras_negocio/#rn09">RN09</a>).</p></div>
-
-
-
-## US11a e US11b — Modificar status dos exercícios {#ca-us11a-us11b}
-
-Histórias abrangidas: US11a, US11b.
-
-<div id="ca-us11a-us11b-01" class="sj-criterion"><p><strong>CA01 (Autonomia do Atleta):</strong> Dado que o atleta está executando o treino, Quando interage com o botão de status, Então ele só possui permissão para alternar entre &quot;A fazer&quot; e &quot;Concluído&quot; (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
-
-<div id="ca-us11a-us11b-02" class="sj-criterion"><p><strong>CA02 (Auditoria do Treinador):</strong> Dado que o atleta marcou um exercício como &quot;Concluído&quot;, Quando o treinador analisa o vídeo e identifica falhas, Então o treinador tem a prerrogativa de sobrepor esse status e alterá-lo para &quot;Corrigir/Refazer&quot; (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
-
-
-
-## US12 — Adicionar testes de aptidão física (Treinador) {#ca-us12}
-
-Histórias abrangidas: US12.
-
-<div id="ca-us12-01" class="sj-criterion"><p><strong>CA01 (Prerrogativa de Gestão):</strong> Dado que o treinador acessa a aba de testes do perfil de um aluno da sua carteira, Quando ele preenche os dados de uma nova avaliação física e salva, Então o sistema registra o teste e o vincula permanentemente ao histórico daquele atleta (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
-
-
-<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p>
-
-
-## US13 — Remover testes de aptidão física (Treinador) {#ca-us13}
-
-Histórias abrangidas: US13.
-
-<div id="ca-us13-01" class="sj-criterion"><p><strong>CA01 (Controle de Erros):</strong> Dado que o treinador visualiza os testes registados no perfil do aluno, Quando ele seleciona um registo incorreto e aciona a exclusão, Então o sistema remove o teste do histórico, sendo esta uma ação restrita exclusivamente ao treinador vinculado (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
-
-
-<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p>
-
-
-## US14 e US15 — Registrar e Modificar planejamento {#ca-us14-us15}
-
-Histórias abrangidas: US14, US15.
-
-<div id="ca-us14-us15-01" class="sj-criterion"><p><strong>CA01 (Filtro de Destinatários):</strong> Dado que o treinador cria um treino, Quando abre a lista de seleção de alunos, Então o sistema exibe estritamente os atletas vinculados à sua carteira (<a href="../regras_negocio/#rn01">RN01</a>).</p></div>
-
-
-
-## US16 — Vincular treino a macro-objetivos {#ca-us16}
-
-Histórias abrangidas: US16.
-
-<div id="ca-us16-01" class="sj-criterion"><p><strong>CA01 (Rastreabilidade de Metas):</strong> Dado que o treinador finaliza um planejamento, Quando ele seleciona a opção de vínculo, Então o sistema permite associar aquele conjunto de exercícios a um objetivo de longo prazo previamente definido no perfil do aluno.</p></div>
-
-
-## US17, US18 e US19 — Consultas e Relatórios de Treino {#ca-us17-us18-us19}
-
-Histórias abrangidas: US17, US18, US19.
-
-<div id="ca-us17-us18-us19-01" class="sj-criterion"><p><strong>CA01 (Performance de Carregamento):</strong> Dado que o treinador solicita o histórico ou status de treinos de um aluno, Quando a requisição é feita, Então o sistema compila e exibe a interface de dados em no máximo 5 segundos (<a href="../requisitos_nao_funcionais/#rnf11">RNF11</a>).</p></div>
-
-
-## US20, US21 e US22 — Cadastrar e Filtrar Exercícios {#ca-us20-us21-us22}
-
-Histórias abrangidas: US20, US21, US22.
-
-<div id="ca-us20-us21-us22-01" class="sj-criterion"><p><strong>CA01 (Integridade Referencial):</strong> Dado que o treinador preenche os metadados de um novo exercício, Quando tenta adicionar fundamentos ou objetivos, Então ele só pode escolher opções já validadas e existentes no catálogo global da plataforma .</p></div>
-
-
-<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p>
-
-
-## US23, US24 e US25 — Orientação e Metadados Visuais {#ca-us23-us24-us25}
-
-Histórias abrangidas: US23, US24, US25.
-
-<div id="ca-us23-us24-us25-01" class="sj-criterion"><p><strong>CA01 (Suporte Visual):</strong> Dado que o treinador cadastra um vídeo base de demonstração, Quando o arquivo é anexado, Então o sistema disponibiliza campos obrigatórios para título, descrição textual da execução e registro de erros comuns.</p></div>
-
-
-## US26 — Mandar vídeo de execução {#ca-us26}
-
-Histórias abrangidas: US26.
-
-<div id="ca-us26-01" class="sj-criterion"><p><strong>CA01 (Restrições de Submissão):</strong> Dado que o atleta tenta realizar o <em>upload</em>, Quando o arquivo ultrapassa 100MB, excede 60 segundos ou possui extensão diferente de .mp4/.mov, Então o sistema barra a ação e exibe um erro de formato (<a href="../requisitos_nao_funcionais/#rnf06">RNF06</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
-
-<div id="ca-us26-02" class="sj-criterion"><p><strong>CA02 (Progresso Visual):</strong> Dado que o arquivo cumpre as regras técnicas, Quando o upload é iniciado rumo à nuvem criptografada, Então uma barra de progresso numérica (1% a 99%) é exibida na interface (<a href="../requisitos_nao_funcionais/#rnf07">RNF07</a>, <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a>).</p></div>
-
-
-
-## US27 e US28 — Trocar e Excluir vídeo enviado {#ca-us27-us28}
-
-Histórias abrangidas: US27, US28.
-
-<div id="ca-us27-us28-01" class="sj-criterion"><p><strong>CA01 (Bloqueio por Avaliação):</strong> Dado que o atleta deseja excluir ou substituir um vídeo submetido, Quando o treinador já tiver publicado um <em>feedback</em> atrelado àquela mídia, Então os botões de exclusão e substituição ficam inativos (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
-
-
-
-## US29 — Registrar feedback {#ca-us29}
-
-Histórias abrangidas: US29.
-
-<div id="ca-us29-01" class="sj-criterion"><p><strong>CA01 (Vínculo de Mídia):</strong> Dado que o treinador assiste à evidência do aluno, Quando ele salva suas anotações, Então o texto fica permanentemente anexado àquele exercício específico do planejamento.</p></div>
-
-
-## US30 e US31 — Modificar e Excluir feedback {#ca-us30-us31}
-
-Histórias abrangidas: US30, US31.
-
-<div id="ca-us30-us31-01" class="sj-criterion"><p><strong>CA01 (Autoria):</strong> Dado que o treinador tenta editar uma avaliação passada, Quando a requisição é validada, Então o sistema só permite a modificação se o autor original do <em>feedback</em> for o próprio usuário logado (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
-
-
-
-## US32 — Notificar atleta {#ca-us32}
-
-Histórias abrangidas: US32.
-
-<div id="ca-us32-01" class="sj-criterion"><p><strong>CA01 (Gatilho de Notificação):</strong> Dado que o treinador publica ou altera um feedback, Quando a ação é salva, Então o sistema envia imediatamente um alerta visual para o painel do atleta correspondente.</p></div>
-
-
-## US34, US35, US36, US38, US39, US40 e US41 — Consultas Exclusivas do Atleta {#ca-us34-us35-us36-us38-us39-us40-us41}
-
-Histórias abrangidas: US34, US35, US36, US38, US39, US40, US41.
-
-<div id="ca-us34-us35-us36-us38-us39-us40-us41-01" class="sj-criterion"><p><strong>CA01 (Privacidade e LGPD - Atleta):</strong> Dado que o atleta navega pelas seções de histórico, vídeos, objetivos e testes, Quando ele tentar forçar na URL o ID de um recurso pertencente a outro utilizador, Então a API deve recusar o pedido (Erro 403 - <em>Forbidden</em>) e exibir apenas os dados da própria sessão (<a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>, <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
-
-
-<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p>
-
-
-## US33, US37, US42 e US43 — Consultas Exclusivas do Treinador {#ca-us33-us37-us42-us43}
-
-Histórias abrangidas: US33, US37, US42, US43.
-
-<div id="ca-us33-us37-us42-us43-01" class="sj-criterion"><p><strong>CA01 (Isolamento de Carteira - Treinador):</strong> Dado que o treinador visualiza listas de alunos, perfis clínicos, vídeos submetidos ou resultados de aptidão, Quando a interface é carregada, Então o sistema injeta um filtro de banco de dados que retorna rigorosamente os atletas que possuam o seu ID de vínculo, ocultando totalmente o resto da base de utilizadores (<a href="../regras_negocio/#rn01">RN01</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>, <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
-
-
-<p class="sj-record-note">Cenários funcionais deste grupo e condições sem regra própria: detalhamento pendente.</p>
+<div id="ca-us03-01" class="sj-criterion"><p><strong>CA01 (Encerramento de Sessão):</strong> Dado que o aluno está autenticado, Quando clica em "Sair", Então o sistema redireciona para a tela de login e o token anterior passa a receber Erro 401 em novas requisições (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us03-02" class="sj-criterion"><p><strong>CA02 (Acesso Após Sair):</strong> Dado que o aluno saiu da conta, Quando tenta abrir uma página que exige login, Então o sistema redireciona para a tela de login (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us03-03" class="sj-criterion"><p><strong>CA03 (Botão Voltar):</strong> Dado que o aluno saiu da conta, Quando usa o botão "voltar" do navegador, Então nenhuma página com dados pessoais é exibida e o sistema redireciona para a tela de login (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US04 — Logar com conta própria (Aluno) {#ca-us04}
+<div id="ca-us04-01" class="sj-criterion"><p><strong>CA01 (Autenticação do Aluno):</strong> Dado que o aluno informa apelido e senha corretos, Quando aciona o login, Então o sistema o autentica e redireciona para a página inicial do aluno (<a href="../regras_negocio/#rn24">RN24</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us04-02" class="sj-criterion"><p><strong>CA02 (Credenciais Inválidas):</strong> Dado que o aluno informa apelido inexistente ou senha incorreta, Quando aciona o login, Então o sistema não autentica e exibe a mensagem "Apelido ou senha inválidos", sem indicar qual dos dois está errado (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us04-03" class="sj-criterion"><p><strong>CA03 (Termos Pendentes):</strong> Dado que existe uma versão dos termos ainda não aceita pelo aluno, Quando ele faz login, Então o sistema exige o aceite antes de liberar as funcionalidades (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
+<div id="ca-us04-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta acessar uma tela ou endpoint do treinador, Então o sistema retorna Erro 403 (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US05 — Logar com conta própria (Treinador) {#ca-us05}
+<div id="ca-us05-01" class="sj-criterion"><p><strong>CA01 (Autenticação do Treinador):</strong> Dado que o treinador informa e-mail e senha corretos, Quando aciona o login, Então o sistema o autentica e redireciona para a página inicial do treinador (<a href="../regras_negocio/#rn24">RN24</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us05-02" class="sj-criterion"><p><strong>CA02 (Credenciais Inválidas):</strong> Dado que o treinador informa e-mail inexistente ou senha incorreta, Quando aciona o login, Então o sistema não autentica e exibe a mensagem "E-mail ou senha inválidos", sem indicar qual dos dois está errado (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us05-03" class="sj-criterion"><p><strong>CA03 (Termos Pendentes):</strong> Dado que existe uma versão dos termos ainda não aceita pelo treinador, Quando ele faz login, Então o sistema exige o aceite antes de liberar as funcionalidades (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
+
+## US06 — Excluir perfil de aluno {#ca-us06}
+<div id="ca-us06-01" class="sj-criterion"><p><strong>CA01 (Exclusão por Vínculo):</strong> Dado que o treinador gerencia sua carteira, Quando seleciona um aluno e confirma a exclusão, Então o sistema inativa a conta e remove os dados (<a href="../regras_negocio/#rn05">RN05</a>).</p></div>
+
+## US07 — Editar informações corporais e básicas (Aluno) {#ca-us07}
+<div id="ca-us07-01" class="sj-criterion"><p><strong>CA01 (Restrição de Escrita do Aluno):</strong> Dado que o aluno acessa a edição de perfil, Quando altera nome, contato, peso, altura, envergadura ou objetivos, Então o sistema salva as alterações permitidas mantendo histórico de lesões e testes de aptidão bloqueados (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
+<div id="ca-us07-02" class="sj-criterion"><p><strong>CA02 (Validação de Dados):</strong> Dado que o aluno edita o perfil, Quando apaga um dado obrigatório ou informa medida em formato inválido, Então o sistema destaca o campo, bloqueia o salvamento e mantém os dados anteriores (<a href="../regras_negocio/#rn25">RN25</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us07-03" class="sj-criterion"><p><strong>CA03 (Identificador Repetido):</strong> Dado que o aluno edita o perfil, Quando troca o apelido ou o e-mail por um já usado por outro usuário, Então o sistema bloqueia e informa qual dos dois já está em uso (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us07-04" class="sj-criterion"><p><strong>CA04 (Perfil de Outro Aluno):</strong> Dado que o aluno está autenticado, Quando tenta editar o perfil de outro aluno pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+
+## US08 — Trocar senha {#ca-us08}
+<div id="ca-us08-01" class="sj-criterion"><p><strong>CA01 (Troca Válida):</strong> Dado que o usuário está autenticado, Quando informa a senha atual correta e uma nova senha com no mínimo 6 caracteres, Então o sistema atualiza a credencial e passa a exigir a nova senha no login (<a href="../regras_negocio/#rn12">RN12</a>, <a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us08-02" class="sj-criterion"><p><strong>CA02 (Senha Atual Incorreta):</strong> Dado que o usuário está trocando a senha, Quando informa a senha atual errada, Então o sistema bloqueia a troca e mantém a senha anterior (<a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us08-03" class="sj-criterion"><p><strong>CA03 (Senha Curta):</strong> Dado que o usuário está trocando a senha, Quando a nova senha tem menos de 6 caracteres, Então o sistema bloqueia e informa o tamanho mínimo (<a href="../regras_negocio/#rn24">RN24</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us08-04" class="sj-criterion"><p><strong>CA04 (Confirmação Divergente):</strong> Dado que o usuário está trocando a senha, Quando a confirmação não é igual à nova senha, Então o sistema destaca o campo e bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+
+## US09 — Editar informações do perfil (Treinador) {#ca-us09}
+<div id="ca-us09-01" class="sj-criterion"><p><strong>CA01 (Atualização do Treinador):</strong> Dado que o treinador edita seus dados pessoais e de contato, Quando submete as alterações, Então o sistema atualiza o perfil cadastrado.</p></div>
+
+## US10 — Recuperar senha {#ca-us10}
+<div id="ca-us10-01" class="sj-criterion"><p><strong>CA01 (Envio de Token):</strong> Dado que o usuário solicita recuperação de senha, Quando informa um e-mail cadastrado, Então o sistema envia um link ou código temporário de uso único para esse e-mail (<a href="../regras_negocio/#rn12">RN12</a>).</p></div>
+<div id="ca-us10-02" class="sj-criterion"><p><strong>CA02 (E-mail Não Cadastrado):</strong> Dado que o usuário solicita recuperação de senha, Quando informa um e-mail que não está cadastrado, Então o sistema exibe a mesma mensagem genérica de envio, sem revelar se o e-mail existe (<a href="../regras_negocio/#rn12">RN12</a>, <a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+<div id="ca-us10-03" class="sj-criterion"><p><strong>CA03 (Link Expirado ou Usado):</strong> Dado que o usuário recebeu o link ou código, Quando tenta usá-lo depois do prazo de validade ou pela segunda vez, Então o sistema recusa e orienta a fazer nova solicitação (<a href="../regras_negocio/#rn12">RN12</a>).</p></div>
+<div id="ca-us10-04" class="sj-criterion"><p><strong>CA04 (Nova Senha Inválida):</strong> Dado que o usuário abriu um link válido, Quando define uma nova senha com menos de 6 caracteres, Então o sistema bloqueia a redefinição e informa o tamanho mínimo (<a href="../regras_negocio/#rn12">RN12</a>, <a href="../regras_negocio/#rn24">RN24</a>).</p></div>
+
+## US11 — Registrar histórico de lesões e aptidão {#ca-us11}
+<div id="ca-us11-01" class="sj-criterion"><p><strong>CA01 (Prerrogativa Clínica):</strong> Dado que o treinador acessa o perfil de um aluno da sua carteira, Quando registra ou edita o histórico de lesões ou objetivos, Então o sistema persiste as alterações (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
+<div id="ca-us11-02" class="sj-criterion"><p><strong>CA02 (Campos Obrigatórios):</strong> Dado que o treinador registra uma lesão, Quando deixa a descrição da lesão vazia e tenta salvar, Então o sistema destaca o campo e bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us11-03" class="sj-criterion"><p><strong>CA03 (Restrição ao Aluno):</strong> Dado que o aluno está autenticado, Quando tenta registrar ou editar o histórico de lesões pela API, Então o sistema retorna erro de autorização (Erro 403) e a opção não aparece na interface dele (<a href="../regras_negocio/#rn04">RN04</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US12 — Consultar dificuldade {#ca-us12}
+<div id="ca-us12-01" class="sj-criterion"><p><strong>CA01 (Isolamento de Consulta):</strong> Dado que o treinador consulta as métricas de dificuldade, Quando os dados são gerados, Então refletem estritamente os alunos da sua carteira (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us12-02" class="sj-criterion"><p><strong>CA02 (Nota por Exercício):</strong> Dado que o aluno registrou a dificuldade dos exercícios, Quando o treinador abre o treino, Então o sistema mostra a nota de 1 a 5 de cada exercício (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us12-03" class="sj-criterion"><p><strong>CA03 (Sem Registro):</strong> Dado que o aluno não registrou a dificuldade de um exercício, Quando o treinador abre o treino, Então o exercício aparece como "não registrada", sem erro na tela (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us12-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta consultar pela API a dificuldade registrada por outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+
+## US13 — Registrar dificuldade {#ca-us13}
+<div id="ca-us13-01" class="sj-criterion"><p><strong>CA01 (Escala Fixa):</strong> Dado que o aluno avalia a dificuldade do exercício, Quando interage com o seletor, Então a nota é restrita a valores inteiros entre 1 e 5 (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us13-02" class="sj-criterion"><p><strong>CA02 (Registro Válido):</strong> Dado que o aluno executou o exercício, Quando escolhe uma nota e salva, Então o sistema registra a nota vinculada ao exercício do treino e o treinador passa a vê-la (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us13-03" class="sj-criterion"><p><strong>CA03 (Valor Fora da Escala):</strong> Dado que a API recebe uma nota de dificuldade, Quando o valor é menor que 1, maior que 5 ou não inteiro, Então o sistema recusa o registro (<a href="../regras_negocio/#rn08">RN08</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us13-04" class="sj-criterion"><p><strong>CA04 (Treino Concluído):</strong> Dado que o treino está "Concluído", Quando o aluno abre o exercício, Então a opção de registrar a dificuldade não aparece e a API recusa o registro (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+
+## US14 — Editar dificuldade {#ca-us14}
+<div id="ca-us14-01" class="sj-criterion"><p><strong>CA01 (Vigência da Edição):</strong> Dado que o aluno tenta alterar a dificuldade, Quando o treino ainda não está concluído, Então o sistema permite a alteração (<a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us14-02" class="sj-criterion"><p><strong>CA02 (Bloqueio Após Conclusão):</strong> Dado que o treino está "Concluído", Quando o aluno abre a nota registrada, Então a opção de editar não aparece e a API recusa a alteração (<a href="../regras_negocio/#rn07">RN07</a>, <a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us14-03" class="sj-criterion"><p><strong>CA03 (Valor Fora da Escala):</strong> Dado que o aluno edita a nota, Quando envia um valor fora do intervalo inteiro de 1 a 5, Então o sistema recusa e mantém a nota anterior (<a href="../regras_negocio/#rn08">RN08</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us14-04" class="sj-criterion"><p><strong>CA04 (Autoria):</strong> Dado que um aluno está autenticado, Quando tenta alterar pela API a nota registrada por outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+
+## US15 — Registrar conclusão de treino {#ca-us15}
+<div id="ca-us15-01" class="sj-criterion"><p><strong>CA01 (Auditoria do Treinador):</strong> Dado que o treinador analisa o desempenho ou vídeo, Quando valida a execução, Então o status do treino é alterado para "Concluído" (<a href="../regras_negocio/#rn06">RN06</a>, <a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us15-02" class="sj-criterion"><p><strong>CA02 (Conclusão Presencial):</strong> Dado que o treino está "Em andamento" e o treinador acompanhou a execução presencialmente, Quando registra a conclusão, Então o status passa para "Concluído" mesmo sem a marcação "Feito" do aluno (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us15-03" class="sj-criterion"><p><strong>CA03 (Exclusividade do Treinador):</strong> Dado que o aluno está autenticado, Quando tenta registrar o treino como "Concluído" pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn07">RN07</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us15-04" class="sj-criterion"><p><strong>CA04 (Bloqueio de Edições do Aluno):</strong> Dado que o treino foi registrado como "Concluído", Quando o aluno abre o treino, Então a dificuldade e o feedback que ele registrou ficam somente para leitura (<a href="../regras_negocio/#rn08">RN08</a>, <a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+
+## US16 — Registrar teste de aptidão física {#ca-us16}
+<div id="ca-us16-01" class="sj-criterion"><p><strong>CA01 (Vínculo de Avaliação):</strong> Dado que o treinador preenche os dados de um teste físico, Quando salva, Então o sistema vincula o resultado ao histórico do aluno (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+
+## US17 — Editar teste de aptidão física {#ca-us17}
+<div id="ca-us17-01" class="sj-criterion"><p><strong>CA01 (Correção de Teste):</strong> Dado que o treinador seleciona um teste pré-existente, Quando altera os valores e salva, Então o histórico é atualizado.</p></div>
+
+## US18 — Cadastrar planejamento de treino {#ca-us18}
+<div id="ca-us18-01" class="sj-criterion"><p><strong>CA01 (Filtro de Carteira):</strong> Dado que o treinador cria um planejamento, Quando seleciona o aluno, Então a lista exibe apenas alunos da sua carteira (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us18-02" class="sj-criterion"><p><strong>CA02 (Campos Obrigatórios):</strong> Dado que o treinador preenche o planejamento, Quando deixa o aluno ou outro campo obrigatório vazio e tenta salvar, Então o sistema destaca os campos pendentes e bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us18-03" class="sj-criterion"><p><strong>CA03 (Disponível ao Aluno):</strong> Dado que o treinador salvou o planejamento, Quando o aluno consulta seus treinos, Então o planejamento aparece para ele (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
+<div id="ca-us18-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta cadastrar um planejamento pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US19 — Editar planejamento de treino {#ca-us19}
+<div id="ca-us19-01" class="sj-criterion"><p><strong>CA01 (Modificação de Rotina):</strong> Dado que o treinador edita um planejamento vigente, Quando salva as alterações, Então o sistema atualiza a prescrição do aluno (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
+<div id="ca-us19-02" class="sj-criterion"><p><strong>CA02 (Validação na Edição):</strong> Dado que o treinador edita o planejamento, Quando apaga um campo obrigatório e tenta salvar, Então o sistema bloqueia o salvamento e mantém os dados anteriores (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us19-03" class="sj-criterion"><p><strong>CA03 (Cancelamento):</strong> Dado que o treinador alterou o planejamento, Quando cancela a edição, Então nenhuma alteração é salva.</p></div>
+<div id="ca-us19-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta editar um planejamento pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US20 — Associar planejamento a objetivo do aluno {#ca-us20}
+<div id="ca-us20-01" class="sj-criterion"><p><strong>CA01 (Rastreabilidade de Metas):</strong> Dado que o treinador finaliza um planejamento, Quando associa a um objetivo de longo prazo, Então o sistema registra o vínculo.</p></div>
+
+## US21 — Consultar histórico de planejamentos {#ca-us21}
+<div id="ca-us21-01" class="sj-criterion"><p><strong>CA01 (Desempenho de Carga):</strong> Dado que o treinador consulta planejamentos passados, Quando requisita os dados, Então o carregamento ocorre em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+<div id="ca-us21-02" class="sj-criterion"><p><strong>CA02 (Listagem do Histórico):</strong> Dado que o aluno tem planejamentos anteriores, Quando o treinador abre o histórico de planejamentos dele, Então o sistema lista os planejamentos passados com seus treinos (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us21-03" class="sj-criterion"><p><strong>CA03 (Sem Histórico):</strong> Dado que o aluno não tem planejamentos anteriores, Quando o treinador abre o histórico, Então o sistema informa "nenhum planejamento anterior", sem erro na tela.</p></div>
+<div id="ca-us21-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta acessar a consulta de histórico de planejamentos do treinador pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+
+## US22 — Comparar treinamentos {#ca-us22}
+<div id="ca-us22-01" class="sj-criterion"><p><strong>CA01 (Relatório Comparativo):</strong> Dado que o treinador solicita a comparação, Quando o sistema processa, Então exibe o comparativo entre treino planejado e realizado (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+
+## US23 — Consultar status de treino {#ca-us23}
+<div id="ca-us23-01" class="sj-criterion"><p><strong>CA01 (Monitoramento de Estado):</strong> Dado que o treinador visualiza o treino, Quando verifica o progresso, Então o sistema exibe corretamente se está em andamento ou concluído (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us23-02" class="sj-criterion"><p><strong>CA02 (Treino Marcado como Feito):</strong> Dado que o aluno marcou o treino como "Feito", Quando o treinador consulta o status, Então o treino aparece como "Feito" aguardando a validação do treinador (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us23-03" class="sj-criterion"><p><strong>CA03 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta consultar pela API o status dos treinos de outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US24 — Criar treino com exercícios {#ca-us24}
+<div id="ca-us24-01" class="sj-criterion"><p><strong>CA01 (Prescrição de Séries):</strong> Dado que o treinador monta um treino, Quando seleciona exercícios da biblioteca e define parâmetros (séries/repetições), Então o treino é estruturado (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
+<div id="ca-us24-02" class="sj-criterion"><p><strong>CA02 (Preservação do Exercício Prescrito):</strong> Dado um treino criado com um exercício, Quando esse exercício é alterado na biblioteca, Então o treino continua exibindo os dados da data da prescrição (<a href="../regras_negocio/#rn23">RN23</a>).</p></div>
+<div id="ca-us24-03" class="sj-criterion"><p><strong>CA03 (Treino sem Exercício):</strong> Dado que o treinador está criando um treino, Quando tenta salvar sem nenhum exercício, Então o sistema bloqueia o envio e informa que é preciso incluir ao menos um exercício (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us24-04" class="sj-criterion"><p><strong>CA04 (Parâmetros Inválidos):</strong> Dado que o treinador define os parâmetros de um exercício, Quando informa séries, repetições ou duração vazias, zeradas ou negativas, Então o sistema destaca o campo e bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us24-05" class="sj-criterion"><p><strong>CA05 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta criar um treino pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US25 — Editar treino {#ca-us25}
+<div id="ca-us25-01" class="sj-criterion"><p><strong>CA01 (Ajuste de Parâmetros):</strong> Dado que o treinador edita um treino criado, Quando altera exercícios ou cargas, Então o sistema salva a nova configuração (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
+<div id="ca-us25-02" class="sj-criterion"><p><strong>CA02 (Validação na Edição):</strong> Dado que o treinador edita o treino, Quando deixa um parâmetro vazio, zerado ou negativo, Então o sistema bloqueia o salvamento e mantém a configuração anterior (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us25-03" class="sj-criterion"><p><strong>CA03 (Cancelamento):</strong> Dado que o treinador alterou o treino, Quando cancela a edição, Então nenhuma alteração é salva.</p></div>
+<div id="ca-us25-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta editar um treino pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US26 — Excluir planejamento {#ca-us26}
+<div id="ca-us26-01" class="sj-criterion"><p><strong>CA01 (Preservação Histórica):</strong> Dado que o treinador exclui um planejamento, Quando há execuções passadas, Então o histórico de treinos realizados é preservado (<a href="../regras_negocio/#rn13">RN13</a>).</p></div>
+
+## US27 — Consultar planejamento de aluno acompanhado {#ca-us27}
+<div id="ca-us27-01" class="sj-criterion"><p><strong>CA01 (Acesso Restrito do Treinador):</strong> Dado que o treinador acessa o planejamento de um aluno, Quando consulta os dados, Então visualiza estritamente os treinos da sua carteira (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us27-02" class="sj-criterion"><p><strong>CA02 (Detalhe do Planejamento):</strong> Dado que o aluno tem um planejamento vigente, Quando o treinador o abre, Então o sistema mostra os treinos com seus exercícios e parâmetros de execução (<a href="../regras_negocio/#rn06">RN06</a>).</p></div>
+<div id="ca-us27-03" class="sj-criterion"><p><strong>CA03 (Sem Planejamento Vigente):</strong> Dado que o aluno não tem planejamento vigente, Quando o treinador consulta, Então o sistema informa "nenhum planejamento vigente", sem erro na tela.</p></div>
+<div id="ca-us27-04" class="sj-criterion"><p><strong>CA04 (Restrição ao Aluno):</strong> Dado que o aluno está autenticado, Quando tenta usar a consulta de planejamento do treinador para ver o de outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us27-05" class="sj-criterion"><p><strong>CA05 (Desempenho):</strong> Dado que o treinador abre o planejamento de um aluno, Quando a tela é carregada, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+
+## US28 — Consultar histórico de treinos de aluno acompanhado {#ca-us28}
+<div id="ca-us28-01" class="sj-criterion"><p><strong>CA01 (Evolução Longitudinal):</strong> Dado que o treinador consulta o histórico de treinos do aluno, Quando a listagem é gerada, Então exibe todas as execuções passadas validadas (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us28-02" class="sj-criterion"><p><strong>CA02 (Detalhe da Execução):</strong> Dado que o treinador abre um treino do histórico, Quando o detalhe é exibido, Então mostra o status, a dificuldade registrada, os vídeos e os feedbacks de cada exercício (<a href="../regras_negocio/#rn08">RN08</a>, <a href="../regras_negocio/#rn21">RN21</a>).</p></div>
+<div id="ca-us28-03" class="sj-criterion"><p><strong>CA03 (Exercício Alterado ou Excluído):</strong> Dado que um exercício do treino foi editado ou excluído da biblioteca depois da prescrição, Quando o treinador consulta o histórico, Então o treino continua exibindo o exercício com os dados da época (<a href="../regras_negocio/#rn13">RN13</a>, <a href="../regras_negocio/#rn23">RN23</a>).</p></div>
+<div id="ca-us28-04" class="sj-criterion"><p><strong>CA04 (Desempenho):</strong> Dado que o treinador consulta o histórico de um aluno, Quando a listagem é pedida, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+
+## US29 — Registrar status do treino {#ca-us29}
+<div id="ca-us29-01" class="sj-criterion"><p><strong>CA01 (Sinalização de Execução):</strong> Dado que o aluno realizou o treino, Quando marca o status como "Feito", Então o sistema atualiza o registro e o treino fica aguardando a validação do treinador, sem passar para "Concluído" (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us29-02" class="sj-criterion"><p><strong>CA02 (Treino Concluído):</strong> Dado que o treino já está "Concluído", Quando o aluno abre o treino, Então a opção de marcar como "Feito" não aparece e a API recusa a alteração (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+<div id="ca-us29-03" class="sj-criterion"><p><strong>CA03 (Treino de Outro Aluno):</strong> Dado que um aluno está autenticado, Quando tenta marcar como "Feito" o treino de outro aluno pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us29-04" class="sj-criterion"><p><strong>CA04 (Restrição de Perfil):</strong> Dado que o treinador está autenticado, Quando abre o treino de um aluno, Então a opção de marcar como "Feito" não aparece, porque essa marcação é exclusiva do aluno (<a href="../regras_negocio/#rn07">RN07</a>).</p></div>
+
+## US30 — Cadastrar exercício {#ca-us30}
+<div id="ca-us30-01" class="sj-criterion"><p><strong>CA01 (Cadastro Válido):</strong> Dado que o treinador está na biblioteca de exercícios, Quando informa nome, fundamento e objetivo e salva, Então o exercício fica disponível na biblioteca e para prescrição em novos treinos (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../regras_negocio/#rn22">RN22</a>).</p></div>
+<div id="ca-us30-02" class="sj-criterion"><p><strong>CA02 (Campos Obrigatórios):</strong> Dado que o treinador preenche o cadastro, Quando deixa nome, fundamento ou objetivo vazio e tenta salvar, Então o sistema destaca os campos pendentes e bloqueia o envio (<a href="../regras_negocio/#rn22">RN22</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us30-03" class="sj-criterion"><p><strong>CA03 (Fundamento da Lista):</strong> Dado que o treinador escolhe o fundamento, Quando abre o seletor, Então só são oferecidas as opções da lista fechada, e a API recusa qualquer valor fora dela (<a href="../regras_negocio/#rn22">RN22</a>).</p></div>
+<div id="ca-us30-04" class="sj-criterion"><p><strong>CA04 (Campos Opcionais):</strong> Dado que o treinador não preencheu orientações, Quando salva com os campos obrigatórios completos, Então o exercício é cadastrado normalmente (<a href="../regras_negocio/#rn22">RN22</a>).</p></div>
+<div id="ca-us30-05" class="sj-criterion"><p><strong>CA05 (Acesso Restrito):</strong> Dado que um aluno está autenticado, Quando tenta cadastrar um exercício, Então o sistema retorna erro de autorização (Erro 403) e a opção de cadastro não aparece na interface dele (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US31 — Filtrar exercícios por fundamento {#ca-us31}
+<div id="ca-us31-01" class="sj-criterion"><p><strong>CA01 (Busca Específica):</strong> Dado que o treinador aplica filtros na biblioteca, Quando seleciona um fundamento, Então o sistema exibe apenas os exercícios correspondentes (<a href="../requisitos_nao_funcionais/#rnf11">RNF11</a>).</p></div>
+
+## US32 — Associar exercício ao objetivo do treino {#ca-us32}
+<div id="ca-us32-01" class="sj-criterion"><p><strong>CA01 (Padronização de Prescrição):</strong> Dado que o treinador vincula o exercício ao objetivo, Quando salva, Então o sistema cataloga a relação.</p></div>
+
+## US33 — Associar erros e orientações {#ca-us33}
+<div id="ca-us33-01" class="sj-criterion"><p><strong>CA01 (Alerta Preventivo):</strong> Dado que o treinador cadastra orientações de falhas, Quando o exercício é prescrito, Então os alertas ficam visíveis ao aluno (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us33-02" class="sj-criterion"><p><strong>CA02 (Erro sem Orientação):</strong> Dado que o treinador associa um erro comum ao exercício, Quando deixa a orientação corretiva vazia e tenta salvar, Então o sistema destaca o campo e bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us33-03" class="sj-criterion"><p><strong>CA03 (Vários Erros):</strong> Dado que o exercício já tem um erro comum associado, Quando o treinador associa outro erro com sua orientação, Então o exercício passa a exibir os dois (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us33-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta associar erros ou orientações pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US34 — Linkar thumbnail de vídeo base {#ca-us34}
+<div id="ca-us34-01" class="sj-criterion"><p><strong>CA01 (Miniatura Visual):</strong> Dado que o treinador envia uma thumbnail ou o sistema gera um frame automático, Quando processado, Então a imagem ilustra o vídeo base.</p></div>
+
+## US35 — Cadastrar informações complementares do vídeo base {#ca-us35}
+<div id="ca-us35-01" class="sj-criterion"><p><strong>CA01 (Suporte Visual):</strong> Dado que o treinador cadastra um vídeo base, Quando preenche título e descrição, Então os metadados são exibidos na consulta (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us35-02" class="sj-criterion"><p><strong>CA02 (Atualização dos Metadados):</strong> Dado que o vídeo base já tem título e descrição, Quando o treinador altera esses textos e salva, Então a consulta passa a exibir os novos valores (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us35-03" class="sj-criterion"><p><strong>CA03 (Exibição ao Aluno):</strong> Dado que o exercício com vídeo base foi prescrito, Quando o aluno abre o exercício no treino, Então visualiza o título e a descrição do vídeo base (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us35-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta cadastrar ou alterar os metadados do vídeo base pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US36 — Documentar erros e orientações {#ca-us36}
+<div id="ca-us36-01" class="sj-criterion"><p><strong>CA01 (Instrução Correta):</strong> Dado que o treinador documenta os erros comuns, Quando o aluno visualiza o exercício, Então lê as orientações adequadas (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us36-02" class="sj-criterion"><p><strong>CA02 (Texto Vazio):</strong> Dado que o treinador está documentando um erro comum, Quando tenta salvar o erro ou a orientação em branco, Então o sistema destaca o campo e bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us36-03" class="sj-criterion"><p><strong>CA03 (Documentação Opcional):</strong> Dado que o exercício não tem erros comuns documentados, Quando o treinador o prescreve, Então o exercício continua válido e pode ser usado normalmente (<a href="../regras_negocio/#rn22">RN22</a>).</p></div>
+<div id="ca-us36-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta documentar erros ou orientações pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US37 — Editar erros e orientações {#ca-us37}
+<div id="ca-us37-01" class="sj-criterion"><p><strong>CA01 (Atualização de Instruções):</strong> Dado que o treinador edita os erros comuns de um exercício, Quando salva, Então as novas orientações substituem as anteriores na biblioteca (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us37-02" class="sj-criterion"><p><strong>CA02 (Remoção de Erro):</strong> Dado que o exercício tem erros comuns documentados, Quando o treinador remove um deles e salva, Então o erro deixa de aparecer na consulta do exercício (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../regras_negocio/#rn22">RN22</a>).</p></div>
+<div id="ca-us37-03" class="sj-criterion"><p><strong>CA03 (Treinos Já Prescritos):</strong> Dado que o exercício já foi prescrito em um treino, Quando o treinador edita os erros e orientações na biblioteca, Então o treino já prescrito mantém as orientações da data da prescrição (<a href="../regras_negocio/#rn23">RN23</a>).</p></div>
+<div id="ca-us37-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta editar erros ou orientações pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US38 — Consultar exercício da biblioteca {#ca-us38}
+<div id="ca-us38-01" class="sj-criterion"><p><strong>CA01 (Revisão Técnica):</strong> Dado que o treinador abre um exercício da biblioteca, Quando o detalhe é exibido, Então mostra nome, objetivo, fundamento, orientações, erros comuns e vídeo base, se houver (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us38-02" class="sj-criterion"><p><strong>CA02 (Campos Não Preenchidos):</strong> Dado que o exercício não tem orientações, erros comuns ou vídeo base, Quando o detalhe é exibido, Então esses campos aparecem como "não informado", sem erro na tela (<a href="../regras_negocio/#rn22">RN22</a>).</p></div>
+<div id="ca-us38-03" class="sj-criterion"><p><strong>CA03 (Exercício Inexistente):</strong> Dado que o treinador acessa o endereço de um exercício que não existe ou foi excluído, Quando a página carrega, Então o sistema informa que o exercício não foi encontrado (Erro 404).</p></div>
+<div id="ca-us38-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que um aluno está autenticado, Quando tenta acessar a consulta da biblioteca pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US39 — Editar exercício {#ca-us39}
+<div id="ca-us39-01" class="sj-criterion"><p><strong>CA01 (Edição Válida):</strong> Dado que o treinador edita um exercício da biblioteca, Quando altera os dados mantendo os campos obrigatórios e salva, Então a biblioteca passa a exibir a nova versão, que vale para as próximas prescrições (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../regras_negocio/#rn23">RN23</a>).</p></div>
+<div id="ca-us39-02" class="sj-criterion"><p><strong>CA02 (Escopo da Edição):</strong> Dado que o treinador edita um exercício, Quando salva, Então só o registro da biblioteca é alterado e as próximas prescrições usam a nova versão(<a href="../regras_negocio/#rn23">RN23</a>).</p></div>
+<div id="ca-us39-03" class="sj-criterion"><p><strong>CA03 (Campos Obrigatórios):</strong> Dado que o treinador edita o exercício, Quando apaga nome, fundamento ou objetivo e tenta salvar, Então o sistema destaca os campos pendentes, bloqueia o salvamento e mantém os dados anteriores (<a href="../regras_negocio/#rn22">RN22</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us39-04" class="sj-criterion"><p><strong>CA04 (Cancelamento):</strong> Dado que o treinador alterou campos do exercício, Quando cancela a edição, Então nenhuma alteração é salva.</p></div>
+<div id="ca-us39-05" class="sj-criterion"><p><strong>CA05 (Acesso Restrito):</strong> Dado que um aluno está autenticado, Quando tenta editar um exercício pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn14">RN14</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US40 — Excluir exercício {#ca-us40}
+<div id="ca-us40-01" class="sj-criterion"><p><strong>CA01 (Exclusão Segura):</strong> Dado que o treinador remove um exercício, Quando ele já foi utilizado em treinos anteriores, Então o sistema preserva o histórico mantendo a integridade referencial (<a href="../regras_negocio/#rn13">RN13</a>).</p></div>
+
+## US41 — Pesquisar exercício por nome {#ca-us41}
+<div id="ca-us41-01" class="sj-criterion"><p><strong>CA01 (Busca Textual):</strong> Dado que o treinador digita o nome do exercício na barra de pesquisa, Quando aciona a busca, Então o sistema retorna os itens correspondentes (<a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us41-02" class="sj-criterion"><p><strong>CA02 (Busca Parcial):</strong> Dado que existe o exercício "Arremesso de três pontos", Quando o treinador pesquisa "arremesso", Então o exercício aparece no resultado, sem diferenciar maiúsculas e minúsculas (<a href="../requisitos_nao_funcionais/#rnf11">RNF11</a>).</p></div>
+<div id="ca-us41-03" class="sj-criterion"><p><strong>CA03 (Sem Resultados):</strong> Dado que nenhum exercício corresponde ao termo pesquisado, Quando a busca termina, Então o sistema informa "nenhum exercício encontrado", sem erro na tela.</p></div>
+<div id="ca-us41-04" class="sj-criterion"><p><strong>CA04 (Resultado Atualizado):</strong> Dado que o treinador acabou de cadastrar, editar ou excluir um exercício, Quando pesquisa pelo nome, Então o resultado já reflete a alteração em até 1,0 segundo (<a href="../requisitos_nao_funcionais/#rnf11">RNF11</a>).</p></div>
+
+## US42 — Enviar vídeo de execução {#ca-us42}
+<div id="ca-us42-01" class="sj-criterion"><p><strong>CA01 (Restrições de Submissão):</strong> Dado que o aluno faz upload de vídeo, Quando o arquivo excede 100MB, 60 segundos ou formato inválido, Então o sistema bloqueia e exibe erro (<a href="../requisitos_nao_funcionais/#rnf06">RNF06</a>, <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a>).</p></div>
+<div id="ca-us42-02" class="sj-criterion"><p><strong>CA02 (Progresso Visual):</strong> Dado que o arquivo cumpre as regras, Quando o upload é realizado, Então exibe barra de progresso de 1% a 99% (<a href="../requisitos_nao_funcionais/#rnf07">RNF07</a>, <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a>).</p></div>
+<div id="ca-us42-03" class="sj-criterion"><p><strong>CA03 (Prévia Antes do Envio):</strong> Dado que o aluno selecionou um vídeo, Quando a prévia é exibida, Então nenhum dado é enviado ao servidor até ele confirmar o envio (<a href="../requisitos_nao_funcionais/#rnf15">RNF15</a>).</p></div>
+<div id="ca-us42-04" class="sj-criterion"><p><strong>CA04 (Vínculo e Privacidade):</strong> Dado que o upload foi concluído, Quando o vídeo é salvo, Então fica vinculado ao exercício do treino e só pode ser acessado pelo próprio aluno e pelo treinador (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>, <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a>).</p></div>
+<div id="ca-us42-05" class="sj-criterion"><p><strong>CA05 (Um Vídeo por Submissão):</strong> Dado que o exercício já tem um vídeo enviado, Quando o aluno abre o exercício, Então o sistema oferece substituir o vídeo existente em vez de um novo envio (<a href="../regras_negocio/#rn09">RN09</a>).</p></div>
+
+## US43 — Substituir vídeo enviado {#ca-us43}
+<div id="ca-us43-01" class="sj-criterion"><p><strong>CA01 (Bloqueio por Avaliação):</strong> Dado que o aluno deseja substituir o vídeo enviado, Quando o treinador já registrou feedback, Então o botão fica inativo (<a href="../regras_negocio/#rn10">RN10</a>).</p></div>
+<div id="ca-us43-02" class="sj-criterion"><p><strong>CA02 (Substituição Válida):</strong> Dado que o treinador ainda não registrou feedback, Quando o aluno envia um novo vídeo válido, Então o novo vídeo substitui o anterior, que é removido do armazenamento (<a href="../regras_negocio/#rn10">RN10</a>, <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a>).</p></div>
+<div id="ca-us43-03" class="sj-criterion"><p><strong>CA03 (Arquivo Inválido):</strong> Dado que o aluno está substituindo o vídeo, Quando o novo arquivo excede 100MB, 60 segundos ou tem formato inválido, Então o sistema bloqueia e mantém o vídeo anterior (<a href="../regras_negocio/#rn09">RN09</a>, <a href="../requisitos_nao_funcionais/#rnf13">RNF13</a>).</p></div>
+<div id="ca-us43-04" class="sj-criterion"><p><strong>CA04 (Autoria):</strong> Dado que um aluno está autenticado, Quando tenta substituir pela API o vídeo de outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+
+## US44 — Excluir vídeo enviado {#ca-us44}
+<div id="ca-us44-01" class="sj-criterion"><p><strong>CA01 (Remoção Pré-Avaliação):</strong> Dado que o aluno quer excluir o vídeo, Quando nenhum feedback foi emitido, Então o sistema permite a exclusão (<a href="../regras_negocio/#rn10">RN10</a>).</p></div>
+
+## US45 — Registrar feedback {#ca-us45}
+<div id="ca-us45-01" class="sj-criterion"><p><strong>CA01 (Vínculo de Mídia):</strong> Dado que o treinador avalia o vídeo do aluno, Quando salva suas anotações, Então o feedback fica permanentemente anexado ao exercício (<a href="../regras_negocio/#rn11">RN11</a>).</p></div>
+<div id="ca-us45-02" class="sj-criterion"><p><strong>CA02 (Texto Obrigatório):</strong> Dado que o treinador está registrando o feedback, Quando tenta salvar com o texto vazio ou só com espaços, Então o sistema bloqueia o envio (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us45-03" class="sj-criterion"><p><strong>CA03 (Vídeo Imutável):</strong> Dado que o treinador registrou o feedback, Quando o aluno abre o vídeo avaliado, Então as opções de substituir e excluir o vídeo ficam indisponíveis (<a href="../regras_negocio/#rn10">RN10</a>).</p></div>
+<div id="ca-us45-04" class="sj-criterion"><p><strong>CA04 (Exclusividade do Treinador):</strong> Dado que o aluno está autenticado, Quando tenta registrar um feedback de treinador pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn11">RN11</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US46 — Editar feedback {#ca-us46}
+<div id="ca-us46-01" class="sj-criterion"><p><strong>CA01 (Edição Exclusiva do Treinador):</strong> Dado que existe um feedback registrado, Quando o treinador altera o texto e salva, Então o sistema atualiza o feedback; se o aluno tentar editá-lo, o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn11">RN11</a>).</p></div>
+<div id="ca-us46-02" class="sj-criterion"><p><strong>CA02 (Validação na Edição):</strong> Dado que o treinador edita o feedback, Quando apaga todo o texto e tenta salvar, Então o sistema bloqueia e mantém o texto anterior (<a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us46-03" class="sj-criterion"><p><strong>CA03 (Aviso ao Aluno):</strong> Dado que o treinador salvou a edição do feedback, Quando a alteração é registrada, Então o aluno recebe a notificação de feedback editado (<a href="../requisitos/#rf3607">RF3607</a>).</p></div>
+<div id="ca-us46-04" class="sj-criterion"><p><strong>CA04 (Cancelamento):</strong> Dado que o treinador alterou o texto do feedback, Quando cancela a edição, Então o feedback anterior é mantido.</p></div>
+
+## US47 — Excluir feedback {#ca-us47}
+<div id="ca-us47-01" class="sj-criterion"><p><strong>CA01 (Exclusão pelo Treinador):</strong> Dado que existe um feedback registrado, Quando o treinador confirma a exclusão, Então a anotação é removida; se o aluno tentar excluí-la, o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn11">RN11</a>).</p></div>
+
+
+## US48 — Notificar aluno sobre feedback {#ca-us48}
+<div id="ca-us48-01" class="sj-criterion"><p><strong>CA01 (Gatilho de Alerta):</strong> Dado que o treinador publica um feedback, Quando a ação é salva, Então o sistema envia imediatamente um alerta visual ao aluno (<a href="../requisitos/#rf3604">RF3604</a>).</p></div>
+<div id="ca-us48-02" class="sj-criterion"><p><strong>CA02 (Feedback Editado):</strong> Dado que o treinador edita um feedback já publicado, Quando a edição é salva, Então o aluno recebe um novo alerta informando a alteração (<a href="../requisitos/#rf3605">RF3605</a>).</p></div>
+<div id="ca-us48-03" class="sj-criterion"><p><strong>CA03 (Destinatário Único):</strong> Dado que o treinador publicou um feedback para um aluno, Quando o alerta é gerado, Então só o aluno dono do vídeo o recebe (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us48-04" class="sj-criterion"><p><strong>CA04 (Acesso pelo Alerta):</strong> Dado que o aluno recebeu o alerta, Quando clica nele, Então o sistema abre o feedback no exercício correspondente.</p></div>
+
+## US49 — Registrar feedback do aluno {#ca-us49}
+<div id="ca-us49-01" class="sj-criterion"><p><strong>CA01 (Validação do Texto):</strong> Dado que o aluno tenta salvar o feedback, Quando o campo está vazio, só com espaços ou acima de 1.000 caracteres, Então o sistema mostra um alerta e bloqueia o envio (<a href="../regras_negocio/#rn19">RN19</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+<div id="ca-us49-02" class="sj-criterion"><p><strong>CA02 (Registro Único):</strong> Dado que o aluno já registrou feedback no exercício, Quando abre o exercício de novo, Então o sistema mostra o feedback existente com a opção de editar, sem abrir um novo campo de registro (<a href="../regras_negocio/#rn17">RN17</a>).</p></div>
+<div id="ca-us49-03" class="sj-criterion"><p><strong>CA03 (Privacidade):</strong> Dado que um feedback de aluno foi registrado, Quando outro aluno tenta acessá-lo pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../regras_negocio/#rn18">RN18</a>, <a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+
+## US50 — Editar feedback do aluno {#ca-us50}
+<div id="ca-us50-01" class="sj-criterion"><p><strong>CA01 (Edição na Vigência):</strong> Dado que o aluno é o autor do feedback e o treino não está "Concluído", Quando altera o texto e salva, Então o sistema substitui o conteúdo e mostra a indicação "editado" (<a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+<div id="ca-us50-02" class="sj-criterion"><p><strong>CA02 (Bloqueio Após Conclusão):</strong> Dado que o treino está "Concluído", Quando o aluno abre o feedback, Então a opção de editar não aparece e a API recusa qualquer alteração (<a href="../regras_negocio/#rn20">RN20</a>, <a href="../regras_negocio/#rn21">RN21</a>).</p></div>
+<div id="ca-us50-03" class="sj-criterion"><p><strong>CA03 (Autoria Exclusiva):</strong> Dado que um feedback de aluno existe, Quando outro aluno tenta editá-lo, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+<div id="ca-us50-04" class="sj-criterion"><p><strong>CA04 (Validação na Edição):</strong> Dado que o aluno edita o feedback, Quando apaga todo o texto ou passa de 1.000 caracteres, Então o sistema bloqueia o salvamento e mantém o texto anterior (<a href="../regras_negocio/#rn19">RN19</a>, <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a>).</p></div>
+
+## US51 — Consultar feedback do aluno {#ca-us51}
+<div id="ca-us51-01" class="sj-criterion"><p><strong>CA01 (Visão por Exercício):</strong> Dado que o treinador abre um exercício de um aluno da sua carteira, Quando existe feedback registrado, Então o sistema mostra o texto e a indicação "editado", se houver (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us51-02" class="sj-criterion"><p><strong>CA02 (Somente Leitura):</strong> Dado que o treinador está vendo um feedback de aluno, Quando a tela carrega, Então não há opção de editar nem de excluir (<a href="../regras_negocio/#rn20">RN20</a>).</p></div>
+<div id="ca-us51-03" class="sj-criterion"><p><strong>CA03 (Histórico Preservado):</strong> Dado que o treino do aluno está "Concluído", Quando o treinador consulta o histórico, Então os feedbacks do aluno continuam disponíveis (<a href="../regras_negocio/#rn21">RN21</a>).</p></div>
+<div id="ca-us51-04" class="sj-criterion"><p><strong>CA04 (Desempenho):</strong> Dado que o treinador consulta os feedbacks de um aluno, Quando a listagem é pedida, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+
+## US52 — Consultar alunos acompanhados {#ca-us52}
+<div id="ca-us52-01" class="sj-criterion"><p><strong>CA01 (Lista de Alunos):</strong> Dado que o treinador acessa sua carteira, Quando a tela carrega, Então visualiza estritamente os alunos vinculados (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us52-02" class="sj-criterion"><p><strong>CA02 (Acesso ao Perfil):</strong> Dado que a lista foi exibida, Quando o treinador seleciona um aluno, Então o sistema abre o perfil desse aluno (<a href="../requisitos/#rf4810">RF4810</a>).</p></div>
+<div id="ca-us52-03" class="sj-criterion"><p><strong>CA03 (Lista Vazia):</strong> Dado que nenhum aluno se cadastrou ainda, Quando o treinador abre a lista, Então o sistema informa que não há alunos e mostra o código do treinador para compartilhar (<a href="../regras_negocio/#rn02">RN02</a>).</p></div>
+<div id="ca-us52-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta acessar a lista de alunos pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us52-05" class="sj-criterion"><p><strong>CA05 (Desempenho):</strong> Dado que o treinador abre a lista de alunos, Quando a tela carrega, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+
+## US53 — Consultar próprios dados cadastrais {#ca-us53}
+<div id="ca-us53-01" class="sj-criterion"><p><strong>CA01 (Privacidade do Aluno):</strong> Dado que o aluno consulta seus dados, Quando tenta forçar ID de outro usuário na URL ou na API, Então o sistema bloqueia o acesso e retorna Erro 403 (<a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us53-02" class="sj-criterion"><p><strong>CA02 (Dados Exibidos):</strong> Dado que o aluno está autenticado, Quando abre seus dados cadastrais, Então o sistema exibe os dados informados no cadastro (nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência semanal e objetivos — ou "Não informado" quando vazio) e o treinador vinculado, podendo exibir o histórico de lesões em modo somente leitura e sem nunca exibir a senha (<a href="../regras_negocio/#rn25">RN25</a>, <a href="../regras_negocio/#rn26">RN26</a>).</p></div>
+<div id="ca-us53-03" class="sj-criterion"><p><strong>CA03 (Sem Autenticação):</strong> Dado que a sessão expirou ou o usuário não está logado, Quando tenta abrir a página ou requisitar o endpoint de dados cadastrais, Então o sistema retorna Erro 401 e redireciona para a tela de login (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+<div id="ca-us53-04" class="sj-criterion"><p><strong>CA04 (Desempenho):</strong> Dado que o aluno abre seus dados cadastrais, Quando a tela carrega, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+<div id="ca-us53-05" class="sj-criterion"><p><strong>CA05 (Restrição de Perfil):</strong> Dado que um usuário com perfil Treinador está autenticado, Quando tenta acessar o endpoint exclusivo de dados cadastrais do aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US54 — Consultar próprios testes de aptidão física {#ca-us54}
+<div id="ca-us54-01" class="sj-criterion"><p><strong>CA01 (Isolamento de Testes):</strong> Dado que o aluno consulta seus testes físicos, Quando a listagem abre, Então visualiza apenas seus próprios resultados.</p></div>
+
+## US55 — Consultar próprios vídeos enviados {#ca-us55}
+<div id="ca-us55-01" class="sj-criterion"><p><strong>CA01 (Acesso Restrito a Mídias):</strong> Dado que o aluno consulta seus vídeos, Quando a requisição é feita, Então exibe apenas as mídias enviadas por sua conta (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us55-02" class="sj-criterion"><p><strong>CA02 (Vídeo de Outro Aluno):</strong> Dado que o aluno está autenticado, Quando tenta abrir o vídeo de outro aluno por ID ou endereço direto, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>, <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a>).</p></div>
+<div id="ca-us55-03" class="sj-criterion"><p><strong>CA03 (Reprodução Protegida):</strong> Dado que o aluno abre um vídeo seu, Quando o player carrega, Então o vídeo é reproduzido por endereço autenticado ou temporário, sem URL pública permanente (<a href="../requisitos_nao_funcionais/#rnf12">RNF12</a>).</p></div>
+<div id="ca-us55-04" class="sj-criterion"><p><strong>CA04 (Sem Vídeos):</strong> Dado que o aluno ainda não enviou vídeos, Quando abre a consulta, Então o sistema informa "nenhum vídeo enviado", sem erro na tela.</p></div>
+
+## US56 — Consultar vídeos de alunos {#ca-us56}
+<div id="ca-us56-01" class="sj-criterion"><p><strong>CA01 (Visão do Treinador):</strong> Dado que o treinador consulta vídeos, Quando abre o exercício do aluno, Então acessa a mídia enviada pelos alunos da sua carteira (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us56-02" class="sj-criterion"><p><strong>CA02 (Contexto do Exercício):</strong> Dado que o aluno enviou um vídeo, Quando o treinador o abre, Então o sistema mostra o exercício, o treino e a data de envio junto com o vídeo.</p></div>
+<div id="ca-us56-03" class="sj-criterion"><p><strong>CA03 (Reprodução):</strong> Dado que o vídeo está em .mp4 ou .mov, Quando o treinador o abre no navegador, Então o vídeo é reproduzido sem plugins externos (<a href="../requisitos_nao_funcionais/#rnf06">RNF06</a>, <a href="../requisitos_nao_funcionais/#rnf12">RNF12</a>).</p></div>
+<div id="ca-us56-04" class="sj-criterion"><p><strong>CA04 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta usar a consulta de vídeos do treinador pela API, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>).</p></div>
+
+## US57 — Consultar feedback recebido {#ca-us57}
+<div id="ca-us57-01" class="sj-criterion"><p><strong>CA01 (Visualização de Avaliações):</strong> Dado que o aluno consulta feedbacks, Quando abre o exercício, Então visualiza exclusivamente as notas e orientações do seu treinador (<a href="../regras_negocio/#rn11">RN11</a>).</p></div>
+<div id="ca-us57-02" class="sj-criterion"><p><strong>CA02 (Somente Leitura):</strong> Dado que o aluno está vendo um feedback do treinador, Quando a tela carrega, Então não há opção de editar nem de excluir o feedback (<a href="../regras_negocio/#rn11">RN11</a>).</p></div>
+<div id="ca-us57-03" class="sj-criterion"><p><strong>CA03 (Feedback de Outro Aluno):</strong> Dado que o aluno está autenticado, Quando tenta abrir pela API um feedback destinado a outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us57-04" class="sj-criterion"><p><strong>CA04 (Sem Feedback):</strong> Dado que o treinador ainda não avaliou o exercício, Quando o aluno o abre, Então o sistema informa "aguardando avaliação do treinador".</p></div>
+
+## US58 — Consultar próprio histórico de treinos {#ca-us58}
+<div id="ca-us58-01" class="sj-criterion"><p><strong>CA01 (Histórico Individual):</strong> Dado que o aluno consulta seu histórico, Quando a página carrega, Então exibe suas execuções anteriores sem exposição a terceiros (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us58-02" class="sj-criterion"><p><strong>CA02 (Detalhe do Treino):</strong> Dado que o aluno abre um treino do histórico, Quando o detalhe é exibido, Então mostra o status, a dificuldade registrada e os feedbacks de cada exercício (<a href="../regras_negocio/#rn07">RN07</a>, <a href="../regras_negocio/#rn08">RN08</a>).</p></div>
+<div id="ca-us58-03" class="sj-criterion"><p><strong>CA03 (Isolamento):</strong> Dado que o aluno está autenticado, Quando tenta abrir pela API o histórico de outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us58-04" class="sj-criterion"><p><strong>CA04 (Desempenho):</strong> Dado que o aluno abre o histórico, Quando a listagem é pedida, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+
+## US59 — Consultar próprios objetivos do aluno {#ca-us59}
+<div id="ca-us59-01" class="sj-criterion"><p><strong>CA01 (Metas Pessoais):</strong> Dado que o aluno consulta seus objetivos, Quando acessa o painel, Então visualiza as metas registradas para ele (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
+<div id="ca-us59-02" class="sj-criterion"><p><strong>CA02 (Objetivo Atualizado):</strong> Dado que o treinador ou o próprio aluno alterou um objetivo, Quando o aluno consulta o painel, Então vê a versão atualizada (<a href="../regras_negocio/#rn04">RN04</a>).</p></div>
+<div id="ca-us59-03" class="sj-criterion"><p><strong>CA03 (Isolamento):</strong> Dado que o aluno está autenticado, Quando tenta abrir pela API os objetivos de outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../regras_negocio/#rn03">RN03</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us59-04" class="sj-criterion"><p><strong>CA04 (Sem Objetivos):</strong> Dado que não há objetivos registrados, Quando o aluno abre o painel, Então o sistema informa "nenhum objetivo registrado", sem erro na tela.</p></div>
+
+## US60 — Consultar próprio planejamento de treinos {#ca-us60}
+<div id="ca-us60-01" class="sj-criterion"><p><strong>CA01 (Rotina Vigente):</strong> Dado que o aluno consulta seu planejamento, Quando abre a agenda, Então visualiza apenas os treinos prescritos para si (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us60-02" class="sj-criterion"><p><strong>CA02 (Detalhe do Treino):</strong> Dado que o aluno abre um treino planejado, Quando o detalhe é exibido, Então mostra os exercícios com parâmetros, orientações e erros comuns (<a href="../regras_negocio/#rn06">RN06</a>, <a href="../regras_negocio/#rn14">RN14</a>).</p></div>
+<div id="ca-us60-03" class="sj-criterion"><p><strong>CA03 (Isolamento):</strong> Dado que o aluno está autenticado, Quando tenta abrir pela API o planejamento de outro aluno, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us60-04" class="sj-criterion"><p><strong>CA04 (Sem Planejamento):</strong> Dado que o treinador ainda não cadastrou planejamento, Quando o aluno abre a agenda, Então o sistema informa "nenhum treino planejado", sem erro na tela.</p></div>
+
+## US61 — Consultar perfil de aluno acompanhado {#ca-us61}
+<div id="ca-us61-01" class="sj-criterion"><p><strong>CA01 (Dados Clínicos e Corporais):</strong> Dado que o treinador consulta o perfil do aluno, Quando o painel abre, Então visualiza dados completos do aluno vinculado (<a href="../regras_negocio/#rn03">RN03</a>).</p></div>
+<div id="ca-us61-02" class="sj-criterion"><p><strong>CA02 (Dados Exibidos):</strong> Dado que o treinador abre o perfil, Quando o painel carrega, Então mostra os dados cadastrais, os objetivos e o histórico de lesões, sem exibir a senha (<a href="../regras_negocio/#rn04">RN04</a>, <a href="../regras_negocio/#rn25">RN25</a>).</p></div>
+<div id="ca-us61-03" class="sj-criterion"><p><strong>CA03 (Acesso Restrito):</strong> Dado que o aluno está autenticado, Quando tenta abrir o perfil de outro aluno pela rota do treinador, Então o sistema retorna erro de autorização (Erro 403) (<a href="../requisitos_nao_funcionais/#rnf08">RNF08</a>, <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a>).</p></div>
+<div id="ca-us61-04" class="sj-criterion"><p><strong>CA04 (Desempenho):</strong> Dado que o treinador abre o perfil de um aluno, Quando a tela carrega, Então o carregamento termina em até 5 segundos (<a href="../requisitos_nao_funcionais/#rnf10">RNF10</a>).</p></div>
+
+## US62 — Consultar resultados de testes físicos de aluno {#ca-us62}
+<div id="ca-us62-01" class="sj-criterion"><p><strong>CA01 (Evolução Esportiva):</strong> Dado que o treinador consulta os testes do aluno, Quando a tabela é gerada, Então exibe o histórico de avaliações físicas.</p></div>
+
+## US63 — Aceitar termos de uso e política de privacidade {#ca-us63}
+<div id="ca-us63-01" class="sj-criterion"><p><strong>CA01 (Consentimento Obrigatório):</strong> Dado que o usuário realiza o primeiro acesso, Quando visualiza os termos, Então o sistema exige aceite explícito registrando data e versão (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
+<div id="ca-us63-02" class="sj-criterion"><p><strong>CA02 (Termos Não Aceitos):</strong> Dado que o usuário não aceitou os termos vigentes, Quando tenta usar qualquer funcionalidade, Então o sistema bloqueia o acesso e volta para a tela de aceite (<a href="../regras_negocio/#rn15">RN15</a>, <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a>).</p></div>
+<div id="ca-us63-03" class="sj-criterion"><p><strong>CA03 (Nova Versão):</strong> Dado que os termos foram atualizados depois do último aceite, Quando o usuário entra no sistema, Então precisa aceitar a nova versão antes de continuar (<a href="../regras_negocio/#rn15">RN15</a>).</p></div>
+<div id="ca-us63-04" class="sj-criterion"><p><strong>CA04 (Cookies Opcionais):</strong> Dado que o usuário ainda não escolheu as preferências de cookies, Quando acessa a aplicação, Então nenhum cookie opcional é gravado (<a href="../requisitos_nao_funcionais/#rnf16">RNF16</a>).</p></div>
+
+## US64 — Solicitar exclusão dos próprios dados {#ca-us64}
+<div id="ca-us64-01" class="sj-criterion"><p><strong>CA01 (Direito ao Esquecimento - LGPD):</strong> Dado que o titular solicita exclusão, Quando aciona o comando, Então o sistema processa a remoção ou anonimização de dados conforme art. 18 da LGPD (<a href="../regras_negocio/#rn05">RN05</a>).</p></div>
+<div id="ca-us64-02" class="sj-criterion"><p><strong>CA02 (Confirmação Explícita):</strong> Dado que o aluno pediu a exclusão, Quando o sistema exibe o aviso de que a ação é irreversível, Então a exclusão só ocorre após a confirmação do aluno (<a href="../regras_negocio/#rn05">RN05</a>).</p></div>
+<div id="ca-us64-03" class="sj-criterion"><p><strong>CA03 (Remoção das Mídias):</strong> Dado que a exclusão foi confirmada, Quando o processamento termina, Então os vídeos do aluno são removidos do armazenamento e não podem mais ser acessados (<a href="../regras_negocio/#rn05">RN05</a>, <a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>).</p></div>
+<div id="ca-us64-04" class="sj-criterion"><p><strong>CA04 (Acesso Revogado):</strong> Dado que a conta foi excluída, Quando alguém tenta entrar com o apelido e a senha antigos, Então o login falha (<a href="../regras_negocio/#rn05">RN05</a>, <a href="../requisitos_nao_funcionais/#rnf05">RNF05</a>).</p></div>
+
+## US65 — Registrar consentimento de responsável por aluno menor {#ca-us65}
+<div id="ca-us65-01" class="sj-criterion"><p><strong>CA01 (Proteção de Menores):</strong> Dado que o aluno possui menos de 18 anos, Quando realiza o cadastro, Então o sistema exige o registro prévio do consentimento do responsável legal (<a href="../regras_negocio/#rn16">RN16</a>).</p></div>

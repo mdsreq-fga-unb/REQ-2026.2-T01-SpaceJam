@@ -1,0 +1,556 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@700&display=swap');
+
+.conta-aluno {
+  --conta-fundo: #111113;
+  --conta-barra: #19191c;
+  --conta-cartao: #1d1d20;
+  --conta-borda: #454549;
+  --conta-texto: #f2f2f2;
+  --conta-texto-secundario: #c2c2c4;
+  --conta-laranja: #ff9a6c;
+  --conta-destaque: #d63f1e;
+  min-height: 100svh;
+  padding-bottom: 72px;
+  background: var(--conta-fundo);
+  color: var(--conta-texto);
+  font-family: 'Barlow', 'Arial Narrow', sans-serif;
+}
+
+.conta-aluno__cabecalho {
+  display: flex;
+  min-height: 76px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--conta-barra);
+}
+
+.conta-aluno__marca,
+.conta-aluno__usuario {
+  min-width: 0;
+}
+
+.conta-aluno__marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.conta-aluno__logo-v2 {
+  display: block;
+  flex: 0 0 auto;
+  width: 36px;
+  height: 38px;
+}
+
+.conta-aluno__logo-v2 img {
+  width: 36px;
+  height: 38px;
+  object-fit: contain;
+}
+
+.conta-aluno__nome-marca {
+  gap: 12px;
+  color: var(--conta-texto);
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: .02em;
+  white-space: nowrap;
+}
+
+.conta-aluno__usuario {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  color: var(--conta-texto-secundario);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.conta-aluno__nome-curto {
+  max-width: 112px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.conta-aluno__perfil-desktop {
+  display: none;
+}
+
+.conta-aluno__navegacao {
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  height: 72px;
+  padding: 8px;
+  gap: 8px;
+  background: var(--conta-barra);
+  border-top: 1px solid var(--conta-borda);
+}
+
+.conta-aluno__navegacao span {
+  display: grid;
+  min-width: 0;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--conta-cartao);
+  color: var(--conta-texto-secundario);
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.conta-aluno__navegacao span[aria-current='page'] {
+  background: linear-gradient(135deg, #791710, var(--conta-destaque));
+  color: #fff;
+  font-family: 'Barlow', 'Arial Narrow', sans-serif;
+  font-weight: 500;
+}
+
+.conta-aluno__conteudo {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 20px 32px;
+}
+
+.conta-aluno__titulo h1 {
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38px;
+  letter-spacing: .01em;
+}
+
+.conta-aluno__titulo p {
+  margin-top: 8px;
+  color: var(--conta-texto-secundario);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.conta-aluno__grade {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.conta-aluno__cartao {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--conta-borda);
+  border-radius: 12px;
+  background: var(--conta-cartao);
+}
+
+.conta-aluno__cartao--dados {
+  min-height: 146px;
+}
+
+.conta-aluno__cartao--medidas {
+  min-height: 146px;
+}
+
+.conta-aluno__cartao--objetivos {
+  min-height: 98px;
+}
+
+.conta-aluno__cartao--lesoes {
+  min-height: 122px;
+}
+
+.conta-aluno__cartao h2 {
+  font-family: 'Barlow', 'Arial Narrow', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.conta-aluno__cartao dl {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin: 16px 0 0;
+  color: var(--conta-texto-secundario);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.conta-aluno__cartao dl div {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.conta-aluno__cartao dt,
+.conta-aluno__cartao dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.conta-aluno__cartao dt {
+  font-weight: 400;
+}
+
+.conta-aluno__cartao dd {
+  margin: 0;
+}
+
+.conta-aluno__indisponivel {
+  margin-top: 8px;
+  color: var(--conta-texto-secundario);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.conta-aluno__acoes {
+  display: grid;
+  max-width: 480px;
+  gap: 12px;
+  margin: 24px auto 0;
+}
+
+.conta-aluno__acoes button {
+  height: 48px;
+  min-height: 48px;
+  padding: 11px 16px;
+  border: 1px solid var(--conta-borda);
+  border-radius: 12px;
+  background: var(--conta-cartao);
+  color: var(--conta-laranja);
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
+
+.conta-aluno__acoes button:disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+.conta-aluno__acoes button:first-child:disabled {
+  border-color: var(--conta-destaque);
+  background: var(--conta-destaque);
+  color: #fff;
+}
+
+.conta-aluno__acoes .conta-aluno__sair {
+  border-color: var(--conta-borda);
+  background: var(--conta-cartao);
+  color: var(--conta-laranja);
+}
+
+.conta-aluno__acoes .conta-aluno__sair:hover {
+  background: var(--conta-cartao);
+}
+
+@media (min-width: 900px) {
+  .conta-aluno {
+    min-height: 100svh;
+    padding: 0;
+  }
+
+  .conta-aluno__cabecalho {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    width: 224px;
+    min-height: 100svh;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 0;
+  }
+
+  .conta-aluno__marca {
+    width: 224px;
+    height: 158.229px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+
+  .conta-aluno__logo-v2 {
+    width: 64px;
+    height: 68.229px;
+  }
+
+  .conta-aluno__logo-v2 img {
+    width: 64px;
+    height: 68.229px;
+  }
+
+  .conta-aluno__nome-marca {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  .conta-aluno__navegacao {
+    position: static;
+    display: grid;
+    width: 224px;
+    height: auto;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 16px;
+    box-sizing: border-box;
+    background: transparent;
+    border-top: 0;
+  }
+
+  .conta-aluno__navegacao span {
+    min-height: 48px;
+    place-items: center start;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .conta-aluno__usuario {
+    display: grid;
+    width: 224px;
+    height: 92px;
+    gap: 4px;
+    margin-top: auto;
+    padding: 24px;
+    box-sizing: border-box;
+    color: var(--conta-texto-secundario);
+  }
+
+  .conta-aluno__nome-curto {
+    display: none;
+  }
+
+  .conta-aluno__perfil-desktop {
+    display: grid;
+    gap: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .conta-aluno__perfil-desktop strong {
+    color: var(--conta-texto);
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .conta-aluno__perfil-desktop span {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .conta-aluno__conteudo {
+    width: min(1000px, calc(100% - 332px));
+    max-width: none;
+    min-height: 100svh;
+    margin: 0 0 0 332px;
+    padding: 48px;
+    box-sizing: border-box;
+  }
+
+  .conta-aluno__titulo {
+    text-align: left;
+  }
+
+  .conta-aluno__grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .conta-aluno__acoes {
+    margin: 24px 0 0;
+  }
+
+  .conta-aluno__cartao--medidas {
+    min-height: 122px;
+  }
+
+  .conta-aluno__cartao--dados {
+    height: 146px;
+  }
+}
+
+@media (max-width: 899px) and (min-width: 600px) {
+  .conta-aluno__conteudo {
+    padding-inline: 32px;
+  }
+}
+/* US53 — Permitir crescimento dos cartões com dados reais */
+.conta-aluno__cartao--dados {
+  height: auto;
+}
+
+/* US53 — Centralização responsiva do conteúdo desktop */
+@media (min-width: 900px) {
+  .conta-aluno {
+    display: grid;
+    grid-template-columns: 224px minmax(0, 1fr);
+  }
+
+  .conta-aluno__conteudo {
+    grid-column: 2;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px;
+    box-sizing: border-box;
+  }
+}
+/* US53 — Alinhamento uniforme dos cartões no desktop */
+@media (min-width: 900px) {
+  .conta-aluno__grade {
+    align-items: stretch;
+  }
+
+  .conta-aluno__cartao {
+    height: auto;
+  }
+}
+
+/* =========================================
+   US53 — Correções de responsividade
+   e isolamento do tema antigo
+   ========================================= */
+
+/* Remove o fundo vinho antigo apenas
+   quando a tela Minha Conta estiver aberta */
+:root:has(.conta-aluno),
+body:has(.conta-aluno),
+#root:has(.conta-aluno) {
+  background: #111113;
+}
+
+.conta-aluno {
+  width: 100%;
+  min-width: 0;
+  min-height: 100dvh;
+}
+
+/* Impede que conteúdos longos forcem
+   os cartões para fora da tela */
+.conta-aluno__cartao,
+.conta-aluno__cartao dl,
+.conta-aluno__conteudo {
+  min-width: 0;
+}
+
+.conta-aluno__cartao dl {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  margin-top: 16px;
+}
+
+.conta-aluno__cartao dt,
+.conta-aluno__cartao dd {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.conta-aluno__indisponivel {
+  overflow-wrap: anywhere;
+}
+
+/* MOBILE E TABLETS */
+@media (max-width: 899px) {
+  .conta-aluno {
+    display: block;
+    padding-bottom: calc(72px + env(safe-area-inset-bottom));
+  }
+
+  .conta-aluno__cabecalho {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .conta-aluno__conteudo {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px 20px 32px;
+  }
+
+  .conta-aluno__grade {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .conta-aluno__cartao {
+    width: 100%;
+    height: auto;
+  }
+
+  .conta-aluno__acoes {
+    width: 100%;
+    max-width: 100%;
+    margin: 24px 0 0;
+  }
+
+  .conta-aluno__acoes button {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    min-height: 48px;
+    overflow-wrap: anywhere;
+    white-space: normal;
+  }
+
+  /* Navegação fixa na parte inferior */
+  .conta-aluno__navegacao {
+    position: fixed;
+    z-index: 30;
+    inset: auto 0 0;
+    width: 100%;
+    height: 72px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .conta-aluno__navegacao span {
+    min-width: 0;
+    overflow: hidden;
+  }
+}
+
+/* CELULARES MAIS ESTREITOS */
+@media (max-width: 359px) {
+  .conta-aluno__cabecalho {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .conta-aluno__marca {
+    gap: 8px;
+  }
+
+  .conta-aluno__nome-marca {
+    font-size: 20px;
+  }
+
+  .conta-aluno__nome-curto {
+    max-width: 64px;
+  }
+
+  .conta-aluno__conteudo {
+    padding-inline: 16px;
+  }
+}

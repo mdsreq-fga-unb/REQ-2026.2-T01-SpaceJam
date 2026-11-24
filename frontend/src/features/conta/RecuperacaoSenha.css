@@ -1,0 +1,29 @@
+:root:has(.recuperacao-senha), body:has(.recuperacao-senha), #root:has(.recuperacao-senha) { background: #111113; }
+.recuperacao-senha { min-width: 0; color: #f2f2f2; }
+.recuperacao-senha__pular { position: fixed; z-index: 1000; top: 8px; left: 8px; transform: translateY(-160%); border-radius: 8px; background: #ffbc99; color: #111113; padding: 12px 16px; text-decoration: none; font-weight: 700; }
+.recuperacao-senha__pular:focus-visible { transform: translateY(0); }
+.recuperacao-senha__conteudo { display: grid; gap: 28px; width: min(456px, calc(100% - 48px)); margin: 42px auto 56px; }
+.recuperacao-senha__formulario { display: grid; gap: 24px; min-width: 0; }
+.recuperacao-senha__campo { display: grid; gap: 10px; min-width: 0; }
+.recuperacao-senha__campo label { font-size: 16px; font-weight: 600; line-height: 1.4; }
+.recuperacao-senha__campo input { display: block; box-sizing: border-box; min-width: 0; width: 100%; min-height: 50px; padding: 12px 14px; border: 1px solid #707078; border-radius: 10px; outline: none; background: #1e1e21; color: #f2f2f2; font: 400 16px/1.5 'Barlow', 'Arial Narrow', sans-serif; }
+.recuperacao-senha__campo input::placeholder { color: #c2c2c4; opacity: 1; }
+.recuperacao-senha__campo input[aria-invalid='true'] { border-color: #ffc4bc; }
+.recuperacao-senha__campo input:focus-visible, .recuperacao-senha button:focus-visible, .recuperacao-senha a:focus-visible { outline: 3px solid #ffbc99; outline-offset: 3px; }
+.recuperacao-senha__senha-campo { position: relative; min-width: 0; }
+.recuperacao-senha__senha-campo input { padding-right: 104px; }
+.recuperacao-senha__mostrar { position: absolute; top: 5px; right: 5px; bottom: 5px; min-width: 84px; border: 0; border-radius: 8px; background: #303034; color: #f2f2f2; font: 600 14px/1.4 'Barlow', 'Arial Narrow', sans-serif; }
+.recuperacao-senha__mostrar:hover:not(:disabled) { background: #434349; }
+.recuperacao-senha__ajuda { color: #d1d1d4; font-size: 14px; line-height: 1.5; }
+.recuperacao-senha__erro { color: #ffcec5; font-size: 14px; line-height: 1.5; }
+.recuperacao-senha__erro-geral, .recuperacao-senha__estado, .recuperacao-senha__resultado { padding: 16px; border-radius: 12px; background: #1d1d20; border: 1px solid #5b5b61; color: #f2f2f2; line-height: 1.6; overflow-wrap: anywhere; }
+.recuperacao-senha__erro-geral { border-color: #e7a59b; color: #ffcec5; background: #362021; }
+.recuperacao-senha__primario { width: 100%; min-height: 50px; padding: 12px 18px; border: 1px solid #c33819; border-radius: 10px; background: #c33819; color: white; font: 600 16px/1.4 'Barlow', 'Arial Narrow', sans-serif; }
+.recuperacao-senha__primario:hover:not(:disabled) { background: #d63f1e; }
+.recuperacao-senha__primario:disabled { background: #303034; border-color: #56565c; color: #c9c9ce; opacity: 1; cursor: not-allowed; }
+.recuperacao-senha__voltar, .recuperacao-senha__link { color: #ffbc99; font-size: 16px; line-height: 1.5; text-decoration: underline; text-underline-offset: 4px; }
+.recuperacao-senha__voltar { justify-self: start; min-height: 44px; display: inline-flex; align-items: center; }
+.recuperacao-senha__estado { display: grid; gap: 12px; }
+@media (min-width: 900px) { .recuperacao-senha__conteudo { width: min(456px, calc(100% - 96px)); margin-top: 58px; } }
+@media (max-width: 359px) { .recuperacao-senha__conteudo { width: calc(100% - 32px); } }
+@media (prefers-reduced-motion: reduce) { .recuperacao-senha__pular { transition: none; } }
