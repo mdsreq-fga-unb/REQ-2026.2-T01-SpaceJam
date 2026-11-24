@@ -14,10 +14,11 @@ from .models import Usuario
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
+    DadosCadastraisAlunoSerializer,
     LoginAlunoSerializer,
     LoginTreinadorSerializer,
+    PerfilAlunoAcompanhadoSerializer,
     UsuarioSerializer,
-    DadosCadastraisAlunoSerializer
 )
 
 
@@ -145,3 +146,34 @@ def meus_dados_aluno(request):
     )
     serializer = DadosCadastraisAlunoSerializer(aluno or request.user)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def consultar_perfil_aluno_acompanhado(request, aluno_id):
+    """US61 — Consultar perfil de aluno acompanhado pelo treinador (RF4810, RN03, RN04, RN25, RN26)."""
+    if request.user.papel != Usuario.Papel.TREINADOR:
+        return Response(
+            {"detail": "Apenas treinadores podem consultar o perfil de alunos acompanhados."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    aluno = (
+        Usuario.objects.select_related("perfil_aluno", "treinador")
+        .filter(id=aluno_id, papel=Usuario.Papel.ALUNO)
+        .first()
+    )
+
+    if not aluno:
+        return Response(
+            {"detail": "Aluno não encontrado."},
+            status=status.HTTP_404_NOT_FOUND,
+        )
+
+    # RN03: treinador só pode consultar alunos vinculados à própria carteira
+    if aluno.treinador_id != request.user.id:
+        return Response(
+            {"detail": "Você não tem permissão para visualizar o perfil deste aluno."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    return Response(PerfilAlunoAcompanhadoSerializer(aluno).data, status=status.HTTP_200_OK)

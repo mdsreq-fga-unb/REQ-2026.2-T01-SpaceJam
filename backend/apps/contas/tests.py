@@ -196,3 +196,82 @@ class ContasUS01aUS05Tests(APITestCase):
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_treinador['access']}")
         r_forbidden = self.client.get("/api/contas/me/")
         self.assertEqual(r_forbidden.status_code, 403)
+
+    def test_us61_consultar_perfil_aluno_acompanhado_e_casos_borda(self):
+        treinador = self._criar_treinador()
+        payload_aluno = self._payload_aluno(treinador["codigo_convite"])
+        resp_aluno = self.client.post(
+            "/api/auth/cadastro/aluno/", payload_aluno, format="json"
+        )
+        self.assertEqual(resp_aluno.status_code, 201)
+        aluno_id = resp_aluno.data["id"]
+
+        # Sem autenticação -> 401
+        self.client.credentials()
+        r_unauth = self.client.get(f"/api/contas/alunos/{aluno_id}/")
+        self.assertEqual(r_unauth.status_code, 401)
+
+        # Aluno tentando acessar a rota do treinador -> 403
+        login_aluno = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": payload_aluno["apelido"], "senha": payload_aluno["senha"]},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_aluno['access']}")
+        r_aluno = self.client.get(f"/api/contas/alunos/{aluno_id}/")
+        self.assertEqual(r_aluno.status_code, 403)
+
+        # Simula perfil sem objetivos preenchidos para validar o fallback "Não informado"
+        aluno_obj = Usuario.objects.get(id=aluno_id)
+        aluno_obj.perfil_aluno.objetivos = ""
+        aluno_obj.perfil_aluno.save(update_fields=["objetivos"])
+
+        # Treinador da carteira consultando aluno -> 200 sem senha
+        login_treinador = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": treinador["email"], "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {login_treinador['access']}"
+        )
+        r_ok = self.client.get(f"/api/contas/alunos/{aluno_id}/")
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertEqual(r_ok.data["id"], aluno_id)
+        self.assertEqual(r_ok.data["objetivos"], "Não informado")
+        self.assertIn("historico_lesoes", r_ok.data)
+        self.assertNotIn("password", r_ok.data)
+        self.assertNotIn("senha", r_ok.data)
+
+        # ID inexistente -> 404
+        r_404 = self.client.get("/api/contas/alunos/999999/")
+        self.assertEqual(r_404.status_code, 404)
+
+    def test_us61_treinador_nao_acessa_aluno_de_outra_carteira(self):
+        treinador = self._criar_treinador()
+        resp_aluno = self.client.post(
+            "/api/auth/cadastro/aluno/",
+            self._payload_aluno(treinador["codigo_convite"]),
+            format="json",
+        )
+        aluno_id = resp_aluno.data["id"]
+
+        outro_treinador = Usuario.objects.create_user(
+            username="coach_outro_us61",
+            email="outro_coach_us61@basquete.com",
+            password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+            first_name="Marcos",
+            last_name="Lima",
+        )
+        login_outro = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": outro_treinador.email, "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {login_outro['access']}"
+        )
+
+        r_forbidden = self.client.get(f"/api/contas/alunos/{aluno_id}/")
+        self.assertEqual(r_forbidden.status_code, 403)
