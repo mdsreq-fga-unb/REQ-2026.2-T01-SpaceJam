@@ -130,16 +130,16 @@
 <summary><span class="sj-requirement-id">RF1107</span><span class="sj-requirement-name">Editar informações do perfil do aluno</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno autenticado edite exclusivamente seus dados pessoais e corporais básicos: nome, sobrenome, apelido, e-mail, altura, peso, envergadura e objetivos, respeitando as regras de unicidade de identificadores e os limites de formato definidos no cadastro.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno edite seus dados pessoais por exemplo nome, sobrenome, apelido, contato, altura, peso, envergadura, foto de perfil e objetivos do aluno.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
-<p id="us07" class="sj-story"><strong>US07</strong> Como aluno, quero editar as minhas informações pessoais e corporais básicas (nome, sobrenome, apelido, e-mail, altura, peso, envergadura e objetivos), para manter o meu cadastro atualizado.</p>
+<p id="us07" class="sj-story"><strong>US07</strong> Como aluno, quero editar as minhas informações pessoais e corporais básicas (nome, contato, peso, altura), para manter o meu cadastro atualizado.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Aluno</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a> · <a href="../regras_negocio/#rn24">RN24</a> · <a href="../regras_negocio/#rn25">RN25</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn04">RN04</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us07">US07</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,25</p></div>
-<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1101">RF1101</a> · <a href="../requisitos/#rf4802">RF4802</a> · <a href="../requisitos/#rf4812">RF4812</a></p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1106">RF1106</a></p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
@@ -147,16 +147,15 @@
 <summary><span class="sj-requirement-id">RF1108</span><span class="sj-requirement-name">Trocar senha</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o usuário autenticado (aluno ou treinador) altere sua senha de acesso informando a senha atual e definindo uma nova senha válida, exigindo a nova credencial nos acessos seguintes e invalidando sessões anteriores conforme as políticas de autenticação.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o usuário mude sua senha de autenticação.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
-<p id="us08" class="sj-story"><strong>US08</strong> Como usuário (aluno ou treinador), quero trocar minha senha de acesso, para manter minha conta segura. <em>(Nota: o backend atende aluno e treinador; caso a interface do treinador ainda não exista no frontend, o fluxo visual do MVP cobre a tela do usuário/aluno.)</em></p>
+<p id="us08" class="sj-story"><strong>US08</strong> Como aluno, quero trocar a senha de autenticação, para conseguir acessar o site novamente de forma segura e pessoal.</p>
 </div>
 
-<div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Usuário (Aluno e Treinador)</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn24">RN24</a></p></div>
+<div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Usuário</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn12">RN12</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us08">US08</a></p></div>
-<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1104">RF1104</a> · <a href="../requisitos/#rf1105">RF1105</a> · <a href="../requisitos/#rf4812">RF4812</a></p></div>
-<div><p class="sj-record-label">Recorte</p><p>CT registrado: MVP</p></div>
+<div><p class="sj-record-label">Recorte</p><p>CT registrado: 1,83</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
