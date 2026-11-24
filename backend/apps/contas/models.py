@@ -5,6 +5,7 @@ from datetime import date
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.utils import timezone
 
 
 def gerar_codigo_convite():
@@ -101,3 +102,58 @@ class PerfilAluno(models.Model):
 
     def __str__(self):
         return f"Perfil de {self.usuario.username}"
+
+
+class HistoricoImutavelError(Exception):
+    """Tentativa de alterar ou apagar um registro de aceite (RNF16)."""
+
+
+class HistoricoAceiteTermosQuerySet(models.QuerySet):
+    def update(self, **kwargs):
+        raise HistoricoImutavelError("O histórico de aceite dos termos é imutável (RNF16).")
+
+    def delete(self):
+        raise HistoricoImutavelError("O histórico de aceite dos termos é imutável (RNF16).")
+
+
+class HistoricoAceiteTermos(models.Model):
+    """US63 (RF4812) — Registro auditável e imutável de cada aceite dos termos (RN15, RNF16).
+
+    Os registros só podem ser inseridos. A única remoção possível é a exclusão
+    do titular (RN05/US64), feita em cascata pelo Django ao excluir o usuário.
+    """
+
+    class Origem(models.TextChoices):
+        CADASTRO = "CADASTRO", "Cadastro"
+        ACEITE = "ACEITE", "Aceite posterior"
+        MIGRACAO = "MIGRACAO", "Migração de dados"
+
+    usuario = models.ForeignKey(
+        Usuario,
+        on_delete=models.CASCADE,
+        related_name="aceites_termos",
+    )
+    versao = models.CharField(max_length=20)
+    data_hora = models.DateTimeField(default=timezone.now, editable=False)
+    origem = models.CharField(max_length=10, choices=Origem.choices, default=Origem.ACEITE)
+
+    objects = HistoricoAceiteTermosQuerySet.as_manager()
+
+    class Meta:
+        verbose_name = "Aceite dos Termos"
+        verbose_name_plural = "Histórico de Aceites dos Termos"
+        ordering = ["-data_hora"]
+        indexes = [
+            models.Index(fields=["usuario", "-data_hora"], name="contas_aceite_usuario_idx"),
+        ]
+
+    def save(self, *args, **kwargs):
+        if self.pk is not None:
+            raise HistoricoImutavelError("O histórico de aceite dos termos é imutável (RNF16).")
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        raise HistoricoImutavelError("O histórico de aceite dos termos é imutável (RNF16).")
+
+    def __str__(self):
+        return f"{self.usuario_id} aceitou v{self.versao} em {self.data_hora:%d/%m/%Y %H:%M:%S}"
