@@ -12,6 +12,7 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import termos
 from .models import HistoricoAceiteTermos, Usuario
+from .permissions import ROTA_PROTEGIDA
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
@@ -70,7 +71,7 @@ def login_treinador(request):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])  # Isenta da RN15: encerrar a sessão é sempre permitido.
 def logout_view(request):
     """US03 — Deslogar da conta invalidando o refresh token e o access token atual (RF1103)."""
     refresh_token = request.data.get("refresh")
@@ -123,7 +124,7 @@ def termos_vigentes(request):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])  # Isenta da RN15: é a rota que regulariza o aceite.
 def aceitar_termos(request):
     """US63 (RF4812) — Registra aceite da versão vigente dos termos (RN15, RNF16, CA01/CA03).
 
@@ -170,13 +171,13 @@ def aceitar_termos(request):
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])  # Isenta da RN15: o front lê `termos_pendentes` aqui.
 def me(request):
     """Dados do usuário logado (usado pelo front logo após o login)."""
     return Response(UsuarioSerializer(request.user).data)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def meus_dados_aluno(request):
     """US53 — Consultar próprios dados cadastrais do aluno (RF4802, RN03, RN25, RN26, RNF08)."""
     if request.user.papel != Usuario.Papel.ALUNO:

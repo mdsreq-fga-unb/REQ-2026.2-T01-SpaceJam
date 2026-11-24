@@ -108,9 +108,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "apps.contas.authentication.BlacklistableJWTAuthentication",
     ],
-    # Fechado por padrão: toda rota exige login, a menos que diga o contrário (CP8).
+    # Fechado por padrão: toda rota exige login (CP8) e aceite dos termos vigentes (US63/RN15).
+    # A ordem importa: sem login responde 401 antes do 403 TERMOS_PENDENTES.
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+        "apps.contas.permissions.TermosVigentesAceitos",
     ],
 }
 
