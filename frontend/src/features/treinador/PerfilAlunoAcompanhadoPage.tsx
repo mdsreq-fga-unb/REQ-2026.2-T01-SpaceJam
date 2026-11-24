@@ -1,7 +1,6 @@
 
 import { Navigate, useNavigate, useParams } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
-import { AtualizarTermos } from '../../components/AtualizarTermos'
 import {
   PerfilAlunoAcompanhado,
   type DadosAlunoAcompanhado,
@@ -35,10 +34,6 @@ export function PerfilAlunoAcompanhadoPage() {
 
   if (!usuario) {
     return null
-  }
-
-  if (usuario.termos_pendentes) {
-    return <AtualizarTermos />
   }
 
   const rotaDemonstracao = alunoId === 'previa'

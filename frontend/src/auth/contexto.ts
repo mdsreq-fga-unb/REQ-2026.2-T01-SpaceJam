@@ -6,7 +6,7 @@ export interface AuthState {
   carregando: boolean
   login: (identificador: string, senha: string, papel?: Papel) => Promise<void>
   logout: () => void | Promise<void>
-  aceitarTermos?: () => Promise<void>
+  aceitarTermos?: (versao: string) => Promise<void>
   avisoSessao?: string
 }
 

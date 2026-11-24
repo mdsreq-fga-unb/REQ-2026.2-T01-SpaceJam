@@ -144,7 +144,7 @@ describe('US52 — Consultar alunos acompanhados', () => {
 
   it('não exibe a lista antes do aceite de termos pendentes', async () => {
     abrirRota('/treinador/alunos?previa=1', { ...treinador, termos_pendentes: true })
-    expect(await screen.findByRole('heading', { name: 'Termos de uso' })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: 'Termos e privacidade' })).toBeTruthy()
     expect(screen.queryByText('Beatriz Costa')).toBeNull()
   })
 })

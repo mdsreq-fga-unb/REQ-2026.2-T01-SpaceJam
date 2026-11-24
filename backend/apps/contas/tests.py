@@ -1,12 +1,20 @@
 from datetime import date, timedelta
 
 from django.conf import settings
+from django.test import override_settings
 from rest_framework.test import APITestCase
 
-from .models import Usuario
+
+# US63 (RN15): o cadastro só registra aceite com os documentos publicados.
+DOCUMENTOS_CONFIGURADOS = override_settings(
+    TERMOS_USO_URL="/termos-de-uso",
+    POLITICA_PRIVACIDADE_URL="/politica-de-privacidade",
+)
 
 
-class ContasUS01aUS05Tests(APITestCase):
+class CadastroMixin:
+    """Payloads válidos de cadastro reutilizados pelas suítes do app."""
+
     def setUp(self):
         self.dados_treinador = {
             "codigo_ativacao": settings.COACH_ACTIVATION_CODE,
@@ -19,24 +27,6 @@ class ContasUS01aUS05Tests(APITestCase):
             "aceite_termos": True,
         }
 
-    # --- US02: Cadastrar Treinador ---
-    def test_us02_cadastrar_treinador_valido_e_bloquear_segundo_treinador(self):
-        r = self.client.post("/api/auth/cadastro/treinador/", self.dados_treinador, format="json")
-        self.assertEqual(r.status_code, 201)
-        self.assertEqual(r.data["papel"], "TREINADOR")
-        self.assertTrue(r.data["codigo_convite"].startswith("TRN-"))
-
-        # CA03 / RN01: Não permite cadastrar segundo treinador
-        segundo = {**self.dados_treinador, "apelido": "outro_coach", "email": "outro@basquete.com"}
-        r2 = self.client.post("/api/auth/cadastro/treinador/", segundo, format="json")
-        self.assertEqual(r2.status_code, 400)
-
-    def test_us02_codigo_ativacao_invalido(self):
-        invalido = {**self.dados_treinador, "codigo_ativacao": "ERRADO"}
-        r = self.client.post("/api/auth/cadastro/treinador/", invalido, format="json")
-        self.assertEqual(r.status_code, 400)
-
-    # --- US01: Cadastrar Aluno ---
     def _criar_treinador(self):
         r = self.client.post("/api/auth/cadastro/treinador/", self.dados_treinador, format="json")
         return r.data
@@ -61,6 +51,27 @@ class ContasUS01aUS05Tests(APITestCase):
             "consentimento_responsavel": consentimento,
         }
 
+
+@DOCUMENTOS_CONFIGURADOS
+class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
+    # --- US02: Cadastrar Treinador ---
+    def test_us02_cadastrar_treinador_valido_e_bloquear_segundo_treinador(self):
+        r = self.client.post("/api/auth/cadastro/treinador/", self.dados_treinador, format="json")
+        self.assertEqual(r.status_code, 201)
+        self.assertEqual(r.data["papel"], "TREINADOR")
+        self.assertTrue(r.data["codigo_convite"].startswith("TRN-"))
+
+        # CA03 / RN01: Não permite cadastrar segundo treinador
+        segundo = {**self.dados_treinador, "apelido": "outro_coach", "email": "outro@basquete.com"}
+        r2 = self.client.post("/api/auth/cadastro/treinador/", segundo, format="json")
+        self.assertEqual(r2.status_code, 400)
+
+    def test_us02_codigo_ativacao_invalido(self):
+        invalido = {**self.dados_treinador, "codigo_ativacao": "ERRADO"}
+        r = self.client.post("/api/auth/cadastro/treinador/", invalido, format="json")
+        self.assertEqual(r.status_code, 400)
+
+    # --- US01: Cadastrar Aluno ---
     def test_us01_cadastrar_aluno_maior_de_idade_com_vinculo(self):
         treinador = self._criar_treinador()
         payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=True)
@@ -69,17 +80,20 @@ class ContasUS01aUS05Tests(APITestCase):
         self.assertEqual(r.data["papel"], "ALUNO")
         self.assertEqual(r.data["treinador"], treinador["id"])
 
-    def test_us01_bloquear_menor_sem_consentimento_responsavel(self):
+    def test_us01_bloquear_cadastro_de_menor_de_idade(self):
+        """RN16 / Termos v1.0: menores de 18 anos são recusados, mesmo com a marcação de consentimento."""
         treinador = self._criar_treinador()
-        payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=False, consentimento=False)
-        r = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
-        self.assertEqual(r.status_code, 400)
-        self.assertIn("consentimento_responsavel", r.data)
-
-        # Com consentimento do responsável deve permitir
-        payload["consentimento_responsavel"] = True
-        r_ok = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
-        self.assertEqual(r_ok.status_code, 201)
+        for consentimento in (False, True):
+            payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=False, consentimento=consentimento)
+            r = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
+            self.assertEqual(r.status_code, 400)
+            self.assertIn("data_nascimento", r.data)
+            self.assertIn("maiores de 18 anos", str(r.data["data_nascimento"]))
+        # Nenhuma conta foi criada: o login do aluno recusado falha.
+        r_login = self.client.post(
+            "/api/auth/login/aluno/", {"apelido": "lucao10", "senha": payload["senha"]}, format="json"
+        )
+        self.assertEqual(r_login.status_code, 401)
 
     # --- US04: Logar Aluno ---
     def test_us04_login_aluno_valido_e_invalido(self):

@@ -17,6 +17,8 @@ export interface Usuario {
   email: string
   telefone: string
   termos_pendentes?: boolean
+  versao_termos_aceita?: string
+  versao_termos_vigente?: string
   codigo_convite?: string | null
   papel: Papel
 
