@@ -1,4 +1,4 @@
-/* US63 — "Termos e privacidade" e documentos provisórios (Figma: Visitante · Termos e privacidade). */
+/* US63 — "Termos e privacidade" e documentos legais (Figma: Visitante · Termos e privacidade). */
 :root:has(.termos-v2),
 body:has(.termos-v2),
 #root:has(.termos-v2) {
@@ -127,6 +127,61 @@ body:has(.termos-v2),
 .termos-v2 .aceite-termos a { color: var(--termos-laranja); text-underline-offset: 3px; }
 .termos-v2 .aceite-termos label { display: flex; align-items: flex-start; gap: 12px; cursor: pointer; }
 .termos-v2 .aceite-termos input { flex: 0 0 auto; width: 24px; height: 24px; margin: 0; accent-color: var(--termos-primario); }
+
+/* Documentos legais (Termos de Uso e Política de Privacidade). */
+.termos-v2__conteudo:has(.termos-doc) { max-width: 760px; }
+
+.termos-doc { display: grid; gap: 20px; min-width: 0; }
+.termos-doc p,
+.termos-doc li,
+.termos-doc td,
+.termos-doc th {
+  color: var(--termos-secundario);
+  font-size: 16px;
+  line-height: 24px;
+  overflow-wrap: anywhere;
+}
+.termos-doc strong { color: var(--termos-texto); font-weight: 700; }
+.termos-doc ul,
+.termos-doc ol { display: grid; gap: 6px; margin: 8px 0 0; padding-left: 22px; }
+.termos-doc a { color: var(--termos-laranja); text-underline-offset: 3px; }
+
+.termos-doc__meta { margin: 0; }
+
+.termos-doc__pendente {
+  padding: 1px 6px;
+  border: 1px dashed var(--termos-alerta-borda);
+  border-radius: 6px;
+  background: var(--termos-alerta-fundo);
+  color: var(--termos-alerta-texto);
+  font-weight: 500;
+}
+
+.termos-doc__sumario,
+.termos-doc__secao { display: grid; gap: 8px; min-width: 0; }
+.termos-doc__sumario h2,
+.termos-doc__secao h2 {
+  color: var(--termos-texto);
+  font: 700 22px/28px 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  letter-spacing: .01em;
+  overflow-wrap: anywhere;
+}
+.termos-doc__secao { scroll-margin-top: 16px; padding-top: 4px; border-top: 1px solid var(--termos-borda); }
+
+.termos-doc__tabela { max-width: 100%; overflow-x: auto; border: 1px solid var(--termos-borda); border-radius: 10px; }
+.termos-doc__tabela table { width: 100%; min-width: 520px; border-collapse: collapse; }
+.termos-doc__tabela caption {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+.termos-doc__tabela th,
+.termos-doc__tabela td { padding: 10px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--termos-borda); }
+.termos-doc__tabela th { color: var(--termos-texto); background: var(--termos-barra); font-weight: 700; }
+.termos-doc__tabela tr:last-child td { border-bottom: 0; }
+
+.termos-doc__rodape { display: grid; gap: 4px; padding-top: 12px; border-top: 1px solid var(--termos-borda); }
+.termos-doc__rodape ul { list-style: none; padding-left: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+
+.termos-v2 .termos-doc__tabela:focus-visible { outline: 2px solid var(--termos-laranja); outline-offset: 3px; }
 
 @media (min-width: 900px) {
   .termos-v2__cabecalho { padding-inline: 40px; }

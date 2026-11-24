@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { Link } from 'react-router'
 import type { Usuario } from '../../types/usuario'
 import { lerPreferenciasPrivacidade, salvarPreferenciasPrivacidade } from './consentimentoCookies'
 import '../alunos/MinhaContaAluno.css'
@@ -62,12 +63,15 @@ export function PreferenciasPrivacidade({ usuario, onVoltar }: { usuario: Usuari
         <form className="privacidade__formulario" onSubmit={salvar}>
           <section className="conta-aluno__cartao" aria-labelledby="cookies-necessarios">
             <h2 id="cookies-necessarios">Cookies necessários</h2>
-            <p className="conta-aluno__indisponivel">Usados para manter as funções essenciais da aplicação.</p>
+            <p className="conta-aluno__indisponivel">O Space Jam não grava cookies. Para funcionar, guarda neste navegador apenas a sua sessão e esta escolha.</p>
           </section>
 
           <section className="privacidade__opcionais" aria-labelledby="cookies-opcionais">
             <h2 id="cookies-opcionais">Cookies opcionais</h2>
-            <div className="privacidade__opcoes" role="group" aria-labelledby="cookies-opcionais">
+            <p id="cookies-opcionais-descricao" className="conta-aluno__indisponivel">
+              Estatística ou monitoramento. Hoje a plataforma não usa nenhum; se algum for adotado, só será ativado com a sua permissão. A escolha vale para este navegador.
+            </p>
+            <div className="privacidade__opcoes" role="group" aria-labelledby="cookies-opcionais" aria-describedby="cookies-opcionais-descricao">
               <button type="button" className="privacidade__opcao" aria-pressed={!permitidos} onClick={() => escolher(false)}>Não permitir</button>
               <button type="button" className="privacidade__opcao" aria-pressed={permitidos} onClick={() => escolher(true)}>Permitir</button>
             </div>
@@ -80,6 +84,9 @@ export function PreferenciasPrivacidade({ usuario, onVoltar }: { usuario: Usuari
               : 'Os cookies opcionais ficam desativados até você permitir. Você também pode revogar essa permissão.'}</p>
           </section>
 
+          <p className="conta-aluno__indisponivel">
+            Saiba mais na <Link to="/politica-de-privacidade#cookies">Política de Privacidade</Link>.
+          </p>
           {mensagem && <p className="privacidade__sucesso" role="status">{mensagem}</p>}
 
           <div className="privacidade__acoes">

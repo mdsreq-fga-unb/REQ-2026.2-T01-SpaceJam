@@ -71,17 +71,39 @@ describe('CA01 — aceite explícito com documentos e versão vigentes', () => {
   })
 
   it.each([
-    ['/termos-de-uso', 'Termos de Uso'],
-    ['/politica-de-privacidade', 'Política de Privacidade'],
-  ])('publica %s como rascunho provisório acessível sem login', async (caminho, titulo) => {
+    ['/termos-de-uso', 'Termos de Uso', 'Política de Privacidade', '/politica-de-privacidade'],
+    ['/politica-de-privacidade', 'Política de Privacidade', 'Termos de Uso', '/termos-de-uso'],
+  ])('publica %s com o texto da versão 1.0, acessível sem login', async (caminho, titulo, outro, caminhoOutro) => {
     simularApi()
     window.history.replaceState({}, '', '/login')
     window.history.pushState({}, '', caminho)
     const pessoa = abrir(caminho)
-    expect(screen.getByRole('heading', { name: titulo })).toBeTruthy()
-    expect(screen.getByRole('note').textContent).toMatch(/rascunho provisório.*aguarda a publicação oficial/i)
+    expect(screen.getByRole('heading', { level: 1, name: titulo })).toBeTruthy()
+    expect(screen.getByText('Versão 1.0')).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Resumo' })).toBeTruthy()
+    expect(screen.getByRole('navigation', { name: 'Sumário' })).toBeTruthy()
+    expect(screen.queryByText(/rascunho provisório/i)).toBeNull()
+    // Pendências institucionais/jurídicas ficam visíveis e contadas, sem esconder o texto.
+    expect(screen.getByRole('note').textContent).toMatch(/Versão em validação.*\d+ pontos destacados/i)
+    expect(document.querySelectorAll('mark.termos-doc__pendente').length).toBeGreaterThan(0)
+    expect(screen.getByRole('link', { name: outro }).getAttribute('href')).toBe(caminhoOutro)
     await pessoa.click(screen.getByRole('button', { name: 'Voltar' }))
     expect(await screen.findByRole('heading', { name: 'Login' })).toBeTruthy()
+  })
+
+  it('reflete no texto as regras implementadas (maioridade, aceite e cookies)', () => {
+    simularApi()
+    abrir('/politica-de-privacidade')
+    expect(screen.getByRole('heading', { name: /Crianças e adolescentes/ })).toBeTruthy()
+    expect(screen.getAllByText(/apenas maiores de 18 anos/i).length).toBeGreaterThan(0)
+    expect(screen.getByText(/não grava cookies/i)).toBeTruthy()
+    expect(screen.getByRole('link', { name: 'Preferências de privacidade' }).getAttribute('href')).toBe('/conta/privacidade')
+  })
+
+  it('avisa quando a versão do texto difere da versão vigente no backend', async () => {
+    simularApi({ 'GET /api/auth/termos/vigentes/': { corpo: termosV11 } })
+    abrir('/termos-de-uso')
+    expect((await screen.findByRole('alert')).textContent).toMatch(/versão 1\.0.*vigente.*1\.1/i)
   })
 })
 
@@ -202,6 +224,8 @@ describe('Preferências de privacidade (CA04 / RNF16)', () => {
     expect(opcao('Não permitir').getAttribute('aria-pressed')).toBe('true')
     expect(opcao('Permitir').getAttribute('aria-pressed')).toBe('false')
     expect(screen.getByText(/ficam desativados até você permitir/)).toBeTruthy()
+    expect(screen.getByText(/não grava cookies/i)).toBeTruthy()
+    expect(screen.getByRole('link', { name: 'Política de Privacidade' }).getAttribute('href')).toBe('/politica-de-privacidade#cookies')
     expect(salvo()).toBeNull()
     expect(document.cookie).toBe('')
   })
