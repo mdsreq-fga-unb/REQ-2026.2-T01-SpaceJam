@@ -136,32 +136,8 @@ def aceitar_termos(request):
     """
     # Mesmos valores aceitos pelo BooleanField dos cadastros (true, "true", 1, "1"...).
     aceite = request.data.get("aceite_termos")
-    if not isinstance(aceite, (bool, int, str)) or aceite not in BooleanField.TRUE_VALUES:
-        return Response(
-            {"detail": "É necessário confirmar o aceite dos termos.", "code": "ACEITE_OBRIGATORIO"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-
-    if not termos.documentos_configurados():
-        return Response(
-            {
-                "detail": "Os Termos de Uso e a Política de Privacidade estão indisponíveis no momento.",
-                "code": "TERMOS_INDISPONIVEIS",
-            },
-            status=status.HTTP_503_SERVICE_UNAVAILABLE,
-        )
-
-    versao_atual = termos.versao_vigente()
-    versao_enviada = request.data.get("versao")
-    if versao_enviada is not None and str(versao_enviada).strip() != versao_atual:
-        return Response(
-            {
-                "detail": "A versão aceita não corresponde à versão vigente dos termos.",
-                "code": "TERMOS_VERSAO_DIVERGENTE",
-                "versao_atual": versao_atual,
-            },
-            status=status.HTTP_409_CONFLICT,
-        )
+    aceito = isinstance(aceite, (bool, int, str)) and aceite in BooleanField.TRUE_VALUES
+    termos.validar_aceite(aceito, request.data.get("versao"))
 
     if not termos.termos_pendentes(request.user):
         return Response(UsuarioSerializer(request.user).data, status=status.HTTP_200_OK)

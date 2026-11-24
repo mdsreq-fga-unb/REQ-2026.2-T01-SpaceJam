@@ -74,7 +74,8 @@ class CadastroAlunoSerializer(serializers.Serializer):
     frequencia_semanal = serializers.IntegerField(min_value=1, max_value=7)
     objetivos = serializers.CharField()
     senha = serializers.CharField(write_only=True, min_length=6)
-    aceite_termos = serializers.BooleanField(write_only=True)
+    # Ausente equivale a false para responder 400 ACEITE_OBRIGATORIO, não "campo obrigatório".
+    aceite_termos = serializers.BooleanField(write_only=True, required=False, default=False)
     consentimento_responsavel = serializers.BooleanField(write_only=True, required=False, default=False)
 
     def validate_codigo_treinador(self, value):
@@ -99,17 +100,13 @@ class CadastroAlunoSerializer(serializers.Serializer):
             raise serializers.ValidationError("Este e-mail já está em uso.")
         return value.strip().lower()
 
-    def validate_aceite_termos(self, value):
-        if not value:
-            raise serializers.ValidationError("É obrigatório aceitar os Termos de Uso e Política de Privacidade.")
-        return value
-
     def validate_data_nascimento(self, value):
         if value >= date.today():
             raise serializers.ValidationError("A data de nascimento deve ser anterior à data atual.")
         return value
 
     def validate(self, attrs):
+        termos.validar_aceite(attrs["aceite_termos"])
         idade = calcular_idade(attrs["data_nascimento"])
         if idade < 18 and not attrs.get("consentimento_responsavel"):
             raise serializers.ValidationError(
@@ -158,7 +155,8 @@ class CadastroTreinadorSerializer(serializers.Serializer):
     email = serializers.EmailField()
     telefone = serializers.CharField(max_length=20)
     senha = serializers.CharField(write_only=True, min_length=6)
-    aceite_termos = serializers.BooleanField(write_only=True)
+    # Ausente equivale a false para responder 400 ACEITE_OBRIGATORIO, não "campo obrigatório".
+    aceite_termos = serializers.BooleanField(write_only=True, required=False, default=False)
 
     def validate_codigo_ativacao(self, value):
         if value.strip() != settings.COACH_ACTIVATION_CODE:
@@ -175,12 +173,8 @@ class CadastroTreinadorSerializer(serializers.Serializer):
             raise serializers.ValidationError("Este e-mail já está em uso.")
         return value.strip().lower()
 
-    def validate_aceite_termos(self, value):
-        if not value:
-            raise serializers.ValidationError("É obrigatório aceitar os Termos de Uso e Política de Privacidade.")
-        return value
-
     def validate(self, attrs):
+        termos.validar_aceite(attrs["aceite_termos"])
         # Regra do treinador único definida na Conferência do DoR (RN01 / CA03)
         if Usuario.objects.filter(papel=Usuario.Papel.TREINADOR).exists():
             raise serializers.ValidationError(
