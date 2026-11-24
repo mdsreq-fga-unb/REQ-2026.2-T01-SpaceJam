@@ -76,7 +76,6 @@ class CadastroAlunoSerializer(serializers.Serializer):
     senha = serializers.CharField(write_only=True, min_length=6)
     # Ausente equivale a false para responder 400 ACEITE_OBRIGATORIO, não "campo obrigatório".
     aceite_termos = serializers.BooleanField(write_only=True, required=False, default=False)
-    consentimento_responsavel = serializers.BooleanField(write_only=True, required=False, default=False)
 
     def validate_codigo_treinador(self, value):
         try:
@@ -107,12 +106,15 @@ class CadastroAlunoSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         termos.validar_aceite(attrs["aceite_termos"])
-        idade = calcular_idade(attrs["data_nascimento"])
-        if idade < 18 and not attrs.get("consentimento_responsavel"):
+        # RN16 / Termos de Uso v1.0 (3.3): sem fluxo verificável de consentimento do responsável
+        # (US65, ainda não implementada), menores de 18 anos não podem se cadastrar. Uma marcação
+        # enviada pelo próprio aluno não comprova o consentimento (art. 14 da LGPD).
+        if calcular_idade(attrs["data_nascimento"]) < 18:
             raise serializers.ValidationError(
                 {
-                    "consentimento_responsavel": (
-                        "Alunos menores de 18 anos precisam do consentimento prévio de um responsável legal (RN16)."
+                    "data_nascimento": (
+                        "O cadastro está disponível apenas para maiores de 18 anos. O cadastro de menores "
+                        "depende do consentimento do responsável legal, ainda não disponível (RN16)."
                     )
                 }
             )
@@ -130,7 +132,6 @@ class CadastroAlunoSerializer(serializers.Serializer):
             data_nascimento=validated_data["data_nascimento"],
             papel=Usuario.Papel.ALUNO,
             treinador=self._treinador_encontrado,
-            consentimento_responsavel=validated_data.get("consentimento_responsavel", False),
         )
         PerfilAluno.objects.create(
             usuario=usuario,

@@ -80,17 +80,20 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         self.assertEqual(r.data["papel"], "ALUNO")
         self.assertEqual(r.data["treinador"], treinador["id"])
 
-    def test_us01_bloquear_menor_sem_consentimento_responsavel(self):
+    def test_us01_bloquear_cadastro_de_menor_de_idade(self):
+        """RN16 / Termos v1.0: menores de 18 anos são recusados, mesmo com a marcação de consentimento."""
         treinador = self._criar_treinador()
-        payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=False, consentimento=False)
-        r = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
-        self.assertEqual(r.status_code, 400)
-        self.assertIn("consentimento_responsavel", r.data)
-
-        # Com consentimento do responsável deve permitir
-        payload["consentimento_responsavel"] = True
-        r_ok = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
-        self.assertEqual(r_ok.status_code, 201)
+        for consentimento in (False, True):
+            payload = self._payload_aluno(treinador["codigo_convite"], maior_idade=False, consentimento=consentimento)
+            r = self.client.post("/api/auth/cadastro/aluno/", payload, format="json")
+            self.assertEqual(r.status_code, 400)
+            self.assertIn("data_nascimento", r.data)
+            self.assertIn("maiores de 18 anos", str(r.data["data_nascimento"]))
+        # Nenhuma conta foi criada: o login do aluno recusado falha.
+        r_login = self.client.post(
+            "/api/auth/login/aluno/", {"apelido": "lucao10", "senha": payload["senha"]}, format="json"
+        )
+        self.assertEqual(r_login.status_code, 401)
 
     # --- US04: Logar Aluno ---
     def test_us04_login_aluno_valido_e_invalido(self):

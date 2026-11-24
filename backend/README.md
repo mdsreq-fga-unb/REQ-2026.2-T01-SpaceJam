@@ -63,4 +63,6 @@ Sem as duas URLs válidas, o aceite e os cadastros respondem `503`. O frontend l
 
 ### Documentos
 
-Os rascunhos dos Termos de Uso e da Política de Privacidade ficam em `docs/legal/`. Eles estão no `exclude_docs` do `mkdocs.yml` e não são publicados até a aprovação formal. Enquanto isso, as rotas `/termos-de-uso` e `/politica-de-privacidade` do frontend exibem um aviso de rascunho provisório.
+O texto da versão 1.0 dos Termos de Uso e da Política de Privacidade é exibido pelas rotas `/termos-de-uso` e `/politica-de-privacidade` do frontend, a partir de `frontend/src/features/termos/documentosLegais.ts`. O espelho em `docs/legal/` deve ser atualizado junto e continua no `exclude_docs` do `mkdocs.yml` até a aprovação formal. Os pontos ainda pendentes de confirmação aparecem destacados nas páginas.
+
+O cadastro de aluno recusa menores de 18 anos (`400`, campo `data_nascimento`) até existir o fluxo verificável de consentimento do responsável (RN16/US65). O campo `consentimento_responsavel` do modelo foi mantido para esse fluxo futuro.
