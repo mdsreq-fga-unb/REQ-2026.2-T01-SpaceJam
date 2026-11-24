@@ -383,6 +383,18 @@
   .cadastro-v2__grade--medidas .cadastro-v2__campo label { font-size: 15px; }
 }
 
+/* Medidas: rótulo, campo e mensagens compartilham as linhas da grade (subgrid), então os
+   campos lado a lado ficam alinhados mesmo quando um rótulo quebra em mais linhas. */
+.cadastro-v2__grade--medidas .cadastro-v2__campo {
+  display: grid;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+}
+.cadastro-v2__grade--medidas .cadastro-v2__campo label { align-self: end; margin-bottom: 8px; }
+.cadastro-v2__grade--medidas .cadastro-v2__campo-ajuda,
+.cadastro-v2__grade--medidas .cadastro-v2__erro-campo { margin-top: 8px; }
+
 
 /* Ativação do treinador: layout mobile do frame Figma 2146:3354. */
 @media (max-width: 899px) {

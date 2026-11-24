@@ -8,6 +8,7 @@ import { EditarDadosAlunoPage } from './features/alunos/EditarDadosAlunoPage'
 import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
+import { DocumentoProvisorioPage } from './features/termos/DocumentoProvisorioPage'
 
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 
@@ -24,6 +25,9 @@ export default function App() {
           <Route path="/cadastro" element={<Navigate to="/cadastro/aluno" replace />} />
           <Route path="/cadastro/aluno" element={<CadastroPage key="aluno" perfil="ALUNO" />} />
           <Route path="/cadastro/treinador" element={<CadastroPage key="treinador" perfil="TREINADOR" />} />
+          {/* US63 — documentos públicos, acessíveis antes do login e com termos pendentes */}
+          <Route path="/termos-de-uso" element={<DocumentoProvisorioPage key="termos" titulo="Termos de Uso" />} />
+          <Route path="/politica-de-privacidade" element={<DocumentoProvisorioPage key="privacidade" titulo="Política de Privacidade" />} />
           <Route
             path="/"
             element={

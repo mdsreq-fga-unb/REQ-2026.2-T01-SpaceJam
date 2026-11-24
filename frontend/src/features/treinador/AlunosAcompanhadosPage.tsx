@@ -1,6 +1,5 @@
 import { Navigate, useSearchParams } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
-import { AtualizarTermos } from '../../components/AtualizarTermos'
 import {
   AlunosAcompanhados,
   type AlunoAcompanhadoResumo,
@@ -25,7 +24,6 @@ export function AlunosAcompanhadosPage() {
   const previa = parametros.get('previa') === '1'
 
   if (!usuario) return null
-  if (usuario.termos_pendentes) return <AtualizarTermos />
 
   if (previa && !import.meta.env.DEV) {
     return <Navigate to="/treinador/alunos" replace />

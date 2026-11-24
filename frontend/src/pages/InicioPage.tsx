@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router'
 import { useAuth } from '../auth/useAuth'
-import { AtualizarTermos } from '../components/AtualizarTermos'
 import { Marca } from '../components/Marca'
 import { MinhaContaAluno } from '../features/alunos/MinhaContaAluno'
 
@@ -9,7 +8,6 @@ export function InicioPage() {
   const navegar = useNavigate()
 
   if (!usuario) return null
-  if (usuario.termos_pendentes) return <AtualizarTermos />
 
   // US53 — Consultar os próprios dados cadastrais; US07 — navegar para edição.
   if (usuario.papel === 'ALUNO') {
