@@ -22,7 +22,7 @@ Os dados, treinos e mídias dos alunos pertencem à carteira do treinador e só 
  
 ## RN04 · Segregação de Edição Cadastral e Clínica {#rn04}
  
-Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do aluno, a edição do próprio perfil é restrita aos campos **nome, sobrenome, apelido, e-mail, altura, peso, envergadura e objetivos**, aplicando as mesmas regras de unicidade e os mesmos formatos, unidades e limites definidos para o cadastro, desconsiderando o próprio usuário na verificação de duplicidade de apelido e e-mail. Campos protegidos ou de vínculo (`data de nascimento`, `frequência semanal`, `telefone`, `código do treinador`, `papel` e `aceite de termos`) não são alteráveis por essa operação. O treinador também pode registrar e editar os objetivos do aluno, mas não possui permissão para editar os dados pessoais e corporais básicos dele. O registro e a edição de histórico de lesões e testes de aptidão física são prerrogativas exclusivas do treinador.
+Cada usuário possui permissão para editar apenas seus próprios dados pessoais básicos; no caso do atleta, isso inclui suas métricas corporais primárias (nome, apelido, contato, altura, peso, envergadura e foto) e seus objetivos. O treinador também pode registrar e editar os objetivos do atleta. O registro e a edição de histórico de lesões e testes de aptidão física são prerrogativas exclusivas do treinador.
  
 ## RN05 · Política de Exclusão de Conta e Dados (LGPD) {#rn05}
  
@@ -54,7 +54,7 @@ Somente o treinador pode registrar, editar ou excluir o feedback textual dado a 
 
 ## RN12 · Política de Recuperação de Senha {#rn12}
 
-A recuperação de senha ocorre exclusivamente mediante envio de um **link contendo token criptográfico de uso único** para o e-mail cadastrado do usuário (aluno ou treinador), direcionando para a rota de redefinição do frontend com o parâmetro de consulta `token`. O token possui **validade máxima de 1 hora** a partir da emissão, é invalidado imediatamente após o uso bem-sucedido e qualquer nova solicitação de recuperação para o mesmo usuário revoga automaticamente tokens anteriores ainda pendentes. A solicitação de envio deve responder de forma genérica independentemente de o e-mail existir na base, evitando enumeração de contas. Para mitigar abuso, o endpoint de solicitação aplica limite de taxa por endereço de e-mail e por endereço IP. Concluída a redefinição, todas as sessões e tokens de renovação ativos do usuário são encerrados, e o acesso passa a exigir a nova senha.
+A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova senha atenda à política de senha da RN24.
 
 ## RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios {#rn13}
  
@@ -102,12 +102,10 @@ Ao ser incluído em um treino, o exercício é registrado no treino com os dados
 
 ## RN24 · Credenciais e Unicidade de Identificadores {#rn24}
 
-O aluno entra no sistema utilizando apelido e senha, enquanto o treinador entra utilizando e-mail e senha. O apelido e o e-mail são únicos no sistema (garantidos por restrição de unicidade na camada de banco e validação na API), e a falha de autenticação informa apenas que o identificador ou a senha estão incorretos, sem revelar qual dos dois dados falhou. Toda senha cadastrada, alterada ou redefinida via recuperação deve possuir no mínimo **6 caracteres**.
+A senha de qualquer usuário deve ter no mínimo 6 caracteres. O aluno entra com apelido e senha; o treinador entra com e-mail e senha. O apelido e o e-mail são únicos no sistema. Em caso de falha no login, a mensagem não informa qual dos dois dados está incorreto.
 
 ## RN25 · Dados Obrigatórios de Cadastro {#rn25}
-
-O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, inteiro de `1` a `7`), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API — tanto no cadastro quanto na edição de perfil —, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, entre `0.50` e `2.60`, ex.: `1.85`), peso em quilogramas (`Decimal(5,2)`, entre `20.00` e `300.00`), e o texto de objetivos possui limite máximo de `500` caracteres, cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos é obrigatório.
+O cadastro do aluno exige código do treinador, nome, sobrenome, apelido, e-mail, data de nascimento, altura, peso, envergadura, frequência de atividade física (dias por semana, de 1 a 7), objetivos e senha, sendo o telefone opcional. Na camada de persistência e no contrato da API, altura e envergadura são armazenadas e trafegadas em metros (`Decimal(4,2)`, ex.: `1.85`) e peso em quilogramas (`Decimal(5,2)`), cabendo à interface realizar a conversão de unidade na exibição quando necessário. O cadastro do treinador exige código de ativação, nome, sobrenome, apelido, telefone, e-mail e senha. Em ambos, o aceite dos termos é obrigatório.
 
 ## RN26 · Consulta Cadastral do Aluno {#rn26}
-
 Na consulta de dados cadastrais do aluno — seja pelo próprio aluno ou pelo treinador responsável pela sua carteira —, o retorno apresenta exclusivamente os dados vinculados à conta do aluno consultado, podendo expor o `historico_lesoes` em modo somente leitura, permanecendo sua criação e edição restritas ao treinador. Credenciais de acesso (como senha) nunca são retornadas na consulta.
