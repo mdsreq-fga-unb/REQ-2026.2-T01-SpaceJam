@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { ApiError } from '../api/client'
 import { useAuth } from '../auth/useAuth'
+import { CascaTermos } from '../features/termos/CascaTermos'
 import { useTermosVigentes } from '../features/termos/useTermosVigentes'
 import { AceiteTermos } from './AceiteTermos'
 
@@ -36,16 +37,33 @@ export function AtualizarTermos() {
     finally { setEnviando(false) }
   }
 
-  return <main className="acesso"><section className="cartao-login">
-    <h1>Termos de uso</h1>
-    <form className="formulario-cadastro" onSubmit={enviar} aria-busy={enviando}>
-      <p>{documentos
-        ? `Confira os documentos da versão ${documentos.versao} antes de continuar.`
-        : 'Confira os documentos vigentes antes de continuar.'}</p>
-      <AceiteTermos documentos={documentos} carregando={carregando} aceito={aceito} alterar={setAceito} desabilitado={enviando} />
-      {erro && <p role="alert" className="erro">{erro}</p>}
-      <button className="botao-secundario" disabled={!aceito || enviando || !documentos} type="submit">{enviando ? 'Registrando…' : 'Aceitar e continuar'}</button>
-      <button className="botao-secundario" type="button" onClick={logout} disabled={enviando}>Sair da conta</button>
+  const subtitulo = documentos
+    ? `O aceite da versão vigente (${documentos.versao}) é necessário para continuar.`
+    : 'O aceite da versão vigente é necessário para continuar.'
+
+  if (!carregando && !documentos) {
+    return <CascaTermos titulo="Termos e privacidade" subtitulo={subtitulo}>
+      {erro && <p role="alert" className="termos-v2__erro">{erro}</p>}
+      <section className="termos-v2__cartao termos-v2__cartao--alerta" role="status">
+        <h2>Não foi possível carregar os documentos</h2>
+        <p>Os termos de uso e a política de privacidade precisam estar disponíveis antes do aceite.</p>
+      </section>
+      <section className="termos-v2__cartao">
+        <h2>Acesso bloqueado</h2>
+        <p>Nenhuma funcionalidade deve ser liberada até a leitura e o aceite explícito dos documentos vigentes.</p>
+      </section>
+      <button className="termos-v2__acao termos-v2__acao--primaria" type="button" onClick={logout}>Voltar ao login</button>
+    </CascaTermos>
+  }
+
+  return <CascaTermos titulo="Termos e privacidade" subtitulo={subtitulo}>
+    <form className="termos-v2__acoes" onSubmit={enviar} aria-busy={enviando}>
+      <div className="termos-v2__cartao">
+        <AceiteTermos documentos={documentos} carregando={carregando} aceito={aceito} alterar={setAceito} desabilitado={enviando} />
+      </div>
+      {erro && <p role="alert" className="termos-v2__erro">{erro}</p>}
+      <button className="termos-v2__acao termos-v2__acao--primaria" disabled={!aceito || enviando || !documentos} type="submit">{enviando ? 'Registrando…' : 'Aceitar e continuar'}</button>
+      <button className="termos-v2__acao termos-v2__acao--secundaria" type="button" onClick={logout} disabled={enviando}>Sair da conta</button>
     </form>
-  </section></main>
+  </CascaTermos>
 }

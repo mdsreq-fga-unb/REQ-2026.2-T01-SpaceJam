@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router'
-import { Marca } from '../../components/Marca'
+import { CascaTermos } from './CascaTermos'
 
 /**
  * US63 — Estrutura provisória dos documentos legais. O texto oficial será fornecido
@@ -18,13 +18,11 @@ export function DocumentoProvisorioPage({ titulo }: { titulo: string }) {
     navegar('/login', { replace: true })
   }
 
-  return <main className="acesso"><article className="cartao-login documento-provisorio" aria-labelledby="titulo-documento">
-    <Marca />
-    <h1 id="titulo-documento">{titulo}</h1>
-    <p className="aviso-cadastro" role="note">
-      <strong>Rascunho provisório.</strong> Este documento aguarda a publicação oficial pela equipe responsável.
-      O conteúdo definitivo será exibido aqui assim que for publicado.
-    </p>
-    <button type="button" className="botao-secundario" onClick={voltar}>Voltar</button>
-  </article></main>
+  return <CascaTermos titulo={titulo} subtitulo="Documento da plataforma Space Jam.">
+    <section className="termos-v2__cartao termos-v2__cartao--alerta" role="note">
+      <h2>Rascunho provisório</h2>
+      <p>Este documento aguarda a publicação oficial pela equipe responsável. O conteúdo definitivo será exibido aqui assim que for publicado.</p>
+    </section>
+    <button type="button" className="termos-v2__acao termos-v2__acao--primaria" onClick={voltar}>Voltar</button>
+  </CascaTermos>
 }

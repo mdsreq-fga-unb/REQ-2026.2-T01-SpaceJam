@@ -184,7 +184,3 @@ dd { margin: 0; font-size: 20px; overflow-wrap: anywhere; }
 .aceite-termos label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
 .aceite-termos input { flex: 0 0 auto; width: 20px; height: 20px; margin-top: 3px; accent-color: var(--texto); }
 .aceite-termos a { color: inherit; text-underline-offset: 3px; }
-
-.documento-provisorio { display: grid; align-content: start; gap: 32px; padding-top: 32px; }
-.documento-provisorio h1 { font-size: 30px; line-height: 1.3; letter-spacing: -.03em; }
-.documento-provisorio .botao-secundario { justify-self: start; }

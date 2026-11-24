@@ -118,7 +118,7 @@ describe('contrato de acesso do backend', () => {
       'POST /api/auth/aceitar-termos/': { corpo: aluno, status: 201 },
     })
     const pessoa = abrir('/')
-    expect(await screen.findByRole('heading', { name: /Termos de uso/i })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: /Termos e privacidade/i })).toBeTruthy()
     expect(screen.queryByRole('heading', { name: /Dados pessoais/ })).toBeNull()
     await screen.findByRole('link', { name: 'Termos de Uso' })
     await pessoa.click(screen.getByRole('checkbox', { name: /aceito/i }))

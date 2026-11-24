@@ -11,7 +11,7 @@ export function InicioPage() {
 
   // US53 — Consultar os próprios dados cadastrais; US07 — navegar para edição.
   if (usuario.papel === 'ALUNO') {
-    return <MinhaContaAluno usuario={usuario} logout={logout} editarDados={() => navegar('/aluno/conta/editar')} trocarSenha={() => navegar('/conta/senha')} />
+    return <MinhaContaAluno usuario={usuario} logout={logout} editarDados={() => navegar('/aluno/conta/editar')} trocarSenha={() => navegar('/conta/senha')} preferenciasPrivacidade={() => navegar('/conta/privacidade')} />
   }
 
   const nome =
@@ -35,6 +35,9 @@ export function InicioPage() {
         <p className="texto-apoio">Você entrou no Space Jam.</p>
         <button type="button" className="botao-secundario" onClick={() => navegar('/treinador/alunos')}>
           Consultar meus alunos
+        </button>
+        <button type="button" className="botao-secundario" onClick={() => navegar('/conta/privacidade')}>
+          Preferências de privacidade
         </button>
 
         <section className="cartao-conta" aria-labelledby="titulo-conta">

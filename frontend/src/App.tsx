@@ -9,6 +9,7 @@ import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 import { DocumentoProvisorioPage } from './features/termos/DocumentoProvisorioPage'
+import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivacidadePage'
 
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 
@@ -49,6 +50,15 @@ export default function App() {
             element={
               <RotaProtegida papel="ALUNO">
                 <TrocarSenhaPage />
+              </RotaProtegida>
+            }
+          />
+          {/* US63 (CA04) — aluno e treinador */}
+          <Route
+            path="/conta/privacidade"
+            element={
+              <RotaProtegida>
+                <PreferenciasPrivacidadePage />
               </RotaProtegida>
             }
           />

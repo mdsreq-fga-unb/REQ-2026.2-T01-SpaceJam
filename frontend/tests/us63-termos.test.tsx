@@ -2,9 +2,10 @@
  * US63 (RF4812) — Aceitar termos de uso e política de privacidade (RN15, RNF16).
  * CA01 aceite explícito · CA02 bloqueio · CA03 nova versão · CA04 sem cookies opcionais.
  */
-import { act, screen } from '@testing-library/react'
+import { act, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { api, ApiError, tokenStorage } from '../src/api/client'
+import { CHAVE_PREFERENCIAS_PRIVACIDADE } from '../src/features/conta/consentimentoCookies'
 import type { Usuario } from '../src/types/usuario'
 import { abrir, enviadosPara, preencherCadastro, simularApi, termosIndisponiveis, termosVigentes } from './apoio'
 
@@ -90,7 +91,7 @@ describe('CA02 — bloqueio enquanto houver termos pendentes', () => {
     ['/treinador/alunos', treinador], ['/treinador/alunos/previa', treinador],
   ])('a rota protegida %s exige o aceite antes da tela', async (caminho, usuario) => {
     entrarComSessao(caminho, { 'GET /api/auth/me/': { corpo: pendente(usuario) } })
-    expect(await screen.findByRole('heading', { name: 'Termos de uso' })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: 'Termos e privacidade' })).toBeTruthy()
     expect(screen.queryByRole('heading', { name: /Minha conta|Olá|Editar|senha|alunos/i })).toBeNull()
   })
 
@@ -107,8 +108,8 @@ describe('CA02 — bloqueio enquanto houver termos pendentes', () => {
 
     expect(falha).toBeInstanceOf(ApiError)
     expect((falha as ApiError).codigo).toBe('TERMOS_PENDENTES')
-    expect(await screen.findByRole('heading', { name: 'Termos de uso' })).toBeTruthy()
-    expect(await screen.findByText(/versão 1\.1 antes de continuar/)).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: 'Termos e privacidade' })).toBeTruthy()
+    expect(await screen.findByText(/versão vigente \(1\.1\)/)).toBeTruthy()
   })
 
   it('mantém a tela em um 403 de outra regra (ex.: papel)', async () => {
@@ -119,7 +120,7 @@ describe('CA02 — bloqueio enquanto houver termos pendentes', () => {
     expect(await screen.findByRole('heading', { name: /Minha conta/ })).toBeTruthy()
     await act(async () => { await api('/contas/me/').catch(() => undefined) })
     expect(screen.getByRole('heading', { name: /Minha conta/ })).toBeTruthy()
-    expect(screen.queryByRole('heading', { name: 'Termos de uso' })).toBeNull()
+    expect(screen.queryByRole('heading', { name: 'Termos e privacidade' })).toBeNull()
   })
 })
 
@@ -133,11 +134,11 @@ describe('CA03 — nova versão exige novo aceite', () => {
         { corpo: { ...aluno, versao_termos_aceita: '1.1', versao_termos_vigente: '1.1' }, status: 201 },
       ],
     })
-    expect(await screen.findByText(/versão 1\.0 antes de continuar/)).toBeTruthy()
+    expect(await screen.findByText(/versão vigente \(1\.0\)/)).toBeTruthy()
     await aceitarNaTela(pessoa)
 
     expect((await screen.findByRole('alert')).textContent).toMatch(/termos foram atualizados/i)
-    expect(await screen.findByText(/versão 1\.1 antes de continuar/)).toBeTruthy()
+    expect(await screen.findByText(/versão vigente \(1\.1\)/)).toBeTruthy()
     expect((screen.getByRole('checkbox', { name: /aceito/i }) as HTMLInputElement).checked).toBe(false)
 
     await aceitarNaTela(pessoa)
@@ -148,7 +149,7 @@ describe('CA03 — nova versão exige novo aceite', () => {
     ])
   })
 
-  it('informa 503 e deixa de oferecer o aceite se os documentos saírem do ar', async () => {
+  it('informa 503 e passa a bloquear o acesso se os documentos saírem do ar', async () => {
     const { pessoa } = entrarComSessao('/', {
       'GET /api/auth/me/': { corpo: pendente(aluno) },
       'GET /api/auth/termos/vigentes/': [{ corpo: termosVigentes }, { corpo: termosIndisponiveis }],
@@ -156,15 +157,106 @@ describe('CA03 — nova versão exige novo aceite', () => {
     })
     await aceitarNaTela(pessoa)
     expect((await screen.findByRole('alert')).textContent).toMatch(/documentos ficaram indisponíveis/i)
-    expect(await screen.findByText(/ainda não estão disponíveis/i)).toBeTruthy()
-    expect((screen.getByRole('button', { name: /Aceitar e continuar/i }) as HTMLButtonElement).disabled).toBe(true)
+    expect(await screen.findByRole('heading', { name: 'Não foi possível carregar os documentos' })).toBeTruthy()
+    expect(screen.queryByRole('button', { name: /Aceitar e continuar/i })).toBeNull()
+  })
+})
+
+describe('Termos e privacidade — documentos indisponíveis', () => {
+  it('mostra o alerta, o bloqueio e volta ao login encerrando a sessão', async () => {
+    const { pessoa } = entrarComSessao('/', {
+      'GET /api/auth/me/': { corpo: pendente(aluno) },
+      'GET /api/auth/termos/vigentes/': { corpo: termosIndisponiveis },
+    })
+    expect(await screen.findByRole('heading', { name: 'Não foi possível carregar os documentos' })).toBeTruthy()
+    expect(screen.getByText(/precisam estar disponíveis antes do aceite/)).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Acesso bloqueado' })).toBeTruthy()
+    expect(screen.getByText(/Nenhuma funcionalidade deve ser liberada/)).toBeTruthy()
+    expect(screen.queryByRole('checkbox', { name: /aceito/i })).toBeNull()
+
+    await pessoa.click(screen.getByRole('button', { name: 'Voltar ao login' }))
+    expect(await screen.findByRole('heading', { name: 'Login' })).toBeTruthy()
+    expect(tokenStorage.get()).toBeNull()
+  })
+
+  it('trata falha na consulta dos documentos como indisponível', async () => {
+    entrarComSessao('/', {
+      'GET /api/auth/me/': { corpo: pendente(aluno) },
+      'GET /api/auth/termos/vigentes/': { corpo: { detail: 'Erro interno.' }, status: 500 },
+    })
+    expect(await screen.findByRole('heading', { name: 'Acesso bloqueado' })).toBeTruthy()
+    expect(screen.queryByRole('checkbox', { name: /aceito/i })).toBeNull()
+  })
+})
+
+describe('Preferências de privacidade (CA04 / RNF16)', () => {
+  const sessao = (usuario: Usuario) => entrarComSessao('/conta/privacidade', { 'GET /api/auth/me/': { corpo: usuario } })
+  const opcao = (nome: string) => screen.getByRole('button', { name: nome })
+  const salvo = () => JSON.parse(localStorage.getItem(CHAVE_PREFERENCIAS_PRIVACIDADE) ?? 'null')
+
+  it('começa em "Não permitir" sem nada gravado (opt-in explícito)', async () => {
+    sessao(aluno)
+    expect(await screen.findByRole('heading', { name: 'Preferências de privacidade' })).toBeTruthy()
+    expect(screen.getByText('Você pode alterar sua escolha a qualquer momento.')).toBeTruthy()
+    expect(screen.getByRole('heading', { name: 'Cookies necessários' })).toBeTruthy()
+    expect(opcao('Não permitir').getAttribute('aria-pressed')).toBe('true')
+    expect(opcao('Permitir').getAttribute('aria-pressed')).toBe('false')
+    expect(screen.getByText(/ficam desativados até você permitir/)).toBeTruthy()
+    expect(salvo()).toBeNull()
+    expect(document.cookie).toBe('')
+  })
+
+  it('permite, salva com confirmação e depois revoga', async () => {
+    const { pessoa } = sessao(aluno)
+    await screen.findByRole('heading', { name: 'Preferências de privacidade' })
+
+    await pessoa.click(opcao('Permitir'))
+    expect(opcao('Permitir').getAttribute('aria-pressed')).toBe('true')
+    expect(salvo()).toBeNull() // nada muda antes de salvar
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar preferências' }))
+    expect(screen.getByRole('status').textContent).toMatch(/cookies opcionais estão permitidos/i)
+    expect(salvo().cookiesOpcionais).toBe(true)
+    expect(screen.getByText(/pode revogar essa permissão a qualquer momento/)).toBeTruthy()
+
+    await pessoa.click(opcao('Não permitir'))
+    expect(screen.queryByRole('status')).toBeNull()
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar preferências' }))
+    expect(screen.getByRole('status').textContent).toMatch(/continuam desativados/i)
+    expect(salvo().cookiesOpcionais).toBe(false)
+    expect(document.cookie).toBe('')
+  })
+
+  it('restaura a escolha salva ao voltar à página', async () => {
+    localStorage.setItem(CHAVE_PREFERENCIAS_PRIVACIDADE, JSON.stringify({ cookiesOpcionais: true, atualizadoEm: '2026-11-24T00:00:00Z' }))
+    sessao(aluno)
+    await screen.findByRole('heading', { name: 'Preferências de privacidade' })
+    expect(opcao('Permitir').getAttribute('aria-pressed')).toBe('true')
+  })
+
+  it.each([
+    ['aluno', aluno, 'Treinos'],
+    ['treinador', treinador, 'Alunos'],
+  ] as const)('é acessível pela conta do %s', async (_papel, usuario, secao) => {
+    const { pessoa } = entrarComSessao('/', { 'GET /api/auth/me/': { corpo: usuario } })
+    await pessoa.click(await screen.findByRole('button', { name: 'Preferências de privacidade' }))
+    expect(await screen.findByRole('heading', { name: 'Preferências de privacidade' })).toBeTruthy()
+    expect(within(screen.getByRole('navigation', { name: 'Seções da conta' })).getByText(secao)).toBeTruthy()
+    await pessoa.click(screen.getByRole('button', { name: 'Voltar à conta' }))
+    expect(await screen.findByRole('button', { name: 'Preferências de privacidade' })).toBeTruthy()
+  })
+
+  it('também exige o aceite dos termos antes de abrir', async () => {
+    sessao(pendente(aluno))
+    expect(await screen.findByRole('heading', { name: 'Termos e privacidade' })).toBeTruthy()
+    expect(screen.queryByRole('heading', { name: 'Preferências de privacidade' })).toBeNull()
   })
 })
 
 describe('CA04 — nenhum cookie opcional nem script de monitoramento', () => {
   function semArmazenamentoOpcional() {
     expect(document.cookie).toBe('')
-    expect(Object.keys(localStorage).every(chave => ['access_token', 'refresh_token'].includes(chave))).toBe(true)
+    const permitidas = ['access_token', 'refresh_token', CHAVE_PREFERENCIAS_PRIVACIDADE]
+    expect(Object.keys(localStorage).every(chave => permitidas.includes(chave))).toBe(true)
     expect(document.querySelectorAll('script[src], iframe, img[src^="http"]')).toHaveLength(0)
   }
 
