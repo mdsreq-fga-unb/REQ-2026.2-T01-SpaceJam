@@ -19,6 +19,7 @@ body:has(.termos-v2),
   --termos-alerta-borda: #5c4728;
   --termos-alerta-texto: #f5b04c;
   min-height: 100svh;
+  min-height: 100dvh;
   min-width: 0;
   background: var(--termos-fundo);
   color: var(--termos-texto);

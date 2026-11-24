@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700;800&display=swap');
 
 /* Escopo exclusivo da tela de cadastro: não altera login, US53 ou componentes globais. */
+/* Fundo global escuro enquanto o cadastro está aberto (sem o bordô legado do :root). */
+:root:has(.cadastro-v2),
+body:has(.cadastro-v2),
+#root:has(.cadastro-v2) {
+  background: #111113;
+}
+
 .cadastro-v2 {
   --cadastro-fundo: #111113;
   --cadastro-painel: #19191c;
@@ -11,6 +18,7 @@
   --cadastro-laranja: #d63f1e;
   --cadastro-laranja-claro: #ff9a6c;
   min-height: 100svh;
+  min-height: 100dvh;
   width: 100%;
   background: var(--cadastro-fundo);
   color: var(--cadastro-texto);
