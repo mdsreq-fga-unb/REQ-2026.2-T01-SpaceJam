@@ -6,9 +6,9 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("apps.contas.urls")),
+    path("api/treinos/", include("apps.treinos.urls")),
     # Quando cada app tiver rotas, inclua aqui:
     # path("api/exercicios/", include("apps.exercicios.urls")),
-    # path("api/treinos/", include("apps.treinos.urls")),
     # path("api/videos/", include("apps.videos.urls")),
 ]
 
