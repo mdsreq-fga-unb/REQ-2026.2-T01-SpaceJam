@@ -124,6 +124,10 @@ SIMPLE_JWT = {
 # Regras de Negócio (US01, US02, US04, US05)
 COACH_ACTIVATION_CODE = os.environ.get("COACH_ACTIVATION_CODE", "TREINADOR-MVP-2026")
 TERMOS_VERSAO_ATUAL = os.environ.get("TERMOS_VERSAO_ATUAL", "1.0")
+# US63 (RN15) — Documentos vigentes. Sem os dois, o aceite fica indisponível (503).
+# Aceita URL absoluta http(s):// ou caminho relativo iniciado por "/".
+TERMOS_USO_URL = os.environ.get("TERMOS_USO_URL", "").strip()
+POLITICA_PRIVACIDADE_URL = os.environ.get("POLITICA_PRIVACIDADE_URL", "").strip()
 if not DEBUG and (
     not COACH_ACTIVATION_CODE.strip()
     or COACH_ACTIVATION_CODE == "TREINADOR-MVP-2026"

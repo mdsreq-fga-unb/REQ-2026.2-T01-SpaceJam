@@ -3,14 +3,15 @@ from datetime import datetime, timezone as dt_timezone
 from django.conf import settings
 from django.core.cache import cache
 from django.db import connection
-from django.utils import timezone
 from rest_framework import status
+from rest_framework.fields import BooleanField
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Usuario
+from . import termos
+from .models import HistoricoAceiteTermos, Usuario
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
@@ -105,19 +106,67 @@ def logout_view(request):
     return Response({"detail": "Sessão encerrada com sucesso."}, status=status.HTTP_200_OK)
 
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def termos_vigentes(request):
+    """US63 (RF4812) — Consulta pública da versão vigente e dos documentos (RN15)."""
+    disponivel = termos.documentos_configurados()
+    return Response(
+        {
+            "versao": termos.versao_vigente(),
+            "termos_uso_url": settings.TERMOS_USO_URL if disponivel else None,
+            "politica_privacidade_url": settings.POLITICA_PRIVACIDADE_URL if disponivel else None,
+            "disponivel": disponivel,
+        },
+        status=status.HTTP_200_OK,
+    )
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def aceitar_termos(request):
-    """Registra aceite da versão vigente dos termos (CA03 de US04/US05)."""
-    if not request.data.get("aceite_termos"):
+    """US63 (RF4812) — Registra aceite da versão vigente dos termos (RN15, RNF16, CA01/CA03).
+
+    - 400 ACEITE_OBRIGATORIO: `aceite_termos` ausente ou diferente de true.
+    - 503 TERMOS_INDISPONIVEIS: documentos não configurados no servidor.
+    - 409 TERMOS_VERSAO_DIVERGENTE: `versao` (opcional) enviada difere da vigente.
+    - 200: versão vigente já aceita; nenhum registro novo (idempotente).
+    - 201: aceite registrado no histórico e no cache do usuário.
+    """
+    # Mesmos valores aceitos pelo BooleanField dos cadastros (true, "true", 1, "1"...).
+    aceite = request.data.get("aceite_termos")
+    if not isinstance(aceite, (bool, int, str)) or aceite not in BooleanField.TRUE_VALUES:
         return Response(
-            {"detail": "É necessário confirmar o aceite dos termos."},
+            {"detail": "É necessário confirmar o aceite dos termos.", "code": "ACEITE_OBRIGATORIO"},
             status=status.HTTP_400_BAD_REQUEST,
         )
-    request.user.versao_termos_aceita = settings.TERMOS_VERSAO_ATUAL
-    request.user.data_aceite_termos = timezone.now()
-    request.user.save(update_fields=["versao_termos_aceita", "data_aceite_termos"])
-    return Response(UsuarioSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    if not termos.documentos_configurados():
+        return Response(
+            {
+                "detail": "Os Termos de Uso e a Política de Privacidade estão indisponíveis no momento.",
+                "code": "TERMOS_INDISPONIVEIS",
+            },
+            status=status.HTTP_503_SERVICE_UNAVAILABLE,
+        )
+
+    versao_atual = termos.versao_vigente()
+    versao_enviada = request.data.get("versao")
+    if versao_enviada is not None and str(versao_enviada).strip() != versao_atual:
+        return Response(
+            {
+                "detail": "A versão aceita não corresponde à versão vigente dos termos.",
+                "code": "TERMOS_VERSAO_DIVERGENTE",
+                "versao_atual": versao_atual,
+            },
+            status=status.HTTP_409_CONFLICT,
+        )
+
+    if not termos.termos_pendentes(request.user):
+        return Response(UsuarioSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    termos.registrar_aceite(request.user, HistoricoAceiteTermos.Origem.ACEITE)
+    return Response(UsuarioSerializer(request.user).data, status=status.HTTP_201_CREATED)
 
 
 @api_view(["GET"])

@@ -156,4 +156,5 @@ class HistoricoAceiteTermos(models.Model):
         raise HistoricoImutavelError("O histórico de aceite dos termos é imutável (RNF16).")
 
     def __str__(self):
-        return f"{self.usuario_id} aceitou v{self.versao} em {self.data_hora:%d/%m/%Y %H:%M:%S}"
+        data_hora_local = timezone.localtime(self.data_hora)
+        return f"{self.usuario_id} aceitou v{self.versao} em {data_hora_local:%d/%m/%Y %H:%M:%S}"

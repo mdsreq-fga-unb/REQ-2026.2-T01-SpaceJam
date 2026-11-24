@@ -2,12 +2,12 @@ from datetime import date
 
 from django.conf import settings
 from django.db import transaction
-from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import PerfilAluno, Usuario
+from . import termos
+from .models import HistoricoAceiteTermos, PerfilAluno, Usuario
 
 
 def calcular_idade(data_nascimento: date) -> int:
@@ -29,6 +29,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     apelido = serializers.CharField(source="username", read_only=True)
     perfil_aluno = PerfilAlunoSerializer(read_only=True)
     termos_pendentes = serializers.SerializerMethodField()
+    versao_termos_vigente = serializers.SerializerMethodField()
 
     class Meta:
         model = Usuario
@@ -45,11 +46,16 @@ class UsuarioSerializer(serializers.ModelSerializer):
             "treinador",
             "perfil_aluno",
             "termos_pendentes",
+            "versao_termos_aceita",
+            "versao_termos_vigente",
         ]
         read_only_fields = fields
 
     def get_termos_pendentes(self, obj):
-        return obj.versao_termos_aceita != settings.TERMOS_VERSAO_ATUAL
+        return termos.termos_pendentes(obj)
+
+    def get_versao_termos_vigente(self, obj):
+        return termos.versao_vigente()
 
 
 class CadastroAlunoSerializer(serializers.Serializer):
@@ -127,8 +133,6 @@ class CadastroAlunoSerializer(serializers.Serializer):
             data_nascimento=validated_data["data_nascimento"],
             papel=Usuario.Papel.ALUNO,
             treinador=self._treinador_encontrado,
-            versao_termos_aceita=settings.TERMOS_VERSAO_ATUAL,
-            data_aceite_termos=timezone.now(),
             consentimento_responsavel=validated_data.get("consentimento_responsavel", False),
         )
         PerfilAluno.objects.create(
@@ -139,6 +143,8 @@ class CadastroAlunoSerializer(serializers.Serializer):
             frequencia_semanal=validated_data["frequencia_semanal"],
             objetivos=validated_data["objetivos"].strip(),
         )
+        # US63 (RN15) — aceite registrado no histórico na mesma transação do cadastro.
+        termos.registrar_aceite(usuario, HistoricoAceiteTermos.Origem.CADASTRO)
         return usuario
 
 
@@ -184,7 +190,7 @@ class CadastroTreinadorSerializer(serializers.Serializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        return Usuario.objects.create_user(
+        usuario = Usuario.objects.create_user(
             username=validated_data["apelido"],
             email=validated_data["email"],
             password=validated_data["senha"],
@@ -192,9 +198,10 @@ class CadastroTreinadorSerializer(serializers.Serializer):
             last_name=validated_data["sobrenome"].strip(),
             telefone=validated_data["telefone"].strip(),
             papel=Usuario.Papel.TREINADOR,
-            versao_termos_aceita=settings.TERMOS_VERSAO_ATUAL,
-            data_aceite_termos=timezone.now(),
         )
+        # US63 (RN15) — aceite registrado no histórico na mesma transação do cadastro.
+        termos.registrar_aceite(usuario, HistoricoAceiteTermos.Origem.CADASTRO)
+        return usuario
 
 
 class LoginAlunoSerializer(serializers.Serializer):
