@@ -61,6 +61,11 @@ export async function listarExercicios(): Promise<Exercicio[]> {
   return itens.map(daApi);
 }
 
+export async function consultarExercicio(id: number): Promise<Exercicio> {
+  const dados = await api<ExercicioApi>(`/exercicios/${id}/`);
+  return daApi(dados);
+}
+
 export async function criarExercicio(exercicio: Exercicio): Promise<Exercicio> {
   const dados = await api<ExercicioApi>('/exercicios/', {
     method: 'POST',

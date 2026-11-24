@@ -11,6 +11,7 @@ interface ExerciseFormProps {
   onSalvar: (exercicio: Exercicio) => void;
   onCancelar: () => void;
   exercicioInicial?: Exercicio;
+  salvando?: boolean;
 }
 
 interface ErrosFormulario {
@@ -24,6 +25,7 @@ export default function ExerciseForm({
   onSalvar,
   onCancelar,
   exercicioInicial,
+  salvando = false,
 }: ExerciseFormProps) {
   const [nome, setNome] = useState(exercicioInicial?.nome ?? '');
   const [fundamento, setFundamento] = useState<Fundamento | ''>(
@@ -46,6 +48,7 @@ export default function ExerciseForm({
 
   function handleSubmit(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault();
+    if (salvando) return;
 
     const novosErros: ErrosFormulario = {};
 
@@ -89,7 +92,7 @@ export default function ExerciseForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit} aria-busy={salvando} noValidate>
       <h2>
         {exercicioInicial ? 'Editar exercício' : 'Novo exercício'}
       </h2>
@@ -99,6 +102,7 @@ export default function ExerciseForm({
         <input
           type="text"
           value={nome}
+          disabled={salvando}
           onChange={(evento) => {
             setNome(evento.target.value);
             setErros((atuais) => ({ ...atuais, nome: undefined }));
@@ -115,6 +119,7 @@ export default function ExerciseForm({
         Fundamento *
         <select
           value={fundamento}
+          disabled={salvando}
           onChange={(evento) => {
             setFundamento(evento.target.value as Fundamento | '');
             setErros((atuais) => ({
@@ -142,6 +147,7 @@ export default function ExerciseForm({
         Objetivo *
         <textarea
           value={objetivo}
+          disabled={salvando}
           onChange={(evento) => {
             setObjetivo(evento.target.value);
             setErros((atuais) => ({ ...atuais, objetivo: undefined }));
@@ -158,6 +164,7 @@ export default function ExerciseForm({
         Orientações
         <textarea
           value={orientacoes}
+          disabled={salvando}
           onChange={(evento) => setOrientacoes(evento.target.value)}
           placeholder="Adicione orientações para a execução..."
         />
@@ -167,6 +174,7 @@ export default function ExerciseForm({
         Erros comuns
         <textarea
           value={errosComuns}
+          disabled={salvando}
           onChange={(evento) => setErrosComuns(evento.target.value)}
           placeholder="Descreva erros comuns durante a execução..."
         />
@@ -177,6 +185,7 @@ export default function ExerciseForm({
         <input
           type="url"
           value={videoUrl}
+          disabled={salvando}
           onChange={(evento) => {
             setVideoUrl(evento.target.value);
             setErros((atuais) => ({ ...atuais, videoUrl: undefined }));
@@ -190,12 +199,12 @@ export default function ExerciseForm({
       </label>
 
       <div>
-        <button type="button" onClick={onCancelar}>
+        <button type="button" onClick={onCancelar} disabled={salvando}>
           Cancelar
         </button>
 
-        <button type="submit">
-          {exercicioInicial ? 'Salvar alterações' : 'Salvar exercício'}
+        <button type="submit" disabled={salvando}>
+          {salvando ? 'Salvando…' : exercicioInicial ? 'Salvar alterações' : 'Salvar exercício'}
         </button>
       </div>
     </form>

@@ -1,12 +1,14 @@
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router';
 import styles from './BibliotecaExercicios.module.css';
 import logoSpaceJam from '../imagens/logo_space_jam.png';
 import type { Exercicio } from '../../types/exercicio';
 import ExerciseForm from './components/ExerciseForm';
 import ExerciseDetails from './components/ExerciseDetails';
 import {
-  atualizarExercicio as atualizarNaApi,
+  atualizarExercicio,
+  consultarExercicio,
   criarExercicio,
   listarExercicios,
   mensagemDeErro,
@@ -17,16 +19,29 @@ function ordenarPorNome(lista: Exercicio[]) {
 }
 
 export default function BibliotecaExercicios() {
+  const navegar = useNavigate();
+  const { exercicioId } = useParams();
   const [busca, setBusca] = useState('');
-  const [mostrarFormulario, setMostrarFormulario] = useState(false);
-  const [modoEdicao, setModoEdicao] = useState(false);
-
-  const [exercicioSelecionado, setExercicioSelecionado] =
-    useState<Exercicio | null>(null);
-
+  const [formulario, setFormulario] = useState<'novo' | { exercicioId: string } | null>(null);
+  const [detalhe, setDetalhe] = useState<{
+    id: string;
+    exercicio?: Exercicio;
+    erro?: string;
+  } | null>(null);
   const [exercicios, setExercicios] = useState<Exercicio[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState('');
+  const envioEmCurso = useRef(false);
+
+  const idValido = /^[1-9]\d*$/.test(exercicioId ?? '') && Number.isSafeInteger(Number(exercicioId));
+  const detalheAtual = detalhe?.id === exercicioId ? detalhe : null;
+  const exercicioSelecionado = detalheAtual?.exercicio;
+  const erroDetalhe = idValido ? detalheAtual?.erro : 'Exercício não encontrado.';
+  const exercicioEmEdicao = formulario && formulario !== 'novo' && formulario.exercicioId === exercicioId
+    ? exercicioSelecionado
+    : undefined;
+  const mostrarFormulario = (formulario === 'novo' && !exercicioId) || Boolean(exercicioEmEdicao);
 
   useEffect(() => {
     let ativo = true;
@@ -47,55 +62,44 @@ export default function BibliotecaExercicios() {
     };
   }, []);
 
-  async function adicionarExercicio(novoExercicio: Exercicio) {
+  useEffect(() => {
+    if (!exercicioId || !idValido) return;
+    let ativo = true;
+
+    consultarExercicio(Number(exercicioId))
+      .then((exercicio) => {
+        if (ativo) setDetalhe({ id: exercicioId, exercicio });
+      })
+      .catch((falha: unknown) => {
+        if (ativo) setDetalhe({ id: exercicioId, erro: mensagemDeErro(falha) });
+      });
+
+    return () => { ativo = false; };
+  }, [exercicioId, idValido]);
+
+  async function salvarExercicio(exercicio: Exercicio) {
+    if (carregando || envioEmCurso.current) return;
+    envioEmCurso.current = true;
+    setSalvando(true);
     setErro('');
 
+    const id = exercicioEmEdicao?.id;
     try {
-      const criado = await criarExercicio(novoExercicio);
-      setExercicios((listaAtual) => ordenarPorNome([...listaAtual, criado]));
-      setMostrarFormulario(false);
+      const salvo = id === undefined
+        ? await criarExercicio(exercicio)
+        : await atualizarExercicio(id, exercicio);
+      setExercicios((lista) => ordenarPorNome([
+        ...lista.filter((item) => item.id !== salvo.id),
+        salvo,
+      ]));
+      if (exercicioId && id !== undefined) setDetalhe({ id: exercicioId, exercicio: salvo });
+      setFormulario(null);
     } catch (falha) {
       setErro(mensagemDeErro(falha));
+    } finally {
+      envioEmCurso.current = false;
+      setSalvando(false);
     }
-  }
-
-  function iniciarEdicao() {
-    setErro('');
-    setModoEdicao(true);
-    setMostrarFormulario(true);
-  }
-
-  async function atualizarExercicio(exercicioEditado: Exercicio) {
-    if (!exercicioSelecionado || exercicioSelecionado.id === undefined) return;
-
-    setErro('');
-
-    try {
-      const atualizado = await atualizarNaApi(
-        exercicioSelecionado.id,
-        exercicioEditado
-      );
-
-      setExercicios((listaAtual) =>
-        ordenarPorNome(
-          listaAtual.map((exercicio) =>
-            exercicio.id === atualizado.id ? atualizado : exercicio
-          )
-        )
-      );
-
-      setExercicioSelecionado(atualizado);
-      setMostrarFormulario(false);
-      setModoEdicao(false);
-    } catch (falha) {
-      setErro(mensagemDeErro(falha));
-    }
-  }
-
-  function cancelarFormulario() {
-    setErro('');
-    setMostrarFormulario(false);
-    setModoEdicao(false);
   }
 
   const exerciciosFiltrados = exercicios.filter((exercicio) =>
@@ -111,11 +115,7 @@ export default function BibliotecaExercicios() {
           className={styles.logo}
         />
 
-        <button className={styles.botaoMenu} aria-label="Abrir menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
+        <Link className={styles.linkAlunos} to="/treinador/alunos">Alunos</Link>
       </header>
 
       <section className={styles.conteudo}>
@@ -136,12 +136,13 @@ export default function BibliotecaExercicios() {
         </div>
 
         <button
+          type="button"
           className={styles.botaoAdicionar}
+          disabled={carregando || salvando}
           onClick={() => {
             setErro('');
-            setExercicioSelecionado(null);
-            setModoEdicao(false);
-            setMostrarFormulario(true);
+            setFormulario('novo');
+            if (exercicioId) navegar('/exercicios');
           }}
         >
           <span>Adicionar exercício</span>
@@ -156,13 +157,14 @@ export default function BibliotecaExercicios() {
 
         {mostrarFormulario && (
           <ExerciseForm
-            exercicioInicial={
-              modoEdicao
-                ? exercicioSelecionado ?? undefined
-                : undefined
-            }
-            onSalvar={modoEdicao ? atualizarExercicio : adicionarExercicio}
-            onCancelar={cancelarFormulario}
+            key={exercicioEmEdicao?.id ?? 'novo'}
+            exercicioInicial={exercicioEmEdicao}
+            onSalvar={salvarExercicio}
+            onCancelar={() => {
+              setErro('');
+              setFormulario(null);
+            }}
+            salvando={salvando}
           />
         )}
 
@@ -170,11 +172,14 @@ export default function BibliotecaExercicios() {
           <section className={styles.listaExercicios}>
             {exerciciosFiltrados.map((exercicio) => (
               <button
+                type="button"
                 className={styles.exercicio}
                 key={exercicio.id}
+                disabled={salvando}
                 onClick={() => {
-                  setExercicioSelecionado(exercicio);
-                  setMostrarFormulario(false);
+                  setErro('');
+                  setFormulario(null);
+                  if (exercicio.id !== undefined) navegar(`/exercicios/${exercicio.id}`);
                 }}
               >
                 {exercicio.nome}
@@ -196,12 +201,25 @@ export default function BibliotecaExercicios() {
             </p>
           )}
 
-        {exercicioSelecionado && !mostrarFormulario && (
-          <ExerciseDetails
-            exercicio={exercicioSelecionado}
-            onEditar={iniciarEdicao}
-            onFechar={() => setExercicioSelecionado(null)}
-          />
+        {exercicioId && !mostrarFormulario && (
+          erroDetalhe ? (
+            <p role="alert" className="mensagemErro">{erroDetalhe}</p>
+          ) : exercicioSelecionado ? (
+            <ExerciseDetails
+              exercicio={exercicioSelecionado}
+              onEditar={() => {
+                setErro('');
+                setFormulario({ exercicioId });
+              }}
+              onFechar={() => {
+                setFormulario(null);
+                navegar('/exercicios');
+              }}
+              edicaoIndisponivel={carregando || salvando}
+            />
+          ) : (
+            <p role="status">Carregando exercício...</p>
+          )
         )}
       </section>
     </main>

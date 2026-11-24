@@ -33,14 +33,6 @@ export default function App() {
               </RotaProtegida>
             }
           />
-                    <Route
-            path="/exercicios"
-            element={
-              <RotaProtegida papel="TREINADOR">
-                <BibliotecaExercicios />
-              </RotaProtegida>
-            }
-          />
           <Route
             path="/aluno/conta/editar"
             element={
@@ -74,7 +66,7 @@ export default function App() {
             }
           />
           <Route
-            path="/exercicios"
+            path="/exercicios/:exercicioId?"
             element={
               <RotaProtegida papel="TREINADOR">
                 <BibliotecaExercicios />

@@ -31,35 +31,20 @@
   object-fit: contain;
 }
 
-.botaoMenu {
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  border: none;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  cursor: pointer;
+.linkAlunos {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 10px;
+  color: #fff;
+  font-weight: 700;
+  text-underline-offset: 4px;
 }
 
-.botaoMenu span {
-  display: block;
-  width: 16px;
-  height: 2px;
-  background-color: #d1b0be;
-  position: relative;
-}
-
-.botaoMenu span::before {
-  content: '';
-  position: absolute;
-  left: -5px;
-  top: 0;
-  width: 2px;
-  height: 2px;
-  border-radius: 50%;
-  background-color: #d1b0be;
+.botaoAdicionar:disabled,
+.conteudo form button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 /* CONTEÚDO PRINCIPAL */

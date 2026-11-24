@@ -5,12 +5,14 @@ interface ExerciseDetailsProps {
   exercicio: Exercicio;
   onFechar: () => void;
   onEditar: () => void;
+  edicaoIndisponivel?: boolean;
 }
 
 export default function ExerciseDetails({
   exercicio,
   onFechar,
   onEditar,
+  edicaoIndisponivel = false,
 }: ExerciseDetailsProps) {
   return (
     <section>
@@ -42,7 +44,7 @@ export default function ExerciseDetails({
         <p>Não informado</p>
       )}
 
-      <button type="button" onClick={onEditar}>
+      <button type="button" onClick={onEditar} disabled={edicaoIndisponivel}>
         Editar exercício
       </button>
 
