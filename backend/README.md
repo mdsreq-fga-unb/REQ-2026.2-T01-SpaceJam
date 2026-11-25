@@ -66,3 +66,19 @@ Sem as duas URLs válidas, o aceite e os cadastros respondem `503`. O frontend l
 O texto da versão 1.0 dos Termos de Uso e da Política de Privacidade é exibido pelas rotas `/termos-de-uso` e `/politica-de-privacidade` do frontend, a partir de `frontend/src/features/termos/documentosLegais.ts`. O espelho em `docs/legal/` deve ser atualizado junto e continua no `exclude_docs` do `mkdocs.yml` até a aprovação formal. Os pontos ainda pendentes de confirmação aparecem destacados nas páginas.
 
 O cadastro de aluno recusa menores de 18 anos (`400`, campo `data_nascimento`) até existir o fluxo verificável de consentimento do responsável (RN16/US65). O campo `consentimento_responsavel` do modelo foi mantido para esse fluxo futuro.
+
+
+## Recuperação de senha (US10)
+
+A solicitação e a redefinição são públicas. Elas estão disponíveis antes do login e do aceite dos termos.
+
+| Rota | Corpo da solicitação |
+| --- | --- |
+| POST /api/auth/recuperar-senha/ | email |
+| POST /api/auth/redefinir-senha/ | token, nova_senha, confirmacao_senha |
+
+O pedido retorna HTTP 200 com a mesma mensagem para endereços cadastrados, desconhecidos, limitados ou com falha de envio. Falhas do serviço de e-mail ficam registradas no log. O link mais recente permanece válido por até uma hora, sobrevive à reinicialização da aplicação e só pode ser usado uma vez. Erros de link retornam HTTP 400 com código token_invalido, token_expirado ou token_usado. Após a redefinição, entre novamente com a nova senha.
+
+Configure FRONTEND_URL com a URL pública do frontend. Em produção, use HTTPS e configure o backend SMTP com as variáveis EMAIL_* do arquivo .env.example. Em desenvolvimento, o backend de console exibe a mensagem no log local. O limite padrão é de cinco pedidos por e-mail e vinte por IP em quinze minutos. A aplicação conta o IP da conexão. Em ambientes atrás de proxy, aplique também o limite por IP do cliente na borda.
+
+Execute as migrações do Django antes de liberar o fluxo. Solicitações emitidas antes da mudança de armazenamento precisam ser refeitas.
