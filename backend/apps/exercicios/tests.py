@@ -4,6 +4,8 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from apps.contas import termos
+
 from .models import ErroComumExercicio, Exercicio
 
 Usuario = get_user_model()
@@ -569,3 +571,220 @@ class ErrosOrientacoesNaConsultaTests(APITestCase):
         self.assertEqual(resposta.status_code, status.HTTP_200_OK)
         self.assertEqual(len(resposta.data), 4)
         self.assertTrue(all("erros_orientacoes" in item for item in resposta.data))
+
+
+class ErrosOrientacoesApiBase(APITestCase):
+    """Base dos testes da API de erros comuns + orientações (US37 / RF2420).
+
+    As rotas usam ROTA_PROTEGIDA (US63): treinador e aluno precisam ter aceitado
+    os termos vigentes, para que o 403 do aluno venha do perfil (CA04) e não dos termos.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.aluno = Usuario.objects.create_user(
+            username="aluno1",
+            email="aluno1@exemplo.com",
+            password="senha-forte-123",
+            papel="ALUNO",
+            treinador=cls.treinador,
+        )
+        termos.registrar_aceite(cls.treinador)
+        termos.registrar_aceite(cls.aluno)
+        cls.exercicio = Exercicio.objects.create(
+            nome="Drible com deslocamento",
+            objetivo="Conduzir a bola em movimento",
+            fundamento="DRIBLE",
+            criado_por=cls.treinador,
+        )
+        cls.outro_exercicio = Exercicio.objects.create(
+            nome="Passe de peito",
+            objetivo="Melhorar a precisão do passe",
+            fundamento="PASSE",
+            criado_por=cls.treinador,
+        )
+        cls.dados = {
+            "erro": "Olhar somente para a bola.",
+            "orientacao_corretiva": "Mantenha o olhar à frente durante o deslocamento.",
+        }
+
+    def url_lista(self, exercicio_pk=None):
+        return reverse(
+            "exercicio-erro-comum-list", args=[exercicio_pk or self.exercicio.pk]
+        )
+
+    def criar_item(self, exercicio=None, **campos):
+        return ErroComumExercicio.objects.create(
+            exercicio=exercicio or self.exercicio,
+            erro=campos.get("erro", self.dados["erro"]),
+            orientacao_corretiva=campos.get(
+                "orientacao_corretiva", self.dados["orientacao_corretiva"]
+            ),
+        )
+
+
+class ListarECadastrarErrosOrientacoesTests(ErrosOrientacoesApiBase):
+    """Listar e cadastrar itens. A criação pertence à US36; entra aqui porque a
+    US37 precisa de itens para editar (CA01) e remover (CA02)."""
+
+    def test_treinador_lista_somente_os_itens_do_exercicio_em_ordem(self):
+        primeiro = self.criar_item()
+        segundo = self.criar_item(erro="Bater a bola com a palma da mão.")
+        self.criar_item(exercicio=self.outro_exercicio, erro="Erro de outro exercício.")
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.get(self.url_lista())
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual([item["id"] for item in resposta.data], [primeiro.pk, segundo.pk])
+
+    def test_treinador_cadastra_item_e_ele_aparece_no_detalhe(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.post(self.url_lista(), self.dados, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(resposta.data["erro"], self.dados["erro"])
+        self.assertEqual(
+            resposta.data["orientacao_corretiva"], self.dados["orientacao_corretiva"]
+        )
+        detalhe = self.client.get(reverse("exercicio-detail", args=[self.exercicio.pk]))
+        self.assertEqual(
+            [item["id"] for item in detalhe.data["erros_orientacoes"]],
+            [resposta.data["id"]],
+        )
+
+    def test_item_com_erro_ou_orientacao_vazios_e_recusado(self):
+        # RN22 (dentro do item) / RNF14: os dois campos são obrigatórios.
+        self.client.force_authenticate(self.treinador)
+        for campo in ["erro", "orientacao_corretiva"]:
+            for valor in ["", "   "]:
+                with self.subTest(campo=campo, valor=repr(valor)):
+                    resposta = self.client.post(
+                        self.url_lista(), {**self.dados, campo: valor}, format="json"
+                    )
+                    self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+                    self.assertIn(campo, resposta.data)
+            with self.subTest(campo=campo, valor="ausente"):
+                incompleto = {k: v for k, v in self.dados.items() if k != campo}
+                resposta = self.client.post(self.url_lista(), incompleto, format="json")
+                self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertIn(campo, resposta.data)
+        self.assertFalse(ErroComumExercicio.objects.exists())
+
+    def test_item_com_texto_acima_do_limite_e_recusado(self):
+        self.client.force_authenticate(self.treinador)
+        for campo in ["erro", "orientacao_corretiva"]:
+            with self.subTest(campo=campo):
+                resposta = self.client.post(
+                    self.url_lista(), {**self.dados, campo: "x" * 1001}, format="json"
+                )
+                self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertIn(campo, resposta.data)
+        self.assertFalse(ErroComumExercicio.objects.exists())
+
+        no_limite = self.client.post(
+            self.url_lista(),
+            {"erro": "x" * 1000, "orientacao_corretiva": "y" * 1000},
+            format="json",
+        )
+        self.assertEqual(no_limite.status_code, status.HTTP_201_CREATED)
+
+    def test_textos_sao_salvos_sem_espacos_nas_pontas(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.post(
+            self.url_lista(),
+            {"erro": "  Olhar para a bola.  ", "orientacao_corretiva": "\tOlhar à frente.\n"},
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
+        item = ErroComumExercicio.objects.get()
+        self.assertEqual(item.erro, "Olhar para a bola.")
+        self.assertEqual(item.orientacao_corretiva, "Olhar à frente.")
+
+    def test_aluno_recebe_403_ao_listar_e_cadastrar(self):
+        # CA04 / RN14 / RNF08: o 403 vem do perfil (aluno com termos aceitos).
+        self.criar_item()
+        self.client.force_authenticate(self.aluno)
+
+        listar = self.client.get(self.url_lista())
+        cadastrar = self.client.post(self.url_lista(), self.dados, format="json")
+
+        for resposta in (listar, cadastrar):
+            self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertNotEqual(resposta.data.get("code"), "TERMOS_PENDENTES")
+        self.assertEqual(ErroComumExercicio.objects.count(), 1)
+
+    def test_sem_login_recebe_401(self):
+        listar = self.client.get(self.url_lista())
+        cadastrar = self.client.post(self.url_lista(), self.dados, format="json")
+
+        self.assertEqual(listar.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(cadastrar.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertFalse(ErroComumExercicio.objects.exists())
+
+    def test_treinador_com_termos_pendentes_recebe_403(self):
+        # US63 (RN15, RNF16): rota de negócio exige o aceite dos termos vigentes.
+        sem_aceite = Usuario.objects.create_user(
+            username="coach2",
+            email="coach2@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        self.client.force_authenticate(sem_aceite)
+
+        resposta = self.client.post(self.url_lista(), self.dados, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(resposta.data["code"], "TERMOS_PENDENTES")
+        self.assertFalse(ErroComumExercicio.objects.exists())
+
+    def test_exercicio_inexistente_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+
+        listar = self.client.get(self.url_lista(exercicio_pk=9999))
+        cadastrar = self.client.post(
+            self.url_lista(exercicio_pk=9999), self.dados, format="json"
+        )
+
+        self.assertEqual(listar.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(cadastrar.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertFalse(ErroComumExercicio.objects.exists())
+
+    def test_cadastrar_item_nao_altera_o_exercicio_pai(self):
+        # Decisão do plano: o item não grava no exercício (atualizado_em intacto)
+        # e o campo antigo erros_comuns (US39) continua como estava.
+        Exercicio.objects.filter(pk=self.exercicio.pk).update(
+            erros_comuns="Texto antigo de erros comuns."
+        )
+        antes = Exercicio.objects.get(pk=self.exercicio.pk)
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.post(self.url_lista(), self.dados, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
+        depois = Exercicio.objects.get(pk=self.exercicio.pk)
+        self.assertEqual(depois.atualizado_em, antes.atualizado_em)
+        self.assertEqual(depois.erros_comuns, "Texto antigo de erros comuns.")
+
+    def test_exercicio_do_corpo_e_ignorado(self):
+        # O item sempre pertence ao exercício da URL.
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.post(
+            self.url_lista(),
+            {**self.dados, "exercicio": self.outro_exercicio.pk},
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(ErroComumExercicio.objects.get().exercicio, self.exercicio)
+        self.assertFalse(self.outro_exercicio.erros_orientacoes.exists())

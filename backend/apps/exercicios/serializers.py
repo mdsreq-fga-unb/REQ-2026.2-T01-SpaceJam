@@ -3,13 +3,25 @@ from rest_framework import serializers
 from .models import ErroComumExercicio, Exercicio
 
 
+LIMITE_TEXTO_ERRO_ORIENTACAO = 1000
+
+
 class ErroComumExercicioSerializer(serializers.ModelSerializer):
-    """US37 / RF2420 — Item de erro comum + orientação corretiva de um exercício."""
+    """US37 / RF2420 — Item de erro comum + orientação corretiva de um exercício.
+
+    Os dois textos são obrigatórios dentro do item (RN22, RNF14): o padrão do DRF
+    para campos obrigatórios recusa ausente, vazio ou só com espaços
+    (allow_blank=False, trim_whitespace=True). O exercício vem sempre da URL.
+    """
 
     class Meta:
         model = ErroComumExercicio
         fields = ["id", "erro", "orientacao_corretiva", "criado_em", "atualizado_em"]
         read_only_fields = ["id", "criado_em", "atualizado_em"]
+        extra_kwargs = {
+            "erro": {"max_length": LIMITE_TEXTO_ERRO_ORIENTACAO},
+            "orientacao_corretiva": {"max_length": LIMITE_TEXTO_ERRO_ORIENTACAO},
+        }
 
 
 class ExercicioSerializer(serializers.ModelSerializer):
