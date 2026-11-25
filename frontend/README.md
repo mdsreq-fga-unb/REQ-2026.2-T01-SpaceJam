@@ -30,6 +30,24 @@ A interface recebe altura e envergadura em centímetros e converte para metros, 
 
 O login conserva os tokens access e refresh e confirma o perfil pelo servidor. A saída elimina a sessão local imediatamente e envia o refresh com o access no cabeçalho. O backend revoga o refresh, rejeita o access usado no logout e recusa refresh de outro usuário. Se o encerramento falhar, a interface informa que ele não foi confirmado no servidor. A restauração da sessão consulta `/auth/me/`; não foi acrescentada renovação automática do access token.
 
+## Erros comuns e orientações corretivas (US37)
+
+Telas do treinador para manter os pares **erro comum + orientação corretiva** de cada exercício da biblioteca. O acesso é pelo botão "Erros e orientações" no detalhe do exercício. Todas as rotas usam `RotaProtegida papel="TREINADOR"`; a proteção de verdade continua no backend (CA04).
+
+| Rota | Tela | Chamada à API |
+| --- | --- | --- |
+| `/exercicios/:exercicioId/erros-orientacoes` | Lista do exercício, com estado vazio | `GET /exercicios/:id/` (campo `erros_orientacoes`) |
+| `/exercicios/:exercicioId/erros-orientacoes/novo` | Adicionar nova orientação | `POST /exercicios/:id/erros-comuns/` |
+| `/exercicios/:exercicioId/erros-orientacoes/:erroId/editar` | Editar orientação (CA01) | `PUT /exercicios/:id/erros-comuns/:erroId/` |
+| `/exercicios/:exercicioId/erros-orientacoes/:erroId/remover` | Confirmar a remoção (CA02) | `DELETE /exercicios/:id/erros-comuns/:erroId/` |
+
+- O corpo leva só `erro` e `orientacao_corretiva`; o exercício vem sempre da URL. Os dois campos são obrigatórios e têm limite de 1000 caracteres, os mesmos do backend. Os espaços nas pontas são removidos antes do envio.
+- Os erros 400 do backend aparecem no campo correspondente; 403, 404 e falhas de rede aparecem em `role="alert"`, sem perder o que foi digitado.
+- Depois de salvar ou remover, a lista mostra um aviso em `role="status"`. O aviso sai do histórico do navegador e não reaparece ao recarregar.
+- A remoção é definitiva e vale só para o exercício. Treinos já prescritos devem manter a cópia das orientações (RN23); essa parte depende da prescrição (RF2307).
+- O formulário do exercício (US39) não envia a lista, portanto editar o exercício não apaga os itens. O campo de texto antigo "Erros comuns" do exercício foi mantido.
+- Código: `src/features/exercicios/` (`ErrosOrientacoesExercicio.tsx`, `ErroOrientacaoPage.tsx`, `RemoverErroOrientacaoPage.tsx`, `components/ErroOrientacaoForm.tsx` e `ErrosOrientacoes.module.css`). Testes: `tests/us37-erros-orientacoes-*.test.ts(x)`.
+
 ## Pendências para o incremento
 
 - Validar com o responsável pela plataforma os pontos destacados nos documentos legais (DoD06) e publicar com zero pendências, mantendo `VERSAO_DOCUMENTOS_LEGAIS` igual a `TERMOS_VERSAO_ATUAL`. Configurar uma URL não comprova conteúdo, disponibilidade ou validação do documento.
