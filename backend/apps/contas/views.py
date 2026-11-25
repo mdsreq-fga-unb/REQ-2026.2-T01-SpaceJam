@@ -12,11 +12,12 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import termos
 from .models import HistoricoAceiteTermos, Usuario
-from .permissions import ROTA_PROTEGIDA
+from .permissions import IsAlunoProprietarioPerfil, ROTA_PROTEGIDA
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     DadosCadastraisAlunoSerializer,
+    EditarPerfilAlunoSerializer,
     LoginAlunoSerializer,
     LoginTreinadorSerializer,
     PerfilAlunoAcompanhadoSerializer,
@@ -218,3 +219,44 @@ def trocar_senha(request):
         {"detail": "Senha alterada com sucesso."},
         status=status.HTTP_200_OK,
     )
+
+@api_view(["PATCH", "PUT"])
+@permission_classes([*ROTA_PROTEGIDA, IsAlunoProprietarioPerfil])
+def editar_perfil_aluno(request, aluno_id=None):
+    """US07 — Editar informações pessoais e corporais básicas do aluno (RF1107)."""
+    if request.user.papel != Usuario.Papel.ALUNO:
+        return Response(
+            {"detail": "Apenas o próprio aluno pode editar estas informações do perfil."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    if aluno_id is not None and int(aluno_id) != int(request.user.pk):
+        return Response(
+            {"detail": "Você não tem permissão para editar o perfil de outro aluno."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    aluno = (
+        Usuario.objects.select_related("perfil_aluno", "treinador")
+        .filter(pk=request.user.pk)
+        .first()
+        or request.user
+    )
+
+    # Garante que campos protegidos/clínicos enviados no payload não sejam aplicados
+    # (se vierem isoladamente ou junto a campos válidos, não alteram dados protegidos).
+    dados_filtrados = {
+        chave: valor
+        for chave, valor in request.data.items()
+        if chave in EditarPerfilAlunoSerializer.CAMPOS_PERMITIDOS
+    }
+
+    serializer = EditarPerfilAlunoSerializer(
+        aluno,
+        data=dados_filtrados,
+        partial=True,
+        context={"request": request},
+    )
+    serializer.is_valid(raise_exception=True)
+    usuario_atualizado = serializer.save()
+    return Response(UsuarioSerializer(usuario_atualizado).data, status=status.HTTP_200_OK)

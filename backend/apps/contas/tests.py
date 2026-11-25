@@ -373,3 +373,95 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
             format="json",
         )
         self.assertEqual(r_login_nova.status_code, 200)
+
+    def test_us07_editar_perfil_aluno_fluxos_e_bloqueios(self):
+        treinador = self._criar_treinador()
+        payload_aluno = self._payload_aluno(treinador["codigo_convite"])
+        resp_aluno = self.client.post(
+            "/api/auth/cadastro/aluno/", payload_aluno, format="json"
+        )
+        self.assertEqual(resp_aluno.status_code, 201)
+        aluno_id = resp_aluno.data["id"]
+
+        endpoint = "/api/contas/me/editar/"
+
+        # Sem autenticação -> 401
+        self.client.credentials()
+        r_unauth = self.client.patch(endpoint, {"nome": "Lucas Novo"}, format="json")
+        self.assertEqual(r_unauth.status_code, 401)
+
+        # Treinador tentando editar dados básicos do aluno -> 403
+        login_treinador = self.client.post(
+            "/api/auth/login/treinador/",
+            {"email": treinador["email"], "senha": "SenhaForte#2026"},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_treinador['access']}")
+        r_treinador = self.client.patch(
+            f"/api/contas/alunos/{aluno_id}/editar/",
+            {"nome": "Alterado Pelo Coach"},
+            format="json",
+        )
+        self.assertEqual(r_treinador.status_code, 403)
+
+        # Autentica aluno
+        login_aluno = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": payload_aluno["apelido"], "senha": payload_aluno["senha"]},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_aluno['access']}")
+
+        # Tentativa de editar perfil de outro aluno -> 403
+        r_outro_id = self.client.patch(
+            f"/api/contas/alunos/{aluno_id + 999}/editar/",
+            {"nome": "Outro ID"},
+            format="json",
+        )
+        self.assertEqual(r_outro_id.status_code, 403)
+
+        # Edição válida + tentativa de alterar campo protegido (frequencia_semanal)
+        r_ok = self.client.patch(
+            endpoint,
+            {
+                "nome": "Lucas Gabriel",
+                "sobrenome": "Oliveira Costa",
+                "apelido": "lucao_novo",
+                "email": "lucas.novo@aluno.com",
+                "altura": "1.90",
+                "peso": "84.00",
+                "envergadura": "1.98",
+                "objetivos": "Melhorar infiltração e finalização",
+                "frequencia_semanal": 7,
+            },
+            format="json",
+        )
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertEqual(r_ok.data["first_name"], "Lucas Gabriel")
+        self.assertEqual(r_ok.data["last_name"], "Oliveira Costa")
+        self.assertEqual(r_ok.data["apelido"], "lucao_novo")
+        self.assertEqual(r_ok.data["email"], "lucas.novo@aluno.com")
+        self.assertEqual(r_ok.data["perfil_aluno"]["altura"], "1.90")
+        self.assertEqual(r_ok.data["perfil_aluno"]["peso"], "84.00")
+        self.assertEqual(r_ok.data["perfil_aluno"]["envergadura"], "1.98")
+        self.assertEqual(
+            r_ok.data["perfil_aluno"]["objetivos"],
+            "Melhorar infiltração e finalização",
+        )
+        # Campo protegido permanece intacto (4 do cadastro original)
+        self.assertEqual(r_ok.data["perfil_aluno"]["frequencia_semanal"], 4)
+
+        # Novo apelido passa a valer no login e o antigo é recusado
+        r_login_antigo = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": "lucao10", "senha": payload_aluno["senha"]},
+            format="json",
+        )
+        self.assertEqual(r_login_antigo.status_code, 401)
+
+        r_login_novo = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": "lucao_novo", "senha": payload_aluno["senha"]},
+            format="json",
+        )
+        self.assertEqual(r_login_novo.status_code, 200)

@@ -380,3 +380,127 @@ class TrocarSenhaSerializer(serializers.Serializer):
             pass
 
         return user
+
+
+class EditarPerfilAlunoSerializer(serializers.Serializer):
+    """US07 — Editar informações pessoais e corporais básicas do aluno (RF1107)."""
+
+    CAMPOS_PERMITIDOS = {
+        "nome",
+        "sobrenome",
+        "apelido",
+        "email",
+        "altura",
+        "peso",
+        "envergadura",
+        "objetivos",
+    }
+
+    nome = serializers.CharField(max_length=150, required=False)
+    sobrenome = serializers.CharField(max_length=150, required=False)
+    apelido = serializers.CharField(max_length=150, required=False)
+    email = serializers.EmailField(required=False)
+    altura = serializers.DecimalField(
+        max_digits=4, decimal_places=2, min_value=0.5, max_value=2.6, required=False
+    )
+    peso = serializers.DecimalField(
+        max_digits=5, decimal_places=2, min_value=20.0, max_value=300.0, required=False
+    )
+    envergadura = serializers.DecimalField(
+        max_digits=4, decimal_places=2, min_value=0.5, max_value=2.6, required=False
+    )
+    objetivos = serializers.CharField(max_length=500, required=False)
+
+    def _usuario_alvo(self):
+        instance = self.instance
+        if isinstance(instance, PerfilAluno):
+            return instance.usuario
+        if isinstance(instance, Usuario):
+            return instance
+        request = self.context.get("request")
+        return getattr(request, "user", None)
+
+    def validate_nome(self, value):
+        nome = value.strip()
+        if not nome:
+            raise serializers.ValidationError("O nome não pode ficar em branco.")
+        return nome
+
+    def validate_sobrenome(self, value):
+        sobrenome = value.strip()
+        if not sobrenome:
+            raise serializers.ValidationError("O sobrenome não pode ficar em branco.")
+        return sobrenome
+
+    def validate_apelido(self, value):
+        apelido = value.strip()
+        if not apelido:
+            raise serializers.ValidationError("O apelido não pode ficar em branco.")
+
+        qs = Usuario.objects.filter(username__iexact=apelido)
+        usuario_alvo = self._usuario_alvo()
+        if usuario_alvo and usuario_alvo.pk:
+            qs = qs.exclude(pk=usuario_alvo.pk)
+        if qs.exists():
+            raise serializers.ValidationError("Este apelido já está em uso.")
+        return apelido
+
+    def validate_email(self, value):
+        email = value.strip().lower()
+        if not email:
+            raise serializers.ValidationError("O e-mail não pode ficar em branco.")
+
+        qs = Usuario.objects.filter(email__iexact=email)
+        usuario_alvo = self._usuario_alvo()
+        if usuario_alvo and usuario_alvo.pk:
+            qs = qs.exclude(pk=usuario_alvo.pk)
+        if qs.exists():
+            raise serializers.ValidationError("Este e-mail já está em uso.")
+        return email
+
+    def validate_objetivos(self, value):
+        objetivos = value.strip()
+        if not objetivos:
+            raise serializers.ValidationError("Os objetivos não podem ficar em branco.")
+        return objetivos
+
+    def validate(self, attrs):
+        if not attrs:
+            raise serializers.ValidationError(
+                "Informe ao menos um campo válido para edição do perfil."
+            )
+        return attrs
+
+    @transaction.atomic
+    def update(self, instance, validated_data):
+        usuario = self._usuario_alvo()
+        perfil, _ = PerfilAluno.objects.get_or_create(usuario=usuario)
+
+        campos_usuario_atualizados = []
+        if "nome" in validated_data:
+            usuario.first_name = validated_data["nome"]
+            campos_usuario_atualizados.append("first_name")
+        if "sobrenome" in validated_data:
+            usuario.last_name = validated_data["sobrenome"]
+            campos_usuario_atualizados.append("last_name")
+        if "apelido" in validated_data:
+            usuario.username = validated_data["apelido"]
+            campos_usuario_atualizados.append("username")
+        if "email" in validated_data:
+            usuario.email = validated_data["email"]
+            campos_usuario_atualizados.append("email")
+
+        if campos_usuario_atualizados:
+            usuario.save(update_fields=campos_usuario_atualizados)
+
+        campos_perfil_atualizados = []
+        for campo in ("altura", "peso", "envergadura", "objetivos"):
+            if campo in validated_data:
+                setattr(perfil, campo, validated_data[campo])
+                campos_perfil_atualizados.append(campo)
+
+        if campos_perfil_atualizados:
+            perfil.save(update_fields=campos_perfil_atualizados)
+
+        usuario.refresh_from_db()
+        return usuario
