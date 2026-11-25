@@ -141,3 +141,23 @@ if not DEBUG and (
         "Configure COACH_ACTIVATION_CODE com um codigo privado "
         "antes de executar em producao."
     )
+
+
+# US10 — Recuperação de senha. Em desenvolvimento, use o console sem SMTP externo.
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173" if DEBUG else "").strip()
+PASSWORD_RESET_TIMEOUT_SECONDS = min(3600, max(1, int(os.environ.get("PASSWORD_RESET_TIMEOUT_SECONDS", "3600"))))
+PASSWORD_RESET_EMAIL_LIMIT = max(1, int(os.environ.get("PASSWORD_RESET_EMAIL_LIMIT", "5")))
+PASSWORD_RESET_IP_LIMIT = max(1, int(os.environ.get("PASSWORD_RESET_IP_LIMIT", "20")))
+PASSWORD_RESET_WINDOW_SECONDS = max(1, int(os.environ.get("PASSWORD_RESET_WINDOW_SECONDS", "900")))
+EMAIL_BACKEND = os.environ.get(
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend" if DEBUG else "django.core.mail.backends.smtp.EmailBackend",
+)
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", False)
+EMAIL_TIMEOUT = int(os.environ.get("EMAIL_TIMEOUT", "10"))
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@spacejam.local")

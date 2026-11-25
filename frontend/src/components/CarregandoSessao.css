@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400&family=Barlow+Condensed:wght@700&display=swap');
+
+:root:has(.sessao-v2),
+body:has(.sessao-v2),
+#root:has(.sessao-v2) {
+  background: #19191c;
+}
+
+.sessao-v2 {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 16px;
+  min-height: 100svh;
+  min-height: 100dvh;
+  padding: 24px;
+  background: #19191c;
+  color: #c2c2c4;
+  text-align: center;
+  font: 400 16px/1.5 Barlow, Arial, sans-serif;
+}
+
+.sessao-v2 .marca {
+  color: #f2f2f2;
+  font: 700 28px/1.1 'Barlow Condensed', 'Arial Narrow', sans-serif;
+}
+
+.sessao-v2 .marca img {
+  display: block;
+  width: 48px;
+  height: 51px;
+}
+
+.sessao-v2 p { margin: 0; }

@@ -21,6 +21,7 @@ class Usuario(AbstractUser):
         TREINADOR = "TREINADOR", "Treinador"
 
     papel = models.CharField(max_length=10, choices=Papel.choices, default=Papel.ALUNO)
+    versao_sessao = models.PositiveIntegerField(default=0, editable=False)
     telefone = models.CharField(max_length=20, blank=True)
     data_nascimento = models.DateField(null=True, blank=True)
 
@@ -181,3 +182,16 @@ class HistoricoAceiteTermos(models.Model):
     def __str__(self):
         data_hora_local = timezone.localtime(self.data_hora)
         return f"{self.usuario_id} aceitou v{self.versao} em {data_hora_local:%d/%m/%Y %H:%M:%S}"
+
+
+class RecuperacaoSenha(models.Model):
+    usuario = models.OneToOneField(Usuario, on_delete=models.CASCADE)
+    resumo_token = models.CharField(max_length=64)
+    expira_em = models.DateTimeField()
+    usado = models.BooleanField(default=False)
+
+
+class LimiteRecuperacaoSenha(models.Model):
+    chave = models.CharField(max_length=64, primary_key=True)
+    expira_em = models.DateTimeField(db_index=True)
+    pedidos = models.PositiveIntegerField()

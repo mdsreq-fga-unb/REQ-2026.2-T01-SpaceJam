@@ -19,7 +19,7 @@ describe('contrato de acesso do backend', () => {
     await pessoa.type(screen.getByLabelText('E-mail'), 'treinador@example.com')
     await pessoa.type(screen.getByLabelText('Senha', { exact: true }), 'Senha#2026')
     await pessoa.click(screen.getByRole('button', { name: 'Entrar', exact: true }))
-    expect(await screen.findByRole('heading', { name: /Olá, Treinador/ })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: 'Minha conta' })).toBeTruthy()
     const [url, opcoes] = requisicoes.mock.calls[0]
     expect(url).toBe('/api/auth/login/treinador/')
     expect(JSON.parse(opcoes.body)).toEqual({ email: 'treinador@example.com', senha: 'Senha#2026' })
@@ -44,7 +44,7 @@ describe('contrato de acesso do backend', () => {
     const requisicoes = vi.fn().mockResolvedValueOnce(resposta(treinador)).mockResolvedValueOnce(resposta({ detail: 'Sessão encerrada com sucesso.' }))
     vi.stubGlobal('fetch', requisicoes)
     const pessoa = abrir('/')
-    await screen.findByRole('heading', { name: /Olá/ })
+    await screen.findByRole('heading', { name: 'Minha conta' })
     await pessoa.click(screen.getByRole('button', { name: 'Sair da conta' }))
     await waitFor(() => expect(requisicoes).toHaveBeenCalledTimes(2))
     const [url, opcoes] = requisicoes.mock.calls[1]

@@ -195,6 +195,7 @@ class AuditoriaRotasTests(SimpleTestCase):
     ISENTAS = {
         "health", "cadastro-aluno", "cadastro-treinador", "login", "login-aluno", "login-treinador",
         "refresh", "termos-vigentes", "me", "logout", "aceitar-termos",
+        "recuperar-senha", "redefinir-senha",  # US10: recuperação ocorre antes do login.
     }
 
     def _rotas_api(self, padroes=None, prefixo=""):
