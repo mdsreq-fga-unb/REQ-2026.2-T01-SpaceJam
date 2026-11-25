@@ -24,7 +24,7 @@ async function entrarTreinador() {
   await pessoa.type(screen.getByLabelText('E-mail'), 'treinador.integracao@example.com')
   await pessoa.type(screen.getByLabelText('Senha', { exact: true }), senha)
   await pessoa.click(screen.getByRole('button', { name: 'Entrar', exact: true }))
-  await screen.findByRole('heading', { name: /Olá, Treinador/ })
+  await screen.findByRole('heading', { name: 'Minha conta' })
   return pessoa
 }
 

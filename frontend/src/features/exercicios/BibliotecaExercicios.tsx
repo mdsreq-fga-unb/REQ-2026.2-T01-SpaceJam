@@ -1,8 +1,8 @@
-
-import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router';
 import styles from './BibliotecaExercicios.module.css';
-import logoSpaceJam from '../imagens/logo_space_jam.png';
+import { AuthContext } from '../../auth/contexto';
+import { LayoutTreinador } from '../treinador/LayoutTreinador';
 import type { Exercicio } from '../../types/exercicio';
 import ExerciseForm from './components/ExerciseForm';
 import ExerciseDetails from './components/ExerciseDetails';
@@ -20,6 +20,8 @@ function ordenarPorNome(lista: Exercicio[]) {
 
 export default function BibliotecaExercicios() {
   const navegar = useNavigate();
+  const treinador = useContext(AuthContext)?.usuario;
+  const resultados = useRef<HTMLElement>(null);
   const { exercicioId } = useParams();
   const [busca, setBusca] = useState('');
   const [formulario, setFormulario] = useState<'novo' | { exercicioId: string } | null>(null);
@@ -106,122 +108,88 @@ export default function BibliotecaExercicios() {
     exercicio.nome.toLowerCase().includes(busca.toLowerCase())
   );
 
+
+  function voltarBiblioteca() {
+    setErro('');
+    setFormulario(null);
+    if (exercicioId) navegar('/exercicios');
+  }
+
   return (
-    <main className={styles.pagina}>
-      <header className={styles.cabecalho}>
-        <img
-          src={logoSpaceJam}
-          alt="Logo Space Jam"
-          className={styles.logo}
-        />
-
-        <Link className={styles.linkAlunos} to="/treinador/alunos">Alunos</Link>
-      </header>
-
-      <section className={styles.conteudo}>
-        <h1 className={styles.titulo}>
-          Biblioteca de exercícios
-        </h1>
-
-        <div className={styles.busca}>
-          <input
-            type="text"
-            placeholder="Buscar:"
-            value={busca}
-            onChange={(evento) => setBusca(evento.target.value)}
-            className={styles.campoBusca}
-          />
-
-          <span className={styles.iconeBusca}></span>
-        </div>
-
-        <button
-          type="button"
-          className={styles.botaoAdicionar}
-          disabled={carregando || salvando}
-          onClick={() => {
-            setErro('');
-            setFormulario('novo');
-            if (exercicioId) navegar('/exercicios');
-          }}
-        >
-          <span>Adicionar exercício</span>
-          <span className={styles.iconeMais}>+</span>
-        </button>
-
-        {erro && (
-          <p role="alert" className="mensagemErro">
-            {erro}
-          </p>
+    <LayoutTreinador nome={treinador?.first_name || treinador?.apelido || 'Treinador'} secao="Biblioteca">
+      <div className={styles.biblioteca}>
+        {(exercicioId || mostrarFormulario) && (
+          <button type="button" className={styles.voltar} onClick={voltarBiblioteca} disabled={salvando}>Voltar à biblioteca</button>
         )}
-
-        {mostrarFormulario && (
+        {erro && <p role="alert" className={styles.erro}>{erro}</p>}
+        {mostrarFormulario ? (
           <ExerciseForm
             key={exercicioEmEdicao?.id ?? 'novo'}
             exercicioInicial={exercicioEmEdicao}
             onSalvar={salvarExercicio}
-            onCancelar={() => {
-              setErro('');
-              setFormulario(null);
-            }}
+            onCancelar={() => { setErro(''); setFormulario(null); }}
             salvando={salvando}
           />
-        )}
-
-        {!mostrarFormulario && (
-          <section className={styles.listaExercicios}>
-            {exerciciosFiltrados.map((exercicio) => (
-              <button
-                type="button"
-                className={styles.exercicio}
-                key={exercicio.id}
-                disabled={salvando}
-                onClick={() => {
-                  setErro('');
-                  setFormulario(null);
-                  if (exercicio.id !== undefined) navegar(`/exercicios/${exercicio.id}`);
-                }}
-              >
-                {exercicio.nome}
-              </button>
-            ))}
-          </section>
-        )}
-
-        {!mostrarFormulario && carregando && <p>Carregando exercícios...</p>}
-
-        {!mostrarFormulario &&
-          !carregando &&
-          !erro &&
-          exerciciosFiltrados.length === 0 && (
-            <p>
-              {exercicios.length === 0
-                ? 'Nenhum exercício cadastrado.'
-                : 'Nenhum exercício encontrado.'}
-            </p>
-          )}
-
-        {exercicioId && !mostrarFormulario && (
+        ) : exercicioId ? (
           erroDetalhe ? (
-            <p role="alert" className="mensagemErro">{erroDetalhe}</p>
+            <section>
+              <header className="sj52__intro"><h1>Biblioteca de exercícios</h1></header>
+              <p role="alert" className={styles.erro}>{erroDetalhe}</p>
+            </section>
           ) : exercicioSelecionado ? (
             <ExerciseDetails
               exercicio={exercicioSelecionado}
-              onEditar={() => {
-                setErro('');
-                setFormulario({ exercicioId });
-              }}
-              onFechar={() => {
-                setFormulario(null);
-                navegar('/exercicios');
-              }}
+              onEditar={() => { setErro(''); setFormulario({ exercicioId }); }}
               edicaoIndisponivel={carregando || salvando}
             />
           ) : (
             <p role="status">Carregando exercício...</p>
           )
+        ) : (
+          <div>
+            <header className="sj52__intro">
+              <div><h1>Biblioteca de exercícios</h1><p>Consulte e prepare exercícios para seus alunos.</p></div>
+            </header>
+            <button type="button" className={styles.adicionar} disabled={carregando || salvando}
+              onClick={() => { setErro(''); setFormulario('novo'); }}>
+              Adicionar exercício
+            </button>
+            <form className={styles.busca} onSubmit={(evento) => {
+              evento.preventDefault();
+              setBusca(busca.trim());
+              resultados.current?.focus();
+            }}>
+              <label htmlFor="biblioteca-busca">Buscar por nome</label>
+              <input id="biblioteca-busca" type="search" placeholder="Nome do exercício" value={busca}
+                onChange={(evento) => setBusca(evento.target.value)} aria-describedby="biblioteca-busca-ajuda" />
+              <small id="biblioteca-busca-ajuda">A busca também aceita parte do nome.</small>
+              <button type="submit" className={styles.buscar}>Buscar</button>
+            </form>
+            <section className={styles.resultados} ref={resultados} tabIndex={-1} aria-label="Resultados da busca">
+              {carregando && <p role="status">Carregando exercícios...</p>}
+              {!carregando && !erro && exerciciosFiltrados.length === 0 && (
+                <p role="status">{exercicios.length === 0 ? 'Nenhum exercício cadastrado.' : 'Nenhum exercício encontrado.'}</p>
+              )}
+              <ul className={styles.lista}>
+                {exerciciosFiltrados.map((exercicio) => (
+                  <li key={exercicio.id}>
+                    <button type="button" className={styles.exercicio} aria-label={exercicio.nome}
+                      disabled={salvando || exercicio.id === undefined}
+                      onClick={() => { setErro(''); navegar(`/exercicios/${exercicio.id}`); }}>
+                      <strong>{exercicio.nome}</strong>
+                      <small>{exercicio.fundamento}</small>
+                      <span>{exercicio.objetivo}</span>
+                      <span className={styles.consultar}>Consultar exercício</span>
+                      <img className={styles.icone} src={exercicio.fundamento === 'Arremesso' ? '/biblioteca/cesta.svg' : '/biblioteca/estrategia.svg'}
+                        width={48} height={48} alt="" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
         )}
-      </section>
-    </main>
+      </div>
+    </LayoutTreinador>
   );
 }

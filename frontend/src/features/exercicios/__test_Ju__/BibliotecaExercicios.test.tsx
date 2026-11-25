@@ -124,7 +124,7 @@ describe('BibliotecaExercicios', () => {
     await cadastrarExercicio(usuario, 'Arremesso de bandeja');
     await cadastrarExercicio(usuario, 'Passe de peito');
 
-    const campoBusca = screen.getByPlaceholderText('Buscar:');
+    const campoBusca = screen.getByRole('searchbox', { name: 'Buscar por nome' });
 
     await usuario.type(campoBusca, 'Arremesso');
 
@@ -242,6 +242,7 @@ describe('BibliotecaExercicios', () => {
     await usuario.click(await screen.findByRole('button', { name: 'Passe de peito' }));
     await usuario.click(await screen.findByRole('button', { name: /editar exercício/i }));
     await usuario.type(screen.getByLabelText(/nome do exercício/i), ' atualizado');
+    await usuario.click(screen.getByRole('button', { name: 'Voltar à biblioteca' }));
     await usuario.click(screen.getByRole('button', { name: /adicionar exercício/i }));
 
     expect(screen.getByRole('heading', { name: 'Novo exercício' })).toBeInTheDocument();
