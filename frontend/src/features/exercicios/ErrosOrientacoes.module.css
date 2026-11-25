@@ -1,0 +1,110 @@
+/* US37 — erros comuns e orientações corretivas.
+   Usa os tokens do layout do treinador (--sj52-*, --treinador-*). */
+
+.pagina {
+  display: grid;
+  gap: 24px;
+  overflow-wrap: anywhere;
+}
+.pagina h1,
+.pagina h2,
+.pagina h3,
+.pagina p { margin: 0; }
+
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  justify-self: start;
+  min-height: 44px;
+  color: var(--sj52-laranja);
+  font: 500 15px/1.3 Barlow, Arial, sans-serif;
+  text-decoration: none;
+}
+.voltar:hover { text-decoration: underline; text-underline-offset: 3px; }
+.voltar:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2px; border-radius: 6px; }
+.iconeVoltar { flex: 0 0 auto; }
+
+.cabecalho { display: grid; justify-items: start; gap: 12px; margin-top: -12px; }
+.cabecalho h1 { font: 700 34px/1.1 'Barlow Condensed', 'Roboto Condensed', sans-serif; }
+.selo {
+  padding: 4px 12px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 999px;
+  background: var(--treinador-cartao);
+  color: var(--sj52-texto);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.contexto {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+.cartaoInfo {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 18px 20px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+}
+.cartaoInfo h2,
+.rotulo {
+  color: var(--sj52-secundario);
+  font: 600 12px/1.3 Barlow, Arial, sans-serif;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.cartaoInfo p { color: var(--sj52-texto); font-size: 15px; line-height: 1.5; white-space: pre-line; }
+.cartaoInfo .vazio { color: var(--sj52-secundario); }
+
+.secao { display: grid; gap: 14px; margin-top: 8px; }
+.cabecalhoSecao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 20px;
+}
+.cabecalhoSecao h2 { font: 700 26px/1.15 'Barlow Condensed', 'Roboto Condensed', sans-serif; }
+.cabecalhoSecao p { margin-top: 4px; color: var(--sj52-secundario); font-size: 14px; }
+
+.lista { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.item {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+  padding: 16px 20px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+}
+.item > div { display: grid; align-content: start; gap: 6px; min-width: 0; }
+.textoErro { color: var(--sj52-texto); font-weight: 600; font-size: 15px; line-height: 1.45; white-space: pre-line; }
+.textoOrientacao { color: var(--sj52-secundario); font-size: 15px; line-height: 1.5; white-space: pre-line; }
+
+.vazioCartao {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  padding: 32px 24px;
+  border: 1px dashed var(--sj52-borda);
+  border-radius: 12px;
+  text-align: center;
+}
+.vazioIcone { color: var(--sj52-laranja); }
+.vazioCartao h3 { color: var(--sj52-texto); font: 600 18px/1.3 Barlow, Arial, sans-serif; }
+.vazioCartao p { max-width: 52ch; color: var(--sj52-secundario); font-size: 15px; line-height: 1.55; }
+
+.erro { color: #ffc2b9; }
+
+@media (max-width: 899px) {
+  .cabecalho h1 { font-size: 30px; }
+  .contexto,
+  .item { grid-template-columns: minmax(0, 1fr); }
+  .item { gap: 12px; }
+  .vazioCartao { padding: 28px 18px; }
+}
