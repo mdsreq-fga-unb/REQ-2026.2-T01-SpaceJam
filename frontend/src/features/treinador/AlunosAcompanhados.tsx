@@ -77,7 +77,7 @@ export function AlunosAcompanhados({
         <nav className="sj52__menu" aria-label="Menu do treinador">
           <span aria-current="page">Alunos</span>
           <span aria-disabled="true">Treinos</span>
-          <span aria-disabled="true">Biblioteca</span>
+          <Link to="/exercicios">Biblioteca</Link>
           <Link to="/">Conta</Link>
         </nav>
         <div className="sj52__usuario-lateral">
@@ -200,7 +200,7 @@ export function AlunosAcompanhados({
       <nav className="sj52__navegacao-mobile" aria-label="Seções do treinador">
         <span aria-current="page">Alunos</span>
         <span aria-disabled="true">Treinos</span>
-        <span aria-disabled="true">Biblioteca</span>
+        <Link to="/exercicios">Biblioteca</Link>
         <Link to="/">Conta</Link>
       </nav>
     </div>

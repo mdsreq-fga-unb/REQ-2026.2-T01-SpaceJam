@@ -179,15 +179,16 @@
 <summary><span class="sj-requirement-id">RF1110</span><span class="sj-requirement-name">Recuperar senha</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o usuário que esqueceu a senha solicite a redefinição por e-mail, por meio de link ou código temporário com prazo de validade, seguindo os critérios de senha do <a href="../requisitos/#rf1108">RF1108</a>.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o usuário (aluno ou treinador) recupere o acesso à sua conta informando o e-mail cadastrado para receber um link temporário de uso único (validade de 1 hora) que permite definir uma nova senha conforme os critérios da <a href="../regras_negocio/#rn24">RN24</a>. Os endpoints de solicitação e redefinição são públicos e não sofrem bloqueio por aceite de termos pendentes.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
-<p id="us10" class="sj-story"><strong>US10</strong> Como usuário do sistema, quero recuperar minha senha caso eu esqueça, para continuar autenticando meu perfil e utilizando os recursos do sistema.</p>
+<p id="us10" class="sj-story"><strong>US10</strong> Como usuário (aluno ou treinador), quero recuperar minha senha através de um link temporário enviado ao meu e-mail cadastrado, para restabelecer o acesso à plataforma caso eu a esqueça.</p>
 </div>
 
-<div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Usuário</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn12">RN12</a></p></div>
+<div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP1</a><br>Aluno, Treinador</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn12">RN12</a> · <a href="../regras_negocio/#rn24">RN24</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us10">US10</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 4,02</p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf1108">RF1108</a> e serviço de envio de e-mail (SMTP / console em desenvolvimento)</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
@@ -1094,13 +1095,13 @@
 <summary><span class="sj-requirement-id">RF4812</span><span class="sj-requirement-name">Aceitar termos de uso e política de privacidade</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve exigir que o usuário aceite os termos de uso e a política de privacidade no cadastro ou no primeiro acesso, registrando a data e a versão aceitas.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve exigir que o usuário aceite os termos de uso e a política de privacidade no cadastro ou no primeiro acesso, registrando a data, a hora e a versão aceitas.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
 <p id="us63" class="sj-story"><strong>US63</strong> Como usuário, quero aceitar os termos de uso e a política de privacidade no meu cadastro ou primeiro acesso, para utilizar a plataforma ciente das condições de uso e tratamento de dados.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Usuário</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn15">RN15</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn05">RN05</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us63">US63</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,42</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
