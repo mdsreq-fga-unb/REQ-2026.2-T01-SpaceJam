@@ -94,7 +94,9 @@ body:has(.sj52),
 .sj52__placar span { display: block; font-size: 11px; font-weight: 700; }
 .sj52__nota { margin-bottom: 18px; font-size: 14px; line-height: 1.5; color: var(--sj52-secundario); }
 .sj52__nota--demonstracao { padding: 10px 14px; border-left: 3px solid #ff7a1a; background: #1a1a1d; }
-.sj52__colunas { display: grid; grid-template-columns: minmax(0, 421fr) minmax(0, 459fr); gap: 24px; align-items: start; }
+.sj52__colunas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.sj52__colunas:has(.sj52__estado) { align-items: stretch; }
+.sj52__lista:has(.sj52__estado) { display: grid; }
 .sj52__lista { min-width: 0; }
 .sj52__lista-itens { list-style: none; margin: 0; padding: 0; border: 1px solid var(--sj52-borda); }
 .sj52__aluno { min-height: 80px; display: flex; align-items: center; gap: 14px; padding: 12px 16px; background: #222225; }
@@ -106,12 +108,13 @@ body:has(.sj52),
 .sj52__ver-perfil { flex: 0 0 auto; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 2px 0 6px; border: none; background: transparent; color: var(--sj52-laranja); text-decoration: none; font-size: 14px; font-weight: 600; }
 .sj52__ver-perfil:hover:not(:disabled) { text-decoration: underline; }
 .sj52__ver-perfil--pendente { color: #c4c4c7; font-weight: 500; cursor: default; white-space: nowrap; }
-.sj52__estado { min-height: 200px; display: grid; align-content: center; gap: 14px; padding: 24px; border: 1px solid var(--sj52-borda); border-radius: 12px; background: var(--sj52-cartao); }
-.sj52__estado h2 { font: 700 22px/1.2 'Barlow Condensed', 'Roboto Condensed', sans-serif; }
-.sj52__estado p { color: var(--sj52-secundario); font-size: 14px; line-height: 1.55; }
-.sj52__convite { padding: 20px; border-radius: 16px; background: #29292d; }
-.sj52__convite h2 { margin: 0; color: var(--sj52-laranja); font: 700 23px/1.2 'Barlow Condensed', 'Roboto Condensed', sans-serif; }
-.sj52__convite > p:not(.sj52__feedback) { margin-top: 18px; line-height: 1.5; color: var(--sj52-texto); font-size: 14px; }
+.sj52__estado, .sj52__convite { padding: 20px; border: 1px solid var(--sj52-borda); border-radius: 12px; }
+.sj52__estado { display: grid; align-content: start; gap: 12px; background: var(--sj52-cartao); }
+.sj52__estado h2, .sj52__convite h2 { margin: 0; font: 700 22px/1.2 'Barlow Condensed', 'Roboto Condensed', sans-serif; }
+.sj52__estado p { margin: 0; color: var(--sj52-secundario); font-size: 14px; line-height: 1.55; }
+.sj52__convite { background: #29292d; }
+.sj52__convite h2 { color: var(--sj52-laranja); }
+.sj52__convite > p:not(.sj52__feedback) { margin-top: 12px; line-height: 1.55; color: var(--sj52-texto); font-size: 14px; }
 .sj52__codigo { display: block; margin-top: 22px; color: var(--sj52-laranja); font: 700 22px/1.2 'Barlow Condensed', 'Roboto Condensed', sans-serif; letter-spacing: 0.02em; user-select: all; overflow-wrap: anywhere; }
 .sj52__codigo-indisponivel { color: var(--sj52-secundario) !important; }
 .sj52__copiar { width: 100%; min-height: 48px; margin-top: 14px; border: 1px solid var(--sj52-borda); border-radius: 12px; background: #19191c; color: var(--sj52-laranja); font-size: 14px; }
@@ -133,7 +136,6 @@ body:has(.sj52),
   .sj52__lista-itens { border: 0; display: grid; gap: 6px; }
   .sj52__aluno { min-height: 82px; border: 1px solid var(--sj52-borda); border-radius: 12px; }
   .sj52__aluno + .sj52__aluno { border-top: 1px solid var(--sj52-borda); }
-  .sj52__convite { padding: 20px; }
   .sj52__navegacao-mobile { position: fixed; z-index: 30; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; min-height: 72px; padding: 10px 8px max(10px, env(safe-area-inset-bottom)); background: #19191c; }
   .sj52__navegacao-mobile > * { min-width: 0; min-height: 48px; display: grid; place-items: center; border-radius: 12px; background: #222225; color: var(--sj52-texto); text-decoration: none; font-size: 13px; }
   .sj52__navegacao-mobile > [aria-disabled='true'] { color: var(--sj52-secundario); }
