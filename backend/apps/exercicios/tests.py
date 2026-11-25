@@ -1,9 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from .models import Exercicio
+from .models import ErroComumExercicio, Exercicio
 
 Usuario = get_user_model()
 
@@ -423,3 +424,43 @@ class ErrosComunsEVideoBaseTests(APITestCase):
             self.url_lista, {**self.dados, "objetivo": "x" * 600}
         )
         self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
+
+
+class ErroComumExercicioModelTests(TestCase):
+    """US37 / RF2420 — Itens de erro comum + orientação corretiva de um exercício."""
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.exercicio = Exercicio.objects.create(
+            nome="Drible com deslocamento",
+            objetivo="Conduzir a bola em movimento",
+            fundamento="DRIBLE",
+            criado_por=cls.treinador,
+        )
+
+    def test_exercicio_pode_ter_varios_erros_em_ordem_de_criacao(self):
+        primeiro = ErroComumExercicio.objects.create(
+            exercicio=self.exercicio,
+            erro="Olhar somente para a bola.",
+            orientacao_corretiva="Mantenha o olhar à frente durante o deslocamento.",
+        )
+        segundo = ErroComumExercicio.objects.create(
+            exercicio=self.exercicio,
+            erro="Bater a bola com a palma da mão.",
+            orientacao_corretiva="Use a ponta dos dedos para controlar a bola.",
+        )
+
+        self.assertEqual(
+            list(self.exercicio.erros_orientacoes.all()), [primeiro, segundo]
+        )
+
+    def test_exercicio_sem_erros_continua_valido(self):
+        # RN22: erros comuns e orientações são opcionais no exercício.
+        self.exercicio.full_clean()
+        self.assertFalse(self.exercicio.erros_orientacoes.exists())
