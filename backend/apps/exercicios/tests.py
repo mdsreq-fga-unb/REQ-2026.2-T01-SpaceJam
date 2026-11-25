@@ -788,3 +788,178 @@ class ListarECadastrarErrosOrientacoesTests(ErrosOrientacoesApiBase):
         self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
         self.assertEqual(ErroComumExercicio.objects.get().exercicio, self.exercicio)
         self.assertFalse(self.outro_exercicio.erros_orientacoes.exists())
+
+
+class EditarErroOrientacaoTests(ErrosOrientacoesApiBase):
+    """US37 CA01 — Editar um erro comum e sua orientação corretiva."""
+
+    def setUp(self):
+        self.item = self.criar_item()
+        self.novos_dados = {
+            "erro": "Olhar para a bola durante o drible em deslocamento.",
+            "orientacao_corretiva": "Manter a cabeça erguida e usar a visão periférica.",
+        }
+
+    def url_item(self, item=None, exercicio_pk=None):
+        item = item or self.item
+        return reverse(
+            "exercicio-erro-comum-detail",
+            args=[exercicio_pk or item.exercicio_id, item.pk],
+        )
+
+    def assert_item_intacto(self):
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.erro, self.dados["erro"])
+        self.assertEqual(
+            self.item.orientacao_corretiva, self.dados["orientacao_corretiva"]
+        )
+
+    def test_treinador_consulta_um_item(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.get(self.url_item())
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["id"], self.item.pk)
+        self.assertEqual(resposta.data["erro"], self.dados["erro"])
+
+    def test_ca01_edicao_substitui_o_texto_anterior_na_consulta(self):
+        # CA01 / RN14: as novas orientações substituem as anteriores na biblioteca.
+        atualizado_antes = self.item.atualizado_em
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.put(self.url_item(), self.novos_dados, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["erro"], self.novos_dados["erro"])
+        consulta = self.client.get(
+            reverse("exercicio-detail", args=[self.exercicio.pk])
+        )
+        itens = consulta.data["erros_orientacoes"]
+        self.assertEqual(len(itens), 1)
+        self.assertEqual(itens[0]["id"], self.item.pk)
+        self.assertEqual(itens[0]["erro"], self.novos_dados["erro"])
+        self.assertEqual(
+            itens[0]["orientacao_corretiva"], self.novos_dados["orientacao_corretiva"]
+        )
+        self.assertNotIn(
+            self.dados["orientacao_corretiva"],
+            [item["orientacao_corretiva"] for item in itens],
+        )
+        self.item.refresh_from_db()
+        self.assertGreater(self.item.atualizado_em, atualizado_antes)
+
+    def test_patch_altera_so_o_campo_enviado(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.patch(
+            self.url_item(),
+            {"orientacao_corretiva": self.novos_dados["orientacao_corretiva"]},
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.erro, self.dados["erro"])
+        self.assertEqual(
+            self.item.orientacao_corretiva, self.novos_dados["orientacao_corretiva"]
+        )
+
+    def test_edicao_com_campo_vazio_bloqueia_e_mantem_dados(self):
+        # RN22 (dentro do item) / RNF14: vazio, só espaços, acima do limite ou,
+        # no PUT, campo ausente são recusados sem alterar o item.
+        self.client.force_authenticate(self.treinador)
+        for campo in ["erro", "orientacao_corretiva"]:
+            for valor in ["", "   ", "x" * 1001]:
+                for metodo in ["put", "patch"]:
+                    with self.subTest(campo=campo, valor=valor[:5], metodo=metodo):
+                        corpo = (
+                            {**self.novos_dados, campo: valor}
+                            if metodo == "put"
+                            else {campo: valor}
+                        )
+                        resposta = getattr(self.client, metodo)(
+                            self.url_item(), corpo, format="json"
+                        )
+                        self.assertEqual(
+                            resposta.status_code, status.HTTP_400_BAD_REQUEST
+                        )
+                        self.assertIn(campo, resposta.data)
+                        self.assert_item_intacto()
+            with self.subTest(campo=campo, valor="ausente no PUT"):
+                incompleto = {k: v for k, v in self.novos_dados.items() if k != campo}
+                resposta = self.client.put(self.url_item(), incompleto, format="json")
+                self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertIn(campo, resposta.data)
+                self.assert_item_intacto()
+
+    def test_item_de_outro_exercicio_retorna_404(self):
+        # A URL não permite acessar o item pelo exercício errado.
+        self.client.force_authenticate(self.treinador)
+        url_errada = self.url_item(exercicio_pk=self.outro_exercicio.pk)
+
+        consultar = self.client.get(url_errada)
+        editar = self.client.put(url_errada, self.novos_dados, format="json")
+        editar_parcial = self.client.patch(url_errada, self.novos_dados, format="json")
+
+        for resposta in (consultar, editar, editar_parcial):
+            self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)
+        self.assert_item_intacto()
+
+    def test_item_inexistente_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+        url = reverse("exercicio-erro-comum-detail", args=[self.exercicio.pk, 9999])
+
+        self.assertEqual(self.client.get(url).status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(
+            self.client.put(url, self.novos_dados, format="json").status_code,
+            status.HTTP_404_NOT_FOUND,
+        )
+
+    def test_aluno_recebe_403_ao_editar(self):
+        # CA04 / RN14 / RNF08: o 403 vem do perfil (aluno com termos aceitos).
+        self.client.force_authenticate(self.aluno)
+
+        consultar = self.client.get(self.url_item())
+        editar = self.client.put(self.url_item(), self.novos_dados, format="json")
+        editar_parcial = self.client.patch(
+            self.url_item(), {"erro": "Alterado pelo aluno"}, format="json"
+        )
+
+        for resposta in (consultar, editar, editar_parcial):
+            self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+            self.assertNotEqual(resposta.data.get("code"), "TERMOS_PENDENTES")
+        self.assert_item_intacto()
+
+    def test_sem_login_recebe_401_ao_editar(self):
+        resposta = self.client.put(self.url_item(), self.novos_dados, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assert_item_intacto()
+
+    def test_exercicio_e_id_do_corpo_sao_ignorados_na_edicao(self):
+        # O item continua no exercício da URL e com o mesmo id.
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.put(
+            self.url_item(),
+            {**self.novos_dados, "exercicio": self.outro_exercicio.pk, "id": 9999},
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["id"], self.item.pk)
+        self.item.refresh_from_db()
+        self.assertEqual(self.item.exercicio, self.exercicio)
+        self.assertFalse(self.outro_exercicio.erros_orientacoes.exists())
+
+    def test_editar_item_nao_altera_o_exercicio_pai(self):
+        antes = Exercicio.objects.get(pk=self.exercicio.pk)
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.put(self.url_item(), self.novos_dados, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        depois = Exercicio.objects.get(pk=self.exercicio.pk)
+        self.assertEqual(depois.atualizado_em, antes.atualizado_em)
+        self.assertEqual(depois.erros_comuns, antes.erros_comuns)

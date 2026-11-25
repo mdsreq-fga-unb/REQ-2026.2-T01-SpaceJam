@@ -35,12 +35,16 @@ class ExercicioViewSet(
 class ErroComumExercicioViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
     viewsets.GenericViewSet,
 ):
     """US37 / RF2420 — Erros comuns e orientações corretivas de um exercício.
 
     Só o treinador com os termos vigentes aceitos acessa (RN14, RNF08, US63); o
     aluno recebe 403 (CA04). O exercício vem sempre da URL e, se não existir, 404.
+    Um item só é encontrado pelo exercício a que pertence: pelo exercício errado, 404.
+    A edição (CA01) substitui o texto anterior do item na biblioteca.
     """
 
     serializer_class = ErroComumExercicioSerializer
