@@ -9,7 +9,7 @@ router.register("exercicios", ExercicioViewSet, basename="exercicio")
 # US37 — Erros comuns e orientações corretivas de um exercício (rotas explícitas).
 erros_comuns_lista = ErroComumExercicioViewSet.as_view({"get": "list", "post": "create"})
 erros_comuns_detalhe = ErroComumExercicioViewSet.as_view(
-    {"get": "retrieve", "put": "update", "patch": "partial_update"}
+    {"get": "retrieve", "put": "update", "patch": "partial_update", "delete": "destroy"}
 )
 
 urlpatterns = [

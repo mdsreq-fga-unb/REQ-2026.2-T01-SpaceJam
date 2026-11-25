@@ -963,3 +963,125 @@ class EditarErroOrientacaoTests(ErrosOrientacoesApiBase):
         depois = Exercicio.objects.get(pk=self.exercicio.pk)
         self.assertEqual(depois.atualizado_em, antes.atualizado_em)
         self.assertEqual(depois.erros_comuns, antes.erros_comuns)
+
+
+class RemoverErroOrientacaoTests(ErrosOrientacoesApiBase):
+    """US37 CA02 — Remover um erro comum do exercício.
+
+    Telas "Remover associação" e "Remover esta orientação?": a remoção é definitiva
+    e tira o item deste exercício (não há catálogo compartilhado).
+    """
+
+    def setUp(self):
+        self.item = self.criar_item()
+        self.outro_item = self.criar_item(
+            erro="Bater a bola com a palma da mão.",
+            orientacao_corretiva="Use a ponta dos dedos para controlar a bola.",
+        )
+        self.item_de_outro_exercicio = self.criar_item(
+            exercicio=self.outro_exercicio, erro="Passe sem olhar o companheiro."
+        )
+
+    def url_item(self, item=None, exercicio_pk=None):
+        item = item or self.item
+        return reverse(
+            "exercicio-erro-comum-detail",
+            args=[exercicio_pk or item.exercicio_id, item.pk],
+        )
+
+    def ids_na_consulta(self, exercicio=None):
+        consulta = self.client.get(
+            reverse("exercicio-detail", args=[(exercicio or self.exercicio).pk])
+        )
+        return [item["id"] for item in consulta.data["erros_orientacoes"]]
+
+    def test_ca02_item_removido_some_da_consulta(self):
+        # CA02 / RN14: o erro removido deixa de aparecer na consulta do exercício.
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.delete(self.url_item())
+
+        self.assertEqual(resposta.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertFalse(ErroComumExercicio.objects.filter(pk=self.item.pk).exists())
+        self.assertNotIn(self.item.pk, self.ids_na_consulta())
+        lista = self.client.get(self.url_lista())
+        self.assertNotIn(self.item.pk, [item["id"] for item in lista.data])
+
+    def test_remocao_preserva_os_demais_itens(self):
+        self.client.force_authenticate(self.treinador)
+
+        self.client.delete(self.url_item())
+
+        self.assertEqual(self.ids_na_consulta(), [self.outro_item.pk])
+        self.assertEqual(
+            self.ids_na_consulta(self.outro_exercicio),
+            [self.item_de_outro_exercicio.pk],
+        )
+        self.outro_item.refresh_from_db()
+        self.assertEqual(self.outro_item.erro, "Bater a bola com a palma da mão.")
+
+    def test_remover_o_ultimo_item_mantem_o_exercicio_valido(self):
+        # RN22: erros e orientações são opcionais; sem itens, o exercício segue válido.
+        self.client.force_authenticate(self.treinador)
+
+        self.client.delete(self.url_item())
+        self.client.delete(self.url_item(self.outro_item))
+
+        consulta = self.client.get(reverse("exercicio-detail", args=[self.exercicio.pk]))
+        self.assertEqual(consulta.status_code, status.HTTP_200_OK)
+        self.assertEqual(consulta.data["erros_orientacoes"], [])
+        self.assertTrue(Exercicio.objects.filter(pk=self.exercicio.pk).exists())
+
+    def test_remover_item_inexistente_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+        url_inexistente = reverse(
+            "exercicio-erro-comum-detail", args=[self.exercicio.pk, 9999]
+        )
+
+        self.assertEqual(
+            self.client.delete(url_inexistente).status_code, status.HTTP_404_NOT_FOUND
+        )
+        self.assertEqual(
+            self.client.delete(self.url_item()).status_code, status.HTTP_204_NO_CONTENT
+        )
+        # Remover de novo o mesmo item: ele não existe mais.
+        self.assertEqual(
+            self.client.delete(self.url_item()).status_code, status.HTTP_404_NOT_FOUND
+        )
+
+    def test_remover_item_de_outro_exercicio_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.delete(
+            self.url_item(exercicio_pk=self.outro_exercicio.pk)
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertTrue(ErroComumExercicio.objects.filter(pk=self.item.pk).exists())
+
+    def test_aluno_recebe_403_ao_remover(self):
+        # CA04 / RN14 / RNF08: o 403 vem do perfil (aluno com termos aceitos).
+        self.client.force_authenticate(self.aluno)
+
+        resposta = self.client.delete(self.url_item())
+
+        self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertNotEqual(resposta.data.get("code"), "TERMOS_PENDENTES")
+        self.assertTrue(ErroComumExercicio.objects.filter(pk=self.item.pk).exists())
+
+    def test_sem_login_recebe_401_ao_remover(self):
+        resposta = self.client.delete(self.url_item())
+
+        self.assertEqual(resposta.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertTrue(ErroComumExercicio.objects.filter(pk=self.item.pk).exists())
+
+    def test_remover_item_nao_altera_o_exercicio_pai(self):
+        antes = Exercicio.objects.get(pk=self.exercicio.pk)
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.delete(self.url_item())
+
+        self.assertEqual(resposta.status_code, status.HTTP_204_NO_CONTENT)
+        depois = Exercicio.objects.get(pk=self.exercicio.pk)
+        self.assertEqual(depois.atualizado_em, antes.atualizado_em)
+        self.assertEqual(depois.erros_comuns, antes.erros_comuns)
