@@ -23,6 +23,8 @@ from .serializers import (
     PerfilAlunoAcompanhadoSerializer,
     UsuarioSerializer,
     TrocarSenhaSerializer,
+    SolicitarRecuperacaoSenhaSerializer,
+    RedefinirSenhaRecuperacaoSerializer,
 )
 
 
@@ -260,3 +262,25 @@ def editar_perfil_aluno(request, aluno_id=None):
     serializer.is_valid(raise_exception=True)
     usuario_atualizado = serializer.save()
     return Response(UsuarioSerializer(usuario_atualizado).data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def solicitar_recuperacao_senha(request):
+    """US10 — Solicita envio de link temporário de recuperação de senha (RF1110 / RN12)."""
+    serializer = SolicitarRecuperacaoSenhaSerializer(data=request.data, context={"request": request})
+    serializer.is_valid(raise_exception=True)
+    resultado = serializer.save()
+    return Response(resultado, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def redefinir_senha_recuperacao(request):
+    """US10 — Redefine a senha utilizando link/token válido de uso único (RF1110 / RN12 / RN24)."""
+    serializer = RedefinirSenhaRecuperacaoSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(
+        {"detail": "Senha redefinida com sucesso."},
+        status=status.HTTP_200_OK,
+    )

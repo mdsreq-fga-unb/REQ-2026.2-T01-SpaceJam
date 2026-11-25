@@ -54,7 +54,7 @@ Somente o treinador pode registrar, editar ou excluir o feedback textual dado a 
 
 ## RN12 · Política de Recuperação de Senha {#rn12}
 
-A redefinição de senha esquecida ocorre mediante envio de código ou link temporário ao e-mail cadastrado, com prazo de validade limitado e uso único, exigindo que a nova senha atenda à política de senha da RN24.
+A recuperação de senha ocorre exclusivamente mediante envio de um **link contendo token criptográfico de uso único** para o e-mail cadastrado do usuário (aluno ou treinador), direcionando para a rota de redefinição do frontend com o parâmetro de consulta `token`. O token possui **validade máxima de 1 hora** a partir da emissão, é invalidado imediatamente após o uso bem-sucedido e cada nova emissão para o mesmo usuário revoga automaticamente tokens anteriores ainda pendentes. A solicitação de envio deve responder de forma genérica independentemente de o e-mail existir na base, evitando enumeração de contas. Para mitigar abuso, o endpoint de solicitação aplica limite de taxa por endereço de e-mail e por endereço IP. A nova senha deve atender à RN24 e ser confirmada. Concluída a redefinição, todas as sessões e tokens de renovação ativos do usuário são encerrados, e o acesso passa a exigir a nova senha.
 
 ## RN13 · Integridade Referencial na Exclusão de Planejamentos e Exercícios {#rn13}
  
