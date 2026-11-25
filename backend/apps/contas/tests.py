@@ -465,3 +465,136 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
             format="json",
         )
         self.assertEqual(r_login_novo.status_code, 200)
+
+    def test_us10_recuperar_senha_fluxos_e_bloqueios(self):
+        from urllib.parse import parse_qs, urlparse
+        from django.core import mail
+        from django.test.utils import override_settings
+
+        treinador = self._criar_treinador()
+        endpoint_solicitar = "/api/auth/recuperar-senha/"
+        endpoint_redefinir = "/api/auth/redefinir-senha/"
+
+        with override_settings(
+            EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
+            FRONTEND_URL="https://spacejam.example.test",
+            PASSWORD_RESET_TIMEOUT_SECONDS=3600,
+        ):
+            mail.outbox.clear()
+
+            # CA02: E-mail não cadastrado retorna resposta genérica sem enviar e-mail
+            r_inexistente = self.client.post(
+                endpoint_solicitar,
+                {"email": "naoexiste@basquete.com"},
+                format="json",
+            )
+            self.assertEqual(r_inexistente.status_code, 200)
+            self.assertEqual(len(mail.outbox), 0)
+
+            # CA01: E-mail cadastrado envia link com token
+            r_ok = self.client.post(
+                endpoint_solicitar,
+                {"email": treinador["email"]},
+                format="json",
+            )
+            self.assertEqual(r_ok.status_code, 200)
+            self.assertEqual(r_ok.data["detail"], r_inexistente.data["detail"])
+            self.assertEqual(len(mail.outbox), 1)
+
+            corpo_email = mail.outbox[0].body
+            link = next(
+                (linha.strip() for linha in corpo_email.splitlines() if "redefinir-senha?token=" in linha),
+                None,
+            )
+            self.assertIsNotNone(link)
+            token = parse_qs(urlparse(link).query)["token"][0]
+
+            # CA04: Token adulterado
+            r_adulterado = self.client.post(
+                endpoint_redefinir,
+                {
+                    "token": f"{token}x",
+                    "nova_senha": "NovaSenha#2026",
+                    "confirmacao_senha": "NovaSenha#2026",
+                },
+                format="json",
+            )
+            self.assertEqual(r_adulterado.status_code, 400)
+
+            # CA05: Nova senha curta (< 6 caracteres)
+            r_curta = self.client.post(
+                endpoint_redefinir,
+                {
+                    "token": token,
+                    "nova_senha": "123",
+                    "confirmacao_senha": "123",
+                },
+                format="json",
+            )
+            self.assertEqual(r_curta.status_code, 400)
+
+            # CA06: Novo pedido invalida o token anterior
+            self.client.post(
+                endpoint_solicitar,
+                {"email": treinador["email"]},
+                format="json",
+            )
+            r_revogado = self.client.post(
+                endpoint_redefinir,
+                {
+                    "token": token,
+                    "nova_senha": "NovaSenha#2026",
+                    "confirmacao_senha": "NovaSenha#2026",
+                },
+                format="json",
+            )
+            self.assertEqual(r_revogado.status_code, 400)
+
+            # Pega o segundo link (mais recente) e conclui a redefinição (CA07)
+            link_recente = next(
+                (
+                    linha.strip()
+                    for linha in mail.outbox[-1].body.splitlines()
+                    if "redefinir-senha?token=" in linha
+                ),
+                None,
+            )
+            token_recente = parse_qs(urlparse(link_recente).query)["token"][0]
+
+            r_redefinido = self.client.post(
+                endpoint_redefinir,
+                {
+                    "token": token_recente,
+                    "nova_senha": "NovaSenha#2026",
+                    "confirmacao_senha": "NovaSenha#2026",
+                },
+                format="json",
+            )
+            self.assertEqual(r_redefinido.status_code, 200)
+
+            # CA03: Reutilizar o mesmo token já usado deve falhar
+            r_reuso = self.client.post(
+                endpoint_redefinir,
+                {
+                    "token": token_recente,
+                    "nova_senha": "OutraSenha#2026",
+                    "confirmacao_senha": "OutraSenha#2026",
+                },
+                format="json",
+            )
+            self.assertEqual(r_reuso.status_code, 400)
+
+            # Login com senha antiga falha e com a nova senha funciona
+            r_login_antigo = self.client.post(
+                "/api/auth/login/treinador/",
+                {"email": treinador["email"], "senha": "SenhaForte#2026"},
+                format="json",
+            )
+            self.assertEqual(r_login_antigo.status_code, 401)
+
+            r_login_novo = self.client.post(
+                "/api/auth/login/treinador/",
+                {"email": treinador["email"], "senha": "NovaSenha#2026"},
+                format="json",
+            )
+            self.assertEqual(r_login_novo.status_code, 200)

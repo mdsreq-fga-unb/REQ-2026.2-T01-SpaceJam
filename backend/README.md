@@ -67,6 +67,21 @@ O texto da versão 1.0 dos Termos de Uso e da Política de Privacidade é exibid
 
 O cadastro de aluno recusa menores de 18 anos (`400`, campo `data_nascimento`) até existir o fluxo verificável de consentimento do responsável (RN16/US65). O campo `consentimento_responsavel` do modelo foi mantido para esse fluxo futuro.
 
+## Recuperação de senha (US10)
+
+A solicitação e a redefinição são públicas. Elas estão disponíveis antes do login e do aceite dos termos.
+
+| Rota | Corpo da solicitação |
+| --- | --- |
+| POST /api/auth/recuperar-senha/ | email |
+| POST /api/auth/redefinir-senha/ | token, nova_senha, confirmacao_senha |
+
+O pedido retorna HTTP 200 com a mesma mensagem para endereços cadastrados, desconhecidos, limitados ou com falha de envio. Falhas do serviço de e-mail ficam registradas no log. O link mais recente permanece válido por até uma hora, sobrevive à reinicialização da aplicação e só pode ser usado uma vez. Erros de link retornam HTTP 400 com código token_invalido, token_expirado ou token_usado. Após a redefinição, entre novamente com a nova senha.
+
+Configure FRONTEND_URL com a URL pública do frontend. Em produção, use HTTPS e configure o backend SMTP com as variáveis EMAIL_* do arquivo .env.example. Em desenvolvimento, o backend de console exibe a mensagem no log local. O limite padrão é de cinco pedidos por e-mail e vinte por IP em quinze minutos. A aplicação conta o IP da conexão. Em ambientes atrás de proxy, aplique também o limite por IP do cliente na borda.
+
+Execute as migrações do Django antes de liberar o fluxo. Solicitações emitidas antes da mudança de armazenamento precisam ser refeitas.
+
 ## API: Erros comuns e orientações corretivas (US37)
 
 Cada exercício da biblioteca pode ter uma lista de pares **erro comum + orientação corretiva** (modelo `ErroComumExercicio`, em `apps/exercicios/`). A US37 (RF2420) permite ao treinador editar (CA01) e remover (CA02) esses pares. O cadastro (US36) usa a mesma API.

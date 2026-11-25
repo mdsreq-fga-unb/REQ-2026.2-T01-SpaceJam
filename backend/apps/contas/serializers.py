@@ -4,9 +4,9 @@ from django.conf import settings
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
-from rest_framework_simplejwt.tokens import RefreshToken
 
-from . import termos
+from . import recuperacao, termos
+from .authentication import SessaoRefreshToken
 from .models import HistoricoAceiteTermos, PerfilAluno, Usuario
 
 
@@ -218,7 +218,7 @@ class LoginAlunoSerializer(serializers.Serializer):
         if not usuario or not usuario.is_active or not usuario.check_password(senha):
             raise AuthenticationFailed("Apelido ou senha inválidos")
 
-        refresh = RefreshToken.for_user(usuario)
+        refresh = SessaoRefreshToken.for_user(usuario)
         return {
             "access": str(refresh.access_token),
             "refresh": str(refresh),
@@ -244,7 +244,7 @@ class LoginTreinadorSerializer(serializers.Serializer):
         if not usuario or not usuario.is_active or not usuario.check_password(senha):
             raise AuthenticationFailed("E-mail ou senha inválidos")
 
-        refresh = RefreshToken.for_user(usuario)
+        refresh = SessaoRefreshToken.for_user(usuario)
         return {
             "access": str(refresh.access_token),
             "refresh": str(refresh),
@@ -504,3 +504,29 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
 
         usuario.refresh_from_db()
         return usuario
+
+
+class SolicitarRecuperacaoSenhaSerializer(serializers.Serializer):
+    email = serializers.EmailField(required=True)
+
+    def save(self, **kwargs):
+        email = self.validated_data["email"].lower()
+        ip = self.context["request"].META.get("REMOTE_ADDR") or "indisponivel"
+        recuperacao.solicitar(email, ip)
+        return {"detail": recuperacao.MENSAGEM_GENERICA}
+
+
+class RedefinirSenhaRecuperacaoSerializer(serializers.Serializer):
+    token = serializers.CharField(write_only=True)
+    nova_senha = serializers.CharField(write_only=True, min_length=6, trim_whitespace=False)
+    confirmacao_senha = serializers.CharField(write_only=True, trim_whitespace=False)
+
+    def validate(self, attrs):
+        if attrs["nova_senha"] != attrs["confirmacao_senha"]:
+            raise serializers.ValidationError(
+                {"confirmacao_senha": "A confirmação da nova senha não confere."}
+            )
+        return attrs
+
+    def save(self, **kwargs):
+        recuperacao.redefinir(self.validated_data["token"], self.validated_data["nova_senha"])
