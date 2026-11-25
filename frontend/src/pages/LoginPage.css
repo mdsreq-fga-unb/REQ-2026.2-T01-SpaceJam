@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;700&family=Barlow+Condensed:wght@700&display=swap');
 
+/* Fundo global escuro enquanto o login está aberto (sem o bordô legado do :root). */
+:root:has(.login-v2),
+body:has(.login-v2),
+#root:has(.login-v2) {
+  background: #111113;
+}
+
 .login-v2 {
   --login-fundo: #111113;
   --login-painel: #19191c;
@@ -10,6 +17,7 @@
   --login-laranja: #ff9a6c;
   --login-primario: #d63f1e;
   min-height: 100svh;
+  min-height: 100dvh;
   background: var(--login-fundo);
   color: var(--login-texto);
   font-family: 'Barlow', 'Arial Narrow', sans-serif;

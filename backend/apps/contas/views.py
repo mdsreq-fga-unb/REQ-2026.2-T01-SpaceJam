@@ -3,15 +3,16 @@ from datetime import datetime, timezone as dt_timezone
 from django.conf import settings
 from django.core.cache import cache
 from django.db import connection
-from django.utils import timezone
 from rest_framework import status
+from rest_framework.fields import BooleanField
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import Usuario
-from .permissions import IsAlunoProprietarioPerfil
+from . import termos
+from .models import HistoricoAceiteTermos, Usuario
+from .permissions import IsAlunoProprietarioPerfil, ROTA_PROTEGIDA
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
@@ -75,7 +76,7 @@ def login_treinador(request):
 
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])  # Isenta da RN15: encerrar a sessão é sempre permitido.
 def logout_view(request):
     """US03 — Deslogar da conta invalidando o refresh token e o access token atual (RF1103)."""
     refresh_token = request.data.get("refresh")
@@ -111,29 +112,53 @@ def logout_view(request):
     return Response({"detail": "Sessão encerrada com sucesso."}, status=status.HTTP_200_OK)
 
 
+@api_view(["GET"])
+@permission_classes([AllowAny])
+def termos_vigentes(request):
+    """US63 (RF4812) — Consulta pública da versão vigente e dos documentos (RN15)."""
+    disponivel = termos.documentos_configurados()
+    return Response(
+        {
+            "versao": termos.versao_vigente(),
+            "termos_uso_url": settings.TERMOS_USO_URL if disponivel else None,
+            "politica_privacidade_url": settings.POLITICA_PRIVACIDADE_URL if disponivel else None,
+            "disponivel": disponivel,
+        },
+        status=status.HTTP_200_OK,
+    )
+
+
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])  # Isenta da RN15: é a rota que regulariza o aceite.
 def aceitar_termos(request):
-    """Registra aceite da versão vigente dos termos (CA03 de US04/US05)."""
-    if not request.data.get("aceite_termos"):
-        return Response(
-            {"detail": "É necessário confirmar o aceite dos termos."},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
-    request.user.versao_termos_aceita = settings.TERMOS_VERSAO_ATUAL
-    request.user.data_aceite_termos = timezone.now()
-    request.user.save(update_fields=["versao_termos_aceita", "data_aceite_termos"])
-    return Response(UsuarioSerializer(request.user).data, status=status.HTTP_200_OK)
+    """US63 (RF4812) — Registra aceite da versão vigente dos termos (RN15, RNF16, CA01/CA03).
+
+    - 400 ACEITE_OBRIGATORIO: `aceite_termos` ausente ou diferente de true.
+    - 503 TERMOS_INDISPONIVEIS: documentos não configurados no servidor.
+    - 409 TERMOS_VERSAO_DIVERGENTE: `versao` (opcional) enviada difere da vigente.
+    - 200: versão vigente já aceita; nenhum registro novo (idempotente).
+    - 201: aceite registrado no histórico e no cache do usuário.
+    """
+    # Mesmos valores aceitos pelo BooleanField dos cadastros (true, "true", 1, "1"...).
+    aceite = request.data.get("aceite_termos")
+    aceito = isinstance(aceite, (bool, int, str)) and aceite in BooleanField.TRUE_VALUES
+    termos.validar_aceite(aceito, request.data.get("versao"))
+
+    if not termos.termos_pendentes(request.user):
+        return Response(UsuarioSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    termos.registrar_aceite(request.user, HistoricoAceiteTermos.Origem.ACEITE)
+    return Response(UsuarioSerializer(request.user).data, status=status.HTTP_201_CREATED)
 
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])  # Isenta da RN15: o front lê `termos_pendentes` aqui.
 def me(request):
     """Dados do usuário logado (usado pelo front logo após o login)."""
     return Response(UsuarioSerializer(request.user).data)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def meus_dados_aluno(request):
     """US53 — Consultar próprios dados cadastrais do aluno (RF4802, RN03, RN25, RN26, RNF08)."""
     if request.user.papel != Usuario.Papel.ALUNO:
@@ -198,7 +223,7 @@ def trocar_senha(request):
     )
 
 @api_view(["PATCH", "PUT"])
-@permission_classes([IsAuthenticated, IsAlunoProprietarioPerfil])
+@permission_classes([*ROTA_PROTEGIDA, IsAlunoProprietarioPerfil])
 def editar_perfil_aluno(request, aluno_id=None):
     """US07 — Editar informações pessoais e corporais básicas do aluno (RF1107)."""
     if request.user.papel != Usuario.Papel.ALUNO:

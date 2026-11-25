@@ -1,18 +1,11 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import App from '../src/App'
+import { abrir, enviadosPara, simularApi } from './apoio'
 
 afterEach(() => {
   vi.unstubAllGlobals()
   window.history.replaceState({}, '', '/')
 })
-
-function abrir(caminho: string) {
-  window.history.replaceState({}, '', caminho)
-  render(<App />)
-  return userEvent.setup()
-}
 
 describe('formulários de cadastro', () => {
   it('permite chegar ao cadastro do aluno a partir do login', async () => {
@@ -58,8 +51,7 @@ describe('formulários de cadastro', () => {
   })
 
   it('não envia nem anuncia cadastro sem aceite dos termos', async () => {
-    const requisicao = vi.fn()
-    vi.stubGlobal('fetch', requisicao)
+    const requisicao = simularApi()
     const pessoa = abrir('/cadastro/treinador')
     for (const [campo, valor] of [
       ['Nome', 'Treinador'], ['Sobrenome', 'Teste'], ['Apelido', 'treinador.teste'],
@@ -71,7 +63,7 @@ describe('formulários de cadastro', () => {
     await pessoa.click(screen.getByRole('button', { name: 'Cadastre-se', exact: true }))
     expect(screen.getByText(/consulte e aceite/i)).toBeTruthy()
     expect(screen.queryByText(/cadastrado com sucesso/i)).toBeNull()
-    expect(requisicao).not.toHaveBeenCalled()
+    expect(enviadosPara(requisicao, 'POST /api/auth/cadastro/treinador/')).toEqual([])
     expect(localStorage.length).toBe(0)
   })
 
@@ -92,8 +84,7 @@ describe('formulários de cadastro', () => {
 
 
 it('associa o erro de telefone ao campo e bloqueia cadastro sem enviar dados', async () => {
-  const requisicao = vi.fn()
-  vi.stubGlobal('fetch', requisicao)
+  const requisicao = simularApi()
   const pessoa = abrir('/cadastro/treinador')
   for (const [campo, valor] of [
     ['Nome', 'Treinador'], ['Sobrenome', 'Teste'], ['Apelido', 'treinador.teste'],
@@ -106,7 +97,7 @@ it('associa o erro de telefone ao campo e bloqueia cadastro sem enviar dados', a
   expect(telefone.getAttribute('aria-describedby')).toBe('cadastro-telefone-erro')
   expect(document.activeElement).toBe(telefone)
   expect(screen.getByRole('alert')).toBeTruthy()
-  expect(requisicao).not.toHaveBeenCalled()
+  expect(enviadosPara(requisicao, 'POST /api/auth/cadastro/treinador/')).toEqual([])
 })
 
 
