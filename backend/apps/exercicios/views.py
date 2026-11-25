@@ -16,7 +16,8 @@ class ExercicioViewSet(
     mixins.UpdateModelMixin,
     viewsets.GenericViewSet,
     ):
-    queryset = Exercicio.objects.all()
+    # prefetch: traz os erros e orientações (US37) sem uma consulta por exercício.
+    queryset = Exercicio.objects.prefetch_related("erros_orientacoes")
     serializer_class = ExercicioSerializer
     permission_classes = [IsAuthenticated, IsTreinador]
 

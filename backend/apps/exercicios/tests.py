@@ -464,3 +464,108 @@ class ErroComumExercicioModelTests(TestCase):
         # RN22: erros comuns e orientações são opcionais no exercício.
         self.exercicio.full_clean()
         self.assertFalse(self.exercicio.erros_orientacoes.exists())
+
+
+class ErrosOrientacoesNaConsultaTests(APITestCase):
+    """US37 / RF2420 — Itens de erro + orientação exibidos na consulta do exercício."""
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.exercicio = Exercicio.objects.create(
+            nome="Drible com deslocamento",
+            objetivo="Conduzir a bola em movimento",
+            fundamento="DRIBLE",
+            erros_comuns="Texto antigo de erros comuns.",
+            criado_por=cls.treinador,
+        )
+        cls.url = reverse("exercicio-detail", args=[cls.exercicio.pk])
+
+    def setUp(self):
+        self.client.force_authenticate(self.treinador)
+
+    def criar_item(self, exercicio=None, erro="Olhar somente para a bola.",
+                   orientacao="Mantenha o olhar à frente durante o deslocamento."):
+        return ErroComumExercicio.objects.create(
+            exercicio=exercicio or self.exercicio,
+            erro=erro,
+            orientacao_corretiva=orientacao,
+        )
+
+    def test_detalhe_traz_lista_de_erros_e_orientacoes(self):
+        # RNF11: o item cadastrado aparece na consulta imediatamente.
+        primeiro = self.criar_item()
+        segundo = self.criar_item(
+            erro="Bater a bola com a palma da mão.",
+            orientacao="Use a ponta dos dedos para controlar a bola.",
+        )
+
+        resposta = self.client.get(self.url)
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        itens = resposta.data["erros_orientacoes"]
+        self.assertEqual([item["id"] for item in itens], [primeiro.pk, segundo.pk])
+        self.assertEqual(itens[0]["erro"], "Olhar somente para a bola.")
+        self.assertEqual(
+            itens[0]["orientacao_corretiva"],
+            "Mantenha o olhar à frente durante o deslocamento.",
+        )
+        self.assertEqual(
+            set(itens[0]),
+            {"id", "erro", "orientacao_corretiva", "criado_em", "atualizado_em"},
+        )
+
+    def test_exercicio_sem_itens_retorna_lista_vazia(self):
+        # RN22 / US38 CA02: sem itens, a consulta funciona e devolve lista vazia.
+        resposta = self.client.get(self.url)
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["erros_orientacoes"], [])
+
+    def test_put_do_exercicio_preserva_itens_e_campo_legado(self):
+        # Não regressão da US39: o PUT do exercício ignora a lista (somente leitura).
+        item = self.criar_item()
+
+        resposta = self.client.put(
+            self.url,
+            {
+                "nome": "Drible com deslocamento",
+                "objetivo": "Conduzir a bola em movimento",
+                "fundamento": "DRIBLE",
+                "erros_comuns": "Texto antigo atualizado.",
+                "erros_orientacoes": [],
+            },
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            list(self.exercicio.erros_orientacoes.values_list("pk", flat=True)),
+            [item.pk],
+        )
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.erros_comuns, "Texto antigo atualizado.")
+        self.assertEqual(len(resposta.data["erros_orientacoes"]), 1)
+
+    def test_lista_da_biblioteca_nao_consulta_itens_por_exercicio(self):
+        # RNF11: a lista traz os itens sem uma consulta extra por exercício.
+        for indice in range(3):
+            exercicio = Exercicio.objects.create(
+                nome=f"Exercício {indice}",
+                objetivo="Objetivo",
+                fundamento="PASSE",
+                criado_por=self.treinador,
+            )
+            self.criar_item(exercicio=exercicio)
+
+        with self.assertNumQueries(2):
+            resposta = self.client.get(reverse("exercicio-list"))
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(resposta.data), 4)
+        self.assertTrue(all("erros_orientacoes" in item for item in resposta.data))
