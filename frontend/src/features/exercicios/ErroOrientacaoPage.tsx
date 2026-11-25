@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import estilos from './ErrosOrientacoes.module.css';
+import botoes from './BibliotecaExercicios.module.css';
 import { AuthContext } from '../../auth/contexto';
 import { ApiError } from '../../api/client';
 import { LayoutTreinador } from '../treinador/LayoutTreinador';
@@ -137,6 +138,16 @@ export default function ErroOrientacaoPage() {
               onAlterarCampo={limparErroDoCampo}
               onSalvar={salvar}
               onCancelar={voltarParaLista}
+              acoesExtras={modo === 'edicao' && (
+                <button
+                  type="button"
+                  className={botoes.secundario}
+                  disabled={salvando}
+                  onClick={() => navegar(`${rotaLista}/${erroId}/remover`)}
+                >
+                  Remover orientação
+                </button>
+              )}
             />
           </>
         )}
