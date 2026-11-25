@@ -1,3 +1,7 @@
+import copy
+import json
+from unittest import skip
+
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from django.test import TestCase
@@ -7,6 +11,7 @@ from rest_framework.test import APITestCase
 from apps.contas import termos
 
 from .models import ErroComumExercicio, Exercicio
+from .services import snapshot_exercicio
 
 Usuario = get_user_model()
 
@@ -1085,3 +1090,139 @@ class RemoverErroOrientacaoTests(ErrosOrientacoesApiBase):
         depois = Exercicio.objects.get(pk=self.exercicio.pk)
         self.assertEqual(depois.atualizado_em, antes.atualizado_em)
         self.assertEqual(depois.erros_comuns, antes.erros_comuns)
+
+
+class SnapshotExercicioTests(TestCase):
+    """RN23 / US37 CA03 — Cópia dos dados do exercício para a prescrição.
+
+    `snapshot_exercicio` é o contrato que o RF2307 (prescrição de treino) deve usar:
+    copiar os dados vigentes no momento da prescrição, nunca referenciar o exercício
+    ou o item. Assim, editar ou remover itens na biblioteca não altera treinos já
+    prescritos, e a nova versão vale só para novas prescrições.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.exercicio = Exercicio.objects.create(
+            nome="Drible com deslocamento",
+            objetivo="Conduzir a bola em movimento",
+            fundamento="DRIBLE",
+            orientacoes="Manter o corpo baixo.",
+            erros_comuns="Texto antigo de erros comuns.",
+            video_base="https://www.youtube.com/watch?v=exemplo",
+            criado_por=cls.treinador,
+        )
+        cls.item = ErroComumExercicio.objects.create(
+            exercicio=cls.exercicio,
+            erro="Olhar somente para a bola.",
+            orientacao_corretiva="Mantenha o olhar à frente durante o deslocamento.",
+        )
+        cls.outro_item = ErroComumExercicio.objects.create(
+            exercicio=cls.exercicio,
+            erro="Bater a bola com a palma da mão.",
+            orientacao_corretiva="Use a ponta dos dedos para controlar a bola.",
+        )
+
+    def test_snapshot_contem_todos_os_dados_do_exercicio(self):
+        self.assertEqual(
+            snapshot_exercicio(self.exercicio),
+            {
+                "nome": "Drible com deslocamento",
+                "objetivo": "Conduzir a bola em movimento",
+                "fundamento": "DRIBLE",
+                "fundamento_nome": "Drible",
+                "orientacoes": "Manter o corpo baixo.",
+                "erros_comuns": "Texto antigo de erros comuns.",
+                "video_base": "https://www.youtube.com/watch?v=exemplo",
+                "erros_orientacoes": [
+                    {
+                        "erro": "Olhar somente para a bola.",
+                        "orientacao_corretiva": "Mantenha o olhar à frente durante o deslocamento.",
+                    },
+                    {
+                        "erro": "Bater a bola com a palma da mão.",
+                        "orientacao_corretiva": "Use a ponta dos dedos para controlar a bola.",
+                    },
+                ],
+            },
+        )
+
+    def test_snapshot_tem_dados_puros_sem_ids(self):
+        # Sem ids: o treino não pode depender do exercício nem dos itens da biblioteca.
+        snapshot = snapshot_exercicio(self.exercicio)
+
+        self.assertNotIn("id", snapshot)
+        self.assertTrue(all("id" not in item for item in snapshot["erros_orientacoes"]))
+        # Serializável em JSON, pronto para ser gravado junto do treino.
+        self.assertEqual(json.loads(json.dumps(snapshot)), snapshot)
+
+    def test_snapshot_de_exercicio_sem_itens_tem_lista_vazia(self):
+        # RN22: erros e orientações são opcionais.
+        sem_itens = Exercicio.objects.create(
+            nome="Passe de peito",
+            objetivo="Melhorar a precisão do passe",
+            fundamento="PASSE",
+            criado_por=self.treinador,
+        )
+
+        snapshot = snapshot_exercicio(sem_itens)
+
+        self.assertEqual(snapshot["erros_orientacoes"], [])
+        self.assertEqual(snapshot["erros_comuns"], "")
+
+    def test_snapshot_nao_muda_apos_editar_ou_remover_item(self):
+        # RN23: a cópia feita na prescrição não acompanha edições posteriores.
+        snapshot_da_prescricao = snapshot_exercicio(self.exercicio)
+        copia_original = copy.deepcopy(snapshot_da_prescricao)
+
+        self.item.erro = "Erro editado na biblioteca."
+        self.item.orientacao_corretiva = "Orientação editada na biblioteca."
+        self.item.save()
+        self.outro_item.delete()
+        Exercicio.objects.filter(pk=self.exercicio.pk).update(nome="Nome editado")
+
+        self.assertEqual(snapshot_da_prescricao, copia_original)
+        # A nova versão vale para novas prescrições.
+        nova = snapshot_exercicio(Exercicio.objects.get(pk=self.exercicio.pk))
+        self.assertEqual(nova["nome"], "Nome editado")
+        self.assertEqual(
+            nova["erros_orientacoes"],
+            [
+                {
+                    "erro": "Erro editado na biblioteca.",
+                    "orientacao_corretiva": "Orientação editada na biblioteca.",
+                }
+            ],
+        )
+
+    def test_snapshot_usa_os_itens_ja_carregados(self):
+        # Com prefetch, copiar vários exercícios não faz uma consulta por exercício.
+        exercicio = Exercicio.objects.prefetch_related("erros_orientacoes").get(
+            pk=self.exercicio.pk
+        )
+
+        with self.assertNumQueries(0):
+            snapshot = snapshot_exercicio(exercicio)
+
+        self.assertEqual(len(snapshot["erros_orientacoes"]), 2)
+
+    @skip("Depende do RF2307 — prescrição de treino")
+    def test_ca03_treino_prescrito_mantem_orientacoes(self):
+        """CA03 integrado. Roteiro para quando o RF2307 existir:
+
+        1. Treinador prescreve um treino com este exercício. A prescrição grava
+           `snapshot_exercicio(exercicio)` junto do item do treino.
+        2. Treinador edita um item (PUT .../erros-comuns/<id>/) e remove outro
+           (DELETE .../erros-comuns/<id>/) na biblioteca.
+        3. A consulta do treino já prescrito (aluno e treinador) mostra os erros e
+           orientações da data da prescrição (iguais ao snapshot do passo 1).
+        4. A consulta do exercício na biblioteca mostra a versão nova.
+        5. Um novo treino prescrito depois da edição recebe a versão nova.
+        """
+        self.fail("Implementar quando o RF2307 (prescrição de treino) existir.")
