@@ -223,3 +223,45 @@ class TreinoSerializer(serializers.ModelSerializer):
                 ]
             )
         return treino
+
+class TreinoResumoSerializer(serializers.ModelSerializer):
+    status_display = serializers.CharField(source="get_status_display", read_only=True)
+    total_exercicios = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Treino
+        fields = ["id", "nome", "status", "status_display", "total_exercicios"]
+
+
+class PlanejamentoVigenteSerializer(serializers.ModelSerializer):
+    treinos = TreinoResumoSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Planejamento
+        fields = ["id", "nome", "criado_em", "treinos"]
+
+
+class PlanejamentoResumoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Planejamento
+        fields = ["id", "nome"]
+
+
+def nome_do_aluno(aluno):
+    return aluno.get_full_name() or aluno.username
+
+
+class AlunoCarteiraSerializer(serializers.ModelSerializer):
+    nome = serializers.SerializerMethodField()
+    planejamento_vigente = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Usuario
+        fields = ["id", "nome", "planejamento_vigente"]
+
+    def get_nome(self, obj):
+        return nome_do_aluno(obj)
+
+    def get_planejamento_vigente(self, obj):
+        vigentes = obj.planejamentos_vigentes
+        return PlanejamentoResumoSerializer(vigentes[0]).data if vigentes else None
