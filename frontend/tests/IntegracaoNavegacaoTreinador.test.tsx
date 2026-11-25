@@ -32,7 +32,7 @@ afterEach(() => {
 describe('Integração de navegação do treinador', () => {
   it('o treinador navega da conta para a lista de alunos', async () => {
     const requisicoes = abrirComTreinador('/')
-    const botao = await screen.findByRole('button', { name: 'Consultar meus alunos' })
+    const botao = await screen.findByRole('button', { name: 'Consultar alunos' })
     fireEvent.click(botao)
     await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos'))
     expect(await screen.findByRole('heading', { name: 'Seus alunos' })).toBeTruthy()
