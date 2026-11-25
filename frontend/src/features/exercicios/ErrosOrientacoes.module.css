@@ -24,6 +24,15 @@
 .voltar:hover { text-decoration: underline; text-underline-offset: 3px; }
 .voltar:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2px; border-radius: 6px; }
 .iconeVoltar { flex: 0 0 auto; }
+/* Complementa o .voltar da biblioteca: sem margem extra (a página já tem gap) e
+   largura que acomoda textos maiores. */
+.pagina > .voltarBotao {
+  justify-self: start;
+  width: auto;
+  min-width: min(100%, 240px);
+  margin-bottom: 0;
+}
+.pagina > .voltarBotao:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2px; }
 
 .cabecalho { display: grid; justify-items: start; gap: 12px; margin-top: -12px; }
 .cabecalho h1 { font: 700 34px/1.1 'Barlow Condensed', 'Roboto Condensed', sans-serif; }
@@ -146,7 +155,7 @@ a.item:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2
 .campo textarea:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2px; }
 .campo textarea[aria-invalid="true"] { border-color: #ff987d; }
 .campo textarea:disabled { opacity: .7; }
-.rodapeCampo { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.rodapeCampo { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .erroCampo { color: #ffc2b9; font-size: 14px; line-height: 1.4; }
 .contador { flex: 0 0 auto; color: var(--sj52-secundario); font-size: 13px; font-variant-numeric: tabular-nums; }
 
@@ -213,6 +222,7 @@ a.item:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2
   .iconeAvancar { grid-column: 2; grid-row: 1; }
   .cabecalhoSecao { display: grid; }
   .adicionar, .aviso, .acoes { width: 100%; }
+  .pagina > .voltarBotao { width: 100%; }
   .vazioCartao { padding: 28px 18px; }
   .cancelarTopo { display: inline-flex; }
 }

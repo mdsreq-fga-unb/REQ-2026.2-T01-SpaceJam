@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useLocation, useParams } from 'react-router';
+import { Link, useLocation, useNavigate, useParams } from 'react-router';
 import estilos from './ErrosOrientacoes.module.css';
+import botoes from './BibliotecaExercicios.module.css';
 import { AuthContext } from '../../auth/contexto';
 import { LayoutTreinador } from '../treinador/LayoutTreinador';
 import type { Exercicio } from '../../types/exercicio';
@@ -33,6 +34,9 @@ function IconeAvancar() {
   );
 }
 
+/** Botão de voltar no mesmo estilo do "Voltar à biblioteca" do detalhe do exercício. */
+export const classeBotaoVoltar = `${botoes.voltar} ${estilos.voltarBotao}`;
+
 export function IconeVoltar() {
   return (
     <svg className={estilos.iconeVoltar} viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
@@ -44,7 +48,16 @@ export function IconeVoltar() {
 export default function ErrosOrientacoesExercicio() {
   const treinador = useContext(AuthContext)?.usuario;
   const { exercicioId } = useParams();
-  const aviso = (useLocation().state as { aviso?: string } | null)?.aviso;
+  const local = useLocation();
+  const navegar = useNavigate();
+  // Aviso de sucesso vindo das telas de adicionar, editar ou remover. É lido uma vez e
+  // retirado do histórico, para não reaparecer ao recarregar a página.
+  const [aviso] = useState(() => (local.state as { aviso?: string } | null)?.aviso);
+  useEffect(() => {
+    if ((local.state as { aviso?: string } | null)?.aviso) {
+      navegar(local.pathname, { replace: true, state: null });
+    }
+  }, [local, navegar]);
   const idValido = idDeRotaValido(exercicioId);
   const rotaNovo = `/exercicios/${exercicioId}/erros-orientacoes/novo`;
   const [estado, setEstado] = useState<{ id: string; exercicio?: Exercicio; erro?: string } | null>(null);
@@ -66,9 +79,8 @@ export default function ErrosOrientacoesExercicio() {
   return (
     <LayoutTreinador nome={treinador?.first_name || treinador?.apelido || 'Treinador'} secao="Biblioteca">
       <div className={estilos.pagina}>
-        <Link className={estilos.voltar} to={idValido ? `/exercicios/${exercicioId}` : '/exercicios'}>
-          <IconeVoltar />
-          {idValido ? 'Voltar ao exercício' : 'Biblioteca de exercícios'}
+        <Link className={classeBotaoVoltar} to={idValido ? `/exercicios/${exercicioId}` : '/exercicios'}>
+          {idValido ? 'Voltar ao exercício' : 'Voltar à biblioteca'}
         </Link>
 
         {erro ? (

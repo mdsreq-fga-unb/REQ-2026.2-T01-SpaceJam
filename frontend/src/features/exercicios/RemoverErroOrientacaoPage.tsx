@@ -5,7 +5,7 @@ import botoes from './BibliotecaExercicios.module.css';
 import { AuthContext } from '../../auth/contexto';
 import { LayoutTreinador } from '../treinador/LayoutTreinador';
 import type { Exercicio } from '../../types/exercicio';
-import { IconeVoltar, idDeRotaValido } from './ErrosOrientacoesExercicio';
+import { classeBotaoVoltar, idDeRotaValido } from './ErrosOrientacoesExercicio';
 import {
   consultarExercicio,
   mensagemDeErro,
@@ -73,9 +73,8 @@ export default function RemoverErroOrientacaoPage() {
         {erroCarga ? (
           <>
             <p role="alert" className={estilos.erro}>{erroCarga}</p>
-            <Link className={estilos.voltar} to={idDeRotaValido(exercicioId) ? rotaLista : '/exercicios'}>
-              <IconeVoltar />
-              {idDeRotaValido(exercicioId) ? 'Voltar aos erros e orientações' : 'Biblioteca de exercícios'}
+            <Link className={classeBotaoVoltar} to={idDeRotaValido(exercicioId) ? rotaLista : '/exercicios'}>
+              {idDeRotaValido(exercicioId) ? 'Voltar aos erros e orientações' : 'Voltar à biblioteca'}
             </Link>
           </>
         ) : !exercicio || !item ? (

@@ -11,7 +11,7 @@ import ErroOrientacaoForm, {
   type ErrosDosCampos,
   type TextosErroOrientacao,
 } from './components/ErroOrientacaoForm';
-import { IconeVoltar, idDeRotaValido } from './ErrosOrientacoesExercicio';
+import { classeBotaoVoltar, IconeVoltar, idDeRotaValido } from './ErrosOrientacoesExercicio';
 import {
   atualizarErroOrientacao,
   consultarExercicio,
@@ -119,9 +119,8 @@ export default function ErroOrientacaoPage() {
         {erroCarga ? (
           <>
             <p role="alert" className={estilos.erro}>{erroCarga}</p>
-            <Link className={estilos.voltar} to={idDeRotaValido(exercicioId) ? rotaLista : '/exercicios'}>
-              <IconeVoltar />
-              {idDeRotaValido(exercicioId) ? 'Voltar aos erros e orientações' : 'Biblioteca de exercícios'}
+            <Link className={classeBotaoVoltar} to={idDeRotaValido(exercicioId) ? rotaLista : '/exercicios'}>
+              {idDeRotaValido(exercicioId) ? 'Voltar aos erros e orientações' : 'Voltar à biblioteca'}
             </Link>
           </>
         ) : !exercicio ? (

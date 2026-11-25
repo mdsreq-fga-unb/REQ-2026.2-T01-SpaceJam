@@ -30,10 +30,16 @@ const drible: Exercicio = {
 }
 
 function Endereco() {
-  return <div data-testid="endereco">{useLocation().pathname}</div>
+  const local = useLocation()
+  return (
+    <>
+      <div data-testid="endereco">{local.pathname}</div>
+      <div data-testid="estado">{JSON.stringify(local.state ?? null)}</div>
+    </>
+  )
 }
 
-function abrir(rota: string) {
+function abrir(rota: string | { pathname: string; state: unknown }) {
   return render(
     <MemoryRouter initialEntries={[rota]}>
       <Routes>
@@ -78,6 +84,14 @@ describe('US37 — tela de erros e orientações', () => {
     expect(screen.queryByRole('alert')).not.toBeInTheDocument()
   })
 
+  it('o aviso de sucesso aparece uma vez e sai do histórico (não volta ao recarregar)', async () => {
+    abrir({ pathname: '/exercicios/1/erros-orientacoes', state: { aviso: 'Alterações salvas.' } })
+
+    expect(await screen.findByText('Alterações salvas.')).toHaveAttribute('role', 'status')
+    expect(screen.getByTestId('estado')).toHaveTextContent('null')
+    expect(screen.getByTestId('endereco')).toHaveTextContent('/exercicios/1/erros-orientacoes')
+  })
+
   it('exercício inexistente mostra o aviso', async () => {
     vi.mocked(consultarExercicio).mockRejectedValue(new ApiError(404, 'Not found.'))
     abrir('/exercicios/999/erros-orientacoes')
@@ -90,7 +104,7 @@ describe('US37 — tela de erros e orientações', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Exercício não encontrado.')
     expect(consultarExercicio).not.toHaveBeenCalled()
-    expect(screen.getByRole('link', { name: 'Biblioteca de exercícios' })).toHaveAttribute('href', '/exercicios')
+    expect(screen.getByRole('link', { name: 'Voltar à biblioteca' })).toHaveAttribute('href', '/exercicios')
   })
 
   it('textos com HTML aparecem como texto, sem serem interpretados', async () => {
