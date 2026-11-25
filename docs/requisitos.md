@@ -1094,13 +1094,13 @@
 <summary><span class="sj-requirement-id">RF4812</span><span class="sj-requirement-name">Aceitar termos de uso e política de privacidade</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve exigir que o usuário aceite os termos de uso e a política de privacidade no cadastro ou no primeiro acesso, registrando a data e a versão aceitas.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve exigir que o usuário aceite os termos de uso e a política de privacidade no cadastro ou no primeiro acesso, registrando a data, a hora e a versão aceitas.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
 <p id="us63" class="sj-story"><strong>US63</strong> Como usuário, quero aceitar os termos de uso e a política de privacidade no meu cadastro ou primeiro acesso, para utilizar a plataforma ciente das condições de uso e tratamento de dados.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE4 - CP8</a><br>Usuário</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn15">RN15</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf16">RNF16</a><br><a href="../regras_negocio/#rn05">RN05</a> · <a href="../regras_negocio/#rn15">RN15</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us63">US63</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,42</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>

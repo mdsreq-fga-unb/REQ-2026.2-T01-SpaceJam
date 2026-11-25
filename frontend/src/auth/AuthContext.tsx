@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { api, ApiError, TOKEN_KEY, tokenStorage } from '../api/client'
+import { aoTermosPendentes, api, ApiError, TOKEN_KEY, tokenStorage } from '../api/client'
 import type { Papel, Usuario } from '../types/usuario'
 import { AuthContext } from './contexto'
 
@@ -11,6 +11,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
   const versaoSessao = useRef(0)
   const [avisoSessao, setAvisoSessao] = useState('')
+
+  // US63 (CA02): termos atualizados durante a sessão levam direto à renovação do aceite.
+  useEffect(() => aoTermosPendentes(versaoAtual => {
+    setUsuario(atual => atual && {
+      ...atual,
+      termos_pendentes: true,
+      versao_termos_vigente: versaoAtual ?? atual.versao_termos_vigente,
+    })
+  }), [])
 
   // Recupera uma sessão já existente.
   useEffect(() => {
@@ -162,12 +171,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function aceitarTermos() {
+  async function aceitarTermos(versaoTermos: string) {
     const versao = versaoSessao.current
 
     const perfil = await api<Usuario>('/auth/aceitar-termos/', {
       method: 'POST',
-      body: JSON.stringify({ aceite_termos: true }),
+      body: JSON.stringify({ aceite_termos: true, versao: versaoTermos }),
     })
 
     if (versao === versaoSessao.current) {

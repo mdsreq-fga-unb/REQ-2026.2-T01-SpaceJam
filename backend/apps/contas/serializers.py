@@ -2,12 +2,12 @@ from datetime import date
 
 from django.conf import settings
 from django.db import transaction
-from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from .models import PerfilAluno, Usuario
+from . import termos
+from .models import HistoricoAceiteTermos, PerfilAluno, Usuario
 
 
 def calcular_idade(data_nascimento: date) -> int:
@@ -29,6 +29,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     apelido = serializers.CharField(source="username", read_only=True)
     perfil_aluno = PerfilAlunoSerializer(read_only=True)
     termos_pendentes = serializers.SerializerMethodField()
+    versao_termos_vigente = serializers.SerializerMethodField()
 
     class Meta:
         model = Usuario
@@ -45,11 +46,16 @@ class UsuarioSerializer(serializers.ModelSerializer):
             "treinador",
             "perfil_aluno",
             "termos_pendentes",
+            "versao_termos_aceita",
+            "versao_termos_vigente",
         ]
         read_only_fields = fields
 
     def get_termos_pendentes(self, obj):
-        return obj.versao_termos_aceita != settings.TERMOS_VERSAO_ATUAL
+        return termos.termos_pendentes(obj)
+
+    def get_versao_termos_vigente(self, obj):
+        return termos.versao_vigente()
 
 
 class CadastroAlunoSerializer(serializers.Serializer):
@@ -68,8 +74,8 @@ class CadastroAlunoSerializer(serializers.Serializer):
     frequencia_semanal = serializers.IntegerField(min_value=1, max_value=7)
     objetivos = serializers.CharField()
     senha = serializers.CharField(write_only=True, min_length=6)
-    aceite_termos = serializers.BooleanField(write_only=True)
-    consentimento_responsavel = serializers.BooleanField(write_only=True, required=False, default=False)
+    # Ausente equivale a false para responder 400 ACEITE_OBRIGATORIO, não "campo obrigatório".
+    aceite_termos = serializers.BooleanField(write_only=True, required=False, default=False)
 
     def validate_codigo_treinador(self, value):
         try:
@@ -93,23 +99,22 @@ class CadastroAlunoSerializer(serializers.Serializer):
             raise serializers.ValidationError("Este e-mail já está em uso.")
         return value.strip().lower()
 
-    def validate_aceite_termos(self, value):
-        if not value:
-            raise serializers.ValidationError("É obrigatório aceitar os Termos de Uso e Política de Privacidade.")
-        return value
-
     def validate_data_nascimento(self, value):
         if value >= date.today():
             raise serializers.ValidationError("A data de nascimento deve ser anterior à data atual.")
         return value
 
     def validate(self, attrs):
-        idade = calcular_idade(attrs["data_nascimento"])
-        if idade < 18 and not attrs.get("consentimento_responsavel"):
+        termos.validar_aceite(attrs["aceite_termos"])
+        # RN16 / Termos de Uso v1.0 (3.3): sem fluxo verificável de consentimento do responsável
+        # (US65, ainda não implementada), menores de 18 anos não podem se cadastrar. Uma marcação
+        # enviada pelo próprio aluno não comprova o consentimento (art. 14 da LGPD).
+        if calcular_idade(attrs["data_nascimento"]) < 18:
             raise serializers.ValidationError(
                 {
-                    "consentimento_responsavel": (
-                        "Alunos menores de 18 anos precisam do consentimento prévio de um responsável legal (RN16)."
+                    "data_nascimento": (
+                        "O cadastro está disponível apenas para maiores de 18 anos. O cadastro de menores "
+                        "depende do consentimento do responsável legal, ainda não disponível (RN16)."
                     )
                 }
             )
@@ -127,9 +132,6 @@ class CadastroAlunoSerializer(serializers.Serializer):
             data_nascimento=validated_data["data_nascimento"],
             papel=Usuario.Papel.ALUNO,
             treinador=self._treinador_encontrado,
-            versao_termos_aceita=settings.TERMOS_VERSAO_ATUAL,
-            data_aceite_termos=timezone.now(),
-            consentimento_responsavel=validated_data.get("consentimento_responsavel", False),
         )
         PerfilAluno.objects.create(
             usuario=usuario,
@@ -139,6 +141,8 @@ class CadastroAlunoSerializer(serializers.Serializer):
             frequencia_semanal=validated_data["frequencia_semanal"],
             objetivos=validated_data["objetivos"].strip(),
         )
+        # US63 (RN15) — aceite registrado no histórico na mesma transação do cadastro.
+        termos.registrar_aceite(usuario, HistoricoAceiteTermos.Origem.CADASTRO)
         return usuario
 
 
@@ -152,7 +156,8 @@ class CadastroTreinadorSerializer(serializers.Serializer):
     email = serializers.EmailField()
     telefone = serializers.CharField(max_length=20)
     senha = serializers.CharField(write_only=True, min_length=6)
-    aceite_termos = serializers.BooleanField(write_only=True)
+    # Ausente equivale a false para responder 400 ACEITE_OBRIGATORIO, não "campo obrigatório".
+    aceite_termos = serializers.BooleanField(write_only=True, required=False, default=False)
 
     def validate_codigo_ativacao(self, value):
         if value.strip() != settings.COACH_ACTIVATION_CODE:
@@ -169,12 +174,9 @@ class CadastroTreinadorSerializer(serializers.Serializer):
             raise serializers.ValidationError("Este e-mail já está em uso.")
         return value.strip().lower()
 
-    def validate_aceite_termos(self, value):
-        if not value:
-            raise serializers.ValidationError("É obrigatório aceitar os Termos de Uso e Política de Privacidade.")
-        return value
-
     def validate(self, attrs):
+        termos.validar_aceite(attrs["aceite_termos"])
+        # Regra do treinador único definida na Conferência do DoR (RN01 / CA03)
         if Usuario.objects.filter(papel=Usuario.Papel.TREINADOR).exists():
             raise serializers.ValidationError(
                 {"detail": "O cadastro de treinador não está disponível pois já existe um treinador registrado."}
@@ -183,7 +185,7 @@ class CadastroTreinadorSerializer(serializers.Serializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        return Usuario.objects.create_user(
+        usuario = Usuario.objects.create_user(
             username=validated_data["apelido"],
             email=validated_data["email"],
             password=validated_data["senha"],
@@ -191,16 +193,17 @@ class CadastroTreinadorSerializer(serializers.Serializer):
             last_name=validated_data["sobrenome"].strip(),
             telefone=validated_data["telefone"].strip(),
             papel=Usuario.Papel.TREINADOR,
-            versao_termos_aceita=settings.TERMOS_VERSAO_ATUAL,
-            data_aceite_termos=timezone.now(),
         )
+        # US63 (RN15) — aceite registrado no histórico na mesma transação do cadastro.
+        termos.registrar_aceite(usuario, HistoricoAceiteTermos.Origem.CADASTRO)
+        return usuario
 
 
 class LoginAlunoSerializer(serializers.Serializer):
     """US04 — Logar com conta própria (Aluno) via apelido e senha."""
 
     apelido = serializers.CharField(required=False)
-    username = serializers.CharField(required=False)
+    username = serializers.CharField(required=False)  # Compatibilidade com o esqueleto anterior
     senha = serializers.CharField(write_only=True, required=False)
     password = serializers.CharField(write_only=True, required=False)
 
@@ -247,7 +250,6 @@ class LoginTreinadorSerializer(serializers.Serializer):
             "refresh": str(refresh),
             "usuario": UsuarioSerializer(usuario).data,
         }
-
 
 class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
     """US53 (RF4802) — Consulta dos próprios dados cadastrais do aluno (RN25, RN26, sem senha)."""
@@ -311,10 +313,9 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
-
-
+    
 class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
-    """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador."""
+    """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador (RN03, RN04, RN25, RN26)."""
 
     historico_lesoes = serializers.SerializerMethodField()
 
@@ -323,14 +324,14 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
         read_only_fields = fields
 
     def get_historico_lesoes(self, obj):
+        # RN26: exposto em modo somente leitura quando houver vínculo; lista vazia até haver modelo de lesões
         lesoes_rel = getattr(obj, "lesoes", None)
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
-
-
+    
 class TrocarSenhaSerializer(serializers.Serializer):
-    """US08 (RF1108) — Troca de senha para usuário autenticado."""
+    """US08 (RF1108) — Troca de senha para usuário autenticado (RN24)."""
 
     senha_atual = serializers.CharField(write_only=True, required=True)
     nova_senha = serializers.CharField(write_only=True, required=True, min_length=6)
@@ -365,6 +366,7 @@ class TrocarSenhaSerializer(serializers.Serializer):
         user.set_password(nova_senha)
         user.save(update_fields=["password"])
 
+        # Invalida refresh tokens ativos do usuário via token_blacklist (quando habilitado)
         try:
             from rest_framework_simplejwt.token_blacklist.models import (
                 BlacklistedToken,
@@ -374,6 +376,7 @@ class TrocarSenhaSerializer(serializers.Serializer):
             for token in OutstandingToken.objects.filter(user=user):
                 BlacklistedToken.objects.get_or_create(token=token)
         except Exception:
+            # Evita quebra caso token_blacklist não esteja ativado no ambiente
             pass
 
         return user
