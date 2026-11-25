@@ -88,6 +88,8 @@ Cada exercício da biblioteca pode ter uma lista de pares **erro comum + orienta
 
 Cada item pertence a um único exercício; não há catálogo compartilhado entre exercícios. A lista é opcional no exercício, mas, dentro de um item, o erro e a orientação são obrigatórios (RN22).
 
+As telas do treinador que usam esta API estão descritas em `frontend/README.md`, na seção "Erros comuns e orientações corretivas (US37)".
+
 ### Acesso
 
 As rotas usam `[*ROTA_PROTEGIDA, IsTreinador]` (`apps/contas/permissions.py`):
@@ -107,7 +109,7 @@ O exercício vem sempre da URL. Um exercício inexistente, ou um item acessado p
 | `GET /api/exercicios/<exercicio_id>/erros-comuns/<id>/` | Consulta um item | `200` com o item |
 | `PUT /api/exercicios/<exercicio_id>/erros-comuns/<id>/` | Edita o item; os dois campos são obrigatórios (CA01) | `200` com o item atualizado |
 | `PATCH /api/exercicios/<exercicio_id>/erros-comuns/<id>/` | Edita só os campos enviados (CA01) | `200` com o item atualizado |
-| `DELETE /api/exercicios/<exercicio_id>/erros-comuns/<id>/` | Remove o item **de forma definitiva** (CA02; "Remover associação" nas telas) | `204` sem corpo |
+| `DELETE /api/exercicios/<exercicio_id>/erros-comuns/<id>/` | Remove o item **de forma definitiva** (CA02; "Remover orientação" e a confirmação "Remover orientação?" nas telas) | `204` sem corpo |
 
 Corpo de `POST` e `PUT`:
 
@@ -132,7 +134,7 @@ Item na resposta:
 | Status | Quando | Corpo |
 | --- | --- | --- |
 | `400` | `erro` ou `orientacao_corretiva` ausente (no `POST` e no `PUT`), vazio, só com espaços ou com mais de 1000 caracteres | `{ "<campo>": ["mensagem"] }` |
-| `401` | Requisição sem autenticação | `{ "detail": "..." }` |
+| `401` | Requisição sem autenticação, ou token inválido ou vencido | `{ "detail": "..." }`; com token inválido ou vencido, também `code` `token_not_valid` |
 | `403` | Aluno (`"Apenas treinadores podem fazer isso."`) ou termos pendentes (`code` `TERMOS_PENDENTES`) | `{ "detail": "..." }` |
 | `404` | Exercício inexistente, item inexistente ou item de outro exercício | `{ "detail": "..." }` |
 

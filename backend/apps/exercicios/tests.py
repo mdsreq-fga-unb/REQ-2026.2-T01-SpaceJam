@@ -973,7 +973,7 @@ class EditarErroOrientacaoTests(ErrosOrientacoesApiBase):
 class RemoverErroOrientacaoTests(ErrosOrientacoesApiBase):
     """US37 CA02 — Remover um erro comum do exercício.
 
-    Telas "Remover associação" e "Remover esta orientação?": a remoção é definitiva
+    Telas "Remover orientação" e "Remover orientação?": a remoção é definitiva
     e tira o item deste exercício (não há catálogo compartilhado).
     """
 
