@@ -1,373 +1,113 @@
-
-.pagina {
-  position: fixed;
-  inset: 0;
-  width: auto;
-  height: 100vh;
-  background-color: #290611;
-  color: #d1b0be;
-  font-family: 'Roboto Condensed', sans-serif;
-  overflow-x: hidden;
-  overflow-y: auto;
-  box-sizing: border-box;
+.biblioteca {
+  position: relative;
+  overflow-wrap: anywhere;
 }
-
-/* CABEÇALHO */
-
-.cabecalho {
+.busca, .pilha, .acoesDetalhe { display: grid; gap: 22px; }
+.busca { gap: 9px; margin-block: 24px; }
+.busca label, .formulario label {
+  color: var(--sj52-texto);
+  font-size: 16px;
+  line-height: 1.4;
+}
+.formulario label { display: grid; align-content: start; gap: 9px; }
+.busca small, .formulario small { color: var(--sj52-secundario); font-size: 14px; }
+.biblioteca :is(input, select, textarea) {
   width: 100%;
-  height: 76px;
-  background-color: #4b0021;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 30px;
-  box-sizing: border-box;
+  min-height: 48px;
+  padding: 12px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+  color: var(--sj52-texto);
+  font: inherit;
+  color-scheme: dark;
 }
-
-.logo {
-  width: 76px;
-  height: 76px;
-  object-fit: contain;
+.biblioteca :is(input, textarea)::placeholder { color: var(--sj52-secundario); opacity: 1; }
+.biblioteca select {
+  appearance: none;
+  padding-right: 44px;
+  background: var(--treinador-cartao) url('/biblioteca/seletor.svg') no-repeat right 12px center;
 }
+.biblioteca textarea { min-height: 112px; resize: vertical; }
+.biblioteca :is(input, select, textarea):focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 2px; }
+.biblioteca [aria-invalid="true"] { border-color: #ff987d; }
+.resultados:focus-visible { outline: 2px solid var(--sj52-laranja); outline-offset: 4px; }
+.lista {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.lista > li { display: grid; min-width: 0; }
+.exercicio {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  justify-items: start;
+  align-items: start;
+  gap: 10px;
+  width: 100%;
+  min-height: 140px;
+  padding: 16px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+  color: var(--sj52-secundario);
+  text-align: left;
+  font: inherit;
+  line-height: 1.45;
+}
+.exercicio:hover:not(:disabled) { border-color: var(--sj52-laranja); }
+.exercicio strong { position: relative; z-index: 1; color: var(--sj52-texto); font-size: 18px; line-height: 1.3; }
+.exercicio small, .consultar { position: relative; z-index: 1; color: var(--sj52-laranja); }
+.exercicio :is(strong, small) { width: 100%; padding-inline-end: 56px; }
+.exercicio .consultar { align-self: end; }
+.exercicio > span { position: relative; z-index: 1; }
+.icone { position: absolute; top: 16px; right: 16px; opacity: .6; pointer-events: none; }
+.colunas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 32px; }
+.pilha section :is(h2, p) { margin: 0; }
+.pilha section h2 { margin-bottom: 8px; color: var(--sj52-texto); font: 700 18px/1.25 Barlow, Arial, sans-serif; }
+.pilha section p { color: var(--sj52-secundario); line-height: 1.55; }
+.aviso { padding: 16px; border-radius: 12px; background: #29292d; }
+.aviso strong { color: var(--sj52-laranja); }
+.aviso p { margin: 8px 0 0; line-height: 1.55; }
+.biblioteca .erro { color: #ffc2b9; }
+.acoesDetalhe { width: min(100%, 320px); margin-top: 24px; }
 
-.linkAlunos {
+.principal,
+.adicionar,
+.secundario,
+.voltar,
+.buscar {
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 0 10px;
-  color: #fff;
-  font-weight: 700;
-  text-underline-offset: 4px;
-}
-
-.botaoAdicionar:disabled,
-.conteudo form button:disabled {
-  opacity: 0.65;
-  cursor: not-allowed;
-}
-
-/* CONTEÚDO PRINCIPAL */
-
-.conteudo {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px 30px 40px;
-  box-sizing: border-box;
-}
-
-/* TÍTULO */
-
-.titulo {
-  width: 100%;
-  min-height: 32px;
-  margin: 0 0 12px;
-  padding: 4px 9px;
-  background-color: #3a0019;
-  font-size: 18px;
-  font-weight: 400;
-  line-height: 1.3;
-  text-align: left;
-  box-sizing: border-box;
-}
-
-/* BUSCA */
-
-.busca {
-  width: 100%;
-  height: 37px;
-  margin-bottom: 10px;
-  padding: 0 12px;
-  border-radius: 16px;
-  background-color: rgba(199, 179, 186, 0.1);
-  border: 1px solid #ac8e98;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: #c7b3ba;
-  font-size: 16px;
-  box-sizing: border-box;
-}
-
-.iconeBusca {
-  width: 13px;
-  height: 13px;
-  border: 1.5px solid #d1b0be;
-  border-radius: 50%;
-  position: relative;
-  flex-shrink: 0;
-}
-
-.iconeBusca::after {
-  content: '';
-  position: absolute;
-  width: 6px;
-  height: 1.5px;
-  background-color: #d1b0be;
-  right: -5px;
-  bottom: -3px;
-  transform: rotate(45deg);
-}
-
-/* BOTÃO ADICIONAR */
-
-.botaoAdicionar {
-  width: 100%;
-  height: 36px;
-  margin-bottom: 15px;
-  padding: 0 12px;
-  border: none;
-  border-radius: 10px;
-  background-color: #6e3b4c;
-  color: #3a0019;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.iconeMais {
-  font-size: 28px;
-  font-weight: 300;
-  line-height: 1;
-}
-
-/* LISTA DE EXERCÍCIOS */
-
-.listaExercicios {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-  width: 100%;
-}
-
-.exercicio {
-  width: 100%;
-  min-height: 40px;
-  padding: 5px 8px;
-  border: none;
-  border-radius: 8px;
-  background-color: #ac8e98;
-  color: #6a002e;
-  font-family: inherit;
-  font-size: 18px;
-  font-weight: bold;
+  justify-content: center;
+  min-height: 48px;
+  padding: 8px 15px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+  color: var(--sj52-laranja);
+  font: 500 16px/1.3 Barlow, Arial, sans-serif;
   text-align: center;
-  cursor: pointer;
+  text-decoration: none;
+}
+.principal, .adicionar { border-color: transparent; background: var(--treinador-acao); color: #fff; }
+.principal:hover:not(:disabled), .adicionar:hover:not(:disabled) { background: #b72f14; }
+.secundario:hover, .voltar:hover, .buscar:hover { background: #242428; }
+.buscar { width: min(100%, 180px); margin-top: 14px; }
+.voltar { width: min(100%, 240px); margin-bottom: 24px; }
+.adicionar { width: min(100%, 260px); }
+.biblioteca button:disabled { opacity: .62; cursor: not-allowed; }
+
+@media (900px <= width < 1100px) {
+  .lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* CAMPO DE BUSCA */
-
-.campoBusca {
-  width: 100%;
-  min-width: 0;
-  padding: 0;
-  border: none;
-  outline: none;
-  background: transparent;
-  color: #d1b0be;
-  font-family: inherit;
-  font-size: 16px;
-}
-
-.campoBusca::placeholder {
-  color: #c7b3ba;
-  opacity: 1;
-}
-
-/* FORMULÁRIO DE CADASTRO */
-
-.conteudo > form {
-  display: grid;
-  gap: 12px;
-  width: 100%;
-  padding: 16px;
-  margin-bottom: 20px;
-  background-color: #3a0019;
-  border-radius: 12px;
-  box-sizing: border-box;
-}
-
-.conteudo > form h2 {
-  margin: 0 0 4px;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.conteudo > form label {
-  display: grid;
-  gap: 6px;
-  color: #d1b0be;
-  font-size: 15px;
-}
-
-.conteudo > form input,
-.conteudo > form textarea,
-.conteudo > form select {
-  width: 100%;
-  min-width: 0;
-  padding: 10px;
-  border: 1px solid #6e3b4c;
-  border-radius: 9px;
-  outline: none;
-  background-color: #1f0710;
-  color: #d1b0be;
-  font-family: inherit;
-  font-size: 14px;
-  box-sizing: border-box;
-}
-
-/* CAMPO FUNDAMENTO */
-
-.conteudo > form select {
-  cursor: pointer;
-  appearance: none;
-  padding-right: 35px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23d1b0be' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-}
-
-.conteudo > form select:focus {
-  border-color: #d1b0be;
-  box-shadow: 0 0 0 2px rgba(209, 176, 190, 0.15);
-}
-
-.conteudo > form select option {
-  background-color: #1f0710;
-  color: #d1b0be;
-}
-
-.conteudo > form input::placeholder,
-.conteudo > form textarea::placeholder {
-  color: #AC8E98;
-}
-
-.conteudo > form textarea {
-  min-height: 90px;
-  resize: vertical;
-}
-
-.conteudo > form > div {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.conteudo > form button {
-  padding: 9px 16px;
-  border: none;
-  border-radius: 9px;
-  background-color: #6e3b4c;
-  color: #f0c4cc;
-  font-family: inherit;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-/* DETALHES DO EXERCÍCIO */
-
-.conteudo > section:not(.listaExercicios) {
-  width: 100%;
-  padding: 16px;
-  margin-top: 15px;
-  background-color: #3a0019;
-  border-radius: 12px;
-  box-sizing: border-box;
-}
-
-.conteudo > section:not(.listaExercicios) h2 {
-  margin: 0 0 15px;
-  font-size: 18px;
-}
-
-.conteudo > section:not(.listaExercicios) h3 {
-  margin: 12px 0 7px;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.conteudo > section:not(.listaExercicios) p {
-  margin: 0;
-  padding: 12px;
-  border-radius: 9px;
-  background-color: #1f0710;
-  color: #d1b0be;
-  font-size: 14px;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-}
-
-.conteudo > section:not(.listaExercicios) a {
-  color: #f0c4cc;
-  overflow-wrap: anywhere;
-}
-
-.conteudo > section:not(.listaExercicios) button {
-  margin-top: 15px;
-  padding: 9px 16px;
-  border: none;
-  border-radius: 9px;
-  background-color: #6e3b4c;
-  color: #f0c4cc;
-  font-family: inherit;
-  cursor: pointer;
-}
-.conteudo > section:not(.listaExercicios) button {
-  margin-right: 12px;
-}
-
-.conteudo > section:not(.listaExercicios) button:last-child {
-  margin-right: 0;
-}
-
-
-/* Validação dos campos do formulário */
-
-.conteudo form [aria-invalid="true"] {
-  border: 2px solid #e05268;
-}
-
-.conteudo form [aria-invalid="true"]:focus {
-  outline: 2px solid rgba(224, 82, 104, 0.25);
-}
-
-:global(.mensagemErro) {
-  display: block;
-  color: #e05268;
-  font-size: 0.85rem;
-  margin-top: 5px;
-}
-
-
-/* TELAS PEQUENAS */
-
-@media (max-width: 600px) {
-  .cabecalho {
-    padding: 0 19px;
-  }
-
-  .conteudo {
-    padding: 10px 19px 30px;
-  }
-
-  .listaExercicios {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-  }
-
-  .exercicio {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 360px) {
-  .listaExercicios {
-    grid-template-columns: 1fr;
-  }
+@media (max-width: 899px) {
+  .lista, .colunas { grid-template-columns: minmax(0, 1fr); }
+  .colunas { gap: 22px; }
+  .acoesDetalhe, .buscar, .voltar, .adicionar { width: 100%; }
 }
