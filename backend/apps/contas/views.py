@@ -12,12 +12,13 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import termos
 from .models import HistoricoAceiteTermos, Usuario
-from .permissions import IsAlunoProprietarioPerfil, ROTA_PROTEGIDA
+from .permissions import IsAlunoProprietarioPerfil, IsTreinador, ROTA_PROTEGIDA
 from .serializers import (
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     DadosCadastraisAlunoSerializer,
     EditarPerfilAlunoSerializer,
+    LesaoSerializer,
     LoginAlunoSerializer,
     LoginTreinadorSerializer,
     PerfilAlunoAcompanhadoSerializer,
@@ -205,6 +206,26 @@ def consultar_perfil_aluno_acompanhado(request, aluno_id):
         )
 
     return Response(PerfilAlunoAcompanhadoSerializer(aluno).data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
+def registrar_lesao(request, aluno_id):
+    """US11 — Registrar lesão no histórico do aluno."""
+    aluno = Usuario.objects.filter(id=aluno_id, papel=Usuario.Papel.ALUNO).first()
+    if not aluno:
+        return Response({"detail": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+    # O treinador só registra lesões de alunos da própria carteira
+    if aluno.treinador_id != request.user.id:
+        return Response(
+            {"detail": "Você não tem permissão para registrar lesões deste aluno."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    serializer = LesaoSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save(aluno=aluno)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])

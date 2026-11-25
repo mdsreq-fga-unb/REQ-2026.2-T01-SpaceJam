@@ -7,7 +7,7 @@ from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from . import termos
-from .models import HistoricoAceiteTermos, PerfilAluno, Usuario
+from .models import HistoricoAceiteTermos, Lesao, PerfilAluno, Usuario
 
 
 def calcular_idade(data_nascimento: date) -> int:
@@ -309,10 +309,26 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         }
 
     def get_historico_lesoes(self, obj):
-        lesoes_rel = getattr(obj, "lesoes", None)
-        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
-            return list(lesoes_rel.values())
-        return []
+        # exposto em modo somente leitura.
+        return LesaoSerializer(obj.lesoes.all(), many=True).data
+
+class LesaoSerializer(serializers.ModelSerializer):
+    """Registro de lesão no histórico do aluno."""
+
+    descricao = serializers.CharField(
+        max_length=Lesao.DESCRICAO_MAX,
+        error_messages={
+            "required": "Informe a descrição da lesão.",
+            "blank": "Informe a descrição da lesão.",
+            "null": "Informe a descrição da lesão.",
+            "max_length": f"A descrição deve ter no máximo {Lesao.DESCRICAO_MAX} caracteres.",
+        },
+    )
+
+    class Meta:
+        model = Lesao
+        fields = ["id", "descricao", "criado_em"]
+        read_only_fields = ["id", "criado_em"]
     
 class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
     """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador (RN03, RN04, RN25, RN26)."""
@@ -323,12 +339,9 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
         fields = DadosCadastraisAlunoSerializer.Meta.fields + ["historico_lesoes"]
         read_only_fields = fields
 
-    def get_historico_lesoes(self, obj):
-        # RN26: exposto em modo somente leitura quando houver vínculo; lista vazia até haver modelo de lesões
-        lesoes_rel = getattr(obj, "lesoes", None)
-        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
-            return list(lesoes_rel.values())
-        return []
+        def get_historico_lesoes(self, obj):
+        # Lista de lesões, da mais recente para a mais antiga.
+            return LesaoSerializer(obj.lesoes.all(), many=True).data
     
 class TrocarSenhaSerializer(serializers.Serializer):
     """US08 (RF1108) — Troca de senha para usuário autenticado (RN24)."""

@@ -104,6 +104,29 @@ class PerfilAluno(models.Model):
         return f"Perfil de {self.usuario.username}"
 
 
+class Lesao(models.Model):
+
+    DESCRICAO_MAX = 300
+
+    aluno = models.ForeignKey(
+        Usuario,
+        on_delete=models.CASCADE,
+        related_name="lesoes",
+        limit_choices_to={"papel": Usuario.Papel.ALUNO},
+    )
+    descricao = models.CharField(max_length=DESCRICAO_MAX)
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        # Histórico da mais recente para a mais antiga; o id desempata registros no mesmo instante.
+        ordering = ["-criado_em", "-id"]
+        verbose_name = "Lesão"
+        verbose_name_plural = "Lesões"
+
+    def __str__(self):
+        return f"Lesão de {self.aluno.username} em {self.criado_em:%d/%m/%Y}"
+
+
 class HistoricoImutavelError(Exception):
     """Tentativa de alterar ou apagar um registro de aceite (RNF16)."""
 
