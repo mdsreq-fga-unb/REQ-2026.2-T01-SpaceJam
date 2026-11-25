@@ -329,3 +329,54 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
+    
+class TrocarSenhaSerializer(serializers.Serializer):
+    """US08 (RF1108) — Troca de senha para usuário autenticado (RN24)."""
+
+    senha_atual = serializers.CharField(write_only=True, required=True)
+    nova_senha = serializers.CharField(write_only=True, required=True, min_length=6)
+    confirmacao_senha = serializers.CharField(write_only=True, required=True)
+
+    def validate_senha_atual(self, value):
+        user = self.context["request"].user
+        if not user.check_password(value):
+            raise serializers.ValidationError("Senha atual incorreta.")
+        return value
+
+    def validate(self, attrs):
+        senha_atual = attrs.get("senha_atual")
+        nova_senha = attrs.get("nova_senha")
+        confirmacao_senha = attrs.get("confirmacao_senha")
+
+        if nova_senha != confirmacao_senha:
+            raise serializers.ValidationError(
+                {"confirmacao_senha": "A confirmação da nova senha não confere."}
+            )
+
+        if senha_atual == nova_senha:
+            raise serializers.ValidationError(
+                {"nova_senha": "A nova senha deve ser diferente da senha atual."}
+            )
+
+        return attrs
+
+    def save(self, **kwargs):
+        user = self.context["request"].user
+        nova_senha = self.validated_data["nova_senha"]
+        user.set_password(nova_senha)
+        user.save(update_fields=["password"])
+
+        # Invalida refresh tokens ativos do usuário via token_blacklist (quando habilitado)
+        try:
+            from rest_framework_simplejwt.token_blacklist.models import (
+                BlacklistedToken,
+                OutstandingToken,
+            )
+
+            for token in OutstandingToken.objects.filter(user=user):
+                BlacklistedToken.objects.get_or_create(token=token)
+        except Exception:
+            # Evita quebra caso token_blacklist não esteja ativado no ambiente
+            pass
+
+        return user

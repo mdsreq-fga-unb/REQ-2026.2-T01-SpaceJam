@@ -21,6 +21,7 @@ from .serializers import (
     LoginTreinadorSerializer,
     PerfilAlunoAcompanhadoSerializer,
     UsuarioSerializer,
+    TrocarSenhaSerializer,
 )
 
 
@@ -203,3 +204,17 @@ def consultar_perfil_aluno_acompanhado(request, aluno_id):
         )
 
     return Response(PerfilAlunoAcompanhadoSerializer(aluno).data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def trocar_senha(request):
+    """US08 — Trocar senha de usuário autenticado (RF1108, RN24, RNF08)."""
+    serializer = TrocarSenhaSerializer(
+        data=request.data, context={"request": request}
+    )
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(
+        {"detail": "Senha alterada com sucesso."},
+        status=status.HTTP_200_OK,
+    )
