@@ -477,7 +477,7 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
 
         with override_settings(
             EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend",
-            FRONTEND_URL="http://localhost:5173",
+            FRONTEND_URL="https://spacejam.example.test",
             PASSWORD_RESET_TIMEOUT_SECONDS=3600,
         ):
             mail.outbox.clear()

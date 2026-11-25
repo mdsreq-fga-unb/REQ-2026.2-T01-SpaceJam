@@ -267,7 +267,7 @@ def editar_perfil_aluno(request, aluno_id=None):
 @permission_classes([AllowAny])
 def solicitar_recuperacao_senha(request):
     """US10 — Solicita envio de link temporário de recuperação de senha (RF1110 / RN12)."""
-    serializer = SolicitarRecuperacaoSenhaSerializer(data=request.data)
+    serializer = SolicitarRecuperacaoSenhaSerializer(data=request.data, context={"request": request})
     serializer.is_valid(raise_exception=True)
     resultado = serializer.save()
     return Response(resultado, status=status.HTTP_200_OK)

@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from . import views
+from .authentication import RenovarSessaoSerializer
 
 urlpatterns = [
     path("health/", views.health, name="health"),
@@ -14,7 +15,7 @@ urlpatterns = [
     path("auth/login/treinador/", views.login_treinador, name="login-treinador"),
     # US03 — Logout e Refresh
     path("auth/logout/", views.logout_view, name="logout"),
-    path("auth/refresh/", TokenRefreshView.as_view(), name="refresh"),
+    path("auth/refresh/", TokenRefreshView.as_view(serializer_class=RenovarSessaoSerializer), name="refresh"),
     # Perfil e Termos
     path("auth/me/", views.me, name="me"),
     path("auth/aceitar-termos/", views.aceitar_termos, name="aceitar-termos"),
