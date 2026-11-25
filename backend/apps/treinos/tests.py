@@ -335,3 +335,161 @@ class CriarTreinoUS24Tests(APITestCase):
         TreinoExercicio.objects.create(**kw)
         with self.assertRaises(IntegrityError), transaction.atomic():
             TreinoExercicio.objects.create(**kw)
+
+class ConsultarPlanejamentoUS27Tests(APITestCase):
+    URL_CARTEIRA = "/api/treinos/alunos/"
+
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach27", email="coach27@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.beatriz = Usuario.objects.create_user(
+            username="beatriz27", email="bia27@aluno.com", password="SenhaAluno#2026",
+            first_name="Beatriz", last_name="Costa",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.andre = Usuario.objects.create_user(
+            username="andre27", email="andre27@aluno.com", password="SenhaAluno#2026",
+            first_name="André", last_name="Lima",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.sem_vinculo = Usuario.objects.create_user(
+            username="solto27", email="solto27@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO,
+        )
+        for usuario in (self.treinador, self.beatriz, self.andre, self.sem_vinculo):
+            termos.registrar_aceite(usuario)
+
+        self.anterior = Planejamento.objects.create(
+            aluno=self.beatriz, treinador=self.treinador, nome="Fundamentos",
+            status=Planejamento.Status.HISTORICO,
+        )
+        self.vigente = Planejamento.objects.create(
+            aluno=self.beatriz, treinador=self.treinador, nome="Controle de bola",
+        )
+        self.exercicio = Exercicio.objects.create(
+            criado_por=self.treinador, nome="Drible alternado",
+            objetivo="Controle", fundamento="DRIBLE",
+        )
+        self.treino_a = self._treino(self.vigente, "Treino A", Treino.Status.FEITO, 3)
+        self.treino_b = self._treino(self.vigente, "Treino B", Treino.Status.EM_ANDAMENTO, 2)
+        self._treino(self.anterior, "Treino antigo", Treino.Status.CONCLUIDO, 1)
+
+    def _treino(self, planejamento, nome, status, qtd_exercicios):
+        treino = Treino.objects.create(planejamento=planejamento, nome=nome, status=status)
+        for ordem in range(1, qtd_exercicios + 1):
+            TreinoExercicio.objects.create(
+                treino=treino, exercicio_origem=self.exercicio, ordem=ordem,
+                nome="Drible alternado", objetivo="Controle", fundamento="Drible",
+                series=3, repeticoes=10,
+            )
+        return treino
+
+    def _get(self, url, usuario=None):
+        self.client.force_authenticate(user=usuario or self.treinador)
+        return self.client.get(url)
+
+    def _url(self, aluno_id):
+        return f"/api/treinos/alunos/{aluno_id}/planejamento-vigente/"
+
+    # Lista da carteira
+    def test_ca02_lista_carteira_com_planejamento_vigente(self):
+        r = self._get(self.URL_CARTEIRA)
+        self.assertEqual(r.status_code, 200)
+        por_id = {a["id"]: a for a in r.data}
+        self.assertEqual(set(por_id), {self.beatriz.id, self.andre.id})
+        self.assertEqual(por_id[self.beatriz.id]["nome"], "Beatriz Costa")
+        self.assertEqual(
+            por_id[self.beatriz.id]["planejamento_vigente"],
+            {"id": self.vigente.id, "nome": "Controle de bola"},
+        )
+        self.assertIsNone(por_id[self.andre.id]["planejamento_vigente"])
+
+    def test_ca02_carteira_nao_inclui_alunos_inativos(self):
+        self.andre.is_active = False
+        self.andre.save()
+        r = self._get(self.URL_CARTEIRA)
+        self.assertEqual([a["id"] for a in r.data], [self.beatriz.id])
+
+    # Planejamento vigente com treinos
+    def test_ca03_exibe_planejamento_vigente_com_treinos(self):
+        r = self._get(self._url(self.beatriz.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["aluno"], {"id": self.beatriz.id, "nome": "Beatriz Costa"})
+        planejamento = r.data["planejamento"]
+        self.assertEqual(planejamento["id"], self.vigente.id)
+        self.assertEqual(planejamento["nome"], "Controle de bola")
+        self.assertEqual(
+            [
+                (t["nome"], t["status"], t["status_display"], t["total_exercicios"])
+                for t in planejamento["treinos"]
+            ],
+            [
+                ("Treino A", "FEITO", "Feito", 3),
+                ("Treino B", "EM_ANDAMENTO", "Em andamento", 2),
+            ],
+        )
+
+    def test_ca03_consulta_nao_faz_uma_query_por_treino(self):
+        for i in range(5):
+            self._treino(self.vigente, f"Treino extra {i}", Treino.Status.EM_ANDAMENTO, 2)
+        self.client.force_authenticate(user=self.treinador)
+        with self.assertNumQueries(3):
+            self.client.get(self._url(self.beatriz.id))
+
+    # Vigente sem treinos
+    def test_ca04_planejamento_vigente_sem_treinos(self):
+        Planejamento.objects.create(aluno=self.andre, treinador=self.treinador, nome="Arremesso")
+        r = self._get(self._url(self.andre.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["planejamento"]["nome"], "Arremesso")
+        self.assertEqual(r.data["planejamento"]["treinos"], [])
+
+    # Sem planejamento vigente
+    def test_ca05_sem_planejamento_vigente_retorna_null(self):
+        r = self._get(self._url(self.andre.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["aluno"]["nome"], "André Lima")
+        self.assertIsNone(r.data["planejamento"])
+
+    # Somente o vigente
+    def test_ca06_planejamento_historico_nao_aparece(self):
+        r = self._get(self._url(self.beatriz.id))
+        nomes = [t["nome"] for t in r.data["planejamento"]["treinos"]]
+        self.assertNotIn("Treino antigo", nomes)
+        self.assertNotEqual(r.data["planejamento"]["id"], self.anterior.id)
+
+    def test_ca06_aluno_so_com_historico_aparece_sem_vigente(self):
+        self.vigente.status = Planejamento.Status.HISTORICO
+        self.vigente.save()
+        r = self._get(self._url(self.beatriz.id))
+        self.assertIsNone(r.data["planejamento"])
+
+    # Acesso restrito
+    def test_ca07_aluno_recebe_403(self):
+        for url in (self.URL_CARTEIRA, self._url(self.beatriz.id)):
+            self.assertEqual(self._get(url, usuario=self.beatriz).status_code, 403)
+
+    def test_ca07_sem_login_recebe_401(self):
+        for url in (self.URL_CARTEIRA, self._url(self.beatriz.id)):
+            self.assertEqual(self.client.get(url).status_code, 401)
+
+    def test_ca07_aluno_inexistente_recebe_404(self):
+        self.assertEqual(self._get(self._url(999999)).status_code, 404)
+
+    def test_ca07_aluno_fora_da_carteira_recebe_404_sem_vazar(self):
+        Planejamento.objects.create(
+            aluno=self.sem_vinculo, treinador=self.treinador, nome="Oculto"
+        )
+        r = self._get(self._url(self.sem_vinculo.id))
+        self.assertEqual(r.status_code, 404)
+        self.assertNotIn("Oculto", str(r.data))
+
+    def test_ca07_id_de_treinador_recebe_404(self):
+        self.assertEqual(self._get(self._url(self.treinador.id)).status_code, 404)
+
+    def test_metodos_de_escrita_nao_permitidos(self):
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(self.client.post(self._url(self.beatriz.id), {}).status_code, 405)
+        self.assertEqual(self.client.delete(self.URL_CARTEIRA).status_code, 405)
