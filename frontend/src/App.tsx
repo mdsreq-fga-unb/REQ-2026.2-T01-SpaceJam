@@ -16,6 +16,7 @@ import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosP
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
+import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 
 export default function App() {
   return (
@@ -94,6 +95,22 @@ export default function App() {
             element={
               <RotaProtegida papel="TREINADOR">
                 <ErrosOrientacoesExercicio />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/novo"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErroOrientacaoPage key="novo" />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/:erroId/editar"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErroOrientacaoPage key="editar" />
               </RotaProtegida>
             }
           />

@@ -30,7 +30,7 @@ const drible: Exercicio = {
 }
 
 function Endereco() {
-  return <output data-testid="endereco">{useLocation().pathname}</output>
+  return <div data-testid="endereco">{useLocation().pathname}</div>
 }
 
 function abrir(rota: string) {
@@ -58,9 +58,9 @@ describe('US37 — tela de erros e orientações', () => {
     expect(screen.getByText('Drible')).toBeInTheDocument()
     expect(screen.getByText('Conduzir a bola em movimento mantendo o controle.')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Erros comuns e orientações' })).toBeInTheDocument()
-    expect(screen.getByText('2 itens')).toBeInTheDocument()
+    expect(screen.getByText('2 itens · selecione um item para editar')).toBeInTheDocument()
 
-    const itens = screen.getAllByRole('article')
+    const itens = screen.getAllByRole('link', { name: /^Editar erro comum:/ })
     expect(itens).toHaveLength(2)
     expect(within(itens[0]).getByText('Olhar somente para a bola.')).toBeInTheDocument()
     expect(within(itens[0]).getByText('Mantenha o olhar à frente.')).toBeInTheDocument()
@@ -102,7 +102,7 @@ describe('US37 — tela de erros e orientações', () => {
 
     expect(await screen.findByText('<b>negrito</b>')).toBeInTheDocument()
     expect(screen.getByText('<img src=x onerror=alert(1)>')).toBeInTheDocument()
-    expect(document.querySelector('article b, article img')).toBeNull()
+    expect(document.querySelector('ul b, ul img')).toBeNull()
   })
 
   it('o botão "Erros e orientações" do detalhe abre a tela, e o voltar retorna ao exercício', async () => {
@@ -111,7 +111,7 @@ describe('US37 — tela de erros e orientações', () => {
 
     await usuario.click(await screen.findByRole('button', { name: 'Erros e orientações' }))
     expect(screen.getByTestId('endereco')).toHaveTextContent('/exercicios/1/erros-orientacoes')
-    expect(await screen.findByText('2 itens')).toBeInTheDocument()
+    expect(await screen.findByText(/^2 itens/)).toBeInTheDocument()
 
     await usuario.click(screen.getByRole('link', { name: 'Voltar ao exercício' }))
     expect(screen.getByTestId('endereco')).toHaveTextContent(/^\/exercicios\/1$/)
