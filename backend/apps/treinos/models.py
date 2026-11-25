@@ -44,3 +44,82 @@ class Planejamento(models.Model):
 
     def __str__(self):
         return f"{self.nome} — {self.aluno.username} ({self.get_status_display()})"
+
+class Treino(models.Model):
+
+    class Status(models.TextChoices):
+        EM_ANDAMENTO = "EM_ANDAMENTO", "Em andamento"
+        FEITO = "FEITO", "Feito"
+        CONCLUIDO = "CONCLUIDO", "Concluído"
+
+    planejamento = models.ForeignKey(
+        Planejamento, on_delete=models.CASCADE, related_name="treinos"
+    )
+    # Obrigatório; "Treino A" é só o exemplo exibido na interface.
+    nome = models.CharField(max_length=255)
+    status = models.CharField(
+        max_length=15, choices=Status.choices, default=Status.EM_ANDAMENTO
+    )
+    criado_em = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["criado_em", "id"]
+        verbose_name = "Treino"
+        verbose_name_plural = "Treinos"
+
+    def __str__(self):
+        return f"{self.nome} ({self.planejamento.nome})"
+
+
+class TreinoExercicio(models.Model):
+
+    class Status(models.TextChoices): 
+        A_FAZER = "A_FAZER", "A fazer"
+        FEITO = "FEITO", "Feito"
+        CONCLUIDO = "CONCLUIDO", "Concluído"
+        CORRIGIR = "CORRIGIR", "Corrigir/Refazer"
+
+    treino = models.ForeignKey(Treino, on_delete=models.CASCADE, related_name="exercicios")
+    exercicio_origem = models.ForeignKey(
+        "exercicios.Exercicio",
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,  # RN13 — excluir da biblioteca não apaga o prescrito
+        related_name="prescricoes",
+    )
+    ordem = models.PositiveSmallIntegerField()
+
+    # Cópia (RN23)
+    nome = models.CharField(max_length=120)
+    objetivo = models.TextField()
+    fundamento = models.CharField(max_length=30)
+    orientacoes = models.TextField(blank=True)
+    erros_comuns = models.TextField(blank=True)
+    video_base = models.URLField(max_length=500, blank=True)
+
+    series = models.PositiveSmallIntegerField()
+    repeticoes = models.PositiveSmallIntegerField(null=True, blank=True)
+    duracao_segundos = models.PositiveIntegerField(null=True, blank=True)
+
+    status = models.CharField(max_length=10, choices=Status.choices, default=Status.A_FAZER)
+
+    class Meta:
+        ordering = ["treino", "ordem"]
+        verbose_name = "Exercício do treino"
+        verbose_name_plural = "Exercícios do treino"
+        constraints = [
+            models.UniqueConstraint(fields=["treino", "ordem"], name="treino_exercicio_ordem_unica"),
+            models.CheckConstraint(
+                condition=Q(series__gte=1), name="treino_exercicio_series_minimo_1"
+            ),
+            models.CheckConstraint(
+                condition=(
+                    (Q(repeticoes__gte=1) & Q(duracao_segundos__isnull=True))
+                    | (Q(repeticoes__isnull=True) & Q(duracao_segundos__gte=1))
+                ),
+                name="treino_exercicio_repeticoes_xor_duracao",
+            ),
+        ]
+
+    def __str__(self):
+        return f"{self.ordem}. {self.nome}"
