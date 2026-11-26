@@ -1,81 +1,131 @@
-
-import { useSearchParams, Link } from 'react-router'
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router'
+import { ApiError } from '../../api/client'
+import { useAuth } from '../../auth/useAuth'
 import { LayoutTreinador } from './LayoutTreinador'
+import {
+  consultarPlanejamentoVigente,
+  quantidadeDeExercicios,
+  rotuloDoTreino,
+  type ConsultaPlanejamentoVigente,
+} from './planejamentosApi'
 import './TreinadorDetalhesPlanejamento.css'
 
-interface TreinadorDetalhesPlanejamentoProps {
-  modoTeste?: boolean
+type Consulta =
+  | { estado: 'carregando' }
+  | { estado: 'erro'; mensagem: string }
+  | { estado: 'pronto'; dados: ConsultaPlanejamentoVigente }
+
+function mensagemDeErro(falha: unknown) {
+  if (falha instanceof ApiError && falha.status === 404) return 'Aluno não encontrado na sua carteira.'
+  if (falha instanceof ApiError && falha.status === 403) return 'Você não tem permissão para consultar este aluno.'
+  return 'Não foi possível consultar o planejamento deste aluno.'
 }
 
-export function TreinadorDetalhesPlanejamento({
-  modoTeste = false,
-}: TreinadorDetalhesPlanejamentoProps) {
-  const [searchParams] = useSearchParams()
+export function TreinadorDetalhesPlanejamento() {
+  const { usuario } = useAuth()
+  const { alunoId } = useParams()
+  const id = Number(alunoId)
+  const idValido = Number.isSafeInteger(id) && id > 0
+  const [consulta, setConsulta] = useState<Consulta>({ estado: 'carregando' })
 
-  const titulo = searchParams.get('titulo') || 'Novo planejamento'
-  const aluno = searchParams.get('aluno') || 'Aluno não informado'
+  useEffect(() => {
+    if (!idValido) return
+    const controle = new AbortController()
+    const { signal } = controle
+
+    setConsulta({ estado: 'carregando' })
+    consultarPlanejamentoVigente(id, signal)
+      .then((dados) => {
+        if (!signal.aborted) setConsulta({ estado: 'pronto', dados })
+      })
+      .catch((falha: unknown) => {
+        if (!signal.aborted) setConsulta({ estado: 'erro', mensagem: mensagemDeErro(falha) })
+      })
+
+    return () => controle.abort()
+  }, [id, idValido])
+
+  const nomeTreinador = usuario?.first_name || usuario?.apelido || ''
+  const estado: Consulta = idValido
+    ? consulta
+    : { estado: 'erro', mensagem: 'Identificador de aluno inválido.' }
 
   return (
-    <LayoutTreinador nome="Lucas" secao="Treinos">
-      <main className="detalhes-planejamento">
-        <header className="detalhes-planejamento__intro">
-          <h1>{titulo}</h1>
-          <p>Planejamento de {aluno}</p>
-        </header>
+    <LayoutTreinador nome={nomeTreinador} secao="Treinos">
+      <div className="detalhes-planejamento">
+        {estado.estado === 'carregando' && <p role="status">Carregando planejamento...</p>}
 
-        {modoTeste && (
-          <p className="detalhes-planejamento__aviso">
-            Prévia visual com dados fictícios.
-          </p>
+        {estado.estado === 'erro' && (
+          <section className="detalhes-planejamento__estado" role="alert">
+            <h1>Planejamento indisponível</h1>
+            <p>{estado.mensagem}</p>
+            <Link className="detalhes-planejamento__botao" to="/treinador/planejamentos">
+              Voltar aos alunos
+            </Link>
+          </section>
         )}
 
-        <section className="detalhes-planejamento__treinos">
-          <div className="detalhes-planejamento__coluna">
-            <Link
-              to="/exercicios"
-              className="detalhes-planejamento__consulta"
-            >
-              <strong>Treino A · {titulo}</strong>
-              <span>Feito · 3 exercícios · aguardando avaliação</span>
-              <span className="detalhes-planejamento__link">
-                Consultar
-              </span>
-            </Link>
-          </div>
+        {estado.estado === 'pronto' && !estado.dados.planejamento && (
+          <section className="detalhes-planejamento__estado" role="status">
+            <header className="detalhes-planejamento__intro">
+              <h1>Nenhum planejamento vigente</h1>
+              <p>Planejamento de {estado.dados.aluno.nome}</p>
+            </header>
+            <div className="detalhes-planejamento__acoes">
+              <Link
+                className="detalhes-planejamento__botao principal"
+                to={`/treinador/novo-planejamento?aluno=${estado.dados.aluno.id}`}
+              >
+                Criar planejamento
+              </Link>
+              <Link className="detalhes-planejamento__botao" to="/treinador/planejamentos">
+                Voltar aos alunos
+              </Link>
+            </div>
+          </section>
+        )}
 
-          <div className="detalhes-planejamento__coluna">
-            <article className="detalhes-planejamento__cartao">
-              <strong>Treino B · Arremesso</strong>
-              <span>Em andamento · 3 exercícios</span>
-            </article>
-          </div>
-        </section>
+        {estado.estado === 'pronto' && estado.dados.planejamento && (
+          <>
+            <header className="detalhes-planejamento__intro">
+              <h1>{estado.dados.planejamento.nome}</h1>
+              <p>Planejamento de {estado.dados.aluno.nome}</p>
+            </header>
 
-        <section
-          className="detalhes-planejamento__acoes"
-          aria-label="Ações do planejamento"
-        >
-          <button type="button" className="detalhes-planejamento__botao principal">
-            Adicionar treino
-          </button>
+            {estado.dados.planejamento.treinos.length > 0 ? (
+              <section className="detalhes-planejamento__treinos" aria-label="Treinos do planejamento">
+                {estado.dados.planejamento.treinos.map((treino) => (
+                  <div className="detalhes-planejamento__coluna" key={treino.id}>
+                    <article className="detalhes-planejamento__cartao">
+                      <strong>{treino.nome}</strong>
+                      <span>
+                        {rotuloDoTreino(treino)} · {quantidadeDeExercicios(treino.total_exercicios)}
+                      </span>
+                    </article>
+                  </div>
+                ))}
+              </section>
+            ) : (
+              <p className="detalhes-planejamento__vazio" role="status">
+                Este planejamento ainda não tem treinos.
+              </p>
+            )}
 
-          <button type="button" className="detalhes-planejamento__botao">
-            Editar planejamento
-          </button>
-
-          <button type="button" className="detalhes-planejamento__botao">
-            Histórico de planejamentos
-          </button>
-
-          <button type="button" className="detalhes-planejamento__botao">
-            Vincular objetivo
-          </button>
-
-          <button type="button" className="detalhes-planejamento__botao">
-            Excluir planejamento
-          </button>
-        </section>
-      </main>
+            <section className="detalhes-planejamento__acoes" aria-label="Ações do planejamento">
+              <Link
+                className="detalhes-planejamento__botao principal"
+                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamento/${estado.dados.planejamento.id}/novo-treino`}
+              >
+                Adicionar treino
+              </Link>
+              <Link className="detalhes-planejamento__botao" to="/treinador/planejamentos">
+                Voltar aos alunos
+              </Link>
+            </section>
+          </>
+        )}
+      </div>
     </LayoutTreinador>
   )
 }

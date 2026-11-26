@@ -1,54 +1,61 @@
+import { useEffect, useState } from 'react'
 import { useAuth } from '../../auth/useAuth'
 import type { Usuario } from '../../types/usuario'
+import {
+  descricaoDoPlanejamento,
+  listarCarteiraPlanejamentos,
+  type AlunoDaCarteira,
+} from './planejamentosApi'
 import {
   TreinadorPlanejamentos,
   type PlanejamentoAlunoResumo,
 } from './TreinadorPlanejamentos'
 
-interface Props {
-  modoTeste?: boolean
-}
+type Consulta =
+  | { estado: 'carregando' | 'erro' }
+  | { estado: 'pronto'; alunos: AlunoDaCarteira[] }
 
-const treinadorTeste: Usuario = {
-  id: 1,
-  apelido: 'lucas',
-  first_name: 'Lucas',
-  last_name: 'Treinador',
-  email: 'lucas@teste.com',
-  telefone: '',
-  papel: 'TREINADOR',
-}
+function CarteiraDePlanejamentos({ treinador }: { treinador: Usuario }) {
+  const [consulta, setConsulta] = useState<Consulta>({ estado: 'carregando' })
 
-const planejamentosDemonstracao: readonly PlanejamentoAlunoResumo[] = [
-  {
-    id: 1,
-    nome: 'Beatriz Costa',
-    descricao: 'Controle de bola · Planejamento vigente',
-    alunoId: 'previa',
-  },
-  {
-    id: 2,
-    nome: 'André Lima',
-    descricao: 'Nenhum planejamento vigente',
-    alunoId: 'previa',
-  },
-]
+  useEffect(() => {
+    const controle = new AbortController()
+    const { signal } = controle
 
-export function TreinadorPlanejamentosPage({
-  modoTeste = false,
-}: Props) {
-  const { usuario } = useAuth()
+    listarCarteiraPlanejamentos(signal)
+      .then((alunos) => {
+        if (!signal.aborted) setConsulta({ estado: 'pronto', alunos })
+      })
+      .catch(() => {
+        if (!signal.aborted) setConsulta({ estado: 'erro' })
+      })
 
-  // Utiliza um treinador fictício somente na rota de testes.
-  const treinador = modoTeste ? treinadorTeste : usuario
+    return () => controle.abort()
+  }, [])
 
-  if (!treinador) return null
+  const planejamentos: PlanejamentoAlunoResumo[] =
+    consulta.estado === 'pronto'
+      ? consulta.alunos.map((aluno) => ({
+          id: aluno.id,
+          nome: aluno.nome,
+          descricao: descricaoDoPlanejamento(aluno),
+          alunoId: String(aluno.id),
+        }))
+      : []
 
   return (
     <TreinadorPlanejamentos
       treinador={treinador}
-      planejamentos={planejamentosDemonstracao}
-      demonstracao={modoTeste}
+      planejamentos={planejamentos}
+      estado={consulta.estado}
     />
   )
+}
+
+export function TreinadorPlanejamentosPage() {
+  const { usuario } = useAuth()
+
+  if (!usuario) return null
+
+  return <CarteiraDePlanejamentos key={usuario.id} treinador={usuario} />
 }
