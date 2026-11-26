@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from django.db import IntegrityError, transaction
+from django.utils import timezone
 from rest_framework.test import APITestCase
 
 from apps.contas import termos
@@ -493,3 +496,185 @@ class ConsultarPlanejamentoUS27Tests(APITestCase):
         self.client.force_authenticate(user=self.treinador)
         self.assertEqual(self.client.post(self._url(self.beatriz.id), {}).status_code, 405)
         self.assertEqual(self.client.delete(self.URL_CARTEIRA).status_code, 405)
+
+
+class ConsultarHistoricoPlanejamentosUS21Tests(APITestCase):
+    """US21 — Consultar histórico de planejamentos."""
+
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach21", email="coach21@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.beatriz = Usuario.objects.create_user(
+            username="beatriz21", email="bia21@aluno.com", password="SenhaAluno#2026",
+            first_name="Beatriz", last_name="Costa",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.andre = Usuario.objects.create_user(
+            username="andre21", email="andre21@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.sem_vinculo = Usuario.objects.create_user(
+            username="solto21", email="solto21@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO,
+        )
+        for usuario in (self.treinador, self.beatriz, self.andre, self.sem_vinculo):
+            termos.registrar_aceite(usuario)
+
+        self.exercicio = Exercicio.objects.create(
+            criado_por=self.treinador, nome="Drible alternado",
+            objetivo="Controle", fundamento="DRIBLE",
+        )
+        agora = timezone.now()
+        self.mais_antigo = self._planejamento(
+            "Base de arremesso", encerrado_em=agora - timedelta(days=30)
+        )
+        self.mais_recente = self._planejamento(
+            "Fundamentos de drible", encerrado_em=agora - timedelta(days=7)
+        )
+        self.vigente = Planejamento.objects.create(
+            aluno=self.beatriz, treinador=self.treinador, nome="Controle de bola",
+        )
+        self._treino(self.mais_recente, "Treino A", Treino.Status.CONCLUIDO, 3)
+        self._treino(self.mais_recente, "Treino B", Treino.Status.FEITO, 2)
+        self._treino(self.mais_antigo, "Treino antigo", Treino.Status.EM_ANDAMENTO, 1)
+        self._treino(self.vigente, "Treino atual", Treino.Status.EM_ANDAMENTO, 1)
+
+    def _planejamento(self, nome, encerrado_em, aluno=None):
+        return Planejamento.objects.create(
+            aluno=aluno or self.beatriz, treinador=self.treinador, nome=nome,
+            status=Planejamento.Status.HISTORICO, encerrado_em=encerrado_em,
+        )
+
+    def _treino(self, planejamento, nome, status, qtd_exercicios):
+        treino = Treino.objects.create(planejamento=planejamento, nome=nome, status=status)
+        for ordem in range(1, qtd_exercicios + 1):
+            TreinoExercicio.objects.create(
+                treino=treino, exercicio_origem=self.exercicio, ordem=ordem,
+                nome="Drible alternado", objetivo="Controle", fundamento="Drible",
+                series=3, repeticoes=10,
+            )
+        return treino
+
+    def _get(self, url, usuario=None):
+        self.client.force_authenticate(user=usuario or self.treinador)
+        return self.client.get(url)
+
+    def _url_lista(self, aluno_id):
+        return f"/api/treinos/alunos/{aluno_id}/planejamentos-historico/"
+
+    def _url_detalhe(self, aluno_id, planejamento_id):
+        return f"/api/treinos/alunos/{aluno_id}/planejamentos-historico/{planejamento_id}/"
+
+    # Lista do histórico
+    def test_ca01_lista_planejamentos_anteriores_com_nome_e_total_de_treinos(self):
+        r = self._get(self._url_lista(self.beatriz.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["aluno"], {"id": self.beatriz.id, "nome": "Beatriz Costa"})
+        self.assertEqual(
+            [(p["nome"], p["total_treinos"]) for p in r.data["planejamentos"]],
+            [("Fundamentos de drible", 2), ("Base de arremesso", 1)],
+        )
+
+    def test_ca01_ordem_do_encerrado_mais_recente_para_o_mais_antigo(self):
+        r = self._get(self._url_lista(self.beatriz.id))
+        ids = [p["id"] for p in r.data["planejamentos"]]
+        self.assertEqual(ids, [self.mais_recente.id, self.mais_antigo.id])
+
+    def test_ca01_planejamento_vigente_nao_aparece_na_lista(self):
+        r = self._get(self._url_lista(self.beatriz.id))
+        ids = [p["id"] for p in r.data["planejamentos"]]
+        self.assertNotIn(self.vigente.id, ids)
+
+    def test_ca01_planejamento_encerrado_pela_us18_entra_no_historico(self):
+        # Fluxo real: criar um novo planejamento encerra o vigente (RN27)
+        self.client.force_authenticate(user=self.treinador)
+        r_novo = self.client.post(
+            "/api/treinos/planejamentos/",
+            {"aluno": self.beatriz.id, "nome": "Novo ciclo"}, format="json",
+        )
+        self.assertEqual(r_novo.status_code, 201)
+        r = self.client.get(self._url_lista(self.beatriz.id))
+        self.assertEqual(r.data["planejamentos"][0]["id"], self.vigente.id)
+
+    # Sem histórico
+    def test_ca02_aluno_sem_historico_recebe_lista_vazia(self):
+        r = self._get(self._url_lista(self.andre.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["planejamentos"], [])
+
+    # Detalhe do planejamento anterior
+    def test_ca03_detalhe_mostra_treinos_com_nome_estado_e_total_de_exercicios(self):
+        r = self._get(self._url_detalhe(self.beatriz.id, self.mais_recente.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["aluno"]["nome"], "Beatriz Costa")
+        self.assertEqual(r.data["planejamento"]["nome"], "Fundamentos de drible")
+        self.assertEqual(
+            [
+                (t["nome"], t["status"], t["status_display"], t["total_exercicios"])
+                for t in r.data["planejamento"]["treinos"]
+            ],
+            [
+                ("Treino A", "CONCLUIDO", "Concluído", 3),
+                ("Treino B", "FEITO", "Feito", 2),
+            ],
+        )
+
+    # Planejamento anterior sem treinos
+    def test_ca04_planejamento_anterior_sem_treinos(self):
+        vazio = self._planejamento("Sem treinos", encerrado_em=timezone.now())
+        r = self._get(self._url_detalhe(self.beatriz.id, vazio.id))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["planejamento"]["treinos"], [])
+
+    # Somente leitura
+    def test_ca05_metodos_de_escrita_nao_permitidos(self):
+        self.client.force_authenticate(user=self.treinador)
+        for url in (
+            self._url_lista(self.beatriz.id),
+            self._url_detalhe(self.beatriz.id, self.mais_recente.id),
+        ):
+            for metodo in (self.client.post, self.client.put, self.client.patch, self.client.delete):
+                with self.subTest(url=url, metodo=metodo.__name__):
+                    self.assertEqual(metodo(url, {}).status_code, 405)
+
+    # Somente planejamentos do histórico daquele aluno
+    def test_ca06_planejamento_vigente_no_detalhe_recebe_404(self):
+        r = self._get(self._url_detalhe(self.beatriz.id, self.vigente.id))
+        self.assertEqual(r.status_code, 404)
+
+    def test_ca06_planejamento_de_outro_aluno_recebe_404(self):
+        do_andre = self._planejamento("Do André", encerrado_em=timezone.now(), aluno=self.andre)
+        r = self._get(self._url_detalhe(self.beatriz.id, do_andre.id))
+        self.assertEqual(r.status_code, 404)
+
+    # Acesso restrito
+    def test_ca07_aluno_recebe_403(self):
+        for url in (
+            self._url_lista(self.beatriz.id),
+            self._url_detalhe(self.beatriz.id, self.mais_recente.id),
+        ):
+            self.assertEqual(self._get(url, usuario=self.beatriz).status_code, 403)
+
+    def test_ca07_sem_login_recebe_401(self):
+        for url in (
+            self._url_lista(self.beatriz.id),
+            self._url_detalhe(self.beatriz.id, self.mais_recente.id),
+        ):
+            self.assertEqual(self.client.get(url).status_code, 401)
+
+    def test_ca07_aluno_ou_planejamento_inexistente_recebe_404(self):
+        self.assertEqual(self._get(self._url_lista(999999)).status_code, 404)
+        self.assertEqual(self._get(self._url_detalhe(self.beatriz.id, 999999)).status_code, 404)
+
+    def test_ca07_id_de_treinador_recebe_404(self):
+        self.assertEqual(self._get(self._url_lista(self.treinador.id)).status_code, 404)
+
+    def test_ca07_aluno_fora_da_carteira_recebe_404_sem_vazar(self):
+        oculto = self._planejamento("Oculto", encerrado_em=timezone.now(), aluno=self.sem_vinculo)
+        r_lista = self._get(self._url_lista(self.sem_vinculo.id))
+        r_detalhe = self._get(self._url_detalhe(self.sem_vinculo.id, oculto.id))
+        self.assertEqual(r_lista.status_code, 404)
+        self.assertEqual(r_detalhe.status_code, 404)
+        self.assertNotIn("Oculto", str(r_lista.data) + str(r_detalhe.data))
