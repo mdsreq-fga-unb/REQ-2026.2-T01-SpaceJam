@@ -66,7 +66,7 @@ function paraApi(exercicio: Exercicio) {
     objetivo: exercicio.objetivo,
     fundamento: CODIGO_FUNDAMENTO[exercicio.fundamento],
     orientacoes: exercicio.orientacoes ?? '',
-    erros_comuns: exercicio.errosComuns ?? '',
+    erros_comuns: exercicio.errosComuns,
     video_base: exercicio.videoUrl ?? '',
   };
 }

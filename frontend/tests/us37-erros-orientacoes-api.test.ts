@@ -2,6 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { tokenStorage } from '../src/api/client'
 import {
   atualizarErroOrientacao,
+  atualizarExercicio,
   consultarExercicio,
   criarErroOrientacao,
   listarErrosOrientacoes,
@@ -55,6 +56,28 @@ describe('US37 — API de erros e orientações', () => {
       { id: 7, erro: 'Olhar para a bola', orientacaoCorretiva: 'Manter a cabeça erguida.' },
     ])
     expect(exercicio.errosComuns).toBe('Texto antigo')
+  })
+
+  it('editar um exercício sem preencher erros comuns preserva o texto legado', async () => {
+    const buscar = simularFetch(Response.json({ ...exercicioApi, nome: 'Drible lateral' }))
+    const atualizado = await atualizarExercicio(1, {
+      nome: 'Drible lateral',
+      objetivo: 'Conduzir a bola em movimento.',
+      fundamento: 'Drible',
+    })
+
+    expect(chamada(buscar)).toEqual({
+      url: '/api/exercicios/1/',
+      metodo: 'PUT',
+      corpo: {
+        nome: 'Drible lateral',
+        objetivo: 'Conduzir a bola em movimento.',
+        fundamento: 'DRIBLE',
+        orientacoes: '',
+        video_base: '',
+      },
+    })
+    expect(atualizado.errosComuns).toBe('Texto antigo')
   })
 
   it('consulta sem o campo novo resulta em lista vazia', async () => {

@@ -83,9 +83,6 @@ export default function ExerciseForm({
       fundamento,
       objetivo: objetivo.trim(),
       orientacoes: orientacoes.trim() || undefined,
-      // O campo de texto antigo saiu do formulário: os erros ficam em
-      // "Erros e orientações" (US37). Na edição, o valor já salvo é mantido.
-      errosComuns: exercicioInicial?.errosComuns,
       videoUrl: videoUrl.trim() || undefined,
     });
   }
