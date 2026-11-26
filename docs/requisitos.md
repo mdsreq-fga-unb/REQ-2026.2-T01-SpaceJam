@@ -267,14 +267,15 @@
 <summary><span class="sj-requirement-id">RF1215</span><span class="sj-requirement-name">Registrar conclusão de treino</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Should Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador registre a conclusão do treino de acordo com a análise presencial do treinador ou vídeo enviado pelo aluno, quando houver.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve disponibilizar um campo de seleção na área de treino do aluno para que o treinador registre de forma irreversível a conclusão formal do treino (&quot;Concluído&quot;) ou o devolva para correção (&quot;Corrigir/Refazer&quot;), de acordo com a análise presencial ou vídeo enviado pelo aluno, quando houver.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
-<p id="us15" class="sj-story"><strong>US15</strong> Como treinador, quero registrar conclusão dos treinos dos meus alunos para &quot;Concluído&quot;, para auditar e validar o progresso deles após analisar a execução.</p>
+<p id="us15" class="sj-story"><strong>US15</strong> Como treinador, quero registrar conclusão dos treinos dos meus alunos para &quot;Concluído&quot;, para validar o progresso deles após analisar a execução.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE1 - CP2</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn07">RN07</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn07">RN07</a> · <a href="../regras_negocio/#rn08">RN08</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn20">RN20</a> · <a href="../regras_negocio/#rn27">RN27</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us15">US15</a></p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2306">RF2306</a>, <a href="../requisitos/#rf2307">RF2307</a> e <a href="../requisitos/#rf4812">RF4812</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,17</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
@@ -403,14 +404,15 @@
 <summary><span class="sj-requirement-id">RF2306</span><span class="sj-requirement-name">Consultar status de treino</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador identifique o estado de cada treino planejado, como em andamento ou concluído.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o treinador identifique o estado de cada treino planejado (&quot;Em andamento&quot;, &quot;Feito&quot;, &quot;Corrigir/Refazer&quot; ou &quot;Concluído&quot;) dos alunos sob seu acompanhamento, bem como que cada aluno consulte o estado vigente do seu próprio treino na tela da prescrição. No MVP, cada treino prescrito representa uma instância única de execução.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
 <p id="us23" class="sj-story"><strong>US23</strong> Como treinador, quero consultar o andamento e status do treino, para aprimorar o acompanhamento da execução diária de cada aluno.</p>
 </div>
 
-<div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf10">RNF10</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn07">RN07</a></p></div>
+<div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE 2 - CP3</a><br>Treinador, Aluno</p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn07">RN07</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn27">RN27</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us23">US23</a></p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2307">RF2307</a> e <a href="../requisitos/#rf4812">RF4812</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,50</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
@@ -499,14 +501,15 @@
 <summary><span class="sj-requirement-id">RF2312</span><span class="sj-requirement-name">Registrar status do treino</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno registre o status do treino indicando como &quot;Feito&quot;. Enquanto não estiver &quot;Feito&quot;, constará como &quot;Em andamento&quot;. A conclusão formal (&quot;Concluído&quot;) é registrada pelo treinador.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno registre o status do próprio treino indicando como &quot;Feito&quot; (com carimbo de data e hora <code>realizado_em</code>, de forma idempotente) — tanto a partir do estado inicial &quot;Em andamento&quot; quanto após devolução pelo treinador em &quot;Corrigir/Refazer&quot; — ou desfaça a marcação retornando para &quot;Em andamento&quot; enquanto o treino não estiver concluído. Enquanto não estiver &quot;Feito&quot; ou devolvido, constará como &quot;Em andamento&quot;. A conclusão formal (&quot;Concluído&quot;) ou devolução (&quot;Corrigir/Refazer&quot;) é registrada exclusivamente pelo treinador.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
 <p id="us29" class="sj-story"><strong>US29</strong> Como aluno, quero marcar um treino como feito, para que o treinador acompanhe meu progresso e valide a conclusão.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE2 - CP3</a><br>Aluno</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p>RNF a confirmar.<br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn07">RN07</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn06">RN06</a> · <a href="../regras_negocio/#rn07">RN07</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn27">RN27</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us29">US29</a></p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2307">RF2307</a>, <a href="../requisitos/#rf4809">RF4809</a> e <a href="../requisitos/#rf4812">RF4812</a></p></div>
 <div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,18</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
@@ -850,16 +853,16 @@
 <summary><span class="sj-requirement-id">RF3608</span><span class="sj-requirement-name">Registrar feedback do aluno</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno autenticado registre um feedback em texto livre ligado a um exercício do seu treino, para relatar ao treinador percepções, dúvidas ou desconfortos sentidos na execução. Só o próprio aluno e o treinador podem ver esse feedback.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno autenticado registre um único feedback em texto livre (entidade <code>FeedbackAluno</code>, distinta do feedback do treinador, com carimbo <code>criado_em</code>) ligado a um item de exercício do seu treino, exclusivamente enquanto o treino não estiver com o estado &quot;Concluído&quot;, para relatar ao treinador percepções, dúvidas ou desconfortos sentidos na execução. Só o próprio aluno e o treinador podem ver esse feedback, que é eliminado definitivamente em caso de solicitação de exclusão de dados (<a href="../requisitos/#rf4813">RF4813</a>).</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
 <p id="us49" class="sj-story"><strong>US49</strong> Como aluno, quero escrever um feedback em texto sobre um exercício do meu treino, para contar ao treinador como foi a execução, minhas dúvidas e desconfortos e receber orientações mais adequadas.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Aluno</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn17">RN17</a> · <a href="../regras_negocio/#rn18">RN18</a> · <a href="../regras_negocio/#rn19">RN19</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn05">RN05</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn17">RN17</a> · <a href="../regras_negocio/#rn18">RN18</a> · <a href="../regras_negocio/#rn19">RN19</a> · <a href="../regras_negocio/#rn20">RN20</a> · <a href="../regras_negocio/#rn21">RN21</a> · <a href="../regras_negocio/#rn27">RN27</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us49">US49</a></p></div>
-<div><p class="sj-record-label">Recorte</p><p>CT a registrar</p></div>
-<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2307">RF2307</a></p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf2307">RF2307</a>, <a href="../requisitos/#rf4809">RF4809</a>, <a href="../requisitos/#rf1215">RF1215</a> e <a href="../requisitos/#rf4812">RF4812</a></p></div>
+<div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,37</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
@@ -867,16 +870,16 @@
 <summary><span class="sj-requirement-id">RF3609</span><span class="sj-requirement-name">Editar feedback do aluno</span><span class="sj-requirement-tags"><span class="sj-tag sj-tag-mvp">MVP</span><span class="sj-tag">Must Have</span></span></summary>
 
 <div class="sj-requirement-body">
-<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno autenticado edite um feedback que ele mesmo registrou, enquanto o treino ligado a esse feedback não estiver com o estado &quot;Concluído&quot;.</p></div>
+<div class="sj-record-full"><p class="sj-record-label">Descrição do requisito</p><p>O sistema deve permitir que o aluno autenticado edite o feedback que ele mesmo registrou no exercício, enquanto o treino ligado a esse feedback não estiver com o estado &quot;Concluído&quot; (inclusive quando devolvido como &quot;Corrigir/Refazer&quot;), sobrescrevendo o conteúdo anterior (sem histórico de versões) e gravando a data e hora de edição (<code>editado_em</code>). Não há exclusão operacional de feedback no MVP.</p></div>
 <div class="sj-record-full"><p class="sj-record-label">Descrição da história de usuário</p>
 <p id="us50" class="sj-story"><strong>US50</strong> Como aluno, quero editar o feedback que registrei num exercício enquanto o treino não estiver concluído, para corrigir ou completar o que relatei ao treinador.</p>
 </div>
 
 <div><p class="sj-record-label">Origem e perfis</p><p><a href="../solucao/#22-objetivos-especificos-oe-do-produto">OE3 - CP6</a><br>Aluno</p></div>
-<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn19">RN19</a> · <a href="../regras_negocio/#rn20">RN20</a> · <a href="../regras_negocio/#rn21">RN21</a></p></div>
+<div><p class="sj-record-label">Condições relacionadas</p><p><a href="../requisitos_nao_funcionais/#rnf05">RNF05</a> · <a href="../requisitos_nao_funcionais/#rnf08">RNF08</a> · <a href="../requisitos_nao_funcionais/#rnf09">RNF09</a> · <a href="../requisitos_nao_funcionais/#rnf14">RNF14</a><br><a href="../regras_negocio/#rn03">RN03</a> · <a href="../regras_negocio/#rn15">RN15</a> · <a href="../regras_negocio/#rn19">RN19</a> · <a href="../regras_negocio/#rn20">RN20</a> · <a href="../regras_negocio/#rn21">RN21</a> · <a href="../regras_negocio/#rn27">RN27</a></p></div>
 <div class="sj-record-full"><p class="sj-record-label">Critérios de aceitação</p><p><a href="../criterios_aceitacao/#ca-us50">US50</a></p></div>
-<div><p class="sj-record-label">Recorte</p><p>CT a registrar</p></div>
-<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf3608">RF3608</a></p></div>
+<div><p class="sj-record-label">Dependências</p><p>Depende de: <a href="../requisitos/#rf3608">RF3608</a>, <a href="../requisitos/#rf1215">RF1215</a> e <a href="../requisitos/#rf4812">RF4812</a></p></div>
+<div><p class="sj-record-label">Recorte</p><p>CT registrado: 2,00</p></div>
 <div class="sj-record-full sj-record-return"><a href="#guia-do-catalogo">Voltar ao índice de características ↑</a></div>
 </div></details>
 
