@@ -208,6 +208,25 @@ body:has(.perfil-acompanhado),
   overflow-wrap: anywhere;
 }
 
+.perfil-acompanhado__historico-lesoes {
+  margin: 0;
+  padding-inline-start: 24px;
+  list-style: disc outside;
+  color: var(--us61-texto);
+  font-size: 17px;
+  line-height: 26px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.perfil-acompanhado__historico-lesoes li + li {
+  margin-top: 8px;
+}
+
+.perfil-acompanhado__historico-lesoes li::marker {
+  color: var(--us61-laranja);
+}
+
 .perfil-acompanhado__info {
   display: flex;
   flex-direction: column;

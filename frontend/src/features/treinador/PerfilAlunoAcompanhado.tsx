@@ -94,12 +94,7 @@ export function PerfilAlunoAcompanhado({
         } por semana`
       : 'Não disponível para consulta'
 
-  const lesoes =
-    aluno?.historicoLesoes == null
-      ? 'Histórico ainda não disponível para consulta.'
-      : aluno.historicoLesoes.length === 0
-        ? 'Nenhuma lesão registrada.'
-        : aluno.historicoLesoes.join('; ')
+  const lesoes = aluno?.historicoLesoes
 
   return (
     <div className="perfil-acompanhado">
@@ -236,7 +231,13 @@ export function PerfilAlunoAcompanhado({
           <div className="perfil-acompanhado__coluna">
             <section aria-labelledby="us61-lesoes">
               <h2 id="us61-lesoes">Histórico de lesões</h2>
-              <p>{lesoes}</p>
+              {lesoes?.length ? (
+                <ul className="perfil-acompanhado__historico-lesoes">
+                  {lesoes.map((lesao, indice) => <li key={`${indice}-${lesao}`}>{lesao}</li>)}
+                </ul>
+              ) : (
+                <p>{lesoes ? 'Nenhuma lesão registrada.' : 'Histórico ainda não disponível para consulta.'}</p>
+              )}
               {lesaoRegistrada && <p className="perfil-acompanhado__sucesso-lesao" role="status">Lesão registrada.</p>}
 
               <button

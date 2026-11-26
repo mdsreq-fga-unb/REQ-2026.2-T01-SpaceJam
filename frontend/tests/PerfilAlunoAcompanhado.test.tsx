@@ -210,8 +210,11 @@ describe('US11 — Registrar lesão no perfil de um aluno', () => {
     fireEvent.change(campo, { target: { value: '  Entorse no tornozelo.  ' } })
     await pessoa.click(screen.getByRole('button', { name: /salvar/i }))
     const historico = await screen.findByRole('region', { name: 'Histórico de lesões' })
-    expect(await within(historico).findByText(/Entorse no tornozelo\./)).toBeInTheDocument()
-    expect(within(historico).getByText(/Registro anterior\./)).toBeInTheDocument()
+    const lista = within(historico).getByRole('list')
+    expect(within(lista).getAllByRole('listitem').map(item => item.textContent)).toEqual([
+      'Entorse no tornozelo.',
+      'Registro anterior.',
+    ])
     expect(within(historico).getByRole('status')).toHaveTextContent('Lesão registrada.')
     expect(requisicoes).toHaveBeenCalledWith(rotaLesoes, expect.objectContaining({
       method: 'POST', body: '{"descricao":"Entorse no tornozelo."}',
