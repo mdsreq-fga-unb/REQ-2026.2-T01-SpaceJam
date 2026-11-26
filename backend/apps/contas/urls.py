@@ -23,6 +23,12 @@ urlpatterns = [
     path("auth/termos/vigentes/", views.termos_vigentes, name="termos-vigentes"),
     # US53 — Consultar próprios dados cadastrais do aluno
     path("contas/me/", views.meus_dados_aluno, name="contas-me-aluno"),
+    # US52 — Consultar alunos acompanhados
+    path(
+        "alunos-acompanhados/",
+        views.alunos_acompanhados,
+        name="alunos-acompanhados",
+    ),
     path(
         "contas/alunos/<int:aluno_id>/",
         views.consultar_perfil_aluno_acompanhado,
