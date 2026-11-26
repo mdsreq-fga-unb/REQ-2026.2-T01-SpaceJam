@@ -13,13 +13,13 @@ export interface PlanejamentoAlunoResumo {
 interface TreinadorPlanejamentosProps {
   treinador: Usuario
   planejamentos: readonly PlanejamentoAlunoResumo[]
-  demonstracao?: boolean
+  estado?: 'carregando' | 'erro' | 'pronto'
 }
 
 export function TreinadorPlanejamentos({
   treinador,
   planejamentos,
-  demonstracao = false,
+  estado = 'pronto',
 }: TreinadorPlanejamentosProps) {
   const nomeTreinador = treinador.first_name || treinador.apelido
 
@@ -41,9 +41,7 @@ export function TreinadorPlanejamentos({
     </div>
   )
 
-  const rotaNovoPlanejamento = demonstracao
-    ? '/teste/treinador/novo-planejamento'
-    : '/treinador/novo-planejamento'
+  const rotaNovoPlanejamento = '/treinador/novo-planejamento'
 
   return (
     <div className="sj-planejamentos">
@@ -96,13 +94,6 @@ export function TreinadorPlanejamentos({
             <p>Escolha um aluno da sua carteira.</p>
           </div>
 
-          {demonstracao && (
-            <p className="sj-planejamentos__aviso" role="status">
-              Prévia visual com dados fictícios do Figma.
-              Nenhum planejamento real foi consultado.
-            </p>
-          )}
-
           {planejamentos.length > 0 ? (
             <div
               className="sj-planejamentos__lista"
@@ -111,7 +102,7 @@ export function TreinadorPlanejamentos({
               {planejamentos.map((item) => (
                 <Link
                   className="sj-planejamentos__linha"
-                  to={`/treinador/alunos/${item.alunoId}`}
+                  to={'/treinador/alunos/${item.alunoId}/planejamento'}
                   key={item.id}
                 >
                   <strong>{item.nome}</strong>
@@ -129,10 +120,19 @@ export function TreinadorPlanejamentos({
               className="sj-planejamentos__estado"
               role="status"
             >
-              <h2>Planejamentos indisponíveis</h2>
+              <h2>
+                {estado === 'carregando'
+                  ? 'Carregando planejamentos'
+                  : estado === 'erro'
+                    ? 'Planejamentos indisponíveis'
+                    : 'Nenhum aluno na carteira'}
+              </h2>
               <p>
-                Os planejamentos dos alunos ainda não estão
-                disponíveis para consulta.
+                {estado === 'carregando'
+                  ? 'Buscando os alunos da sua carteira...'
+                  : estado === 'erro'
+                    ? 'Não foi possível carregar os planejamentos dos alunos.'
+                    : 'Quando um aluno se vincular ao seu código, ele aparecerá aqui.'}
               </p>
             </section>
           )}

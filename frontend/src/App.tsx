@@ -17,6 +17,10 @@ import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
+import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDetalhesPlanejamento'
+import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
+import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
+import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
 
 export default function App() {
   return (
@@ -50,6 +54,36 @@ export default function App() {
             element={
               <RotaProtegida papel="TREINADOR">
                 <TreinadorPlanejamentosPage />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US18 - Criar planejamento */}
+          <Route
+            path="/treinador/novo-planejamento"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorNovoPlanejamento />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US27 - Planejamento vigente do aluno */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamento"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorDetalhesPlanejamento />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US24 - Criar treino */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamento/:planejamentoId/novo-treino"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorNovoTreino />
               </RotaProtegida>
             }
           />

@@ -3,6 +3,7 @@ import { Navigate, useNavigate, useParams } from 'react-router'
 import { consultarPerfilDoAluno, registrarLesaoDoAluno, type DadosCadastraisApi } from '../../api/integracaoUs'
 import { ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
+import { consultarPlanejamentoVigente } from './planejamentosApi'
 import {
   PerfilAlunoAcompanhado,
   type DadosAlunoAcompanhado,
@@ -57,7 +58,16 @@ export function PerfilAlunoAcompanhadoPage() {
     setErro('')
     setAluno(null)
     consultarPerfilDoAluno(id).then(resposta => {
-      if (ativo) setAluno({ id, dados: paraTela(resposta) })
+      if (!ativo) return
+      setAluno({ id, dados: paraTela(resposta) })
+      // US27: mostra o planejamento vigente; se a consulta falhar, o perfil segue sem ele.
+      consultarPlanejamentoVigente(id).then(vigente => {
+        if (!ativo) return
+        const nome = vigente.planejamento ? vigente.planejamento.nome : 'Nenhum planejamento vigente'
+        setAluno(atual => atual?.id === id
+          ? { ...atual, dados: { ...atual.dados, planejamentoAtual: nome } }
+          : atual)
+      }).catch(() => undefined)
     }).catch((falha: unknown) => {
       if (!ativo) return
       if (falha instanceof ApiError && falha.status === 403) {
@@ -105,7 +115,9 @@ export function PerfilAlunoAcompanhadoPage() {
       treinador={usuario}
       aluno={previa ? alunoDemonstracao : selecionado?.dados}
       demonstracao={previa}
-      onVoltar={() => navegar('/treinador/alunos')}
+      onVerPlanejamento={selecionado && !previa
+        ? () => navegar(`/treinador/alunos/${selecionado.id}/planejamento`)
+        : undefined}
       onRegistrarLesao={podeRegistrar
         ? (descricao, signal) => registrarLesao(selecionado.id, descricao, signal)
         : undefined}

@@ -95,6 +95,8 @@
 }
 
 .detalhes-planejamento__botao {
+  box-sizing: border-box;
+  text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,4 +135,27 @@
   .detalhes-planejamento__acoes {
     width: 100%;
   }
+}
+
+
+.detalhes-planejamento__estado {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 440px;
+}
+
+.detalhes-planejamento__estado h1 {
+  margin: 0;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 32px;
+  line-height: 38px;
+}
+
+.detalhes-planejamento__estado p,
+.detalhes-planejamento__vazio {
+  margin: 0;
+  color: #c2c2c4;
+  font-size: 16px;
+  line-height: 24px;
 }
