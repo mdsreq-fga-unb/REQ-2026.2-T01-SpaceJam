@@ -14,6 +14,7 @@ from . import termos
 from .models import HistoricoAceiteTermos, Usuario
 from .permissions import IsAlunoProprietarioPerfil, ROTA_PROTEGIDA
 from .serializers import (
+    AlunoAcompanhadoSerializer,
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     DadosCadastraisAlunoSerializer,
@@ -283,4 +284,43 @@ def redefinir_senha_recuperacao(request):
     return Response(
         {"detail": "Senha redefinida com sucesso."},
         status=status.HTTP_200_OK,
+    )
+
+
+# US52 — Consultar alunos acompanhados pelo treinador
+@api_view(["GET"])
+@permission_classes(ROTA_PROTEGIDA)
+def alunos_acompanhados(request):
+    """Consulta os alunos vinculados ao treinador autenticado."""
+
+    # CA04 — Somente treinadores podem acessar a carteira.
+    if not request.user.is_treinador:
+        return Response(
+            {"detail": "Apenas treinadores podem consultar seus alunos."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    # CA01 — Busca somente os alunos vinculados ao treinador logado.
+    alunos = (
+        request.user.alunos
+        .filter(papel="ALUNO")
+        .only(
+            "id",
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "telefone",
+        )
+        .order_by("first_name", "last_name")
+    )
+
+    serializer = AlunoAcompanhadoSerializer(alunos, many=True)
+
+    # CA03 — Retorna também o código de convite.
+    return Response(
+        {
+            "alunos": serializer.data,
+            "codigo_convite": request.user.codigo_convite,
+        },
     )

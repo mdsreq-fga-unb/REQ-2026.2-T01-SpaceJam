@@ -313,6 +313,24 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
             return list(lesoes_rel.values())
         return []
+
+
+class AlunoAcompanhadoSerializer(serializers.ModelSerializer):
+    """US52 — Dados dos alunos acompanhados pelo treinador."""
+
+    apelido = serializers.CharField(source="username", read_only=True)
+
+    class Meta:
+        model = Usuario
+        fields = [
+            "id",
+            "apelido",
+            "first_name",
+            "last_name",
+            "email",
+            "telefone",
+        ]
+        read_only_fields = fields
     
 class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
     """US61 (RF4810) — Consulta do perfil completo de aluno acompanhado pelo treinador (RN03, RN04, RN25, RN26)."""
