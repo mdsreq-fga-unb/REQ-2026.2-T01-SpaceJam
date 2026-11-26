@@ -36,3 +36,30 @@ class Exercicio(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+class ErroComumExercicio(models.Model):
+    """US37 / RF2420 — Erro comum e sua orientação corretiva, ligados a um exercício.
+
+    Cada item pertence a um único exercício (não há catálogo compartilhado). A
+    preservação dos treinos já prescritos (RN23) é feita copiando estes dados no
+    momento da prescrição, nunca referenciando o item.
+    """
+
+    exercicio = models.ForeignKey(
+        Exercicio,
+        on_delete=models.CASCADE,
+        related_name="erros_orientacoes",
+    )
+    erro = models.TextField()
+    orientacao_corretiva = models.TextField()
+    criado_em = models.DateTimeField(auto_now_add=True)
+    atualizado_em = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["criado_em", "id"]
+        verbose_name = "erro comum do exercício"
+        verbose_name_plural = "erros comuns do exercício"
+
+    def __str__(self):
+        return f"{self.exercicio.nome}: {self.erro[:50]}"

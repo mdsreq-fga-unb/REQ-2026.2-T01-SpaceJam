@@ -15,6 +15,9 @@ import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosP
 
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
+import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
+import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
+import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
 
 export default function App() {
   return (
@@ -84,6 +87,39 @@ export default function App() {
             element={
               <RotaProtegida papel="TREINADOR">
                 <BibliotecaExercicios />
+              </RotaProtegida>
+            }
+          />
+          {/* US37 — erros comuns e orientações corretivas do exercício */}
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErrosOrientacoesExercicio />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/novo"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErroOrientacaoPage key="novo" />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/:erroId/editar"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErroOrientacaoPage key="editar" />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/:erroId/remover"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <RemoverErroOrientacaoPage />
               </RotaProtegida>
             }
           />
