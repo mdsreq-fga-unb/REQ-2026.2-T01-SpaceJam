@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from '../src/App'
 import { tokenStorage } from '../src/api/client'
+import type { FeedbackAluno } from '../src/features/treinos/FeedbackExercicio'
 import type { Papel } from '../src/types/usuario'
 
 const estados = {
@@ -14,8 +15,12 @@ const estados = {
 
 type Status = keyof typeof estados
 
-function abrirTreino(papel: Papel, statusInicial: Status, statusHttp = 200, falhaNaGravacao = false) {
+function abrirTreino(
+  papel: Papel, statusInicial: Status, statusHttp = 200, falhaNaGravacao = false,
+  opcoesFeedback?: { inicial: FeedbackAluno | null; conflito?: 'concluido' | 'ja-registrado' },
+) {
   let status = statusInicial
+  let feedback = opcoesFeedback?.inicial
   const json = (dados: unknown, codigo = 200) => new Response(JSON.stringify(dados), { status: codigo })
   const dadosStatus = () => ({
     id: 14, alunoId: 2, nome: 'Treino de drible', status,
@@ -32,8 +37,22 @@ function abrirTreino(papel: Papel, statusInicial: Status, statusHttp = 200, falh
         ...dadosStatus(), titulo: '', alunoNome: 'Aluno de teste', treinadorNome: 'Treinador de teste',
         data: '2026-11-26', objetivo: 'Controle de bola',
         exercicios: [{ id: 42, ordem: 1, nome: 'Drible alternado', parametros: '3 séries',
-          resumo: '', orientacoes: 'Mantenha a cabeça erguida.', errosComuns: 'Olhar para a bola.' }],
+          resumo: '', orientacoes: 'Mantenha a cabeça erguida.', errosComuns: 'Olhar para a bola.', feedback }],
       })
+    }
+    if (rota === '/api/treinos/exercicios/42/feedback-aluno/') {
+      if (opcoesFeedback?.conflito === 'concluido') {
+        status = 'CONCLUIDO'
+        return json({ detail: 'O treino já foi concluído.' }, 409)
+      }
+      if (opcoesFeedback?.conflito === 'ja-registrado') {
+        feedback = { autorId: 2, texto: 'Registrado em outra sessão.', editado: false }
+        return json({ detail: 'Já existe um feedback.' }, 409)
+      }
+      const { texto } = JSON.parse(String(opcoes?.body)) as { texto: string }
+      const editado = opcoes?.method === 'PATCH'
+      feedback = { autorId: 2, texto, editado }
+      return json(feedback, editado ? 200 : 201)
     }
     if (rota === '/api/treinos/14/feito/' || rota === '/api/treinos/14/concluir/') {
       if (falhaNaGravacao) {
@@ -116,5 +135,49 @@ describe('Treino integrado às rotas das US23, US29 e US15', () => {
     abrirTreino('ALUNO', 'EM_ANDAMENTO', codigo)
     expect(await screen.findByRole('alert')).toHaveTextContent(mensagem)
     expect(screen.queryByRole('button', { name: 'Marcar treino como feito' })).not.toBeInTheDocument()
+  })
+})
+
+describe('Feedback do aluno integrado às rotas da US49 e da US50', () => {
+  it('registra pelo ID do item, mostra o relato e permite editar o mesmo registro', async () => {
+    const { buscar, pessoa } = abrirTreino('ALUNO', 'CORRIGIR_REFAZER', 200, false, { inicial: null })
+    await pessoa.click(await screen.findByRole('button', { name: 'Ver exercício: Drible alternado' }))
+    await pessoa.click(screen.getByRole('button', { name: 'Registrar feedback' }))
+    const campo = screen.getByRole('textbox', { name: 'Conte como foi o exercício' })
+    await pessoa.type(campo, 'Tive dificuldade no início.')
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar feedback' }))
+    const criado = await screen.findByRole('region', { name: 'Seu feedback' })
+    expect(within(criado).getByText('Tive dificuldade no início.')).toBeInTheDocument()
+    expect(buscar).toHaveBeenCalledWith('/api/treinos/exercicios/42/feedback-aluno/', expect.objectContaining({
+      method: 'POST', body: '{"texto":"Tive dificuldade no início."}',
+    }))
+
+    await pessoa.click(screen.getByRole('button', { name: 'Editar feedback' }))
+    const edicao = screen.getByRole('textbox', { name: 'Conte como foi o exercício' })
+    expect(edicao).toHaveValue('Tive dificuldade no início.')
+    await pessoa.clear(edicao)
+    await pessoa.type(edicao, 'Melhorei na segunda série.')
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar feedback' }))
+    const editado = await screen.findByRole('region', { name: /seu feedback.*editado/i })
+    expect(within(editado).getByText('Melhorei na segunda série.')).toBeInTheDocument()
+    expect(buscar).toHaveBeenCalledWith('/api/treinos/exercicios/42/feedback-aluno/', expect.objectContaining({
+      method: 'PATCH', body: '{"texto":"Melhorei na segunda série."}',
+    }))
+  })
+
+  it.each(['concluido', 'ja-registrado'] as const)('atualiza o exercício após conflito %s', async conflito => {
+    const { pessoa } = abrirTreino('ALUNO', 'EM_ANDAMENTO', 200, false, { inicial: null, conflito })
+    await pessoa.click(await screen.findByRole('button', { name: 'Ver exercício: Drible alternado' }))
+    await pessoa.click(screen.getByRole('button', { name: 'Registrar feedback' }))
+    await pessoa.type(screen.getByRole('textbox'), 'Meu relato.')
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar feedback' }))
+    if (conflito === 'concluido') {
+      expect(await screen.findByRole('alert')).toHaveTextContent('O treino foi concluído')
+      expect(screen.queryByRole('button', { name: 'Editar feedback' })).not.toBeInTheDocument()
+    } else {
+      expect(await screen.findByText('Registrado em outra sessão.')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Editar feedback' })).toBeInTheDocument()
+    }
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 })

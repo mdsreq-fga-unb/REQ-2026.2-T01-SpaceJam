@@ -32,6 +32,7 @@ type TreinoDisponivel = {
 }
 
 export type ConsultaTreino = Exclude<ConsultaStatus, { estado: 'disponivel' }> | TreinoDisponivel
+type SelecaoExercicio = { id: number; tela: 'exercicio' } | { id: number; tela: 'feedback'; editando: boolean }
 
 interface DetalheTreinoProps {
   usuario: UsuarioTreino
@@ -82,7 +83,7 @@ export function DetalheTreino({
   usuario, consulta, navegacao, onMarcarFeito, onDesfazerFeito, onDevolver, onConcluir, onSalvarFeedback,
   onAbrirExercicio, onVerHistorico, onVoltarPlanejamento, onVerFeedback,
 }: DetalheTreinoProps) {
-  const [selecao, setSelecao] = useState<{ id: number; tela: 'exercicio' | 'feedback' } | null>(null)
+  const [selecao, setSelecao] = useState<SelecaoExercicio | null>(null)
   const tituloExercicio = useRef<HTMLHeadingElement>(null)
   const idExercicioVisivel = selecao?.tela === 'exercicio' ? selecao.id : null
   const aluno = usuario.papel === 'ALUNO'
@@ -104,8 +105,11 @@ export function DetalheTreino({
   const { alunoId, exercicios, status, treinadorNome } = consulta
   const selecionado = exercicios.find(exercicio => exercicio.id === selecao?.id)
   const feedbackSelecionado = selecionado?.feedback
-  const abreFormulario = aluno && selecionado && selecao?.tela === 'feedback' && onSalvarFeedback && status !== 'concluido' &&
-    (!feedbackSelecionado || feedbackSelecionado.autorId === alunoId)
+  const formularioAberto = selecao?.tela === 'feedback'
+  const registroMudou = formularioAberto && selecao.editando !== Boolean(feedbackSelecionado)
+  const abreFormulario = aluno && selecionado && formularioAberto && onSalvarFeedback &&
+    status !== 'concluido' && !registroMudou &&
+    (feedbackSelecionado === null || feedbackSelecionado?.autorId === alunoId)
 
   if (abreFormulario) {
     return (
@@ -118,7 +122,7 @@ export function DetalheTreino({
     )
   }
 
-  if (selecionado && selecao?.tela === 'exercicio') {
+  if (selecionado) {
     const { id, nome, parametros, situacao, orientacoes, errosComuns } = selecionado
     return (
       <TreinoLayout usuario={usuario} links={navegacao}>
@@ -127,6 +131,13 @@ export function DetalheTreino({
         </button>
         <TituloTreino titulo={nome} detalhe={parametros} tituloRef={tituloExercicio} />
         {situacao && <span className="treino-selo">{situacao.split(' · ')[0]}</span>}
+        {formularioAberto && (
+          <p className="treino-erro" role="alert">
+            {status === 'concluido'
+              ? 'O treino foi concluído. O feedback está disponível somente para leitura.'
+              : 'O registro mudou. Confira o feedback antes de continuar.'}
+          </p>
+        )}
         <div className="treino-colunas treino-exercicio-conteudo">
           {(orientacoes || errosComuns) && (
             <section className="treino-cartao treino-exercicio-orientacoes" aria-label="Orientações do exercício">
@@ -138,10 +149,12 @@ export function DetalheTreino({
               )}
             </section>
           )}
-          {(feedbackSelecionado !== undefined || onSalvarFeedback) && (
+          {feedbackSelecionado !== undefined && (
             <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
-              feedback={feedbackSelecionado ?? null}
-              onAbrir={aluno && onSalvarFeedback ? () => setSelecao({ id, tela: 'feedback' }) : undefined} />
+              feedback={feedbackSelecionado}
+              onAbrir={aluno && onSalvarFeedback
+                ? () => setSelecao({ id, tela: 'feedback', editando: Boolean(feedbackSelecionado) })
+                : undefined} />
           )}
         </div>
       </TreinoLayout>

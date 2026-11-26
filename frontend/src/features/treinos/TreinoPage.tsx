@@ -4,6 +4,7 @@ import { api, ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
 import { DetalheTreino, type ConsultaTreino } from './DetalheTreino'
 import type { StatusTreino } from './EstadoTreino'
+import type { AlteracaoFeedback, FeedbackAluno } from './FeedbackExercicio'
 import type { UsuarioTreino } from './TreinoLayout'
 
 type StatusApi = 'EM_ANDAMENTO' | 'FEITO' | 'CORRIGIR_REFAZER' | 'CONCLUIDO'
@@ -24,6 +25,7 @@ interface DetalheApi {
     resumo: string
     orientacoes: string
     errosComuns: string
+    feedback?: FeedbackAluno | null
   }[]
 }
 
@@ -74,6 +76,13 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
     return () => controle.abort()
   }, [rota, tentativa])
 
+  async function atualizarAposConflito(erro: unknown, signal?: AbortSignal) {
+    if (!(erro instanceof ApiError) || erro.status !== 409 || signal?.aborted) return
+
+    const detalhe = await api<DetalheApi>(rota, { signal }).catch(() => null)
+    if (detalhe && !signal?.aborted) setConsulta(dadosDoTreino(detalhe))
+  }
+
   async function enviarStatus(acao: 'feito' | 'concluir', status: StatusApi) {
     const signal = requisicao.current?.signal
     try {
@@ -86,10 +95,27 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
         setConsulta(atual => atual.estado === 'disponivel' ? { ...atual, status: resposta.statusSlug } : atual)
       }
     } catch (erro) {
-      if (erro instanceof ApiError && erro.status === 409 && !signal?.aborted) {
-        const detalhe = await api<DetalheApi>(rota, { signal }).catch(() => null)
-        if (detalhe && !signal?.aborted) setConsulta(dadosDoTreino(detalhe))
+      await atualizarAposConflito(erro, signal)
+      throw erro
+    }
+  }
+
+  async function salvarFeedback(itemId: number, { tipo, texto }: AlteracaoFeedback) {
+    const signal = requisicao.current?.signal
+    try {
+      const feedback = await api<FeedbackAluno>('/treinos/exercicios/' + itemId + '/feedback-aluno/', {
+        method: tipo === 'registrar' ? 'POST' : 'PATCH',
+        body: JSON.stringify({ texto }),
+        signal,
+      })
+      if (!signal?.aborted) {
+        setConsulta(atual => atual.estado === 'disponivel' ? {
+          ...atual,
+          exercicios: atual.exercicios.map(item => item.id === itemId ? { ...item, feedback } : item),
+        } : atual)
       }
+    } catch (erro) {
+      await atualizarAposConflito(erro, signal)
       throw erro
     }
   }
@@ -100,6 +126,7 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
     onDesfazerFeito={aluno ? () => enviarStatus('feito', 'EM_ANDAMENTO') : undefined}
     onDevolver={!aluno ? () => enviarStatus('concluir', 'CORRIGIR_REFAZER') : undefined}
     onConcluir={!aluno ? () => enviarStatus('concluir', 'CONCLUIDO') : undefined}
+    onSalvarFeedback={aluno ? salvarFeedback : undefined}
   />
 }
 

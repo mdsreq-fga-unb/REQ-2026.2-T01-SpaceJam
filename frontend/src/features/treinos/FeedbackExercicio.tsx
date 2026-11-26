@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
+import { ApiError } from '../../api/client'
 import type { Usuario } from '../../types/usuario'
 import type { StatusTreino } from './EstadoTreino'
 import './Treino.css'
@@ -37,6 +38,7 @@ export function FormularioFeedback({ feedback, onSalvar, onFechar, telaPropria }
   const descricao = useId()
   const aviso = useId()
   const textarea = useRef<HTMLTextAreaElement>(null)
+  const envioEmCurso = useRef(false)
   const [texto, setTexto] = useState(feedback?.texto ?? '')
   const [erroCampo, setErroCampo] = useState('')
   const [erroEnvio, setErroEnvio] = useState('')
@@ -46,7 +48,7 @@ export function FormularioFeedback({ feedback, onSalvar, onFechar, telaPropria }
 
   async function enviar(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault()
-    if (salvando) return
+    if (envioEmCurso.current) return
     setErroEnvio('')
 
     const tamanho = Array.from(texto).length
@@ -59,13 +61,18 @@ export function FormularioFeedback({ feedback, onSalvar, onFechar, telaPropria }
       return
     }
 
+    envioEmCurso.current = true
     setSalvando(true)
     try {
       await onSalvar({ tipo: feedback ? 'editar' : 'registrar', texto })
       onFechar()
-    } catch {
-      setErroEnvio('Não foi possível salvar o feedback. Tente novamente.')
+    } catch (erro) {
+      const mensagemDaApi = erro instanceof ApiError
+        ? erro.campos.texto?.[0] || erro.campos.detail?.[0]
+        : undefined
+      setErroEnvio(mensagemDaApi || 'Não foi possível salvar o feedback. Tente novamente.')
     } finally {
+      envioEmCurso.current = false
       setSalvando(false)
     }
   }
