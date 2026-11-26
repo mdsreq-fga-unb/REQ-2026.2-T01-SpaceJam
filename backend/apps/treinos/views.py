@@ -83,7 +83,8 @@ def consultar_planejamento_vigente(request, aluno_id):
         .prefetch_related(
             Prefetch(
                 "treinos",
-                queryset=Treino.objects.annotate(total_exercicios=Count("exercicios")),
+                queryset=Treino.objects.annotate(total_exercicios=Count("exercicios"))
+                .prefetch_related("exercicios"),
             )
         )
         .first()

@@ -3,9 +3,10 @@ from rest_framework.test import APITestCase
 
 from apps.contas import termos
 from apps.contas.models import Usuario
-from apps.exercicios.models import Exercicio
+from apps.exercicios.models import ErroComumExercicio, Exercicio
 
 from .models import Planejamento, Treino, TreinoExercicio
+from .serializers import TreinoExercicioSerializer
 
 URL = "/api/treinos/planejamentos/"
 
@@ -187,6 +188,9 @@ class CriarTreinoUS24Tests(APITestCase):
         self.assertEqual(len(r.data["exercicios"]), 2)
 
     def test_ca02_treino_preserva_dados_da_data_da_prescricao(self):
+        orientacao = ErroComumExercicio.objects.create(
+            exercicio=self.ex1, erro="Olhar para baixo", orientacao_corretiva="Olhe à frente."
+        )
         r = self._post(self._payload())
         self.assertEqual(r.status_code, 201)
         self.ex1.nome = "Nome alterado"
@@ -201,6 +205,14 @@ class CriarTreinoUS24Tests(APITestCase):
         self.assertEqual(item.orientacoes, "Cabeça erguida")
         self.assertEqual(item.erros_comuns, "Olhar para a bola")
         self.assertEqual(item.video_base, "https://exemplo.com/v1")
+
+        orientacao.orientacao_corretiva = "Nova orientação"
+        orientacao.save(update_fields=["orientacao_corretiva"])
+        orientacao.delete()
+        item.refresh_from_db()
+        pares = [{"erro": "Olhar para baixo", "orientacao_corretiva": "Olhe à frente."}]
+        self.assertEqual(item.erros_orientacoes, pares)
+        self.assertEqual(r.data["exercicios"][0]["erros_orientacoes"], pares)
 
     def test_ca02_excluir_exercicio_da_biblioteca_preserva_o_prescrito(self):
         r = self._post(self._payload())
@@ -256,6 +268,19 @@ class CriarTreinoUS24Tests(APITestCase):
             r = self._post(self._payload(exercicios=[item]))
             self.assertEqual(r.status_code, 400, item)
         self.assertEqual(Treino.objects.count(), 0)
+
+    def test_ca04_rejeita_valores_acima_do_limite_dos_campos(self):
+        dados_validos = {"exercicio": self.ex1.id, "series": 3, "repeticoes": 10}
+        casos = (
+            ("series", {**dados_validos, "series": 32_768}),
+            ("repeticoes", {**dados_validos, "repeticoes": 32_768}),
+            ("duracao_segundos", {**dados_validos, "repeticoes": None, "duracao_segundos": 2_147_483_648}),
+        )
+        for campo, dados in casos:
+            with self.subTest(campo=campo):
+                serializer = TreinoExercicioSerializer(data=dados)
+                self.assertFalse(serializer.is_valid())
+                self.assertIn(campo, serializer.errors)
 
     def test_ca04_erro_em_um_item_nao_cria_treino_parcial(self):
         r = self._post(self._payload(exercicios=[
@@ -320,13 +345,21 @@ class CriarTreinoUS24Tests(APITestCase):
         self.client.force_authenticate(user=self.treinador)
         self.assertEqual(self.client.get(self._url()).status_code, 405)
 
-    # Integridade no banco 
+    # Integridade no banco
     def test_banco_impede_repeticoes_e_duracao_juntas(self):
         treino = Treino.objects.create(planejamento=self.planejamento, nome="T")
         with self.assertRaises(IntegrityError), transaction.atomic():
             TreinoExercicio.objects.create(
                 treino=treino, ordem=1, nome="x", objetivo="y", fundamento="DRIBLE",
                 series=1, repeticoes=5, duracao_segundos=30,
+            )
+
+    def test_banco_impede_exercicio_sem_meta(self):
+        treino = Treino.objects.create(planejamento=self.planejamento, nome="T")
+        with self.assertRaises(IntegrityError), transaction.atomic():
+            TreinoExercicio.objects.create(
+                treino=treino, ordem=1, nome="Drible", objetivo="Controle",
+                fundamento="DRIBLE", series=1,
             )
 
     def test_banco_impede_ordem_duplicada(self):
@@ -431,11 +464,26 @@ class ConsultarPlanejamentoUS27Tests(APITestCase):
             ],
         )
 
+    def test_ca02_exibe_exercicios_e_parametros_do_treino(self):
+        item = self.treino_a.exercicios.get(ordem=2)
+        item.repeticoes = None
+        item.duracao_segundos = 45
+        item.save(update_fields=["repeticoes", "duracao_segundos"])
+
+        resposta = self._get(self._url(self.beatriz.id))
+        self.assertEqual(resposta.status_code, 200)
+        exercicios = resposta.data["planejamento"]["treinos"][0]["exercicios"]
+        self.assertEqual([e["ordem"] for e in exercicios], [1, 2, 3])
+        self.assertEqual(exercicios[0]["nome"], "Drible alternado")
+        self.assertEqual(exercicios[0]["series"], 3)
+        self.assertEqual(exercicios[0]["repeticoes"], 10)
+        self.assertEqual(exercicios[1]["duracao_segundos"], 45)
+
     def test_ca03_consulta_nao_faz_uma_query_por_treino(self):
         for i in range(5):
             self._treino(self.vigente, f"Treino extra {i}", Treino.Status.EM_ANDAMENTO, 2)
         self.client.force_authenticate(user=self.treinador)
-        with self.assertNumQueries(3):
+        with self.assertNumQueries(4):
             self.client.get(self._url(self.beatriz.id))
 
     # Vigente sem treinos

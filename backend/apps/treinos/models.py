@@ -73,7 +73,7 @@ class Treino(models.Model):
 
 class TreinoExercicio(models.Model):
 
-    class Status(models.TextChoices): 
+    class Status(models.TextChoices):
         A_FAZER = "A_FAZER", "A fazer"
         FEITO = "FEITO", "Feito"
         CONCLUIDO = "CONCLUIDO", "Concluído"
@@ -95,6 +95,7 @@ class TreinoExercicio(models.Model):
     fundamento = models.CharField(max_length=30)
     orientacoes = models.TextField(blank=True)
     erros_comuns = models.TextField(blank=True)
+    erros_orientacoes = models.JSONField(default=list, blank=True)
     video_base = models.URLField(max_length=500, blank=True)
 
     series = models.PositiveSmallIntegerField()
@@ -114,8 +115,8 @@ class TreinoExercicio(models.Model):
             ),
             models.CheckConstraint(
                 condition=(
-                    (Q(repeticoes__gte=1) & Q(duracao_segundos__isnull=True))
-                    | (Q(repeticoes__isnull=True) & Q(duracao_segundos__gte=1))
+                    Q(repeticoes__isnull=False, repeticoes__gte=1, duracao_segundos__isnull=True)
+                    | Q(repeticoes__isnull=True, duracao_segundos__isnull=False, duracao_segundos__gte=1)
                 ),
                 name="treino_exercicio_repeticoes_xor_duracao",
             ),

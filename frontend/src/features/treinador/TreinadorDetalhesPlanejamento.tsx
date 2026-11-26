@@ -102,6 +102,24 @@ export function TreinadorDetalhesPlanejamento() {
                       <span>
                         {rotuloDoTreino(treino)} · {quantidadeDeExercicios(treino.total_exercicios)}
                       </span>
+                      {treino.exercicios?.length > 0 && (
+                        <details className="detalhes-planejamento__exercicios">
+                          <summary aria-label={`Ver exercícios de ${treino.nome}`}>Ver exercícios</summary>
+                          <ol>
+                            {treino.exercicios.map((exercicio) => (
+                              <li key={exercicio.id}>
+                                <strong>{exercicio.nome}</strong>
+                                <span>
+                                  {exercicio.series} {exercicio.series === 1 ? 'série' : 'séries'} ·{' '}
+                                  {exercicio.repeticoes != null
+                                    ? `${exercicio.repeticoes} ${exercicio.repeticoes === 1 ? 'repetição' : 'repetições'}`
+                                    : `${exercicio.duracao_segundos} s`}
+                                </span>
+                              </li>
+                            ))}
+                          </ol>
+                        </details>
+                      )}
                     </article>
                   </div>
                 ))}

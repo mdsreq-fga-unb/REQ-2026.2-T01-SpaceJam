@@ -1,9 +1,11 @@
 from django.db import transaction
+from django.db.models import prefetch_related_objects
 from django.utils import timezone
 from rest_framework import serializers
 
 from apps.contas.models import Usuario
 from apps.exercicios.models import Exercicio
+from apps.exercicios.services import snapshot_exercicio
 
 from .models import Planejamento, Treino, TreinoExercicio
 
@@ -100,6 +102,7 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
     )
     series = serializers.IntegerField(
         min_value=1,
+        max_value=32_767,
         error_messages={
             "required": "Informe as séries.",
             "null": "Informe as séries.",
@@ -111,6 +114,7 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True,
         min_value=1,
+        max_value=32_767,
         error_messages={
             "invalid": "Repetições deve ser um número inteiro.",
             "min_value": "As repetições devem ser no mínimo 1.",
@@ -120,6 +124,7 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
         required=False,
         allow_null=True,
         min_value=1,
+        max_value=2_147_483_647,
         error_messages={
             "invalid": "Duração deve ser um número inteiro de segundos.",
             "min_value": "A duração deve ser de no mínimo 1 segundo.",
@@ -137,6 +142,7 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
             "fundamento",
             "orientacoes",
             "erros_comuns",
+            "erros_orientacoes",
             "video_base",
             "series",
             "repeticoes",
@@ -145,7 +151,7 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             "id", "ordem", "nome", "objetivo", "fundamento",
-            "orientacoes", "erros_comuns", "video_base", "status",
+            "orientacoes", "erros_comuns", "erros_orientacoes", "video_base", "status",
         ]
         validators = []
 
@@ -201,36 +207,34 @@ class TreinoSerializer(serializers.ModelSerializer):
                     {"planejamento": "Só é possível criar treinos em um planejamento vigente."}
                 )
             treino = Treino.objects.create(planejamento=atual, **validated_data)
-            TreinoExercicio.objects.bulk_create(
-                [
+            prefetch_related_objects([item["exercicio_origem"] for item in itens], "erros_orientacoes")
+            prescritos = []
+            for ordem, item in enumerate(itens, start=1):
+                origem = item["exercicio_origem"]
+                dados_prescritos = snapshot_exercicio(origem)
+                dados_prescritos.pop("fundamento_nome")  # O modelo persiste o código do fundamento.
+                prescritos.append(
                     TreinoExercicio(
                         treino=treino,
                         ordem=ordem,
                         exercicio_origem=origem,
-                        # RN23 — cópia dos dados da biblioteca na data da prescrição
-                        nome=origem.nome,
-                        objetivo=origem.objetivo,
-                        fundamento=origem.fundamento,
-                        orientacoes=origem.orientacoes,
-                        erros_comuns=origem.erros_comuns,
-                        video_base=origem.video_base,
                         series=item["series"],
                         repeticoes=item.get("repeticoes"),
                         duracao_segundos=item.get("duracao_segundos"),
+                        **dados_prescritos,
                     )
-                    for ordem, item in enumerate(itens, start=1)
-                    for origem in [item["exercicio_origem"]]
-                ]
-            )
+                )
+            TreinoExercicio.objects.bulk_create(prescritos)
         return treino
 
 class TreinoResumoSerializer(serializers.ModelSerializer):
     status_display = serializers.CharField(source="get_status_display", read_only=True)
     total_exercicios = serializers.IntegerField(read_only=True)
+    exercicios = TreinoExercicioSerializer(many=True, read_only=True)
 
     class Meta:
         model = Treino
-        fields = ["id", "nome", "status", "status_display", "total_exercicios"]
+        fields = ["id", "nome", "status", "status_display", "total_exercicios", "exercicios"]
 
 
 class PlanejamentoVigenteSerializer(serializers.ModelSerializer):

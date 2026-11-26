@@ -7,12 +7,21 @@ export interface AlunoDaCarteira {
   planejamento_vigente: { id: number; nome: string } | null
 }
 
+interface ExercicioPrescrito {
+  id: number
+  nome: string
+  series: number
+  repeticoes: number | null
+  duracao_segundos: number | null
+}
+
 export interface TreinoResumo {
   id: number
   nome: string
   status: 'EM_ANDAMENTO' | 'FEITO' | 'CONCLUIDO'
   status_display: string
   total_exercicios: number
+  exercicios: ExercicioPrescrito[]
 }
 
 export interface ConsultaPlanejamentoVigente {

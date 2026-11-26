@@ -86,6 +86,25 @@
   border-color: #ff9a6c;
 }
 
+.detalhes-planejamento__exercicios summary {
+  color: #ff9a6c;
+  cursor: pointer;
+  min-height: 44px;
+  padding-block: 10px;
+}
+
+.detalhes-planejamento__exercicios ol {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding-inline-start: 22px;
+  overflow-wrap: anywhere;
+}
+
+.detalhes-planejamento__exercicios li > span {
+  display: block;
+}
+
 .detalhes-planejamento__acoes {
   display: flex;
   flex-direction: column;

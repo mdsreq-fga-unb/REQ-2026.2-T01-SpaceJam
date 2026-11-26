@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { tokenStorage } from '../src/api/client'
 import type { Usuario } from '../src/types/usuario'
@@ -46,6 +47,28 @@ describe('US27 — planejamento vigente do aluno', () => {
     expect(screen.getByRole('link', { name: 'Adicionar treino' }).getAttribute('href')).toBe(
       '/treinador/alunos/21/planejamento/5/novo-treino',
     )
+  })
+
+  it('mostra os exercícios prescritos com seus parâmetros (CA02)', async () => {
+    abrirPlanejamento({
+      aluno,
+      planejamento: {
+        id: 5, nome: 'Controle de bola', criado_em,
+        treinos: [{
+          id: 1, nome: 'Treino A', status: 'FEITO', status_display: 'Feito', total_exercicios: 2,
+          exercicios: [
+            { id: 7, nome: 'Drible alternado', series: 3, repeticoes: 10, duracao_segundos: null },
+            { id: 8, nome: 'Prancha', series: 1, repeticoes: null, duracao_segundos: 45 },
+          ],
+        }],
+      },
+    })
+
+    await userEvent.setup().click(await screen.findByText('Ver exercícios'))
+    expect(screen.getByText('Drible alternado')).toBeVisible()
+    expect(screen.getByText('3 séries · 10 repetições')).toBeVisible()
+    expect(screen.getByText('Prancha')).toBeVisible()
+    expect(screen.getByText('1 série · 45 s')).toBeVisible()
   })
 
   it('não mostra ações fora do MVP', async () => {

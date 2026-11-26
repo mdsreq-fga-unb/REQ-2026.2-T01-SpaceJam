@@ -7,7 +7,7 @@ from .models import Planejamento, Treino, TreinoExercicio
 class PlanejamentoAdmin(admin.ModelAdmin):
     list_display = ("nome", "aluno", "treinador", "status", "criado_em", "encerrado_em")
     list_filter = ("status",)
-    search_fields = ("nome", "aluno_username", "aluno_first_name")
+    search_fields = ("nome", "aluno__username", "aluno__first_name")
 
 class TreinoExercicioInline(admin.TabularInline):
     model = TreinoExercicio
