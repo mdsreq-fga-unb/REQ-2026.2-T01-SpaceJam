@@ -45,7 +45,7 @@ Telas do treinador para manter os pares **erro comum + orientação corretiva** 
 - Os erros 400 do backend aparecem no campo correspondente; 403, 404 e falhas de rede aparecem em `role="alert"`, sem perder o que foi digitado.
 - Depois de salvar ou remover, a lista mostra um aviso em `role="status"`. O aviso sai do histórico do navegador e não reaparece ao recarregar.
 - A remoção é definitiva e vale só para o exercício. Treinos já prescritos devem manter a cópia das orientações (RN23); essa parte depende da prescrição (RF2307).
-- O formulário do exercício (US39) não envia a lista, portanto editar o exercício não apaga os itens. O campo de texto antigo "Erros comuns" do exercício foi mantido.
+- O formulário do exercício (US39) não envia a lista, portanto editar o exercício não apaga os itens. O campo de texto antigo "Erros comuns" saiu da consulta e do formulário do exercício; o valor já salvo é preservado ao editar, e os erros passam a ser mantidos só em "Erros e orientações".
 - Código: `src/features/exercicios/` (`ErrosOrientacoesExercicio.tsx`, `ErroOrientacaoPage.tsx`, `RemoverErroOrientacaoPage.tsx`, `components/ErroOrientacaoForm.tsx` e `ErrosOrientacoes.module.css`). Testes: `tests/us37-erros-orientacoes-*.test.ts(x)`.
 
 ## Pendências para o incremento

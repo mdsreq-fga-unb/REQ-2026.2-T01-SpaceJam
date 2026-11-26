@@ -28,7 +28,6 @@ export default function ExerciseDetails({
           <section id="orientacoes-exercicio"><h2>Orientações</h2><p>{exercicio.orientacoes || 'Não informado'}</p></section>
         </div>
         <div className={styles.pilha}>
-          <section><h2>Erros comuns</h2><p>{exercicio.errosComuns || 'Não informado'}</p></section>
           <section>
             <h2>Vídeo base</h2>
             {exercicio.videoUrl ? (

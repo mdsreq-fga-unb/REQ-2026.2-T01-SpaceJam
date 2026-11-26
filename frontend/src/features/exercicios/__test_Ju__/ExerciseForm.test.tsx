@@ -19,8 +19,9 @@ describe('ExerciseForm', () => {
     expect(screen.getByLabelText(/fundamento/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/objetivo/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/orientações/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/erros comuns/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/vídeo base/i)).toBeInTheDocument();
+    // Os erros comuns ficam em "Erros e orientações" (US37), fora do formulário.
+    expect(screen.queryByLabelText(/erros comuns/i)).not.toBeInTheDocument();
   });
 
   // TESTE 02: Campos obrigatórios vazios
@@ -128,11 +129,6 @@ describe('ExerciseForm', () => {
     );
 
     await usuario.type(
-      screen.getByLabelText(/erros comuns/i),
-      'Não olhar para a cesta durante a finalização.'
-    );
-
-    await usuario.type(
       screen.getByLabelText(/vídeo base/i),
       'https://www.youtube.com/watch?v=exemplo'
     );
@@ -146,7 +142,7 @@ describe('ExerciseForm', () => {
       fundamento: 'Arremesso',
       objetivo: 'Melhorar a finalização.',
       orientacoes: 'Realizar a bandeja utilizando a mão dominante.',
-      errosComuns: 'Não olhar para a cesta durante a finalização.',
+      errosComuns: undefined,
       videoUrl: 'https://www.youtube.com/watch?v=exemplo',
     });
   });
@@ -229,8 +225,7 @@ describe('ExerciseForm', () => {
     expect(screen.getByLabelText(/orientações/i))
       .toHaveValue('Usar a mão dominante.');
 
-    expect(screen.getByLabelText(/erros comuns/i))
-      .toHaveValue('Não olhar para a cesta.');
+    expect(screen.queryByLabelText(/erros comuns/i)).not.toBeInTheDocument();
 
     expect(screen.getByLabelText(/vídeo base/i))
       .toHaveValue('https://www.youtube.com/watch?v=exemplo');
@@ -238,6 +233,33 @@ describe('ExerciseForm', () => {
     expect(
       screen.getByRole('button', { name: /salvar alterações/i })
     ).toBeInTheDocument();
+  });
+
+  // Sem o campo na tela, salvar a edição não apaga o texto antigo de erros comuns.
+  it('deve manter o texto antigo de erros comuns ao salvar a edição', async () => {
+    const usuario = userEvent.setup();
+    const onSalvar = vi.fn();
+
+    render(
+      <ExerciseForm
+        onSalvar={onSalvar}
+        onCancelar={vi.fn()}
+        exercicioInicial={{
+          nome: 'Arremesso de bandeja',
+          fundamento: 'Arremesso',
+          objetivo: 'Melhorar a finalização.',
+          errosComuns: 'Não olhar para a cesta.',
+        }}
+      />
+    );
+
+    await usuario.click(
+      screen.getByRole('button', { name: /salvar alterações/i })
+    );
+
+    expect(onSalvar).toHaveBeenCalledWith(
+      expect.objectContaining({ errosComuns: 'Não olhar para a cesta.' })
+    );
   });
 
   // TESTE 07: Cancelamento
