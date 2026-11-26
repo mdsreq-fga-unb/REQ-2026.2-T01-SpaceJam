@@ -436,6 +436,7 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
                 "sobrenome": "Oliveira Costa",
                 "apelido": "lucao_novo",
                 "email": "lucas.novo@aluno.com",
+                "telefone": "+55 (61) 95555-0101",
                 "altura": "1.90",
                 "peso": "84.00",
                 "envergadura": "1.98",
@@ -449,6 +450,8 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         self.assertEqual(r_ok.data["last_name"], "Oliveira Costa")
         self.assertEqual(r_ok.data["apelido"], "lucao_novo")
         self.assertEqual(r_ok.data["email"], "lucas.novo@aluno.com")
+        self.assertEqual(r_ok.data["telefone"], "+55 (61) 95555-0101")
+        self.assertEqual(self.client.get("/api/contas/me/").data["telefone"], "+55 (61) 95555-0101")
         self.assertEqual(r_ok.data["perfil_aluno"]["altura"], "1.90")
         self.assertEqual(r_ok.data["perfil_aluno"]["peso"], "84.00")
         self.assertEqual(r_ok.data["perfil_aluno"]["envergadura"], "1.98")
@@ -458,6 +461,15 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         )
         # Campo protegido permanece intacto (4 do cadastro original)
         self.assertEqual(r_ok.data["perfil_aluno"]["frequencia_semanal"], 4)
+
+        r_invalido = self.client.patch(endpoint, {"telefone": "ramal"}, format="json")
+        self.assertEqual(r_invalido.status_code, 400)
+        self.assertIn("telefone", r_invalido.data)
+        self.assertEqual(self.client.get("/api/contas/me/").data["telefone"], "+55 (61) 95555-0101")
+
+        r_limpo = self.client.patch(endpoint, {"telefone": ""}, format="json")
+        self.assertEqual(r_limpo.status_code, 200)
+        self.assertEqual(self.client.get("/api/contas/me/").data["telefone"], "")
 
         # Novo apelido passa a valer no login e o antigo é recusado
         r_login_antigo = self.client.post(

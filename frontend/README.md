@@ -63,6 +63,12 @@ Telas do treinador para manter os pares **erro comum + orientação corretiva** 
 
 A suíte renderiza os componentes React em jsdom e usa a API real pelo proxy do Vite. Além dos fluxos de acesso, ela verifica edição e consulta de cadastro, perfil de aluno vinculado e troca de senha com rejeição das credenciais da sessão anterior.
 
-Para incluir a recuperação de senha no teste HTTP, execute também o Django com o backend de e-mail em arquivo e aponte `SPACE_JAM_TEST_MAIL_DIR` para o diretório inicialmente vazio definido em `EMAIL_FILE_PATH`. Configure `FRONTEND_URL` com a origem do frontend local. O teste lê o link gerado, redefine a senha e verifica que o link não pode ser reutilizado.
+Para incluir a recuperação de senha no teste HTTP, aponte `SPACE_JAM_TEST_MAIL_DIR` para um diretório vazio em que as mensagens serão gravadas. Use o backend de e-mail em arquivo do Django com `EMAIL_FILE_PATH` ou um SMTP de teste que grave as mensagens recebidas nesse diretório. Configure `FRONTEND_URL` com a origem do frontend local. O teste lê o link gerado, redefine a senha e verifica que o link não pode ser reutilizado.
 
 Os resultados registram o comportamento no ambiente de teste. A revisão independente, os documentos de termos vigentes e a validação pelo cliente seguem o fluxo da equipe.
+
+### Integração da Iteração 2
+
+- US07 e US53 permitem que o aluno atualize e consulte seus dados cadastrais. O telefone é opcional e pode ser removido ao limpar o campo.
+- US08 e US10 conectam a troca de senha e a recuperação com link de uso único à API de contas. Para validar o fluxo com a configuração de entrega, use PostgreSQL 16 e configure o backend SMTP do Django.
+- US61 consulta o perfil real pelo identificador do aluno. O caminho pela lista de alunos depende da integração da US52. A exibição de lesões registradas depende da persistência pela US11.

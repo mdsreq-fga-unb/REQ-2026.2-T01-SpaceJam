@@ -22,6 +22,7 @@ export interface AtualizacaoPerfilAluno {
   sobrenome: string
   apelido: string
   email: string
+  telefone?: string
   altura: string
   peso: string
   envergadura: string
@@ -73,6 +74,10 @@ export function validarDadosAluno(dados: FormularioDadosAluno): ErrosDadosAluno 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dados.email.trim()) || dados.email.length > 254) {
     erros.email = 'Informe um e-mail válido.'
   }
+  const telefone = dados.telefone.trim()
+  if (telefone && (telefone.length > 20 || !/^\+?(?=[\d ().-]*\d)[\d ().-]+$/.test(telefone))) {
+    erros.telefone = 'Informe um telefone válido de até 20 caracteres.'
+  }
   const faixas = [
     ['altura_cm', 50, 260, 'altura'] as const,
     ['peso_kg', 20, 300, 'peso'] as const,
@@ -96,6 +101,7 @@ export function dadosParaAtualizacao(dados: FormularioDadosAluno): AtualizacaoPe
     sobrenome: dados.last_name.trim(),
     apelido: dados.apelido.trim(),
     email: dados.email.trim().toLowerCase(),
+    telefone: dados.telefone.trim(),
     altura: (numeroSeguro(dados.altura_cm) / 100).toFixed(2),
     peso: numeroSeguro(dados.peso_kg).toFixed(2),
     envergadura: (numeroSeguro(dados.envergadura_cm) / 100).toFixed(2),

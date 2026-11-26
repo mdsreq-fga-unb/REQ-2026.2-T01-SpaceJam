@@ -12,7 +12,7 @@ import './EditarDadosAluno.css'
 interface Props {
   usuario: Usuario
   onCancelar: () => void
-  /** Futuro contrato de escrita, conectado apenas quando o backend autorizar e implementar. */
+  /** Salva os dados do aluno pela API nas rotas integradas. */
   onSalvar?: (dados: AtualizacaoPerfilAluno) => Promise<void>
 }
 
@@ -158,7 +158,7 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
                     onBlur={() => conferirCampo(nome)}
                     aria-invalid={Boolean(erros[nome])}
                     aria-describedby={erros[nome] ? `erro-us07-${nome}` : nome === 'frequencia_semanal' ? 'ajuda-us07-frequencia' : undefined}
-                    disabled={enviando || ['telefone', 'data_nascimento', 'frequencia_semanal'].includes(nome)}
+                    disabled={enviando || nome === 'data_nascimento' || nome === 'frequencia_semanal'}
                   />
                   {nome === 'frequencia_semanal' && <small id="ajuda-us07-frequencia">De 1 a 7 dias.</small>}
                   {erros[nome] && <p className="editar-aluno__erro" id={`erro-us07-${nome}`}>{erros[nome]}</p>}
@@ -193,7 +193,7 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
               A atualização dos dados está indisponível no momento. Nenhuma alteração será salva.
             </p>
           )}
-          <p className="editar-aluno__aviso-indisponivel">Telefone, nascimento e frequência semanal são somente leitura nesta edição.</p>
+          <p className="editar-aluno__aviso-indisponivel">Nascimento e frequência semanal são somente leitura nesta edição.</p>
           <div className="editar-aluno__acoes">
             <button type="submit" className="editar-aluno__salvar" disabled={!onSalvar || enviando} aria-describedby={!onSalvar ? 'us07-salvamento-indisponivel' : undefined}>
               {enviando ? 'Salvando…' : 'Salvar alterações'}

@@ -386,6 +386,7 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
         "sobrenome",
         "apelido",
         "email",
+        "telefone",
         "altura",
         "peso",
         "envergadura",
@@ -396,6 +397,13 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
     sobrenome = serializers.CharField(max_length=150, required=False)
     apelido = serializers.CharField(max_length=150, required=False)
     email = serializers.EmailField(required=False)
+    telefone = serializers.RegexField(
+        r"\A\+?(?=[0-9 ().-]*[0-9])[0-9 ().-]+\Z",
+        max_length=20,
+        required=False,
+        allow_blank=True,
+        error_messages={"invalid": "Informe um telefone válido."},
+    )
     altura = serializers.DecimalField(
         max_digits=4, decimal_places=2, min_value=0.5, max_value=2.6, required=False
     )
@@ -485,6 +493,9 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
         if "email" in validated_data:
             usuario.email = validated_data["email"]
             campos_usuario_atualizados.append("email")
+        if "telefone" in validated_data:
+            usuario.telefone = validated_data["telefone"]
+            campos_usuario_atualizados.append("telefone")
 
         if campos_usuario_atualizados:
             usuario.save(update_fields=campos_usuario_atualizados)

@@ -59,7 +59,7 @@ describe('US07 — Editar informações do próprio perfil', () => {
   it('converte centímetros em metros e vírgula para valores de API', () => {
     const dados = dadosDoUsuario(usuario)
     expect(dadosParaAtualizacao({ ...dados, altura_cm: '185', peso_kg: '80,5', envergadura_cm: '190', frequencia_semanal: '4' }))
-      .toEqual({ nome: 'Beatriz', sobrenome: 'Costa', apelido: 'beatriz.costa', email: 'beatriz@example.com', altura: '1.85', peso: '80.50', envergadura: '1.90', objetivos: 'Melhorar o arremesso' })
+      .toEqual({ nome: 'Beatriz', sobrenome: 'Costa', apelido: 'beatriz.costa', email: 'beatriz@example.com', telefone: '61999990000', altura: '1.85', peso: '80.50', envergadura: '1.90', objetivos: 'Melhorar o arremesso' })
   })
 
   it('exige intervalo coerente para frequência e medidas', () => {
@@ -102,6 +102,25 @@ describe('US07 — Editar informações do próprio perfil', () => {
     await userEvent.setup().click(screen.getByRole('button', { name: 'Salvar alterações' }))
     expect(await screen.findByRole('alert')).toHaveProperty('textContent', expect.stringContaining('Nenhuma alteração foi confirmada'))
     expect(screen.queryByText('Alterações salvas com sucesso.')).toBeNull()
+  })
+
+  it('valida o telefone editável e permite apagar o contato opcional', async () => {
+    const salvar = vi.fn().mockResolvedValue(undefined)
+    renderizar(salvar)
+    const pessoa = userEvent.setup()
+    const telefone = screen.getByLabelText('Telefone')
+    const botao = screen.getByRole('button', { name: 'Salvar alterações' })
+
+    expect(telefone).toBeEnabled()
+    await pessoa.clear(telefone)
+    await pessoa.type(telefone, 'ramal')
+    await pessoa.click(botao)
+    expect(telefone).toHaveAttribute('aria-invalid', 'true')
+    expect(salvar).not.toHaveBeenCalled()
+
+    await pessoa.clear(telefone)
+    await pessoa.click(botao)
+    await waitFor(() => expect(salvar).toHaveBeenCalledWith(expect.objectContaining({ telefone: '' })))
   })
 
   it('mantém a navegação da US53 compatível com os testes existentes', () => {

@@ -158,8 +158,10 @@ grupo('HTTP real pelo proxy do frontend', { timeout: 15000 }, () => {
   it('US61: o treinador consulta a rota real de um aluno vinculado', async () => {
     await entrarTreinador()
     cleanup()
+    const inicio = performance.now()
     abrir('/treinador/alunos/' + aluno.id)
     expect(await screen.findByRole('heading', { name: 'Aluno Integração' }, esperaHttp)).toBeInTheDocument()
+    expect(performance.now() - inicio).toBeLessThan(5000)
     expect(screen.getByText('01/01/2000')).toBeInTheDocument()
     expect(screen.getByText('aluno.integracao@example.com')).toBeInTheDocument()
     await expect(api('/contas/alunos/999999/')).rejects.toMatchObject({ status: 404 })
@@ -171,9 +173,12 @@ grupo('HTTP real pelo proxy do frontend', { timeout: 15000 }, () => {
     const nome = screen.getByLabelText(/^Nome\b/)
     await pessoa.clear(nome)
     await pessoa.type(nome, 'Estudante')
+    const telefone = screen.getByLabelText('Telefone')
+    await pessoa.clear(telefone)
+    await pessoa.type(telefone, '+55 (61) 95555-0101')
     await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
     await screen.findByText('Alterações salvas com sucesso.', {}, esperaHttp)
-    expect(await api('/contas/me/')).toMatchObject({ first_name: 'Estudante' })
+    expect(await api('/contas/me/')).toMatchObject({ first_name: 'Estudante', telefone: '+55 (61) 95555-0101' })
     await expect(api('/contas/alunos/' + (aluno.id + 1) + '/editar/', {
       method: 'PATCH',
       body: JSON.stringify({ nome: 'Outro' }),
