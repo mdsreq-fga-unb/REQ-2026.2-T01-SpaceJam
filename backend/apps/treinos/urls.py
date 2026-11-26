@@ -18,4 +18,15 @@ urlpatterns = [
         views.consultar_planejamento_vigente,
         name="planejamento-vigente",
     ),
+    # Consultar histórico de planejamentos
+    path(
+        "alunos/<int:aluno_id>/planejamentos-historico/",
+        views.listar_historico_planejamentos,
+        name="planejamentos-historico",
+    ),
+    path(
+        "alunos/<int:aluno_id>/planejamentos-historico/<int:planejamento_id>/",
+        views.consultar_planejamento_historico,
+        name="planejamento-historico-detalhe",
+    ),
 ]

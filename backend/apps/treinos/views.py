@@ -1,4 +1,4 @@
-from django.db.models import Count, Prefetch
+from django.db.models import Count, F, Prefetch
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -10,6 +10,8 @@ from apps.contas.permissions import ROTA_PROTEGIDA, IsTreinador
 from .models import Planejamento, Treino
 from .serializers import (
     AlunoCarteiraSerializer,
+    PlanejamentoHistoricoResumoSerializer,
+    PlanejamentoHistoricoSerializer,
     PlanejamentoSerializer,
     PlanejamentoVigenteSerializer,
     TreinoSerializer,
@@ -94,5 +96,52 @@ def consultar_planejamento_vigente(request, aluno_id):
             "planejamento": (
                 PlanejamentoVigenteSerializer(planejamento).data if planejamento else None
             ),
+        }
+    )
+
+
+
+def _planejamentos_historico(aluno):
+    # Só planejamentos encerrados; o vigente nunca aparece no histórico.
+    return Planejamento.objects.filter(aluno=aluno, status=Planejamento.Status.HISTORICO)
+
+
+@api_view(["GET"])
+@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
+def listar_historico_planejamentos(request, aluno_id):
+    """Lista os planejamentos anteriores de um aluno da carteira."""
+    aluno = get_object_or_404(_alunos_da_carteira(request.user), pk=aluno_id)
+    planejamentos = (
+        _planejamentos_historico(aluno)
+        .annotate(total_treinos=Count("treinos"))
+        # Do encerrado mais recente para o mais antigo
+        .order_by(F("encerrado_em").desc(nulls_last=True), "-id")
+    )
+    return Response(
+        {
+            "aluno": {"id": aluno.id, "nome": nome_do_aluno(aluno)},
+            "planejamentos": PlanejamentoHistoricoResumoSerializer(planejamentos, many=True).data,
+        }
+    )
+
+
+@api_view(["GET"])
+@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
+def consultar_planejamento_historico(request, aluno_id, planejamento_id):
+    """Detalhe somente leitura de um planejamento anterior."""
+    aluno = get_object_or_404(_alunos_da_carteira(request.user), pk=aluno_id)
+    planejamento = get_object_or_404(
+        _planejamentos_historico(aluno).prefetch_related(
+            Prefetch(
+                "treinos",
+                queryset=Treino.objects.annotate(total_exercicios=Count("exercicios")),
+            )
+        ),
+        pk=planejamento_id,
+    )
+    return Response(
+        {
+            "aluno": {"id": aluno.id, "nome": nome_do_aluno(aluno)},
+            "planejamento": PlanejamentoHistoricoSerializer(planejamento).data,
         }
     )

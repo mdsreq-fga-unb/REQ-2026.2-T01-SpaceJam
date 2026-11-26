@@ -265,3 +265,24 @@ class AlunoCarteiraSerializer(serializers.ModelSerializer):
     def get_planejamento_vigente(self, obj):
         vigentes = obj.planejamentos_vigentes
         return PlanejamentoResumoSerializer(vigentes[0]).data if vigentes else None
+
+
+class PlanejamentoHistoricoResumoSerializer(serializers.ModelSerializer):
+    """US21 (RF2304) — Item da lista de planejamentos anteriores"""
+
+    total_treinos = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Planejamento
+        fields = ["id", "nome", "total_treinos"]
+
+
+class PlanejamentoHistoricoSerializer(serializers.ModelSerializer):
+    """Detalhe somente leitura de um planejamento anterior ."""
+
+    treinos = TreinoResumoSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Planejamento
+        fields = ["id", "nome", "treinos"]
+        read_only_fields = fields
