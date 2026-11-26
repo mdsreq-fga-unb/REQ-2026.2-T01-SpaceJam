@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    ItemTreinoFeedbackAlunoView,
     TreinoConcluirTreinadorView,
     TreinoDetalheView,
     TreinoRegistrarStatusAlunoView,
@@ -12,4 +13,9 @@ urlpatterns = [
     path("treinos/<int:treino_id>/status/", TreinoStatusView.as_view(), name="treino-status"),
     path("treinos/<int:treino_id>/feito/", TreinoRegistrarStatusAlunoView.as_view(), name="treino-feito"),
     path("treinos/<int:treino_id>/concluir/", TreinoConcluirTreinadorView.as_view(), name="treino-concluir"),
+    path(
+        "treinos/exercicios/<int:item_id>/feedback-aluno/",
+        ItemTreinoFeedbackAlunoView.as_view(),
+        name="item-treino-feedback-aluno",
+    ),
 ]

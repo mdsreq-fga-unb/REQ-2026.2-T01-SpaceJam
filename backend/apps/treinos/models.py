@@ -72,3 +72,39 @@ class ItemTreino(models.Model):
 
     def __str__(self) -> str:
         return f"{self.ordem}. {self.nome} ({self.treino.nome})"
+    
+class FeedbackAluno(models.Model):
+    """US49 (RF3608) e US50 (RF3609) — Relato/feedback do próprio aluno sobre um exercício do treino."""
+
+    item_treino = models.OneToOneField(
+        ItemTreino,
+        on_delete=models.CASCADE,
+        related_name="feedback_aluno",
+    )
+    aluno = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="feedbacks_enviados",
+        limit_choices_to={"papel": "ALUNO"},
+    )
+    texto = models.TextField(max_length=1000)
+    criado_em = models.DateTimeField(auto_now_add=True)
+    editado_em = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Feedback do Aluno"
+        verbose_name_plural = "Feedbacks dos Alunos"
+        ordering = ["-criado_em"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["aluno", "item_treino"],
+                name="treinos_unico_feedback_aluno_por_item",
+            ),
+        ]
+
+    @property
+    def editado(self) -> bool:
+        return self.editado_em is not None
+
+    def __str__(self) -> str:
+        return f"Feedback de {self.aluno.username} em {self.item_treino.nome}"

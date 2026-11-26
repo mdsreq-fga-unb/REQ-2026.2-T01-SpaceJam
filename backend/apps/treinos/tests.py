@@ -6,7 +6,7 @@ from rest_framework.test import APITestCase
 from apps.contas.models import Usuario
 from apps.contas.termos import versao_vigente
 
-from .models import ItemTreino, Treino
+from .models import FeedbackAluno, ItemTreino, Treino
 
 
 class TreinoStatusConclusaoTests(APITestCase):
@@ -217,3 +217,181 @@ class TreinoStatusConclusaoTests(APITestCase):
 
         self.client.force_authenticate(user=self.aluno)
         self.assertEqual(self.client.patch(url_feito, {}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+class TreinoFeedbackAlunoTests(APITestCase):
+    def setUp(self):
+        agora = timezone.now()
+        versao = versao_vigente()
+
+        self.treinador = Usuario.objects.create_user(
+            username="lucas",
+            email="lucas@spacejam.com",
+            password="Password123",
+            papel=Usuario.Papel.TREINADOR,
+            first_name="Lucas",
+            last_name="Cordeiro",
+            versao_termos_aceita=versao,
+            data_aceite_termos=agora,
+        )
+        self.aluno = Usuario.objects.create_user(
+            username="beatriz",
+            email="beatriz@spacejam.com",
+            password="Password123",
+            papel=Usuario.Papel.ALUNO,
+            first_name="Beatriz",
+            treinador=self.treinador,
+            versao_termos_aceita=versao,
+            data_aceite_termos=agora,
+        )
+        self.outro_aluno = Usuario.objects.create_user(
+            username="carlos",
+            email="carlos@spacejam.com",
+            password="Password123",
+            papel=Usuario.Papel.ALUNO,
+            treinador=self.treinador,
+            versao_termos_aceita=versao,
+            data_aceite_termos=agora,
+        )
+        self.treino = Treino.objects.create(
+            aluno=self.aluno,
+            treinador=self.treinador,
+            nome="Controle de bola",
+        )
+        self.item = ItemTreino.objects.create(
+            treino=self.treino,
+            ordem=1,
+            nome="Drible alternado",
+            parametros="3 séries · 30 segundos",
+        )
+        self.url = reverse("item-treino-feedback-aluno", kwargs={"item_id": self.item.id})
+
+    # --- US49: Registrar feedback do aluno ---
+
+    def test_us49_ca01_aluno_registra_feedback_valido_e_valida_limites(self):
+        self.client.force_authenticate(user=self.aluno)
+
+        # Vazio / só espaços / > 1000 caracteres -> 400
+        self.assertEqual(self.client.post(self.url, {"texto": ""}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.client.post(self.url, {"texto": "   "}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.client.post(self.url, {"texto": "a" * 1001}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+
+        # Registro válido (até 1.000 caracteres) -> 201
+        resp = self.client.post(
+            self.url,
+            {"texto": "Senti leve desconforto no ombro na última série."},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(resp.data["autorId"], self.aluno.id)
+        self.assertFalse(resp.data["editado"])
+        self.assertIsNotNone(resp.data["criadoEm"])
+        self.assertIsNone(resp.data["editadoEm"])
+
+        # Treinador visualiza no detalhe do treino
+        self.client.force_authenticate(user=self.treinador)
+        detalhe = self.client.get(reverse("treino-detalhe", kwargs={"treino_id": self.treino.id}))
+        self.assertEqual(detalhe.status_code, status.HTTP_200_OK)
+        self.assertEqual(
+            detalhe.data["exercicios"][0]["feedback"]["texto"],
+            "Senti leve desconforto no ombro na última série.",
+        )
+
+    def test_us49_ca02_bloqueia_segundo_registro_no_mesmo_exercicio_com_409(self):
+        self.client.force_authenticate(user=self.aluno)
+        self.client.post(self.url, {"texto": "Primeiro relato."}, format="json")
+
+        resp_dup = self.client.post(self.url, {"texto": "Segundo relato."}, format="json")
+        self.assertEqual(resp_dup.status_code, status.HTTP_409_CONFLICT)
+
+    def test_us49_ca03_e_ca04_bloqueia_outro_aluno_e_treinador_com_403(self):
+        self.client.force_authenticate(user=self.outro_aluno)
+        self.assertEqual(
+            self.client.post(self.url, {"texto": "Tentativa indevida"}, format="json").status_code,
+            status.HTTP_403_FORBIDDEN,
+        )
+
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(
+            self.client.post(self.url, {"texto": "Treinador escrevendo"}, format="json").status_code,
+            status.HTTP_403_FORBIDDEN,
+        )
+
+    def test_us49_ca05_e_ca06_bloqueia_apos_conclusao_409_e_retorna_401_404(self):
+        # 401 sem autenticação
+        self.assertEqual(self.client.post(self.url, {"texto": "Sem token"}, format="json").status_code, status.HTTP_401_UNAUTHORIZED)
+
+        self.client.force_authenticate(user=self.aluno)
+        # 404 item inexistente
+        url_inexistente = reverse("item-treino-feedback-aluno", kwargs={"item_id": 999999})
+        self.assertEqual(self.client.post(url_inexistente, {"texto": "Inexistente"}, format="json").status_code, status.HTTP_404_NOT_FOUND)
+
+        # 409 treino concluído
+        self.treino.status = Treino.Status.CONCLUIDO
+        self.treino.save(update_fields=["status"])
+        self.assertEqual(self.client.post(self.url, {"texto": "Tardio"}, format="json").status_code, status.HTTP_409_CONFLICT)
+
+    # --- US50: Editar feedback do aluno ---
+
+    def test_us50_ca01_aluno_edita_feedback_na_vigencia_inclusive_corrigir_refazer(self):
+        FeedbackAluno.objects.create(
+            item_treino=self.item,
+            aluno=self.aluno,
+            texto="Relato inicial.",
+        )
+        self.treino.status = Treino.Status.CORRIGIR_REFAZER
+        self.treino.save(update_fields=["status"])
+
+        self.client.force_authenticate(user=self.aluno)
+        resp = self.client.patch(
+            self.url,
+            {"texto": "Relato atualizado após refazer o exercício."},
+            format="json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertEqual(resp.data["texto"], "Relato atualizado após refazer o exercício.")
+        self.assertTrue(resp.data["editado"])
+        self.assertIsNotNone(resp.data["editadoEm"])
+
+    def test_us50_ca02_a_ca06_bloqueia_concluido_409_autoria_403_validacao_400_delete_405_e_404(self):
+        self.client.force_authenticate(user=self.aluno)
+
+        # Sem feedback prévio -> 404
+        self.assertEqual(self.client.patch(self.url, {"texto": "Nada"}, format="json").status_code, status.HTTP_404_NOT_FOUND)
+
+        FeedbackAluno.objects.create(
+            item_treino=self.item,
+            aluno=self.aluno,
+            texto="Texto original.",
+        )
+
+        # Validação vazio / > 1000 -> 400
+        self.assertEqual(self.client.patch(self.url, {"texto": "   "}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.client.patch(self.url, {"texto": "x" * 1001}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+
+        # DELETE não permitido -> 405
+        self.assertEqual(self.client.delete(self.url).status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+        # Outro aluno ou treinador -> 403
+        self.client.force_authenticate(user=self.outro_aluno)
+        self.assertEqual(self.client.patch(self.url, {"texto": "Outro aluno"}, format="json").status_code, status.HTTP_403_FORBIDDEN)
+
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(self.client.patch(self.url, {"texto": "Treinador"}, format="json").status_code, status.HTTP_403_FORBIDDEN)
+
+        # Treino concluído -> 409
+        self.treino.status = Treino.Status.CONCLUIDO
+        self.treino.save(update_fields=["status"])
+        self.client.force_authenticate(user=self.aluno)
+        self.assertEqual(self.client.patch(self.url, {"texto": "Pós conclusão"}, format="json").status_code, status.HTTP_409_CONFLICT)
+
+    def test_us49_concorrencia_integrity_error_retorna_409_sem_erro_500(self):
+        from unittest.mock import patch
+        from django.db import IntegrityError
+
+        self.client.force_authenticate(user=self.aluno)
+        with patch(
+            "apps.treinos.views.FeedbackAluno.objects.create",
+            side_effect=IntegrityError("duplicate key value violates unique constraint"),
+        ):
+            resp = self.client.post(self.url, {"texto": "Envio concorrente."}, format="json")
+
+        self.assertEqual(resp.status_code, status.HTTP_409_CONFLICT)

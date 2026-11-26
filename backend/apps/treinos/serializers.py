@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import ItemTreino, Treino
+from .models import FeedbackAluno, ItemTreino, Treino
 
 
 STATUS_API_PARA_FRONT = {
@@ -11,8 +11,59 @@ STATUS_API_PARA_FRONT = {
 }
 
 
+class FeedbackAlunoSerializer(serializers.ModelSerializer):
+    """Representação do feedback do aluno alinhada a FeedbackExercicio.tsx e DetalheTreino.tsx."""
+
+    autorId = serializers.IntegerField(source="aluno_id", read_only=True)
+    autorNome = serializers.SerializerMethodField()
+    exercicioId = serializers.IntegerField(source="item_treino_id", read_only=True)
+    criadoEm = serializers.DateTimeField(source="criado_em", read_only=True)
+    editadoEm = serializers.DateTimeField(source="editado_em", read_only=True)
+    editado = serializers.BooleanField(read_only=True)
+
+    class Meta:
+        model = FeedbackAluno
+        fields = [
+            "id",
+            "exercicioId",
+            "autorId",
+            "autorNome",
+            "texto",
+            "editado",
+            "criadoEm",
+            "editadoEm",
+        ]
+
+    def get_autorNome(self, obj: FeedbackAluno) -> str:
+        nome = f"{obj.aluno.first_name} {obj.aluno.last_name}".strip()
+        return nome or obj.aluno.username
+
+
+class SalvarFeedbackAlunoSerializer(serializers.Serializer):
+    """US49 / US50 — Valida texto obrigatório, não vazio e com no máximo 1.000 caracteres (RN19, RNF14)."""
+
+    texto = serializers.CharField(
+        allow_blank=False,
+        trim_whitespace=False,
+        max_length=1000,
+        error_messages={
+            "blank": "Escreva um feedback antes de salvar.",
+            "required": "Escreva um feedback antes de salvar.",
+            "max_length": "Use no máximo 1.000 caracteres.",
+        },
+    )
+
+    def validate_texto(self, value: str) -> str:
+        if not value.strip():
+            raise serializers.ValidationError("Escreva um feedback antes de salvar.")
+        if len(value) > 1000:
+            raise serializers.ValidationError("Use no máximo 1.000 caracteres.")
+        return value
+
+
 class ItemTreinoSerializer(serializers.ModelSerializer):
     errosComuns = serializers.CharField(source="erros_comuns", read_only=True)
+    feedback = FeedbackAlunoSerializer(source="feedback_aluno", read_only=True)
 
     class Meta:
         model = ItemTreino
@@ -24,6 +75,7 @@ class ItemTreinoSerializer(serializers.ModelSerializer):
             "resumo",
             "orientacoes",
             "errosComuns",
+            "feedback",
         ]
 
 
