@@ -11,4 +11,11 @@ urlpatterns = [
         views.criar_treino,
         name="treino-criar",
     ),
+    # Consultar planejamento de aluno acompanhado
+    path("alunos/", views.listar_carteira_planejamentos, name="carteira-planejamentos"),
+    path(
+        "alunos/<int:aluno_id>/planejamento-vigente/",
+        views.consultar_planejamento_vigente,
+        name="planejamento-vigente",
+    ),
 ]
