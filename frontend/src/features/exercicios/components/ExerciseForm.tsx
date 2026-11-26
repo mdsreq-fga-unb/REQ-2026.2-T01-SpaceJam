@@ -37,9 +37,6 @@ export default function ExerciseForm({
   const [orientacoes, setOrientacoes] = useState(
     exercicioInicial?.orientacoes ?? ''
   );
-  const [errosComuns, setErrosComuns] = useState(
-    exercicioInicial?.errosComuns ?? ''
-  );
   const [videoUrl, setVideoUrl] = useState(
     exercicioInicial?.videoUrl ?? ''
   );
@@ -86,7 +83,6 @@ export default function ExerciseForm({
       fundamento,
       objetivo: objetivo.trim(),
       orientacoes: orientacoes.trim() || undefined,
-      errosComuns: errosComuns.trim() || undefined,
       videoUrl: videoUrl.trim() || undefined,
     });
   }
@@ -177,16 +173,6 @@ export default function ExerciseForm({
 
         </div>
         <div className={styles.pilha}>
-          <label>
-            Erros comuns (opcional)
-            <textarea
-              value={errosComuns}
-              disabled={salvando}
-              onChange={(evento) => setErrosComuns(evento.target.value)}
-              placeholder="Descreva erros comuns durante a execução..."
-            />
-          </label>
-
           <label>
             <strong>Vídeo base (opcional)</strong>
             <input
