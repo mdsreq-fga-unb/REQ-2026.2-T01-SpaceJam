@@ -155,7 +155,7 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Termos de uso',
+        name: 'Termos e privacidade',
       }),
     ).toBeTruthy()
 

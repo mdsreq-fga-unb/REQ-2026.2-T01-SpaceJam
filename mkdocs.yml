@@ -156,6 +156,8 @@ plugins:
 exclude_docs: |
 
   /unidade-2.md
+  # Rascunhos jurídicos (US63): só publicar após aprovação formal.
+  /legal/
 
 
 

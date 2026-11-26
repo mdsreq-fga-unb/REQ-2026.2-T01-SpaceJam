@@ -1,0 +1,84 @@
+/* US63 — "Preferências de privacidade" (Figma: Aluno · Preferências de privacidade). Usa os tokens da casca .conta-aluno. */
+.privacidade__pular {
+  position: fixed;
+  z-index: 1000;
+  top: 8px;
+  left: 8px;
+  transform: translateY(-180%);
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #ffbc99;
+  color: #111113;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.privacidade__pular:focus-visible { transform: translateY(0); }
+
+.privacidade button:focus-visible,
+.privacidade a:focus-visible,
+.privacidade .conta-aluno__conteudo:focus-visible { outline: 3px solid #ffbc99; outline-offset: 3px; }
+
+.privacidade__formulario {
+  display: grid;
+  gap: 24px;
+  max-width: 600px;
+  min-width: 0;
+  margin-top: 24px;
+}
+
+.privacidade__opcionais { display: grid; gap: 12px; min-width: 0; }
+.privacidade__opcionais h2 { font-size: 18px; font-weight: 700; line-height: 24px; }
+
+.privacidade__opcoes { display: grid; gap: 12px; }
+
+.privacidade__opcao,
+.privacidade__salvar,
+.privacidade__voltar {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 1px solid var(--conta-borda);
+  border-radius: 12px;
+  background: var(--conta-cartao);
+  color: var(--conta-laranja);
+  font: 500 16px/24px 'Barlow', 'Arial Narrow', sans-serif;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+/* Opção selecionada: mesmo destaque da navegação ativa da casca. */
+.privacidade__opcao[aria-pressed='true'] {
+  border-color: transparent;
+  background: linear-gradient(135deg, #791710, var(--conta-destaque));
+  color: #fff;
+}
+
+.privacidade__opcao[aria-pressed='false']:hover,
+.privacidade__voltar:hover { background: #28282c; }
+
+.privacidade__salvar { border-color: var(--conta-destaque); background: var(--conta-destaque); color: #fff; }
+.privacidade__salvar:hover { background: #e64a28; }
+
+.privacidade__sucesso {
+  padding: 14px 16px;
+  border: 1px solid #8a9d92;
+  border-radius: 10px;
+  background: #1d3328;
+  color: #e7ffef;
+  font-size: 15px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.privacidade__acoes { display: grid; gap: 12px; }
+
+@media (min-width: 600px) {
+  .privacidade__opcoes,
+  .privacidade__acoes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .privacidade__pular { transition: none; }
+}
