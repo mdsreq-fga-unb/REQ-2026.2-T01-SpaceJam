@@ -28,6 +28,7 @@ urlpatterns = [
         "alunos-acompanhados/",
         views.alunos_acompanhados,
         name="alunos-acompanhados",
+    ),
     path(
         "contas/alunos/<int:aluno_id>/",
         views.consultar_perfil_aluno_acompanhado,
