@@ -32,6 +32,8 @@ class CadastrarExercicioTests(APITestCase):
             papel="ALUNO",
             treinador=cls.treinador,
         )
+        termos.registrar_aceite(cls.treinador)
+        termos.registrar_aceite(cls.aluno)
         cls.url = reverse("exercicio-list")
         cls.dados = {
             "nome": "Bandeja pela direita",
@@ -131,6 +133,8 @@ class ConsultarExercicioTests(APITestCase):
             papel="ALUNO",
             treinador=cls.treinador,
         )
+        termos.registrar_aceite(cls.treinador)
+        termos.registrar_aceite(cls.aluno)
         cls.completo = Exercicio.objects.create(
             nome="Passe de peito",
             objetivo="Melhorar a precisão do passe",
@@ -248,6 +252,8 @@ class EditarExercicioTests(APITestCase):
             papel="ALUNO",
             treinador=cls.treinador,
         )
+        termos.registrar_aceite(cls.treinador)
+        termos.registrar_aceite(cls.aluno)
         cls.exercicio = Exercicio.objects.create(
             nome="Passe de peito",
             objetivo="Melhorar a precisão do passe",
@@ -383,6 +389,7 @@ class ErrosComunsEVideoBaseTests(APITestCase):
             password="senha-forte-123",
             papel="TREINADOR",
         )
+        termos.registrar_aceite(cls.treinador)
         cls.url_lista = reverse("exercicio-list")
         cls.dados = {
             "nome": "Bandeja pela direita",
@@ -484,6 +491,7 @@ class ErrosOrientacoesNaConsultaTests(APITestCase):
             password="senha-forte-123",
             papel="TREINADOR",
         )
+        termos.registrar_aceite(cls.treinador)
         cls.exercicio = Exercicio.objects.create(
             nome="Drible com deslocamento",
             objetivo="Conduzir a bola em movimento",

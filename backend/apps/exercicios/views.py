@@ -1,7 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from apps.contas.permissions import ROTA_PROTEGIDA, IsTreinador
@@ -20,7 +19,7 @@ class ExercicioViewSet(
     # prefetch: traz os erros e orientações (US37) sem uma consulta por exercício.
     queryset = Exercicio.objects.prefetch_related("erros_orientacoes")
     serializer_class = ExercicioSerializer
-    permission_classes = [IsAuthenticated, IsTreinador]
+    permission_classes = [*ROTA_PROTEGIDA, IsTreinador]
 
     def perform_create(self, serializer):
         serializer.save(criado_por=self.request.user)

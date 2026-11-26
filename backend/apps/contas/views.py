@@ -178,7 +178,7 @@ def meus_dados_aluno(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def consultar_perfil_aluno_acompanhado(request, aluno_id):
     """US61 — Consultar perfil de aluno acompanhado pelo treinador (RF4810, RN03, RN04, RN25, RN26)."""
     if request.user.papel != Usuario.Papel.TREINADOR:
@@ -209,7 +209,7 @@ def consultar_perfil_aluno_acompanhado(request, aluno_id):
     return Response(PerfilAlunoAcompanhadoSerializer(aluno).data, status=status.HTTP_200_OK)
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def trocar_senha(request):
     """US08 — Trocar senha de usuário autenticado (RF1108, RN24, RNF08)."""
     serializer = TrocarSenhaSerializer(
