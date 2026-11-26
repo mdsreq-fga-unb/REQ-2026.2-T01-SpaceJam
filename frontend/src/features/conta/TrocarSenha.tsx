@@ -78,9 +78,16 @@ export function TrocarSenha({ usuario, onVoltar, onTrocarSenha }: Props) {
     } catch (falha) {
       if (falha instanceof ApiError) {
         const atualIncorreta = Boolean(falha.campos.senha_atual?.length || falha.campos.senha_antiga?.length)
-        if (atualIncorreta) {
-          setErros((antes) => ({ ...antes, senha_atual: 'Confira sua senha atual.' }))
-          document.getElementById('us08-senha_atual')?.focus()
+        const erroNova = falha.campos.nova_senha?.join(' ')
+        const erroConfirmacao = falha.campos.confirmacao_senha?.join(' ')
+        if (atualIncorreta || erroNova || erroConfirmacao) {
+          setErros((antes) => ({
+            ...antes,
+            ...(atualIncorreta ? { senha_atual: 'Confira sua senha atual.' } : {}),
+            ...(erroNova ? { nova_senha: erroNova } : {}),
+            ...(erroConfirmacao ? { confirmar_senha: erroConfirmacao } : {}),
+          }))
+          document.getElementById(atualIncorreta ? 'us08-senha_atual' : erroNova ? 'us08-nova_senha' : 'us08-confirmar_senha')?.focus()
         }
         setAviso(falha.status === 401
           ? 'Sua sessão expirou. Entre novamente para continuar.'

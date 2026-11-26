@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react'
 import { Navigate, useSearchParams } from 'react-router'
+import { listarAlunosAcompanhados } from '../../api/integracaoUs'
 import { useAuth } from '../../auth/useAuth'
+import type { Usuario } from '../../types/usuario'
 import {
   AlunosAcompanhados,
   type AlunoAcompanhadoResumo,
@@ -18,6 +21,42 @@ const alunosDemonstracao: readonly AlunoAcompanhadoResumo[] = [
   { id: 106, nome: 'Felipe Souza', objetivo: 'Passe em movimento' },
 ]
 
+type ConsultaDaCarteira =
+  | { estado: 'carregando' | 'erro' }
+  | { estado: 'pronto'; alunos: AlunoAcompanhadoResumo[]; codigoConvite: string | null }
+
+function CarteiraDoTreinador({ treinador }: { treinador: Usuario }) {
+  const [consulta, setConsulta] = useState<ConsultaDaCarteira>({ estado: 'carregando' })
+
+  useEffect(() => {
+    const controle = new AbortController()
+    const { signal } = controle
+
+    listarAlunosAcompanhados(signal).then(carteira => {
+      if (signal.aborted) return
+      const alunos = carteira.alunos.map(({ id, first_name, last_name, apelido }) => ({
+        id,
+        nome: [first_name.trim(), last_name.trim()].filter(Boolean).join(' ') || apelido,
+      }))
+      setConsulta({ estado: 'pronto', alunos, codigoConvite: carteira.codigo_convite })
+    }).catch(() => {
+      if (!signal.aborted) setConsulta({ estado: 'erro' })
+    })
+
+    return () => controle.abort()
+  }, [])
+
+  const carteira = consulta.estado === 'pronto' ? consulta : null
+  return (
+    <AlunosAcompanhados
+      treinador={carteira ? { ...treinador, codigo_convite: carteira.codigoConvite } : treinador}
+      alunos={carteira?.alunos}
+      estado={consulta.estado}
+      perfilIntegrado
+    />
+  )
+}
+
 export function AlunosAcompanhadosPage() {
   const { usuario } = useAuth()
   const [parametros] = useSearchParams()
@@ -29,14 +68,14 @@ export function AlunosAcompanhadosPage() {
     return <Navigate to="/treinador/alunos" replace />
   }
 
-  return (
+  if (previa) return (
     <AlunosAcompanhados
       treinador={usuario}
-      alunos={previa ? alunosDemonstracao : []}
-      estado={previa ? 'pronto' : 'aguardando-api'}
-      demonstracao={previa}
-      // A navegação para o perfil está disponível na branch integrada.
-      perfilIntegrado={true}
+      alunos={alunosDemonstracao}
+      estado="pronto"
+      demonstracao
     />
   )
+
+  return <CarteiraDoTreinador key={usuario.id} treinador={usuario} />
 }

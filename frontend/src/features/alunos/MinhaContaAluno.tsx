@@ -7,6 +7,8 @@ type MinhaContaAlunoProps = {
   editarDados?: () => void
   trocarSenha?: () => void
   preferenciasPrivacidade?: () => void
+  treinadorVinculado?: { id: number; nome: string; codigo_convite?: string } | null
+  historicoLesoes?: unknown[] | null
 }
 
 type Medida = string | number | null | undefined
@@ -47,7 +49,15 @@ function formatarNascimento(data?: string | null) {
   return `${dia}/${mes}/${ano}`
 }
 
-export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, preferenciasPrivacidade }: MinhaContaAlunoProps) {
+function descreverLesao(item: unknown): string {
+  if (typeof item === 'string') return item
+  if (item && typeof item === 'object' && 'descricao' in item && typeof item.descricao === 'string') {
+    return item.descricao
+  }
+  return 'Lesão registrada'
+}
+
+export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, preferenciasPrivacidade, treinadorVinculado, historicoLesoes }: MinhaContaAlunoProps) {
   const nome =
     [usuario.first_name, usuario.last_name]
       .filter(Boolean)
@@ -103,6 +113,7 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
               <div><dt>Apelido:</dt><dd>{usuario.apelido || 'Não informado'}</dd></div>
               <div><dt>E-mail:</dt><dd>{usuario.email || 'Não informado'}</dd></div>
               <div><dt>Nascimento:</dt><dd>{formatarNascimento(usuario.data_nascimento)}</dd></div>
+              {treinadorVinculado && <div><dt>Treinador vinculado:</dt><dd>{treinadorVinculado.nome}</dd></div>}
             </dl>
           </section>
 
@@ -123,7 +134,13 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
 
           <section className="conta-aluno__cartao conta-aluno__cartao--lesoes" aria-labelledby="historico-lesoes">
             <h2 id="historico-lesoes">Histórico de lesões</h2>
-            <p className="conta-aluno__indisponivel">Histórico ainda não disponível para consulta.</p>
+            {historicoLesoes == null ? (
+              <p className="conta-aluno__indisponivel">Histórico ainda não disponível para consulta.</p>
+            ) : historicoLesoes.length === 0 ? (
+              <p className="conta-aluno__indisponivel">Nenhuma lesão registrada.</p>
+            ) : (
+              <ul>{historicoLesoes.map((lesao, indice) => <li key={indice}>{descreverLesao(lesao)}</li>)}</ul>
+            )}
           </section>
         </div>
 

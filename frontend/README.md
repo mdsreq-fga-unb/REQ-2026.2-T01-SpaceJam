@@ -61,4 +61,15 @@ Telas do treinador para manter os pares **erro comum + orientação corretiva** 
 
 `tests/acesso-api-real.test.tsx` é opcional e usa HTTP real. Só execute contra uma cópia descartável do backend, com banco vazio, migrações aplicadas e proxy do Vite ativo. Defina `SPACE_JAM_API_TEST_URL` com a base local (por exemplo `http://127.0.0.1:5173/api`) e `SPACE_JAM_TEST_ACTIVATION_CODE` com o código desse backend de teste, apenas no processo de testes. Execute `npm test -- --pool=threads tests/acesso-api-real.test.tsx`. Não use banco da equipe: a suíte cria contas fictícias e o backend permite apenas um treinador. Na execução padrão esses testes ficam ignorados por falta das variáveis explícitas.
 
-A suíte real verifica cadastro/persistência/vínculo pelo cliente HTTP, login e saída pelos componentes React, consulta e restauração do perfil, rejeição de credenciais/duplicidade e aceite pelo endpoint. Usa DOM de teste (jsdom), não automatiza um navegador real e não comprova a revisão dos documentos de termos. Testes aprovados não substituem revisão independente nem validação do cliente.
+A suíte renderiza os componentes React em jsdom e usa a API real pelo proxy do Vite. Além dos fluxos de acesso, ela verifica edição e consulta de cadastro, perfil de aluno vinculado e troca de senha com rejeição das credenciais da sessão anterior.
+
+Para incluir a recuperação de senha no teste HTTP, aponte `SPACE_JAM_TEST_MAIL_DIR` para um diretório vazio em que as mensagens serão gravadas. Use o backend de e-mail em arquivo do Django com `EMAIL_FILE_PATH` ou um SMTP de teste que grave as mensagens recebidas nesse diretório. Configure `FRONTEND_URL` com a origem do frontend local. O teste lê o link gerado, redefine a senha e verifica que o link não pode ser reutilizado.
+
+Os resultados registram o comportamento no ambiente de teste. A revisão independente, os documentos de termos vigentes e a validação pelo cliente seguem o fluxo da equipe.
+
+### Integração da Iteração 2
+
+- US07 e US53 permitem que o aluno atualize e consulte seus dados cadastrais. O telefone é opcional e pode ser removido ao limpar o campo.
+- US08 e US10 conectam a troca de senha e a recuperação com link de uso único à API de contas. Para validar o fluxo com a configuração de entrega, use PostgreSQL 16 e configure o backend SMTP do Django.
+- US52 carrega a carteira do treinador de `GET /api/alunos-acompanhados/`. A ação **Ver perfil** usa o identificador devolvido na lista para abrir o perfil real da US61.
+- US61 também funciona pela rota direta. A exibição de lesões registradas depende da persistência pela US11.
