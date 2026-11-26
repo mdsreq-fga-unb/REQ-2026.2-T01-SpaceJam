@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router'
-import { consultarPerfilDoAluno, type DadosCadastraisApi } from '../../api/integracaoUs'
+import { consultarPerfilDoAluno, registrarLesaoDoAluno, type DadosCadastraisApi } from '../../api/integracaoUs'
 import { ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
 import {
@@ -78,7 +78,22 @@ export function PerfilAlunoAcompanhadoPage() {
   if (!usuario) return null
   if (previa && !import.meta.env.DEV) return <Navigate to="/" replace />
 
-  const alunoAtual = aluno?.id === Number(alunoId) ? aluno.dados : null
+  const selecionado = aluno?.id === Number(alunoId) ? aluno : null
+  const podeRegistrar = selecionado && !previa && usuario.papel === 'TREINADOR' && !usuario.termos_pendentes
+
+  async function registrarLesao(id: number, descricao: string, signal: AbortSignal) {
+    const registro = await registrarLesaoDoAluno(id, descricao, signal)
+    if (signal.aborted) return
+
+    setAluno(atual => atual?.id === id ? {
+      ...atual,
+      dados: {
+        ...atual.dados,
+        historicoLesoes: [registro.descricao, ...(atual.dados.historicoLesoes ?? [])],
+      },
+    } : atual)
+  }
+
   return <>
     {carregando && <p role="status">Carregando perfil do aluno...</p>}
     {erro && <div role="alert">
@@ -86,10 +101,14 @@ export function PerfilAlunoAcompanhadoPage() {
       <button type="button" onClick={() => navegar('/treinador/alunos')}>Voltar aos alunos</button>
     </div>}
     {(previa || (!carregando && !erro)) && <PerfilAlunoAcompanhado
+      key={alunoId}
       treinador={usuario}
-      aluno={previa ? alunoDemonstracao : alunoAtual}
+      aluno={previa ? alunoDemonstracao : selecionado?.dados}
       demonstracao={previa}
       onVoltar={() => navegar('/treinador/alunos')}
+      onRegistrarLesao={podeRegistrar
+        ? (descricao, signal) => registrarLesao(selecionado.id, descricao, signal)
+        : undefined}
     />}
   </>
 }

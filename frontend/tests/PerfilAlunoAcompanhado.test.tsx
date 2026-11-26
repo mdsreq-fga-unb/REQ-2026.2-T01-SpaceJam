@@ -1,5 +1,6 @@
 
-import { render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from '../src/App'
 import { tokenStorage } from '../src/api/client'
@@ -20,14 +21,15 @@ const treinador: Usuario = {
 function abrirComSessao(
   caminho: string,
   usuario: Usuario = treinador,
+  responder?: (url: string, opcoes?: RequestInit) => Response | undefined,
 ) {
   tokenStorage.set('token-teste')
 
-  const requisicoes = vi.fn().mockImplementation((url: string) => Promise.resolve(
-    url.includes('/api/contas/alunos/')
+  const requisicoes = vi.fn(async (url: string, opcoes?: RequestInit) =>
+    responder?.(url, opcoes) ?? (url.includes('/api/contas/alunos/')
       ? new Response(JSON.stringify({ detail: 'Aluno não encontrado' }), { status: 404 })
-      : new Response(JSON.stringify(usuario), { status: 200 }),
-  ))
+      : new Response(JSON.stringify(usuario), { status: 200 })),
+  )
 
   vi.stubGlobal('fetch', requisicoes)
   window.history.replaceState({}, '', caminho)
@@ -132,6 +134,7 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
         name: 'Beatriz Costa',
       }),
     ).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Registrar lesão' })).toBeNull()
   })
 
   it('não consulta uma API inexistente ao receber um ID real', async () => {
@@ -167,5 +170,68 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
         name: 'Beatriz Costa',
       }),
     ).toBeNull()
+  })
+})
+
+describe('US11 — Registrar lesão no perfil de um aluno', () => {
+  const rotaPerfil = '/treinador/alunos/21'
+  const rotaLesoes = '/api/contas/alunos/21/lesoes/'
+  const perfil = {
+    id: 21, first_name: 'Beatriz', last_name: 'Costa', apelido: 'bia',
+    email: 'bia@example.invalid', historico_lesoes: [{ id: 8, descricao: 'Registro anterior.' }],
+  }
+
+  async function abrirFormulario(resposta: Response) {
+    const requisicoes = abrirComSessao(rotaPerfil, treinador, url => {
+      if (url === '/api/contas/alunos/21/') return Response.json(perfil)
+      if (url === rotaLesoes) return resposta
+    })
+    const pessoa = userEvent.setup()
+    await pessoa.click(await screen.findByRole('button', { name: 'Registrar lesão' }))
+    const campo = await screen.findByRole('textbox', { name: /descrição da lesão/i })
+    return { requisicoes, pessoa, campo }
+  }
+
+  it('bloqueia descrição inválida e inclui o registro devolvido pela API no histórico', async () => {
+    const { requisicoes, pessoa, campo } = await abrirFormulario(
+      Response.json({ id: 9, descricao: 'Entorse no tornozelo.', criado_em: '2026-11-26T18:00:00Z' }, { status: 201 }),
+    )
+
+    await pessoa.type(campo, '   ')
+    await pessoa.click(screen.getByRole('button', { name: /salvar/i }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Informe a descrição da lesão')
+    expect(campo).toHaveAttribute('aria-invalid', 'true')
+
+    fireEvent.change(campo, { target: { value: 'a'.repeat(301) } })
+    await pessoa.click(screen.getByRole('button', { name: /salvar/i }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('300 caracteres')
+    expect(requisicoes.mock.calls.some(([url]) => url === rotaLesoes)).toBe(false)
+
+    fireEvent.change(campo, { target: { value: '  Entorse no tornozelo.  ' } })
+    await pessoa.click(screen.getByRole('button', { name: /salvar/i }))
+    const historico = await screen.findByRole('region', { name: 'Histórico de lesões' })
+    const lista = within(historico).getByRole('list')
+    expect(within(lista).getAllByRole('listitem').map(item => item.textContent)).toEqual([
+      'Entorse no tornozelo.',
+      'Registro anterior.',
+    ])
+    expect(within(historico).getByRole('status')).toHaveTextContent('Lesão registrada.')
+    expect(requisicoes).toHaveBeenCalledWith(rotaLesoes, expect.objectContaining({
+      method: 'POST', body: '{"descricao":"Entorse no tornozelo."}',
+    }))
+  })
+
+  it('mantém a descrição para corrigir ou tentar novamente quando a API recusa', async () => {
+    const { pessoa, campo } = await abrirFormulario(
+      Response.json({ descricao: ['Descrição recusada pela API.'] }, { status: 400 }),
+    )
+    await pessoa.type(campo, 'Descrição para revisar.')
+    await pessoa.click(screen.getByRole('button', { name: /salvar/i }))
+    expect(await screen.findByRole('alert')).toHaveTextContent('Descrição recusada pela API.')
+    expect(campo).toHaveValue('Descrição para revisar.')
+    await pessoa.click(screen.getByRole('button', { name: 'Cancelar' }))
+    const historico = screen.getByRole('region', { name: 'Histórico de lesões' })
+    expect(within(historico).getByText('Registro anterior.')).toBeInTheDocument()
+    expect(within(historico).queryByText('Lesão registrada.')).toBeNull()
   })
 })

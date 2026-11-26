@@ -44,6 +44,14 @@ export function consultarPerfilDoAluno(alunoId: number) {
   return api<DadosCadastraisApi>(`/contas/alunos/${alunoId}/`)
 }
 
+export function registrarLesaoDoAluno(alunoId: number, descricao: string, signal: AbortSignal) {
+  return api<{ id: number; descricao: string; criado_em: string }>(`/contas/alunos/${alunoId}/lesoes/`, {
+    method: 'POST',
+    body: JSON.stringify({ descricao }),
+    signal,
+  })
+}
+
 interface CarteiraDeAlunosApi {
   alunos: Pick<DadosCadastraisApi, 'id' | 'first_name' | 'last_name' | 'apelido'>[]
   codigo_convite: string | null
