@@ -129,7 +129,7 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
 
           <section className="conta-aluno__cartao conta-aluno__cartao--objetivos" aria-labelledby="objetivos">
             <h2 id="objetivos">Objetivos</h2>
-            <p className="conta-aluno__indisponivel">{perfil?.objetivos?.trim() || 'Não informado'}</p>
+                        <p className="conta-aluno__indisponivel">{perfil?.objetivos?.trim() || 'Nenhum objetivo registrado'}</p>
           </section>
 
           <section className="conta-aluno__cartao conta-aluno__cartao--lesoes" aria-labelledby="historico-lesoes">

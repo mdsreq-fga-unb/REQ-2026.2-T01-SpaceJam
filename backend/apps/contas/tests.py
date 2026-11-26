@@ -860,3 +860,65 @@ class RegistrarLesaoTests(LesaoMixin, APITestCase):
         Lesao.objects.create(aluno=self.aluno, descricao="Entorse no tornozelo.")
         self.aluno.delete()
         self.assertEqual(Lesao.objects.count(), 0)
+
+
+
+
+class ConsultarObjetivosUS59Tests(LesaoMixin, APITestCase):
+    """US59 — O aluno consulta exclusivamente os próprios objetivos."""
+
+    url = "/api/contas/me/"
+
+    def test_ca01_aluno_ve_os_proprios_objetivos(self):
+        self._autenticar(self.aluno)
+        r = self.client.get(self.url)
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["objetivos"], "Melhorar arremesso")
+
+    def test_ca02_objetivo_alterado_pelo_aluno_aparece_na_consulta(self):
+        self._autenticar(self.aluno)
+        r_edicao = self.client.patch(
+            "/api/contas/me/editar/", {"objetivos": "Ganhar velocidade na transição"}, format="json"
+        )
+        self.assertEqual(r_edicao.status_code, 200)
+        r = self.client.get(self.url)
+        self.assertEqual(r.data["objetivos"], "Ganhar velocidade na transição")
+
+    def test_ca03_aluno_nao_acessa_objetivos_de_outro_aluno(self):
+        outro = self._criar_aluno("outro_aluno_us59", self.treinador)
+        PerfilAluno.objects.filter(usuario=outro).update(objetivos="Objetivo do outro aluno")
+        self._autenticar(self.aluno)
+
+        r_perfil = self.client.get(f"/api/contas/alunos/{outro.id}/")
+        self.assertEqual(r_perfil.status_code, 403)
+        self.assertNotIn("Objetivo do outro aluno", str(r_perfil.data))
+
+        r_edicao = self.client.patch(
+            f"/api/contas/alunos/{outro.id}/editar/", {"objetivos": "Invadido"}, format="json"
+        )
+        self.assertEqual(r_edicao.status_code, 403)
+        outro.perfil_aluno.refresh_from_db()
+        self.assertEqual(outro.perfil_aluno.objetivos, "Objetivo do outro aluno")
+
+        r_meus = self.client.get(self.url)
+        self.assertEqual(r_meus.data["objetivos"], "Melhorar arremesso")
+
+    def test_ca04_sem_objetivos_devolve_vazio_sem_erro(self):
+        PerfilAluno.objects.filter(usuario=self.aluno).update(objetivos="  ")
+        self._autenticar(self.aluno)
+        r = self.client.get(self.url)
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["objetivos"], "")
+
+    def test_rota_do_aluno_exige_autenticacao_e_papel_aluno(self):
+        self.client.credentials()
+        self.assertEqual(self.client.get(self.url).status_code, 401)
+        self._autenticar(self.treinador)
+        self.assertEqual(self.client.get(self.url).status_code, 403)
+
+    def test_us61_treinador_continua_vendo_nao_informado_sem_objetivos(self):
+        PerfilAluno.objects.filter(usuario=self.aluno).update(objetivos="")
+        self._autenticar(self.treinador)
+        r = self.client.get(f"/api/contas/alunos/{self.aluno.id}/")
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["objetivos"], "Não informado")
