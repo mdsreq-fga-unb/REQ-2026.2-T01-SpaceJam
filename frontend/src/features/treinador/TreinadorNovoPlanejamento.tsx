@@ -1,6 +1,6 @@
 
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import './TreinadorNovoPlanejamento.css'
 
 interface TreinadorNovoPlanejamentoProps {
@@ -14,6 +14,8 @@ export function TreinadorNovoPlanejamento({
   nomeTreinador = 'Lucas',
   modoTeste = false,
 }: TreinadorNovoPlanejamentoProps) {
+  const navigate = useNavigate()
+
   const [alunoSelecionado, setAlunoSelecionado] = useState('Beatriz Costa')
   const [nomePlanejamento, setNomePlanejamento] = useState('Controle de bola')
   const [mensagem, setMensagem] = useState('')
@@ -21,12 +23,23 @@ export function TreinadorNovoPlanejamento({
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
 
-    // A integração com o backend será feita posteriormente.
-    setMensagem(
-      modoTeste
-        ? 'Prévia visual: o planejamento ainda não foi salvo.'
-        : 'A criação de planejamentos ainda não está integrada.'
-    )
+    const nome = nomePlanejamento.trim()
+
+    if (!nome) {
+      setMensagem('Informe um nome para o planejamento.')
+      return
+    }
+
+    const parametros = new URLSearchParams({
+      titulo: nome,
+      aluno: alunoSelecionado,
+    })
+
+    const destino = modoTeste
+      ? `/teste/treinador/planejamento?${parametros.toString()}`
+      : `/treinador/planejamento?${parametros.toString()}`
+
+    navigate(destino)
   }
 
   return (
@@ -54,9 +67,11 @@ export function TreinadorNovoPlanejamento({
 
         <nav className="sj-novo__menu" aria-label="Menu do treinador">
           <Link to="/treinador/alunos">Alunos</Link>
+
           <Link to="/treinador/planejamentos" className="ativo">
             Treinos
           </Link>
+
           <Link to="/exercicios">Biblioteca</Link>
           <Link to="/">Conta</Link>
         </nav>
@@ -78,6 +93,7 @@ export function TreinadorNovoPlanejamento({
             />
             <span>SPACE JAM</span>
           </div>
+
           <span>{nomeTreinador}</span>
         </header>
 
@@ -129,8 +145,9 @@ export function TreinadorNovoPlanejamento({
 
               <div className="sj-novo__campo">
                 <label htmlFor="nome-planejamento">
-                  Nome do planejamento
+                  Nome do planejamento *
                 </label>
+
                 <input
                   id="nome-planejamento"
                   type="text"
@@ -181,9 +198,11 @@ export function TreinadorNovoPlanejamento({
         aria-label="Seções do treinador"
       >
         <Link to="/treinador/alunos">Alunos</Link>
+
         <Link to="/treinador/planejamentos" className="ativo">
           Treinos
         </Link>
+
         <Link to="/exercicios">Biblioteca</Link>
         <Link to="/">Conta</Link>
       </nav>

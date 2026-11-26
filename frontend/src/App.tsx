@@ -14,6 +14,7 @@ import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivac
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
+import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDetalhesPlanejamento'
 
 // US18 - Planejamentos do treinador
 import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
@@ -36,6 +37,10 @@ export default function App() {
           <Route
             path="/teste/treinador/novo-planejamento"
             element={<TreinadorNovoPlanejamento modoTeste />}
+          />
+          <Route
+            path="/teste/treinador/planejamento"
+            element={<TreinadorDetalhesPlanejamento modoTeste />}
           />
 
           <Route path="/cadastro" element={<Navigate to="/cadastro/aluno" replace />} />

@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router'
 import type { Usuario } from '../../types/usuario'
 import './TreinadorPlanejamentos.css'
@@ -40,6 +41,10 @@ export function TreinadorPlanejamentos({
     </div>
   )
 
+  const rotaNovoPlanejamento = demonstracao
+    ? '/teste/treinador/novo-planejamento'
+    : '/treinador/novo-planejamento'
+
   return (
     <div className="sj-planejamentos">
       <a
@@ -57,12 +62,14 @@ export function TreinadorPlanejamentos({
           aria-label="Menu do treinador"
         >
           <Link to="/treinador/alunos">Alunos</Link>
+
           <Link
             to="/treinador/planejamentos"
             aria-current="page"
           >
             Treinos
           </Link>
+
           <Link to="/exercicios">Biblioteca</Link>
           <Link to="/">Conta</Link>
         </nav>
@@ -108,7 +115,9 @@ export function TreinadorPlanejamentos({
                   key={item.id}
                 >
                   <strong>{item.nome}</strong>
+
                   <span>{item.descricao}</span>
+
                   <span className="sj-planejamentos__consultar">
                     Consultar
                   </span>
@@ -129,13 +138,12 @@ export function TreinadorPlanejamentos({
           )}
 
           <div className="sj-planejamentos__acoes">
-            <button
-              type="button"
-              disabled
-              title="A criação de planejamentos ainda não está integrada."
+            <Link
+              className="sj-planejamentos__botao"
+              to={rotaNovoPlanejamento}
             >
               Novo planejamento
-            </button>
+            </Link>
           </div>
         </main>
       </div>
@@ -145,12 +153,14 @@ export function TreinadorPlanejamentos({
         aria-label="Seções do treinador"
       >
         <Link to="/treinador/alunos">Alunos</Link>
+
         <Link
           to="/treinador/planejamentos"
           aria-current="page"
         >
           Treinos
         </Link>
+
         <Link to="/exercicios">Biblioteca</Link>
         <Link to="/">Conta</Link>
       </nav>

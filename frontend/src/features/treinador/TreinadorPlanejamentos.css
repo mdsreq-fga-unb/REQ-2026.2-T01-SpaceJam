@@ -230,7 +230,11 @@ body:has(.sj-planejamentos),
   margin-top: 24px;
 }
 
+.sj-planejamentos__acoes a,
 .sj-planejamentos__acoes button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   min-height: 48px;
   padding: 14px;
@@ -238,8 +242,19 @@ body:has(.sj-planejamentos),
   border-radius: 12px;
   background: #c4381c;
   color: #fff;
+  font-family: 'Barlow', Arial, sans-serif;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.sj-planejamentos__acoes a:hover,
+.sj-planejamentos__acoes button:hover:not(:disabled) {
+  background: #a92f19;
+  color: #fff;
+  text-decoration: none;
 }
 
 .sj-planejamentos__acoes button:disabled {

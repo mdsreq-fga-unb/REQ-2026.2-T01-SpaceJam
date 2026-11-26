@@ -1,0 +1,136 @@
+
+.detalhes-planejamento {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  color: #f2f2f2;
+  font-family: 'Barlow', Arial, sans-serif;
+}
+
+.detalhes-planejamento__intro {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detalhes-planejamento__intro h1 {
+  margin: 0;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 38px;
+}
+
+.detalhes-planejamento__intro p {
+  margin: 0;
+  color: #c2c2c4;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.detalhes-planejamento__aviso {
+  margin: 0;
+  color: #ffb18e;
+  font-size: 14px;
+}
+
+.detalhes-planejamento__treinos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+.detalhes-planejamento__coluna {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.detalhes-planejamento__consulta,
+.detalhes-planejamento__cartao {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 118px;
+  padding: 16px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+  background: #1d1d20;
+  color: #f2f2f2;
+  text-decoration: none;
+}
+
+.detalhes-planejamento__consulta strong,
+.detalhes-planejamento__cartao strong {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.detalhes-planejamento__consulta span,
+.detalhes-planejamento__cartao span {
+  color: #c2c2c4;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.detalhes-planejamento__consulta .detalhes-planejamento__link {
+  color: #ff9a6c;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.detalhes-planejamento__consulta:hover {
+  border-color: #ff9a6c;
+}
+
+.detalhes-planejamento__acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 440px;
+  max-width: 100%;
+}
+
+.detalhes-planejamento__botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 14px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+  background: #1d1d20;
+  color: #ff9a6c;
+  font-family: 'Barlow', Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.detalhes-planejamento__botao:hover {
+  background: #29292d;
+}
+
+.detalhes-planejamento__botao.principal {
+  border-color: transparent;
+  background: #c4381c;
+  color: #fff;
+}
+
+.detalhes-planejamento__botao.principal:hover {
+  background: #b72f14;
+}
+
+@media (max-width: 700px) {
+  .detalhes-planejamento__treinos {
+    grid-template-columns: 1fr;
+  }
+
+  .detalhes-planejamento__acoes {
+    width: 100%;
+  }
+}

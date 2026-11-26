@@ -2,9 +2,20 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { MemoryRouter } from 'react-router'
+import { MemoryRouter, useLocation } from 'react-router'
 
 import { TreinadorNovoPlanejamento } from '../TreinadorNovoPlanejamento'
+
+function RotaAtual() {
+  const location = useLocation()
+
+  return (
+    <output data-testid="rota-atual">
+      {location.pathname}
+      {location.search}
+    </output>
+  )
+}
 
 describe('TreinadorNovoPlanejamento', () => {
   // TESTE 01: Exibição da página
@@ -134,6 +145,7 @@ describe('TreinadorNovoPlanejamento', () => {
     render(
       <MemoryRouter>
         <TreinadorNovoPlanejamento modoTeste />
+        <RotaAtual />
       </MemoryRouter>
     )
 
@@ -144,20 +156,17 @@ describe('TreinadorNovoPlanejamento', () => {
     expect(campoNome).toBeRequired()
     expect(campoNome).toBeInvalid()
 
-    await usuario.click(
-      screen.getByRole('button', { name: /criar planejamento/i })
-    )
-
-    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    expect(screen.getByTestId('rota-atual')).toHaveTextContent('/')
   })
 
   // TESTE 09: Envio válido
-  it('deve aceitar o envio quando o nome está preenchido', async () => {
+  it('deve redirecionar após criar um planejamento', async () => {
     const usuario = userEvent.setup()
 
     render(
       <MemoryRouter>
         <TreinadorNovoPlanejamento modoTeste />
+        <RotaAtual />
       </MemoryRouter>
     )
 
@@ -170,72 +179,82 @@ describe('TreinadorNovoPlanejamento', () => {
       screen.getByRole('button', { name: /criar planejamento/i })
     )
 
-    expect(screen.getByRole('status')).toBeInTheDocument()
+    expect(screen.getByTestId('rota-atual')).toHaveTextContent(
+      '/teste/treinador/planejamento'
+    )
+    expect(screen.getByTestId('rota-atual').textContent).toContain(
+      'titulo=Treino+de+arremesso'
+    )
   })
 
-  // TESTE 10: Mensagem de confirmação
-  it('deve exibir a mensagem de prévia após o envio', async () => {
+  // TESTE 10: Envio do título escolhido
+  it('deve enviar o nome escolhido pelo treinador na URL', async () => {
     const usuario = userEvent.setup()
 
     render(
       <MemoryRouter>
         <TreinadorNovoPlanejamento modoTeste />
+        <RotaAtual />
       </MemoryRouter>
     )
+
+    const campoNome = screen.getByLabelText(/nome do planejamento/i)
+
+    await usuario.clear(campoNome)
+    await usuario.type(campoNome, 'Treino de defesa')
 
     await usuario.click(
       screen.getByRole('button', { name: /criar planejamento/i })
     )
 
-    expect(screen.getByRole('status')).toHaveTextContent(/visual/)
-    expect(screen.getByRole('status')).toHaveTextContent(/planejamento/)
+    const rota = screen.getByTestId('rota-atual')
+
+    expect(rota.textContent).toContain('titulo=Treino+de+defesa')
+    expect(rota.textContent).toContain('aluno=Beatriz')
   })
 
-  // TESTE 11: Limpeza da mensagem ao editar o nome
-  it('deve remover a mensagem quando o nome é alterado', async () => {
+  // TESTE 11: Envio do aluno selecionado
+  it('deve enviar o aluno selecionado na URL', async () => {
     const usuario = userEvent.setup()
 
     render(
       <MemoryRouter>
         <TreinadorNovoPlanejamento modoTeste />
+        <RotaAtual />
       </MemoryRouter>
     )
-
-    await usuario.click(
-      screen.getByRole('button', { name: /criar planejamento/i })
-    )
-
-    expect(screen.getByRole('status')).toBeInTheDocument()
-
-    await usuario.type(
-      screen.getByLabelText(/nome do planejamento/i),
-      ' novo'
-    )
-
-    expect(screen.queryByRole('status')).not.toBeInTheDocument()
-  })
-
-  // TESTE 12: Limpeza da mensagem ao trocar aluno
-  it('deve remover a mensagem quando outro aluno é selecionado', async () => {
-    const usuario = userEvent.setup()
-
-    render(
-      <MemoryRouter>
-        <TreinadorNovoPlanejamento modoTeste />
-      </MemoryRouter>
-    )
-
-    await usuario.click(
-      screen.getByRole('button', { name: /criar planejamento/i })
-    )
-
-    expect(screen.getByRole('status')).toBeInTheDocument()
 
     await usuario.click(
       screen.getByRole('button', { name: /camila martins/i })
     )
 
-    expect(screen.queryByRole('status')).not.toBeInTheDocument()
+    await usuario.click(
+      screen.getByRole('button', { name: /criar planejamento/i })
+    )
+
+    expect(screen.getByTestId('rota-atual').textContent).toContain(
+      'aluno=Camila+Martins'
+    )
+  })
+
+  // TESTE 12: Redirecionamento no modo normal
+  it('deve utilizar a rota normal quando o modo de teste está desativado', async () => {
+    const usuario = userEvent.setup()
+
+    render(
+      <MemoryRouter>
+        <TreinadorNovoPlanejamento />
+        <RotaAtual />
+      </MemoryRouter>
+    )
+
+    await usuario.click(
+      screen.getByRole('button', { name: /criar planejamento/i })
+    )
+
+    expect(screen.getByTestId('rota-atual')).toHaveTextContent(
+      '/treinador/planejamento'
+    )
   })
 
   // TESTE 13: Cancelamento
