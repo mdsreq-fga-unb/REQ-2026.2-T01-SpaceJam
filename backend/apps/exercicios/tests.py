@@ -185,13 +185,22 @@ class ConsultarExercicioTests(APITestCase):
             with self.subTest(pk=pk):
                 resposta = self.client.get(self.url_detalhe(pk))
                 self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)
-
-    def test_aluno_recebe_403_na_lista_e_no_detalhe(self):
+    def test_aluno_recebe_403_na_lista_e_200_no_detalhe(self):
         self.client.force_authenticate(self.aluno)
-        for url in [self.url_lista, self.url_detalhe(self.completo.pk)]:
-            with self.subTest(url=url):
-                resposta = self.client.get(url)
-                self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+
+        resposta_lista = self.client.get(self.url_lista)
+        self.assertEqual(
+            resposta_lista.status_code,
+            status.HTTP_403_FORBIDDEN,
+        )
+
+        resposta_detalhe = self.client.get(
+            self.url_detalhe(self.completo.pk)
+        )
+        self.assertEqual(
+            resposta_detalhe.status_code,
+            status.HTTP_200_OK,
+        )
 
     def test_sem_login_recebe_401(self):
         for url in [self.url_lista, self.url_detalhe(self.completo.pk)]:
@@ -503,6 +512,35 @@ class ErrosOrientacoesNaConsultaTests(APITestCase):
 
     def setUp(self):
         self.client.force_authenticate(self.treinador)
+
+    def test_aluno_consulta_detalhe_com_erros_e_orientacoes(self):
+        aluno = Usuario.objects.create_user(
+            username="aluno_us36",
+            email="aluno_us36@exemplo.com",
+            password="senha-forte-123",
+            papel="ALUNO",
+            treinador=self.treinador,
+        )
+
+        item = self.criar_item()
+
+        self.client.force_authenticate(aluno)
+        resposta = self.client.get(self.url)
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(resposta.data["erros_orientacoes"]), 1)
+        self.assertEqual(
+            resposta.data["erros_orientacoes"][0]["id"],
+            item.pk,
+        )
+        self.assertEqual(
+            resposta.data["erros_orientacoes"][0]["erro"],
+            "Olhar somente para a bola.",
+        )
+        self.assertEqual(
+            resposta.data["erros_orientacoes"][0]["orientacao_corretiva"],
+            "Mantenha o olhar à frente durante o deslocamento.",
+        )
 
     def criar_item(self, exercicio=None, erro="Olhar somente para a bola.",
                    orientacao="Mantenha o olhar à frente durante o deslocamento."):

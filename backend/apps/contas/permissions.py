@@ -16,6 +16,17 @@ class IsAluno(BasePermission):
     def has_permission(self, request, view):
         return bool(request.user and request.user.is_authenticated and request.user.is_aluno)
 
+class IsTreinadorOuAluno(BasePermission):
+    message = "Apenas treinadores ou alunos podem fazer isso."
+
+    def has_permission(self, request, view):
+        user = getattr(request, "user", None)
+        return bool(
+            user
+            and user.is_authenticated
+            and (user.is_treinador or user.is_aluno)
+        )
+
 
 class IsAlunoProprietarioPerfil(BasePermission):
     """US07 / RF1107 — Permite editar apenas o próprio perfil básico do aluno."""

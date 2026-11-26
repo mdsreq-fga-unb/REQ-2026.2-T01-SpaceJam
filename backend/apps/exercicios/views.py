@@ -3,7 +3,8 @@ from rest_framework import mixins, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from apps.contas.permissions import ROTA_PROTEGIDA, IsTreinador
+from apps.contas.permissions import ROTA_PROTEGIDA, IsTreinador, IsTreinadorOuAluno
+
 
 from .models import Exercicio, Fundamento
 from .serializers import ErroComumExercicioSerializer, ExercicioSerializer
@@ -21,6 +22,13 @@ class ExercicioViewSet(
     serializer_class = ExercicioSerializer
     permission_classes = [*ROTA_PROTEGIDA, IsTreinador]
 
+    def get_permissions(self):
+        if self.action == "retrieve":
+            permission_classes = [IsAuthenticated, IsTreinadorOuAluno]
+        else:
+            permission_classes = [IsAuthenticated, IsTreinador]
+
+        return [permission() for permission in permission_classes]
     def perform_create(self, serializer):
         serializer.save(criado_por=self.request.user)
 
