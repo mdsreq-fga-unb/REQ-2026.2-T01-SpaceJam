@@ -62,3 +62,11 @@ Telas do treinador para manter os pares **erro comum + orientação corretiva** 
 `tests/acesso-api-real.test.tsx` é opcional e usa HTTP real. Só execute contra uma cópia descartável do backend, com banco vazio, migrações aplicadas e proxy do Vite ativo. Defina `SPACE_JAM_API_TEST_URL` com a base local (por exemplo `http://127.0.0.1:5173/api`) e `SPACE_JAM_TEST_ACTIVATION_CODE` com o código desse backend de teste, apenas no processo de testes. Execute `npm test -- --pool=threads tests/acesso-api-real.test.tsx`. Não use banco da equipe: a suíte cria contas fictícias e o backend permite apenas um treinador. Na execução padrão esses testes ficam ignorados por falta das variáveis explícitas.
 
 A suíte real verifica cadastro/persistência/vínculo pelo cliente HTTP, login e saída pelos componentes React, consulta e restauração do perfil, rejeição de credenciais/duplicidade e aceite pelo endpoint. Usa DOM de teste (jsdom), não automatiza um navegador real e não comprova a revisão dos documentos de termos. Testes aprovados não substituem revisão independente nem validação do cliente.
+
+## Status de treino na Iteração 3
+
+- **US23** — A rota autenticada `/treinos/:treinoId` carrega o detalhe e o status pela API. Use o identificador de um treino existente e associado à conta de teste.
+- **US29** — O aluno pode marcar um treino como feito, inclusive depois de devolvido, e desfazer a marcação enquanto o treino aguarda avaliação.
+- **US15** — O treinador pode devolver o treino para correção ou confirmar a conclusão. A tela usa o estado retornado pelo servidor e atualiza a consulta ao receber HTTP 409.
+
+O acesso ao detalhe pela agenda depende da consulta ao planejamento (US60). A gravação de feedback depende das US49 e US50. Os testes da rota ficam em `tests/TreinoPage.test.tsx`.

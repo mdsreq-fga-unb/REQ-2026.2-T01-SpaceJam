@@ -18,6 +18,7 @@ import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
+import { TreinoPage } from './features/treinos/TreinoPage'
 
 export default function App() {
   return (
@@ -63,6 +64,14 @@ export default function App() {
             element={
               <RotaProtegida>
                 <PreferenciasPrivacidadePage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinos/:treinoId"
+            element={
+              <RotaProtegida>
+                <TreinoPage />
               </RotaProtegida>
             }
           />

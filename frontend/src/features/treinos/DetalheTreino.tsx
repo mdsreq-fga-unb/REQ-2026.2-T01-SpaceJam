@@ -6,7 +6,7 @@ import { TituloTreino, TreinoLayout, type UsuarioTreino } from './TreinoLayout'
 interface ExercicioDoTreino {
   id: number
   nome: string
-  feedback: FeedbackAluno | null
+  feedback?: FeedbackAluno | null
   parametros?: string
   resumo?: string
   situacao?: string
@@ -38,6 +38,8 @@ interface DetalheTreinoProps {
   consulta: ConsultaTreino
   navegacao?: Parameters<typeof TreinoLayout>[0]['links']
   onMarcarFeito?: () => Promise<void>
+  onDesfazerFeito?: () => Promise<void>
+  onDevolver?: () => Promise<void>
   onConcluir?: () => Promise<void>
   onSalvarFeedback?: (exercicioId: number, alteracao: AlteracaoFeedback) => Promise<void>
   onAbrirExercicio?: (exercicioId: number) => void
@@ -77,7 +79,7 @@ function NomeExercicio({ exercicio, numero, aluno, onAbrir }: {
 }
 
 export function DetalheTreino({
-  usuario, consulta, navegacao, onMarcarFeito, onConcluir, onSalvarFeedback,
+  usuario, consulta, navegacao, onMarcarFeito, onDesfazerFeito, onDevolver, onConcluir, onSalvarFeedback,
   onAbrirExercicio, onVerHistorico, onVoltarPlanejamento, onVerFeedback,
 }: DetalheTreinoProps) {
   const [selecao, setSelecao] = useState<{ id: number; tela: 'exercicio' | 'feedback' } | null>(null)
@@ -116,7 +118,7 @@ export function DetalheTreino({
     )
   }
 
-  if (aluno && selecionado && selecao?.tela === 'exercicio') {
+  if (selecionado && selecao?.tela === 'exercicio') {
     const { id, nome, parametros, situacao, orientacoes, errosComuns } = selecionado
     return (
       <TreinoLayout usuario={usuario} links={navegacao}>
@@ -136,9 +138,11 @@ export function DetalheTreino({
               )}
             </section>
           )}
-          <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
-            feedback={feedbackSelecionado ?? null}
-            onAbrir={onSalvarFeedback && (() => setSelecao({ id, tela: 'feedback' }))} />
+          {(feedbackSelecionado !== undefined || onSalvarFeedback) && (
+            <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
+              feedback={feedbackSelecionado ?? null}
+              onAbrir={aluno && onSalvarFeedback ? () => setSelecao({ id, tela: 'feedback' }) : undefined} />
+          )}
         </div>
       </TreinoLayout>
     )
@@ -150,6 +154,7 @@ export function DetalheTreino({
   }
 
   const ativo = aluno && status !== 'concluido'
+  const progressoPorExercicio = exercicios.every(exercicio => exercicio.feito !== undefined)
   const proximo = exercicios.find(exercicio => !exercicio.feito)
   const feitos = exercicios.filter(exercicio => exercicio.feito).length
   const tituloNovoFeedback = treinadorNome ? `Novo feedback de ${treinadorNome}` : 'Novo feedback'
@@ -160,10 +165,11 @@ export function DetalheTreino({
     <TreinoLayout usuario={usuario} links={navegacao}>
       <EstadoTreino papel={usuario.papel} consulta={consulta}
         contexto={{
-          ...consulta, feitos, quantidade: exercicios.length,
+          ...consulta, feitos, quantidade: progressoPorExercicio ? exercicios.length : undefined,
           onContinuar: proximo && (() => abrirExercicio(proximo.id)),
         }}
-        onMarcarFeito={onMarcarFeito} onConcluir={onConcluir} onVerHistorico={onVerHistorico}
+        onMarcarFeito={onMarcarFeito} onDesfazerFeito={onDesfazerFeito} onDevolver={onDevolver}
+        onConcluir={onConcluir} onVerHistorico={onVerHistorico}
         onVoltarPlanejamento={onVoltarPlanejamento}
         alerta={ativo && status === 'em-andamento' && consulta.avisoFeedback && (
           <section className="treino-cartao treino-alerta-feedback">
@@ -183,18 +189,24 @@ export function DetalheTreino({
             )}
             <div className="treino-texto">
               <h2>Como funciona</h2>
-              <p>Marque os exercícios que realizou. A conclusão do treino é registrada pelo treinador.</p>
+              <p>{progressoPorExercicio
+                ? 'Marque os exercícios que realizou.'
+                : 'Consulte os exercícios e marque o treino como feito ao terminar.'}
+                {' '}A conclusão do treino é registrada pelo treinador.</p>
             </div>
           </aside>
         )}>
         {exercicios.length === 0 ? <p>Nenhum exercício neste treino.</p> : (
           <div className={!aluno && status === 'concluido' ? 'treino-colunas treino-registros--concluido' : 'treino-registros'}>
-            {ativo && <div className="treino-exercicios-titulo"><h2>Exercícios</h2><p>{feitos} de {exercicios.length} feitos</p></div>}
+            {ativo && <div className="treino-exercicios-titulo"><h2>Exercícios</h2>
+              {progressoPorExercicio && <p>{feitos} de {exercicios.length} feitos</p>}
+            </div>}
             <ul className={`treino-lista ${tipoLista}`} aria-label="Exercícios do treino">
               {exercicios.map((exercicio, indice) => (
-                <li key={exercicio.id} className={exercicio === proximo && status === 'em-andamento' ? 'treino-exercicio--atual' : undefined}>
+                <li key={exercicio.id} className={progressoPorExercicio && exercicio === proximo && status === 'em-andamento'
+                  ? 'treino-exercicio--atual' : undefined}>
                   <NomeExercicio exercicio={exercicio} numero={indice + 1} aluno={ativo}
-                    onAbrir={ativo || onAbrirExercicio ? () => abrirExercicio(exercicio.id) : undefined} />
+                    onAbrir={() => abrirExercicio(exercicio.id)} />
                   {aluno && status === 'concluido' && exercicio.feedback && (
                     <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
                       feedback={exercicio.feedback} />
@@ -212,7 +224,7 @@ export function DetalheTreino({
               <div className="treino-colunas treino-colunas--cartoes">
                 {exercicios.filter(exercicio => exercicio.feedback?.autorId === alunoId).map(exercicio => (
                   <FeedbackExercicio key={exercicio.id} alunoId={alunoId} usuario={usuario}
-                    statusTreino={status} feedback={exercicio.feedback} />
+                    statusTreino={status} feedback={exercicio.feedback ?? null} />
                 ))}
                 {status !== 'concluido' && (
                   <section className="treino-cartao">

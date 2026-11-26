@@ -2,11 +2,11 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Papel } from '../../types/usuario'
 import { TituloTreino } from './TreinoLayout'
 
-export type StatusTreino = 'em-andamento' | 'feito' | 'concluido'
+export type StatusTreino = 'em-andamento' | 'feito' | 'corrigir-refazer' | 'concluido'
 
 export type ConsultaStatus =
   | { estado: 'carregando' }
-  | { estado: 'erro'; tentarNovamente?: () => void }
+  | { estado: 'erro'; mensagem?: string; tentarNovamente?: () => void }
   | { estado: 'disponivel'; status: StatusTreino }
 
 interface ContextoTreino {
@@ -26,6 +26,8 @@ interface EstadoTreinoProps {
   consulta: ConsultaStatus
   contexto?: ContextoTreino
   onMarcarFeito?: () => Promise<void>
+  onDesfazerFeito?: () => Promise<void>
+  onDevolver?: () => Promise<void>
   onConcluir?: () => Promise<void>
   onVerHistorico?: () => void
   onVoltarPlanejamento?: () => void
@@ -37,13 +39,14 @@ interface EstadoTreinoProps {
 const rotulos: Record<StatusTreino, string> = {
   'em-andamento': 'Em andamento',
   feito: 'Feito',
+  'corrigir-refazer': 'Corrigir/Refazer',
   concluido: 'Concluído',
 }
 
 const mensagemSomenteLeitura = 'A dificuldade e o feedback do aluno ficam somente para leitura.'
 const aguardandoAvaliacao = 'O treino aguarda a avaliação do treinador.'
 
-function CartaoAluno({ contexto, status }: { contexto: ContextoTreino; status: 'em-andamento' | 'feito' }) {
+function CartaoAluno({ contexto, status }: { contexto: ContextoTreino; status: Exclude<StatusTreino, 'concluido'> }) {
   const { nome, titulo, treinadorNome, feitos = 0, quantidade = 0, onContinuar } = contexto
   const subtitulo = [titulo, treinadorNome && `orientado por ${treinadorNome}`].filter(Boolean).join(' · ')
   const progresso = quantidade > 0 ? `${feitos} de ${quantidade} exercícios marcados como feitos` : ''
@@ -52,7 +55,7 @@ function CartaoAluno({ contexto, status }: { contexto: ContextoTreino; status: '
     <section className="treino-hero" aria-label="Progresso do treino">
       <img className="treino-hero-quadra" src="/treinos/quadra.svg" width="151" height="195" alt="" />
       <span className="treino-hero-selo">
-        <span aria-hidden="true">● </span>{status === 'feito' ? 'FEITO · EM AVALIAÇÃO' : 'EM ANDAMENTO'}
+        <span aria-hidden="true">● </span>{status === 'feito' ? 'FEITO · EM AVALIAÇÃO' : rotulos[status].toUpperCase()}
       </span>
       <h2>{nome}</h2>
       {subtitulo && <p className="treino-hero-orientacao">{subtitulo}</p>}
@@ -73,12 +76,13 @@ function CartaoAluno({ contexto, status }: { contexto: ContextoTreino; status: '
 }
 
 export function EstadoTreino({
-  papel, consulta, contexto, onMarcarFeito, onConcluir, onVerHistorico,
+  papel, consulta, contexto, onMarcarFeito, onDesfazerFeito, onDevolver, onConcluir, onVerHistorico,
   onVoltarPlanejamento, alerta, lateral, children,
 }: EstadoTreinoProps) {
   const [tela, setTela] = useState<'treino' | 'confirmar' | 'feito'>('treino')
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState('')
+  const emEnvio = useRef(false)
   const tituloDaAcao = useRef<HTMLHeadingElement>(null)
   const botaoConcluir = useRef<HTMLButtonElement>(null)
   const aluno = papel === 'ALUNO'
@@ -89,6 +93,8 @@ export function EstadoTreino({
   }, [tela, status])
 
   async function registrar(acao: () => Promise<void>, emCasoDeFalha: string, destino: typeof tela) {
+    if (emEnvio.current) return
+    emEnvio.current = true
     setSalvando(true)
     setErro('')
     try {
@@ -97,6 +103,7 @@ export function EstadoTreino({
     } catch {
       setErro(emCasoDeFalha)
     } finally {
+      emEnvio.current = false
       setSalvando(false)
     }
   }
@@ -108,7 +115,7 @@ export function EstadoTreino({
   if (consulta.estado === 'erro') {
     return (
       <div className="treino-cartao">
-        <p role="alert">Não foi possível consultar o status do treino.</p>
+        <p role="alert">{consulta.mensagem ?? 'Não foi possível consultar o status do treino.'}</p>
         {consulta.tentarNovamente && (
           <button className="treino-botao" type="button" onClick={consulta.tentarNovamente}>Tentar novamente</button>
         )}
@@ -199,7 +206,7 @@ export function EstadoTreino({
     )
   }
 
-  const marcarFeito = aluno && estado === 'em-andamento' ? onMarcarFeito : undefined
+  const marcarFeito = aluno && (estado === 'em-andamento' || estado === 'corrigir-refazer') ? onMarcarFeito : undefined
   const acaoAluno = (
     <>
       {erroEnvio}
@@ -210,6 +217,12 @@ export function EstadoTreino({
         </button>
       )}
       {estado === 'feito' && <p className="treino-status-ajuda">{aguardandoAvaliacao}</p>}
+      {estado === 'feito' && onDesfazerFeito && (
+        <button className="treino-botao" type="button" disabled={salvando}
+          onClick={() => void registrar(onDesfazerFeito, 'Não foi possível desfazer a marcação. Tente novamente.', 'treino')}>
+          Desfazer marcação
+        </button>
+      )}
     </>
   )
 
@@ -244,12 +257,18 @@ export function EstadoTreino({
         <>
           {children}
           {erroEnvio}
-          {(onConcluir || onVoltarPlanejamento) && (
+          {(onConcluir || onDevolver || onVoltarPlanejamento) && (
             <div className="treino-acoes">
               {onConcluir && (
-                <button ref={botaoConcluir} className="treino-botao treino-botao--principal" type="button"
+                <button ref={botaoConcluir} className="treino-botao treino-botao--principal" type="button" disabled={salvando}
                   onClick={() => { setErro(''); setTela('confirmar') }}>
                   Concluir treino
+                </button>
+              )}
+              {onDevolver && estado !== 'corrigir-refazer' && (
+                <button className="treino-botao" type="button" disabled={salvando}
+                  onClick={() => void registrar(onDevolver, 'Não foi possível devolver o treino. Tente novamente.', 'treino')}>
+                  Devolver para correção
                 </button>
               )}
               {onVoltarPlanejamento && (
