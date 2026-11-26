@@ -382,3 +382,16 @@ class TreinoFeedbackAlunoTests(APITestCase):
         self.treino.save(update_fields=["status"])
         self.client.force_authenticate(user=self.aluno)
         self.assertEqual(self.client.patch(self.url, {"texto": "Pós conclusão"}, format="json").status_code, status.HTTP_409_CONFLICT)
+
+    def test_us49_concorrencia_integrity_error_retorna_409_sem_erro_500(self):
+        from unittest.mock import patch
+        from django.db import IntegrityError
+
+        self.client.force_authenticate(user=self.aluno)
+        with patch(
+            "apps.treinos.views.FeedbackAluno.objects.create",
+            side_effect=IntegrityError("duplicate key value violates unique constraint"),
+        ):
+            resp = self.client.post(self.url, {"texto": "Envio concorrente."}, format="json")
+
+        self.assertEqual(resp.status_code, status.HTTP_409_CONFLICT)

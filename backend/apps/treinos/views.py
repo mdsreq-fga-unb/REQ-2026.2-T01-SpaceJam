@@ -1,4 +1,4 @@
-from django.db import transaction
+from django.db import IntegrityError, transaction
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
@@ -152,28 +152,35 @@ class ItemTreinoFeedbackAlunoView(APIView):
 
     def post(self, request, item_id: int):
         """US49 (RF3608) — Registrar feedback único do aluno enquanto o treino não estiver concluído."""
-        item = _obter_item_treino_do_aluno(request, item_id)
+        serializer = SalvarFeedbackAlunoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
-        if item.treino.esta_concluido:
-            return Response(
-                {"detail": "Não é possível registrar feedback em um treino já concluído."},
-                status=status.HTTP_409_CONFLICT,
-            )
+        try:
+            with transaction.atomic():
+                item = _obter_item_treino_do_aluno(request, item_id, bloquear_treino=True)
 
-        if hasattr(item, "feedback_aluno"):
+                if item.treino.esta_concluido:
+                    return Response(
+                        {"detail": "Não é possível registrar feedback em um treino já concluído."},
+                        status=status.HTTP_409_CONFLICT,
+                    )
+
+                if hasattr(item, "feedback_aluno"):
+                    return Response(
+                        {"detail": "Você já registrou um feedback para este exercício. Utilize a edição."},
+                        status=status.HTTP_409_CONFLICT,
+                    )
+
+                feedback = FeedbackAluno.objects.create(
+                    item_treino=item,
+                    aluno=request.user,
+                    texto=serializer.validated_data["texto"],
+                )
+        except IntegrityError:
             return Response(
                 {"detail": "Você já registrou um feedback para este exercício. Utilize a edição."},
                 status=status.HTTP_409_CONFLICT,
             )
-
-        serializer = SalvarFeedbackAlunoSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-
-        feedback = FeedbackAluno.objects.create(
-            item_treino=item,
-            aluno=request.user,
-            texto=serializer.validated_data["texto"],
-        )
 
         return Response(
             FeedbackAlunoSerializer(feedback).data,
@@ -182,30 +189,31 @@ class ItemTreinoFeedbackAlunoView(APIView):
 
     def patch(self, request, item_id: int):
         """US50 (RF3609) — Editar feedback do próprio aluno enquanto o treino não estiver concluído."""
-        item = _obter_item_treino_do_aluno(request, item_id)
-
-        if not hasattr(item, "feedback_aluno"):
-            return Response(
-                {"detail": "Nenhum feedback encontrado para este exercício."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
-        feedback = item.feedback_aluno
-        if feedback.aluno_id != request.user.id:
-            raise PermissionDenied("Apenas o autor pode editar este feedback.")
-
-        if item.treino.esta_concluido:
-            return Response(
-                {"detail": "Não é possível editar feedback de um treino já concluído."},
-                status=status.HTTP_409_CONFLICT,
-            )
-
         serializer = SalvarFeedbackAlunoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        feedback.texto = serializer.validated_data["texto"]
-        feedback.editado_em = timezone.now()
-        feedback.save(update_fields=["texto", "editado_em"])
+        with transaction.atomic():
+            item = _obter_item_treino_do_aluno(request, item_id, bloquear_treino=True)
+
+            if not hasattr(item, "feedback_aluno"):
+                return Response(
+                    {"detail": "Nenhum feedback encontrado para este exercício."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            feedback = item.feedback_aluno
+            if feedback.aluno_id != request.user.id:
+                raise PermissionDenied("Apenas o autor pode editar este feedback.")
+
+            if item.treino.esta_concluido:
+                return Response(
+                    {"detail": "Não é possível editar feedback de um treino já concluído."},
+                    status=status.HTTP_409_CONFLICT,
+                )
+
+            feedback.texto = serializer.validated_data["texto"]
+            feedback.editado_em = timezone.now()
+            feedback.save(update_fields=["texto", "editado_em"])
 
         return Response(
             FeedbackAlunoSerializer(feedback).data,
