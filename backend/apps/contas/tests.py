@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from django.conf import settings
 from django.test import override_settings
 from rest_framework.test import APITestCase
+from apps.contas.models import Usuario
 
 
 # US63 (RN15): o cadastro só registra aceite com os documentos publicados.
@@ -177,74 +178,30 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         )
         self.assertEqual(r_forbidden.status_code, 403)
 
+    def test_us53_consultar_proprios_dados_aluno_e_bloquear_treinador(self):
+        treinador = self._criar_treinador()
+        payload_aluno = self._payload_aluno(treinador["codigo_convite"])
+        self.client.post("/api/auth/cadastro/aluno/", payload_aluno, format="json")
 
-# --- US52: Consultar Alunos Acompanhados ---
-class ContasUS52Tests(APITestCase):
-    def criar_treinador(self, username, email):
-        return Usuario.objects.create_user(
-            username=username,
-            email=email,
-            password="SenhaForte#2026",
-            papel=Usuario.Papel.TREINADOR,
-        )
+        # Sem autenticação -> 401
+        r_unauth = self.client.get("/api/contas/me/")
+        self.assertEqual(r_unauth.status_code, 401)
 
-    def criar_aluno(self, username, email, treinador):
-        return Usuario.objects.create_user(
-            username=username,
-            email=email,
-            password="SenhaAluno#2026",
-            papel=Usuario.Papel.ALUNO,
-            treinador=treinador,
-            first_name="Aluno",
-            last_name=username,
-            telefone="61999990000",
-        )
+        # Aluno autenticado -> 200 com dados cadastrais e sem senha
+        login_aluno = self.client.post(
+            "/api/auth/login/aluno/",
+            {"apelido": payload_aluno["apelido"], "senha": payload_aluno["senha"]},
+            format="json",
+        ).data
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {login_aluno['access']}")
 
-    def test_us52_treinador_visualiza_somente_seus_alunos(self):
-        treinador1 = self.criar_treinador("coach1", "coach1@email.com")
-        treinador2 = self.criar_treinador("coach2", "coach2@email.com")
+        r_ok = self.client.get("/api/contas/me/")
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertEqual(r_ok.data["apelido"], payload_aluno["apelido"])
+        self.assertIn("historico_lesoes", r_ok.data)
+        self.assertNotIn("password", r_ok.data)
+        self.assertNotIn("senha", r_ok.data)
 
-        aluno1 = self.criar_aluno("aluno1", "aluno1@email.com", treinador1)
-        aluno2 = self.criar_aluno("aluno2", "aluno2@email.com", treinador1)
-        aluno_outro = self.criar_aluno("aluno3", "aluno3@email.com", treinador2)
-
-        # CA01 / RN03: O treinador deve visualizar somente os alunos vinculados a ele.
-        self.client.force_authenticate(user=treinador1)
-        r = self.client.get("/api/alunos-acompanhados/")
-
-        self.assertEqual(r.status_code, 200)
-
-        ids_retornados = {aluno["id"] for aluno in r.data["alunos"]}
-
-        self.assertEqual(ids_retornados, {aluno1.id, aluno2.id})
-        self.assertNotIn(aluno_outro.id, ids_retornados)
-
-    def test_us52_treinador_sem_alunos_recebe_lista_vazia_e_codigo_convite(self):
-        treinador = self.criar_treinador("coach_vazio", "vazio@email.com")
-
-        # CA03: Quando não houver alunos, deve retornar lista vazia e código de convite.
-        self.client.force_authenticate(user=treinador)
-        r = self.client.get("/api/alunos-acompanhados/")
-
-        self.assertEqual(r.status_code, 200)
-        self.assertEqual(r.data["alunos"], [])
-        self.assertEqual(r.data["codigo_convite"], treinador.codigo_convite)
-
-    def test_us52_aluno_nao_pode_consultar_alunos_acompanhados(self):
-        treinador = self.criar_treinador("coach3", "coach3@email.com")
-        aluno = self.criar_aluno("aluno4", "aluno4@email.com", treinador)
-
-        # CA04 / RNF08: O aluno não possui permissão para acessar a carteira do treinador.
-        self.client.force_authenticate(user=aluno)
-        r = self.client.get("/api/alunos-acompanhados/")
-
-        self.assertEqual(r.status_code, 403)
-
-    def test_us52_usuario_nao_autenticado_nao_pode_consultar_alunos(self):
-        # CA04: Usuários não autenticados não podem acessar a carteira de alunos.
-        r = self.client.get("/api/alunos-acompanhados/")
-
-        self.assertEqual(r.status_code, 401)
         # Treinador autenticado na rota exclusiva do aluno -> 403
         login_treinador = self.client.post(
             "/api/auth/login/treinador/",
@@ -642,3 +599,89 @@ class ContasUS52Tests(APITestCase):
                 format="json",
             )
             self.assertEqual(r_login_novo.status_code, 200)
+
+
+# --- US52: Consultar Alunos Acompanhados ---
+class ContasUS52Tests(APITestCase):
+    def criar_treinador(self, username, email):
+        return Usuario.objects.create_user(
+            username=username,
+            email=email,
+            password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+            versao_termos_aceita=settings.TERMOS_VERSAO_ATUAL,
+        )
+
+    def criar_aluno(self, username, email, treinador):
+        return Usuario.objects.create_user(
+            username=username,
+            email=email,
+            password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO,
+            versao_termos_aceita=settings.TERMOS_VERSAO_ATUAL,
+            treinador=treinador,
+            first_name="Aluno",
+            last_name=username,
+            telefone="61999990000",
+        )
+
+    def test_us52_treinador_visualiza_somente_seus_alunos(self):
+        treinador1 = self.criar_treinador("coach1", "coach1@email.com")
+        treinador2 = self.criar_treinador("coach2", "coach2@email.com")
+
+        aluno1 = self.criar_aluno("aluno1", "aluno1@email.com", treinador1)
+        aluno2 = self.criar_aluno("aluno2", "aluno2@email.com", treinador1)
+        aluno_outro = self.criar_aluno("aluno3", "aluno3@email.com", treinador2)
+
+        # CA01 / RN03: O treinador deve visualizar somente os alunos vinculados a ele.
+        self.client.force_authenticate(user=treinador1)
+        r = self.client.get("/api/alunos-acompanhados/")
+
+        self.assertEqual(r.status_code, 200)
+
+        ids_retornados = {aluno["id"] for aluno in r.data["alunos"]}
+
+        self.assertEqual(ids_retornados, {aluno1.id, aluno2.id})
+        self.assertNotIn(aluno_outro.id, ids_retornados)
+
+    def test_us52_treinador_sem_alunos_recebe_lista_vazia_e_codigo_convite(self):
+        treinador = self.criar_treinador("coach_vazio", "vazio@email.com")
+
+        # CA03: Quando não houver alunos, deve retornar lista vazia e código de convite.
+        self.client.force_authenticate(user=treinador)
+        r = self.client.get("/api/alunos-acompanhados/")
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["alunos"], [])
+        self.assertEqual(r.data["codigo_convite"], treinador.codigo_convite)
+
+    def test_us52_aluno_nao_pode_consultar_alunos_acompanhados(self):
+        treinador = self.criar_treinador("coach3", "coach3@email.com")
+        aluno = self.criar_aluno("aluno4", "aluno4@email.com", treinador)
+
+        # CA04 / RNF08: O aluno não possui permissão para acessar a carteira do treinador.
+        self.client.force_authenticate(user=aluno)
+        r = self.client.get("/api/alunos-acompanhados/")
+
+        self.assertEqual(r.status_code, 403)
+
+    def test_us52_usuario_nao_autenticado_nao_pode_consultar_alunos(self):
+        # CA04: Usuários não autenticados não podem acessar a carteira de alunos.
+        r = self.client.get("/api/alunos-acompanhados/")
+
+        self.assertEqual(r.status_code, 401)
+
+    def test_us52_abre_perfil_da_us61_com_o_id_da_lista(self):
+        treinador = self.criar_treinador("coach_perfil", "coach_perfil@example.test")
+        aluno = self.criar_aluno("aluno_perfil", "aluno_perfil@example.test", treinador)
+        self.client.force_authenticate(user=treinador)
+
+        lista = self.client.get("/api/alunos-acompanhados/")
+        self.assertEqual(lista.status_code, 200)
+        self.assertEqual(len(lista.data["alunos"]), 1)
+        aluno_id = lista.data["alunos"][0]["id"]
+        self.assertEqual(aluno_id, aluno.id)
+
+        perfil = self.client.get(f"/api/contas/alunos/{aluno_id}/")
+        self.assertEqual(perfil.status_code, 200)
+        self.assertEqual(perfil.data["id"], aluno.id)

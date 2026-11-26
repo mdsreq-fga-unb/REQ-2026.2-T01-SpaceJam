@@ -6,12 +6,8 @@ Nunca coloque senha real direto neste arquivo.
 import os
 from datetime import timedelta
 from pathlib import Path
-from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# Carrega as variáveis do .env localizado na raiz do projeto.
-load_dotenv(BASE_DIR.parent / ".env")
 
 
 def env_bool(nome, padrao=False):
