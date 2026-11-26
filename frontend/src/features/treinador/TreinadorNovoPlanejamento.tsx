@@ -1,45 +1,83 @@
-
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
+import { useEffect, useState, type FormEvent } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router'
+import { ApiError } from '../../api/client'
+import { useAuth } from '../../auth/useAuth'
+import {
+  criarPlanejamento,
+  listarCarteiraPlanejamentos,
+  type AlunoDaCarteira,
+} from './planejamentosApi'
 import './TreinadorNovoPlanejamento.css'
 
-interface TreinadorNovoPlanejamentoProps {
-  nomeTreinador?: string
-  modoTeste?: boolean
+type Alunos =
+  | { estado: 'carregando' | 'erro' }
+  | { estado: 'pronto'; lista: AlunoDaCarteira[] }
+
+interface Erros {
+  aluno?: string
+  nome?: string
+  geral?: string
 }
 
-const alunos = ['Beatriz Costa', 'André Lima', 'Camila Martins']
-
-export function TreinadorNovoPlanejamento({
-  nomeTreinador = 'Lucas',
-  modoTeste = false,
-}: TreinadorNovoPlanejamentoProps) {
+export function TreinadorNovoPlanejamento() {
   const navigate = useNavigate()
+  const { usuario } = useAuth()
+  const [parametros] = useSearchParams()
+  const nomeTreinador = usuario?.first_name || usuario?.apelido || ''
 
-  const [alunoSelecionado, setAlunoSelecionado] = useState('Beatriz Costa')
-  const [nomePlanejamento, setNomePlanejamento] = useState('Controle de bola')
-  const [mensagem, setMensagem] = useState('')
+  const [alunos, setAlunos] = useState<Alunos>({ estado: 'carregando' })
+  const [alunoSelecionado, setAlunoSelecionado] = useState<number | null>(
+    () => Number(parametros.get('aluno')) || null,
+  )
+  const [nomePlanejamento, setNomePlanejamento] = useState('')
+  const [erros, setErros] = useState<Erros>({})
+  const [enviando, setEnviando] = useState(false)
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  useEffect(() => {
+    const controle = new AbortController()
+    const { signal } = controle
+
+    listarCarteiraPlanejamentos(signal)
+      .then((lista) => {
+        if (!signal.aborted) setAlunos({ estado: 'pronto', lista })
+      })
+      .catch(() => {
+        if (!signal.aborted) setAlunos({ estado: 'erro' })
+      })
+
+    return () => controle.abort()
+  }, [])
+
+  const lista = alunos.estado === 'pronto' ? alunos.lista : []
+  const escolhido = lista.find((aluno) => aluno.id === alunoSelecionado)
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (enviando) return
 
     const nome = nomePlanejamento.trim()
+    const novos: Erros = {}
+    if (!escolhido) novos.aluno = 'Selecione o aluno.'
+    if (!nome) novos.nome = 'Informe o nome do planejamento.'
+    setErros(novos)
+    if (!escolhido || novos.nome) return
 
-    if (!nome) {
-      setMensagem('Informe um nome para o planejamento.')
-      return
+    setEnviando(true)
+    try {
+      await criarPlanejamento({ aluno: escolhido.id, nome })
+      navigate(`/treinador/alunos/${escolhido.id}/planejamento`)
+    } catch (falha) {
+      if (falha instanceof ApiError && falha.status === 400) {
+        setErros({
+          aluno: falha.campos.aluno?.join(' '),
+          nome: falha.campos.nome?.join(' '),
+          geral: falha.campos.detail?.join(' '),
+        })
+      } else {
+        setErros({ geral: 'Não foi possível criar o planejamento. Tente novamente.' })
+      }
+      setEnviando(false)
     }
-
-    const parametros = new URLSearchParams({
-      titulo: nome,
-      aluno: alunoSelecionado,
-    })
-
-    const destino = modoTeste
-      ? `/teste/treinador/planejamento?${parametros.toString()}`
-      : `/treinador/planejamento?${parametros.toString()}`
-
-    navigate(destino)
   }
 
   return (
@@ -107,40 +145,50 @@ export function TreinadorNovoPlanejamento({
             <p>Organize os treinos de um aluno.</p>
           </div>
 
-          {modoTeste && (
-            <p className="sj-novo__aviso">
-              Prévia visual com dados fictícios.
-            </p>
-          )}
-
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate>
             <div className="sj-novo__campos">
               <fieldset className="sj-novo__alunos">
                 <legend>Aluno *</legend>
 
+                {alunos.estado === 'carregando' && (
+                  <p role="status">Carregando alunos...</p>
+                )}
+                {alunos.estado === 'erro' && (
+                  <p role="alert">Não foi possível carregar os alunos da sua carteira.</p>
+                )}
+                {alunos.estado === 'pronto' && lista.length === 0 && (
+                  <p role="status">Nenhum aluno na sua carteira.</p>
+                )}
+
                 <div className="sj-novo__opcoes">
-                  {alunos.map((aluno) => (
+                  {lista.map((aluno) => (
                     <button
-                      key={aluno}
+                      key={aluno.id}
                       type="button"
                       className={
-                        alunoSelecionado === aluno
+                        alunoSelecionado === aluno.id
                           ? 'sj-novo__opcao selecionada'
                           : 'sj-novo__opcao'
                       }
                       onClick={() => {
-                        setAlunoSelecionado(aluno)
-                        setMensagem('')
+                        setAlunoSelecionado(aluno.id)
+                        setErros({})
                       }}
-                      aria-pressed={alunoSelecionado === aluno}
+                      aria-pressed={alunoSelecionado === aluno.id}
                     >
-                      {alunoSelecionado === aluno && (
+                      {alunoSelecionado === aluno.id && (
                         <span aria-hidden="true">✓ </span>
                       )}
-                      {aluno}
+                      {aluno.nome}
                     </button>
                   ))}
                 </div>
+
+                {erros.aluno && (
+                  <p className="sj-novo__mensagem" role="alert">
+                    {erros.aluno}
+                  </p>
+                )}
               </fieldset>
 
               <div className="sj-novo__campo">
@@ -154,11 +202,18 @@ export function TreinadorNovoPlanejamento({
                   value={nomePlanejamento}
                   onChange={(event) => {
                     setNomePlanejamento(event.target.value)
-                    setMensagem('')
+                    setErros({})
                   }}
                   placeholder="Ex.: Controle de bola"
-                  required
+                  aria-invalid={Boolean(erros.nome)}
+                  aria-describedby={erros.nome ? 'erro-nome-planejamento' : undefined}
                 />
+
+                {erros.nome && (
+                  <p className="sj-novo__mensagem" id="erro-nome-planejamento" role="alert">
+                    {erros.nome}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -168,11 +223,18 @@ export function TreinadorNovoPlanejamento({
                 <p>
                   Adicione os treinos e selecione os exercícios da biblioteca.
                 </p>
+                {escolhido?.planejamento_vigente && (
+                  <p>
+                    {escolhido.nome} já tem o planejamento vigente "
+                    {escolhido.planejamento_vigente.nome}". Ao criar um novo, o
+                    atual vai para o histórico e seus treinos deixam de aceitar alterações.
+                  </p>
+                )}
               </section>
             </div>
 
             <div className="sj-novo__acoes">
-              <button className="sj-novo__criar" type="submit">
+              <button className="sj-novo__criar" type="submit" disabled={enviando}>
                 Criar planejamento
               </button>
 
@@ -184,9 +246,9 @@ export function TreinadorNovoPlanejamento({
               </Link>
             </div>
 
-            {mensagem && (
-              <p className="sj-novo__mensagem" role="status">
-                {mensagem}
+            {erros.geral && (
+              <p className="sj-novo__mensagem" role="alert">
+                {erros.geral}
               </p>
             )}
           </form>
