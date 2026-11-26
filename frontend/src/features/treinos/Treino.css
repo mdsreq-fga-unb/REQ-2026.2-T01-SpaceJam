@@ -81,7 +81,8 @@
   overflow-wrap: anywhere;
 }
 
-.treino-navegacao [aria-current='page'] {
+.treino-navegacao [aria-current='page'],
+.treino-navegacao [aria-current='location'] {
   background: linear-gradient(to right, #791710, #d63f1e);
   box-shadow: inset 0 0 0 1px var(--treino-laranja);
   color: #fff;

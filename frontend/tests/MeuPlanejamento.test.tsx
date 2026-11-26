@@ -87,6 +87,7 @@ describe('US60 — Meu planejamento do aluno', () => {
     abrir('/treinos/planejamento/4')
 
     expect(await screen.findByRole('heading', { name: 'Treino A' })).toBeVisible()
+    expect(screen.getByRole('link', { name: 'Abrir execução do treino' })).toHaveAttribute('href', '/treinos/4')
   })
 
   it('informa quando não há planejamento vigente', async () => {

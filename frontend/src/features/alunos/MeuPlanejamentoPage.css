@@ -159,3 +159,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+.meu-planejamento__executar {
+  margin-block-end: 16px;
+}

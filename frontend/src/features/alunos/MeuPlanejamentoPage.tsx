@@ -120,6 +120,9 @@ function DetalheDoTreino({ treino }: { treino?: TreinoPrescrito }) {
       {treino ? (
         <section aria-labelledby="exercicios-prescritos">
           <h2 id="exercicios-prescritos" className="meu-planejamento__subtitulo">Exercícios prescritos</h2>
+          <Link className="meu-planejamento__voltar meu-planejamento__executar" to={'/treinos/' + treino.id}>
+            Abrir execução do treino
+          </Link>
           {treino.exercicios.length === 0 ? (
             <p className="conta-aluno__cartao meu-planejamento__estado" role="status">Este treino ainda não tem exercícios.</p>
           ) : (
