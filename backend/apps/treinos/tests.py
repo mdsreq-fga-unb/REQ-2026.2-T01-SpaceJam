@@ -662,3 +662,210 @@ class EditarTreinoUS25Tests(APITestCase):
         r = self._put(self._payload(nome="Só o nome"))
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.data["status"], "FEITO")
+
+
+class EditarPlanejamentoUS19Tests(APITestCase):
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach19", email="coach19@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.outro_treinador = Usuario.objects.create_user(
+            username="coach19b", email="coach19b@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.aluno = Usuario.objects.create_user(
+            username="beatriz19", email="bia19@aluno.com", password="SenhaAluno#2026",
+            first_name="Beatriz", last_name="Costa",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.outro_aluno = Usuario.objects.create_user(
+            username="andre19", email="andre19@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.aluno_de_fora = Usuario.objects.create_user(
+            username="fora19", email="fora19@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.outro_treinador,
+        )
+        for usuario in (
+            self.treinador, self.outro_treinador, self.aluno, self.outro_aluno, self.aluno_de_fora
+        ):
+            termos.registrar_aceite(usuario)
+
+        self.planejamento = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Controle de bola",
+        )
+        self.exercicio = Exercicio.objects.create(
+            criado_por=self.treinador, nome="Drible alternado",
+            objetivo="Controle", fundamento="DRIBLE",
+        )
+        self.treino_a = self._treino(self.planejamento, "Treino A")
+        self.treino_b = self._treino(self.planejamento, "Treino B")
+        self.treino_c = self._treino(self.planejamento, "Treino C")
+
+    def _treino(self, planejamento, nome, status=Treino.Status.EM_ANDAMENTO, qtd=2):
+        treino = Treino.objects.create(planejamento=planejamento, nome=nome, status=status)
+        for ordem in range(1, qtd + 1):
+            TreinoExercicio.objects.create(
+                treino=treino, exercicio_origem=self.exercicio, ordem=ordem,
+                nome="Drible alternado", objetivo="Controle", fundamento="Drible",
+                series=3, repeticoes=10,
+            )
+        return treino
+
+    def _url(self, planejamento_id=None):
+        return f"/api/treinos/planejamentos/{planejamento_id or self.planejamento.id}/"
+
+    def _url_treino(self, treino_id, planejamento_id=None):
+        return f"{self._url(planejamento_id)}treinos/{treino_id}/"
+
+    def _patch(self, payload, usuario=None, url=None):
+        self.client.force_authenticate(user=usuario or self.treinador)
+        return self.client.patch(url or self._url(), payload, format="json")
+
+    def _delete(self, treino_id, usuario=None, planejamento_id=None):
+        self.client.force_authenticate(user=usuario or self.treinador)
+        return self.client.delete(self._url_treino(treino_id, planejamento_id))
+
+    # Edição do nome
+    def test_ca01_altera_nome_sem_mexer_em_aluno_treinos_e_estados(self):
+        self.treino_b.status = Treino.Status.FEITO
+        self.treino_b.save()
+        r = self._patch({"nome": "  Arremesso de média distância  "})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["nome"], "Arremesso de média distância")
+        self.assertEqual(r.data["aluno"], self.aluno.id)
+        self.assertEqual(r.data["status"], "VIGENTE")
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.nome, "Arremesso de média distância")
+        self.assertEqual(
+            list(self.planejamento.treinos.values_list("nome", "status")),
+            [("Treino A", "EM_ANDAMENTO"), ("Treino B", "FEITO"), ("Treino C", "EM_ANDAMENTO")],
+        )
+
+    # Validação
+    def test_ca02_bloqueia_nome_vazio_so_espacos_ou_longo(self):
+        for nome in ("", "   ", "x" * 256):
+            r = self._patch({"nome": nome})
+            self.assertEqual(r.status_code, 400, nome)
+            self.assertIn("nome", r.data)
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.nome, "Controle de bola")
+
+    def test_ca02_aceita_nome_com_255_caracteres(self):
+        self.assertEqual(self._patch({"nome": "x" * 255}).status_code, 200)
+
+    # Cancelamento: sem requisição, nada muda
+    def test_ca03_sem_requisicao_nada_muda(self):
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.nome, "Controle de bola")
+        self.assertEqual(self.planejamento.treinos.count(), 3)
+
+    # Remoção de treino
+    def test_ca04_remove_treino_nao_executado(self):
+        r = self._delete(self.treino_b.id)
+        self.assertEqual(r.status_code, 204)
+        self.assertFalse(Treino.objects.filter(pk=self.treino_b.id).exists())
+        self.assertFalse(TreinoExercicio.objects.filter(treino_id=self.treino_b.id).exists())
+        self.assertEqual(
+            list(self.planejamento.treinos.values_list("nome", "status")),
+            [("Treino A", "EM_ANDAMENTO"), ("Treino C", "EM_ANDAMENTO")],
+        )
+
+    def test_ca04_pode_remover_todos_os_treinos(self):
+        for treino in (self.treino_a, self.treino_b, self.treino_c):
+            self.assertEqual(self._delete(treino.id).status_code, 204)
+        self.assertEqual(self.planejamento.treinos.count(), 0)
+        self.planejamento.refresh_from_db()
+        self.assertTrue(self.planejamento.is_vigente)
+
+    # Treino executado
+    def test_ca05_bloqueia_treino_feito_ou_concluido(self):
+        for status in (Treino.Status.FEITO, Treino.Status.CONCLUIDO):
+            treino = self._treino(self.planejamento, f"Treino {status}", status=status)
+            r = self._delete(treino.id)
+            self.assertEqual(r.status_code, 409)
+            self.assertEqual(r.data["code"], "EDICAO_BLOQUEADA")
+            self.assertTrue(Treino.objects.filter(pk=treino.id).exists())
+
+    def test_ca05_bloqueia_treino_com_exercicio_fora_de_a_fazer(self):
+        for status in (
+            TreinoExercicio.Status.FEITO,
+            TreinoExercicio.Status.CONCLUIDO,
+            TreinoExercicio.Status.CORRIGIR,
+        ):
+            treino = self._treino(self.planejamento, f"Treino {status}")
+            exercicio = treino.exercicios.first()
+            exercicio.status = status
+            exercicio.save()
+            self.assertEqual(self._delete(treino.id).status_code, 409)
+            self.assertEqual(treino.exercicios.count(), 2)
+
+    # Planejamento no histórico
+    def test_ca06_planejamento_historico_nao_edita_nome(self):
+        self.planejamento.status = Planejamento.Status.HISTORICO
+        self.planejamento.save()
+        r = self._patch({"nome": "Novo nome"})
+        self.assertEqual(r.status_code, 409)
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.nome, "Controle de bola")
+
+    def test_ca06_planejamento_historico_nao_remove_treino(self):
+        self.planejamento.status = Planejamento.Status.HISTORICO
+        self.planejamento.save()
+        self.assertEqual(self._delete(self.treino_a.id).status_code, 409)
+        self.assertTrue(Treino.objects.filter(pk=self.treino_a.id).exists())
+
+    def test_ca06_planejamento_encerrado_por_novo_planejamento_fica_bloqueado(self):
+        self.client.force_authenticate(user=self.treinador)
+        self.client.post(URL, {"aluno": self.aluno.id, "nome": "Novo ciclo"}, format="json")
+        self.assertEqual(self._patch({"nome": "Tentativa"}).status_code, 409)
+
+    # Aluno fixo
+    def test_ca07_nao_troca_o_aluno(self):
+        r = self._patch({"nome": "Controle de bola", "aluno": self.outro_aluno.id})
+        self.assertEqual(r.status_code, 200)
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.aluno, self.aluno)
+
+    def test_ca07_ignora_status_enviado_pelo_cliente(self):
+        self._patch({"nome": "Controle de bola", "status": "HISTORICO"})
+        self.planejamento.refresh_from_db()
+        self.assertTrue(self.planejamento.is_vigente)
+
+    # Acesso restrito
+    def test_ca08_aluno_recebe_403(self):
+        self.assertEqual(self._patch({"nome": "X"}, usuario=self.aluno).status_code, 403)
+        self.assertEqual(self._delete(self.treino_a.id, usuario=self.aluno).status_code, 403)
+
+    def test_ca08_sem_login_recebe_401(self):
+        self.assertEqual(self.client.patch(self._url(), {"nome": "X"}).status_code, 401)
+        self.assertEqual(self.client.delete(self._url_treino(self.treino_a.id)).status_code, 401)
+
+    def test_ca08_planejamento_de_outra_carteira_ou_inexistente_recebe_404(self):
+        de_fora = Planejamento.objects.create(
+            aluno=self.aluno_de_fora, treinador=self.outro_treinador, nome="Oculto",
+        )
+        treino_de_fora = self._treino(de_fora, "Treino oculto")
+        self.assertEqual(self._patch({"nome": "X"}, url=self._url(de_fora.id)).status_code, 404)
+        self.assertEqual(self._patch({"nome": "X"}, url=self._url(999999)).status_code, 404)
+        self.assertEqual(
+            self._delete(treino_de_fora.id, planejamento_id=de_fora.id).status_code, 404
+        )
+        de_fora.refresh_from_db()
+        self.assertEqual(de_fora.nome, "Oculto")
+
+    def test_ca08_treino_de_outro_planejamento_recebe_404(self):
+        outro = Planejamento.objects.create(
+            aluno=self.outro_aluno, treinador=self.treinador, nome="Outro",
+        )
+        treino_outro = self._treino(outro, "Treino X")
+        self.assertEqual(self._delete(treino_outro.id).status_code, 404)
+        self.assertEqual(self._delete(999999).status_code, 404)
+        self.assertTrue(Treino.objects.filter(pk=treino_outro.id).exists())
+
+    def test_metodos_nao_permitidos(self):
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(self.client.get(self._url()).status_code, 405)
+        self.assertEqual(self.client.delete(self._url()).status_code, 405)
+        self.assertEqual(self.client.patch(self._url_treino(self.treino_a.id), {}).status_code, 405)
