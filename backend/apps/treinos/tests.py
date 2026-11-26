@@ -186,6 +186,37 @@ class TreinoStatusConclusaoTests(APITestCase):
             self.client.patch(url, {"status": "CONCLUIDO"}, format="json").status_code,
             status.HTTP_403_FORBIDDEN,
         )
+    def test_us23_treinador_anterior_perde_acesso_apos_troca_de_carteira(self):
+        # Aluno migra para outro_treinador
+        self.aluno.treinador = self.outro_treinador
+        self.aluno.save(update_fields=["treinador"])
+
+        url_status = reverse("treino-status", kwargs={"treino_id": self.treino.id})
+        url_detalhe = reverse("treino-detalhe", kwargs={"treino_id": self.treino.id})
+        url_concluir = reverse("treino-concluir", kwargs={"treino_id": self.treino.id})
+
+        # Treinador antigo não pode mais consultar nem concluir (403)
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(self.client.get(url_status).status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(self.client.get(url_detalhe).status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(
+            self.client.patch(url_concluir, {"status": "CONCLUIDO"}, format="json").status_code,
+            status.HTTP_403_FORBIDDEN,
+        )
+
+        # Novo treinador da carteira passa a ter acesso (200)
+        self.client.force_authenticate(user=self.outro_treinador)
+        self.assertEqual(self.client.get(url_status).status_code, status.HTTP_200_OK)
+
+    def test_us15_e_us29_recusam_requisicao_sem_campo_status(self):
+        url_concluir = reverse("treino-concluir", kwargs={"treino_id": self.treino.id})
+        url_feito = reverse("treino-feito", kwargs={"treino_id": self.treino.id})
+
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(self.client.patch(url_concluir, {}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
+
+        self.client.force_authenticate(user=self.aluno)
+        self.assertEqual(self.client.patch(url_feito, {}, format="json").status_code, status.HTTP_400_BAD_REQUEST)
 class TreinoFeedbackAlunoTests(APITestCase):
     def setUp(self):
         agora = timezone.now()
