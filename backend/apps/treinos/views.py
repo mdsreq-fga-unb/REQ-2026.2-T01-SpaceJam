@@ -5,8 +5,14 @@ from rest_framework.response import Response
 
 from apps.contas.permissions import ROTA_PROTEGIDA, IsTreinador
 
-from .models import Planejamento
-from .serializers import PlanejamentoSerializer, TreinoSerializer
+from .models import Planejamento, Treino
+from .serializers import (
+    EdicaoBloqueada,
+    PlanejamentoSerializer,
+    TreinoEdicaoSerializer,
+    TreinoSerializer,
+    motivo_bloqueio_edicao,
+)
 
 
 @api_view(["POST"])
@@ -42,3 +48,20 @@ def criar_treino(request, planejamento_id):
         TreinoSerializer(treino, context={"request": request}).data,
         status=status.HTTP_201_CREATED,
     )
+
+@api_view(["PUT"])
+@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
+def editar_treino(request, treino_id):
+    treino = get_object_or_404(
+        Treino.objects.select_related("planejamento"),
+        pk=treino_id,
+        planejamento__aluno__treinador=request.user,
+    )
+    motivo = motivo_bloqueio_edicao(treino)
+    if motivo:
+        raise EdicaoBloqueada(motivo)
+    serializer = TreinoEdicaoSerializer(treino, data=request.data, context={"request": request})
+    serializer.is_valid(raise_exception=True)
+    treino = serializer.save()
+    treino = Treino.objects.get(pk=treino.pk)
+    return Response(TreinoSerializer(treino, context={"request": request}).data)

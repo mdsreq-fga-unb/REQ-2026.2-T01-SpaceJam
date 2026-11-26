@@ -11,4 +11,6 @@ urlpatterns = [
         views.criar_treino,
         name="treino-criar",
     ),
+    # Editar treino
+    path("treinos/<int:treino_id>/", views.editar_treino, name="treino-editar"),
 ]
