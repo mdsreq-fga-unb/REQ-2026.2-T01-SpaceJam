@@ -18,11 +18,23 @@ export const tokenStorage = {
 export class ApiError extends Error {
   status: number
   campos: Record<string, string[]>
-  constructor(status: number, message: string, campos: Record<string, string[]> = {}) {
+  /** Código estruturado do backend (`{"detail", "code"}`), ex.: TERMOS_PENDENTES. */
+  codigo?: string
+  constructor(status: number, message: string, campos: Record<string, string[]> = {}, codigo?: string) {
     super(message)
     this.status = status
     this.campos = campos
+    this.codigo = codigo
   }
+}
+
+type OuvinteTermosPendentes = (versaoAtual?: string) => void
+const ouvintesTermosPendentes = new Set<OuvinteTermosPendentes>()
+
+/** US63 (CA02): avisa a sessão quando uma rota protegida responde 403 TERMOS_PENDENTES. */
+export function aoTermosPendentes(ouvinte: OuvinteTermosPendentes) {
+  ouvintesTermosPendentes.add(ouvinte)
+  return () => { ouvintesTermosPendentes.delete(ouvinte) }
 }
 
 export async function api<T>(path: string, options: RequestInit = {}, autenticada = true): Promise<T> {
@@ -36,14 +48,19 @@ export async function api<T>(path: string, options: RequestInit = {}, autenticad
   if (!resp.ok) {
     const corpo: unknown = await resp.json().catch(() => ({}))
     const campos: Record<string, string[]> = {}
+    let codigo: string | undefined
     if (corpo && typeof corpo === 'object') {
       for (const [campo, valor] of Object.entries(corpo)) {
-        if (typeof valor === 'string') campos[campo] = [valor]
+        if (campo === 'code') codigo = typeof valor === 'string' ? valor : undefined
+        else if (typeof valor === 'string') campos[campo] = [valor]
         else if (Array.isArray(valor)) campos[campo] = valor.filter((item): item is string => typeof item === 'string')
       }
     }
+    if (resp.status === 403 && codigo === 'TERMOS_PENDENTES') {
+      ouvintesTermosPendentes.forEach(ouvinte => ouvinte(campos.versao_atual?.[0]))
+    }
     const mensagem = campos.detail?.join(' ') || campos.non_field_errors?.join(' ') || `Erro ${resp.status}`
-    throw new ApiError(resp.status, mensagem, campos)
+    throw new ApiError(resp.status, mensagem, campos, codigo)
   }
   return resp.status === 204 ? (undefined as T) : resp.json()
 }

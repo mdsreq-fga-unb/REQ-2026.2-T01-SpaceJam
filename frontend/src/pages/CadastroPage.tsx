@@ -2,9 +2,10 @@ import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type Rea
 import { Link, Navigate, NavLink } from 'react-router'
 import './CadastroPage.css'
 import { api, ApiError } from '../api/client'
-import { AceiteTermos, documentosTermos } from '../components/AceiteTermos'
+import { AceiteTermos } from '../components/AceiteTermos'
 import { CarregandoSessao } from '../components/CarregandoSessao'
 import { useAuth } from '../auth/useAuth'
+import { useTermosVigentes } from '../features/termos/useTermosVigentes'
 import {
   gruposCadastro,
   validarCadastro,
@@ -74,6 +75,7 @@ function etapaDeCampo(campo: CampoCadastro): EtapaAluno {
 
 export function CadastroPage({ perfil }: { perfil: Papel }) {
   const { usuario, carregando } = useAuth()
+  const termosVigentes = useTermosVigentes()
   const [dados, setDados] = useState<DadosCadastro>({})
   const [erros, setErros] = useState<ErrosCadastro>({})
   const [erroGeral, setErroGeral] = useState('')
@@ -187,7 +189,7 @@ export function CadastroPage({ perfil }: { perfil: Papel }) {
       }
       return
     }
-    if (!aceito || !documentosTermos()) {
+    if (!aceito || !termosVigentes.documentos) {
       setErroTermos('Consulte e aceite os documentos antes de continuar.')
       if (aluno && mobile) setEtapa(3)
       document.getElementById('aceite-termos')?.focus()
@@ -213,7 +215,17 @@ export function CadastroPage({ perfil }: { perfil: Papel }) {
       setDados({}); setErros({}); setCadastrado(conta)
     } catch (falha) {
       const campos: ErrosCadastro = {}
-      if (falha instanceof ApiError && falha.status === 400) {
+      const codigo = falha instanceof ApiError ? falha.codigo : undefined
+      if (codigo === 'ACEITE_OBRIGATORIO' || codigo === 'TERMOS_INDISPONIVEIS') {
+        // US63 (CA01): nenhum dado é aceito sem o aceite dos documentos vigentes.
+        setAceito(false)
+        if (codigo === 'TERMOS_INDISPONIVEIS') termosVigentes.recarregar()
+        setErroTermos(codigo === 'TERMOS_INDISPONIVEIS'
+          ? 'Os documentos ficaram indisponíveis. Nenhum dado foi cadastrado; tente novamente mais tarde.'
+          : 'Consulte e aceite os documentos antes de continuar.')
+        if (aluno && mobile) setEtapa(3)
+        document.getElementById('aceite-termos')?.focus()
+      } else if (falha instanceof ApiError && falha.status === 400) {
         for (const [nome, mensagens] of Object.entries(falha.campos)) {
           const campo = camposDaApi[nome]
           if (campo) campos[campo] = mensagens.join(' ')
@@ -263,7 +275,7 @@ export function CadastroPage({ perfil }: { perfil: Papel }) {
   }
 
   const loginUrl = aluno ? '/login' : '/login?perfil=treinador'
-  const termo = <AceiteTermos aceito={aceito}
+  const termo = <AceiteTermos documentos={termosVigentes.documentos} carregando={termosVigentes.carregando} aceito={aceito}
     alterar={valor => { setAceito(valor); setErroTermos('') }}
     desabilitado={enviando} erro={erroTermos} />
 

@@ -1,0 +1,56 @@
+.conta-treinador__grade {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.conta-treinador__bloco {
+  color: var(--sj52-secundario);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.conta-treinador__bloco h2 {
+  margin: 0 0 10px;
+  color: var(--sj52-texto);
+  font: 700 18px/1.3 Barlow, Arial, sans-serif;
+}
+
+.conta-treinador__bloco :is(p, dl, dt, dd) { margin: 0; }
+.conta-treinador__bloco :is(dt, dd) { font: inherit; }
+
+.conta-treinador__bloco dl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+}
+
+.conta-treinador__bloco dl > div {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 12px;
+}
+
+.conta-treinador__bloco dd,
+.conta-treinador__codigo { color: var(--sj52-texto); }
+
+.conta-treinador__codigo {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.conta-treinador__cadastro { grid-column: 1 / -1; }
+
+.conta-treinador__acoes {
+  display: grid;
+  gap: 12px;
+  width: min(100%, 480px);
+  margin-top: 24px;
+}
+
+@media (max-width: 899px) {
+  .conta-treinador__grade { grid-template-columns: minmax(0, 1fr); }
+  .conta-treinador__acoes { width: 100%; }
+}

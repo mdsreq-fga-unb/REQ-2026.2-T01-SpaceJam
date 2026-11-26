@@ -6,10 +6,8 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("apps.contas.urls")),
-    # Quando cada app tiver rotas, inclua aqui:
-    # path("api/exercicios/", include("apps.exercicios.urls")),
-    # path("api/treinos/", include("apps.treinos.urls")),
-    # path("api/videos/", include("apps.videos.urls")),
+    path("api/", include("apps.exercicios.urls")),
+    path("api/", include("apps.treinos.urls")),
 ]
 
 if settings.DEBUG:

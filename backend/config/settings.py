@@ -85,7 +85,10 @@ AUTH_USER_MODEL = "contas.Usuario"
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 6},
+    },
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
@@ -108,9 +111,11 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "apps.contas.authentication.BlacklistableJWTAuthentication",
     ],
-    # Fechado por padrão: toda rota exige login, a menos que diga o contrário (CP8).
+    # Fechado por padrão: toda rota exige login (CP8) e aceite dos termos vigentes (US63/RN15).
+    # A ordem importa: sem login responde 401 antes do 403 TERMOS_PENDENTES.
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
+        "apps.contas.permissions.TermosVigentesAceitos",
     ],
 }
 
@@ -124,6 +129,10 @@ SIMPLE_JWT = {
 # Regras de Negócio (US01, US02, US04, US05)
 COACH_ACTIVATION_CODE = os.environ.get("COACH_ACTIVATION_CODE", "TREINADOR-MVP-2026")
 TERMOS_VERSAO_ATUAL = os.environ.get("TERMOS_VERSAO_ATUAL", "1.0")
+# US63 (RN15) — Documentos vigentes. Sem os dois, o aceite fica indisponível (503).
+# Aceita URL absoluta http(s):// ou caminho relativo iniciado por "/".
+TERMOS_USO_URL = os.environ.get("TERMOS_USO_URL", "").strip()
+POLITICA_PRIVACIDADE_URL = os.environ.get("POLITICA_PRIVACIDADE_URL", "").strip()
 if not DEBUG and (
     not COACH_ACTIVATION_CODE.strip()
     or COACH_ACTIVATION_CODE == "TREINADOR-MVP-2026"
@@ -132,3 +141,23 @@ if not DEBUG and (
         "Configure COACH_ACTIVATION_CODE com um codigo privado "
         "antes de executar em producao."
     )
+
+
+# US10 — Recuperação de senha. Em desenvolvimento, use o console sem SMTP externo.
+FRONTEND_URL = os.environ.get("FRONTEND_URL", "http://localhost:5173" if DEBUG else "").strip()
+PASSWORD_RESET_TIMEOUT_SECONDS = min(3600, max(1, int(os.environ.get("PASSWORD_RESET_TIMEOUT_SECONDS", "3600"))))
+PASSWORD_RESET_EMAIL_LIMIT = max(1, int(os.environ.get("PASSWORD_RESET_EMAIL_LIMIT", "5")))
+PASSWORD_RESET_IP_LIMIT = max(1, int(os.environ.get("PASSWORD_RESET_IP_LIMIT", "20")))
+PASSWORD_RESET_WINDOW_SECONDS = max(1, int(os.environ.get("PASSWORD_RESET_WINDOW_SECONDS", "900")))
+EMAIL_BACKEND = os.environ.get(
+    "EMAIL_BACKEND",
+    "django.core.mail.backends.console.EmailBackend" if DEBUG else "django.core.mail.backends.smtp.EmailBackend",
+)
+EMAIL_HOST = os.environ.get("EMAIL_HOST", "localhost")
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", "587"))
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
+EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", False)
+EMAIL_TIMEOUT = int(os.environ.get("EMAIL_TIMEOUT", "10"))
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@spacejam.local")

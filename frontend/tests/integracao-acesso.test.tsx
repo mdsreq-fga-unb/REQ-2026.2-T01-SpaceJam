@@ -1,28 +1,11 @@
-import { render, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import App from '../src/App'
+import { screen, waitFor } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { api, tokenStorage } from '../src/api/client'
+import { abrir, enviadosPara, preencherCadastro, simularApi, termosIndisponiveis } from './apoio'
 
 const treinador = { id: 1, apelido: 'treinador', first_name: 'Treinador', last_name: 'Teste', email: 'treinador@example.com', telefone: '61999990000', papel: 'TREINADOR', codigo_convite: 'TRN-ABC123', termos_pendentes: false }
 const aluno = { ...treinador, id: 2, apelido: 'aluno', papel: 'ALUNO', codigo_convite: null }
 const resposta = (corpo: unknown, status = 200) => new Response(JSON.stringify(corpo), { status })
-function abrir(caminho: string) {
-  window.history.replaceState({}, '', caminho)
-  render(<App />)
-  return userEvent.setup()
-}
-async function preencherCadastro(pessoa: ReturnType<typeof userEvent.setup>, perfil = 'aluno', nascimento = '2000-01-01') {
-  const campos = perfil === 'aluno'
-    ? { Nome: 'Aluno', Sobrenome: 'Teste', Apelido: 'aluno', 'E-mail': 'aluno@example.com', Senha: 'Senha#2026', 'Código do treinador': 'TRN-ABC123', 'Altura (cm)': '185', 'Peso (kg)': '80,5', 'Envergadura (cm)': '190', 'Frequência de atividade física (dias por semana)': '3', Objetivos: 'Melhorar o arremesso' }
-    : { Nome: 'Treinador', Sobrenome: 'Teste', Apelido: 'treinador', 'E-mail': 'treinador@example.com', Telefone: '61999990000', Senha: 'Senha#2026', 'Código de ativação': 'ativacao-de-teste' }
-  for (const [nome, valor] of Object.entries(campos)) await pessoa.type(screen.getByLabelText(nome, { exact: true }), valor)
-  if (perfil === 'aluno') await pessoa.type(screen.getByLabelText('Data de nascimento'), nascimento)
-}
-beforeEach(() => {
-  vi.stubEnv('VITE_TERMOS_USO_URL', '/documentos/termos-teste.html')
-  vi.stubEnv('VITE_POLITICA_PRIVACIDADE_URL', '/documentos/privacidade-teste.html')
-})
 afterEach(() => {
   vi.unstubAllGlobals(); vi.unstubAllEnvs()
   window.history.replaceState({}, '', '/')
@@ -36,7 +19,7 @@ describe('contrato de acesso do backend', () => {
     await pessoa.type(screen.getByLabelText('E-mail'), 'treinador@example.com')
     await pessoa.type(screen.getByLabelText('Senha', { exact: true }), 'Senha#2026')
     await pessoa.click(screen.getByRole('button', { name: 'Entrar', exact: true }))
-    expect(await screen.findByRole('heading', { name: /Olá, Treinador/ })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: 'Minha conta' })).toBeTruthy()
     const [url, opcoes] = requisicoes.mock.calls[0]
     expect(url).toBe('/api/auth/login/treinador/')
     expect(JSON.parse(opcoes.body)).toEqual({ email: 'treinador@example.com', senha: 'Senha#2026' })
@@ -61,7 +44,7 @@ describe('contrato de acesso do backend', () => {
     const requisicoes = vi.fn().mockResolvedValueOnce(resposta(treinador)).mockResolvedValueOnce(resposta({ detail: 'Sessão encerrada com sucesso.' }))
     vi.stubGlobal('fetch', requisicoes)
     const pessoa = abrir('/')
-    await screen.findByRole('heading', { name: /Olá/ })
+    await screen.findByRole('heading', { name: 'Minha conta' })
     await pessoa.click(screen.getByRole('button', { name: 'Sair da conta' }))
     await waitFor(() => expect(requisicoes).toHaveBeenCalledTimes(2))
     const [url, opcoes] = requisicoes.mock.calls[1]
@@ -82,20 +65,17 @@ describe('contrato de acesso do backend', () => {
     expect(localStorage.getItem('refresh_token')).toBeNull()
   })
   it('envia cadastro de aluno com unidades e nomes aceitos pelo servidor', async () => {
-    const requisicoes = vi.fn().mockResolvedValue(resposta(aluno, 201))
-    vi.stubGlobal('fetch', requisicoes)
+    const requisicoes = simularApi({ 'POST /api/auth/cadastro/aluno/': { corpo: aluno, status: 201 } })
     const pessoa = abrir('/cadastro/aluno')
     await preencherCadastro(pessoa)
     await pessoa.click(screen.getByRole('checkbox', { name: /aceito/i }))
     await pessoa.click(screen.getByRole('button', { name: 'Cadastre-se', exact: true }))
     expect(await screen.findByText(/conta.*criada/i)).toBeTruthy()
-    const [url, opcoes] = requisicoes.mock.calls[0]
-    expect(url).toBe('/api/auth/cadastro/aluno/')
-    expect(JSON.parse(opcoes.body)).toEqual({ nome: 'Aluno', sobrenome: 'Teste', apelido: 'aluno', email: 'aluno@example.com', senha: 'Senha#2026', codigo_treinador: 'TRN-ABC123', data_nascimento: '2000-01-01', altura: '1.85', peso: '80.5', envergadura: '1.9', frequencia_semanal: 3, objetivos: 'Melhorar o arremesso', aceite_termos: true })
+    expect(enviadosPara(requisicoes, 'POST /api/auth/cadastro/aluno/')).toEqual([{ nome: 'Aluno', sobrenome: 'Teste', apelido: 'aluno', email: 'aluno@example.com', senha: 'Senha#2026', codigo_treinador: 'TRN-ABC123', data_nascimento: '2000-01-01', altura: '1.85', peso: '80.5', envergadura: '1.9', frequencia_semanal: 3, objetivos: 'Melhorar o arremesso', aceite_termos: true }])
     expect(localStorage.length).toBe(0)
   })
   it('mostra o código de convite devolvido pelo cadastro do treinador', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(resposta(treinador, 201)))
+    simularApi({ 'POST /api/auth/cadastro/treinador/': { corpo: treinador, status: 201 } })
     const pessoa = abrir('/cadastro/treinador')
     await preencherCadastro(pessoa, 'treinador')
     await pessoa.click(screen.getByRole('checkbox', { name: /aceito/i }))
@@ -104,7 +84,7 @@ describe('contrato de acesso do backend', () => {
     expect(screen.queryByLabelText('Senha', { exact: true })).toBeNull()
   })
   it('apresenta e foca o erro de unicidade devolvido pela API', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(resposta({ email: ['Este e-mail já está em uso.'] }, 400)))
+    simularApi({ 'POST /api/auth/cadastro/treinador/': { corpo: { email: ['Este e-mail já está em uso.'] }, status: 400 } })
     const pessoa = abrir('/cadastro/treinador')
     await preencherCadastro(pessoa, 'treinador')
     await pessoa.click(screen.getByRole('checkbox', { name: /aceito/i }))
@@ -114,33 +94,37 @@ describe('contrato de acesso do backend', () => {
     expect((screen.getByLabelText('E-mail') as HTMLInputElement).value).toBe('treinador@example.com')
   })
   it('não envia aceite se os documentos não estiverem disponíveis', async () => {
-    vi.stubEnv('VITE_TERMOS_USO_URL', ''); vi.stubEnv('VITE_POLITICA_PRIVACIDADE_URL', '')
-    const requisicoes = vi.fn(); vi.stubGlobal('fetch', requisicoes)
+    const requisicoes = simularApi({ 'GET /api/auth/termos/vigentes/': { corpo: termosIndisponiveis } })
     const pessoa = abrir('/cadastro/treinador')
     await preencherCadastro(pessoa, 'treinador')
     await pessoa.click(screen.getByRole('button', { name: 'Cadastre-se', exact: true }))
     expect((screen.getByRole('checkbox', { name: /aceito/i }) as HTMLInputElement).disabled).toBe(true)
-    expect(requisicoes).not.toHaveBeenCalled()
+    expect(enviadosPara(requisicoes, 'POST /api/auth/cadastro/treinador/')).toEqual([])
     expect(screen.queryByText(/conta.*criada/i)).toBeNull()
   })
   it('não transforma uma marcação simples em comprovação do consentimento de menores', async () => {
-    const requisicoes = vi.fn(); vi.stubGlobal('fetch', requisicoes)
+    const requisicoes = simularApi()
     const pessoa = abrir('/cadastro/aluno')
     await preencherCadastro(pessoa, 'aluno', '2015-01-01')
     await pessoa.click(screen.getByRole('checkbox', { name: /aceito/i }))
     await pessoa.click(screen.getByRole('button', { name: 'Cadastre-se', exact: true }))
     expect(screen.getByRole('alert').textContent).toMatch(/responsável/i)
-    expect(requisicoes).not.toHaveBeenCalled()
+    expect(enviadosPara(requisicoes, 'POST /api/auth/cadastro/aluno/')).toEqual([])
   })
   it('exige renovar termos antes de mostrar a conta e só prossegue após confirmação do servidor', async () => {
     tokenStorage.set('access-teste')
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValueOnce(resposta({ ...aluno, termos_pendentes: true })).mockResolvedValueOnce(resposta(aluno)))
+    const requisicoes = simularApi({
+      'GET /api/auth/me/': { corpo: { ...aluno, termos_pendentes: true } },
+      'POST /api/auth/aceitar-termos/': { corpo: aluno, status: 201 },
+    })
     const pessoa = abrir('/')
-    expect(await screen.findByRole('heading', { name: /Termos de uso/i })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: /Termos e privacidade/i })).toBeTruthy()
     expect(screen.queryByRole('heading', { name: /Dados pessoais/ })).toBeNull()
+    await screen.findByRole('link', { name: 'Termos de Uso' })
     await pessoa.click(screen.getByRole('checkbox', { name: /aceito/i }))
     await pessoa.click(screen.getByRole('button', { name: /Aceitar e continuar/i }))
     expect(await screen.findByRole('heading', { name: /Dados pessoais/ })).toBeTruthy()
+    expect(enviadosPara(requisicoes, 'POST /api/auth/aceitar-termos/')).toEqual([{ aceite_termos: true, versao: '1.0' }])
   })
   it('usa a base configurada e normaliza a barra final da URL', async () => {
     vi.stubEnv('VITE_API_URL', 'https://api.example.com/api/')

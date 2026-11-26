@@ -6,6 +6,7 @@ type MinhaContaAlunoProps = {
   logout: () => void
   editarDados?: () => void
   trocarSenha?: () => void
+  preferenciasPrivacidade?: () => void
 }
 
 type Medida = string | number | null | undefined
@@ -46,7 +47,7 @@ function formatarNascimento(data?: string | null) {
   return `${dia}/${mes}/${ano}`
 }
 
-export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha }: MinhaContaAlunoProps) {
+export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, preferenciasPrivacidade }: MinhaContaAlunoProps) {
   const nome =
     [usuario.first_name, usuario.last_name]
       .filter(Boolean)
@@ -131,7 +132,7 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha }: M
             Editar meus dados
           </button>
           <button type="button" disabled={!trocarSenha} onClick={trocarSenha}>Trocar senha</button>
-          <button type="button" disabled>Preferências de privacidade</button>
+          <button type="button" disabled={!preferenciasPrivacidade} onClick={preferenciasPrivacidade}>Preferências de privacidade</button>
           <button type="button" disabled>Solicitar exclusão dos dados</button>
           <button className="conta-aluno__sair" type="button" onClick={logout}>Sair da conta</button>
         </div>

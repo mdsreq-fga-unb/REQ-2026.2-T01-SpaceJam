@@ -2,11 +2,13 @@ import type { ReactNode } from 'react'
 import { Navigate } from 'react-router'
 import type { Papel } from '../types/usuario'
 import { useAuth } from './useAuth'
+import { AtualizarTermos } from '../components/AtualizarTermos'
 import { CarregandoSessao } from '../components/CarregandoSessao'
 
 /**
  * Bloqueia a rota para quem não está logado e, opcionalmente, para quem
- * não tem o papel exigido (CP7). Exemplo:
+ * não tem o papel exigido (CP7). Também exige o aceite dos termos vigentes antes de
+ * qualquer tela protegida (US63/RN15, CA02), na mesma ordem do backend. Exemplo:
  *   <RotaProtegida papel="TREINADOR"><MeusAlunos /></RotaProtegida>
  *
  * Atenção: isso só esconde a tela. A proteção de verdade (CP8) é no backend.
@@ -15,6 +17,7 @@ export function RotaProtegida({ children, papel }: { children: ReactNode; papel?
   const { usuario, carregando } = useAuth()
   if (carregando) return <CarregandoSessao />
   if (!usuario) return <Navigate to="/login" replace />
+  if (usuario.termos_pendentes) return <AtualizarTermos />
   if (papel && usuario.papel !== papel) return <Navigate to="/" replace />
   return children
 }
