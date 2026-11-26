@@ -220,6 +220,7 @@ def alunos_acompanhados(request):
             "alunos": serializer.data,
             "codigo_convite": request.user.codigo_convite,
         },
+    )
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def consultar_perfil_aluno_acompanhado(request, aluno_id):
