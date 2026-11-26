@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 import { EditarDadosAluno } from '../src/features/alunos/EditarDadosAluno'
 import { MinhaContaAluno } from '../src/features/alunos/MinhaContaAluno'
@@ -126,7 +127,7 @@ describe('US07 — Editar informações do próprio perfil', () => {
   it('mantém a navegação da US53 compatível com os testes existentes', () => {
     const editar = vi.fn()
     const logout = vi.fn()
-    render(<MinhaContaAluno usuario={usuario} logout={logout} editarDados={editar} />)
+    render(<MinhaContaAluno usuario={usuario} logout={logout} editarDados={editar} />, { wrapper: MemoryRouter })
     fireEvent.click(screen.getByRole('button', { name: 'Editar meus dados' }))
     expect(editar).toHaveBeenCalledOnce()
   })

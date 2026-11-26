@@ -10,6 +10,8 @@ from .views_execucao import (
 )
 
 urlpatterns = [
+    # Consultar o próprio planejamento de treino
+    path("meu-planejamento/", views.consultar_meu_planejamento, name="meu-planejamento"),
     # Cadastrar planejamento de treino
     path("planejamentos/", views.cadastrar_planejamento, name="planejamento-cadastrar"),
     # Criar treino com exercícios dentro de um planejamento

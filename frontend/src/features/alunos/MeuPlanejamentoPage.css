@@ -1,0 +1,161 @@
+.meu-planejamento__titulo {
+  margin-bottom: 24px;
+  overflow-wrap: anywhere;
+}
+
+.meu-planejamento__titulo--treino,
+.meu-planejamento__treino,
+.meu-planejamento__exercicio header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.meu-planejamento__titulo--treino h1,
+.meu-planejamento__treino > div,
+.meu-planejamento__exercicio header > div {
+  min-width: 0;
+  flex: 1 1 180px;
+}
+
+.meu-planejamento__subtitulo {
+  margin-bottom: 12px;
+  font-size: 20px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.meu-planejamento__lista {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.meu-planejamento__treino {
+  height: 100%;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+}
+
+.meu-planejamento__treino:hover {
+  border-color: var(--conta-laranja);
+}
+
+.meu-planejamento__treino h3,
+.meu-planejamento__exercicio h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.meu-planejamento__treino p,
+.meu-planejamento__exercicio p,
+.meu-planejamento__estado {
+  color: var(--conta-texto-secundario);
+  line-height: 1.5;
+}
+
+.meu-planejamento__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #343437;
+  color: var(--conta-texto);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.meu-planejamento__status[data-status='EM_ANDAMENTO'],
+.meu-planejamento__status[data-status='CORRIGIR'],
+.meu-planejamento__status[data-status='CORRIGIR_REFAZER'] {
+  background: #402520;
+  color: #ffb092;
+}
+
+.meu-planejamento__status[data-status='CONCLUIDO'] {
+  background: #20382c;
+  color: #b6ebc6;
+}
+
+.meu-planejamento__exercicio {
+  display: grid;
+  gap: 16px;
+}
+
+.meu-planejamento__exercicio h4 {
+  margin: 0 0 4px;
+  font-size: 16px;
+}
+
+.meu-planejamento__exercicio p,
+.meu-planejamento__exercicio dd {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.meu-planejamento__exercicio .meu-planejamento__correcoes {
+  margin-top: 0;
+  gap: 8px;
+}
+
+.meu-planejamento__correcoes div {
+  flex-direction: column;
+  border-inline-start: 2px solid var(--conta-borda);
+  padding-inline-start: 12px;
+}
+
+.meu-planejamento__correcoes dt {
+  color: var(--conta-texto);
+  font-weight: 700;
+}
+
+.meu-planejamento__voltar,
+.meu-planejamento__link,
+.meu-planejamento__tentar {
+  color: var(--conta-laranja);
+}
+
+.meu-planejamento__voltar {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-bottom: 8px;
+  gap: 10px;
+}
+
+.meu-planejamento__voltar::before {
+  width: 8px;
+  height: 8px;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  transform: rotate(45deg);
+  content: '';
+}
+
+.meu-planejamento__link {
+  justify-self: start;
+}
+
+.meu-planejamento__tentar {
+  min-height: 44px;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border: 1px solid var(--conta-borda);
+  border-radius: 12px;
+  background: var(--conta-barra);
+}
+
+@media (min-width: 720px) {
+  .meu-planejamento__lista--treinos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
