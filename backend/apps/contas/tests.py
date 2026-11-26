@@ -4,6 +4,7 @@ from django.conf import settings
 from django.test import override_settings
 from rest_framework.test import APITestCase
 from apps.contas.models import Usuario
+from apps.contas.termos import registrar_aceite
 
 
 # US63 (RN15): o cadastro só registra aceite com os documentos publicados.
@@ -198,6 +199,7 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         r_ok = self.client.get("/api/contas/me/")
         self.assertEqual(r_ok.status_code, 200)
         self.assertEqual(r_ok.data["apelido"], payload_aluno["apelido"])
+        self.assertEqual(r_ok.data["data_nascimento"], payload_aluno["data_nascimento"])
         self.assertIn("historico_lesoes", r_ok.data)
         self.assertNotIn("password", r_ok.data)
         self.assertNotIn("senha", r_ok.data)
@@ -253,6 +255,7 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         r_ok = self.client.get(f"/api/contas/alunos/{aluno_id}/")
         self.assertEqual(r_ok.status_code, 200)
         self.assertEqual(r_ok.data["id"], aluno_id)
+        self.assertEqual(r_ok.data["data_nascimento"], payload_aluno["data_nascimento"])
         self.assertEqual(r_ok.data["objetivos"], "Não informado")
         self.assertIn("historico_lesoes", r_ok.data)
         self.assertNotIn("password", r_ok.data)
@@ -279,6 +282,7 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
             first_name="Marcos",
             last_name="Lima",
         )
+        registrar_aceite(outro_treinador)
         login_outro = self.client.post(
             "/api/auth/login/treinador/",
             {"email": outro_treinador.email, "senha": "SenhaForte#2026"},
@@ -290,6 +294,7 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
 
         r_forbidden = self.client.get(f"/api/contas/alunos/{aluno_id}/")
         self.assertEqual(r_forbidden.status_code, 403)
+        self.assertNotEqual(r_forbidden.data.get("code"), "TERMOS_PENDENTES")
         
     def test_us08_trocar_senha_fluxos_e_bloqueios(self):
         self._criar_treinador()
@@ -352,7 +357,9 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
         )
         self.assertEqual(r_ok.status_code, 200)
 
-        # Refresh token antigo deve ser invalidado após a troca -> 401
+        # A API deve rejeitar o access e o refresh da sessão anterior.
+        self.assertEqual(self.client.get("/api/auth/me/").status_code, 401)
+        self.client.credentials()
         r_refresh = self.client.post(
             "/api/auth/refresh/",
             {"refresh": login["refresh"]},
