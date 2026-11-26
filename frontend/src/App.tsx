@@ -1,3 +1,4 @@
+
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { AuthProvider } from './auth/AuthContext'
 import { RotaProtegida } from './auth/RotaProtegida'
@@ -10,14 +11,16 @@ import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 import { DocumentoLegalPage } from './features/termos/DocumentoLegalPage'
 import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivacidadePage'
-
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
-
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
+import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDetalhesPlanejamento'
+import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
+import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
+import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
 
 export default function App() {
   return (
@@ -31,9 +34,11 @@ export default function App() {
           <Route path="/cadastro" element={<Navigate to="/cadastro/aluno" replace />} />
           <Route path="/cadastro/aluno" element={<CadastroPage key="aluno" perfil="ALUNO" />} />
           <Route path="/cadastro/treinador" element={<CadastroPage key="treinador" perfil="TREINADOR" />} />
-          {/* US63 — documentos públicos, acessíveis antes do login e com termos pendentes */}
+
+          {/* US63 — documentos públicos */}
           <Route path="/termos-de-uso" element={<DocumentoLegalPage key="termos" documento="termos" />} />
           <Route path="/politica-de-privacidade" element={<DocumentoLegalPage key="privacidade" documento="privacidade" />} />
+
           <Route
             path="/"
             element={
@@ -42,6 +47,47 @@ export default function App() {
               </RotaProtegida>
             }
           />
+
+          {/* US18 - Planejamentos do treinador */}
+          <Route
+            path="/treinador/planejamentos"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorPlanejamentosPage />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US18 - Criar planejamento */}
+          <Route
+            path="/treinador/novo-planejamento"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorNovoPlanejamento />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US27 - Planejamento vigente do aluno */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamento"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorDetalhesPlanejamento />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US24 - Criar treino */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamento/:planejamentoId/novo-treino"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorNovoTreino />
+              </RotaProtegida>
+            }
+          />
+
           <Route
             path="/aluno/conta/editar"
             element={
@@ -58,6 +104,7 @@ export default function App() {
               </RotaProtegida>
             }
           />
+
           {/* US63 (CA04) — aluno e treinador */}
           <Route
             path="/conta/privacidade"
