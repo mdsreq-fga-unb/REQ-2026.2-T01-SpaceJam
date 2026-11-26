@@ -1,163 +1,271 @@
+from django.db import transaction
+from django.db.models import prefetch_related_objects
+from django.utils import timezone
 from rest_framework import serializers
 
-from .models import FeedbackAluno, ItemTreino, Treino
+from apps.contas.models import Usuario
+from apps.exercicios.models import Exercicio
+from apps.exercicios.services import snapshot_exercicio
+
+from .models import Planejamento, Treino, TreinoExercicio
 
 
-STATUS_API_PARA_FRONT = {
-    Treino.Status.EM_ANDAMENTO: "em-andamento",
-    Treino.Status.FEITO: "feito",
-    Treino.Status.CORRIGIR_REFAZER: "corrigir-refazer",
-    Treino.Status.CONCLUIDO: "concluido",
-}
+class PlanejamentoSerializer(serializers.ModelSerializer):
 
-
-class FeedbackAlunoSerializer(serializers.ModelSerializer):
-    """Representação do feedback do aluno alinhada a FeedbackExercicio.tsx e DetalheTreino.tsx."""
-
-    autorId = serializers.IntegerField(source="aluno_id", read_only=True)
-    autorNome = serializers.SerializerMethodField()
-    exercicioId = serializers.IntegerField(source="item_treino_id", read_only=True)
-    criadoEm = serializers.DateTimeField(source="criado_em", read_only=True)
-    editadoEm = serializers.DateTimeField(source="editado_em", read_only=True)
-    editado = serializers.BooleanField(read_only=True)
+    aluno = serializers.PrimaryKeyRelatedField(
+        queryset=Usuario.objects.none(),
+        error_messages={
+            "required": "Selecione o aluno.",
+            "null": "Selecione o aluno.",
+            "does_not_exist": "Aluno não encontrado na sua carteira.",
+            "incorrect_type": "Aluno inválido.",
+        },
+    )
+    nome = serializers.CharField(
+        max_length=255,
+        error_messages={
+            "required": "Informe o nome do planejamento.",
+            "blank": "Informe o nome do planejamento.",
+            "max_length": "O nome do planejamento deve ter no máximo 255 caracteres.",
+        },
+    )
+    aluno_nome = serializers.SerializerMethodField()
+    planejamento_anterior = serializers.SerializerMethodField()
 
     class Meta:
-        model = FeedbackAluno
+        model = Planejamento
         fields = [
             "id",
-            "exercicioId",
-            "autorId",
-            "autorNome",
-            "texto",
-            "editado",
-            "criadoEm",
-            "editadoEm",
+            "aluno",
+            "aluno_nome",
+            "nome",
+            "status",
+            "criado_em",
+            "encerrado_em",
+            "planejamento_anterior",
         ]
+        read_only_fields = ["id", "status", "criado_em", "encerrado_em"]
+        # o 2º planejamento. A RN27 manda trocar o vigente, então a regra fica no create().
+        validators = []
 
-    def get_autorNome(self, obj: FeedbackAluno) -> str:
-        nome = f"{obj.aluno.first_name} {obj.aluno.last_name}".strip()
-        return nome or obj.aluno.username
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        request = self.context.get("request")
+        if request and request.user.is_authenticated:
+            self.fields["aluno"].queryset = Usuario.objects.filter(
+                papel=Usuario.Papel.ALUNO,
+                treinador=request.user,
+                is_active=True,
+            )
 
+    def get_aluno_nome(self, obj):
+        return obj.aluno.get_full_name() or obj.aluno.username
 
-class SalvarFeedbackAlunoSerializer(serializers.Serializer):
-    """US49 / US50 — Valida texto obrigatório, não vazio e com no máximo 1.000 caracteres (RN19, RNF14)."""
+    def get_planejamento_anterior(self, obj):
+        anterior = getattr(obj, "_planejamento_anterior", None)
+        return anterior.id if anterior else None
 
-    texto = serializers.CharField(
-        allow_blank=False,
-        trim_whitespace=False,
-        max_length=1000,
+    def create(self, validated_data):
+        aluno = validated_data["aluno"]
+        with transaction.atomic():
+            Usuario.objects.select_for_update().get(pk=aluno.pk)
+
+            # O vigente anterior vai para o histórico; seus treinos ficam congelados.
+            anterior = (
+                Planejamento.objects.select_for_update()
+                .filter(aluno=aluno, status=Planejamento.Status.VIGENTE)
+                .first()
+            )
+            if anterior:
+                anterior.status = Planejamento.Status.HISTORICO
+                anterior.encerrado_em = timezone.now()
+                anterior.save(update_fields=["status", "encerrado_em"])
+
+            planejamento = Planejamento.objects.create(
+                treinador=self.context["request"].user,
+                **validated_data,
+            )
+        planejamento._planejamento_anterior = anterior
+        return planejamento
+
+class TreinoExercicioSerializer(serializers.ModelSerializer):
+
+    exercicio = serializers.PrimaryKeyRelatedField(
+        queryset=Exercicio.objects.all(),
+        source="exercicio_origem",
         error_messages={
-            "blank": "Escreva um feedback antes de salvar.",
-            "required": "Escreva um feedback antes de salvar.",
-            "max_length": "Use no máximo 1.000 caracteres.",
+            "required": "Selecione o exercício.",
+            "null": "Selecione o exercício.",
+            "does_not_exist": "Exercício não encontrado na biblioteca.",
+            "incorrect_type": "Exercício inválido.",
+        },
+    )
+    series = serializers.IntegerField(
+        min_value=1,
+        max_value=32_767,
+        error_messages={
+            "required": "Informe as séries.",
+            "null": "Informe as séries.",
+            "invalid": "Séries deve ser um número inteiro.",
+            "min_value": "As séries devem ser no mínimo 1.",
+        },
+    )
+    repeticoes = serializers.IntegerField(
+        required=False,
+        allow_null=True,
+        min_value=1,
+        max_value=32_767,
+        error_messages={
+            "invalid": "Repetições deve ser um número inteiro.",
+            "min_value": "As repetições devem ser no mínimo 1.",
+        },
+    )
+    duracao_segundos = serializers.IntegerField(
+        required=False,
+        allow_null=True,
+        min_value=1,
+        max_value=2_147_483_647,
+        error_messages={
+            "invalid": "Duração deve ser um número inteiro de segundos.",
+            "min_value": "A duração deve ser de no mínimo 1 segundo.",
         },
     )
 
-    def validate_texto(self, value: str) -> str:
-        if not value.strip():
-            raise serializers.ValidationError("Escreva um feedback antes de salvar.")
-        if len(value) > 1000:
-            raise serializers.ValidationError("Use no máximo 1.000 caracteres.")
-        return value
-
-
-class ItemTreinoSerializer(serializers.ModelSerializer):
-    errosComuns = serializers.CharField(source="erros_comuns", read_only=True)
-    feedback = FeedbackAlunoSerializer(source="feedback_aluno", read_only=True)
-
     class Meta:
-        model = ItemTreino
+        model = TreinoExercicio
         fields = [
             "id",
+            "exercicio",
             "ordem",
             "nome",
-            "parametros",
-            "resumo",
-            "orientacoes",
-            "errosComuns",
-            "feedback",
-        ]
-
-
-class TreinoDetalheSerializer(serializers.ModelSerializer):
-    alunoId = serializers.IntegerField(source="aluno_id", read_only=True)
-    alunoNome = serializers.SerializerMethodField()
-    treinadorNome = serializers.SerializerMethodField()
-    statusSlug = serializers.SerializerMethodField()
-    statusLabel = serializers.CharField(source="get_status_display", read_only=True)
-    data = serializers.DateField(source="data_prevista", read_only=True)
-    realizadoEm = serializers.DateTimeField(source="realizado_em", read_only=True)
-    exercicios = ItemTreinoSerializer(many=True, read_only=True)
-
-    class Meta:
-        model = Treino
-        fields = [
-            "id",
-            "nome",
-            "titulo",
             "objetivo",
-            "data",
+            "fundamento",
+            "orientacoes",
+            "erros_comuns",
+            "erros_orientacoes",
+            "video_base",
+            "series",
+            "repeticoes",
+            "duracao_segundos",
             "status",
-            "statusSlug",
-            "statusLabel",
-            "realizadoEm",
-            "alunoId",
-            "alunoNome",
-            "treinadorNome",
-            "exercicios",
         ]
+        read_only_fields = [
+            "id", "ordem", "nome", "objetivo", "fundamento",
+            "orientacoes", "erros_comuns", "erros_orientacoes", "video_base", "status",
+        ]
+        validators = []
 
-    def _nome_usuario(self, usuario) -> str:
-        nome = f"{usuario.first_name} {usuario.last_name}".strip()
-        return nome or usuario.username
+    def validate(self, attrs):
+        repeticoes = attrs.get("repeticoes")
+        duracao = attrs.get("duracao_segundos")
+        if repeticoes is None and duracao is None:
+            raise serializers.ValidationError(
+                "Informe as repetições ou a duração do exercício."
+            )
+        if repeticoes is not None and duracao is not None:
+            raise serializers.ValidationError(
+                "Informe repetições ou duração, não os dois."
+            )
+        return attrs
 
-    def get_alunoNome(self, obj: Treino) -> str:
-        return self._nome_usuario(obj.aluno)
 
-    def get_treinadorNome(self, obj: Treino) -> str:
-        return self._nome_usuario(obj.treinador)
+class TreinoSerializer(serializers.ModelSerializer):
 
-    def get_statusSlug(self, obj: Treino) -> str:
-        return STATUS_API_PARA_FRONT.get(obj.status, "em-andamento")
-
-
-class TreinoStatusConsultaSerializer(serializers.ModelSerializer):
-    """US23 (RF2306) — Retorno enxuto de consulta de status."""
-
-    alunoId = serializers.IntegerField(source="aluno_id", read_only=True)
-    statusSlug = serializers.SerializerMethodField()
-    statusLabel = serializers.CharField(source="get_status_display", read_only=True)
-    realizadoEm = serializers.DateTimeField(source="realizado_em", read_only=True)
+    nome = serializers.CharField(
+        max_length=255,
+        error_messages={
+            "required": "Informe o nome do treino.",
+            "blank": "Informe o nome do treino.",
+            "max_length": "O nome do treino deve ter no máximo 255 caracteres.",
+        },
+    )
+    exercicios = TreinoExercicioSerializer(
+        many=True,
+        allow_empty=False,
+        error_messages={
+            "required": "Selecione ao menos um exercício.",
+            "empty": "Selecione ao menos um exercício.",
+            "not_a_list": "Envie a lista de exercícios.",
+        },
+    )
+    planejamento = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Treino
-        fields = [
-            "id",
-            "nome",
-            "alunoId",
-            "status",
-            "statusSlug",
-            "statusLabel",
-            "realizadoEm",
-        ]
+        fields = ["id", "planejamento", "nome", "status", "criado_em", "exercicios"]
+        read_only_fields = ["id", "planejamento", "status", "criado_em"]
 
-    def get_statusSlug(self, obj: Treino) -> str:
-        return STATUS_API_PARA_FRONT.get(obj.status, "em-andamento")
+    def create(self, validated_data):
+        itens = validated_data.pop("exercicios")
+        planejamento = self.context["planejamento"]
+        with transaction.atomic():
+            # Trava o planejamento e revalida: ele pode ter virado histórico
+            # (RN27) entre a leitura da view e este ponto.
+            atual = Planejamento.objects.select_for_update().get(pk=planejamento.pk)
+            if not atual.is_vigente:
+                raise serializers.ValidationError(
+                    {"planejamento": "Só é possível criar treinos em um planejamento vigente."}
+                )
+            treino = Treino.objects.create(planejamento=atual, **validated_data)
+            prefetch_related_objects([item["exercicio_origem"] for item in itens], "erros_orientacoes")
+            prescritos = []
+            for ordem, item in enumerate(itens, start=1):
+                origem = item["exercicio_origem"]
+                dados_prescritos = snapshot_exercicio(origem)
+                dados_prescritos.pop("fundamento_nome")  # O modelo persiste o código do fundamento.
+                prescritos.append(
+                    TreinoExercicio(
+                        treino=treino,
+                        ordem=ordem,
+                        exercicio_origem=origem,
+                        series=item["series"],
+                        repeticoes=item.get("repeticoes"),
+                        duracao_segundos=item.get("duracao_segundos"),
+                        **dados_prescritos,
+                    )
+                )
+            TreinoExercicio.objects.bulk_create(prescritos)
+        return treino
+
+class TreinoResumoSerializer(serializers.ModelSerializer):
+    status_display = serializers.CharField(source="get_status_display", read_only=True)
+    total_exercicios = serializers.IntegerField(read_only=True)
+    exercicios = TreinoExercicioSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Treino
+        fields = ["id", "nome", "status", "status_display", "total_exercicios", "exercicios"]
 
 
-class RegistrarStatusAlunoSerializer(serializers.Serializer):
-    """US29 (RF2312) — Aluno marca como FEITO ou desfaz para EM_ANDAMENTO."""
+class PlanejamentoVigenteSerializer(serializers.ModelSerializer):
+    treinos = TreinoResumoSerializer(many=True, read_only=True)
 
-    status = serializers.ChoiceField(
-        choices=[Treino.Status.FEITO, Treino.Status.EM_ANDAMENTO],
-        required=True,
-    )
+    class Meta:
+        model = Planejamento
+        fields = ["id", "nome", "criado_em", "treinos"]
 
 
-class AvaliarConclusaoTreinadorSerializer(serializers.Serializer):
-    """US15 (RF1215) — Treinador conclui (CONCLUIDO) ou devolve (CORRIGIR_REFAZER)."""
+class PlanejamentoResumoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Planejamento
+        fields = ["id", "nome"]
 
-    status = serializers.ChoiceField(
-        choices=[Treino.Status.CONCLUIDO, Treino.Status.CORRIGIR_REFAZER],
-        required=True,
-    )
+
+def nome_do_aluno(aluno):
+    return aluno.get_full_name() or aluno.username
+
+
+class AlunoCarteiraSerializer(serializers.ModelSerializer):
+    nome = serializers.SerializerMethodField()
+    planejamento_vigente = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Usuario
+        fields = ["id", "nome", "planejamento_vigente"]
+
+    def get_nome(self, obj):
+        return nome_do_aluno(obj)
+
+    def get_planejamento_vigente(self, obj):
+        vigentes = obj.planejamentos_vigentes
+        return PlanejamentoResumoSerializer(vigentes[0]).data if vigentes else None

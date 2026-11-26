@@ -19,12 +19,15 @@ export class ApiError extends Error {
   status: number
   campos: Record<string, string[]>
   /** Código estruturado do backend (`{"detail", "code"}`), ex.: TERMOS_PENDENTES. */
-  codigo?: string
-  constructor(status: number, message: string, campos: Record<string, string[]> = {}, codigo?: string) {
+    codigo?: string
+  /** Corpo JSON bruto do erro, para erros aninhados (ex.: lista de exercícios de um treino). */
+  corpo?: unknown
+  constructor(status: number, message: string, campos: Record<string, string[]> = {}, codigo?: string, corpo?: unknown) {
     super(message)
     this.status = status
     this.campos = campos
     this.codigo = codigo
+    this.corpo = corpo
   }
 }
 
@@ -60,7 +63,7 @@ export async function api<T>(path: string, options: RequestInit = {}, autenticad
       ouvintesTermosPendentes.forEach(ouvinte => ouvinte(campos.versao_atual?.[0]))
     }
     const mensagem = campos.detail?.join(' ') || campos.non_field_errors?.join(' ') || `Erro ${resp.status}`
-    throw new ApiError(resp.status, mensagem, campos, codigo)
+    throw new ApiError(resp.status, mensagem, campos, codigo, corpo)
   }
   return resp.status === 204 ? (undefined as T) : resp.json()
 }

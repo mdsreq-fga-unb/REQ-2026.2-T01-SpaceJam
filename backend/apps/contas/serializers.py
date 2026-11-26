@@ -296,7 +296,7 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
     def get_objetivos(self, obj):
         perfil = getattr(obj, "perfil_aluno", None)
         if not perfil or not perfil.objetivos or not perfil.objetivos.strip():
-            return "Não informado"
+            return ""
         return perfil.objetivos
 
     def get_treinador_vinculado(self, obj):
@@ -339,6 +339,13 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
     class Meta(DadosCadastraisAlunoSerializer.Meta):
         fields = DadosCadastraisAlunoSerializer.Meta.fields + ["historico_lesoes"]
         read_only_fields = fields
+
+    
+    def get_objetivos(self, obj):
+        perfil = getattr(obj, "perfil_aluno", None)
+        if not perfil or not perfil.objetivos or not perfil.objetivos.strip():
+            return "Não informado"
+        return perfil.objetivos
 
     def get_historico_lesoes(self, obj):
         # exposto em modo somente leitura.

@@ -192,11 +192,13 @@ export function EstadoTreino({
           <h2>{aluno ? 'Registro somente para consulta' : 'Histórico preservado'}</h2>
           <p>{aluno ? mensagemSomenteLeitura : 'Os registros da execução continuam disponíveis para consulta.'}</p>
         </section>
-        {onVerHistorico && (
+        {(onVerHistorico || (!aluno && onVoltarPlanejamento)) && (
           <div className="treino-acoes">
-            <button className="treino-botao treino-botao--principal" type="button" onClick={onVerHistorico}>
-              {aluno ? 'Ver histórico' : 'Consultar histórico'}
-            </button>
+            {onVerHistorico && (
+              <button className="treino-botao treino-botao--principal" type="button" onClick={onVerHistorico}>
+                {aluno ? 'Ver histórico' : 'Consultar histórico'}
+              </button>
+            )}
             {!aluno && onVoltarPlanejamento && (
               <button className="treino-botao" type="button" onClick={onVoltarPlanejamento}>Voltar ao planejamento</button>
             )}

@@ -77,9 +77,9 @@ Os resultados registram o comportamento no ambiente de teste. A revisão indepen
 
 ## Status de treino e feedback na Iteração 3
 
-- **US23** — A rota autenticada `/treinos/:treinoId` carrega o detalhe e o status pela API. Use o identificador de um treino existente e associado à conta de teste.
+- **US23** — A rota autenticada `/treinos/:treinoId` carrega o detalhe e o status pela API. O treinador abre o treino pelo planejamento de um aluno acompanhado.
 - **US29** — O aluno pode marcar um treino como feito, inclusive depois de devolvido, e desfazer a marcação enquanto o treino aguarda avaliação.
 - **US15** — O treinador pode devolver o treino para correção ou confirmar a conclusão. A tela usa o estado retornado pelo servidor e atualiza a consulta ao receber HTTP 409.
 - **US49 e US50** — Na tela do exercício do treino, o aluno registra seu feedback com `POST` e edita o mesmo registro com `PATCH`, em `/api/treinos/exercicios/:itemId/feedback-aluno/`. O detalhe do treino já inclui o feedback salvo e sua marca de edição. Após a conclusão o formulário fica indisponível.
 
-O acesso ao detalhe pela agenda depende da consulta ao planejamento (US60). Os testes da rota e do formulário ficam em `tests/TreinoPage.test.tsx`.
+A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a execução e o feedback usam os mesmos identificadores de treino e exercício. Os testes da rota e do formulário ficam em `tests/TreinoPage.test.tsx`.

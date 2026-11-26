@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import { api, ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
 import { DetalheTreino, type ConsultaTreino } from './DetalheTreino'
@@ -11,20 +11,21 @@ type StatusApi = 'EM_ANDAMENTO' | 'FEITO' | 'CORRIGIR_REFAZER' | 'CONCLUIDO'
 
 interface DetalheApi {
   nome: string
-  titulo: string
+  titulo?: string
   alunoId: number
   alunoNome: string
   treinadorNome: string
   statusSlug: StatusTreino
-  objetivo: string
-  data: string | null
+  objetivo?: string
+  data?: string | null
   exercicios: {
     id: number
     nome: string
     parametros: string
-    resumo: string
+    resumo?: string
     orientacoes: string
     errosComuns: string
+    errosOrientacoes?: { erro: string; orientacao_corretiva: string }[]
     feedback?: FeedbackAluno | null
   }[]
 }
@@ -46,6 +47,7 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
   const [consulta, setConsulta] = useState<ConsultaTreino>({ estado: 'carregando' })
   const [tentativa, setTentativa] = useState(0)
   const requisicao = useRef<AbortController>(null)
+  const navegar = useNavigate()
   const rota = '/treinos/' + id + '/'
 
   useEffect(() => {
@@ -126,6 +128,9 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
     onDesfazerFeito={aluno ? () => enviarStatus('feito', 'EM_ANDAMENTO') : undefined}
     onDevolver={!aluno ? () => enviarStatus('concluir', 'CORRIGIR_REFAZER') : undefined}
     onConcluir={!aluno ? () => enviarStatus('concluir', 'CONCLUIDO') : undefined}
+    onVoltarPlanejamento={!aluno && consulta.estado === 'disponivel'
+      ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
+      : undefined}
     onSalvarFeedback={aluno ? salvarFeedback : undefined}
   />
 }

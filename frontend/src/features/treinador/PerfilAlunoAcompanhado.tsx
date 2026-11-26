@@ -23,6 +23,7 @@ interface PerfilAlunoAcompanhadoProps {
   demonstracao?: boolean
   onVoltar?: () => void
   onRegistrarLesao?: (descricao: string, signal: AbortSignal) => Promise<void>
+  onVerPlanejamento?: () => void
 }
 
 function valorOuIndisponivel(valor?: string | null) {
@@ -74,6 +75,7 @@ export function PerfilAlunoAcompanhado({
   demonstracao = false,
   onVoltar,
   onRegistrarLesao,
+  onVerPlanejamento,
 }: PerfilAlunoAcompanhadoProps) {
   const nomeTreinador = treinador.first_name || treinador.apelido
   const botaoRegistrar = useRef<HTMLButtonElement>(null)
@@ -265,8 +267,8 @@ export function PerfilAlunoAcompanhado({
               <button
                 className="perfil-acompanhado__acao perfil-acompanhado__acao--principal"
                 type="button"
-                disabled
-                title="Consulta de planejamento indisponível no momento"
+                disabled={!onVerPlanejamento}
+                onClick={onVerPlanejamento}
               >
                 Ver planejamento
               </button>

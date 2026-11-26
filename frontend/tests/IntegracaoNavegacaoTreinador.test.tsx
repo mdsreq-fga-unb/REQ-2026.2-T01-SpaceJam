@@ -51,6 +51,12 @@ describe('Integração de navegação do treinador', () => {
           email: 'bia@example.invalid', objetivos: 'Melhorar o arremesso',
         })
       }
+      if (url.endsWith('/api/treinos/alunos/21/planejamento-vigente/')) {
+        return Response.json({
+          aluno: { id: 21, nome: 'Beatriz Costa' },
+          planejamento: { id: 5, nome: 'Controle de bola', criado_em: '2026-11-26T12:00:00Z', treinos: [] },
+        })
+      }
     })
     const botao = await screen.findByRole('button', { name: 'Consultar alunos' })
     fireEvent.click(botao)
@@ -61,8 +67,32 @@ describe('Integração de navegação do treinador', () => {
     fireEvent.click(perfil)
     expect(await screen.findByRole('heading', { name: 'Beatriz Costa' })).toBeTruthy()
     expect(window.location.pathname).toBe('/treinador/alunos/21')
+    expect(await screen.findByText('Controle de bola')).toBeTruthy()
     const rotas = requisicoes.mock.calls.map(([url]) => url)
-    expect(rotas).toEqual(['/api/auth/me/', '/api/alunos-acompanhados/', '/api/contas/alunos/21/'])
+    expect(rotas).toEqual([
+      '/api/auth/me/',
+      '/api/alunos-acompanhados/',
+      '/api/contas/alunos/21/',
+      '/api/treinos/alunos/21/planejamento-vigente/',
+    ])
+  })
+
+  it('abre o planejamento do aluno pelo botão Ver planejamento do perfil (US27)', async () => {
+    abrirComTreinador('/treinador/alunos/21', (url) => {
+      if (url.endsWith('/api/contas/alunos/21/')) {
+        return Response.json({
+          id: 21, first_name: 'Beatriz', last_name: 'Costa', apelido: 'bia',
+          email: 'bia@example.invalid', objetivos: 'Melhorar o arremesso',
+        })
+      }
+      if (url.endsWith('/api/treinos/alunos/21/planejamento-vigente/')) {
+        return Response.json({ aluno: { id: 21, nome: 'Beatriz Costa' }, planejamento: null })
+      }
+    })
+    expect(await screen.findByText('Nenhum planejamento vigente')).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Ver planejamento' }))
+    await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos/21/planejamento'))
+    expect(await screen.findByRole('heading', { name: 'Nenhum planejamento vigente' })).toBeTruthy()
   })
 
   it('o treinador volta do perfil demonstrativo para a lista real', async () => {

@@ -14,6 +14,7 @@ interface ExercicioDoTreino {
   feedbackTreinador?: string
   orientacoes?: string
   errosComuns?: string
+  errosOrientacoes?: { erro: string; orientacao_corretiva: string }[]
 }
 
 type TreinoDisponivel = {
@@ -123,7 +124,7 @@ export function DetalheTreino({
   }
 
   if (selecionado) {
-    const { id, nome, parametros, situacao, orientacoes, errosComuns } = selecionado
+    const { id, nome, parametros, situacao, orientacoes, errosComuns, errosOrientacoes = [] } = selecionado
     return (
       <TreinoLayout usuario={usuario} links={navegacao}>
         <button className="treino-botao treino-botao--voltar" type="button" onClick={() => setSelecao(null)}>
@@ -139,13 +140,23 @@ export function DetalheTreino({
           </p>
         )}
         <div className="treino-colunas treino-exercicio-conteudo">
-          {(orientacoes || errosComuns) && (
+          {(orientacoes || errosComuns || errosOrientacoes.length > 0) && (
             <section className="treino-cartao treino-exercicio-orientacoes" aria-label="Orientações do exercício">
               {orientacoes && (
                 <div className="treino-texto"><h2>Como executar</h2><p>{orientacoes}</p></div>
               )}
               {errosComuns && (
                 <div className="treino-texto"><h2>Evite estes erros</h2><p>{errosComuns}</p></div>
+              )}
+              {errosOrientacoes.length > 0 && (
+                <div className="treino-texto">
+                  <h2>Erros e orientações corretivas</h2>
+                  <ul>
+                    {errosOrientacoes.map(({ erro, orientacao_corretiva }, indice) => (
+                      <li key={indice}><strong>{erro}</strong><p>{orientacao_corretiva}</p></li>
+                    ))}
+                  </ul>
+                </div>
               )}
             </section>
           )}
