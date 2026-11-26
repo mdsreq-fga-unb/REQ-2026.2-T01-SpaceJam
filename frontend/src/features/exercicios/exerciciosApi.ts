@@ -1,5 +1,10 @@
 import { api, ApiError } from '../../api/client';
-import type { ErroOrientacao, Exercicio, Fundamento } from '../../types/exercicio';
+import type {
+  ErroOrientacao,
+  Exercicio,
+  Fundamento,
+  InformacoesVideoBase,
+} from '../../types/exercicio';
 
 interface ErroOrientacaoApi {
   id: number;
@@ -16,6 +21,8 @@ interface ExercicioApi {
   orientacoes: string;
   erros_comuns: string;
   video_base: string;
+  video_titulo?: string;
+  video_descricao?: string;
   erros_orientacoes?: ErroOrientacaoApi[];
 }
 
@@ -35,6 +42,8 @@ const NOME_CAMPO: Record<string, string> = {
   orientacoes: 'Orientações',
   erros_comuns: 'Erros comuns',
   video_base: 'Vídeo base',
+  video_titulo: 'Título do vídeo',
+  video_descricao: 'Descrição do vídeo',
   erro: 'Erro comum',
   orientacao_corretiva: 'Orientação corretiva',
 };
@@ -56,10 +65,14 @@ function daApi(dados: ExercicioApi): Exercicio {
     orientacoes: dados.orientacoes || undefined,
     errosComuns: dados.erros_comuns || undefined,
     videoUrl: dados.video_base || undefined,
+    videoTitulo: dados.video_titulo || undefined,
+    videoDescricao: dados.video_descricao || undefined,
     errosOrientacoes: (dados.erros_orientacoes ?? []).map(erroOrientacaoDaApi),
   };
 }
 
+// Não envia título e descrição do vídeo-base (US35): o PUT da edição do exercício os
+// preserva, e eles só mudam pela tela própria (atualizarInformacoesVideoBase).
 function paraApi(exercicio: Exercicio) {
   return {
     nome: exercicio.nome,
@@ -99,6 +112,21 @@ export async function atualizarExercicio(
   const dados = await api<ExercicioApi>(`/exercicios/${id}/`, {
     method: 'PUT',
     body: JSON.stringify(paraApi(exercicio)),
+  });
+  return daApi(dados);
+}
+
+// US35 — título e descrição breve do vídeo-base. PATCH parcial: só os dois textos.
+export async function atualizarInformacoesVideoBase(
+  id: number,
+  textos: InformacoesVideoBase
+): Promise<Exercicio> {
+  const dados = await api<ExercicioApi>(`/exercicios/${id}/`, {
+    method: 'PATCH',
+    body: JSON.stringify({
+      video_titulo: textos.videoTitulo,
+      video_descricao: textos.videoDescricao,
+    }),
   });
   return daApi(dados);
 }
