@@ -71,4 +71,5 @@ Os resultados registram o comportamento no ambiente de teste. A revisão indepen
 
 - US07 e US53 permitem que o aluno atualize e consulte seus dados cadastrais. O telefone é opcional e pode ser removido ao limpar o campo.
 - US08 e US10 conectam a troca de senha e a recuperação com link de uso único à API de contas. Para validar o fluxo com a configuração de entrega, use PostgreSQL 16 e configure o backend SMTP do Django.
-- US61 consulta o perfil real pelo identificador do aluno. O caminho pela lista de alunos depende da integração da US52. A exibição de lesões registradas depende da persistência pela US11.
+- US52 carrega a carteira do treinador de `GET /api/alunos-acompanhados/`. A ação **Ver perfil** usa o identificador devolvido na lista para abrir o perfil real da US61.
+- US61 também funciona pela rota direta. A exibição de lesões registradas depende da persistência pela US11.

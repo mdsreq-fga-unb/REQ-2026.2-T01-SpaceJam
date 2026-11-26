@@ -43,3 +43,12 @@ export function redefinirSenha(payload: SolicitacaoRedefinicao) {
 export function consultarPerfilDoAluno(alunoId: number) {
   return api<DadosCadastraisApi>(`/contas/alunos/${alunoId}/`)
 }
+
+interface CarteiraDeAlunosApi {
+  alunos: Pick<DadosCadastraisApi, 'id' | 'first_name' | 'last_name' | 'apelido'>[]
+  codigo_convite: string | null
+}
+
+export function listarAlunosAcompanhados(signal: AbortSignal) {
+  return api<CarteiraDeAlunosApi>('/alunos-acompanhados/', { signal })
+}
