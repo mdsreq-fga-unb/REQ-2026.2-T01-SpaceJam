@@ -335,3 +335,330 @@ class CriarTreinoUS24Tests(APITestCase):
         TreinoExercicio.objects.create(**kw)
         with self.assertRaises(IntegrityError), transaction.atomic():
             TreinoExercicio.objects.create(**kw)
+
+
+class EditarTreinoUS25Tests(APITestCase):
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach", email="coach@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.outro_treinador = Usuario.objects.create_user(
+            username="coach2", email="coach2@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.aluno = Usuario.objects.create_user(
+            username="beatriz", email="bia@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.aluno_de_outro = Usuario.objects.create_user(
+            username="carlos", email="carlos@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.outro_treinador,
+        )
+        for usuario in (self.treinador, self.outro_treinador, self.aluno, self.aluno_de_outro):
+            termos.registrar_aceite(usuario)
+        self.planejamento = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Controle de bola"
+        )
+        self.ex1 = Exercicio.objects.create(
+            nome="Drible entre cones", objetivo="Controle de bola", fundamento="DRIBLE",
+            orientacoes="Cabeça erguida", erros_comuns="Olhar para a bola",
+            video_base="https://exemplo.com/v1", criado_por=self.treinador,
+        )
+        self.ex2 = Exercicio.objects.create(
+            nome="Prancha", objetivo="Core", fundamento="CONDICIONAMENTO_FISICO",
+            criado_por=self.treinador,
+        )
+        self.ex3 = Exercicio.objects.create(
+            nome="Bandeja", objetivo="Finalização", fundamento="ARREMESSO",
+            orientacoes="Passada longa", criado_por=self.treinador,
+        )
+        self.treino = Treino.objects.create(planejamento=self.planejamento, nome="Treino A")
+        self.te1 = self._item(self.treino, 1, self.ex1, series=3, repeticoes=12)
+        self.te2 = self._item(self.treino, 2, self.ex2, series=2, duracao_segundos=45)
+
+    def _item(self, treino, ordem, ex, **params):
+        return TreinoExercicio.objects.create(
+            treino=treino, ordem=ordem, exercicio_origem=ex, nome=ex.nome, objetivo=ex.objetivo,
+            fundamento=ex.fundamento, orientacoes=ex.orientacoes, erros_comuns=ex.erros_comuns,
+            video_base=ex.video_base, **params,
+        )
+
+    def _url(self, treino=None):
+        return f"/api/treinos/treinos/{(treino or self.treino).id}/"
+
+    def _payload(self, **extra):
+        base = {
+            "nome": "Treino A",
+            "exercicios": [
+                {"id": self.te1.id, "series": 3, "repeticoes": 12},
+                {"id": self.te2.id, "series": 2, "duracao_segundos": 45},
+            ],
+        }
+        base.update(extra)
+        return base
+
+    def _put(self, payload, usuario=None, treino=None):
+        self.client.force_authenticate(user=usuario or self.treinador)
+        return self.client.put(self._url(treino), payload, format="json")
+
+    def _estado(self):
+        self.treino.refresh_from_db()
+        itens = list(self.treino.exercicios.values_list("id", "ordem", "series", "repeticoes", "duracao_segundos", "status"))
+        return self.treino.nome, self.treino.status, itens
+
+    # Ajuste — nome e parâmetros de exercícios "A fazer"
+    def test_ca01_altera_nome_e_parametros(self):
+        r = self._put({
+            "nome": "Treino A - revisado",
+            "exercicios": [
+                {"id": self.te1.id, "series": 4, "duracao_segundos": 30},
+                {"id": self.te2.id, "series": 3, "repeticoes": 15},
+            ],
+        })
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["nome"], "Treino A - revisado")
+        a, b = r.data["exercicios"]
+        self.assertEqual((a["id"], a["ordem"], a["series"], a["repeticoes"], a["duracao_segundos"]),
+                         (self.te1.id, 1, 4, None, 30))
+        self.assertEqual((b["id"], b["ordem"], b["series"], b["repeticoes"], b["duracao_segundos"]),
+                         (self.te2.id, 2, 3, 15, None))
+        self.assertTrue(all(i["status"] == "A_FAZER" for i in r.data["exercicios"]))
+
+    def test_ca01_ordem_dos_existentes_nao_muda(self):
+        payload = self._payload()
+        payload["exercicios"].reverse()
+        r = self._put(payload)
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([i["id"] for i in r.data["exercicios"]], [self.te1.id, self.te2.id])
+
+    # Validação: nada é salvo
+    def test_ca02_bloqueia_nome_vazio_ou_so_espacos(self):
+        antes = self._estado()
+        for nome in ("", "   "):
+            r = self._put(self._payload(nome=nome))
+            self.assertEqual(r.status_code, 400)
+            self.assertIn("nome", r.data)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca02_bloqueia_sem_exercicios(self):
+        antes = self._estado()
+        for exercicios in ([], None):
+            r = self._put(self._payload(exercicios=exercicios))
+            self.assertEqual(r.status_code, 400)
+            self.assertIn("exercicios", r.data)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca02_bloqueia_parametros_invalidos(self):
+        antes = self._estado()
+        casos = [
+            {"id": self.te1.id, "repeticoes": 10},
+            {"id": self.te1.id, "series": 0, "repeticoes": 10},
+            {"id": self.te1.id, "series": 3},
+            {"id": self.te1.id, "series": 3, "repeticoes": 10, "duracao_segundos": 30},
+            {"id": self.te1.id, "series": 3, "repeticoes": 0},
+            {"id": self.te1.id, "series": 3, "duracao_segundos": -5},
+        ]
+        for item in casos:
+            r = self._put(self._payload(exercicios=[item]))
+            self.assertEqual(r.status_code, 400, item)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca02_item_precisa_de_id_ou_exercicio_nunca_os_dois(self):
+        antes = self._estado()
+        for item in (
+            {"series": 3, "repeticoes": 10},
+            {"id": self.te1.id, "exercicio": self.ex3.id, "series": 3, "repeticoes": 10},
+        ):
+            r = self._put(self._payload(exercicios=[item]))
+            self.assertEqual(r.status_code, 400, item)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca02_bloqueia_id_de_outro_treino_e_id_repetido(self):
+        outro = Treino.objects.create(planejamento=self.planejamento, nome="Treino B")
+        alheio = self._item(outro, 1, self.ex3, series=1, repeticoes=5)
+        antes = self._estado()
+        r = self._put(self._payload(exercicios=[{"id": alheio.id, "series": 1, "repeticoes": 5}]))
+        self.assertEqual(r.status_code, 400)
+        r = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 1, "repeticoes": 5},
+            {"id": self.te1.id, "series": 2, "repeticoes": 5},
+        ]))
+        self.assertEqual(r.status_code, 400)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca02_bloqueia_exercicio_inexistente_na_biblioteca(self):
+        antes = self._estado()
+        r = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 3, "repeticoes": 12},
+            {"exercicio": 999999, "series": 1, "repeticoes": 5},
+        ]))
+        self.assertEqual(r.status_code, 400)
+        self.assertEqual(self._estado(), antes)
+
+    # Cancelamento — comportamento de interface: sem requisição, nada é salvo.
+
+    # Acesso restrito
+    def test_ca04_aluno_recebe_403(self):
+        antes = self._estado()
+        r = self._put(self._payload(nome="Invasão"), usuario=self.aluno)
+        self.assertEqual(r.status_code, 403)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca04_sem_login_recebe_401(self):
+        r = self.client.put(self._url(), self._payload(), format="json")
+        self.assertEqual(r.status_code, 401)
+
+    def test_ca04_treino_de_outra_carteira_e_inexistente_dao_404(self):
+        outro_plan = Planejamento.objects.create(
+            aluno=self.aluno_de_outro, treinador=self.outro_treinador, nome="Alheio"
+        )
+        outro_treino = Treino.objects.create(planejamento=outro_plan, nome="Treino X")
+        self.assertEqual(self._put(self._payload(), treino=outro_treino).status_code, 404)
+        self.client.force_authenticate(user=self.treinador)
+        r = self.client.put("/api/treinos/treinos/999999/", self._payload(), format="json")
+        self.assertEqual(r.status_code, 404)
+
+    def test_ca04_metodos_nao_permitidos(self):
+        self.client.force_authenticate(user=self.treinador)
+        self.assertEqual(self.client.get(self._url()).status_code, 405)
+        self.assertEqual(self.client.delete(self._url()).status_code, 405)
+
+    # Preservação do exercício prescrito
+    def test_ca05_existente_mantem_dados_da_prescricao_e_novo_copia_na_inclusao(self):
+        self.ex1.nome = "Nome alterado"
+        self.ex1.erros_comuns = "Outros erros"
+        self.ex1.save()
+        r = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 5, "repeticoes": 8},
+            {"exercicio": self.ex3.id, "series": 2, "repeticoes": 10},
+        ]))
+        self.assertEqual(r.status_code, 200)
+        self.te1.refresh_from_db()
+        self.assertEqual(self.te1.nome, "Drible entre cones")
+        self.assertEqual(self.te1.erros_comuns, "Olhar para a bola")
+        novo = TreinoExercicio.objects.get(treino=self.treino, exercicio_origem=self.ex3)
+        self.assertEqual((novo.nome, novo.orientacoes, novo.fundamento), ("Bandeja", "Passada longa", "ARREMESSO"))
+        self.ex3.nome = "Outro nome"
+        self.ex3.save()
+        novo.refresh_from_db()
+        self.assertEqual(novo.nome, "Bandeja")
+
+    # Treino bloqueado
+    def test_ca06_treino_concluido_e_somente_leitura(self):
+        self.treino.status = Treino.Status.CONCLUIDO
+        self.treino.save()
+        antes = self._estado()
+        r = self._put(self._payload(nome="Mudou"))
+        self.assertEqual(r.status_code, 409)
+        self.assertEqual(r.data["code"], "EDICAO_BLOQUEADA")
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca06_planejamento_historico_e_somente_leitura(self):
+        self.planejamento.status = Planejamento.Status.HISTORICO
+        self.planejamento.save()
+        antes = self._estado()
+        r = self._put(self._payload(nome="Mudou"))
+        self.assertEqual(r.status_code, 409)
+        self.assertEqual(self._estado(), antes)
+
+    # Exercício já executado
+    def _marcar_feito(self, te):
+        te.status = TreinoExercicio.Status.FEITO
+        te.save()
+
+    def test_ca07_nao_altera_parametros_de_exercicio_executado(self):
+        for status in (TreinoExercicio.Status.FEITO, TreinoExercicio.Status.CONCLUIDO, TreinoExercicio.Status.CORRIGIR):
+            self.te1.status = status
+            self.te1.save()
+            antes = self._estado()
+            r = self._put(self._payload(exercicios=[
+                {"id": self.te1.id, "series": 9, "repeticoes": 12},
+                {"id": self.te2.id, "series": 2, "duracao_segundos": 45},
+            ]))
+            self.assertEqual(r.status_code, 409, status)
+            self.assertEqual(self._estado(), antes)
+
+    def test_ca07_nao_remove_exercicio_executado(self):
+        self._marcar_feito(self.te1)
+        antes = self._estado()
+        r = self._put(self._payload(exercicios=[{"id": self.te2.id, "series": 2, "duracao_segundos": 45}]))
+        self.assertEqual(r.status_code, 409)
+        self.assertEqual(self._estado(), antes)
+
+    def test_ca07_executado_pode_vir_igual_e_os_a_fazer_seguem_editaveis(self):
+        self._marcar_feito(self.te1)
+        r = self._put(self._payload(
+            nome="Treino A2",
+            exercicios=[
+                {"id": self.te1.id, "series": 3, "repeticoes": 12},
+                {"id": self.te2.id, "series": 4, "duracao_segundos": 60},
+            ],
+        ))
+        self.assertEqual(r.status_code, 200)
+        self.te1.refresh_from_db()
+        self.te2.refresh_from_db()
+        self.assertEqual(self.te1.status, TreinoExercicio.Status.FEITO)
+        self.assertEqual((self.te2.series, self.te2.duracao_segundos), (4, 60))
+
+    def test_ca07_conflito_nao_grava_alteracoes_parciais(self):
+        self._marcar_feito(self.te1)
+        antes = self._estado()
+        r = self._put(self._payload(
+            nome="Parcial",
+            exercicios=[
+                {"id": self.te1.id, "series": 9, "repeticoes": 12},
+                {"id": self.te2.id, "series": 7, "duracao_segundos": 99},
+                {"exercicio": self.ex3.id, "series": 1, "repeticoes": 5},
+            ],
+        ))
+        self.assertEqual(r.status_code, 409)
+        self.assertEqual(self._estado(), antes)
+
+    # Incluir e remover
+    def test_ca08_inclui_no_fim_com_estado_a_fazer(self):
+        r = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 3, "repeticoes": 12},
+            {"id": self.te2.id, "series": 2, "duracao_segundos": 45},
+            {"exercicio": self.ex3.id, "series": 2, "repeticoes": 10},
+            {"exercicio": self.ex1.id, "series": 1, "duracao_segundos": 20},
+        ]))
+        self.assertEqual(r.status_code, 200)
+        itens = r.data["exercicios"]
+        self.assertEqual([i["ordem"] for i in itens], [1, 2, 3, 4])
+        self.assertEqual([i["nome"] for i in itens][2:], ["Bandeja", "Drible entre cones"])
+        self.assertTrue(all(i["status"] == "A_FAZER" for i in itens))
+
+    def test_ca08_remove_exercicio_a_fazer_e_fecha_a_ordem(self):
+        te3 = self._item(self.treino, 3, self.ex3, series=2, repeticoes=10)
+        r = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 3, "repeticoes": 12},
+            {"id": te3.id, "series": 2, "repeticoes": 10},
+        ]))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([(i["id"], i["ordem"]) for i in r.data["exercicios"]], [(self.te1.id, 1), (te3.id, 2)])
+        self.assertFalse(TreinoExercicio.objects.filter(pk=self.te2.id).exists())
+
+    def test_ca08_pode_trocar_todos_os_a_fazer_por_novos(self):
+        r = self._put(self._payload(exercicios=[{"exercicio": self.ex3.id, "series": 2, "repeticoes": 10}]))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([i["nome"] for i in r.data["exercicios"]], ["Bandeja"])
+        self.assertEqual(self.treino.exercicios.count(), 1)
+
+    def test_ca08_treino_feito_com_exercicio_novo_volta_para_em_andamento(self):
+        self.treino.status = Treino.Status.FEITO
+        self.treino.save()
+        r = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 3, "repeticoes": 12},
+            {"id": self.te2.id, "series": 2, "duracao_segundos": 45},
+            {"exercicio": self.ex3.id, "series": 2, "repeticoes": 10},
+        ]))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["status"], "EM_ANDAMENTO")
+
+    def test_treino_feito_sem_exercicio_novo_continua_feito(self):
+        self.treino.status = Treino.Status.FEITO
+        self.treino.save()
+        r = self._put(self._payload(nome="Só o nome"))
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["status"], "FEITO")
