@@ -75,7 +75,7 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
     } catch (falha) {
       if (falha instanceof ApiError) {
         const nomesDaApi: Record<string, CampoDadosAluno> = {
-          first_name: 'first_name', last_name: 'last_name', apelido: 'apelido',
+          nome: 'first_name', sobrenome: 'last_name', apelido: 'apelido',
           username: 'apelido', email: 'email', telefone: 'telefone',
           data_nascimento: 'data_nascimento', altura: 'altura_cm',
           peso: 'peso_kg', envergadura: 'envergadura_cm',
@@ -158,7 +158,7 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
                     onBlur={() => conferirCampo(nome)}
                     aria-invalid={Boolean(erros[nome])}
                     aria-describedby={erros[nome] ? `erro-us07-${nome}` : nome === 'frequencia_semanal' ? 'ajuda-us07-frequencia' : undefined}
-                    disabled={enviando}
+                    disabled={enviando || ['telefone', 'data_nascimento', 'frequencia_semanal'].includes(nome)}
                   />
                   {nome === 'frequencia_semanal' && <small id="ajuda-us07-frequencia">De 1 a 7 dias.</small>}
                   {erros[nome] && <p className="editar-aluno__erro" id={`erro-us07-${nome}`}>{erros[nome]}</p>}
@@ -168,7 +168,7 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
             <div className="editar-aluno__campo editar-aluno__campo--objetivos">
               <label htmlFor="us07-objetivos">Meus objetivos <span aria-hidden="true">*</span></label>
               <textarea
-                id="us07-objetivos" name="objetivos" rows={4} maxLength={1500}
+                id="us07-objetivos" name="objetivos" rows={4} maxLength={500}
                 value={dados.objetivos} onChange={(evento) => alterar('objetivos', evento.target.value)}
                 onBlur={() => conferirCampo('objetivos')} aria-invalid={Boolean(erros.objetivos)}
                 aria-describedby={erros.objetivos ? 'erro-us07-objetivos' : 'ajuda-us07-objetivos'}
@@ -193,6 +193,7 @@ export function EditarDadosAluno({ usuario, onCancelar, onSalvar }: Props) {
               A atualização dos dados está indisponível no momento. Nenhuma alteração será salva.
             </p>
           )}
+          <p className="editar-aluno__aviso-indisponivel">Telefone, nascimento e frequência semanal são somente leitura nesta edição.</p>
           <div className="editar-aluno__acoes">
             <button type="submit" className="editar-aluno__salvar" disabled={!onSalvar || enviando} aria-describedby={!onSalvar ? 'us07-salvamento-indisponivel' : undefined}>
               {enviando ? 'Salvando…' : 'Salvar alterações'}

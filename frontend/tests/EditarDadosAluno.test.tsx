@@ -58,8 +58,8 @@ describe('US07 — Editar informações do próprio perfil', () => {
 
   it('converte centímetros em metros e vírgula para valores de API', () => {
     const dados = dadosDoUsuario(usuario)
-    expect(dadosParaAtualizacao({ ...dados, altura_cm: '185', peso_kg: '80,5', envergadura_cm: '190', frequencia_semanal: '4' }).perfil_aluno)
-      .toEqual({ altura: '1.85', peso: '80.50', envergadura: '1.90', frequencia_semanal: 4, objetivos: 'Melhorar o arremesso' })
+    expect(dadosParaAtualizacao({ ...dados, altura_cm: '185', peso_kg: '80,5', envergadura_cm: '190', frequencia_semanal: '4' }))
+      .toEqual({ nome: 'Beatriz', sobrenome: 'Costa', apelido: 'beatriz.costa', email: 'beatriz@example.com', altura: '1.85', peso: '80.50', envergadura: '1.90', objetivos: 'Melhorar o arremesso' })
   })
 
   it('exige intervalo coerente para frequência e medidas', () => {
@@ -68,13 +68,13 @@ describe('US07 — Editar informações do próprio perfil', () => {
     expect(erros.altura_cm).toBeTruthy()
     expect(erros.peso_kg).toBeTruthy()
     expect(erros.envergadura_cm).toBeTruthy()
-    expect(erros.frequencia_semanal).toBeTruthy()
+    expect(erros.frequencia_semanal).toBeUndefined() // não editável pela US07
   })
 
   it('rejeita data de nascimento impossível, e-mail incorreto e apelido com espaços', () => {
     const dados = dadosDoUsuario(usuario)
     const erros = validarDadosAluno({ ...dados, data_nascimento: '2003-02-30', email: 'sem-arroba', apelido: 'um apelido' })
-    expect(erros.data_nascimento).toBeTruthy()
+    expect(erros.data_nascimento).toBeUndefined() // não editável pela US07
     expect(erros.email).toBeTruthy()
     expect(erros.apelido).toBeTruthy()
   })
@@ -92,7 +92,7 @@ describe('US07 — Editar informações do próprio perfil', () => {
     await userEvent.setup().click(screen.getByRole('button', { name: 'Salvar alterações' }))
     await waitFor(() => expect(salvar).toHaveBeenCalledOnce())
     expect(salvar.mock.calls[0][0].apelido).toBe('beatriz.costa')
-    expect(salvar.mock.calls[0][0].perfil_aluno.altura).toBe('1.72')
+    expect(salvar.mock.calls[0][0].altura).toBe('1.72')
     expect(await screen.findByText('Alterações salvas com sucesso.')).toBeTruthy()
   })
 

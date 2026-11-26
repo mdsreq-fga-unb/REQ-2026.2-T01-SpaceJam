@@ -23,9 +23,11 @@ function abrirComSessao(
 ) {
   tokenStorage.set('token-teste')
 
-  const requisicoes = vi.fn().mockResolvedValue(
-    new Response(JSON.stringify(usuario), { status: 200 }),
-  )
+  const requisicoes = vi.fn().mockImplementation((url: string) => Promise.resolve(
+    url.includes('/api/contas/alunos/')
+      ? new Response(JSON.stringify({ detail: 'Aluno não encontrado' }), { status: 404 })
+      : new Response(JSON.stringify(usuario), { status: 200 }),
+  ))
 
   vi.stubGlobal('fetch', requisicoes)
   window.history.replaceState({}, '', caminho)
@@ -143,8 +145,9 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
       screen.queryByText('Beatriz Costa'),
     ).toBeNull()
 
-    // Apenas /auth/me/ é consultado para restaurar a sessão.
-    expect(requisicoes).toHaveBeenCalledTimes(1)
+    // /auth/me/ restaura a sessão; /contas/alunos/:id/ consulta o perfil real.
+    await waitFor(() => expect(requisicoes).toHaveBeenCalledTimes(2))
+    expect(requisicoes.mock.calls[1][0]).toBe('/api/contas/alunos/123/')
   })
 
   it('exige renovação dos termos antes de exibir o perfil', async () => {

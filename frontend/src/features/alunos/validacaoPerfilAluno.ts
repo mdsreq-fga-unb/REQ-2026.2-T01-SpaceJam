@@ -18,19 +18,14 @@ export type CampoDadosAluno = keyof FormularioDadosAluno
 export type ErrosDadosAluno = Partial<Record<CampoDadosAluno, string>>
 
 export interface AtualizacaoPerfilAluno {
-  first_name: string
-  last_name: string
+  nome: string
+  sobrenome: string
   apelido: string
   email: string
-  telefone: string
-  data_nascimento: string
-  perfil_aluno: {
-    altura: string
-    peso: string
-    envergadura: string
-    frequencia_semanal: number
-    objetivos: string
-  }
+  altura: string
+  peso: string
+  envergadura: string
+  objetivos: string
 }
 
 function numeroSeguro(valor: string) {
@@ -78,22 +73,10 @@ export function validarDadosAluno(dados: FormularioDadosAluno): ErrosDadosAluno 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(dados.email.trim()) || dados.email.length > 254) {
     erros.email = 'Informe um e-mail válido.'
   }
-  if (dados.telefone.trim() && (!/^[+\d\s()-]+$/.test(dados.telefone.trim()) || dados.telefone.trim().length > 20)) {
-    erros.telefone = 'Informe um telefone válido de até 20 caracteres.'
-  }
-  const nascimento = dados.data_nascimento
-  const data = /^\d{4}-\d{2}-\d{2}$/.test(nascimento) ? new Date(`${nascimento}T00:00:00Z`) : null
-  if (!data || Number.isNaN(data.getTime()) || data.toISOString().slice(0, 10) !== nascimento) {
-    erros.data_nascimento = 'Informe uma data de nascimento válida.'
-  } else {
-    const hoje = new Date()
-    const hojeISO = [hoje.getFullYear(), String(hoje.getMonth() + 1).padStart(2, '0'), String(hoje.getDate()).padStart(2, '0')].join('-')
-    if (nascimento >= hojeISO) erros.data_nascimento = 'A data deve ser anterior a hoje.'
-  }
   const faixas = [
     ['altura_cm', 50, 260, 'altura'] as const,
     ['peso_kg', 20, 300, 'peso'] as const,
-    ['envergadura_cm', 50, 280, 'envergadura'] as const,
+    ['envergadura_cm', 50, 260, 'envergadura'] as const,
   ]
   for (const [campo, minimo, maximo, rotulo] of faixas) {
     const n = numeroSeguro(dados[campo])
@@ -101,30 +84,21 @@ export function validarDadosAluno(dados: FormularioDadosAluno): ErrosDadosAluno 
       erros[campo] = `Informe ${rotulo} entre ${minimo} e ${maximo} ${campo === 'peso_kg' ? 'kg' : 'cm'}.`
     }
   }
-  const frequencia = numeroSeguro(dados.frequencia_semanal)
-  if (!Number.isInteger(frequencia) || frequencia < 1 || frequencia > 7) {
-    erros.frequencia_semanal = 'Informe um número inteiro entre 1 e 7.'
-  }
   if (!dados.objetivos.trim()) erros.objetivos = 'Descreva ao menos um objetivo pessoal.'
-  else if (dados.objetivos.trim().length > 1500) erros.objetivos = 'Use no máximo 1500 caracteres.'
+  else if (dados.objetivos.trim().length > 500) erros.objetivos = 'Use no máximo 500 caracteres.'
   return erros
 }
 
-/** Formato de envio proposto. A URL e o contrato de escrita devem ser aprovados pelo backend. */
+/** Campos efetivamente autorizados pelo contrato PATCH /contas/me/editar/. */
 export function dadosParaAtualizacao(dados: FormularioDadosAluno): AtualizacaoPerfilAluno {
   return {
-    first_name: dados.first_name.trim(),
-    last_name: dados.last_name.trim(),
+    nome: dados.first_name.trim(),
+    sobrenome: dados.last_name.trim(),
     apelido: dados.apelido.trim(),
     email: dados.email.trim().toLowerCase(),
-    telefone: dados.telefone.trim(),
-    data_nascimento: dados.data_nascimento,
-    perfil_aluno: {
-      altura: (numeroSeguro(dados.altura_cm) / 100).toFixed(2),
-      peso: numeroSeguro(dados.peso_kg).toFixed(2),
-      envergadura: (numeroSeguro(dados.envergadura_cm) / 100).toFixed(2),
-      frequencia_semanal: Number(dados.frequencia_semanal),
-      objetivos: dados.objetivos.trim(),
-    },
+    altura: (numeroSeguro(dados.altura_cm) / 100).toFixed(2),
+    peso: numeroSeguro(dados.peso_kg).toFixed(2),
+    envergadura: (numeroSeguro(dados.envergadura_cm) / 100).toFixed(2),
+    objetivos: dados.objetivos.trim(),
   }
 }

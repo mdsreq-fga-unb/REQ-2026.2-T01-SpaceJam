@@ -61,4 +61,8 @@ Telas do treinador para manter os pares **erro comum + orientação corretiva** 
 
 `tests/acesso-api-real.test.tsx` é opcional e usa HTTP real. Só execute contra uma cópia descartável do backend, com banco vazio, migrações aplicadas e proxy do Vite ativo. Defina `SPACE_JAM_API_TEST_URL` com a base local (por exemplo `http://127.0.0.1:5173/api`) e `SPACE_JAM_TEST_ACTIVATION_CODE` com o código desse backend de teste, apenas no processo de testes. Execute `npm test -- --pool=threads tests/acesso-api-real.test.tsx`. Não use banco da equipe: a suíte cria contas fictícias e o backend permite apenas um treinador. Na execução padrão esses testes ficam ignorados por falta das variáveis explícitas.
 
-A suíte real verifica cadastro/persistência/vínculo pelo cliente HTTP, login e saída pelos componentes React, consulta e restauração do perfil, rejeição de credenciais/duplicidade e aceite pelo endpoint. Usa DOM de teste (jsdom), não automatiza um navegador real e não comprova a revisão dos documentos de termos. Testes aprovados não substituem revisão independente nem validação do cliente.
+A suíte renderiza os componentes React em jsdom e usa a API real pelo proxy do Vite. Além dos fluxos de acesso, ela verifica edição e consulta de cadastro, perfil de aluno vinculado e troca de senha com rejeição das credenciais da sessão anterior.
+
+Para incluir a recuperação de senha no teste HTTP, execute também o Django com o backend de e-mail em arquivo e aponte `SPACE_JAM_TEST_MAIL_DIR` para o diretório inicialmente vazio definido em `EMAIL_FILE_PATH`. Configure `FRONTEND_URL` com a origem do frontend local. O teste lê o link gerado, redefine a senha e verifica que o link não pode ser reutilizado.
+
+Os resultados registram o comportamento no ambiente de teste. A revisão independente, os documentos de termos vigentes e a validação pelo cliente seguem o fluxo da equipe.

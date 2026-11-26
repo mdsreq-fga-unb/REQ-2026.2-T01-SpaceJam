@@ -135,16 +135,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  async function logout() {
+  function limparSessaoLocal() {
     const versao = ++versaoSessao.current
-
-    const access = tokenStorage.get()
-    const refresh = tokenStorage.getRefresh()
-
     tokenStorage.clear()
     setUsuario(null)
     setCarregando(false)
     setAvisoSessao('')
+    return versao
+  }
+
+  async function logout() {
+    const access = tokenStorage.get()
+    const refresh = tokenStorage.getRefresh()
+    const versao = limparSessaoLocal()
 
     try {
       if (!access || !refresh) {
@@ -171,6 +174,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function recarregarUsuario() {
+    const versao = versaoSessao.current
+    const perfil = await api<Usuario>('/auth/me/')
+    if (versao === versaoSessao.current) setUsuario(perfil)
+  }
+
   async function aceitarTermos(versaoTermos: string) {
     const versao = versaoSessao.current
 
@@ -192,6 +201,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         login,
         logout,
         aceitarTermos,
+        recarregarUsuario,
+        limparSessaoLocal,
         avisoSessao,
       }}
     >
