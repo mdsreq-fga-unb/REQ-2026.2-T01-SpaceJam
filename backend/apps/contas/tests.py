@@ -3,6 +3,8 @@ from datetime import date, timedelta
 from django.conf import settings
 from django.test import override_settings
 from rest_framework.test import APITestCase
+from . import termos
+from .models import Usuario
 
 
 # US63 (RN15): o cadastro só registra aceite com os documentos publicados.
@@ -54,6 +56,100 @@ class CadastroMixin:
 
 @DOCUMENTOS_CONFIGURADOS
 class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
+
+
+    def test_us24_listar_alunos_acompanhados(self):
+        treinador = self._criar_treinador()
+
+        # Cadastra um aluno vinculado ao treinador
+        payload_aluno = self._payload_aluno(treinador["codigo_convite"])
+        resp_aluno = self.client.post(
+            "/api/auth/cadastro/aluno/",
+            payload_aluno,
+            format="json",
+        )
+        self.assertEqual(resp_aluno.status_code, 201)
+        aluno_id = resp_aluno.data["id"]
+
+        endpoint = "/api/contas/alunos/"
+
+        # Sem autenticação -> 401
+        self.client.credentials()
+        r_unauth = self.client.get(endpoint)
+        self.assertEqual(r_unauth.status_code, 401)
+
+        # Aluno autenticado tentando listar alunos -> 403
+        login_aluno = self.client.post(
+            "/api/auth/login/aluno/",
+            {
+                "apelido": payload_aluno["apelido"],
+                "senha": payload_aluno["senha"],
+            },
+            format="json",
+        ).data
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {login_aluno['access']}"
+        )
+        r_aluno = self.client.get(endpoint)
+        self.assertEqual(r_aluno.status_code, 403)
+
+        # Treinador autenticado -> 200
+        login_treinador = self.client.post(
+            "/api/auth/login/treinador/",
+            {
+                "email": treinador["email"],
+                "senha": "SenhaForte#2026",
+            },
+            format="json",
+        ).data
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {login_treinador['access']}"
+        )
+        r_ok = self.client.get(endpoint)
+
+        self.assertEqual(r_ok.status_code, 200)
+        self.assertEqual(len(r_ok.data), 1)
+        self.assertEqual(r_ok.data[0]["id"], aluno_id)
+        self.assertEqual(r_ok.data[0]["nome"], "Lucas Oliveira")
+        self.assertEqual(
+            r_ok.data[0]["objetivo"],
+            "Melhorar arremesso de 3 pontos",
+        )
+
+        # Outro treinador não deve visualizar alunos dessa carteira
+        outro_treinador = Usuario.objects.create_user(
+            username="coach_outro_us24",
+            email="outro_coach_us24@basquete.com",
+            password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+            first_name="Marcos",
+            last_name="Lima",
+        )
+        # Registra o aceite dos termos pela função oficial do sistema.
+        # Isso evita que a permissão bloqueie o acesso por TERMOS_PENDENTES.
+        termos.registrar_aceite(outro_treinador)
+
+        login_outro = self.client.post(
+            "/api/auth/login/treinador/",
+            {
+                "email": outro_treinador.email,
+                "senha": "SenhaForte#2026",
+            },
+            format="json",
+        ).data
+
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {login_outro['access']}"
+        )
+
+        r_outro = self.client.get(endpoint)
+
+        self.assertEqual(r_outro.status_code, 200)
+        self.assertEqual(len(r_outro.data), 0)
+
+
     # --- US02: Cadastrar Treinador ---
     def test_us02_cadastrar_treinador_valido_e_bloquear_segundo_treinador(self):
         r = self.client.post("/api/auth/cadastro/treinador/", self.dados_treinador, format="json")
@@ -278,6 +374,8 @@ class ContasUS01aUS05Tests(CadastroMixin, APITestCase):
             first_name="Marcos",
             last_name="Lima",
         )
+        termos.registrar_aceite(outro_treinador)
+        
         login_outro = self.client.post(
             "/api/auth/login/treinador/",
             {"email": outro_treinador.email, "senha": "SenhaForte#2026"},

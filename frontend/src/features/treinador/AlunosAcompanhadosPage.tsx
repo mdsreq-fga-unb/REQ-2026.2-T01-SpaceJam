@@ -1,14 +1,12 @@
+import { useEffect, useState } from 'react'
 import { Navigate, useSearchParams } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
+import { api } from '../../api/client'
 import {
   AlunosAcompanhados,
   type AlunoAcompanhadoResumo,
 } from './AlunosAcompanhados'
 
-/**
- * US52 — dados inteiramente fictícios, exclusivamente para visualizar a V2
- * durante o desenvolvimento. Não correspondem a dados reais do backend.
- */
 const alunosDemonstracao: readonly AlunoAcompanhadoResumo[] = [
   { id: 101, nome: 'Beatriz Costa', objetivo: 'Melhorar o arremesso' },
   { id: 102, nome: 'André Lima', objetivo: 'Controle de bola' },
@@ -23,6 +21,42 @@ export function AlunosAcompanhadosPage() {
   const [parametros] = useSearchParams()
   const previa = parametros.get('previa') === '1'
 
+  const [alunos, setAlunos] = useState<AlunoAcompanhadoResumo[]>([])
+  const [estado, setEstado] = useState<
+    'aguardando-api' | 'carregando' | 'erro' | 'pronto'
+  >('carregando')
+
+  useEffect(() => {
+    if (!usuario || previa) return
+
+    let ativo = true
+
+    async function carregarAlunos() {
+      setEstado('carregando')
+
+      try {
+        const resposta = await api<AlunoAcompanhadoResumo[]>(
+          '/contas/alunos/',
+        )
+
+        if (ativo) {
+          setAlunos(resposta)
+          setEstado('pronto')
+        }
+      } catch {
+        if (ativo) {
+          setEstado('erro')
+        }
+      }
+    }
+
+    void carregarAlunos()
+
+    return () => {
+      ativo = false
+    }
+  }, [usuario, previa])
+
   if (!usuario) return null
 
   if (previa && !import.meta.env.DEV) {
@@ -32,10 +66,9 @@ export function AlunosAcompanhadosPage() {
   return (
     <AlunosAcompanhados
       treinador={usuario}
-      alunos={previa ? alunosDemonstracao : []}
-      estado={previa ? 'pronto' : 'aguardando-api'}
+      alunos={previa ? alunosDemonstracao : alunos}
+      estado={previa ? 'pronto' : estado}
       demonstracao={previa}
-      // A navegação para o perfil está disponível na branch integrada.
       perfilIntegrado={true}
     />
   )

@@ -23,9 +23,16 @@ function abrirComSessao(
 ) {
   tokenStorage.set('token-teste')
 
-  const requisicoes = vi.fn().mockResolvedValue(
-    new Response(JSON.stringify(usuario), { status: 200 }),
-  )
+  const requisicoes = vi.fn(async (url: string) => {
+    if (url.endsWith('/api/contas/alunos/123/')) {
+      return Response.json(
+        { detail: 'Aluno não encontrado.' },
+        { status: 404 },
+      )
+    }
+
+    return Response.json(usuario)
+  })
 
   vi.stubGlobal('fetch', requisicoes)
   window.history.replaceState({}, '', caminho)
@@ -132,19 +139,16 @@ describe('US61 — Consultar perfil de aluno acompanhado', () => {
     ).toBeNull()
   })
 
-  it('não consulta uma API inexistente ao receber um ID real', async () => {
-    const requisicoes = abrirComSessao('/treinador/alunos/123')
+  it('consulta a API e exibe erro quando o aluno não é encontrado', async () => {
+  const requisicoes = abrirComSessao('/treinador/alunos/123')
 
-    expect(
-      await screen.findByText('Os dados deste aluno não estão disponíveis no momento.'),
-    ).toBeTruthy()
+  expect(await screen.findByRole('alert')).toBeTruthy()
 
-    expect(
-      screen.queryByText('Beatriz Costa'),
-    ).toBeNull()
+  expect(
+    screen.queryByText('Beatriz Costa'),
+  ).toBeNull()
 
-    // Apenas /auth/me/ é consultado para restaurar a sessão.
-    expect(requisicoes).toHaveBeenCalledTimes(1)
+  expect(requisicoes).toHaveBeenCalledTimes(2)
   })
 
   it('exige renovação dos termos antes de exibir o perfil', async () => {

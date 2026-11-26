@@ -178,7 +178,7 @@ def meus_dados_aluno(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def consultar_perfil_aluno_acompanhado(request, aluno_id):
     """US61 — Consultar perfil de aluno acompanhado pelo treinador (RF4810, RN03, RN04, RN25, RN26)."""
     if request.user.papel != Usuario.Papel.TREINADOR:
@@ -208,8 +208,51 @@ def consultar_perfil_aluno_acompanhado(request, aluno_id):
 
     return Response(PerfilAlunoAcompanhadoSerializer(aluno).data, status=status.HTTP_200_OK)
 
+
+@api_view(["GET"])
+@permission_classes(ROTA_PROTEGIDA)
+def listar_alunos_acompanhados(request):
+    """Lista os alunos ativos vinculados ao treinador autenticado."""
+
+    if request.user.papel != Usuario.Papel.TREINADOR:
+        return Response(
+            {"detail": "Apenas treinadores podem listar alunos acompanhados."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    alunos = (
+        Usuario.objects
+        .select_related("perfil_aluno")
+        .filter(
+            treinador=request.user,
+            papel=Usuario.Papel.ALUNO,
+            is_active=True,
+        )
+        .order_by("first_name", "last_name")
+    )
+
+    resultado = []
+
+    for aluno in alunos:
+        nome = f"{aluno.first_name} {aluno.last_name}".strip()
+
+        perfil = getattr(aluno, "perfil_aluno", None)
+
+        resultado.append({
+            "id": aluno.id,
+            "nome": nome or aluno.username,
+            "objetivo": (
+                perfil.objetivos
+                if perfil and perfil.objetivos
+                else "Não informado"
+            ),
+        })
+
+    return Response(resultado, status=status.HTTP_200_OK)
+
+
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def trocar_senha(request):
     """US08 — Trocar senha de usuário autenticado (RF1108, RN24, RNF08)."""
     serializer = TrocarSenhaSerializer(

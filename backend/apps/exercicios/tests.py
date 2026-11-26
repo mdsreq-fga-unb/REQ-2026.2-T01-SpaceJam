@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from .models import Exercicio
+from apps.contas import termos
 
 Usuario = get_user_model()
 
@@ -17,6 +18,7 @@ class CadastrarExercicioTests(APITestCase):
             password="senha-forte-123",
             papel="TREINADOR",
         )
+        termos.registrar_aceite(cls.treinador)
         cls.aluno = Usuario.objects.create_user(
             username="aluno1",
             email="aluno1@exemplo.com",
@@ -116,6 +118,7 @@ class ConsultarExercicioTests(APITestCase):
             password="senha-forte-123",
             papel="TREINADOR",
         )
+        termos.registrar_aceite(cls.treinador)
         cls.aluno = Usuario.objects.create_user(
             username="aluno1",
             email="aluno1@exemplo.com",
@@ -233,6 +236,7 @@ class EditarExercicioTests(APITestCase):
             password="senha-forte-123",
             papel="TREINADOR",
         )
+        termos.registrar_aceite(cls.treinador)
         cls.aluno = Usuario.objects.create_user(
             username="aluno1",
             email="aluno1@exemplo.com",
@@ -375,6 +379,7 @@ class ErrosComunsEVideoBaseTests(APITestCase):
             password="senha-forte-123",
             papel="TREINADOR",
         )
+        termos.registrar_aceite(cls.treinador)
         cls.url_lista = reverse("exercicio-list")
         cls.dados = {
             "nome": "Bandeja pela direita",

@@ -17,7 +17,22 @@ const treinador: Usuario = {
 
 function abrirComTreinador(rota: string, responder?: (url: string) => Response | undefined) {
   tokenStorage.set('token-teste')
-  const buscar = vi.fn(async (url: string) => responder?.(url) ?? Response.json(treinador))
+
+  const buscar = vi.fn(async (url: string) => {
+    const resposta = responder?.(url)
+
+    if (resposta) return resposta
+
+    if (url.endsWith('/api/contas/alunos/')) {
+      return Response.json(
+        { detail: 'Falha ao consultar alunos.' },
+        { status: 500 },
+      )
+    }
+
+    return Response.json(treinador)
+  })
+
   vi.stubGlobal('fetch', buscar)
   window.history.replaceState({}, '', rota)
   render(<App />)
@@ -36,8 +51,8 @@ describe('Integração de navegação do treinador', () => {
     fireEvent.click(botao)
     await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos'))
     expect(await screen.findByRole('heading', { name: 'Seus alunos' })).toBeTruthy()
-    expect(screen.getByText('Lista de alunos indisponível')).toBeTruthy()
-    expect(requisicoes).toHaveBeenCalledTimes(1)
+    expect(screen.getByText('Não foi possível consultar os alunos')).toBeTruthy()
+    expect(requisicoes).toHaveBeenCalledTimes(2)
   })
 
   it('o treinador volta do perfil demonstrativo para a lista real', async () => {
@@ -47,7 +62,7 @@ describe('Integração de navegação do treinador', () => {
     fireEvent.click(voltar)
     await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos'))
     expect(await screen.findByRole('heading', { name: 'Seus alunos' })).toBeTruthy()
-    expect(requisicoes).toHaveBeenCalledTimes(1)
+    expect(requisicoes).toHaveBeenCalledTimes(2)
   })
 
   it.each(['Menu do treinador', 'Seções do treinador'])('abre a biblioteca a partir de %s', async (menu) => {
