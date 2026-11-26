@@ -115,6 +115,7 @@ export function PerfilAlunoAcompanhadoPage() {
       treinador={usuario}
       aluno={previa ? alunoDemonstracao : selecionado?.dados}
       demonstracao={previa}
+      onVoltar={() => navegar('/treinador/alunos')}
       onVerPlanejamento={selecionado && !previa
         ? () => navegar(`/treinador/alunos/${selecionado.id}/planejamento`)
         : undefined}

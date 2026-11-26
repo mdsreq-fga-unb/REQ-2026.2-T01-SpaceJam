@@ -102,7 +102,7 @@ export function TreinadorPlanejamentos({
               {planejamentos.map((item) => (
                 <Link
                   className="sj-planejamentos__linha"
-                  to={'/treinador/alunos/${item.alunoId}/planejamento'}
+                  to={`/treinador/alunos/${item.alunoId}/planejamento`}
                   key={item.id}
                 >
                   <strong>{item.nome}</strong>
