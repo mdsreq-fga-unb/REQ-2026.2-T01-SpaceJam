@@ -1,5 +1,6 @@
-
+import { useRef, useState } from 'react'
 import type { Usuario } from '../../types/usuario'
+import { RegistrarLesaoFormulario } from './RegistrarLesaoFormulario'
 import './PerfilAlunoAcompanhado.css'
 
 export interface DadosAlunoAcompanhado {
@@ -21,6 +22,7 @@ interface PerfilAlunoAcompanhadoProps {
   aluno?: DadosAlunoAcompanhado | null
   demonstracao?: boolean
   onVoltar?: () => void
+  onRegistrarLesao?: (descricao: string, signal: AbortSignal) => Promise<void>
 }
 
 function valorOuIndisponivel(valor?: string | null) {
@@ -71,8 +73,19 @@ export function PerfilAlunoAcompanhado({
   aluno,
   demonstracao = false,
   onVoltar,
+  onRegistrarLesao,
 }: PerfilAlunoAcompanhadoProps) {
   const nomeTreinador = treinador.first_name || treinador.apelido
+  const botaoRegistrar = useRef<HTMLButtonElement>(null)
+  const [formularioAberto, setFormularioAberto] = useState(false)
+  const [lesaoRegistrada, setLesaoRegistrada] = useState(false)
+  const registrar = treinador.papel === 'TREINADOR' && aluno && !demonstracao ? onRegistrarLesao : undefined
+  const emRegistro = Boolean(formularioAberto && registrar && aluno)
+
+  function voltarAoPerfil() {
+    setFormularioAberto(false)
+    requestAnimationFrame(() => botaoRegistrar.current?.focus())
+  }
 
   const frequencia =
     aluno?.frequenciaSemanal != null
@@ -81,12 +94,7 @@ export function PerfilAlunoAcompanhado({
         } por semana`
       : 'Não disponível para consulta'
 
-  const lesoes =
-    aluno?.historicoLesoes == null
-      ? 'Histórico ainda não disponível para consulta.'
-      : aluno.historicoLesoes.length === 0
-        ? 'Nenhuma lesão registrada.'
-        : aluno.historicoLesoes.join('; ')
+  const lesoes = aluno?.historicoLesoes
 
   return (
     <div className="perfil-acompanhado">
@@ -112,10 +120,10 @@ export function PerfilAlunoAcompanhado({
           className="perfil-acompanhado__navegacao"
           aria-label="Seções do treinador"
         >
-          <span aria-current="page">Alunos</span>
+          <span aria-current={emRegistro ? undefined : 'page'}>Alunos</span>
           <span>Treinos</span>
           <span>Biblioteca</span>
-          <span>Conta</span>
+          <span aria-current={emRegistro ? 'page' : undefined}>Conta</span>
         </nav>
 
         <div className="perfil-acompanhado__usuario">
@@ -124,7 +132,19 @@ export function PerfilAlunoAcompanhado({
         </div>
       </header>
 
-      <main className="perfil-acompanhado__conteudo">
+      {emRegistro && registrar && aluno ? (
+        <main className="perfil-acompanhado__conteudo perfil-acompanhado__conteudo--registro">
+          <RegistrarLesaoFormulario
+            nomeAluno={aluno.nome}
+            onSalvar={registrar}
+            onConcluir={() => {
+              setLesaoRegistrada(true)
+              voltarAoPerfil()
+            }}
+            onCancelar={voltarAoPerfil}
+          />
+        </main>
+      ) : <main className="perfil-acompanhado__conteudo">
         {/* Identificação do aluno */}
         <div className="perfil-acompanhado__titulo">
           <h1>{aluno?.nome || 'Perfil do aluno'}</h1>
@@ -211,13 +231,25 @@ export function PerfilAlunoAcompanhado({
           <div className="perfil-acompanhado__coluna">
             <section aria-labelledby="us61-lesoes">
               <h2 id="us61-lesoes">Histórico de lesões</h2>
-              <p>{lesoes}</p>
+              {lesoes?.length ? (
+                <ul className="perfil-acompanhado__historico-lesoes">
+                  {lesoes.map((lesao, indice) => <li key={`${indice}-${lesao}`}>{lesao}</li>)}
+                </ul>
+              ) : (
+                <p>{lesoes ? 'Nenhuma lesão registrada.' : 'Histórico ainda não disponível para consulta.'}</p>
+              )}
+              {lesaoRegistrada && <p className="perfil-acompanhado__sucesso-lesao" role="status">Lesão registrada.</p>}
 
               <button
+                ref={botaoRegistrar}
                 className="perfil-acompanhado__acao"
                 type="button"
-                disabled
-                title="Registro de lesões indisponível no momento"
+                disabled={!registrar}
+                title={registrar ? undefined : 'Registro de lesões indisponível no momento'}
+                onClick={() => {
+                  setLesaoRegistrada(false)
+                  setFormularioAberto(true)
+                }}
               >
                 Registrar lesão
               </button>
@@ -253,7 +285,7 @@ export function PerfilAlunoAcompanhado({
             Voltar aos alunos
           </button>
         </div>
-      </main>
+      </main>}
     </div>
   )
 }

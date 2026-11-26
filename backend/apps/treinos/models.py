@@ -72,7 +72,7 @@ class ItemTreino(models.Model):
 
     def __str__(self) -> str:
         return f"{self.ordem}. {self.nome} ({self.treino.nome})"
-    
+
 class FeedbackAluno(models.Model):
     """US49 (RF3608) e US50 (RF3609) — Relato/feedback do próprio aluno sobre um exercício do treino."""
 

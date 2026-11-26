@@ -28,6 +28,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
           <Route path="/recuperar-senha/redefinir" element={<RedefinirSenhaPage />} />
+          <Route path="/redefinir-senha" element={<RedefinirSenhaPage />} />
           <Route path="/cadastro" element={<Navigate to="/cadastro/aluno" replace />} />
           <Route path="/cadastro/aluno" element={<CadastroPage key="aluno" perfil="ALUNO" />} />
           <Route path="/cadastro/treinador" element={<CadastroPage key="treinador" perfil="TREINADOR" />} />
@@ -53,7 +54,7 @@ export default function App() {
           <Route
             path="/conta/senha"
             element={
-              <RotaProtegida papel="ALUNO">
+              <RotaProtegida>
                 <TrocarSenhaPage />
               </RotaProtegida>
             }

@@ -127,7 +127,7 @@ class TreinoConcluirTreinadorView(APIView):
             treino.save(update_fields=["status", "atualizado_em"])
 
         return Response(TreinoStatusConsultaSerializer(treino).data, status=status.HTTP_200_OK)
-    
+
 def _obter_item_treino_do_aluno(request, item_id: int, *, bloquear_treino: bool = False) -> ItemTreino:
     """Busca o ItemTreino (404 se não existir) e garante que pertence ao aluno autenticado (403)."""
     queryset = ItemTreino.objects.select_related(
