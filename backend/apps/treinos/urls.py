@@ -13,4 +13,15 @@ urlpatterns = [
     ),
     # Editar treino
     path("treinos/<int:treino_id>/", views.editar_treino, name="treino-editar"),
+    # Editar planejamento de treino
+    path(
+        "planejamentos/<int:planejamento_id>/",
+        views.editar_planejamento,
+        name="planejamento-editar",
+    ),
+    path(
+        "planejamentos/<int:planejamento_id>/treinos/<int:treino_id>/",
+        views.remover_treino,
+        name="planejamento-remover-treino",
+    ),
 ]

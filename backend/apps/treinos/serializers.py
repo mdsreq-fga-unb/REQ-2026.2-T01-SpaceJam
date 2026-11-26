@@ -398,3 +398,37 @@ class TreinoEdicaoSerializer(serializers.ModelSerializer):
                 ]
             )
         return treino
+
+# US19 — Editar planejamento de treino
+class PlanejamentoEdicaoSerializer(serializers.ModelSerializer):
+    nome = serializers.CharField(
+        max_length=255,
+        error_messages={
+            "required": "Informe o nome do planejamento.",
+            "blank": "Informe o nome do planejamento.",
+            "max_length": "O nome do planejamento deve ter no máximo 255 caracteres.",
+        },
+    )
+    aluno_nome = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Planejamento
+        fields = ["id", "aluno", "aluno_nome", "nome", "status", "criado_em", "encerrado_em"]
+        read_only_fields = ["id", "aluno", "status", "criado_em", "encerrado_em"]
+
+    def get_aluno_nome(self, obj):
+        return obj.aluno.get_full_name() or obj.aluno.username
+
+
+def motivo_bloqueio_planejamento(planejamento):
+    if planejamento.status != Planejamento.Status.VIGENTE:
+        return "Este planejamento está no histórico e é somente leitura."
+    return None
+
+
+def motivo_bloqueio_remocao(treino):
+    if treino.status != Treino.Status.EM_ANDAMENTO:
+        return "Só é possível remover treinos que ainda não foram executados."
+    if treino.exercicios.exclude(status=TreinoExercicio.Status.A_FAZER).exists():
+        return "Este treino já tem exercícios executados e não pode ser removido."
+    return None
