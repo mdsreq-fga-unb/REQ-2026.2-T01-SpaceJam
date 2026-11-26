@@ -98,8 +98,7 @@ class RegistrarStatusAlunoSerializer(serializers.Serializer):
 
     status = serializers.ChoiceField(
         choices=[Treino.Status.FEITO, Treino.Status.EM_ANDAMENTO],
-        default=Treino.Status.FEITO,
-        required=False,
+        required=True,
     )
 
 
@@ -108,6 +107,5 @@ class AvaliarConclusaoTreinadorSerializer(serializers.Serializer):
 
     status = serializers.ChoiceField(
         choices=[Treino.Status.CONCLUIDO, Treino.Status.CORRIGIR_REFAZER],
-        default=Treino.Status.CONCLUIDO,
-        required=False,
+        required=True,
     )
