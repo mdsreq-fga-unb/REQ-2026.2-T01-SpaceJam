@@ -73,3 +73,4 @@ Os resultados registram o comportamento no ambiente de teste. A revisão indepen
 - US08 e US10 conectam a troca de senha e a recuperação com link de uso único à API de contas. Para validar o fluxo com a configuração de entrega, use PostgreSQL 16 e configure o backend SMTP do Django.
 - US52 carrega a carteira do treinador de `GET /api/alunos-acompanhados/`. A ação **Ver perfil** usa o identificador devolvido na lista para abrir o perfil real da US61.
 - US61 também funciona pela rota direta. A exibição de lesões registradas depende da persistência pela US11.
+- US11 permite ao treinador abrir **Registrar lesão** no perfil de um aluno acompanhado. O formulário envia a descrição de até 300 caracteres para `POST /api/contas/alunos/{aluno_id}/lesoes/` e mostra o registro salvo no histórico. A rota exige o backend da US11 com as migrações de contas aplicadas.

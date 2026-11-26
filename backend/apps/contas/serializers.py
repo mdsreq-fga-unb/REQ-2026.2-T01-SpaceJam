@@ -8,7 +8,7 @@ from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, Ou
 
 from . import recuperacao, termos
 from .authentication import SessaoRefreshToken
-from .models import HistoricoAceiteTermos, PerfilAluno, Usuario
+from .models import HistoricoAceiteTermos, Lesao, PerfilAluno, Usuario
 
 
 def calcular_idade(data_nascimento: date) -> int:
@@ -310,10 +310,8 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         }
 
     def get_historico_lesoes(self, obj):
-        lesoes_rel = getattr(obj, "lesoes", None)
-        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
-            return list(lesoes_rel.values())
-        return []
+        # exposto em modo somente leitura.
+        return LesaoSerializer(obj.lesoes.all(), many=True).data
 
 
 class AlunoAcompanhadoSerializer(serializers.ModelSerializer):
@@ -343,11 +341,8 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
         read_only_fields = fields
 
     def get_historico_lesoes(self, obj):
-        # RN26: exposto em modo somente leitura quando houver vínculo; lista vazia até haver modelo de lesões
-        lesoes_rel = getattr(obj, "lesoes", None)
-        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
-            return list(lesoes_rel.values())
-        return []
+        # exposto em modo somente leitura.
+        return LesaoSerializer(obj.lesoes.all(), many=True).data
     
 class TrocarSenhaSerializer(serializers.Serializer):
     """US08 (RF1108) — Troca de senha para usuário autenticado (RN24)."""
@@ -555,3 +550,22 @@ class RedefinirSenhaRecuperacaoSerializer(serializers.Serializer):
 
     def save(self, **kwargs):
         recuperacao.redefinir(self.validated_data["token"], self.validated_data["nova_senha"])
+
+
+class LesaoSerializer(serializers.ModelSerializer):
+    """Registro de lesão no histórico do aluno."""
+
+    descricao = serializers.CharField(
+        max_length=Lesao.DESCRICAO_MAX,
+        error_messages={
+            "required": "Informe a descrição da lesão.",
+            "blank": "Informe a descrição da lesão.",
+            "null": "Informe a descrição da lesão.",
+            "max_length": f"A descrição deve ter no máximo {Lesao.DESCRICAO_MAX} caracteres.",
+        },
+    )
+
+    class Meta:
+        model = Lesao
+        fields = ["id", "descricao", "criado_em"]
+        read_only_fields = ["id", "criado_em"]
