@@ -4,10 +4,11 @@ from django.conf import settings
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 
 from . import recuperacao, termos
 from .authentication import SessaoRefreshToken
-from .models import HistoricoAceiteTermos, PerfilAluno, Usuario
+from .models import HistoricoAceiteTermos, Lesao, PerfilAluno, Usuario
 
 
 def calcular_idade(data_nascimento: date) -> int:
@@ -255,7 +256,7 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
     """US53 (RF4802) — Consulta dos próprios dados cadastrais do aluno (RN25, RN26, sem senha)."""
 
     apelido = serializers.CharField(source="username", read_only=True)
-    data_nascimento = serializers.DateField(source="perfil_aluno.data_nascimento", read_only=True)
+    data_nascimento = serializers.DateField(read_only=True)
     altura = serializers.DecimalField(
         source="perfil_aluno.altura", max_digits=4, decimal_places=2, read_only=True
     )
@@ -309,10 +310,8 @@ class DadosCadastraisAlunoSerializer(serializers.ModelSerializer):
         }
 
     def get_historico_lesoes(self, obj):
-        lesoes_rel = getattr(obj, "lesoes", None)
-        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
-            return list(lesoes_rel.values())
-        return []
+        # exposto em modo somente leitura.
+        return LesaoSerializer(obj.lesoes.all(), many=True).data
 
 
 class AlunoAcompanhadoSerializer(serializers.ModelSerializer):
@@ -342,11 +341,8 @@ class PerfilAlunoAcompanhadoSerializer(DadosCadastraisAlunoSerializer):
         read_only_fields = fields
 
     def get_historico_lesoes(self, obj):
-        # RN26: exposto em modo somente leitura quando houver vínculo; lista vazia até haver modelo de lesões
-        lesoes_rel = getattr(obj, "lesoes", None)
-        if lesoes_rel is not None and hasattr(lesoes_rel, "all"):
-            return list(lesoes_rel.values())
-        return []
+        # exposto em modo somente leitura.
+        return LesaoSerializer(obj.lesoes.all(), many=True).data
     
 class TrocarSenhaSerializer(serializers.Serializer):
     """US08 (RF1108) — Troca de senha para usuário autenticado (RN24)."""
@@ -378,25 +374,20 @@ class TrocarSenhaSerializer(serializers.Serializer):
 
         return attrs
 
+    @transaction.atomic
     def save(self, **kwargs):
-        user = self.context["request"].user
-        nova_senha = self.validated_data["nova_senha"]
-        user.set_password(nova_senha)
-        user.save(update_fields=["password"])
+        user = Usuario.objects.select_for_update().get(pk=self.context["request"].user.pk)
+        if not user.check_password(self.validated_data["senha_atual"]):
+            raise serializers.ValidationError({"senha_atual": "Senha atual incorreta."})
 
-        # Invalida refresh tokens ativos do usuário via token_blacklist (quando habilitado)
-        try:
-            from rest_framework_simplejwt.token_blacklist.models import (
-                BlacklistedToken,
-                OutstandingToken,
-            )
+        user.set_password(self.validated_data["nova_senha"])
+        user.versao_sessao += 1
+        user.save(update_fields=["password", "versao_sessao"])
 
-            for token in OutstandingToken.objects.filter(user=user):
-                BlacklistedToken.objects.get_or_create(token=token)
-        except Exception:
-            # Evita quebra caso token_blacklist não esteja ativado no ambiente
-            pass
-
+        tokens = OutstandingToken.objects.filter(user=user).values_list("pk", flat=True)
+        BlacklistedToken.objects.bulk_create(
+            [BlacklistedToken(token_id=pk) for pk in tokens], ignore_conflicts=True
+        )
         return user
 
 
@@ -408,6 +399,7 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
         "sobrenome",
         "apelido",
         "email",
+        "telefone",
         "altura",
         "peso",
         "envergadura",
@@ -418,6 +410,13 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
     sobrenome = serializers.CharField(max_length=150, required=False)
     apelido = serializers.CharField(max_length=150, required=False)
     email = serializers.EmailField(required=False)
+    telefone = serializers.RegexField(
+        r"\A\+?(?=[0-9 ().-]*[0-9])[0-9 ().-]+\Z",
+        max_length=20,
+        required=False,
+        allow_blank=True,
+        error_messages={"invalid": "Informe um telefone válido."},
+    )
     altura = serializers.DecimalField(
         max_digits=4, decimal_places=2, min_value=0.5, max_value=2.6, required=False
     )
@@ -507,6 +506,9 @@ class EditarPerfilAlunoSerializer(serializers.Serializer):
         if "email" in validated_data:
             usuario.email = validated_data["email"]
             campos_usuario_atualizados.append("email")
+        if "telefone" in validated_data:
+            usuario.telefone = validated_data["telefone"]
+            campos_usuario_atualizados.append("telefone")
 
         if campos_usuario_atualizados:
             usuario.save(update_fields=campos_usuario_atualizados)
@@ -548,3 +550,22 @@ class RedefinirSenhaRecuperacaoSerializer(serializers.Serializer):
 
     def save(self, **kwargs):
         recuperacao.redefinir(self.validated_data["token"], self.validated_data["nova_senha"])
+
+
+class LesaoSerializer(serializers.ModelSerializer):
+    """Registro de lesão no histórico do aluno."""
+
+    descricao = serializers.CharField(
+        max_length=Lesao.DESCRICAO_MAX,
+        error_messages={
+            "required": "Informe a descrição da lesão.",
+            "blank": "Informe a descrição da lesão.",
+            "null": "Informe a descrição da lesão.",
+            "max_length": f"A descrição deve ter no máximo {Lesao.DESCRICAO_MAX} caracteres.",
+        },
+    )
+
+    class Meta:
+        model = Lesao
+        fields = ["id", "descricao", "criado_em"]
+        read_only_fields = ["id", "criado_em"]

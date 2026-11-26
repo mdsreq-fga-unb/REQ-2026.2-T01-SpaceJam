@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useLocation, useSearchParams } from 'react-router'
 import { RedefinirSenha } from './RedefinirSenha'
+import { redefinirSenha } from '../../api/integracaoUs'
 
 interface EstadoRecuperacao {
   tokenRecuperacao?: unknown
@@ -28,6 +29,7 @@ export function RedefinirSenhaPage() {
     })
   }, [parametros, setParametros, tokenDaUrl])
 
-  // A redefinição real continua dependendo do contrato seguro da API do backend.
-  return <RedefinirSenha token={token} />
+  return <RedefinirSenha token={token} onRedefinir={async dados => {
+    await redefinirSenha(dados)
+  }} />
 }

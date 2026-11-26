@@ -145,7 +145,9 @@ export function AlunosAcompanhados({
                       <span className="sj52__avatar" aria-hidden="true">{iniciais(aluno.nome)}</span>
                       <div className="sj52__aluno-dados">
                         <strong>{aluno.nome}</strong>
-                        <span>{aluno.objetivo?.trim() || 'Objetivo não informado'}</span>
+                        {aluno.objetivo !== undefined && (
+                          <span>{aluno.objetivo?.trim() || 'Objetivo não informado'}</span>
+                        )}
                       </div>
                       {perfilIntegrado && !demonstracao ? (
                         <Link

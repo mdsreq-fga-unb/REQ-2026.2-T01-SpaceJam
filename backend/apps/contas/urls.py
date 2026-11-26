@@ -34,6 +34,11 @@ urlpatterns = [
         views.consultar_perfil_aluno_acompanhado,
         name="contas-perfil-aluno",
     ),
+    path(
+        "contas/alunos/<int:aluno_id>/lesoes/",
+        views.registrar_lesao,
+        name="contas-aluno-lesoes",
+    ),
     path("auth/trocar-senha/", views.trocar_senha, name="trocar-senha"),
     path("contas/me/editar/", views.editar_perfil_aluno, name="contas-me-editar-aluno"),
     path(

@@ -87,7 +87,7 @@ describe('US08 — Trocar senha (RF1108)', () => {
 
   it('não remove espaços ou modifica senhas antes do envio', () => {
     expect(prepararTrocaSenha({ senha_atual: ' antiga#1 ', nova_senha: ' nova@2 ', confirmar_senha: ' nova@2 ' }))
-      .toEqual({ senha_atual: ' antiga#1 ', nova_senha: ' nova@2 ' })
+      .toEqual({ senha_atual: ' antiga#1 ', nova_senha: ' nova@2 ', confirmacao_senha: ' nova@2 ' })
   })
 
   it('não fornece simulação de envio ou mensagem fictícia de sucesso', async () => {
@@ -104,7 +104,7 @@ describe('US08 — Trocar senha (RF1108)', () => {
     const user=await preencher()
     await user.click(screen.getByRole('button', { name: 'Alterar senha' }))
     await waitFor(() => expect(api).toHaveBeenCalledOnce())
-    expect(api).toHaveBeenCalledWith({ senha_atual: 'Antiga#2026', nova_senha: 'Nova@1234' })
+    expect(api).toHaveBeenCalledWith({ senha_atual: 'Antiga#2026', nova_senha: 'Nova@1234', confirmacao_senha: 'Nova@1234' })
     expect(screen.getByText('Senha alterada com sucesso.')).toBeTruthy()
     expect((document.querySelector('[name="nova_senha"]') as HTMLInputElement).value).toBe('')
   })

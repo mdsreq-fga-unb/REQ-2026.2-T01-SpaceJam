@@ -9,6 +9,7 @@ export interface DadosRedefinicao {
 export interface SolicitacaoRedefinicao {
   token: string
   nova_senha: string
+  confirmacao_senha: string
 }
 
 export type ErrosRedefinicao = Partial<Record<keyof DadosRedefinicao, string>>
@@ -41,5 +42,5 @@ export function validarRedefinicao(dados: DadosRedefinicao): ErrosRedefinicao {
 
 /** Não altera espaços nem faz trim nas senhas. */
 export function prepararRedefinicao(token: string, dados: DadosRedefinicao): SolicitacaoRedefinicao {
-  return { token, nova_senha: dados.nova_senha }
+  return { token, nova_senha: dados.nova_senha, confirmacao_senha: dados.confirmar_senha }
 }

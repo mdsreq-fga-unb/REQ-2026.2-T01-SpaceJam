@@ -10,6 +10,7 @@ export type ErrosTrocaSenha = Partial<Record<CampoTrocaSenha, string>>
 export interface SolicitarTrocaSenha {
   senha_atual: string
   nova_senha: string
+  confirmacao_senha: string
 }
 
 /** RN24 e CA01/CA03 da US08: mínimo de 6 caracteres; sem classes obrigatórias. */
@@ -42,5 +43,5 @@ export function validarTrocaSenha(dados: CamposTrocaSenha): ErrosTrocaSenha {
 
 export function prepararTrocaSenha(dados: CamposTrocaSenha): SolicitarTrocaSenha {
   // Senhas nunca são normalizadas ou removidas de suas extremidades.
-  return { senha_atual: dados.senha_atual, nova_senha: dados.nova_senha }
+  return { senha_atual: dados.senha_atual, nova_senha: dados.nova_senha, confirmacao_senha: dados.confirmar_senha }
 }
