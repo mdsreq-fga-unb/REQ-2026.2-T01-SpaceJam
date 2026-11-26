@@ -4,7 +4,8 @@
 :root {
   font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
   color: #c7b3ba;
-  background: #290611;
+  /* Mesmo fundo escuro das telas V2: evita o fundo vinho enquanto a tela carrega. */
+  background: #111113;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
