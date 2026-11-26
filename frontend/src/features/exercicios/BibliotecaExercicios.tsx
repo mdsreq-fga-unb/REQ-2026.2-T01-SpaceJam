@@ -140,6 +140,7 @@ export default function BibliotecaExercicios() {
             <ExerciseDetails
               exercicio={exercicioSelecionado}
               onEditar={() => { setErro(''); setFormulario({ exercicioId }); }}
+              onErrosOrientacoes={() => navegar(`/exercicios/${exercicioId}/erros-orientacoes`)}
               edicaoIndisponivel={carregando || salvando}
             />
           ) : (

@@ -14,11 +14,9 @@ import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivac
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
-import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDetalhesPlanejamento'
-
-// US18 - Planejamentos do treinador
-import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
-import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
+import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
+import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
+import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
 
 export default function App() {
   return (
@@ -28,21 +26,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
           <Route path="/recuperar-senha/redefinir" element={<RedefinirSenhaPage />} />
-
-          {/* Rotas temporárias para visualizar as telas em desenvolvimento */}
-          <Route
-            path="/teste/treinador/planejamentos"
-            element={<TreinadorPlanejamentosPage modoTeste />}
-          />
-          <Route
-            path="/teste/treinador/novo-planejamento"
-            element={<TreinadorNovoPlanejamento modoTeste />}
-          />
-          <Route
-            path="/teste/treinador/planejamento"
-            element={<TreinadorDetalhesPlanejamento modoTeste />}
-          />
-
+          <Route path="/redefinir-senha" element={<RedefinirSenhaPage />} />
           <Route path="/cadastro" element={<Navigate to="/cadastro/aluno" replace />} />
           <Route path="/cadastro/aluno" element={<CadastroPage key="aluno" perfil="ALUNO" />} />
           <Route path="/cadastro/treinador" element={<CadastroPage key="treinador" perfil="TREINADOR" />} />
@@ -81,7 +65,7 @@ export default function App() {
           <Route
             path="/conta/senha"
             element={
-              <RotaProtegida papel="ALUNO">
+              <RotaProtegida>
                 <TrocarSenhaPage />
               </RotaProtegida>
             }
@@ -120,7 +104,39 @@ export default function App() {
               </RotaProtegida>
             }
           />
-
+          {/* US37 — erros comuns e orientações corretivas do exercício */}
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErrosOrientacoesExercicio />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/novo"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErroOrientacaoPage key="novo" />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/:erroId/editar"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <ErroOrientacaoPage key="editar" />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/exercicios/:exercicioId/erros-orientacoes/:erroId/remover"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <RemoverErroOrientacaoPage />
+              </RotaProtegida>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

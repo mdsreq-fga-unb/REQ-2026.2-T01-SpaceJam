@@ -10,6 +10,16 @@ export const FUNDAMENTOS = [
 
 export type Fundamento = (typeof FUNDAMENTOS)[number];
 
+/** US37: par erro comum + orientação corretiva de um exercício. */
+export interface ErroOrientacao {
+  id: number;
+  erro: string;
+  orientacaoCorretiva: string;
+}
+
+/** Limite de caracteres de cada campo do par (mesmo valor do backend). */
+export const LIMITE_TEXTO_ERRO_ORIENTACAO = 1000;
+
 export interface Exercicio {
   id?: number;
   nome: string;
@@ -18,4 +28,5 @@ export interface Exercicio {
   orientacoes?: string;
   errosComuns?: string;
   videoUrl?: string;
+  errosOrientacoes?: ErroOrientacao[];
 }

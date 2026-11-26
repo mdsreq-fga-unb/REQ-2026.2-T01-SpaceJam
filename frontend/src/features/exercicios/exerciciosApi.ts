@@ -1,5 +1,11 @@
 import { api, ApiError } from '../../api/client';
-import type { Exercicio, Fundamento } from '../../types/exercicio';
+import type { ErroOrientacao, Exercicio, Fundamento } from '../../types/exercicio';
+
+interface ErroOrientacaoApi {
+  id: number;
+  erro: string;
+  orientacao_corretiva: string;
+}
 
 interface ExercicioApi {
   id: number;
@@ -10,6 +16,7 @@ interface ExercicioApi {
   orientacoes: string;
   erros_comuns: string;
   video_base: string;
+  erros_orientacoes?: ErroOrientacaoApi[];
 }
 
 const CODIGO_FUNDAMENTO: Record<Fundamento, string> = {
@@ -28,7 +35,17 @@ const NOME_CAMPO: Record<string, string> = {
   orientacoes: 'Orientações',
   erros_comuns: 'Erros comuns',
   video_base: 'Vídeo base',
+  erro: 'Erro comum',
+  orientacao_corretiva: 'Orientação corretiva',
 };
+
+function erroOrientacaoDaApi(dados: ErroOrientacaoApi): ErroOrientacao {
+  return {
+    id: dados.id,
+    erro: dados.erro,
+    orientacaoCorretiva: dados.orientacao_corretiva,
+  };
+}
 
 function daApi(dados: ExercicioApi): Exercicio {
   return {
@@ -39,6 +56,7 @@ function daApi(dados: ExercicioApi): Exercicio {
     orientacoes: dados.orientacoes || undefined,
     errosComuns: dados.erros_comuns || undefined,
     videoUrl: dados.video_base || undefined,
+    errosOrientacoes: (dados.erros_orientacoes ?? []).map(erroOrientacaoDaApi),
   };
 }
 
@@ -48,7 +66,7 @@ function paraApi(exercicio: Exercicio) {
     objetivo: exercicio.objetivo,
     fundamento: CODIGO_FUNDAMENTO[exercicio.fundamento],
     orientacoes: exercicio.orientacoes ?? '',
-    erros_comuns: exercicio.errosComuns ?? '',
+    erros_comuns: exercicio.errosComuns,
     video_base: exercicio.videoUrl ?? '',
   };
 }
@@ -83,6 +101,67 @@ export async function atualizarExercicio(
     body: JSON.stringify(paraApi(exercicio)),
   });
   return daApi(dados);
+}
+
+// US37 — erros comuns e orientações corretivas do exercício.
+// O exercício vem sempre da URL; o corpo leva só os dois textos.
+
+type TextosErroOrientacao = Pick<ErroOrientacao, 'erro' | 'orientacaoCorretiva'>;
+
+function rotaErrosOrientacoes(exercicioId: number, erroId?: number) {
+  return `/exercicios/${exercicioId}/erros-comuns/${erroId === undefined ? '' : `${erroId}/`}`;
+}
+
+function erroOrientacaoParaApi(textos: TextosErroOrientacao) {
+  return {
+    erro: textos.erro,
+    orientacao_corretiva: textos.orientacaoCorretiva,
+  };
+}
+
+export async function listarErrosOrientacoes(exercicioId: number): Promise<ErroOrientacao[]> {
+  const dados = await api<ErroOrientacaoApi[]>(rotaErrosOrientacoes(exercicioId));
+  return dados.map(erroOrientacaoDaApi);
+}
+
+export async function criarErroOrientacao(
+  exercicioId: number,
+  textos: TextosErroOrientacao
+): Promise<ErroOrientacao> {
+  const dados = await api<ErroOrientacaoApi>(rotaErrosOrientacoes(exercicioId), {
+    method: 'POST',
+    body: JSON.stringify(erroOrientacaoParaApi(textos)),
+  });
+  return erroOrientacaoDaApi(dados);
+}
+
+export async function atualizarErroOrientacao(
+  exercicioId: number,
+  erroId: number,
+  textos: TextosErroOrientacao
+): Promise<ErroOrientacao> {
+  const dados = await api<ErroOrientacaoApi>(rotaErrosOrientacoes(exercicioId, erroId), {
+    method: 'PUT',
+    body: JSON.stringify(erroOrientacaoParaApi(textos)),
+  });
+  return erroOrientacaoDaApi(dados);
+}
+
+export async function removerErroOrientacao(exercicioId: number, erroId: number): Promise<void> {
+  await api<void>(rotaErrosOrientacoes(exercicioId, erroId), { method: 'DELETE' });
+}
+
+/** Mensagens das telas de erros e orientações (US37). */
+export function mensagemDeErroOrientacao(erro: unknown): string {
+  if (erro instanceof ApiError) {
+    if (erro.status === 403 && erro.codigo !== 'TERMOS_PENDENTES') {
+      return 'Apenas treinadores podem editar erros e orientações.';
+    }
+    if (erro.status === 404) {
+      return 'Erro comum não encontrado. Ele pode ter sido removido.';
+    }
+  }
+  return mensagemDeErro(erro);
 }
 
 export function mensagemDeErro(erro: unknown): string {

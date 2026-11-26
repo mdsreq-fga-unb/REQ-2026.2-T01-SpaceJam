@@ -51,6 +51,18 @@ describe('US53 — Consultar próprios dados cadastrais', () => {
     expect(screen.queryByText('Melhorar o arremesso')).toBeNull()
   })
 
+  it('informa quando não há objetivos registrados (US59 CA04)', () => {
+    const semObjetivos: Usuario = {
+      ...aluno,
+      perfil_aluno: { ...aluno.perfil_aluno!, objetivos: '' },
+    }
+
+    render(<MinhaContaAluno usuario={semObjetivos} logout={vi.fn()} />)
+
+    expect(screen.getByText('Nenhum objetivo registrado')).toBeTruthy()
+    expect(screen.queryByText('Melhorar o arremesso')).toBeNull()
+  })
+
   it('permite sair da conta', async () => {
     const logout = vi.fn()
 

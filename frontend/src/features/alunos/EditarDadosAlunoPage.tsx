@@ -1,12 +1,17 @@
 import { useNavigate } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import { EditarDadosAluno } from './EditarDadosAluno'
+import { editarMeusDados } from '../../api/integracaoUs'
+import type { AtualizacaoPerfilAluno } from './validacaoPerfilAluno'
 
 export function EditarDadosAlunoPage() {
-  const { usuario } = useAuth()
+  const { usuario, recarregarUsuario } = useAuth()
   const navegar = useNavigate()
   if (!usuario) return null
-  // US07: ainda não há PATCH/PUT no backend de contas.
-  // O callback onSalvar só deve ser conectado após contrato e autorização confirmados.
-  return <EditarDadosAluno usuario={usuario} onCancelar={() => navegar('/')} />
+  async function salvar(dados: AtualizacaoPerfilAluno) {
+    await editarMeusDados(dados)
+    // O backend confirmou o PATCH; a falha no refresh não invalida o salvamento.
+    if (recarregarUsuario) await recarregarUsuario().catch(() => undefined)
+  }
+  return <EditarDadosAluno usuario={usuario} onCancelar={() => navegar('/')} onSalvar={salvar} />
 }
