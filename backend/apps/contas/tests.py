@@ -3,6 +3,7 @@ from datetime import date, timedelta
 from django.conf import settings
 from django.test import override_settings
 from rest_framework.test import APITestCase
+from apps.contas.models import Usuario
 
 
 # US63 (RN15): o cadastro só registra aceite com os documentos publicados.

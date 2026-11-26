@@ -5,6 +5,8 @@ interface ExerciseDetailsProps {
   exercicio: Exercicio;
   onFechar?: () => void;
   onEditar: () => void;
+  /** US37: abre a tela de erros comuns e orientações corretivas. */
+  onErrosOrientacoes?: () => void;
   edicaoIndisponivel?: boolean;
 }
 
@@ -12,6 +14,7 @@ export default function ExerciseDetails({
   exercicio,
   onFechar,
   onEditar,
+  onErrosOrientacoes,
   edicaoIndisponivel = false,
 }: ExerciseDetailsProps) {
   return (
@@ -25,7 +28,6 @@ export default function ExerciseDetails({
           <section id="orientacoes-exercicio"><h2>Orientações</h2><p>{exercicio.orientacoes || 'Não informado'}</p></section>
         </div>
         <div className={styles.pilha}>
-          <section><h2>Erros comuns</h2><p>{exercicio.errosComuns || 'Não informado'}</p></section>
           <section>
             <h2>Vídeo base</h2>
             {exercicio.videoUrl ? (
@@ -38,7 +40,9 @@ export default function ExerciseDetails({
       </div>
       <div className={styles.acoesDetalhe}>
         <button type="button" className={styles.principal} onClick={onEditar} disabled={edicaoIndisponivel}>Editar exercício</button>
-        <a className={styles.secundario} href="#orientacoes-exercicio">Erros e orientações</a>
+        {onErrosOrientacoes
+          ? <button type="button" className={styles.secundario} onClick={onErrosOrientacoes}>Erros e orientações</button>
+          : <a className={styles.secundario} href="#orientacoes-exercicio">Erros e orientações</a>}
         {exercicio.videoUrl
           ? <a className={styles.secundario} href={exercicio.videoUrl} target="_blank" rel="noopener noreferrer">Vídeo de demonstração</a>
           : <button type="button" className={styles.secundario} disabled>Vídeo de demonstração</button>}
