@@ -18,6 +18,7 @@ import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
+import { ConsultarExercicioAlunoPage } from './features/alunos/ConsultarExercicioAlunoPage'
 
 export default function App() {
   return (
@@ -46,6 +47,14 @@ export default function App() {
             element={
               <RotaProtegida papel="ALUNO">
                 <EditarDadosAlunoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/aluno/exercicios/:exercicioId"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <ConsultarExercicioAlunoPage />
               </RotaProtegida>
             }
           />
