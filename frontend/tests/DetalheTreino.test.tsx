@@ -56,6 +56,27 @@ describe('Detalhe do treino', () => {
     expect(screen.queryByRole('button', { name: /editar feedback|registrar feedback/i })).toBeNull()
   })
 
+  it('US35 CA03: mostra ao aluno o título e a descrição do vídeo-base da prescrição', async () => {
+    const comVideo = {
+      ...detalhe,
+      exercicios: [
+        { id: 1, nome: 'Bandeja', feedback: null, videoTitulo: 'Bandeja pela direita', videoDescricao: 'Dois passos e impulsão.' },
+        { id: 2, nome: 'Prancha', feedback: null, videoTitulo: '', videoDescricao: '' },
+      ],
+    } satisfies ConsultaTreino
+    render(<DetalheTreino consulta={comVideo} usuario={{ id: 7, papel: 'ALUNO' }} onSalvarFeedback={vi.fn()} />)
+    const interacao = userEvent.setup()
+
+    await interacao.click(screen.getByRole('button', { name: 'Ver exercício: Bandeja' }))
+    expect(screen.getByRole('heading', { name: 'Vídeo de demonstração' })).toBeTruthy()
+    expect(screen.getByText('Bandeja pela direita')).toBeTruthy()
+    expect(screen.getByText('Dois passos e impulsão.')).toBeTruthy()
+
+    await interacao.click(screen.getByRole('button', { name: 'Voltar ao treino' }))
+    await interacao.click(screen.getByRole('button', { name: 'Ver exercício: Prancha' }))
+    expect(screen.queryByRole('heading', { name: 'Vídeo de demonstração' })).toBeNull()
+  })
+
   it('descarta o detalhe se os dados não forem do aluno autenticado', () => {
     render(<DetalheTreino consulta={detalhe} usuario={{ id: 8, papel: 'ALUNO' }} />)
     expect(screen.getByRole('alert').textContent).toContain('Não foi possível consultar')
