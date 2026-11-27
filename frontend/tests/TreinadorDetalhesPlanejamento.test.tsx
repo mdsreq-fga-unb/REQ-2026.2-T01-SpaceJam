@@ -71,13 +71,29 @@ describe('US27 — planejamento vigente do aluno', () => {
     expect(screen.getByText('1 série · 45 s')).toBeVisible()
   })
 
-  it('não mostra ações fora do MVP', async () => {
-    abrirPlanejamento({ aluno, planejamento: { id: 5, nome: 'Controle de bola', criado_em, treinos: [] } })
+  it('oferece as ações de edição e histórico do planejamento', async () => {
+    abrirPlanejamento({
+      aluno,
+      planejamento: {
+        id: 5,
+        nome: 'Controle de bola',
+        criado_em,
+        treinos: [],
+      },
+    })
 
     await screen.findByRole('heading', { name: 'Controle de bola' })
-    for (const nome of ['Editar planejamento', 'Histórico de planejamentos', 'Vincular objetivo', 'Excluir planejamento']) {
-      expect(screen.queryByText(nome)).toBeNull()
-    }
+
+    expect(screen.getByRole('link', { name: 'Editar planejamento' }).getAttribute('href')).toBe(
+      '/treinador/alunos/21/planejamento/5/editar',
+    )
+
+    expect(screen.getByRole('link', { name: 'Planejamentos anteriores' }).getAttribute('href')).toBe(
+      '/treinador/alunos/21/planejamentos-anteriores',
+    )
+
+    expect(screen.queryByText('Vincular objetivo')).toBeNull()
+    expect(screen.queryByText('Excluir planejamento')).toBeNull()
   })
 
   it('indica quando o planejamento vigente ainda não tem treinos (CA04)', async () => {

@@ -146,6 +146,20 @@
   background: #b72f14;
 }
 
+.detalhes-planejamento__editar-treino {
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 8px 0;
+  color: #ff9a6c;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detalhes-planejamento__editar-treino:hover {
+  text-decoration: underline;
+}
+
 @media (max-width: 700px) {
   .detalhes-planejamento__treinos {
     grid-template-columns: 1fr;
