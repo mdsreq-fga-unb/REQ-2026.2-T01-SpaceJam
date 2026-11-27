@@ -24,6 +24,7 @@ import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDet
 import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
 import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
 import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
+import {TreinadorEditarPlanejamento, TreinadorPlanejamentosAnteriores, TreinadorEditarTreino,} from './features/treinador/TreinadorHistoriasComplementares'
 import { TreinoPage } from './features/treinos/TreinoPage'
 
 export default function App() {
@@ -31,6 +32,35 @@ export default function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          {/* US19 — Editar planejamento */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamento/:planejamentoId/editar"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorEditarPlanejamento />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US21 — Consultar planejamentos anteriores */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamentos-anteriores"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorPlanejamentosAnteriores />
+              </RotaProtegida>
+            }
+          />
+
+          {/* US25 — Editar treino */}
+          <Route
+            path="/treinador/alunos/:alunoId/planejamento/:planejamentoId/treinos/:treinoId/editar"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <TreinadorEditarTreino />
+              </RotaProtegida>
+            }
+          />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
           <Route path="/recuperar-senha/redefinir" element={<RedefinirSenhaPage />} />
