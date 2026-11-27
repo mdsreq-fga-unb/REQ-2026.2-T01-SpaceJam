@@ -9,7 +9,7 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from .models import Planejamento, Treino, TreinoExercicio
+from .models import FeedbackAluno, Planejamento, Treino, TreinoExercicio
 from .serializers import TreinoExercicioSerializer
 
 URL = "/api/treinos/planejamentos/"
@@ -1002,9 +1002,22 @@ class EditarTreinoUS25Tests(APITestCase):
         self.assertEqual([i["nome"] for i in r.data["exercicios"]], ["Bandeja"])
         self.assertEqual(self.treino.exercicios.count(), 1)
 
+    def test_preserva_exercicio_com_feedback(self):
+        feedback = FeedbackAluno.objects.create(item_treino=self.te2, aluno=self.aluno, texto="Foi difícil.")
+
+        resposta = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 3, "repeticoes": 12},
+        ]))
+
+        self.assertEqual(resposta.status_code, 409)
+        self.assertTrue(FeedbackAluno.objects.filter(pk=feedback.pk).exists())
+
     def test_ca08_treino_feito_com_exercicio_novo_volta_para_em_andamento(self):
-        self.treino.status = Treino.Status.FEITO
-        self.treino.save()
+        self.client.force_authenticate(user=self.aluno)
+        resposta_status = self.client.patch(
+            f"/api/treinos/{self.treino.id}/feito/", {"status": "FEITO"}, format="json",
+        )
+        self.assertEqual(resposta_status.status_code, 200)
         r = self._put(self._payload(exercicios=[
             {"id": self.te1.id, "series": 3, "repeticoes": 12},
             {"id": self.te2.id, "series": 2, "duracao_segundos": 45},
@@ -1012,6 +1025,28 @@ class EditarTreinoUS25Tests(APITestCase):
         ]))
         self.assertEqual(r.status_code, 200)
         self.assertEqual(r.data["status"], "EM_ANDAMENTO")
+        self.assertEqual([item["status"] for item in r.data["exercicios"]], ["FEITO", "FEITO", "A_FAZER"])
+
+    def test_protege_parametros_e_remocao_quando_aluno_marca_treino_como_feito(self):
+        self.client.force_authenticate(user=self.aluno)
+        resposta_status = self.client.patch(
+            f"/api/treinos/{self.treino.id}/feito/", {"status": "FEITO"}, format="json",
+        )
+        self.assertEqual(resposta_status.status_code, 200)
+
+        resposta_edicao = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 5, "repeticoes": 12},
+            {"id": self.te2.id, "series": 2, "duracao_segundos": 45},
+        ]))
+        resposta_remocao = self._put(self._payload(exercicios=[
+            {"id": self.te1.id, "series": 3, "repeticoes": 12},
+        ]))
+
+        self.assertEqual(resposta_edicao.status_code, 409)
+        self.assertEqual(resposta_remocao.status_code, 409)
+        self.te1.refresh_from_db()
+        self.assertEqual(self.te1.series, 3)
+        self.assertTrue(self.treino.exercicios.filter(pk=self.te2.pk).exists())
 
     def test_treino_feito_sem_exercicio_novo_continua_feito(self):
         self.treino.status = Treino.Status.FEITO
@@ -1117,6 +1152,28 @@ class EditarPlanejamentoUS19Tests(APITestCase):
         self.planejamento.refresh_from_db()
         self.assertEqual(self.planejamento.nome, "Controle de bola")
         self.assertEqual(self.planejamento.treinos.count(), 3)
+
+    def test_salva_nome_e_remocoes_na_mesma_edicao(self):
+        resposta = self._patch({"nome": "Novo plano", "treinos_removidos": [self.treino_a.id, self.treino_b.id]})
+
+        self.assertEqual(resposta.status_code, 200)
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.nome, "Novo plano")
+        self.assertEqual(list(self.planejamento.treinos.values_list("id", flat=True)), [self.treino_c.id])
+
+    def test_preserva_plano_e_feedback_quando_uma_das_remocoes_e_bloqueada(self):
+        feedback = FeedbackAluno.objects.create(
+            item_treino=self.treino_b.exercicios.first(), aluno=self.aluno, texto="Foi difícil.",
+        )
+
+        resposta = self._patch({"nome": "Novo plano", "treinos_removidos": [self.treino_a.id, self.treino_b.id]})
+
+        self.assertEqual(resposta.status_code, 409)
+        self.planejamento.refresh_from_db()
+        self.assertEqual(self.planejamento.nome, "Controle de bola")
+        self.assertEqual(self.planejamento.treinos.count(), 3)
+        self.assertEqual(self._delete(self.treino_b.id).status_code, 409)
+        self.assertTrue(FeedbackAluno.objects.filter(pk=feedback.pk).exists())
 
     # Remoção de treino
     def test_ca04_remove_treino_nao_executado(self):

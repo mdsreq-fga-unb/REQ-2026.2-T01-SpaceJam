@@ -114,6 +114,9 @@ describe('US27 — planejamento vigente do aluno', () => {
     expect(screen.getByRole('link', { name: 'Criar planejamento' }).getAttribute('href')).toBe(
       '/treinador/novo-planejamento?aluno=21',
     )
+    expect(screen.getByRole('link', { name: 'Planejamentos anteriores' })).toHaveAttribute(
+      'href', '/treinador/alunos/21/planejamentos-anteriores',
+    )
     expect(screen.getByRole('link', { name: 'Voltar aos alunos' }).getAttribute('href')).toBe('/treinador/planejamentos')
   })
 

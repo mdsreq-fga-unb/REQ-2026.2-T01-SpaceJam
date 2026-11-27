@@ -13,7 +13,6 @@ import {
   listarPlanejamentosAnteriores,
   podeRemoverTreino,
   quantidadeDeExercicios,
-  removerTreino,
   rotuloDoTreino,
   type ConsultaPlanejamentoVigente,
   type ItemDaEdicao,
@@ -116,7 +115,8 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
 }) {
   const navigate = useNavigate()
   const [nome, setNome] = useState(nomeInicial)
-  const [treinos, setTreinos] = useState(treinosIniciais)
+  const [treinosRemovidos, setTreinosRemovidos] = useState<number[]>([])
+  const treinos = treinosIniciais.filter((treino) => !treinosRemovidos.includes(treino.id))
   const [confirmando, setConfirmando] = useState<number | null>(null)
   const [erroNome, setErroNome] = useState('')
   const [erroGeral, setErroGeral] = useState('')
@@ -124,6 +124,7 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
 
   async function salvar(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    if (enviando) return
     setErroGeral('')
     if (!nome.trim()) {
       setErroNome('Informe o nome do planejamento.')
@@ -131,7 +132,7 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
     }
     setEnviando(true)
     try {
-      await editarPlanejamento(planejamentoId, nome.trim())
+      await editarPlanejamento(planejamentoId, nome.trim(), treinosRemovidos)
       navigate(voltar)
     } catch (falha) {
       if (falha instanceof ApiError && falha.status === 400) setErroNome(falha.campos.nome?.join(' ') ?? falha.message)
@@ -141,16 +142,10 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
     }
   }
 
-  async function remover(treino: TreinoResumo) {
+  function marcarRemocao(treino: TreinoResumo) {
     setErroGeral('')
-    try {
-      await removerTreino(planejamentoId, treino.id)
-      setTreinos((atuais) => atuais.filter((item) => item.id !== treino.id))
-    } catch (falha) {
-      setErroGeral(mensagemDeErro(falha, 'Não foi possível remover o treino.'))
-    } finally {
-      setConfirmando(null)
-    }
+    setTreinosRemovidos((atuais) => [...atuais, treino.id])
+    setConfirmando(null)
   }
 
   return (
@@ -162,6 +157,7 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
             id="nome-planejamento"
             value={nome}
             maxLength={255}
+            disabled={enviando}
             aria-invalid={Boolean(erroNome)}
             aria-describedby={erroNome ? 'erro-nome-planejamento' : undefined}
             onChange={(event) => { setNome(event.target.value); setErroNome('') }}
@@ -172,6 +168,7 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
         <aside className="sj-historias__painel">
           <h2>Treinos do planejamento</h2>
           {treinos.length === 0 && <p>Este planejamento ainda não tem treinos.</p>}
+          {treinosRemovidos.length > 0 && <p role="status">As remoções só serão aplicadas ao salvar.</p>}
           <ul>
             {treinos.map((treino) => (
               <li key={treino.id} className="sj-historias__linha-treino">
@@ -181,6 +178,7 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
                     type="button"
                     className="sj-historias__remover"
                     aria-label={`Remover ${treino.nome}`}
+                    disabled={enviando}
                     onClick={() => setConfirmando(treino.id)}
                   >
                     Remover
@@ -188,10 +186,10 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
                 )}
                 {confirmando === treino.id && (
                   <span className="sj-historias__confirmacao">
-                    <button type="button" className="sj-historias__remover" onClick={() => remover(treino)}>
+                    <button type="button" className="sj-historias__remover" disabled={enviando} onClick={() => marcarRemocao(treino)}>
                       Confirmar remoção
                     </button>
-                    <button type="button" className="sj-historias__remover" onClick={() => setConfirmando(null)}>
+                    <button type="button" className="sj-historias__remover" disabled={enviando} onClick={() => setConfirmando(null)}>
                       Manter
                     </button>
                   </span>
@@ -208,7 +206,7 @@ function FormularioPlanejamento({ planejamentoId, nomeInicial, treinosIniciais, 
         <button className="sj-historias__botao sj-historias__botao--principal" type="submit" disabled={enviando}>
           {enviando ? 'Salvando...' : 'Salvar alterações'}
         </button>
-        <button className="sj-historias__botao" type="button" onClick={() => navigate(voltar)}>
+        <button className="sj-historias__botao" type="button" disabled={enviando} onClick={() => navigate(voltar)}>
           Cancelar
         </button>
       </div>
@@ -412,7 +410,10 @@ function FormularioTreino({ treino, voltar }: { treino: TreinoResumo; voltar: st
   const navigate = useNavigate()
   const [biblioteca, setBiblioteca] = useState<Exercicio[]>([])
   const [nome, setNome] = useState(treino.nome)
-  const [linhas, setLinhas] = useState<Linha[]>(() => treino.exercicios.map(linhaDoTreino))
+  const [linhas, setLinhas] = useState<Linha[]>(() => treino.exercicios.map((exercicio) => {
+    const linha = linhaDoTreino(exercicio)
+    return { ...linha, executado: linha.executado || treino.status === 'FEITO' }
+  }))
   const [erros, setErros] = useState<Record<string, string>>({})
   const [erroGeral, setErroGeral] = useState('')
   const [enviando, setEnviando] = useState(false)

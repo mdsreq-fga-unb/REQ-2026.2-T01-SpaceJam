@@ -76,17 +76,12 @@ export function quantidadeDeExercicios(total: number) {
   return `${total} ${total === 1 ? 'exercício' : 'exercícios'}`
 }
 
-/** US19 — altera o nome do planejamento vigente. */
-export function editarPlanejamento(planejamentoId: number, nome: string) {
+/** US19 — salva o nome e as remoções confirmadas do planejamento vigente. */
+export function editarPlanejamento(planejamentoId: number, nome: string, treinosRemovidos: number[]) {
   return api<{ id: number; nome: string }>(`/treinos/planejamentos/${planejamentoId}/`, {
     method: 'PATCH',
-    body: JSON.stringify({ nome }),
+    body: JSON.stringify({ nome, ...(treinosRemovidos.length > 0 && { treinos_removidos: treinosRemovidos }) }),
   })
-}
-
-/** US19 — remove do planejamento vigente um treino ainda não executado. */
-export function removerTreino(planejamentoId: number, treinoId: number) {
-  return api<void>(`/treinos/planejamentos/${planejamentoId}/treinos/${treinoId}/`, { method: 'DELETE' })
 }
 
 export function podeRemoverTreino(treino: TreinoResumo) {

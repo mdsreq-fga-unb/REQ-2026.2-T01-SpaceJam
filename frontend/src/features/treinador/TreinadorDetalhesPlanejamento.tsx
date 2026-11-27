@@ -84,6 +84,12 @@ export function TreinadorDetalhesPlanejamento() {
               >
                 Criar planejamento
               </Link>
+              <Link
+                className="detalhes-planejamento__botao"
+                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamentos-anteriores`}
+              >
+                Planejamentos anteriores
+              </Link>
               <Link className="detalhes-planejamento__botao" to="/treinador/planejamentos">
                 Voltar aos alunos
               </Link>

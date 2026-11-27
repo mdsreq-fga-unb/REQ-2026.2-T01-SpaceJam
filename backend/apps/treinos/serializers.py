@@ -2,13 +2,13 @@ from django.db import transaction
 from django.db.models import prefetch_related_objects
 from django.utils import timezone
 from rest_framework import serializers, status
-from rest_framework.exceptions import APIException
+from rest_framework.exceptions import APIException, NotFound
 
 from apps.contas.models import Usuario
 from apps.exercicios.models import Exercicio
 from apps.exercicios.services import snapshot_exercicio
 
-from .models import Planejamento, Treino, TreinoExercicio
+from .models import FeedbackAluno, Planejamento, Treino, TreinoExercicio
 
 
 class PlanejamentoSerializer(serializers.ModelSerializer):
@@ -372,20 +372,32 @@ class TreinoEdicaoSerializer(serializers.ModelSerializer):
             treino = (
                 Treino.objects.select_for_update(of=("self",))
                 .select_related("planejamento")
-                .get(pk=instance.pk)
+                .filter(pk=instance.pk)
+                .first()
             )
+            if treino is None:
+                raise NotFound("Este treino não está mais disponível.")
             motivo = motivo_bloqueio_edicao(treino)
             if motivo:
                 raise EdicaoBloqueada(motivo)
+            treino_ja_feito = treino.status == Treino.Status.FEITO
 
             existentes = {
                 te.id: te for te in TreinoExercicio.objects.select_for_update().filter(treino=treino)
             }
             enviados = {item["id"]: item for item in itens if "id" in item}
             novos = [item for item in itens if "id" not in item]
+            removidos = existentes.keys() - enviados.keys()
 
-            for te_id, te in existentes.items():
-                if te_id not in enviados and te.status != TreinoExercicio.Status.A_FAZER:
+            if enviados.keys() - existentes.keys():
+                raise EdicaoBloqueada("Os exercícios mudaram. Recarregue o treino antes de editar.")
+
+            if FeedbackAluno.objects.filter(item_treino_id__in=removidos).exists():
+                raise EdicaoBloqueada("Exercícios com feedback do aluno não podem ser removidos.")
+
+            for te_id in removidos:
+                te = existentes[te_id]
+                if treino_ja_feito or te.status != TreinoExercicio.Status.A_FAZER:
                     raise EdicaoBloqueada(
                         f"O exercício \"{te.nome}\" já foi executado e não pode ser removido."
                     )
@@ -394,19 +406,17 @@ class TreinoEdicaoSerializer(serializers.ModelSerializer):
                 te = existentes[te_id]
                 novos_valores = (item["series"], item.get("repeticoes"), item.get("duracao_segundos"))
                 valores_atuais = (te.series, te.repeticoes, te.duracao_segundos)
-                if te.status != TreinoExercicio.Status.A_FAZER and novos_valores != valores_atuais:
+                if (treino_ja_feito or te.status != TreinoExercicio.Status.A_FAZER) and novos_valores != valores_atuais:
                     raise EdicaoBloqueada(
                         f"O exercício \"{te.nome}\" já foi executado e não pode ser alterado."
                     )
 
             treino.nome = validated_data["nome"]
-            if novos and treino.status == Treino.Status.FEITO:
+            if novos and treino_ja_feito:
                 treino.status = Treino.Status.EM_ANDAMENTO
             treino.save(update_fields=["nome", "status"])
 
-            TreinoExercicio.objects.filter(
-                pk__in=[te_id for te_id in existentes if te_id not in enviados]
-            ).delete()
+            TreinoExercicio.objects.filter(pk__in=removidos).delete()
 
             restantes = sorted(
                 (te for te_id, te in existentes.items() if te_id in enviados),
@@ -419,6 +429,12 @@ class TreinoEdicaoSerializer(serializers.ModelSerializer):
                 te.duracao_segundos = item.get("duracao_segundos")
                 te.ordem = posicao
                 te.save(update_fields=["series", "repeticoes", "duracao_segundos", "ordem"])
+
+            if novos and treino_ja_feito:
+                # Ao reabrir, só os exercícios novos devem ficar pendentes.
+                treino.exercicios.filter(status=TreinoExercicio.Status.A_FAZER).update(
+                    status=TreinoExercicio.Status.FEITO,
+                )
 
             prefetch_related_objects([item["exercicio_origem"] for item in novos], "erros_orientacoes")
             prescritos = []
@@ -452,22 +468,46 @@ class PlanejamentoEdicaoSerializer(serializers.ModelSerializer):
         },
     )
     aluno_nome = serializers.SerializerMethodField()
+    treinos_removidos = serializers.ListField(
+        child=serializers.IntegerField(min_value=1), required=False, write_only=True,
+    )
 
     class Meta:
         model = Planejamento
-        fields = ["id", "aluno", "aluno_nome", "nome", "status", "criado_em", "encerrado_em"]
+        fields = ["id", "aluno", "aluno_nome", "nome", "status", "criado_em", "encerrado_em", "treinos_removidos"]
         read_only_fields = ["id", "aluno", "status", "criado_em", "encerrado_em"]
 
     def get_aluno_nome(self, obj):
         return nome_do_aluno(obj.aluno)
 
+    def update(self, instance, validated_data):
+        remover_treinos_do_planejamento(instance, validated_data.pop("treinos_removidos", []))
+        return super().update(instance, validated_data)
 
-def motivo_bloqueio_remocao(treino):
-    if treino.status != Treino.Status.EM_ANDAMENTO:
-        return "Só é possível remover treinos que ainda não foram executados."
-    if treino.exercicios.exclude(status=TreinoExercicio.Status.A_FAZER).exists():
-        return "Este treino já tem exercícios executados e não pode ser removido."
-    return None
+
+def remover_treinos_do_planejamento(planejamento, ids):
+    ids = set(ids)
+    if not ids:
+        return
+
+    treinos = list(planejamento.treinos.select_for_update().filter(pk__in=ids).order_by("pk"))
+    if len(treinos) != len(ids):
+        raise NotFound("Um dos treinos selecionados não pertence a este planejamento.")
+
+    motivo = motivo_bloqueio_planejamento(planejamento)
+    if motivo:
+        raise EdicaoBloqueada(motivo)
+
+    for treino in treinos:
+        if treino.status != Treino.Status.EM_ANDAMENTO:
+            raise EdicaoBloqueada("Só é possível remover treinos que ainda não foram executados.")
+        exercicios = list(treino.exercicios.select_for_update())
+        if any(exercicio.status != TreinoExercicio.Status.A_FAZER for exercicio in exercicios):
+            raise EdicaoBloqueada("Este treino já tem exercícios executados e não pode ser removido.")
+        if FeedbackAluno.objects.filter(item_treino__treino=treino).exists():
+            raise EdicaoBloqueada("Treinos com feedback do aluno não podem ser removidos.")
+
+    planejamento.treinos.filter(pk__in=ids).delete()
 
 
 # US21 — Consultar histórico de planejamentos

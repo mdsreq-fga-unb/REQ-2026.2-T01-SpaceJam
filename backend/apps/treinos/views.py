@@ -21,8 +21,8 @@ from .serializers import (
     TreinoSerializer,
     motivo_bloqueio_edicao,
     motivo_bloqueio_planejamento,
-    motivo_bloqueio_remocao,
     nome_do_aluno,
+    remover_treinos_do_planejamento,
 )
 
 
@@ -175,14 +175,7 @@ def editar_planejamento(request, planejamento_id):
 def remover_treino(request, planejamento_id, treino_id):
     with transaction.atomic():
         planejamento = _planejamento_da_carteira(request, planejamento_id)
-        treino = get_object_or_404(
-            Treino.objects.select_for_update(), pk=treino_id, planejamento=planejamento
-        )
-        list(treino.exercicios.select_for_update())
-        motivo = motivo_bloqueio_planejamento(planejamento) or motivo_bloqueio_remocao(treino)
-        if motivo:
-            raise EdicaoBloqueada(motivo)
-        treino.delete()
+        remover_treinos_do_planejamento(planejamento, [treino_id])
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 

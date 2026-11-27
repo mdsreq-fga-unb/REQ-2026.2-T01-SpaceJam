@@ -66,11 +66,12 @@ describe('US19 — editar planejamento', () => {
     expect(enviadosPara(fetch, 'PATCH /api/treinos/planejamentos/5/')).toEqual([])
   })
 
-  it('só oferece remover treino não executado e remove após confirmar (CA04, CA05)', async () => {
-    simularApi({
+  it('envia a remoção de um treino não executado só ao salvar', async () => {
+    const fetch = simularApi({
       'GET /api/auth/me/': { corpo: treinador },
       [URL_VIGENTE]: { corpo: vigente },
       'DELETE /api/treinos/planejamentos/5/treinos/2/': { corpo: {} },
+      'PATCH /api/treinos/planejamentos/5/': { corpo: { id: 5, nome: 'Controle de bola' } },
     })
     const pessoa = abrir('/treinador/alunos/21/planejamento/5/editar')
 
@@ -82,6 +83,28 @@ describe('US19 — editar planejamento', () => {
 
     expect(await screen.findByText(/Treino A/)).toBeTruthy()
     expect(screen.queryByText(/Treino B/)).toBeNull()
+    expect(enviadosPara(fetch, 'DELETE /api/treinos/planejamentos/5/treinos/2/')).toEqual([])
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
+    expect(enviadosPara(fetch, 'PATCH /api/treinos/planejamentos/5/')).toEqual([
+      { nome: 'Controle de bola', treinos_removidos: [2] },
+    ])
+  })
+
+  it('descarta a remoção confirmada quando cancela a edição (CA03)', async () => {
+    const fetch = simularApi({
+      'GET /api/auth/me/': { corpo: treinador },
+      [URL_VIGENTE]: { corpo: vigente },
+      'DELETE /api/treinos/planejamentos/5/treinos/2/': { corpo: {} },
+    })
+    const pessoa = abrir('/treinador/alunos/21/planejamento/5/editar')
+
+    await pessoa.click(await screen.findByRole('button', { name: 'Remover Treino B' }))
+    await pessoa.click(screen.getByRole('button', { name: 'Confirmar remoção' }))
+    await pessoa.click(screen.getByRole('button', { name: 'Cancelar' }))
+
+    expect(await screen.findByRole('link', { name: 'Consultar treino Treino B' })).toBeVisible()
+    expect(enviadosPara(fetch, 'DELETE /api/treinos/planejamentos/5/treinos/2/')).toEqual([])
+    expect(enviadosPara(fetch, 'PATCH /api/treinos/planejamentos/5/')).toEqual([])
   })
 
   it('mostra aviso quando o planejamento não é o vigente (CA06)', async () => {
@@ -192,5 +215,18 @@ describe('US25 — editar treino', () => {
 
     expect(await screen.findByText('Treino concluído é somente leitura.')).toBeTruthy()
     expect(screen.queryByRole('button', { name: 'Salvar alterações' })).toBeNull()
+  })
+
+  it('protege os exercícios anteriores do treino feito e permite adicionar outro', async () => {
+    const treino = { ...vigente.planejamento.treinos[1], status: 'FEITO' }
+    const { pessoa } = abrirEdicao('/treinador/alunos/21/planejamento/5/treinos/2/editar', {
+      [URL_VIGENTE]: { corpo: { ...vigente, planejamento: { ...vigente.planejamento, treinos: [treino] } } },
+    })
+
+    const anterior = (await screen.findByText(/Arremesso · já executado/)).closest('fieldset')!
+    expect(within(anterior).getByLabelText('Séries *')).toBeDisabled()
+    expect(within(anterior).queryByRole('button', { name: /Remover/ })).toBeNull()
+    await pessoa.click(screen.getByRole('button', { name: 'Adicionar exercício' }))
+    expect(screen.getByLabelText('Exercício da biblioteca *')).toBeVisible()
   })
 })
