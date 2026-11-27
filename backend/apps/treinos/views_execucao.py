@@ -33,7 +33,9 @@ def _obter_treino_com_permissao(request, treino_id, *, bloquear_linha=False, inc
     if bloquear_linha:
         queryset = queryset.select_for_update(of=("self",))
     if incluir_exercicios:
-        queryset = queryset.prefetch_related("exercicios__feedback_aluno__aluno")
+        queryset = queryset.prefetch_related(
+            "exercicios__feedback_aluno__aluno", "exercicios__video_execucao"
+        )
     treino = get_object_or_404(queryset, pk=treino_id)
     _validar_acesso_treino(request.user, treino)
     return treino
