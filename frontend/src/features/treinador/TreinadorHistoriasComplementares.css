@@ -1,0 +1,330 @@
+.sj-historias {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #f2f2f2;
+}
+
+.sj-historias__intro {
+  margin-bottom: 24px;
+}
+
+.sj-historias__intro h1 {
+  margin: 0 0 8px;
+  color: #f2f2f2;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.sj-historias__intro p {
+  margin: 0;
+  color: #c2c2c4;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.sj-historias__form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sj-historias__colunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.sj-historias__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sj-historias__campo label {
+  color: #f2f2f2;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.sj-historias__campo input {
+  width: 100%;
+  min-height: 48px;
+  box-sizing: border-box;
+  padding: 12px;
+  color: #f2f2f2;
+  background: #1d1d20;
+  border: 1px solid #777780;
+  border-radius: 10px;
+  font: inherit;
+  outline-offset: 3px;
+}
+
+.sj-historias__campo input:focus {
+  border-color: #ff9a6c;
+  outline: 2px solid #ff9a6c55;
+}
+
+.sj-historias__painel,
+.sj-historias__prescricao {
+  padding: 20px;
+  background: #1d1d20;
+  border: 1px solid #454549;
+  border-radius: 12px;
+}
+
+.sj-historias__painel {
+  margin-top: 28px;
+}
+
+.sj-historias__painel h2,
+.sj-historias__prescricao h2,
+.sj-historias__detalhe h2 {
+  margin: 0 0 8px;
+  color: #f2f2f2;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sj-historias__painel p,
+.sj-historias__painel li,
+.sj-historias__prescricao p,
+.sj-historias__detalhe li {
+  color: #c2c2c4;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+.sj-historias__painel ul,
+.sj-historias__detalhe ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.sj-historias__acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(100%, 440px);
+}
+
+.sj-historias__botao {
+  display: inline-flex;
+  min-height: 48px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  color: #ff9a6c;
+  background: #1d1d20;
+  border: 1px solid #454549;
+  border-radius: 12px;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sj-historias__botao--principal {
+  color: #fff;
+  background: #c4381c;
+  border-color: #c4381c;
+}
+
+.sj-historias__botao:hover {
+  filter: brightness(1.12);
+}
+
+.sj-historias__feedback {
+  margin: 0;
+  color: #9bd6a5;
+}
+
+.sj-historias__historico {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.sj-historias__item {
+  align-self: start;
+  overflow: hidden;
+  background: #1d1d20;
+  border: 1px solid #454549;
+  border-radius: 12px;
+}
+
+.sj-historias__item-botao {
+  display: flex;
+  width: 100%;
+  min-height: 112px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sj-historias__item-botao strong {
+  display: block;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.sj-historias__item-botao small {
+  display: block;
+  margin-top: 4px;
+  color: #c2c2c4;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.sj-historias__consultar {
+  color: #ff9a6c;
+  font-weight: 600;
+}
+
+.sj-historias__detalhe {
+  padding: 16px;
+  border-top: 1px solid #454549;
+}
+
+.sj-historias__prescricao {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 24px;
+  padding: 14px 16px;
+}
+
+.sj-historias__exercicio {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 0;
+  color: #f2f2f2;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #39393f;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sj-historias__exercicio strong {
+  font-size: 16px;
+}
+
+.sj-historias__exercicio span {
+  color: #c2c2c4;
+  font-size: 14px;
+}
+
+.sj-historias__exercicio.is-selecionado strong {
+  color: #ff9a6c;
+}
+
+.sj-historias__prescricao > p {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+.sj-historias__colunas--parametros {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sj-historias__nota {
+  margin: 0;
+  color: #c2c2c4;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+@media (max-width: 760px) {
+  .sj-historias {
+    padding: 28px 20px;
+  }
+
+  .sj-historias__colunas,
+  .sj-historias__historico {
+    grid-template-columns: 1fr;
+  }
+
+  .sj-historias__painel {
+    margin-top: 0;
+  }
+
+  .sj-historias__colunas--parametros {
+    grid-template-columns: 1fr;
+  }
+
+  .sj-historias__acoes {
+    width: 100%;
+  }
+}
+
+.sj-historias__erro {
+  margin: 4px 0 0;
+  color: #ffb4a3;
+  font-size: 14px;
+}
+
+.sj-historias__estado {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 440px;
+}
+
+.sj-historias__linha-treino {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.sj-historias__confirmacao {
+  display: flex;
+  gap: 8px;
+}
+
+.sj-historias__remover {
+  border: 0;
+  background: none;
+  color: #ff9a6c;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.sj-historias__item-exercicio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+}
+
+.sj-historias__item-exercicio legend {
+  padding: 0 6px;
+  font-weight: 700;
+}
+
+.sj-historias__item-exercicio input:disabled,
+.sj-historias__item-exercicio select:disabled {
+  opacity: 0.6;
+}
