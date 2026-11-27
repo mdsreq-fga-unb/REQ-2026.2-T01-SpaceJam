@@ -31,6 +31,7 @@ function abrirTreino(
     if (rota === '/api/auth/me/') {
       return json({ id: papel === 'ALUNO' ? 2 : 1, papel, first_name: 'Teste', termos_pendentes: false })
     }
+    if (rota === '/api/treinos/meu-planejamento/') return json({ planejamento: null })
     if (rota === '/api/treinos/14/') {
       if (statusHttp !== 200) return json({ detail: 'Erro de consulta' }, statusHttp)
       return json({
@@ -101,6 +102,13 @@ describe('Treino integrado às rotas das US23, US29 e US15', () => {
     expect(buscar).toHaveBeenCalledWith('/api/treinos/14/feito/', expect.objectContaining({
       method: 'PATCH', body: '{"status":"EM_ANDAMENTO"}',
     }))
+  })
+
+  it.each(['EM_ANDAMENTO', 'FEITO', 'CONCLUIDO'] as const)('permite ao aluno voltar ao planejamento no estado %s', async status => {
+    const { pessoa } = abrirTreino('ALUNO', status)
+    await pessoa.click(await screen.findByRole('button', { name: 'Voltar ao planejamento' }))
+    expect(window.location.pathname).toBe('/treinos')
+    expect(await screen.findByRole('heading', { name: 'Meu planejamento' })).toBeVisible()
   })
 
   it('envia devolução e conclusão explícitas pelo treinador', async () => {

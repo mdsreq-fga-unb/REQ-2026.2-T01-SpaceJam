@@ -2,6 +2,7 @@ from django.db import IntegrityError, transaction
 from rest_framework.test import APITestCase
 
 from apps.contas import termos
+from apps.contas.authentication import SessaoRefreshToken
 from apps.contas.models import Usuario
 from apps.exercicios.models import ErroComumExercicio, Exercicio
 
@@ -559,3 +560,134 @@ class ConsultarPlanejamentoUS27Tests(APITestCase):
         self.client.force_authenticate(user=self.treinador)
         self.assertEqual(self.client.post(self._url(self.beatriz.id), {}).status_code, 405)
         self.assertEqual(self.client.delete(self.URL_CARTEIRA).status_code, 405)
+
+
+class ConsultarMeuPlanejamentoUS60Tests(APITestCase):
+    URL = "/api/treinos/meu-planejamento/"
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach60", email="coach60@example.com", papel=Usuario.Papel.TREINADOR,
+        )
+        cls.aluno = Usuario.objects.create_user(
+            username="bia60", email="bia60@example.com", papel=Usuario.Papel.ALUNO,
+            treinador=cls.treinador,
+        )
+        cls.outro = Usuario.objects.create_user(
+            username="andre60", email="andre60@example.com", papel=Usuario.Papel.ALUNO,
+            treinador=cls.treinador,
+        )
+        for usuario in (cls.treinador, cls.aluno, cls.outro):
+            termos.registrar_aceite(usuario)
+
+        cls.vigente = Planejamento.objects.create(
+            aluno=cls.aluno, treinador=cls.treinador, nome="Controle de bola",
+        )
+        cls.historico = Planejamento.objects.create(
+            aluno=cls.aluno, treinador=cls.treinador, nome="Primeiro planejamento",
+            status=Planejamento.Status.HISTORICO,
+        )
+        cls.planejamento_alheio = Planejamento.objects.create(
+            aluno=cls.outro, treinador=cls.treinador, nome="Planejamento do André",
+        )
+
+    def _autenticar(self, usuario):
+        token = SessaoRefreshToken.for_user(usuario).access_token
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")
+
+    def test_requer_autenticacao(self):
+        self.assertEqual(self.client.get(self.URL).status_code, 401)
+
+    def test_requer_papel_de_aluno(self):
+        self._autenticar(self.treinador)
+        self.assertEqual(self.client.get(self.URL).status_code, 403)
+
+    def test_requer_aceite_dos_termos(self):
+        aluno = Usuario.objects.create_user(
+            username="pendente60", email="pendente60@example.com", papel=Usuario.Papel.ALUNO,
+        )
+        self._autenticar(aluno)
+        resposta = self.client.get(self.URL)
+        self.assertEqual(resposta.status_code, 403)
+        self.assertEqual(resposta.data["code"], "TERMOS_PENDENTES")
+
+    def test_consulta_somente_o_vigente_do_aluno_autenticado(self):
+        Treino.objects.create(planejamento=self.historico, nome="Treino antigo")
+        Treino.objects.create(planejamento=self.planejamento_alheio, nome="Treino de outro aluno")
+        Treino.objects.create(planejamento=self.vigente, nome="Treino A", status=Treino.Status.FEITO)
+        Treino.objects.create(planejamento=self.vigente, nome="Treino B")
+
+        self._autenticar(self.aluno)
+        resposta = self.client.get(self.URL, {"aluno_id": self.outro.pk})
+
+        self.assertEqual(resposta.status_code, 200)
+        planejamento = resposta.data["planejamento"]
+        self.assertEqual(planejamento["nome"], "Controle de bola")
+        self.assertEqual(
+            [(treino["nome"], treino["status"], treino["status_display"]) for treino in planejamento["treinos"]],
+            [("Treino A", "FEITO", "Feito"), ("Treino B", "EM_ANDAMENTO", "Em andamento")],
+        )
+
+    def test_retorna_null_quando_aluno_so_tem_historico(self):
+        self.vigente.delete()
+        self._autenticar(self.aluno)
+        resposta = self.client.get(self.URL)
+        self.assertEqual(resposta.status_code, 200)
+        self.assertEqual(resposta.data, {"planejamento": None})
+
+    def test_retorna_planejamento_vigente_sem_treinos(self):
+        self._autenticar(self.aluno)
+        resposta = self.client.get(self.URL)
+        self.assertEqual(resposta.status_code, 200)
+        self.assertEqual(resposta.data["planejamento"]["nome"], "Controle de bola")
+        self.assertEqual(resposta.data["planejamento"]["treinos"], [])
+
+    def test_exibe_o_snapshot_dos_exercicios_na_ordem_prescrita(self):
+        drible = Exercicio.objects.create(
+            nome="Drible entre cones", objetivo="Controle de bola", fundamento="DRIBLE",
+            orientacoes="Cabeça erguida", erros_comuns="Olhar para a bola",
+            video_base="https://example.com/drible", criado_por=self.treinador,
+        )
+        ErroComumExercicio.objects.create(
+            exercicio=drible, erro="Perder o equilíbrio", orientacao_corretiva="Flexione os joelhos.",
+        )
+        prancha = Exercicio.objects.create(
+            nome="Prancha", objetivo="Estabilidade", fundamento="CONDICIONAMENTO_FISICO",
+            criado_por=self.treinador,
+        )
+        self._autenticar(self.treinador)
+        criado = self.client.post(
+            f"/api/treinos/planejamentos/{self.vigente.pk}/treinos/",
+            {
+                "nome": "Treino A",
+                "exercicios": [
+                    {"exercicio": prancha.pk, "series": 2, "duracao_segundos": 45},
+                    {"exercicio": drible.pk, "series": 3, "repeticoes": 12},
+                ],
+            },
+            format="json",
+        )
+        self.assertEqual(criado.status_code, 201)
+        drible.delete()
+
+        self._autenticar(self.aluno)
+        resposta = self.client.get(self.URL)
+        self.assertEqual(resposta.status_code, 200)
+        treino = resposta.data["planejamento"]["treinos"][0]
+        self.assertEqual(treino["total_exercicios"], 2)
+        itens = treino["exercicios"]
+        self.assertEqual([(item["ordem"], item["nome"]) for item in itens], [(1, "Prancha"), (2, "Drible entre cones")])
+        self.assertEqual((itens[0]["series"], itens[0]["repeticoes"], itens[0]["duracao_segundos"]), (2, None, 45))
+        self.assertEqual((itens[1]["series"], itens[1]["repeticoes"], itens[1]["duracao_segundos"]), (3, 12, None))
+        self.assertIsNone(itens[1]["exercicio"])
+        self.assertEqual(itens[1]["orientacoes"], "Cabeça erguida")
+        self.assertEqual(itens[1]["erros_comuns"], "Olhar para a bola")
+        self.assertEqual(itens[1]["erros_orientacoes"], [
+            {"erro": "Perder o equilíbrio", "orientacao_corretiva": "Flexione os joelhos."},
+        ])
+        self.assertEqual(itens[1]["video_base"], "https://example.com/drible")
+
+    def test_bloqueia_escrita(self):
+        self._autenticar(self.aluno)
+        self.assertEqual(self.client.post(self.URL, {}, format="json").status_code, 405)

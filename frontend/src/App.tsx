@@ -6,6 +6,7 @@ import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
 import { CadastroPage } from './pages/CadastroPage'
 import { EditarDadosAlunoPage } from './features/alunos/EditarDadosAlunoPage'
+import { MeuPlanejamentoPage } from './features/alunos/MeuPlanejamentoPage'
 import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
@@ -95,6 +96,23 @@ export default function App() {
             element={
               <RotaProtegida papel="ALUNO">
                 <EditarDadosAlunoPage />
+              </RotaProtegida>
+            }
+          />
+          {/* US60 — planejamento vigente do aluno */}
+          <Route
+            path="/treinos"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeuPlanejamentoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinos/planejamento/:treinoId"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeuPlanejamentoPage />
               </RotaProtegida>
             }
           />
