@@ -76,6 +76,17 @@
   line-height: 24px;
 }
 
+.detalhes-planejamento__cartao[data-status='CONCLUIDO'] .detalhes-planejamento__status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #20382c;
+  color: #b6ebc6;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+}
+
 .detalhes-planejamento__link {
   color: #ff9a6c;
   font-weight: 500;
