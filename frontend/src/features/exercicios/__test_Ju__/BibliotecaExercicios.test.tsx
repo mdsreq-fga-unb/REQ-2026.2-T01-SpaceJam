@@ -146,6 +146,9 @@ describe('BibliotecaExercicios', () => {
     await usuario.type(campoBusca, '  ARREMESSO  ');
     expect(await screen.findByRole('button', { name: 'Arremesso de três pontos' })).toBeVisible();
     expect(screen.getByRole('status')).toHaveTextContent('1 exercício encontrado.');
+    expect(screen.queryByRole('button', { name: /^Buscar$/ })).not.toBeInTheDocument();
+    await usuario.keyboard('{Enter}');
+    expect(screen.getByRole('region', { name: 'Resultados da busca' })).toHaveFocus();
     await usuario.clear(campoBusca);
     await usuario.type(campoBusca, 'Gancho');
     expect(screen.getByText('Nenhum exercício encontrado.')).toBeVisible();

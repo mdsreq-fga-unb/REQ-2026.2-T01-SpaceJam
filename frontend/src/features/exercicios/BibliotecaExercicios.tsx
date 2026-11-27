@@ -166,10 +166,9 @@ export default function BibliotecaExercicios() {
               resultados.current?.focus();
             }}>
               <label htmlFor="biblioteca-busca">Buscar por nome</label>
-              <input id="biblioteca-busca" ref={campoBusca} type="search" placeholder="Nome do exercício" value={busca}
+              <input id="biblioteca-busca" ref={campoBusca} type="search" enterKeyHint="search" placeholder="Nome do exercício" value={busca}
                 onChange={(evento) => setBusca(evento.target.value)} aria-describedby="biblioteca-busca-ajuda" />
               <small id="biblioteca-busca-ajuda">A busca também aceita parte do nome.</small>
-              <button type="submit" className={styles.buscar}>Buscar</button>
             </form>
             <section className={styles.resultados} ref={resultados} tabIndex={-1} aria-label="Resultados da busca">
               <div role="status">
