@@ -11,11 +11,12 @@ export type UsuarioTreino = Pick<Usuario, 'id' | 'papel'> &
 
 interface TreinoLayoutProps {
   usuario: UsuarioTreino
-  links?: Partial<Record<'Alunos' | 'Biblioteca' | 'Conta' | 'Histórico' | 'Feedbacks', string>>
+  links?: Partial<Record<'Treinos' | 'Alunos' | 'Biblioteca' | 'Conta' | 'Histórico' | 'Feedbacks', string>>
+  secaoAtiva?: 'Treinos' | 'Histórico'
   children: ReactNode
 }
 
-export function TreinoLayout({ usuario, links, children }: TreinoLayoutProps) {
+export function TreinoLayout({ usuario, links, secaoAtiva = 'Treinos', children }: TreinoLayoutProps) {
   const treinador = usuario.papel === 'TREINADOR'
   const perfil = treinador ? 'Treinador' : 'Aluno'
   const nome = [usuario.first_name, usuario.last_name].filter(Boolean).join(' ') || usuario.apelido
@@ -36,7 +37,7 @@ export function TreinoLayout({ usuario, links, children }: TreinoLayoutProps) {
       </header>
       <nav className="treino-navegacao" aria-label={treinador ? 'Seções do treinador' : 'Seções do aluno'}>
         {secoes.map(secao => {
-          if (secao === 'Treinos') return <span key={secao} aria-current="page">{secao}</span>
+          if (secao === secaoAtiva) return <span key={secao} aria-current="page">{secao}</span>
           const destino = links?.[secao]
           return destino
             ? <a key={secao} href={destino}>{secao}</a>
