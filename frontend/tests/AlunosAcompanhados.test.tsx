@@ -103,11 +103,11 @@ describe('US52 — Consultar alunos acompanhados', () => {
     expect(screen.getByRole('link', { name: 'Ver perfil de André Lima' }).getAttribute('href')).toBe('/treinador/alunos/22')
   })
 
-  it('identifica as opções de menu ainda não integradas', () => {
+  it('leva a opção Treinos do menu à lista de planejamentos (US27)', () => {
     componente()
-    const treinos = screen.getAllByText('Treinos')
+    const treinos = screen.getAllByRole('link', { name: 'Treinos' })
     expect(treinos).toHaveLength(2)
-    for (const elemento of treinos) expect(elemento.getAttribute('aria-disabled')).toBe('true')
+    for (const elemento of treinos) expect(elemento.getAttribute('href')).toBe('/treinador/planejamentos')
   })
 
   it('copia somente o código real do treinador', async () => {

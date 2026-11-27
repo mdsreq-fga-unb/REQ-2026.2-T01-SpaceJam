@@ -5,7 +5,7 @@ import './LayoutTreinador.css'
 
 const secoes = [
   { titulo: 'Alunos', rota: '/treinador/alunos' },
-  { titulo: 'Treinos', rota: null },
+  { titulo: 'Treinos', rota: '/treinador/planejamentos' },
   { titulo: 'Biblioteca', rota: '/exercicios' },
   { titulo: 'Conta', rota: '/' },
 ] as const
