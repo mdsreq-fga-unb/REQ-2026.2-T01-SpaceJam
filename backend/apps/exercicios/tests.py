@@ -1569,3 +1569,198 @@ class InformacoesVideoBaseTests(APITestCase):
         self.assertEqual(snapshot["video_titulo"], self.textos["video_titulo"])
         self.assertEqual(snapshot["video_descricao"], self.textos["video_descricao"])
         self.assertEqual(json.loads(json.dumps(snapshot)), snapshot)
+
+class AssociarErrosOrientacoesUS33Tests(ErrosOrientacoesApiBase):
+    """US33 — Associar a um exercício pares de erro e orientação de outros exercícios."""
+
+    def url_candidatos(self, exercicio_pk=None):
+        return reverse(
+            "exercicio-erro-comum-candidatos", args=[exercicio_pk or self.exercicio.pk]
+        )
+
+    def url_associar(self, exercicio_pk=None):
+        return reverse(
+            "exercicio-erro-comum-associar", args=[exercicio_pk or self.exercicio.pk]
+        )
+
+    def associar(self, ids, exercicio_pk=None):
+        return self.client.post(
+            self.url_associar(exercicio_pk), {"ids": ids}, format="json"
+        )
+
+    def setUp(self):
+        self.client.force_authenticate(user=self.treinador)
+
+    # Candidatos 
+
+    def test_candidatos_sao_os_pares_de_outros_exercicios_sem_repetir_texto(self):
+        a = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        copia = self.criar_item(
+            Exercicio.objects.create(
+                nome="Drible cruzado", objetivo="Cruzar a bola", fundamento="DRIBLE",
+                criado_por=self.treinador,
+            ),
+            erro="Drible alto", orientacao_corretiva="Bola rente ao corpo",
+        )
+        b = self.criar_item(self.outro_exercicio, erro="Apoio baixo", orientacao_corretiva="Joelhos flexionados")
+
+        r = self.client.get(self.url_candidatos())
+
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
+        self.assertEqual([item["erro"] for item in r.data], ["Apoio baixo", "Drible alto"])
+        self.assertEqual({item["id"] for item in r.data}, {b.id, min(a.id, copia.id)})
+
+    def test_candidatos_nao_incluem_pares_do_proprio_exercicio_nem_texto_ja_existente_nele(self):
+        self.criar_item(self.exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        self.criar_item(self.exercicio, erro="So do exercicio", orientacao_corretiva="Orientacao")
+        livre = self.criar_item(self.outro_exercicio, erro="Apoio baixo", orientacao_corretiva="Joelhos flexionados")
+
+        r = self.client.get(self.url_candidatos())
+
+        self.assertEqual([item["id"] for item in r.data], [livre.id])
+
+    def test_candidatos_nao_incluem_par_sem_orientacao(self):
+        self.criar_item(self.outro_exercicio, erro="Apoio baixo", orientacao_corretiva="  ")
+
+        r = self.client.get(self.url_candidatos())
+
+        self.assertEqual(r.data, [])
+
+    def test_candidatos_de_exercicio_inexistente_retorna_404(self):
+        self.assertEqual(self.client.get(self.url_candidatos(999999)).status_code, 404)
+
+    # Associação de Existentes
+
+    def test_ca01_associa_par_de_outro_exercicio_como_par_proprio(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+
+        r = self.associar([origem.id])
+
+        self.assertEqual(r.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(r.data["ignorados"], 0)
+        self.assertEqual(len(r.data["criados"]), 1)
+        copia = self.exercicio.erros_orientacoes.get()
+        self.assertNotEqual(copia.pk, origem.pk)
+        self.assertEqual((copia.erro, copia.orientacao_corretiva), ("Drible alto", "Bola rente ao corpo"))
+        self.assertEqual(r.data["criados"][0]["id"], copia.pk)
+        # O par de origem continua onde estava.
+        self.assertEqual(self.outro_exercicio.erros_orientacoes.get().pk, origem.pk)
+
+    def test_ca01_copia_e_independente_do_par_de_origem(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        self.associar([origem.id])
+
+        origem.orientacao_corretiva = "Texto novo na origem"
+        origem.save()
+        copia = self.exercicio.erros_orientacoes.get()
+        copia.refresh_from_db()
+
+        self.assertEqual(copia.orientacao_corretiva, "Bola rente ao corpo")
+        origem.delete()
+        self.assertEqual(self.exercicio.erros_orientacoes.count(), 1)
+
+    def test_ca01_par_associado_deixa_de_ser_candidato(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        self.associar([origem.id])
+
+        self.assertEqual(self.client.get(self.url_candidatos()).data, [])
+
+    # Erro sem Orientação
+
+    def test_ca02_par_sem_orientacao_nao_e_associado(self):
+        sem_orientacao = self.criar_item(self.outro_exercicio, erro="Apoio baixo", orientacao_corretiva="  ")
+
+        r = self.associar([sem_orientacao.id])
+
+        self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("ids", r.data)
+        self.assertEqual(self.exercicio.erros_orientacoes.count(), 0)
+
+    # Vários Erros
+
+    def test_ca03_associa_varios_pares_e_mantem_os_que_o_exercicio_ja_tinha(self):
+        self.criar_item(self.exercicio, erro="Olhar para a bola", orientacao_corretiva="Olhar à frente")
+        a = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        b = self.criar_item(self.outro_exercicio, erro="Apoio baixo", orientacao_corretiva="Joelhos flexionados")
+
+        r = self.associar([a.id, b.id])
+        lista = self.client.get(self.url_lista())
+
+        self.assertEqual(r.status_code, status.HTTP_201_CREATED)
+        self.assertEqual([item["erro"] for item in r.data["criados"]], ["Drible alto", "Apoio baixo"])
+        self.assertEqual(
+            [item["erro"] for item in lista.data],
+            ["Olhar para a bola", "Drible alto", "Apoio baixo"],
+        )
+
+    def test_associar_e_idempotente_e_ignora_texto_que_o_exercicio_ja_tem(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        self.associar([origem.id])
+
+        de_novo = self.associar([origem.id])
+
+        self.assertEqual(de_novo.status_code, status.HTTP_200_OK)
+        self.assertEqual(de_novo.data, {"criados": [], "ignorados": 1})
+        self.assertEqual(self.exercicio.erros_orientacoes.count(), 1)
+
+    def test_ids_repetidos_na_mesma_requisicao_criam_um_par_so(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+
+        r = self.associar([origem.id, origem.id])
+
+        self.assertEqual(r.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(self.exercicio.erros_orientacoes.count(), 1)
+
+    def test_associar_e_tudo_ou_nada(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+
+        r = self.associar([origem.id, 999999])
+
+        self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(r.data["ids"], ["Um ou mais pares não foram encontrados."])
+        self.assertEqual(self.exercicio.erros_orientacoes.count(), 0)
+
+    def test_associar_exige_lista_de_ids_valida(self):
+        for corpo in ({}, {"ids": []}, {"ids": "1"}, {"ids": [0]}, {"ids": ["a"]}, {"ids": list(range(1, 52))}):
+            r = self.client.post(self.url_associar(), corpo, format="json")
+            self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST, corpo)
+            self.assertIn("ids", r.data)
+
+    def test_associar_a_exercicio_inexistente_retorna_404(self):
+        origem = self.criar_item(self.outro_exercicio)
+
+        self.assertEqual(self.associar([origem.id], exercicio_pk=999999).status_code, 404)
+
+    # Acesso Restrito 
+
+    def test_ca04_aluno_recebe_403_ao_associar_e_ao_listar_candidatos(self):
+        origem = self.criar_item(self.outro_exercicio)
+        self.client.force_authenticate(user=self.aluno)
+
+        associar = self.associar([origem.id])
+        candidatos = self.client.get(self.url_candidatos())
+
+        self.assertEqual(associar.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(candidatos.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(self.exercicio.erros_orientacoes.count(), 0)
+
+    def test_ca04_sem_login_recebe_401(self):
+        origem = self.criar_item(self.outro_exercicio)
+        self.client.force_authenticate(user=None)
+
+        self.assertEqual(self.associar([origem.id]).status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(self.client.get(self.url_candidatos()).status_code, status.HTTP_401_UNAUTHORIZED)
+
+    # Alerta Preventivo
+
+    def test_ca05_pares_associados_entram_na_copia_da_prescricao(self):
+        origem = self.criar_item(self.outro_exercicio, erro="Drible alto", orientacao_corretiva="Bola rente ao corpo")
+        self.associar([origem.id])
+
+        snapshot = snapshot_exercicio(Exercicio.objects.get(pk=self.exercicio.pk))
+
+        self.assertEqual(
+            snapshot["erros_orientacoes"],
+            [{"erro": "Drible alto", "orientacao_corretiva": "Bola rente ao corpo"}],
+        )
