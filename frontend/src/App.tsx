@@ -19,6 +19,7 @@ import VideoDemonstracaoExercicio from './features/exercicios/VideoDemonstracaoE
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
+import { ConsultarExercicioAlunoPage } from './features/alunos/ConsultarExercicioAlunoPage'
 import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDetalhesPlanejamento'
 import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
 import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
@@ -113,6 +114,14 @@ export default function App() {
             element={
               <RotaProtegida papel="ALUNO">
                 <MeuPlanejamentoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/aluno/exercicios/:exercicioId"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <ConsultarExercicioAlunoPage />
               </RotaProtegida>
             }
           />
