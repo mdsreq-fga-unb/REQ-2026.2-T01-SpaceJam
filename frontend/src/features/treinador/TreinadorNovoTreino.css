@@ -1,0 +1,140 @@
+.novo-treino {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  color: #f2f2f2;
+  font-family: 'Barlow', Arial, sans-serif;
+}
+
+.novo-treino__intro h1 {
+  margin: 0 0 8px;
+  font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  font-size: 32px;
+  line-height: 38px;
+}
+
+.novo-treino__intro p {
+  margin: 0;
+  color: #c2c2c4;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.novo-treino form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.novo-treino__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.novo-treino__campo label {
+  color: #f2f2f2;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.novo-treino__campo input,
+.novo-treino__campo select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+  background: #1d1d20;
+  color: #f2f2f2;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.novo-treino__campo input[aria-invalid='true'] {
+  border-color: #ff9a6c;
+}
+
+.novo-treino__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.novo-treino__item {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+  background: #222225;
+}
+
+.novo-treino__item > .novo-treino__botao {
+  grid-column: 1 / -1;
+}
+
+.novo-treino__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.novo-treino__botao {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 18px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+  background: #1d1d20;
+  color: #ff9a6c;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.novo-treino__botao:hover {
+  background: #29292d;
+}
+
+.novo-treino__botao--principal {
+  border-color: transparent;
+  background: #c4381c;
+  color: #fff;
+}
+
+.novo-treino__botao--principal:hover {
+  background: #b72f14;
+}
+
+.novo-treino__botao:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.novo-treino__erro {
+  margin: 0;
+  color: #ffb18e;
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .novo-treino__item {
+    grid-template-columns: 1fr;
+  }
+
+  .novo-treino__acoes > * {
+    width: 100%;
+  }
+}

@@ -17,7 +17,14 @@ const treinador: Usuario = {
 
 function abrirComTreinador(rota: string, responder?: (url: string) => Response | undefined) {
   tokenStorage.set('token-teste')
-  const buscar = vi.fn(async (url: string) => responder?.(url) ?? Response.json(treinador))
+  const buscar = vi.fn(async (url: string) => {
+    const resposta = responder?.(url)
+    if (resposta) return resposta
+    if (url.endsWith('/api/alunos-acompanhados/')) {
+      return Response.json({ alunos: [], codigo_convite: null })
+    }
+    return Response.json(treinador)
+  })
   vi.stubGlobal('fetch', buscar)
   window.history.replaceState({}, '', rota)
   render(<App />)
@@ -30,14 +37,62 @@ afterEach(() => {
 })
 
 describe('Integração de navegação do treinador', () => {
-  it('o treinador navega da conta para a lista de alunos', async () => {
-    const requisicoes = abrirComTreinador('/')
+  it('o treinador navega da conta para a lista e abre o perfil pelo ID retornado', async () => {
+    const requisicoes = abrirComTreinador('/', (url) => {
+      if (url.endsWith('/api/alunos-acompanhados/')) {
+        return Response.json({
+          alunos: [{ id: 21, first_name: 'Beatriz', last_name: 'Costa', apelido: 'bia' }],
+          codigo_convite: 'TRN-ABC123',
+        })
+      }
+      if (url.endsWith('/api/contas/alunos/21/')) {
+        return Response.json({
+          id: 21, first_name: 'Beatriz', last_name: 'Costa', apelido: 'bia',
+          email: 'bia@example.invalid', objetivos: 'Melhorar o arremesso',
+        })
+      }
+      if (url.endsWith('/api/treinos/alunos/21/planejamento-vigente/')) {
+        return Response.json({
+          aluno: { id: 21, nome: 'Beatriz Costa' },
+          planejamento: { id: 5, nome: 'Controle de bola', criado_em: '2026-11-26T12:00:00Z', treinos: [] },
+        })
+      }
+    })
     const botao = await screen.findByRole('button', { name: 'Consultar alunos' })
     fireEvent.click(botao)
     await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos'))
     expect(await screen.findByRole('heading', { name: 'Seus alunos' })).toBeTruthy()
-    expect(screen.getByText('Lista de alunos indisponível')).toBeTruthy()
-    expect(requisicoes).toHaveBeenCalledTimes(1)
+    const perfil = await screen.findByRole('link', { name: 'Ver perfil de Beatriz Costa' })
+    expect(screen.getByText('TRN-ABC123')).toBeTruthy()
+    fireEvent.click(perfil)
+    expect(await screen.findByRole('heading', { name: 'Beatriz Costa' })).toBeTruthy()
+    expect(window.location.pathname).toBe('/treinador/alunos/21')
+    expect(await screen.findByText('Controle de bola')).toBeTruthy()
+    const rotas = requisicoes.mock.calls.map(([url]) => url)
+    expect(rotas).toEqual([
+      '/api/auth/me/',
+      '/api/alunos-acompanhados/',
+      '/api/contas/alunos/21/',
+      '/api/treinos/alunos/21/planejamento-vigente/',
+    ])
+  })
+
+  it('abre o planejamento do aluno pelo botão Ver planejamento do perfil (US27)', async () => {
+    abrirComTreinador('/treinador/alunos/21', (url) => {
+      if (url.endsWith('/api/contas/alunos/21/')) {
+        return Response.json({
+          id: 21, first_name: 'Beatriz', last_name: 'Costa', apelido: 'bia',
+          email: 'bia@example.invalid', objetivos: 'Melhorar o arremesso',
+        })
+      }
+      if (url.endsWith('/api/treinos/alunos/21/planejamento-vigente/')) {
+        return Response.json({ aluno: { id: 21, nome: 'Beatriz Costa' }, planejamento: null })
+      }
+    })
+    expect(await screen.findByText('Nenhum planejamento vigente')).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: 'Ver planejamento' }))
+    await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos/21/planejamento'))
+    expect(await screen.findByRole('heading', { name: 'Nenhum planejamento vigente' })).toBeTruthy()
   })
 
   it('o treinador volta do perfil demonstrativo para a lista real', async () => {
@@ -47,7 +102,18 @@ describe('Integração de navegação do treinador', () => {
     fireEvent.click(voltar)
     await waitFor(() => expect(window.location.pathname).toBe('/treinador/alunos'))
     expect(await screen.findByRole('heading', { name: 'Seus alunos' })).toBeTruthy()
-    expect(requisicoes).toHaveBeenCalledTimes(1)
+    expect(await screen.findByRole('heading', { name: 'Nenhum aluno vinculado' })).toBeTruthy()
+    expect(requisicoes.mock.calls.map(([url]) => url)).toEqual(['/api/auth/me/', '/api/alunos-acompanhados/'])
+  })
+
+  it('distingue falha da API de uma carteira vazia', async () => {
+    abrirComTreinador('/treinador/alunos', (url) => {
+      if (url.endsWith('/api/alunos-acompanhados/')) {
+        return Response.json({ detail: 'Serviço indisponível' }, { status: 503 })
+      }
+    })
+    expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível consultar os alunos')
+    expect(screen.queryByRole('heading', { name: 'Nenhum aluno vinculado' })).toBeNull()
   })
 
   it.each(['Menu do treinador', 'Seções do treinador'])('abre a biblioteca a partir de %s', async (menu) => {

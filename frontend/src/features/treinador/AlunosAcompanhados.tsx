@@ -76,7 +76,7 @@ export function AlunosAcompanhados({
         {marca}
         <nav className="sj52__menu" aria-label="Menu do treinador">
           <span aria-current="page">Alunos</span>
-          <span aria-disabled="true">Treinos</span>
+          <Link to="/treinador/planejamentos">Treinos</Link>
           <Link to="/exercicios">Biblioteca</Link>
           <Link to="/">Conta</Link>
         </nav>
@@ -145,7 +145,9 @@ export function AlunosAcompanhados({
                       <span className="sj52__avatar" aria-hidden="true">{iniciais(aluno.nome)}</span>
                       <div className="sj52__aluno-dados">
                         <strong>{aluno.nome}</strong>
-                        <span>{aluno.objetivo?.trim() || 'Objetivo não informado'}</span>
+                        {aluno.objetivo !== undefined && (
+                          <span>{aluno.objetivo?.trim() || 'Objetivo não informado'}</span>
+                        )}
                       </div>
                       {perfilIntegrado && !demonstracao ? (
                         <Link
@@ -199,7 +201,7 @@ export function AlunosAcompanhados({
 
       <nav className="sj52__navegacao-mobile" aria-label="Seções do treinador">
         <span aria-current="page">Alunos</span>
-        <span aria-disabled="true">Treinos</span>
+        <Link to="/treinador/planejamentos">Treinos</Link>
         <Link to="/exercicios">Biblioteca</Link>
         <Link to="/">Conta</Link>
       </nav>
