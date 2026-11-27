@@ -8,8 +8,8 @@ urlpatterns = [
     path("api/", include("apps.contas.urls")),
     path("api/treinos/", include("apps.treinos.urls")),
     path("api/", include("apps.exercicios.urls")),
-    # Quando cada app tiver rotas, inclua aqui:
-    # path("api/videos/", include("apps.videos.urls")),
+    # US42 — vídeos de execução, pendurados no exercício do treino.
+    path("api/treinos/", include("apps.videos.urls")),
 ]
 
 if settings.DEBUG:
