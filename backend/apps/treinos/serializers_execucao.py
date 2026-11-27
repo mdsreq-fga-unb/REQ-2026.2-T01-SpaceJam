@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from apps.videos.serializers import VideoExecucaoSerializer
+
 from .models import FeedbackAluno, Treino, TreinoExercicio
 from .serializers import nome_do_aluno
 
@@ -56,12 +58,15 @@ class ExercicioExecucaoSerializer(serializers.ModelSerializer):
     videoTitulo = serializers.CharField(source="video_titulo", read_only=True)
     videoDescricao = serializers.CharField(source="video_descricao", read_only=True)
     feedback = FeedbackAlunoSerializer(source="feedback_aluno", read_only=True)
+    # US42 CA05: null = "Enviar vídeo"; preenchido = "Substituir vídeo". Sem link: o link
+    # de 10 min só é gerado quando alguém abre o vídeo (GET exercicios/<id>/video/).
+    videoExecucao = VideoExecucaoSerializer(source="video_execucao", read_only=True)
 
     class Meta:
         model = TreinoExercicio
         fields = [
             "id", "ordem", "nome", "parametros", "orientacoes", "errosComuns", "errosOrientacoes",
-            "videoTitulo", "videoDescricao", "feedback",
+            "videoTitulo", "videoDescricao", "feedback", "videoExecucao",
         ]
 
     def get_parametros(self, obj):
