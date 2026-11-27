@@ -10,7 +10,9 @@ from django.conf import settings
 from supabase import create_client
 
 # Link de leitura curto: o vídeo só é exibido a quem o backend autorizou (RNF12, CA04).
-VALIDADE_LEITURA_SEGUNDOS = 300
+# 10 min cobrem uma revisão normal do treinador; se vencer com a tela aberta, o front
+# pede um link novo sozinho. Um link vazado deixa de funcionar nesse mesmo prazo.
+VALIDADE_LEITURA_SEGUNDOS = 600
 EXTENSOES_PERMITIDAS = {".mp4", ".mov"}  # RN09, RNF06
 
 
