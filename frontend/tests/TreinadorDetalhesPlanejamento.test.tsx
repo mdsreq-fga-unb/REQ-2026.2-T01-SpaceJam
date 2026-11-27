@@ -64,6 +64,8 @@ describe('US27 — planejamento vigente do aluno', () => {
       },
     })
 
+    expect(await screen.findByRole('link', { name: 'Consultar treino Treino A' }))
+      .toHaveAttribute('href', '/treinos/1')
     await userEvent.setup().click(await screen.findByText('Ver exercícios'))
     expect(screen.getByText('Drible alternado')).toBeVisible()
     expect(screen.getByText('3 séries · 10 repetições')).toBeVisible()

@@ -21,6 +21,7 @@ import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDet
 import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
 import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
 import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
+import { TreinoPage } from './features/treinos/TreinoPage'
 
 export default function App() {
   return (
@@ -171,6 +172,7 @@ export default function App() {
               </RotaProtegida>
             }
           />
+          <Route path="/treinos/:treinoId" element={<RotaProtegida><TreinoPage /></RotaProtegida>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

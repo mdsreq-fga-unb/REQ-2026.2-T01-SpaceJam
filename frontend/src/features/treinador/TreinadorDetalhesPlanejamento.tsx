@@ -102,6 +102,10 @@ export function TreinadorDetalhesPlanejamento() {
                       <span>
                         {rotuloDoTreino(treino)} · {quantidadeDeExercicios(treino.total_exercicios)}
                       </span>
+                      <Link className="detalhes-planejamento__link" to={'/treinos/' + treino.id}
+                        aria-label={'Consultar treino ' + treino.nome}>
+                        Consultar treino
+                      </Link>
                       {treino.exercicios?.length > 0 && (
                         <details className="detalhes-planejamento__exercicios">
                           <summary aria-label={`Ver exercícios de ${treino.nome}`}>Ver exercícios</summary>
