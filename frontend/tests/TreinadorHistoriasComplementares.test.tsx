@@ -1,212 +1,196 @@
+import { screen, within } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { tokenStorage } from '../src/api/client'
+import type { Usuario } from '../src/types/usuario'
+import { abrir, enviadosPara, simularApi } from './apoio'
+import '@testing-library/jest-dom/vitest'
 
-import React from 'react'
-import { describe, expect, it, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { MemoryRouter, Route, Routes } from 'react-router'
-import {
-  TreinadorEditarPlanejamento,
-  TreinadorPlanejamentosAnteriores,
-  TreinadorEditarTreino,
-} from '../src/features/treinador/TreinadorHistoriasComplementares'
-
-vi.mock('../src/auth/useAuth', () => ({
-  useAuth: () => ({
-    usuario: {
-      id: 1,
-      apelido: 'lucas',
-      first_name: 'Lucas',
-      last_name: 'Treinador',
-    },
-  }),
-}))
-
-function renderizarTela(
-  componente: React.ReactNode,
-  rota = '/treinador/alunos/21/planejamento/5/editar',
-) {
-  return render(
-    <MemoryRouter initialEntries={[rota]}>
-      <Routes>
-        <Route
-          path="/treinador/alunos/:alunoId/planejamento/:planejamentoId/*"
-          element={componente}
-        />
-        <Route
-          path="/treinador/alunos/:alunoId/planejamentos-anteriores"
-          element={componente}
-        />
-      </Routes>
-    </MemoryRouter>,
-  )
+const treinador: Usuario = {
+  id: 1, apelido: 'lucas', first_name: 'Lucas', last_name: 'Treinador',
+  email: 'lucas@example.invalid', telefone: '', papel: 'TREINADOR', termos_pendentes: false,
 }
+const aluno = { id: 21, nome: 'Beatriz Costa' }
+const criado_em = '2026-11-26T12:00:00Z'
+const exercicio = (id: number, nome: string, status = 'A_FAZER', repeticoes: number | null = 10) => ({
+  id, nome, series: 3, repeticoes, duracao_segundos: repeticoes ? null : 30, status,
+})
+const vigente = {
+  aluno,
+  planejamento: {
+    id: 5, nome: 'Controle de bola', criado_em,
+    treinos: [
+      { id: 1, nome: 'Treino A', status: 'EM_ANDAMENTO', status_display: 'Em andamento', total_exercicios: 2,
+        exercicios: [exercicio(11, 'Drible alternado', 'FEITO'), exercicio(12, 'Mudança de direção', 'A_FAZER', null)] },
+      { id: 2, nome: 'Treino B', status: 'EM_ANDAMENTO', status_display: 'Em andamento', total_exercicios: 1,
+        exercicios: [exercicio(21, 'Arremesso')] },
+      { id: 3, nome: 'Treino C', status: 'CONCLUIDO', status_display: 'Concluído', total_exercicios: 1,
+        exercicios: [exercicio(31, 'Passe', 'CONCLUIDO')] },
+    ],
+  },
+}
+const URL_VIGENTE = 'GET /api/treinos/alunos/21/planejamento-vigente/'
+
+beforeEach(() => tokenStorage.set('token-teste'))
+afterEach(() => {
+  vi.unstubAllGlobals()
+  window.history.replaceState({}, '', '/')
+})
 
 describe('US19 — editar planejamento', () => {
-  it('exibe o planejamento e os treinos vinculados', () => {
-    renderizarTela(<TreinadorEditarPlanejamento />)
+  it('salva o novo nome e volta ao planejamento (CA01)', async () => {
+    const fetch = simularApi({
+      'GET /api/auth/me/': { corpo: treinador },
+      [URL_VIGENTE]: { corpo: vigente },
+      'PATCH /api/treinos/planejamentos/5/': { corpo: { id: 5, nome: 'Arremesso' } },
+    })
+    const pessoa = abrir('/treinador/alunos/21/planejamento/5/editar')
 
-    expect(screen.getByText(/Controle de bola/i)).toBeTruthy()
-    expect(screen.getByText(/Beatriz Costa/i)).toBeTruthy()
+    const campo = await screen.findByLabelText('Nome do planejamento *')
+    expect(campo).toHaveValue('Controle de bola')
+    await pessoa.clear(campo)
+    await pessoa.type(campo, 'Arremesso')
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
+
+    expect(enviadosPara(fetch, 'PATCH /api/treinos/planejamentos/5/')).toEqual([{ nome: 'Arremesso' }])
+    expect(await screen.findByRole('heading', { name: 'Controle de bola' })).toBeTruthy()
   })
 
-  it('permite alterar e salvar o nome do planejamento', async () => {
-    const user = userEvent.setup()
+  it('bloqueia nome vazio sem chamar a API (CA02)', async () => {
+    const fetch = simularApi({ 'GET /api/auth/me/': { corpo: treinador }, [URL_VIGENTE]: { corpo: vigente } })
+    const pessoa = abrir('/treinador/alunos/21/planejamento/5/editar')
 
-    renderizarTela(<TreinadorEditarPlanejamento />)
+    await pessoa.clear(await screen.findByLabelText('Nome do planejamento *'))
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
 
-    const campoNome = screen.getByDisplayValue('Controle de bola')
+    expect(await screen.findByText('Informe o nome do planejamento.')).toBeTruthy()
+    expect(enviadosPara(fetch, 'PATCH /api/treinos/planejamentos/5/')).toEqual([])
+  })
 
-    await user.clear(campoNome)
-    await user.type(campoNome, 'Fundamentos de basquete')
-
-    const botaoSalvar = screen.getByRole('button', {
-      name: /salvar/i,
+  it('só oferece remover treino não executado e remove após confirmar (CA04, CA05)', async () => {
+    simularApi({
+      'GET /api/auth/me/': { corpo: treinador },
+      [URL_VIGENTE]: { corpo: vigente },
+      'DELETE /api/treinos/planejamentos/5/treinos/2/': { corpo: {} },
     })
+    const pessoa = abrir('/treinador/alunos/21/planejamento/5/editar')
 
-    await user.click(botaoSalvar)
+    await screen.findByLabelText('Nome do planejamento *')
+    expect(screen.queryByRole('button', { name: 'Remover Treino A' })).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Remover Treino C' })).toBeNull()
+    await pessoa.click(screen.getByRole('button', { name: 'Remover Treino B' }))
+    await pessoa.click(screen.getByRole('button', { name: 'Confirmar remoção' }))
 
-    expect(
-      screen.getByDisplayValue('Fundamentos de basquete'),
-    ).toBeTruthy()
+    expect(await screen.findByText(/Treino A/)).toBeTruthy()
+    expect(screen.queryByText(/Treino B/)).toBeNull()
+  })
 
-    expect(
-      screen.getByRole('status').textContent,
-    ).toMatch(/Alterações registradas nesta demonstração/i)
+  it('mostra aviso quando o planejamento não é o vigente (CA06)', async () => {
+    simularApi({ 'GET /api/auth/me/': { corpo: treinador }, [URL_VIGENTE]: { corpo: vigente } })
+    abrir('/treinador/alunos/21/planejamento/99/editar')
+
+    expect(await screen.findByText('Este planejamento está no histórico e é somente leitura.')).toBeTruthy()
+    expect(screen.queryByRole('button', { name: 'Salvar alterações' })).toBeNull()
   })
 })
 
-describe('US21 — consultar planejamentos anteriores', () => {
-  it('apresenta os planejamentos anteriores do aluno', () => {
-    renderizarTela(
-      <TreinadorPlanejamentosAnteriores />,
-      '/treinador/alunos/21/planejamentos-anteriores',
-    )
+describe('US21 — planejamentos anteriores', () => {
+  it('lista o histórico e consulta os treinos de um planejamento (CA02)', async () => {
+    simularApi({
+      'GET /api/auth/me/': { corpo: treinador },
+      'GET /api/treinos/alunos/21/planejamentos-historico/': {
+        corpo: { aluno, planejamentos: [
+          { id: 7, nome: 'Fundamentos', criado_em, encerrado_em: '2026-11-20T12:00:00Z', total_treinos: 2 },
+        ] },
+      },
+      'GET /api/treinos/alunos/21/planejamentos-historico/7/': {
+        corpo: { aluno, planejamento: { id: 7, nome: 'Fundamentos', criado_em, encerrado_em: null, treinos: [
+          { id: 9, nome: 'Treino antigo', status: 'CONCLUIDO', status_display: 'Concluído', total_exercicios: 2, exercicios: [] },
+        ] } },
+      },
+    })
+    const pessoa = abrir('/treinador/alunos/21/planejamentos-anteriores')
 
-    expect(screen.getByText(/Fundamentos de drible/i)).toBeTruthy()
-    expect(screen.getByText(/Base de arremesso/i)).toBeTruthy()
+    const botao = await screen.findByRole('button', { name: /Fundamentos/ })
+    expect(botao).toHaveTextContent('2 treinos')
+    await pessoa.click(botao)
+
+    expect(await screen.findByText('Treino antigo · Concluído · 2 exercícios')).toBeTruthy()
   })
 
-  it('permite consultar e recolher os treinos de um planejamento', async () => {
-    const user = userEvent.setup()
-
-    renderizarTela(
-      <TreinadorPlanejamentosAnteriores />,
-      '/treinador/alunos/21/planejamentos-anteriores',
-    )
-
-    const botao = screen.getByRole('button', {
-      name: /Fundamentos de drible/i,
+  it('informa quando não há planejamento anterior (CA03)', async () => {
+    simularApi({
+      'GET /api/auth/me/': { corpo: treinador },
+      'GET /api/treinos/alunos/21/planejamentos-historico/': { corpo: { aluno, planejamentos: [] } },
     })
+    abrir('/treinador/alunos/21/planejamentos-anteriores')
 
-    await user.click(botao)
-
-    expect(
-      screen.getByText('Treino A · Controle de bola'),
-    ).toBeTruthy()
-
-    expect(
-      screen.getByText('Treino B · Mudança de direção'),
-    ).toBeTruthy()
-
-    await user.click(botao)
-
-    expect(
-      screen.queryByText('Treino A · Controle de bola'),
-    ).toBeNull()
-
-    expect(
-      screen.queryByText('Treino B · Mudança de direção'),
-    ).toBeNull()
-  })
-
-  it('oferece acesso ao planejamento vigente', () => {
-    renderizarTela(
-      <TreinadorPlanejamentosAnteriores />,
-      '/treinador/alunos/21/planejamentos-anteriores',
-    )
-
-    const link = screen.getByRole('link', {
-      name: /planejamento vigente/i,
-    })
-
-    expect(link.getAttribute('href')).toBe(
-      '/treinador/alunos/21/planejamento',
-    )
+    expect(await screen.findByText('Nenhum planejamento anterior.')).toBeTruthy()
   })
 })
 
 describe('US25 — editar treino', () => {
-  it('apresenta os exercícios e os parâmetros do exercício selecionado', () => {
-    renderizarTela(<TreinadorEditarTreino />)
+  function abrirEdicao(rota = '/treinador/alunos/21/planejamento/5/treinos/1/editar', extras = {}) {
+    const fetch = simularApi({
+      'GET /api/auth/me/': { corpo: treinador },
+      [URL_VIGENTE]: { corpo: vigente },
+      'GET /api/exercicios/': { corpo: [] },
+      ...extras,
+    })
+    return { fetch, pessoa: abrir(rota) }
+  }
 
-    expect(screen.getByText(/Treino A/i)).toBeTruthy()
-
-    expect(
-      screen.getByRole('button', {
-        name: /Drible alternado/i,
-      }),
-    ).toBeTruthy()
-
-    expect(
-      screen.getByRole('button', {
-        name: /Drible com deslocamento/i,
-      }),
-    ).toBeTruthy()
-  })
-
-  it('permite alterar a quantidade de repetições', async () => {
-    const user = userEvent.setup()
-
-    renderizarTela(<TreinadorEditarTreino />)
-
-    const campoRepeticoes = screen.getByDisplayValue('10')
-
-    await user.clear(campoRepeticoes)
-    await user.type(campoRepeticoes, '15')
-
-    expect(
-      screen.getByDisplayValue('15'),
-    ).toBeTruthy()
-  })
-
-  it('permite alterar a duração de um exercício', async () => {
-    const user = userEvent.setup()
-
-    renderizarTela(<TreinadorEditarTreino />)
-
-    const exercicio = screen.getByRole('button', {
-      name: /Drible alternado/i,
+  it('trava exercício já executado e envia os parâmetros alterados', async () => {
+    const { fetch, pessoa } = abrirEdicao(undefined, {
+      'PUT /api/treinos/treinos/1/': { corpo: { id: 1, nome: 'Treino A' } },
     })
 
-    await user.click(exercicio)
+    const executado = (await screen.findByText(/Drible alternado · já executado/)).closest('fieldset')!
+    expect(within(executado).getByLabelText('Séries *')).toBeDisabled()
+    expect(within(executado).queryByRole('button', { name: /Remover/ })).toBeNull()
 
-    const campoDuracao = screen.getByDisplayValue('30')
+    const editavel = screen.getByText(/Mudança de direção/).closest('fieldset')!
+    const duracao = within(editavel).getByLabelText('Duração (segundos) *')
+    await pessoa.clear(duracao)
+    await pessoa.type(duracao, '45')
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
 
-    await user.clear(campoDuracao)
-    await user.type(campoDuracao, '45')
-
-    expect(
-      screen.getByDisplayValue('45'),
-    ).toBeTruthy()
+    expect(enviadosPara(fetch, 'PUT /api/treinos/treinos/1/')).toEqual([{
+      nome: 'Treino A',
+      exercicios: [
+        { id: 11, series: 3, repeticoes: 10 },
+        { id: 12, series: 3, duracao_segundos: 45 },
+      ],
+    }])
   })
 
-  it('permite salvar as alterações do treino e apresenta confirmação', async () => {
-    const user = userEvent.setup()
+  it('bloqueia parâmetro inválido sem chamar a API', async () => {
+    const { fetch, pessoa } = abrirEdicao()
 
-    renderizarTela(<TreinadorEditarTreino />)
+    const editavel = (await screen.findByText(/Mudança de direção/)).closest('fieldset')!
+    await pessoa.clear(within(editavel).getByLabelText('Séries *'))
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
 
-    const botaoSalvar = screen.getByRole('button', {
-      name: /salvar/i,
+    expect(screen.getByText('As séries devem ser no mínimo 1.')).toBeTruthy()
+    expect(enviadosPara(fetch, 'PUT /api/treinos/treinos/1/')).toEqual([])
+  })
+
+  it('mostra a mensagem do servidor quando a edição é bloqueada (409)', async () => {
+    const { pessoa } = abrirEdicao(undefined, {
+      'PUT /api/treinos/treinos/1/': {
+        corpo: { detail: 'Treino concluído é somente leitura.', code: 'EDICAO_BLOQUEADA' }, status: 409,
+      },
     })
 
-    await user.click(botaoSalvar)
+    await screen.findByText(/Mudança de direção/)
+    await pessoa.click(screen.getByRole('button', { name: 'Salvar alterações' }))
 
-    expect(
-      await screen.findByRole('status'),
-    ).toBeTruthy()
+    expect(await screen.findByRole('alert')).toHaveTextContent('Treino concluído é somente leitura.')
+  })
 
-    expect(
-      screen.getByRole('status').textContent,
-    ).toMatch(/Alterações registradas nesta demonstração/i)
+  it('não abre o formulário para treino concluído', async () => {
+    abrirEdicao('/treinador/alunos/21/planejamento/5/treinos/3/editar')
+
+    expect(await screen.findByText('Treino concluído é somente leitura.')).toBeTruthy()
+    expect(screen.queryByRole('button', { name: 'Salvar alterações' })).toBeNull()
   })
 })

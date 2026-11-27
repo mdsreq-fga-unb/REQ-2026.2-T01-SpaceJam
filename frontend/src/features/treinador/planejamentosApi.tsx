@@ -7,18 +7,19 @@ export interface AlunoDaCarteira {
   planejamento_vigente: { id: number; nome: string } | null
 }
 
-interface ExercicioPrescrito {
+export interface ExercicioPrescrito {
   id: number
   nome: string
   series: number
   repeticoes: number | null
   duracao_segundos: number | null
+  status: 'A_FAZER' | 'FEITO' | 'CONCLUIDO' | 'CORRIGIR'
 }
 
 export interface TreinoResumo {
   id: number
   nome: string
-  status: 'EM_ANDAMENTO' | 'FEITO' | 'CONCLUIDO'
+  status: 'EM_ANDAMENTO' | 'FEITO' | 'CORRIGIR_REFAZER' | 'CONCLUIDO'
   status_display: string
   total_exercicios: number
   exercicios: ExercicioPrescrito[]
@@ -73,4 +74,57 @@ export function rotuloDoTreino(treino: Pick<TreinoResumo, 'status' | 'status_dis
 
 export function quantidadeDeExercicios(total: number) {
   return `${total} ${total === 1 ? 'exercício' : 'exercícios'}`
+}
+
+/** US19 — altera o nome do planejamento vigente. */
+export function editarPlanejamento(planejamentoId: number, nome: string) {
+  return api<{ id: number; nome: string }>(`/treinos/planejamentos/${planejamentoId}/`, {
+    method: 'PATCH',
+    body: JSON.stringify({ nome }),
+  })
+}
+
+/** US19 — remove do planejamento vigente um treino ainda não executado. */
+export function removerTreino(planejamentoId: number, treinoId: number) {
+  return api<void>(`/treinos/planejamentos/${planejamentoId}/treinos/${treinoId}/`, { method: 'DELETE' })
+}
+
+export function podeRemoverTreino(treino: TreinoResumo) {
+  return treino.status === 'EM_ANDAMENTO' && treino.exercicios.every((item) => item.status === 'A_FAZER')
+}
+
+/** US25 — exercício já prescrito (id) ou novo, vindo da biblioteca (exercicio). */
+export type ItemDaEdicao =
+  | { id: number; series: number; repeticoes?: number; duracao_segundos?: number }
+  | { exercicio: number; series: number; repeticoes?: number; duracao_segundos?: number }
+
+/** US25 — substitui nome e lista de exercícios do treino. */
+export function editarTreino(treinoId: number, payload: { nome: string; exercicios: ItemDaEdicao[] }) {
+  return api<{ id: number; nome: string }>(`/treinos/treinos/${treinoId}/`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export interface PlanejamentoAnterior {
+  id: number
+  nome: string
+  criado_em: string
+  encerrado_em: string | null
+  total_treinos: number
+}
+
+/** US21 — lista os planejamentos do histórico do aluno. */
+export function listarPlanejamentosAnteriores(alunoId: number, signal?: AbortSignal) {
+  return api<{ aluno: { id: number; nome: string }; planejamentos: PlanejamentoAnterior[] }>(
+    `/treinos/alunos/${alunoId}/planejamentos-historico/`,
+    { signal },
+  )
+}
+
+/** US21 — detalhe somente leitura de um planejamento do histórico. */
+export function consultarPlanejamentoAnterior(alunoId: number, planejamentoId: number) {
+  return api<{ aluno: { id: number; nome: string }; planejamento: PlanejamentoAnterior & { treinos: TreinoResumo[] } }>(
+    `/treinos/alunos/${alunoId}/planejamentos-historico/${planejamentoId}/`,
+  )
 }

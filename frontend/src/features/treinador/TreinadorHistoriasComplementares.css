@@ -271,3 +271,60 @@
     width: 100%;
   }
 }
+
+.sj-historias__erro {
+  margin: 4px 0 0;
+  color: #ffb4a3;
+  font-size: 14px;
+}
+
+.sj-historias__estado {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 440px;
+}
+
+.sj-historias__linha-treino {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.sj-historias__confirmacao {
+  display: flex;
+  gap: 8px;
+}
+
+.sj-historias__remover {
+  border: 0;
+  background: none;
+  color: #ff9a6c;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.sj-historias__item-exercicio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #454549;
+  border-radius: 12px;
+}
+
+.sj-historias__item-exercicio legend {
+  padding: 0 6px;
+  font-weight: 700;
+}
+
+.sj-historias__item-exercicio input:disabled,
+.sj-historias__item-exercicio select:disabled {
+  opacity: 0.6;
+}
