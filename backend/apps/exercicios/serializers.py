@@ -44,6 +44,9 @@ class ExercicioSerializer(serializers.ModelSerializer):
             "erros_comuns",
             "erros_orientacoes",
             "video_base",
+            # US35: gravados pelo PATCH; ausentes no PUT da edição (US39) são preservados.
+            "video_titulo",
+            "video_descricao",
             "criado_por",
             "criado_em",
             "atualizado_em",

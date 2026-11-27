@@ -15,6 +15,9 @@ interface ExercicioDoTreino {
   orientacoes?: string
   errosComuns?: string
   errosOrientacoes?: { erro: string; orientacao_corretiva: string }[]
+  /** US35 CA03: título e descrição do vídeo-base copiados na prescrição. */
+  videoTitulo?: string
+  videoDescricao?: string
 }
 
 type TreinoDisponivel = {
@@ -124,7 +127,7 @@ export function DetalheTreino({
   }
 
   if (selecionado) {
-    const { id, nome, parametros, situacao, orientacoes, errosComuns, errosOrientacoes = [] } = selecionado
+    const { id, nome, parametros, situacao, orientacoes, errosComuns, errosOrientacoes = [], videoTitulo, videoDescricao } = selecionado
     return (
       <TreinoLayout usuario={usuario} links={navegacao}>
         <button className="treino-botao treino-botao--voltar" type="button" onClick={() => setSelecao(null)}>
@@ -140,8 +143,15 @@ export function DetalheTreino({
           </p>
         )}
         <div className="treino-colunas treino-exercicio-conteudo">
-          {(orientacoes || errosComuns || errosOrientacoes.length > 0) && (
+          {(videoTitulo || videoDescricao || orientacoes || errosComuns || errosOrientacoes.length > 0) && (
             <section className="treino-cartao treino-exercicio-orientacoes" aria-label="Orientações do exercício">
+              {(videoTitulo || videoDescricao) && (
+                <div className="treino-texto">
+                  <h2>Vídeo de demonstração</h2>
+                  {videoTitulo && <p><strong>{videoTitulo}</strong></p>}
+                  {videoDescricao && <p>{videoDescricao}</p>}
+                </div>
+              )}
               {orientacoes && (
                 <div className="treino-texto"><h2>Como executar</h2><p>{orientacoes}</p></div>
               )}

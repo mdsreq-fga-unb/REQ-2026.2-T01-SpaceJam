@@ -52,13 +52,16 @@ class ExercicioExecucaoSerializer(serializers.ModelSerializer):
     parametros = serializers.SerializerMethodField()
     errosComuns = serializers.CharField(source="erros_comuns", read_only=True)
     errosOrientacoes = serializers.JSONField(source="erros_orientacoes", read_only=True)
+    # US35 CA03: título e descrição do vídeo-base copiados na prescrição (RN23).
+    videoTitulo = serializers.CharField(source="video_titulo", read_only=True)
+    videoDescricao = serializers.CharField(source="video_descricao", read_only=True)
     feedback = FeedbackAlunoSerializer(source="feedback_aluno", read_only=True)
 
     class Meta:
         model = TreinoExercicio
         fields = [
             "id", "ordem", "nome", "parametros", "orientacoes", "errosComuns", "errosOrientacoes",
-            "feedback",
+            "videoTitulo", "videoDescricao", "feedback",
         ]
 
     def get_parametros(self, obj):

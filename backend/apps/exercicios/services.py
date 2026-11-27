@@ -23,6 +23,9 @@ def snapshot_exercicio(exercicio: Exercicio) -> dict:
         "orientacoes": exercicio.orientacoes,
         "erros_comuns": exercicio.erros_comuns,
         "video_base": exercicio.video_base,
+        # US35 CA03: contrato para a prescrição (RF2307) copiar título e descrição.
+        "video_titulo": exercicio.video_titulo,
+        "video_descricao": exercicio.video_descricao,
         "erros_orientacoes": [
             {"erro": item.erro, "orientacao_corretiva": item.orientacao_corretiva}
             for item in exercicio.erros_orientacoes.all()

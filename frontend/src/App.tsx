@@ -14,6 +14,7 @@ import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivac
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
+import VideoDemonstracaoExercicio from './features/exercicios/VideoDemonstracaoExercicio'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
@@ -169,6 +170,15 @@ export default function App() {
             element={
               <RotaProtegida papel="TREINADOR">
                 <RemoverErroOrientacaoPage />
+              </RotaProtegida>
+            }
+          />
+          {/* US35 — título e descrição do vídeo-base do exercício */}
+          <Route
+            path="/exercicios/:exercicioId/video-demonstracao"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <VideoDemonstracaoExercicio />
               </RotaProtegida>
             }
           />

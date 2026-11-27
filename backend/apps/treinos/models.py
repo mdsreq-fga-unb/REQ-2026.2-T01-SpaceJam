@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 
+from apps.exercicios.models import LIMITE_DESCRICAO_VIDEO_BASE, LIMITE_TITULO_VIDEO_BASE
+
 
 class Planejamento(models.Model):
     class Status(models.TextChoices):
@@ -103,6 +105,9 @@ class TreinoExercicio(models.Model):
     erros_comuns = models.TextField(blank=True)
     erros_orientacoes = models.JSONField(default=list, blank=True)
     video_base = models.URLField(max_length=500, blank=True)
+    # US35 CA03 — título e descrição do vídeo-base copiados na prescrição.
+    video_titulo = models.CharField(max_length=LIMITE_TITULO_VIDEO_BASE, blank=True)
+    video_descricao = models.CharField(max_length=LIMITE_DESCRICAO_VIDEO_BASE, blank=True)
 
     series = models.PositiveSmallIntegerField()
     repeticoes = models.PositiveSmallIntegerField(null=True, blank=True)

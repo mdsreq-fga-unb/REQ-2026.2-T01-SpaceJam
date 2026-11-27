@@ -63,6 +63,33 @@ class TreinoStatusConclusaoTests(APITestCase):
             objetivo="Controle de bola", fundamento="DRIBLE", series=3, duracao_segundos=30,
         )
 
+    # --- US35 CA03: título e descrição do vídeo-base no treino do aluno ---
+
+    def test_us35_ca03_aluno_ve_titulo_e_descricao_da_prescricao(self):
+        origem = Exercicio.objects.create(
+            nome="Bandeja", objetivo="Finalização", fundamento="ARREMESSO",
+            video_titulo="Bandeja pela direita", video_descricao="Dois passos e impulsão.",
+            criado_por=self.treinador,
+        )
+        TreinoExercicio.objects.create(
+            treino=self.treino, ordem=2, exercicio_origem=origem, nome=origem.nome,
+            objetivo=origem.objetivo, fundamento=origem.fundamento, series=2, repeticoes=10,
+            video_titulo=origem.video_titulo, video_descricao=origem.video_descricao,
+        )
+        # A biblioteca muda depois da prescrição; o treino mantém o texto da época (RN23).
+        origem.video_titulo = "Título novo na biblioteca"
+        origem.save(update_fields=["video_titulo"])
+        url = reverse("treino-detalhe", kwargs={"treino_id": self.treino.id})
+
+        self.client.force_authenticate(user=self.aluno)
+        resposta = self.client.get(url)
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        sem_textos, com_textos = resposta.data["exercicios"]
+        self.assertEqual(com_textos["videoTitulo"], "Bandeja pela direita")
+        self.assertEqual(com_textos["videoDescricao"], "Dois passos e impulsão.")
+        self.assertEqual((sem_textos["videoTitulo"], sem_textos["videoDescricao"]), ("", ""))
+
     # --- US23: Consultar status de treino ---
 
     def test_us23_ca01_estado_inicial_em_andamento_para_treinador_e_aluno(self):

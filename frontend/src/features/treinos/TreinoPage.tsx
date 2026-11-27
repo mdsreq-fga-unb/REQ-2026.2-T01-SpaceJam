@@ -26,6 +26,8 @@ interface DetalheApi {
     orientacoes: string
     errosComuns: string
     errosOrientacoes?: { erro: string; orientacao_corretiva: string }[]
+    videoTitulo?: string
+    videoDescricao?: string
     feedback?: FeedbackAluno | null
   }[]
 }

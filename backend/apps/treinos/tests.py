@@ -187,6 +187,24 @@ class CriarTreinoUS24Tests(APITestCase):
         self.assertEqual(r.status_code, 201)
         self.assertEqual(len(r.data["exercicios"]), 2)
 
+    def test_us35_ca03_prescricao_copia_titulo_e_descricao_do_video_base(self):
+        # US35 CA03 / RN23: título e descrição do vídeo-base vão para o treino na prescrição
+        # e não mudam se a biblioteca for editada depois.
+        self.ex1.video_titulo = "Drible entre cones"
+        self.ex1.video_descricao = "Alterne as mãos a cada cone."
+        self.ex1.save(update_fields=["video_titulo", "video_descricao"])
+
+        r = self._post(self._payload())
+
+        self.assertEqual(r.status_code, 201)
+        self.ex1.video_titulo = "Título alterado"
+        self.ex1.save(update_fields=["video_titulo"])
+        item = TreinoExercicio.objects.get(treino_id=r.data["id"], ordem=1)
+        self.assertEqual(item.video_titulo, "Drible entre cones")
+        self.assertEqual(item.video_descricao, "Alterne as mãos a cada cone.")
+        sem_textos = TreinoExercicio.objects.get(treino_id=r.data["id"], ordem=2)
+        self.assertEqual((sem_textos.video_titulo, sem_textos.video_descricao), ("", ""))
+
     def test_ca02_treino_preserva_dados_da_data_da_prescricao(self):
         orientacao = ErroComumExercicio.objects.create(
             exercicio=self.ex1, erro="Olhar para baixo", orientacao_corretiva="Olhe à frente."
