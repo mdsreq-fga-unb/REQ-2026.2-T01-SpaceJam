@@ -2,6 +2,9 @@ from django.db.models import Count, Prefetch
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.generics import ListAPIView
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 
 from apps.contas.models import Usuario
@@ -15,6 +18,7 @@ from .serializers import (
     TreinoSerializer,
     nome_do_aluno,
 )
+from .serializers_execucao import TreinoStatusConsultaSerializer
 
 
 @api_view(["POST"])
@@ -110,3 +114,47 @@ def consultar_meu_planejamento(request):
     return Response({
         "planejamento": PlanejamentoVigenteSerializer(planejamento).data if planejamento else None,
     })
+
+
+class HistoricoTreinosPaginacao(PageNumberPagination):
+    """A listagem do histórico é paginada para manter o carregamento dentro de 5 s."""
+
+    page_size = 20
+    page_size_query_param = "tamanho"
+    max_page_size = 100
+
+
+class HistoricoTreinosAlunoView(ListAPIView):
+    """Treinador consulta o histórico de treinos de um aluno da sua carteira.
+    """
+
+    permission_classes = [*ROTA_PROTEGIDA, IsTreinador]
+    serializer_class = TreinoStatusConsultaSerializer
+    pagination_class = HistoricoTreinosPaginacao
+
+    def _aluno(self):
+        if not hasattr(self, "_aluno_consultado"):
+            aluno = get_object_or_404(
+                Usuario, pk=self.kwargs["aluno_id"], papel=Usuario.Papel.ALUNO
+            )
+            # RN03 / RNF09 — só a carteira do próprio treinador.
+            if aluno.treinador_id != self.request.user.pk:
+                raise PermissionDenied("Você não tem permissão para acessar este aluno.")
+            self._aluno_consultado = aluno
+        return self._aluno_consultado
+
+    def get_queryset(self):
+        return (
+            Treino.objects.filter(
+                planejamento__aluno=self._aluno(), status=Treino.Status.CONCLUIDO
+            )
+            .select_related("planejamento")
+            .annotate(total_exercicios=Count("exercicios"))
+            .order_by("-criado_em", "-id")
+        )
+
+    def list(self, request, *args, **kwargs):
+        resposta = super().list(request, *args, **kwargs)
+        aluno = self._aluno()
+        resposta.data["aluno"] = {"id": aluno.pk, "nome": nome_do_aluno(aluno)}
+        return resposta

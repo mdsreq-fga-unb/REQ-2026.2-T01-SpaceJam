@@ -78,13 +78,22 @@ class TreinoStatusConsultaSerializer(serializers.ModelSerializer):
     statusSlug = serializers.SerializerMethodField()
     statusLabel = serializers.CharField(source="get_status_display", read_only=True)
     realizadoEm = serializers.DateTimeField(source="realizado_em", read_only=True)
+    quantidadeExercicios = serializers.SerializerMethodField()
 
     class Meta:
         model = Treino
-        fields = ["id", "nome", "alunoId", "status", "statusSlug", "statusLabel", "realizadoEm"]
+        fields = [
+            "id", "nome", "alunoId", "status", "statusSlug", "statusLabel", "realizadoEm",
+            "quantidadeExercicios",
+        ]
 
     def get_statusSlug(self, obj):
         return STATUS_API_PARA_FRONT[obj.status]
+
+    def get_quantidadeExercicios(self, obj):
+        # Listagens anotam `total_exercicios` para evitar uma consulta por treino (RNF10).
+        total = getattr(obj, "total_exercicios", None)
+        return total if total is not None else obj.exercicios.count()
 
 
 class TreinoDetalheSerializer(TreinoStatusConsultaSerializer):

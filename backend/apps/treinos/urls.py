@@ -27,6 +27,12 @@ urlpatterns = [
         views.consultar_planejamento_vigente,
         name="planejamento-vigente",
     ),
+    # Consultar histórico de treinos de aluno acompanhado
+    path(
+        "alunos/<int:aluno_id>/historico/",
+        views.HistoricoTreinosAlunoView.as_view(),
+        name="aluno-historico-treinos",
+    ),
     # Consultar e registrar a execução de um treino prescrito
     path("<int:treino_id>/", TreinoDetalheView.as_view(), name="treino-detalhe"),
     path("<int:treino_id>/status/", TreinoStatusView.as_view(), name="treino-status"),
