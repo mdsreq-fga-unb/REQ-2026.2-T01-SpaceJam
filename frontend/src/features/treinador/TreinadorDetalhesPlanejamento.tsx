@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { ApiError } from '../../api/client'
@@ -51,6 +52,10 @@ export function TreinadorDetalhesPlanejamento() {
     ? consulta
     : { estado: 'erro', mensagem: 'Identificador de aluno inválido.' }
 
+  // Guarda o planejamento em uma variável para garantir que ele não seja nulo.
+  const planejamento =
+    estado.estado === 'pronto' ? estado.dados.planejamento : null
+
   return (
     <LayoutTreinador nome={nomeTreinador} secao="Treinos">
       <div className="detalhes-planejamento">
@@ -66,7 +71,7 @@ export function TreinadorDetalhesPlanejamento() {
           </section>
         )}
 
-        {estado.estado === 'pronto' && !estado.dados.planejamento && (
+        {estado.estado === 'pronto' && !planejamento && (
           <section className="detalhes-planejamento__estado" role="status">
             <header className="detalhes-planejamento__intro">
               <h1>Nenhum planejamento vigente</h1>
@@ -79,6 +84,12 @@ export function TreinadorDetalhesPlanejamento() {
               >
                 Criar planejamento
               </Link>
+              <Link
+                className="detalhes-planejamento__botao"
+                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamentos-anteriores`}
+              >
+                Planejamentos anteriores
+              </Link>
               <Link className="detalhes-planejamento__botao" to="/treinador/planejamentos">
                 Voltar aos alunos
               </Link>
@@ -86,16 +97,16 @@ export function TreinadorDetalhesPlanejamento() {
           </section>
         )}
 
-        {estado.estado === 'pronto' && estado.dados.planejamento && (
+        {estado.estado === 'pronto' && planejamento && (
           <>
             <header className="detalhes-planejamento__intro">
-              <h1>{estado.dados.planejamento.nome}</h1>
+              <h1>{planejamento.nome}</h1>
               <p>Planejamento de {estado.dados.aluno.nome}</p>
             </header>
 
-            {estado.dados.planejamento.treinos.length > 0 ? (
+            {planejamento.treinos.length > 0 ? (
               <section className="detalhes-planejamento__treinos" aria-label="Treinos do planejamento">
-                {estado.dados.planejamento.treinos.map((treino) => (
+                {planejamento.treinos.map((treino) => (
                   <div className="detalhes-planejamento__coluna" key={treino.id}>
                     <article className="detalhes-planejamento__cartao" data-status={treino.status}>
                       <strong>{treino.nome}</strong>
@@ -107,9 +118,20 @@ export function TreinadorDetalhesPlanejamento() {
                         aria-label={'Consultar treino ' + treino.nome}>
                         Consultar treino
                       </Link>
+                      {treino.status !== 'CONCLUIDO' && (
+                        <Link
+                          className="detalhes-planejamento__editar-treino"
+                          to={`/treinador/alunos/${estado.dados.aluno.id}/planejamento/${planejamento.id}/treinos/${treino.id}/editar`}
+                          aria-label={'Editar treino ' + treino.nome}
+                        >
+                          Editar treino
+                        </Link>
+                      )}
                       {treino.exercicios?.length > 0 && (
                         <details className="detalhes-planejamento__exercicios">
-                          <summary aria-label={`Ver exercícios de ${treino.nome}`}>Ver exercícios</summary>
+                          <summary aria-label={`Ver exercícios de ${treino.nome}`}>
+                            Ver exercícios
+                          </summary>
                           <ol>
                             {treino.exercicios.map((exercicio) => (
                               <li key={exercicio.id}>
@@ -138,12 +160,27 @@ export function TreinadorDetalhesPlanejamento() {
             <section className="detalhes-planejamento__acoes" aria-label="Ações do planejamento">
               <Link
                 className="detalhes-planejamento__botao principal"
-                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamento/${estado.dados.planejamento.id}/novo-treino`}
+                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamento/${planejamento.id}/novo-treino`}
               >
                 Adicionar treino
               </Link>
+
               <Link className="detalhes-planejamento__botao" to="/treinador/planejamentos">
                 Voltar aos alunos
+              </Link>
+
+              <Link
+                className="detalhes-planejamento__botao"
+                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamento/${planejamento.id}/editar`}
+              >
+                Editar planejamento
+              </Link>
+
+              <Link
+                className="detalhes-planejamento__botao"
+                to={`/treinador/alunos/${estado.dados.aluno.id}/planejamentos-anteriores`}
+              >
+                Planejamentos anteriores
               </Link>
             </section>
           </>

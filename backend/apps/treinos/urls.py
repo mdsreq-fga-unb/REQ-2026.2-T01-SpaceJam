@@ -27,6 +27,26 @@ urlpatterns = [
         views.consultar_planejamento_vigente,
         name="planejamento-vigente",
     ),
+    # US19 — Editar planejamento e remover treino não executado
+    path("planejamentos/<int:planejamento_id>/", views.editar_planejamento, name="planejamento-editar"),
+    path(
+        "planejamentos/<int:planejamento_id>/treinos/<int:treino_id>/",
+        views.remover_treino,
+        name="planejamento-remover-treino",
+    ),
+    # US25 — Editar treino
+    path("treinos/<int:treino_id>/", views.editar_treino, name="treino-editar"),
+    # US21 — Consultar histórico de planejamentos
+    path(
+        "alunos/<int:aluno_id>/planejamentos-historico/",
+        views.listar_historico_planejamentos,
+        name="planejamentos-historico",
+    ),
+    path(
+        "alunos/<int:aluno_id>/planejamentos-historico/<int:planejamento_id>/",
+        views.consultar_planejamento_historico,
+        name="planejamento-historico-detalhe",
+    ),
     # Consultar histórico de treinos de aluno acompanhado
     path(
         "alunos/<int:aluno_id>/historico/",
