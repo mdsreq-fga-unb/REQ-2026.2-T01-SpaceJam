@@ -15,8 +15,7 @@ type Consulta =
   | { estado: 'erro' }
   | { estado: 'pronto'; planejamento: PlanejamentoDoAluno | null }
 
-const statusDoExercicio: Record<ExercicioPrescrito['status'], string> = {
-  A_FAZER: 'A fazer',
+const statusDoExercicio: Record<Exclude<ExercicioPrescrito['status'], 'A_FAZER'>, string> = {
   FEITO: 'Feito',
   CONCLUIDO: 'Concluído',
   CORRIGIR: 'Corrigir/Refazer',
@@ -85,7 +84,9 @@ function CartaoDeExercicio({ exercicio }: { exercicio: ExercicioPrescrito }) {
           <h3>{exercicio.nome}</h3>
           <p>{prescricaoDoExercicio(exercicio)}</p>
         </div>
-        <span className="meu-planejamento__status" data-status={exercicio.status}>{statusDoExercicio[exercicio.status]}</span>
+        {exercicio.status !== 'A_FAZER' && (
+          <span className="meu-planejamento__status" data-status={exercicio.status}>{statusDoExercicio[exercicio.status]}</span>
+        )}
       </header>
       {exercicio.objetivo && <div><h4>Objetivo</h4><p>{exercicio.objetivo}</p></div>}
       {exercicio.orientacoes && <div><h4>Orientações</h4><p>{exercicio.orientacoes}</p></div>}
