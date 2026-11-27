@@ -98,7 +98,7 @@ export function DetalheTreino({
     return (
       <TreinoLayout usuario={usuario} links={navegacao}>
         <TituloTreino titulo="Treino" />
-        <EstadoTreino papel={usuario.papel} consulta={consultaIndisponivel} />
+        <EstadoTreino papel={usuario.papel} consulta={consultaIndisponivel} onVoltarPlanejamento={onVoltarPlanejamento} />
       </TreinoLayout>
     )
   }

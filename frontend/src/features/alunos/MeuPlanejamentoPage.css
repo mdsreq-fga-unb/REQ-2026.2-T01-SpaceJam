@@ -3,7 +3,6 @@
   overflow-wrap: anywhere;
 }
 
-.meu-planejamento__titulo--treino,
 .meu-planejamento__treino,
 .meu-planejamento__exercicio header {
   display: flex;
@@ -13,7 +12,6 @@
   gap: 12px;
 }
 
-.meu-planejamento__titulo--treino h1,
 .meu-planejamento__treino > div,
 .meu-planejamento__exercicio header > div {
   min-width: 0;
@@ -160,6 +158,45 @@
   }
 }
 
+.meu-planejamento__titulo--treino,
+.meu-planejamento__identificacao {
+  display: grid;
+  align-items: start;
+  justify-items: start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.meu-planejamento__titulo h1:focus {
+  outline: none;
+}
+
 .meu-planejamento__executar {
-  margin-block-end: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #c4381c;
+  color: #fff;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+}
+
+.meu-planejamento__executar img { flex: 0 0 18px; }
+.meu-planejamento__executar:hover { background: #aa301b; }
+
+.meu-planejamento__executar:focus-visible,
+.meu-planejamento__voltar:focus-visible,
+.meu-planejamento__treino:focus-visible {
+  outline: 2px solid var(--conta-laranja);
+  outline-offset: 3px;
+}
+
+@media (min-width: 900px) {
+  .meu-planejamento__titulo--treino { grid-template-columns: minmax(0, 1fr) auto; }
 }

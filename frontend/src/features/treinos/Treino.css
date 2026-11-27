@@ -741,3 +741,23 @@
     color: #fff;
   }
 }
+
+.treino-avaliacao-cabecalho {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.treino-estado-treinador {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  color: var(--treino-secundario);
+  overflow-wrap: anywhere;
+}
+
+.treino-tela :is(button, a):focus-visible {
+  outline: 2px solid var(--treino-laranja);
+  outline-offset: 3px;
+}

@@ -12,7 +12,11 @@ describe('Estado do treino — US23, US29 e US15', () => {
   ] as const)('mostra o estado %s informado pela consulta ao treinador', (status, rotulo) => {
     render(<EstadoTreino papel="TREINADOR" consulta={{ estado: 'disponivel', status }} />)
     expect(screen.getByText(rotulo, { exact: true })).toBeTruthy()
-    if (status === 'feito') expect(screen.getByRole('status').textContent).toContain('aguardando sua avaliação')
+    if (status !== 'concluido') {
+      const estado = screen.getByRole('status')
+      expect(estado.querySelector('[data-status="' + status + '"]')).toHaveTextContent(rotulo)
+      if (status === 'feito') expect(estado).toHaveTextContent(/aguardando sua avaliação/i)
+    }
   })
 
   it('anuncia carregamento e permite repetir uma consulta que falhou', async () => {

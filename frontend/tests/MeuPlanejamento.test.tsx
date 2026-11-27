@@ -87,7 +87,10 @@ describe('US60 — Meu planejamento do aluno', () => {
     abrir('/treinos/planejamento/4')
 
     expect(await screen.findByRole('heading', { name: 'Treino A' })).toBeVisible()
-    expect(screen.getByRole('link', { name: 'Abrir execução do treino' })).toHaveAttribute('href', '/treinos/4')
+    const cabecalho = screen.getByRole('heading', { name: 'Treino A' })
+    expect(cabecalho).toHaveFocus()
+    const acao = within(cabecalho.closest('header')!).getByRole('link', { name: 'Abrir execução do treino' })
+    expect(acao).toHaveAttribute('href', '/treinos/4')
   })
 
   it('informa quando não há planejamento vigente', async () => {

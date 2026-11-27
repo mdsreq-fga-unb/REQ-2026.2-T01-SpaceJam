@@ -89,7 +89,7 @@ export function EstadoTreino({
   const status = consulta.estado === 'disponivel' ? consulta.status : null
 
   useEffect(() => {
-    if (tela !== 'treino' || status === 'concluido') tituloDaAcao.current?.focus()
+    tituloDaAcao.current?.focus()
   }, [tela, status])
 
   async function registrar(acao: () => Promise<void>, emCasoDeFalha: string, destino: typeof tela) {
@@ -108,6 +108,12 @@ export function EstadoTreino({
     }
   }
 
+  const voltarAoPlanejamento = onVoltarPlanejamento && (
+    <button className="treino-botao" type="button" onClick={onVoltarPlanejamento}>
+      Voltar ao planejamento
+    </button>
+  )
+
   if (consulta.estado === 'carregando') {
     return <p className="treino-cartao" role="status">Carregando status do treino…</p>
   }
@@ -119,6 +125,7 @@ export function EstadoTreino({
         {consulta.tentarNovamente && (
           <button className="treino-botao" type="button" onClick={consulta.tentarNovamente}>Tentar novamente</button>
         )}
+        {voltarAoPlanejamento}
       </div>
     )
   }
@@ -173,9 +180,12 @@ export function EstadoTreino({
           <h2>{treinador ? `Agora é com ${treinador}` : 'Aguarde a avaliação'}</h2>
           <p>Seu treino aguarda a avaliação do treinador. O status mudará para Concluído quando ele registrar a conclusão.</p>
         </div>
-        <button className="treino-botao treino-botao--voltar" type="button" onClick={() => setTela('treino')}>
-          Voltar ao treino
-        </button>
+        <div className="treino-acoes">
+          <button className="treino-botao treino-botao--voltar" type="button" onClick={() => setTela('treino')}>
+            Voltar ao treino
+          </button>
+          {voltarAoPlanejamento}
+        </div>
       </section>
     )
   }
@@ -192,16 +202,14 @@ export function EstadoTreino({
           <h2>{aluno ? 'Registro somente para consulta' : 'Histórico preservado'}</h2>
           <p>{aluno ? mensagemSomenteLeitura : 'Os registros da execução continuam disponíveis para consulta.'}</p>
         </section>
-        {(onVerHistorico || (!aluno && onVoltarPlanejamento)) && (
+        {(onVerHistorico || voltarAoPlanejamento) && (
           <div className="treino-acoes">
             {onVerHistorico && (
               <button className="treino-botao treino-botao--principal" type="button" onClick={onVerHistorico}>
                 {aluno ? 'Ver histórico' : 'Consultar histórico'}
               </button>
             )}
-            {!aluno && onVoltarPlanejamento && (
-              <button className="treino-botao" type="button" onClick={onVoltarPlanejamento}>Voltar ao planejamento</button>
-            )}
+            {voltarAoPlanejamento}
           </div>
         )}
       </section>
@@ -230,14 +238,18 @@ export function EstadoTreino({
 
   return (
     <section className="treino-tela" aria-busy={salvando}>
-      <TituloTreino
-        titulo={aluno ? 'Seu treino' : [tituloDoTreino, contexto?.alunoNome].filter(Boolean).join(' · ')}
-        detalhe={aluno ? contexto?.data : (
-          <span role="status">
-            <span>{rotulos[estado]}</span>
-            {estado === 'feito' && ' · aguardando sua avaliação'}
-          </span>
-        )} />
+      <header className="treino-avaliacao-cabecalho">
+        <TituloTreino
+          titulo={aluno ? 'Seu treino' : [tituloDoTreino, contexto?.alunoNome].filter(Boolean).join(' · ')}
+          detalhe={aluno ? contexto?.data : undefined} tituloRef={tituloDaAcao} />
+        {!aluno && (
+          <div className="treino-estado-treinador" role="status">
+            {selo}
+            {estado === 'feito' && <span>Aguardando sua avaliação</span>}
+            {estado === 'em-andamento' && <span>O aluno ainda não marcou o treino como feito.</span>}
+          </div>
+        )}
+      </header>
       {alerta}
       {aluno && contexto && <CartaoAluno contexto={contexto} status={estado} />}
       {aluno ? (
@@ -252,6 +264,7 @@ export function EstadoTreino({
             ) : null}
             {children}
             {acaoAluno}
+            {voltarAoPlanejamento}
           </div>
           {lateral}
         </div>
@@ -273,9 +286,7 @@ export function EstadoTreino({
                   Devolver para correção
                 </button>
               )}
-              {onVoltarPlanejamento && (
-                <button className="treino-botao" type="button" onClick={onVoltarPlanejamento}>Voltar ao planejamento</button>
-              )}
+              {voltarAoPlanejamento}
             </div>
           )}
         </>

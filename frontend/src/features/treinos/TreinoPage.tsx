@@ -129,9 +129,10 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
     onDesfazerFeito={aluno ? () => enviarStatus('feito', 'EM_ANDAMENTO') : undefined}
     onDevolver={!aluno ? () => enviarStatus('concluir', 'CORRIGIR_REFAZER') : undefined}
     onConcluir={!aluno ? () => enviarStatus('concluir', 'CONCLUIDO') : undefined}
-    onVoltarPlanejamento={!aluno && consulta.estado === 'disponivel'
-      ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
-      : undefined}
+    onVoltarPlanejamento={aluno ? () => navegar('/treinos')
+      : consulta.estado === 'disponivel'
+        ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
+        : undefined}
     onSalvarFeedback={aluno ? salvarFeedback : undefined}
   />
 }

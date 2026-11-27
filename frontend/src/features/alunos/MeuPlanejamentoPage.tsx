@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import { LayoutAluno } from './LayoutAluno'
@@ -36,10 +36,13 @@ function StatusDoTreino({ treino }: { treino: TreinoPrescrito }) {
 }
 
 function ListaDeTreinos({ planejamento }: { planejamento: PlanejamentoDoAluno | null }) {
+  const titulo = useRef<HTMLHeadingElement>(null)
+  useEffect(() => { titulo.current?.focus() }, [])
+
   return (
     <>
       <header className="conta-aluno__titulo meu-planejamento__titulo">
-        <h1>Meu planejamento</h1>
+        <h1 ref={titulo} tabIndex={-1}>Meu planejamento</h1>
       </header>
       {planejamento ? (
         <section aria-labelledby="planejamento-vigente">
@@ -110,19 +113,27 @@ function CartaoDeExercicio({ exercicio }: { exercicio: ExercicioPrescrito }) {
 }
 
 function DetalheDoTreino({ treino }: { treino?: TreinoPrescrito }) {
+  const titulo = useRef<HTMLHeadingElement>(null)
+  useEffect(() => { titulo.current?.focus() }, [treino?.id])
+
   return (
     <>
       <Link className="meu-planejamento__voltar" to="/treinos">Voltar aos treinos</Link>
       <header className="conta-aluno__titulo meu-planejamento__titulo meu-planejamento__titulo--treino">
-        <h1>{treino?.nome ?? 'Treino indisponível'}</h1>
-        {treino && <StatusDoTreino treino={treino} />}
+        <div className="meu-planejamento__identificacao">
+          <h1 ref={titulo} tabIndex={-1}>{treino?.nome ?? 'Treino indisponível'}</h1>
+          {treino && <StatusDoTreino treino={treino} />}
+        </div>
+        {treino && (
+          <Link className="meu-planejamento__executar" to={'/treinos/' + treino.id}>
+            Abrir execução do treino
+            <img src="/treinos/seta-avanco.svg" width="18" height="18" alt="" />
+          </Link>
+        )}
       </header>
       {treino ? (
         <section aria-labelledby="exercicios-prescritos">
           <h2 id="exercicios-prescritos" className="meu-planejamento__subtitulo">Exercícios prescritos</h2>
-          <Link className="meu-planejamento__voltar meu-planejamento__executar" to={'/treinos/' + treino.id}>
-            Abrir execução do treino
-          </Link>
           {treino.exercicios.length === 0 ? (
             <p className="conta-aluno__cartao meu-planejamento__estado" role="status">Este treino ainda não tem exercícios.</p>
           ) : (
