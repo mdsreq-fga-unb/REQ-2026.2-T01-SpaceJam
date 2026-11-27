@@ -71,6 +71,12 @@
 .cartaoInfo .vazio { color: var(--sj52-secundario); }
 
 .secao { display: grid; gap: 14px; margin-top: 8px; }
+.acoesLista {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .cabecalhoSecao {
   display: flex;
   flex-wrap: wrap;

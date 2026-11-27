@@ -37,10 +37,12 @@ export function TreinoLayout({ usuario, links, secaoAtiva = 'Treinos', children 
       </header>
       <nav className="treino-navegacao" aria-label={treinador ? 'Seções do treinador' : 'Seções do aluno'}>
         {secoes.map(secao => {
-          if (secao === secaoAtiva) return <span key={secao} aria-current="page">{secao}</span>
           const destino = links?.[secao]
-          return destino
-            ? <a key={secao} href={destino}>{secao}</a>
+          if (destino) return (
+            <a key={secao} href={destino} aria-current={secao === secaoAtiva ? 'location' : undefined}>{secao}</a>
+          )
+          return secao === secaoAtiva
+            ? <span key={secao} aria-current="page">{secao}</span>
             : <span key={secao} aria-disabled="true">{secao}</span>
         })}
       </nav>

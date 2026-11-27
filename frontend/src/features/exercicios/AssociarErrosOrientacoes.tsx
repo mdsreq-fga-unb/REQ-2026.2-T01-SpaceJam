@@ -7,14 +7,14 @@ interface AssociarErrosOrientacoesProps {
   pares: readonly ErroOrientacao[]
   associados?: readonly ErroOrientacao[]
   voltar: string
-  onAssociar: (ids: number[]) => Promise<void>
+  onAssociar: (ids: number[]) => Promise<{ criados: number; ignorados: number }>
 }
 
 export function AssociarErrosOrientacoes({ pares, associados = [], voltar, onAssociar }: AssociarErrosOrientacoesProps) {
   const [selecao, setSelecao] = useState<number[]>([])
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState('')
-  const [totalAssociado, setTotalAssociado] = useState(0)
+  const [mensagem, definirMensagem] = useState('')
   const grupoId = useId()
   const confirmacao = useRef<HTMLParagraphElement>(null)
   const envio = useRef(false)
@@ -25,13 +25,13 @@ export function AssociarErrosOrientacoes({ pares, associados = [], voltar, onAss
     .map(par => par.id)
 
   useEffect(() => {
-    if (totalAssociado && document.activeElement === document.body) {
+    if (mensagem && document.activeElement === document.body) {
       confirmacao.current?.focus()
     }
-  }, [totalAssociado])
+  }, [mensagem])
 
   function alternar(id: number) {
-    setTotalAssociado(0)
+    definirMensagem('')
     setErro('')
     setSelecao(atual => atual.includes(id) ? atual.filter(item => item !== id) : [...atual, id])
   }
@@ -40,13 +40,15 @@ export function AssociarErrosOrientacoes({ pares, associados = [], voltar, onAss
     evento.preventDefault()
     if (!selecionados.length || envio.current) return
     envio.current = true
-    setTotalAssociado(0)
+    definirMensagem('')
     setSalvando(true)
     setErro('')
     try {
-      await onAssociar(selecionados)
+      const { criados, ignorados } = await onAssociar(selecionados)
       setSelecao([])
-      setTotalAssociado(selecionados.length)
+      const copias = criados === 1 ? '1 par associado.' : criados + ' pares associados.'
+      const repetidos = ignorados === 1 ? '1 par já estava no exercício.' : ignorados + ' pares já estavam no exercício.'
+      definirMensagem([criados ? copias : '', ignorados ? repetidos : ''].filter(Boolean).join(' '))
     } catch {
       setErro('Não foi possível associar os pares selecionados. Tente novamente.')
     } finally {
@@ -59,13 +61,14 @@ export function AssociarErrosOrientacoes({ pares, associados = [], voltar, onAss
     <section className={estilos.pagina}>
       <header className={estilos.cabecalhoFormulario}>
         <h1>Associar erros e orientações</h1>
-        <p>Escolha os pares que se aplicam ao exercício.</p>
+        <p>Escolha pares de outros exercícios. Cada par será copiado para este exercício.</p>
       </header>
       <form onSubmit={associar}>
         <div className={estilos.associacao}>
           <fieldset className={estilos.selecaoPares} disabled={salvando} aria-busy={salvando}>
             <legend>Orientações disponíveis</legend>
             {disponiveis.length === 0 && <p className={estilos.estadoAssociacao}>Nenhuma orientação disponível para associar.</p>}
+            {disponiveis.length > 50 && <p>Selecione até 50 pares por vez.</p>}
             {disponiveis.map(par => {
               const orientacao = par.orientacaoCorretiva.trim()
               const avisoId = grupoId + '-orientacao-' + par.id
@@ -73,7 +76,8 @@ export function AssociarErrosOrientacoes({ pares, associados = [], voltar, onAss
                 <label key={par.id} className={estilos.parAssociavel}>
                   <input type="checkbox" checked={selecionados.includes(par.id)} aria-labelledby={avisoId + '-texto'}
                     aria-describedby={orientacao ? undefined : avisoId}
-                    disabled={!orientacao} onChange={() => alternar(par.id)} />
+                    disabled={!orientacao || (!selecionados.includes(par.id) && selecionados.length >= 50)}
+                    onChange={() => alternar(par.id)} />
                   <span id={avisoId + '-texto'}>
                     <span className={estilos.marcaAssociacao} aria-hidden="true">✓ </span>{par.erro}{orientacao && ' → ' + orientacao}
                   </span>
@@ -94,8 +98,8 @@ export function AssociarErrosOrientacoes({ pares, associados = [], voltar, onAss
           </section>
           <div className={estilos.acoesAssociacao}>
             {erro && <p className={estilos.erro} role="alert">{erro}</p>}
-            <p className={totalAssociado ? estilos.sucesso : 'sr-only'} role="status" ref={confirmacao} tabIndex={-1}>
-              {totalAssociado > 0 && (totalAssociado === 1 ? '1 par associado.' : totalAssociado + ' pares associados.')}
+            <p className={mensagem ? estilos.sucesso : 'sr-only'} role="status" ref={confirmacao} tabIndex={-1}>
+              {mensagem}
             </p>
             <button type="submit" className={estilos.confirmarAssociacao} disabled={!selecionados.length && !salvando} aria-disabled={salvando}>
               {salvando ? 'Associando...' : 'Associar seleção'}

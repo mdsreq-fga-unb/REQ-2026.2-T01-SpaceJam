@@ -12,7 +12,7 @@ const pares = [
 describe('Associar erros e orientações — US33', () => {
   it('só envia após selecionar ao menos um par e permite associar mais de um de uma vez', async () => {
     const usuario = userEvent.setup()
-    const salvar = vi.fn().mockResolvedValue(undefined)
+    const salvar = vi.fn().mockResolvedValue({ criados: 2, ignorados: 0 })
     render(<AssociarErrosOrientacoes pares={pares} voltar="/exercicios/1/erros-orientacoes"
       onAssociar={salvar} />, { wrapper: MemoryRouter })
 

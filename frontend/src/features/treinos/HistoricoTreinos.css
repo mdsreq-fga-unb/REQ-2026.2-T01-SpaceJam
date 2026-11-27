@@ -57,6 +57,15 @@
 .historico-anotacoes p { white-space: pre-wrap; }
 .historico-voltar { width: 100%; text-decoration: none; }
 
+.historico-paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.historico-paginacao .treino-botao { width: auto; text-decoration: none; }
+
 @media (min-width: 900px) {
   .historico-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
   .historico-voltar { width: calc((100% - 24px) / 2); }

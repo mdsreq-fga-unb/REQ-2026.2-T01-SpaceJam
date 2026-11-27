@@ -23,6 +23,20 @@ class ErroComumExercicioSerializer(serializers.ModelSerializer):
             "orientacao_corretiva": {"max_length": LIMITE_TEXTO_ERRO_ORIENTACAO},
         }
 
+class AssociarErrosComunsSerializer(serializers.Serializer):
+    """US33 — Ids dos pares (de outros exercícios) a associar ao exercício."""
+
+    ids = serializers.ListField(
+        child=serializers.IntegerField(min_value=1),
+        allow_empty=False,
+        max_length=50,
+        error_messages={
+            "required": "Selecione ao menos um par.",
+            "empty": "Selecione ao menos um par.",
+            "not_a_list": "Informe a lista de pares.",
+            "max_length": "Selecione no máximo 50 pares por vez.",
+        },
+    )
 
 class ExercicioSerializer(serializers.ModelSerializer):
     fundamento_nome = serializers.CharField(

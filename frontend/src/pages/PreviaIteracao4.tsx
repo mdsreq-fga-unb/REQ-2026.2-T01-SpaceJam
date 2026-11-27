@@ -46,7 +46,10 @@ function PreviaAssociacao() {
     <LayoutTreinador nome={treinador.first_name} secao="Biblioteca">
       <p>Prévia local · dados fictícios</p>
       <AssociarErrosOrientacoes pares={pares} associados={pares.filter(par => associados.includes(par.id))} voltar={base}
-        onAssociar={async ids => setAssociados(atuais => [...atuais, ...ids])} />
+        onAssociar={async ids => {
+          setAssociados(atuais => [...atuais, ...ids])
+          return { criados: ids.length, ignorados: 0 }
+        }} />
     </LayoutTreinador>
   )
 }

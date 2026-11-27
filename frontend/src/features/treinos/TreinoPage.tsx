@@ -32,7 +32,8 @@ interface DetalheApi {
   }[]
 }
 
-const navegacaoTreino = { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios' }
+const navegacaoTreino = { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios', Treinos: '/treinador/planejamentos' }
+const navegacaoAluno = { Conta: '/', Treinos: '/treinos', Histórico: '/historico' }
 const dataCurta = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'UTC' })
 
 function dadosDoTreino(detalhe: DetalheApi): ConsultaTreino {
@@ -125,14 +126,15 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
   }
 
   const aluno = usuario.papel === 'ALUNO'
-  return <DetalheTreino usuario={usuario} consulta={consulta} navegacao={navegacaoTreino}
+  return <DetalheTreino usuario={usuario} consulta={consulta} navegacao={aluno ? navegacaoAluno : navegacaoTreino}
     onMarcarFeito={aluno ? () => enviarStatus('feito', 'FEITO') : undefined}
     onDesfazerFeito={aluno ? () => enviarStatus('feito', 'EM_ANDAMENTO') : undefined}
     onDevolver={!aluno ? () => enviarStatus('concluir', 'CORRIGIR_REFAZER') : undefined}
     onConcluir={!aluno ? () => enviarStatus('concluir', 'CONCLUIDO') : undefined}
-    onVoltarPlanejamento={!aluno && consulta.estado === 'disponivel'
-      ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
-      : undefined}
+    onVoltarPlanejamento={aluno ? () => navegar('/treinos')
+      : consulta.estado === 'disponivel'
+        ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
+        : undefined}
     onSalvarFeedback={aluno ? salvarFeedback : undefined}
   />
 }
@@ -144,7 +146,7 @@ export function TreinoPage() {
 
   const id = Number(treinoId)
   if (!treinoId || !/^\d+$/.test(treinoId) || !Number.isSafeInteger(id) || id < 1) {
-    return <DetalheTreino usuario={usuario} navegacao={navegacaoTreino}
+    return <DetalheTreino usuario={usuario} navegacao={usuario.papel === 'ALUNO' ? navegacaoAluno : navegacaoTreino}
       consulta={{ estado: 'erro', mensagem: 'Treino não encontrado.' }} />
   }
   return <TelaTreino key={usuario.id + ':' + id} usuario={usuario} id={id} />

@@ -7,6 +7,7 @@ import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
 import { CadastroPage } from './pages/CadastroPage'
 import { EditarDadosAlunoPage } from './features/alunos/EditarDadosAlunoPage'
+import { MeuPlanejamentoPage } from './features/alunos/MeuPlanejamentoPage'
 import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
@@ -19,11 +20,14 @@ import VideoDemonstracaoExercicio from './features/exercicios/VideoDemonstracaoE
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
+import { ConsultarExercicioAlunoPage } from './features/alunos/ConsultarExercicioAlunoPage'
 import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDetalhesPlanejamento'
 import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
 import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
 import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
 import { TreinoPage } from './features/treinos/TreinoPage'
+import { HistoricoTreinosPage } from './features/treinos/HistoricoTreinosPage'
+import { AssociarErrosOrientacoesPage } from './features/exercicios/AssociarErrosOrientacoesPage'
 
 const PreviaIteracao4 = import.meta.env.DEV ? lazy(() => import('./pages/PreviaIteracao4')) : null
 
@@ -101,6 +105,31 @@ export default function App() {
               </RotaProtegida>
             }
           />
+          {/* US60 — planejamento vigente do aluno */}
+          <Route
+            path="/treinos"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeuPlanejamentoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinos/planejamento/:treinoId"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeuPlanejamentoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/aluno/exercicios/:exercicioId"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <ConsultarExercicioAlunoPage />
+              </RotaProtegida>
+            }
+          />
           <Route
             path="/conta/senha"
             element={
@@ -143,6 +172,15 @@ export default function App() {
               </RotaProtegida>
             }
           />
+          <Route path="/historico/:treinoId?" element={
+            <RotaProtegida papel="ALUNO"><HistoricoTreinosPage /></RotaProtegida>
+          } />
+          <Route path="/treinador/alunos/:alunoId/historico/:treinoId?" element={
+            <RotaProtegida papel="TREINADOR"><HistoricoTreinosPage /></RotaProtegida>
+          } />
+          <Route path="/exercicios/:exercicioId/erros-orientacoes/associar" element={
+            <RotaProtegida papel="TREINADOR"><AssociarErrosOrientacoesPage /></RotaProtegida>
+          } />
           {/* US37 — erros comuns e orientações corretivas do exercício */}
           <Route
             path="/exercicios/:exercicioId/erros-orientacoes"

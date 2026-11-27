@@ -1,7 +1,12 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from .views import ErroComumExercicioViewSet, ExercicioViewSet
+from .views import (
+    AssociarErrosComunsView,
+    ErroComumExercicioViewSet,
+    ErrosComunsCandidatosView,
+    ExercicioViewSet,
+)
 
 router = DefaultRouter()
 router.register("exercicios", ExercicioViewSet, basename="exercicio")
@@ -24,4 +29,15 @@ urlpatterns = [
         name="exercicio-erro-comum-detail",
     ),
     *router.urls,
+    # US33 — Associar pares de outros exercícios.
+    path(
+        "exercicios/<int:exercicio_pk>/erros-comuns/candidatos/",
+        ErrosComunsCandidatosView.as_view(),
+        name="exercicio-erro-comum-candidatos",
+    ),
+    path(
+        "exercicios/<int:exercicio_pk>/erros-comuns/associar/",
+        AssociarErrosComunsView.as_view(),
+        name="exercicio-erro-comum-associar",
+    ),
 ]

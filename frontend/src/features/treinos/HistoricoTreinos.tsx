@@ -37,11 +37,12 @@ function formatarData(data: string | null) {
   return Number.isFinite(dia) ? dataCurta.format(dia) : null
 }
 
-export function HistoricoTreinos({ alunoNome, consulta, rotaTreino, voltar }: {
+export function HistoricoTreinos({ alunoNome, consulta, rotaTreino, voltar, paginacao }: {
   alunoNome?: string
   consulta: ConsultaHistorico
   rotaTreino: (id: number) => string
   voltar?: { rota: string; texto: string }
+  paginacao?: { pagina: number; anterior?: string; proxima?: string }
 }) {
   const treinador = alunoNome !== undefined
   const titulo = useRef<HTMLHeadingElement>(null)
@@ -83,12 +84,23 @@ export function HistoricoTreinos({ alunoNome, consulta, rotaTreino, voltar }: {
           </aside>}
         </div>
       ) : <p role="status">Nenhum treino realizado no histórico.</p>)}
+      {paginacao && (
+        <nav className="historico-paginacao" aria-label="Páginas do histórico">
+          {paginacao.anterior && <Link className="treino-botao" to={paginacao.anterior}>Página anterior</Link>}
+          <span>Página {paginacao.pagina}</span>
+          {paginacao.proxima && <Link className="treino-botao" to={paginacao.proxima}>Próxima página</Link>}
+        </nav>
+      )}
       {voltar && <Link className="treino-botao historico-voltar" to={voltar.rota}>{voltar.texto}</Link>}
     </section>
   )
 }
 
-export function RegistroTreinoHistorico({ treino, voltar }: { treino: TreinoHistorico; voltar: string }) {
+export function RegistroTreinoHistorico({ treino, voltar, mostrarVideos = false }: {
+  treino: TreinoHistorico
+  voltar: string
+  mostrarVideos?: boolean
+}) {
   const titulo = useRef<HTMLHeadingElement>(null)
 
   useEffect(() => { titulo.current?.focus() }, [treino.id])
@@ -118,7 +130,8 @@ export function RegistroTreinoHistorico({ treino, voltar }: { treino: TreinoHist
                   </dd>
                 </> : null}
                 <dt>Dificuldade</dt>
-                <dd>{exercicio.dificuldade == null ? 'Não registrada' : exercicio.dificuldade + ' de 5'}</dd>
+                <dd>{exercicio.dificuldade === undefined ? 'Não disponível nesta consulta.'
+                  : exercicio.dificuldade === null ? 'Não registrada' : exercicio.dificuldade + ' de 5'}</dd>
                 <dt>Feedbacks</dt>
                 <dd>{exercicio.feedbacks?.length ? (
                   <ul className="historico-anotacoes">
@@ -129,11 +142,11 @@ export function RegistroTreinoHistorico({ treino, voltar }: { treino: TreinoHist
                     ))}
                   </ul>
                 ) : 'Nenhum feedback registrado.'}</dd>
-                {exercicio.videos?.length ? <>
-                  <dt>Vídeos</dt>
-                  <dd>{exercicio.videos.map(video => (
+                {(mostrarVideos || exercicio.videos?.length) ? <>
+                  <dt>Vídeos de execução</dt>
+                  <dd>{exercicio.videos?.length ? exercicio.videos.map(video => (
                     <p key={video.url}><a className="treino-atalho" href={video.url}>{video.titulo}</a></p>
-                  ))}</dd>
+                  )) : 'Não disponíveis nesta consulta.'}</dd>
                 </> : null}
               </dl>
             </li>

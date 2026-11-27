@@ -86,26 +86,13 @@ A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a e
 
 ## Iteração 4 · biblioteca e histórico
 
-A prévia de desenvolvimento está em `/previa/iteracao-4`, com dados fictícios.
-Ela mostra a seleção de pares (US33), preserva as associações anteriores e
-permite revisar a lista e o detalhe do histórico pelo aluno (US58) e pelo
-treinador (US28), incluindo lista vazia, falha e nova tentativa. O build de
-produção exclui a rota e os dados da prévia. A busca da US41 roda na biblioteca
-normal, em `/exercicios`.
-
-| US | Frontend preparado | Para integrar e validar |
+| US | Acesso na aplicação | Integração |
 | --- | --- | --- |
-| US33 | Seleção de vários pares, bloqueio dos itens sem orientação corretiva e lista das associações já feitas. A execução atual já renderiza os pares copiados da prescrição por `GET /api/treinos/:treinoId/`. | Thiago precisa confirmar de onde vêm os pares disponíveis e como associá-los a um exercício. A US37 já cadastra e edita pares de um exercício. Confirmar se ela cobre o fluxo final ou se a seleção terá operação própria. |
-| US41 | Busca parcial por nome, sem distinção de caixa, com estado sem resultados e ação para limpar. Cadastro e edição atualizam a lista pela resposta da API. | O backend atual da biblioteca permite cadastro, consulta e edição. O CA04 também pede que a exclusão se reflita na busca em até 1 segundo. Falta suporte à exclusão do exercício e medir o fluxo completo no ambiente de entrega. |
-| US28 | Lista do aluno acompanhado e detalhe com dados da prescrição, dificuldade, vídeos e feedbacks quando disponíveis. | Thiago precisa confirmar a listagem de execuções passadas validadas e a autorização por carteira. O detalhe pode aproveitar dados preservados da prescrição e o feedback do aluno já retornado no treino. Dificuldade depende do Guilherme, e vídeos e feedback do treinador dependem das histórias correspondentes. |
-| US58 | Lista do próprio histórico e detalhe somente para consulta, com indicação de feedback editado. | Thiago precisa confirmar a listagem do aluno autenticado, os status que entram no histórico e o contrato de detalhe. Validar isolamento entre alunos e medir o carregamento dos dois históricos em até 5 segundos. |
+| US33 | Biblioteca → Consultar exercício → Erros e orientações → Associar erros e orientações | A API lista pares disponíveis em `GET /api/exercicios/:exercicioId/erros-comuns/candidatos/` e copia os selecionados pelo `POST /api/exercicios/:exercicioId/erros-comuns/associar/`. Cada cópia pertence ao exercício de destino. A prescrição preserva os pares conforme a RN23. |
+| US41 | Campo “Buscar por nome” na biblioteca, em `/exercicios` | A busca aceita parte do nome e ignora maiúsculas e minúsculas. Cadastro e edição atualizam a lista pela resposta da API. |
+| US28 | Perfil do aluno acompanhado → Ver histórico de treinos | `GET /api/treinos/alunos/:alunoId/historico/` traz os treinos concluídos do aluno da carteira, com paginação. |
+| US58 | Menu Histórico na conta do aluno | `GET /api/treinos/meu-historico/` traz os treinos do próprio aluno em todos os estados, com paginação. |
 
-Os critérios são os da documentação do projeto. Os tipos das telas representam
-os dados necessários à interface e serão preenchidos por um adaptador quando
-os contratos da API forem confirmados.
+Os detalhes dos dois históricos usam `GET /api/treinos/:treinoId/`, com os dados preservados da prescrição e os feedbacks do aluno. Dificuldade e feedback do treinador ainda dependem das respectivas histórias. O detalhe da US28 também depende da integração de vídeos de execução. Na US41, falta validar o efeito da exclusão na busca quando essa operação estiver disponível.
 
-Na verificação local em Chrome, a busca refletiu o cadastro e a edição pela
-API, e o aluno viu uma orientação corretiva preservada na prescrição. A
-associação de novos pares e os fluxos do histórico foram verificados com
-dados fictícios em desktop e celular. A autoavaliação da prontidão ainda
-depende das decisões de contrato e das validações indicadas na tabela.
+A rota `/previa/iteracao-4` usa dados fictícios para revisar os estados da interface em desenvolvimento. O build de produção exclui essa rota. Os testes das rotas integradas ficam em `tests/IntegracaoBibliotecaHistoricos.test.tsx`.
