@@ -63,16 +63,21 @@ export function ExcluirDadosAluno({ usuario, links, onManter, onSolicitar, onSol
   )
 }
 
-export function SolicitacaoExclusaoRegistrada({ onVoltarLogin }: { onVoltarLogin: () => void }) {
+export function SolicitacaoExclusaoRegistrada({ onVoltarLogin, simulacao = false }: {
+  onVoltarLogin: () => void
+  simulacao?: boolean
+}) {
   return (
     <RegistrosLayout titulo="Solicitação registrada" detalhe="A exclusão dos seus dados está em processamento." estreito>
       <div className="registros-pilha">
         <section className="conta-aluno__cartao registros-cartao">
-          <h2>Sua sessão foi encerrada</h2>
-          <p>O acesso aos dados deve permanecer bloqueado durante o processamento. A conclusão depende do serviço de exclusão.</p>
+          <h2>{simulacao ? 'Esta é uma simulação.' : 'Sua sessão foi encerrada'}</h2>
+          <p>{simulacao
+            ? 'Nenhuma conta, mídia ou sessão real foi alterada.'
+            : 'O acesso aos dados deve permanecer bloqueado durante o processamento. A conclusão depende do serviço de exclusão.'}</p>
         </section>
         <button className="registros-botao registros-botao--principal" type="button" onClick={onVoltarLogin}>
-          Voltar ao login
+          {simulacao ? 'Voltar à prévia' : 'Voltar ao login'}
         </button>
       </div>
     </RegistrosLayout>
