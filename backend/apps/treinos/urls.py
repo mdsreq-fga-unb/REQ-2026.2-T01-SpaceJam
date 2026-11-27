@@ -33,6 +33,8 @@ urlpatterns = [
         views.HistoricoTreinosAlunoView.as_view(),
         name="aluno-historico-treinos",
     ),
+    # US58 — Consultar o próprio histórico de treinos
+    path("meu-historico/", views.MeuHistoricoTreinosView.as_view(), name="meu-historico-treinos"),
     # Consultar e registrar a execução de um treino prescrito
     path("<int:treino_id>/", TreinoDetalheView.as_view(), name="treino-detalhe"),
     path("<int:treino_id>/status/", TreinoStatusView.as_view(), name="treino-status"),

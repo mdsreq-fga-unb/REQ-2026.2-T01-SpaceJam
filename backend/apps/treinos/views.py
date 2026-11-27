@@ -116,6 +116,7 @@ def consultar_meu_planejamento(request):
     })
 
 
+
 class HistoricoTreinosPaginacao(PageNumberPagination):
     """A listagem do histórico é paginada para manter o carregamento dentro de 5 s."""
 
@@ -124,9 +125,20 @@ class HistoricoTreinosPaginacao(PageNumberPagination):
     max_page_size = 100
 
 
+def _treinos_do_historico(aluno, estados=None):
+    """Treinos do aluno em qualquer planejamento (RN13), do mais recente para o mais antigo."""
+    treinos = Treino.objects.filter(planejamento__aluno=aluno)
+    if estados is not None:
+        treinos = treinos.filter(status__in=estados)
+    return (
+        treinos.select_related("planejamento")
+        .annotate(total_exercicios=Count("exercicios"))
+        .order_by("-criado_em", "-id")
+    )
+
+
 class HistoricoTreinosAlunoView(ListAPIView):
-    """Treinador consulta o histórico de treinos de um aluno da sua carteira.
-    """
+    """US28 — Treinador consulta o histórico de treinos de um aluno da sua carteira."""
 
     permission_classes = [*ROTA_PROTEGIDA, IsTreinador]
     serializer_class = TreinoStatusConsultaSerializer
@@ -144,17 +156,20 @@ class HistoricoTreinosAlunoView(ListAPIView):
         return self._aluno_consultado
 
     def get_queryset(self):
-        return (
-            Treino.objects.filter(
-                planejamento__aluno=self._aluno(), status=Treino.Status.CONCLUIDO
-            )
-            .select_related("planejamento")
-            .annotate(total_exercicios=Count("exercicios"))
-            .order_by("-criado_em", "-id")
-        )
+        return _treinos_do_historico(self._aluno(), [Treino.Status.CONCLUIDO])
 
     def list(self, request, *args, **kwargs):
         resposta = super().list(request, *args, **kwargs)
         aluno = self._aluno()
         resposta.data["aluno"] = {"id": aluno.pk, "nome": nome_do_aluno(aluno)}
         return resposta
+
+class MeuHistoricoTreinosView(ListAPIView):
+    """US58 — Aluno consulta o próprio histórico de treinos."""
+
+    permission_classes = [*ROTA_PROTEGIDA, IsAluno]
+    serializer_class = TreinoStatusConsultaSerializer
+    pagination_class = HistoricoTreinosPaginacao
+
+    def get_queryset(self):
+        return _treinos_do_historico(self.request.user)
