@@ -168,3 +168,45 @@ A função devolve dados puros, sem ids e serializáveis em JSON:
 ```
 
 Para copiar vários exercícios sem uma consulta por exercício, carregue-os com `prefetch_related("erros_orientacoes")`. O teste integrado do CA03 (`test_ca03_treino_prescrito_mantem_orientacoes`, em `apps/exercicios/tests.py`) está marcado como pulado até o RF2307 existir e já traz o roteiro a seguir.
+
+## API: Vídeo de execução do exercício (US42)
+
+O aluno envia um vídeo da execução de um exercício do treino para o treinador avaliar (RF3501). O código fica em `apps/videos/`, e toda chamada ao Supabase Storage passa por `apps/videos/storage.py`.
+
+### Por que o vídeo não passa pelo Django
+
+O arquivo vai do aparelho **direto** ao Supabase Storage, por um link de envio assinado. O Django confere quem pode enviar, escolhe o caminho do arquivo e, no fim, confere o que chegou. Assim a API só recebe JSON pequeno: um vídeo de dezenas de MB não ocupa o servidor durante o envio, não esbarra em limites de tamanho de requisição da hospedagem (4,5 MB na Vercel) e a barra de progresso (CA02) mede o envio real.
+
+O link de envio vale para um único caminho, escolhido pelo Django, não sobrescreve arquivos e vence em 2 horas.
+
+### Fluxo
+
+1. `POST /api/treinos/exercicios/<item_id>/video/upload-url/` (aluno dono do treino) com `{ "nomeArquivo", "tipo", "tamanhoBytes", "duracaoSegundos" }`. Responde `urlUpload`, `tipoConteudo`, `comprovante` e `substituiVideo`.
+2. O app envia o arquivo com `PUT` em `urlUpload` (`XMLHttpRequest` + `FormData`, com o tipo `tipoConteudo`).
+3. `POST /api/treinos/exercicios/<item_id>/video/` com `{ "comprovante" }`. Cria a ficha (`201`) ou substitui o vídeo anterior e apaga o antigo (`200`, CA05).
+4. `GET /api/treinos/exercicios/<item_id>/video/` (aluno dono ou treinador da carteira, CA04). Responde os dados do vídeo e `urlVisualizacao`, válida por 10 minutos. Se vencer, chame de novo.
+
+`<item_id>` é o `exercicios[].id` de `GET /api/treinos/<treino_id>/`, que também traz `exercicios[].videoExecucao`: `null` sem vídeo ("Enviar"), ou os dados do vídeo ("Substituir").
+
+### Limites (RN09, RNF06, RNF13)
+
+Formatos `.mp4`/`.mov`, até `VIDEO_MAX_SEGUNDOS` (60) e `VIDEO_MAX_BYTES` (50 MB no plano Free do Supabase, abaixo dos 100 MB da RN09). O tamanho é conferido em quatro pontos: no app, no passo 1, pelo próprio bucket durante o envio (testado: 51 MB recusado com `413`) e no passo 3, com o tamanho real do arquivo. A duração vem do app; o servidor não abre o vídeo no MVP.
+
+### Erros próprios (`{ "detail", "code" }`)
+
+| Status | `code` | Quando |
+| --- | --- | --- |
+| `400` | `COMPROVANTE_INVALIDO` | Comprovante alterado, de outro exercício ou aluno, ou com mais de 2 horas |
+| `400` | `ARQUIVO_NAO_ENCONTRADO` / `ARQUIVO_INVALIDO` | O arquivo não chegou, ou chegou fora do formato ou do tamanho (e é apagado) |
+| `404` | `VIDEO_NAO_ENCONTRADO` | Exercício sem vídeo |
+| `409` | `TREINO_CONCLUIDO` | Treino já concluído pelo treinador |
+| `503` | `ARMAZENAMENTO_INDISPONIVEL` | Storage fora do ar ou `.env` sem as variáveis `SUPABASE_*` |
+
+Campos inválidos no passo 1 seguem o formato do DRF (`{ "<campo>": ["mensagem"] }`). Acesso segue o padrão: `401` sem login, `403` para outro aluno, treinador de outra carteira ou termos pendentes.
+
+### Configuração e cuidados
+
+- Variáveis em `.env.example`: `SUPABASE_URL`, `SUPABASE_SECRET_KEY` (só no backend), `SUPABASE_BUCKET_VIDEOS`, `SUPABASE_PREFIXO` (a sua pasta no bucket compartilhado, como `dev-maria`), `VIDEO_MAX_BYTES` e `VIDEO_MAX_SEGUNDOS`.
+- O bucket é **privado** e sem policies, com o mesmo limite de tamanho de `VIDEO_MAX_BYTES` e os tipos `video/mp4, video/quicktime`.
+- Apagar a ficha do vídeo (edição ou exclusão do treino, exclusão da conta) apaga o arquivo do Storage (`apps/videos/signals.py`, RN05).
+- Um vídeo por exercício, sem histórico de tentativas. A RN10/US43 (bloquear a troca depois do feedback do treinador) entra quando esse feedback existir.
