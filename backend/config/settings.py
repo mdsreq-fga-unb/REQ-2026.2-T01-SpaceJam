@@ -4,6 +4,7 @@ variáveis de ambiente, definidas no arquivo .env da raiz do repositório.
 Nunca coloque senha real direto neste arquivo.
 """
 import os
+import re
 from datetime import timedelta
 from pathlib import Path
 
@@ -161,3 +162,17 @@ EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", False)
 EMAIL_TIMEOUT = int(os.environ.get("EMAIL_TIMEOUT", "10"))
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "noreply@spacejam.local")
+
+# US42 — Vídeos de execução (Supabase Storage, RNF12/RNF13, referente aos alunos)
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "").strip()
+SUPABASE_SECRET_KEY = os.environ.get("SUPABASE_SECRET_KEY", "").strip()
+SUPABASE_BUCKET_VIDEOS = os.environ.get("SUPABASE_BUCKET_VIDEOS", "videos-execucao")
+# Pasta raiz de cada ambiente no bucket compartilhado (ex.: dev-maria, prod), para que
+# cada integrante identifique e limpe só os próprios arquivos de teste.
+SUPABASE_PREFIXO = os.environ.get("SUPABASE_PREFIXO", "dev").strip().lower()
+if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,39}", SUPABASE_PREFIXO):
+    raise RuntimeError(
+        "SUPABASE_PREFIXO deve ter só letras minúsculas, números e hífen (ex.: dev-maria)."
+    )
+VIDEO_MAX_BYTES = int(os.environ.get("VIDEO_MAX_BYTES", str(50 * 1024 * 1024)))
+VIDEO_MAX_SEGUNDOS = int(os.environ.get("VIDEO_MAX_SEGUNDOS", "60"))
