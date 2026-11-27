@@ -83,3 +83,29 @@ Os resultados registram o comportamento no ambiente de teste. A revisão indepen
 - **US49 e US50** — Na tela do exercício do treino, o aluno registra seu feedback com `POST` e edita o mesmo registro com `PATCH`, em `/api/treinos/exercicios/:itemId/feedback-aluno/`. O detalhe do treino já inclui o feedback salvo e sua marca de edição. Após a conclusão o formulário fica indisponível.
 
 A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a execução e o feedback usam os mesmos identificadores de treino e exercício. Os testes da rota e do formulário ficam em `tests/TreinoPage.test.tsx`.
+
+## Iteração 4 · biblioteca e histórico
+
+A prévia de desenvolvimento está em `/previa/iteracao-4`, com dados fictícios.
+Ela mostra a seleção de pares (US33), preserva as associações anteriores e
+permite revisar a lista e o detalhe do histórico pelo aluno (US58) e pelo
+treinador (US28), incluindo lista vazia, falha e nova tentativa. O build de
+produção exclui a rota e os dados da prévia. A busca da US41 roda na biblioteca
+normal, em `/exercicios`.
+
+| US | Frontend preparado | Para integrar e validar |
+| --- | --- | --- |
+| US33 | Seleção de vários pares, bloqueio dos itens sem orientação corretiva e lista das associações já feitas. A execução atual já renderiza os pares copiados da prescrição por `GET /api/treinos/:treinoId/`. | Thiago precisa confirmar de onde vêm os pares disponíveis e como associá-los a um exercício. A US37 já cadastra e edita pares de um exercício. Confirmar se ela cobre o fluxo final ou se a seleção terá operação própria. |
+| US41 | Busca parcial por nome, sem distinção de caixa, com estado sem resultados e ação para limpar. Cadastro e edição atualizam a lista pela resposta da API. | O backend atual da biblioteca permite cadastro, consulta e edição. O CA04 também pede que a exclusão se reflita na busca em até 1 segundo. Falta suporte à exclusão do exercício e medir o fluxo completo no ambiente de entrega. |
+| US28 | Lista do aluno acompanhado e detalhe com dados da prescrição, dificuldade, vídeos e feedbacks quando disponíveis. | Thiago precisa confirmar a listagem de execuções passadas validadas e a autorização por carteira. O detalhe pode aproveitar dados preservados da prescrição e o feedback do aluno já retornado no treino. Dificuldade depende do Guilherme, e vídeos e feedback do treinador dependem das histórias correspondentes. |
+| US58 | Lista do próprio histórico e detalhe somente para consulta, com indicação de feedback editado. | Thiago precisa confirmar a listagem do aluno autenticado, os status que entram no histórico e o contrato de detalhe. Validar isolamento entre alunos e medir o carregamento dos dois históricos em até 5 segundos. |
+
+Os critérios são os da documentação do projeto. Os tipos das telas representam
+os dados necessários à interface e serão preenchidos por um adaptador quando
+os contratos da API forem confirmados.
+
+Na verificação local em Chrome, a busca refletiu o cadastro e a edição pela
+API, e o aluno viu uma orientação corretiva preservada na prescrição. A
+associação de novos pares e os fluxos do histórico foram verificados com
+dados fictícios em desktop e celular. A autoavaliação da prontidão ainda
+depende das decisões de contrato e das validações indicadas na tabela.

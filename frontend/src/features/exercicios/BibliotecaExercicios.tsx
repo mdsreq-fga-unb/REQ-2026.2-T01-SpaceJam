@@ -22,6 +22,7 @@ export default function BibliotecaExercicios() {
   const navegar = useNavigate();
   const treinador = useContext(AuthContext)?.usuario;
   const resultados = useRef<HTMLElement>(null);
+  const campoBusca = useRef<HTMLInputElement>(null);
   const { exercicioId } = useParams();
   const [busca, setBusca] = useState('');
   const [formulario, setFormulario] = useState<'novo' | { exercicioId: string } | null>(null);
@@ -104,9 +105,12 @@ export default function BibliotecaExercicios() {
     }
   }
 
+  const termoDeBusca = busca.trim().toLocaleLowerCase('pt-BR');
   const exerciciosFiltrados = exercicios.filter((exercicio) =>
-    exercicio.nome.toLowerCase().includes(busca.toLowerCase())
+    exercicio.nome.toLocaleLowerCase('pt-BR').includes(termoDeBusca)
   );
+  const buscaSemResultado = !carregando && !erro && Boolean(termoDeBusca) && exerciciosFiltrados.length === 0;
+  const totalEncontrado = exerciciosFiltrados.length;
 
 
   function voltarBiblioteca() {
@@ -156,23 +160,38 @@ export default function BibliotecaExercicios() {
               onClick={() => { setErro(''); setFormulario('novo'); }}>
               Adicionar exercício
             </button>
-            <form className={styles.busca} onSubmit={(evento) => {
+            <form className={styles.busca} role="search" aria-label="Biblioteca de exercícios" onSubmit={(evento) => {
               evento.preventDefault();
               setBusca(busca.trim());
               resultados.current?.focus();
             }}>
               <label htmlFor="biblioteca-busca">Buscar por nome</label>
-              <input id="biblioteca-busca" type="search" placeholder="Nome do exercício" value={busca}
+              <input id="biblioteca-busca" ref={campoBusca} type="search" placeholder="Nome do exercício" value={busca}
                 onChange={(evento) => setBusca(evento.target.value)} aria-describedby="biblioteca-busca-ajuda" />
               <small id="biblioteca-busca-ajuda">A busca também aceita parte do nome.</small>
               <button type="submit" className={styles.buscar}>Buscar</button>
             </form>
             <section className={styles.resultados} ref={resultados} tabIndex={-1} aria-label="Resultados da busca">
-              {carregando && <p role="status">Carregando exercícios...</p>}
-              {!carregando && !erro && exerciciosFiltrados.length === 0 && (
-                <p role="status">{exercicios.length === 0 ? 'Nenhum exercício cadastrado.' : 'Nenhum exercício encontrado.'}</p>
+              <div role="status">
+                {carregando && <p>Carregando exercícios...</p>}
+                {buscaSemResultado && (
+                  <div className={styles.buscaVazia}>
+                    <h2>Nenhum exercício encontrado.</h2>
+                    <p>Tente outro nome ou consulte todos os exercícios da biblioteca.</p>
+                  </div>
+                )}
+                {!carregando && !erro && !termoDeBusca && totalEncontrado === 0 && <p>Nenhum exercício cadastrado.</p>}
+                {termoDeBusca && totalEncontrado > 0 && <span className="sr-only">
+                  {totalEncontrado === 1 ? '1 exercício encontrado.' : totalEncontrado + ' exercícios encontrados.'}
+                </span>}
+              </div>
+              {buscaSemResultado && (
+                <button type="button" className={styles.limparBusca} onClick={() => {
+                  setBusca('');
+                  campoBusca.current?.focus();
+                }}>Limpar busca</button>
               )}
-              <ul className={styles.lista}>
+              {totalEncontrado > 0 && <ul className={styles.lista}>
                 {exerciciosFiltrados.map((exercicio) => (
                   <li key={exercicio.id}>
                     <button type="button" className={styles.exercicio} aria-label={exercicio.nome}
@@ -187,7 +206,7 @@ export default function BibliotecaExercicios() {
                     </button>
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </section>
           </div>
         )}
