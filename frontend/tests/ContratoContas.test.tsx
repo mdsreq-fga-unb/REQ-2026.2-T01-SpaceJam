@@ -23,7 +23,7 @@ describe('Complementos do contrato de backend da iteracao 2', () => {
   it('US53 exibe treinador vinculado e historico de lesoes vazio sem inventar registros', () => {
     render(<MinhaContaAluno usuario={aluno} logout={vi.fn()}
       treinadorVinculado={{ id: 1, nome: 'Carlos Silva', codigo_convite: 'TRN-ABC123' }}
-      historicoLesoes={[]} />)
+      historicoLesoes={[]} />, { wrapper: MemoryRouter })
     expect(screen.getByText('Treinador vinculado:')).toBeTruthy()
     expect(screen.getByText('Nenhuma lesão registrada.')).toBeTruthy()
   })

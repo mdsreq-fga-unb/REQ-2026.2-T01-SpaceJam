@@ -74,3 +74,12 @@ Os resultados registram o comportamento no ambiente de teste. A revisão indepen
 - US52 carrega a carteira do treinador de `GET /api/alunos-acompanhados/`. A ação **Ver perfil** usa o identificador devolvido na lista para abrir o perfil real da US61.
 - US61 também funciona pela rota direta. A exibição de lesões registradas depende da persistência pela US11.
 - US11 permite ao treinador abrir **Registrar lesão** no perfil de um aluno acompanhado. O formulário envia a descrição de até 300 caracteres para `POST /api/contas/alunos/{aluno_id}/lesoes/` e mostra o registro salvo no histórico. A rota exige o backend da US11 com as migrações de contas aplicadas.
+
+## Status de treino e feedback na Iteração 3
+
+- **US23** — A rota autenticada `/treinos/:treinoId` carrega o detalhe e o status pela API. O treinador abre o treino pelo planejamento de um aluno acompanhado.
+- **US29** — O aluno pode marcar um treino como feito, inclusive depois de devolvido, e desfazer a marcação enquanto o treino aguarda avaliação.
+- **US15** — O treinador pode devolver o treino para correção ou confirmar a conclusão. A tela usa o estado retornado pelo servidor e atualiza a consulta ao receber HTTP 409.
+- **US49 e US50** — Na tela do exercício do treino, o aluno registra seu feedback com `POST` e edita o mesmo registro com `PATCH`, em `/api/treinos/exercicios/:itemId/feedback-aluno/`. O detalhe do treino já inclui o feedback salvo e sua marca de edição. Após a conclusão o formulário fica indisponível.
+
+A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a execução e o feedback usam os mesmos identificadores de treino e exercício. Os testes da rota e do formulário ficam em `tests/TreinoPage.test.tsx`.

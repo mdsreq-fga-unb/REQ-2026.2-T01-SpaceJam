@@ -97,11 +97,16 @@ export function TreinadorDetalhesPlanejamento() {
               <section className="detalhes-planejamento__treinos" aria-label="Treinos do planejamento">
                 {estado.dados.planejamento.treinos.map((treino) => (
                   <div className="detalhes-planejamento__coluna" key={treino.id}>
-                    <article className="detalhes-planejamento__cartao">
+                    <article className="detalhes-planejamento__cartao" data-status={treino.status}>
                       <strong>{treino.nome}</strong>
                       <span>
-                        {rotuloDoTreino(treino)} · {quantidadeDeExercicios(treino.total_exercicios)}
+                        <span className="detalhes-planejamento__status">{rotuloDoTreino(treino)}</span>
+                        {' · '}{quantidadeDeExercicios(treino.total_exercicios)}
                       </span>
+                      <Link className="detalhes-planejamento__link" to={'/treinos/' + treino.id}
+                        aria-label={'Consultar treino ' + treino.nome}>
+                        Consultar treino
+                      </Link>
                       {treino.exercicios?.length > 0 && (
                         <details className="detalhes-planejamento__exercicios">
                           <summary aria-label={`Ver exercícios de ${treino.nome}`}>Ver exercícios</summary>

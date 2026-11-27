@@ -6,6 +6,7 @@ import { InicioPage } from './pages/InicioPage'
 import { LoginPage } from './pages/LoginPage'
 import { CadastroPage } from './pages/CadastroPage'
 import { EditarDadosAlunoPage } from './features/alunos/EditarDadosAlunoPage'
+import { MeuPlanejamentoPage } from './features/alunos/MeuPlanejamentoPage'
 import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
@@ -14,6 +15,7 @@ import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivac
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
+import VideoDemonstracaoExercicio from './features/exercicios/VideoDemonstracaoExercicio'
 import ErrosOrientacoesExercicio from './features/exercicios/ErrosOrientacoesExercicio'
 import ErroOrientacaoPage from './features/exercicios/ErroOrientacaoPage'
 import RemoverErroOrientacaoPage from './features/exercicios/RemoverErroOrientacaoPage'
@@ -22,6 +24,7 @@ import { TreinadorDetalhesPlanejamento } from './features/treinador/TreinadorDet
 import { TreinadorPlanejamentosPage } from './features/treinador/TreinadorPlanejamentosPage'
 import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPlanejamento'
 import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
+import { TreinoPage } from './features/treinos/TreinoPage'
 
 export default function App() {
   return (
@@ -94,6 +97,23 @@ export default function App() {
             element={
               <RotaProtegida papel="ALUNO">
                 <EditarDadosAlunoPage />
+              </RotaProtegida>
+            }
+          />
+          {/* US60 — planejamento vigente do aluno */}
+          <Route
+            path="/treinos"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeuPlanejamentoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinos/planejamento/:treinoId"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeuPlanejamentoPage />
               </RotaProtegida>
             }
           />
@@ -180,6 +200,16 @@ export default function App() {
               </RotaProtegida>
             }
           />
+          {/* US35 — título e descrição do vídeo-base do exercício */}
+          <Route
+            path="/exercicios/:exercicioId/video-demonstracao"
+            element={
+              <RotaProtegida papel="TREINADOR">
+                <VideoDemonstracaoExercicio />
+              </RotaProtegida>
+            }
+          />
+          <Route path="/treinos/:treinoId" element={<RotaProtegida><TreinoPage /></RotaProtegida>} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

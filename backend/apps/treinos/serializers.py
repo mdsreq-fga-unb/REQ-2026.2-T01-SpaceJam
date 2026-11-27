@@ -144,6 +144,8 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
             "erros_comuns",
             "erros_orientacoes",
             "video_base",
+            "video_titulo",
+            "video_descricao",
             "series",
             "repeticoes",
             "duracao_segundos",
@@ -151,7 +153,8 @@ class TreinoExercicioSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             "id", "ordem", "nome", "objetivo", "fundamento",
-            "orientacoes", "erros_comuns", "erros_orientacoes", "video_base", "status",
+            "orientacoes", "erros_comuns", "erros_orientacoes", "video_base",
+            "video_titulo", "video_descricao", "status",
         ]
         validators = []
 

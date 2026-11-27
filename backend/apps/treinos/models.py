@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.db.models import Q
 
+from apps.exercicios.models import LIMITE_DESCRICAO_VIDEO_BASE, LIMITE_TITULO_VIDEO_BASE
+
 
 class Planejamento(models.Model):
     class Status(models.TextChoices):
@@ -50,6 +52,7 @@ class Treino(models.Model):
     class Status(models.TextChoices):
         EM_ANDAMENTO = "EM_ANDAMENTO", "Em andamento"
         FEITO = "FEITO", "Feito"
+        CORRIGIR_REFAZER = "CORRIGIR_REFAZER", "Corrigir/Refazer"
         CONCLUIDO = "CONCLUIDO", "Concluído"
 
     planejamento = models.ForeignKey(
@@ -58,14 +61,19 @@ class Treino(models.Model):
     # Obrigatório; "Treino A" é só o exemplo exibido na interface.
     nome = models.CharField(max_length=255)
     status = models.CharField(
-        max_length=15, choices=Status.choices, default=Status.EM_ANDAMENTO
+        max_length=20, choices=Status.choices, default=Status.EM_ANDAMENTO
     )
+    realizado_em = models.DateTimeField(null=True, blank=True)
     criado_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["criado_em", "id"]
         verbose_name = "Treino"
         verbose_name_plural = "Treinos"
+
+    @property
+    def esta_concluido(self):
+        return self.status == self.Status.CONCLUIDO
 
     def __str__(self):
         return f"{self.nome} ({self.planejamento.nome})"
@@ -97,6 +105,9 @@ class TreinoExercicio(models.Model):
     erros_comuns = models.TextField(blank=True)
     erros_orientacoes = models.JSONField(default=list, blank=True)
     video_base = models.URLField(max_length=500, blank=True)
+    # US35 CA03 — título e descrição do vídeo-base copiados na prescrição.
+    video_titulo = models.CharField(max_length=LIMITE_TITULO_VIDEO_BASE, blank=True)
+    video_descricao = models.CharField(max_length=LIMITE_DESCRICAO_VIDEO_BASE, blank=True)
 
     series = models.PositiveSmallIntegerField()
     repeticoes = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -124,3 +135,32 @@ class TreinoExercicio(models.Model):
 
     def __str__(self):
         return f"{self.ordem}. {self.nome}"
+
+
+class FeedbackAluno(models.Model):
+    """Relato do próprio aluno sobre um exercício prescrito (US49/US50)."""
+
+    item_treino = models.OneToOneField(
+        TreinoExercicio, on_delete=models.CASCADE, related_name="feedback_aluno"
+    )
+    aluno = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="feedbacks_enviados",
+        limit_choices_to={"papel": "ALUNO"},
+    )
+    texto = models.TextField(max_length=1000)
+    criado_em = models.DateTimeField(auto_now_add=True)
+    editado_em = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Feedback do aluno"
+        verbose_name_plural = "Feedbacks dos alunos"
+        ordering = ["-criado_em"]
+
+    @property
+    def editado(self):
+        return self.editado_em is not None
+
+    def __str__(self):
+        return f"Feedback de {self.aluno.username} em {self.item_treino.nome}"

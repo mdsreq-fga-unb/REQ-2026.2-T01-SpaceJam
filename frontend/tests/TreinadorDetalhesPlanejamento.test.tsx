@@ -42,8 +42,10 @@ describe('US27 — planejamento vigente do aluno', () => {
 
     expect(await screen.findByRole('heading', { name: 'Controle de bola' })).toBeTruthy()
     expect(screen.getByText('Planejamento de Beatriz Costa')).toBeTruthy()
-    expect(screen.getByText('Feito · aguardando avaliação · 3 exercícios')).toBeTruthy()
-    expect(screen.getByText('Em andamento · 1 exercício')).toBeTruthy()
+    const treinoA = screen.getByRole('link', { name: 'Consultar treino Treino A' }).closest('article')
+    const treinoB = screen.getByRole('link', { name: 'Consultar treino Treino B' }).closest('article')
+    expect(treinoA).toHaveTextContent('Feito · aguardando avaliação · 3 exercícios')
+    expect(treinoB).toHaveTextContent('Em andamento · 1 exercício')
     expect(screen.getByRole('link', { name: 'Adicionar treino' }).getAttribute('href')).toBe(
       '/treinador/alunos/21/planejamento/5/novo-treino',
     )
@@ -64,6 +66,8 @@ describe('US27 — planejamento vigente do aluno', () => {
       },
     })
 
+    expect(await screen.findByRole('link', { name: 'Consultar treino Treino A' }))
+      .toHaveAttribute('href', '/treinos/1')
     await userEvent.setup().click(await screen.findByText('Ver exercícios'))
     expect(screen.getByText('Drible alternado')).toBeVisible()
     expect(screen.getByText('3 séries · 10 repetições')).toBeVisible()

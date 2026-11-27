@@ -10,7 +10,12 @@ from rest_framework.test import APITestCase
 
 from apps.contas import termos
 
-from .models import ErroComumExercicio, Exercicio
+from .models import (
+    LIMITE_DESCRICAO_VIDEO_BASE,
+    LIMITE_TITULO_VIDEO_BASE,
+    ErroComumExercicio,
+    Exercicio,
+)
 from .services import snapshot_exercicio
 
 Usuario = get_user_model()
@@ -1186,6 +1191,8 @@ class SnapshotExercicioTests(TestCase):
                 "orientacoes": "Manter o corpo baixo.",
                 "erros_comuns": "Texto antigo de erros comuns.",
                 "video_base": "https://www.youtube.com/watch?v=exemplo",
+                "video_titulo": "",
+                "video_descricao": "",
                 "erros_orientacoes": [
                     {
                         "erro": "Olhar somente para a bola.",
@@ -1272,3 +1279,293 @@ class SnapshotExercicioTests(TestCase):
         5. Um novo treino prescrito depois da edição recebe a versão nova.
         """
         self.fail("Implementar quando o RF2307 (prescrição de treino) existir.")
+
+
+class InformacoesVideoBaseTests(APITestCase):
+    """US35 / RF2418 — Título e descrição breve do vídeo-base do exercício.
+
+    Gravados pelo PATCH do exercício, só pelo treinador (RN14, RNF08). São opcionais e
+    independentes de haver vídeo-base (RN22), com limites de 120 e 500 caracteres
+    (RNF14). A edição geral do exercício (PUT da US39) não os sobrescreve.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        cls.treinador = Usuario.objects.create_user(
+            username="coach",
+            email="coach@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        cls.aluno = Usuario.objects.create_user(
+            username="aluno1",
+            email="aluno1@exemplo.com",
+            password="senha-forte-123",
+            papel="ALUNO",
+            treinador=cls.treinador,
+        )
+        termos.registrar_aceite(cls.treinador)
+        termos.registrar_aceite(cls.aluno)
+        cls.exercicio = Exercicio.objects.create(
+            nome="Drible com deslocamento",
+            objetivo="Conduzir a bola em movimento",
+            fundamento="DRIBLE",
+            orientacoes="Manter o corpo baixo.",
+            video_base="https://www.youtube.com/watch?v=exemplo",
+            criado_por=cls.treinador,
+        )
+        ErroComumExercicio.objects.create(
+            exercicio=cls.exercicio,
+            erro="Olhar somente para a bola.",
+            orientacao_corretiva="Mantenha o olhar à frente.",
+        )
+        cls.url = reverse("exercicio-detail", args=[cls.exercicio.pk])
+        cls.textos = {
+            "video_titulo": "Drible com deslocamento",
+            "video_descricao": "Observe a alternância das mãos e a direção do olhar.",
+        }
+
+    def gravar_textos(self):
+        Exercicio.objects.filter(pk=self.exercicio.pk).update(**self.textos)
+
+    def campos_do_exercicio(self):
+        """Estado completo do exercício, para provar o que mudou e o que não mudou."""
+        self.exercicio.refresh_from_db()
+        return {
+            "nome": self.exercicio.nome,
+            "objetivo": self.exercicio.objetivo,
+            "fundamento": self.exercicio.fundamento,
+            "orientacoes": self.exercicio.orientacoes,
+            "erros_comuns": self.exercicio.erros_comuns,
+            "video_base": self.exercicio.video_base,
+            "video_titulo": self.exercicio.video_titulo,
+            "video_descricao": self.exercicio.video_descricao,
+            "itens": list(
+                self.exercicio.erros_orientacoes.values_list("erro", "orientacao_corretiva")
+            ),
+        }
+
+    # --- CA01 / CA02: cadastrar, consultar, alterar e apagar ---
+
+    def test_ca01_treinador_cadastra_e_a_consulta_exibe(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.patch(self.url, self.textos, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        consulta = self.client.get(self.url)
+        self.assertEqual(consulta.data["video_titulo"], self.textos["video_titulo"])
+        self.assertEqual(consulta.data["video_descricao"], self.textos["video_descricao"])
+        lista = self.client.get(reverse("exercicio-list"))
+        self.assertEqual(lista.data[0]["video_titulo"], self.textos["video_titulo"])
+
+    def test_ca02_alteracao_substitui_e_textos_podem_ser_apagados(self):
+        self.gravar_textos()
+        self.client.force_authenticate(self.treinador)
+
+        self.client.patch(self.url, {"video_titulo": "Novo título"}, format="json")
+        self.assertEqual(self.client.get(self.url).data["video_titulo"], "Novo título")
+
+        resposta = self.client.patch(
+            self.url, {"video_titulo": "", "video_descricao": ""}, format="json"
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["video_titulo"], "")
+        self.assertEqual(resposta.data["video_descricao"], "")
+
+    def test_exercicio_sem_informacoes_devolve_textos_vazios(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.get(self.url)
+
+        self.assertEqual(resposta.data["video_titulo"], "")
+        self.assertEqual(resposta.data["video_descricao"], "")
+
+    def test_rn22_pode_cadastrar_sem_video_base(self):
+        Exercicio.objects.filter(pk=self.exercicio.pk).update(video_base="")
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.patch(self.url, self.textos, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.assertEqual(resposta.data["video_base"], "")
+        self.assertEqual(resposta.data["video_titulo"], self.textos["video_titulo"])
+
+    def test_textos_sao_salvos_sem_espacos_nas_pontas(self):
+        self.client.force_authenticate(self.treinador)
+
+        self.client.patch(
+            self.url,
+            {"video_titulo": "  Drible  ", "video_descricao": "\n Observe as mãos. \n"},
+            format="json",
+        )
+
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.video_titulo, "Drible")
+        self.assertEqual(self.exercicio.video_descricao, "Observe as mãos.")
+
+    # --- Limites (RNF14) ---
+
+    def test_textos_no_limite_sao_aceitos(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.patch(
+            self.url,
+            {
+                "video_titulo": "t" * LIMITE_TITULO_VIDEO_BASE,
+                "video_descricao": "d" * LIMITE_DESCRICAO_VIDEO_BASE,
+            },
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+
+    def test_texto_acima_do_limite_no_patch_e_recusado_sem_gravar(self):
+        self.gravar_textos()
+        antes = self.campos_do_exercicio()
+        self.client.force_authenticate(self.treinador)
+
+        for campo, limite in (
+            ("video_titulo", LIMITE_TITULO_VIDEO_BASE),
+            ("video_descricao", LIMITE_DESCRICAO_VIDEO_BASE),
+        ):
+            with self.subTest(campo=campo):
+                resposta = self.client.patch(
+                    self.url, {campo: "x" * (limite + 1)}, format="json"
+                )
+
+                self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+                self.assertIn(campo, resposta.data)
+                self.assertEqual(self.campos_do_exercicio(), antes)
+
+    def test_texto_acima_do_limite_no_put_e_recusado_sem_gravar(self):
+        antes = self.campos_do_exercicio()
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.put(
+            self.url,
+            {
+                "nome": "Nome alterado",
+                "objetivo": "Conduzir a bola em movimento",
+                "fundamento": "DRIBLE",
+                "video_titulo": "x" * (LIMITE_TITULO_VIDEO_BASE + 1),
+            },
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(self.campos_do_exercicio(), antes)
+
+    # --- Contrato: um campo não sobrescreve o outro ---
+
+    def test_patch_de_um_campo_preserva_o_outro(self):
+        self.gravar_textos()
+        self.client.force_authenticate(self.treinador)
+
+        self.client.patch(self.url, {"video_titulo": "Só o título"}, format="json")
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.video_descricao, self.textos["video_descricao"])
+
+        self.client.patch(self.url, {"video_descricao": "Só a descrição"}, format="json")
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.video_titulo, "Só o título")
+
+    def test_patch_dos_textos_nao_altera_o_restante_do_exercicio(self):
+        antes = self.campos_do_exercicio()
+        self.client.force_authenticate(self.treinador)
+
+        self.client.patch(self.url, self.textos, format="json")
+
+        depois = self.campos_do_exercicio()
+        esperado = {**antes, **self.textos}
+        self.assertEqual(depois, esperado)
+
+    def test_put_da_edicao_do_exercicio_preserva_os_textos(self):
+        # Não regressão da US39: o front envia o PUT sem os campos da US35.
+        self.gravar_textos()
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.put(
+            self.url,
+            {
+                "nome": "Drible em zigue-zague",
+                "objetivo": "Conduzir a bola em movimento",
+                "fundamento": "DRIBLE",
+                "orientacoes": "Manter o corpo baixo.",
+                "erros_comuns": "",
+                "video_base": "https://www.youtube.com/watch?v=exemplo",
+            },
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_200_OK)
+        self.exercicio.refresh_from_db()
+        self.assertEqual(self.exercicio.nome, "Drible em zigue-zague")
+        self.assertEqual(self.exercicio.video_titulo, self.textos["video_titulo"])
+        self.assertEqual(self.exercicio.video_descricao, self.textos["video_descricao"])
+
+    def test_cadastro_de_exercicio_sem_os_textos_continua_valido(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.post(
+            reverse("exercicio-list"),
+            {"nome": "Passe de peito", "objetivo": "Precisão", "fundamento": "PASSE"},
+            format="json",
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(resposta.data["video_titulo"], "")
+        self.assertEqual(resposta.data["video_descricao"], "")
+
+    # --- CA04 e acesso (RN14, RNF08, US63) ---
+
+    def test_ca04_aluno_recebe_403_e_nada_muda(self):
+        antes = self.campos_do_exercicio()
+        self.client.force_authenticate(self.aluno)
+
+        resposta = self.client.patch(self.url, self.textos, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(self.campos_do_exercicio(), antes)
+
+    def test_sem_login_recebe_401(self):
+        resposta = self.client.patch(self.url, self.textos, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_treinador_com_termos_pendentes_recebe_403(self):
+        sem_aceite = Usuario.objects.create_user(
+            username="coach2",
+            email="coach2@exemplo.com",
+            password="senha-forte-123",
+            papel="TREINADOR",
+        )
+        self.client.force_authenticate(sem_aceite)
+
+        resposta = self.client.patch(self.url, self.textos, format="json")
+
+        self.assertEqual(resposta.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(resposta.data["code"], "TERMOS_PENDENTES")
+
+    def test_exercicio_inexistente_retorna_404(self):
+        self.client.force_authenticate(self.treinador)
+
+        resposta = self.client.patch(
+            reverse("exercicio-detail", args=[999999]), self.textos, format="json"
+        )
+
+        self.assertEqual(resposta.status_code, status.HTTP_404_NOT_FOUND)
+
+    # --- CA03: contrato da prescrição (RN23) ---
+
+    def test_ca03_snapshot_leva_titulo_e_descricao_para_a_prescricao(self):
+        # A exibição ao aluno depende do RF2307 copiar este snapshot no item do treino.
+        self.gravar_textos()
+        self.exercicio.refresh_from_db()
+
+        snapshot = snapshot_exercicio(self.exercicio)
+
+        self.assertEqual(snapshot["video_titulo"], self.textos["video_titulo"])
+        self.assertEqual(snapshot["video_descricao"], self.textos["video_descricao"])
+        self.assertEqual(json.loads(json.dumps(snapshot)), snapshot)

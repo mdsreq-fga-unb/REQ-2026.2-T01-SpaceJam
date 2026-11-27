@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 
 from apps.contas.models import Usuario
-from apps.contas.permissions import ROTA_PROTEGIDA, IsTreinador
+from apps.contas.permissions import ROTA_PROTEGIDA, IsAluno, IsTreinador
 
 from .models import Planejamento, Treino
 from .serializers import (
@@ -74,11 +74,8 @@ def listar_carteira_planejamentos(request):
     return Response(AlunoCarteiraSerializer(alunos, many=True).data)
 
 
-@api_view(["GET"])
-@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
-def consultar_planejamento_vigente(request, aluno_id):
-    aluno = get_object_or_404(_alunos_da_carteira(request.user), pk=aluno_id)
-    planejamento = (
+def _planejamento_vigente_do_aluno(aluno):
+    return (
         Planejamento.objects.filter(aluno=aluno, status=Planejamento.Status.VIGENTE)
         .prefetch_related(
             Prefetch(
@@ -89,6 +86,13 @@ def consultar_planejamento_vigente(request, aluno_id):
         )
         .first()
     )
+
+
+@api_view(["GET"])
+@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
+def consultar_planejamento_vigente(request, aluno_id):
+    aluno = get_object_or_404(_alunos_da_carteira(request.user), pk=aluno_id)
+    planejamento = _planejamento_vigente_do_aluno(aluno)
     return Response(
         {
             "aluno": {"id": aluno.id, "nome": nome_do_aluno(aluno)},
@@ -97,3 +101,12 @@ def consultar_planejamento_vigente(request, aluno_id):
             ),
         }
     )
+
+
+@api_view(["GET"])
+@permission_classes([*ROTA_PROTEGIDA, IsAluno])
+def consultar_meu_planejamento(request):
+    planejamento = _planejamento_vigente_do_aluno(request.user)
+    return Response({
+        "planejamento": PlanejamentoVigenteSerializer(planejamento).data if planejamento else None,
+    })

@@ -1,5 +1,5 @@
 import type { Usuario } from '../../types/usuario'
-import './MinhaContaAluno.css'
+import { LayoutAluno } from './LayoutAluno'
 
 type MinhaContaAlunoProps = {
   usuario: Usuario
@@ -63,7 +63,6 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
       .filter(Boolean)
       .join(' ') || usuario.apelido
 
-  const nomeCurto = usuario.first_name || usuario.apelido
   const perfil = usuario.perfil_aluno
 
   const frequencia =
@@ -74,33 +73,7 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
       : 'Não informado'
 
   return (
-    <div className="conta-aluno">
-      <header className="conta-aluno__cabecalho">
-        <div className="conta-aluno__marca">
-          <picture className="conta-aluno__logo-v2">
-            <source media="(min-width: 900px)" srcSet="/space-jam-logo-v2-desktop.png" />
-            <img src="/space-jam-logo-v2-mobile.png" alt="" width="36" height="38" />
-          </picture>
-          <span className="conta-aluno__nome-marca">SPACE JAM</span>
-        </div>
-
-        <nav className="conta-aluno__navegacao" aria-label="Seções do sistema">
-          <span>Treinos</span>
-          <span>Histórico</span>
-          <span>Feedbacks</span>
-          <span aria-current="page">Conta</span>
-        </nav>
-
-        <div className="conta-aluno__usuario">
-          <span className="conta-aluno__nome-curto">{nomeCurto}</span>
-          <div className="conta-aluno__perfil-desktop">
-            <strong>{nome}</strong>
-            <span>Aluno</span>
-          </div>
-        </div>
-      </header>
-
-      <main className="conta-aluno__conteudo">
+    <LayoutAluno usuario={usuario} secao="Conta">
         <div className="conta-aluno__titulo">
           <h1>Minha conta</h1>
           <p>{nome}</p>
@@ -153,7 +126,6 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
           <button type="button" disabled>Solicitar exclusão dos dados</button>
           <button className="conta-aluno__sair" type="button" onClick={logout}>Sair da conta</button>
         </div>
-      </main>
-    </div>
+    </LayoutAluno>
   )
 }
