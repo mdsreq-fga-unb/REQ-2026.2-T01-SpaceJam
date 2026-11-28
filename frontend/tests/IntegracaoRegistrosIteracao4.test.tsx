@@ -11,13 +11,13 @@ afterEach(() => {
   window.history.replaceState({}, '', '/')
 })
 
-it('registra e edita a dificuldade do item pela API na execução do treino', async () => {
+it('registra e edita a dificuldade do item sem precisar marcar o treino inteiro como feito', async () => {
   tokenStorage.set('sessao-de-teste')
   const endpoint = '/api/treinos/exercicios/8/dificuldade/'
   const fetch = simularApi({
     'GET /api/auth/me/': { corpo: usuario },
     'GET /api/treinos/7/': { corpo: {
-      alunoId: 2, nome: 'Controle de bola', treinadorNome: 'Lucas', statusSlug: 'feito',
+      alunoId: 2, nome: 'Controle de bola', treinadorNome: 'Lucas', statusSlug: 'em-andamento',
       exercicios: [{ id: 8, nome: 'Drible', parametros: '3 séries', orientacoes: '', dificuldade: null, feedback: null }],
     } },
     ['POST ' + endpoint]: { status: 201, corpo: { nota: 4 } },
@@ -26,6 +26,7 @@ it('registra e edita a dificuldade do item pela API na execução do treino', as
   const pessoa = abrir('/treinos/7')
   await pessoa.click(await screen.findByRole('button', { name: 'Ver exercício: Drible' }))
   await pessoa.click(screen.getByRole('button', { name: 'Registrar dificuldade' }))
+  expect(screen.getByText('Ao salvar, você confirma que realizou este exercício.')).toBeVisible()
   await pessoa.click(screen.getByRole('radio', { name: '4 · Difícil' }))
   await pessoa.click(screen.getByRole('button', { name: 'Salvar nota' }))
   expect(await screen.findByText('4 de 5 · Difícil')).toBeVisible()

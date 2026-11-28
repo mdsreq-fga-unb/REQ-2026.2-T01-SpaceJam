@@ -99,7 +99,7 @@ A rota `/previa/iteracao-4` usa dados fictícios para revisar os estados da inte
 
 ## Iteração 4 · dificuldades, feedback do aluno e exclusão de dados
 
-- **US12, US13 e US14:** no detalhe do exercício, a nota pertence ao item prescrito. O aluno salva por `POST` e edita por `PATCH` em `/api/treinos/exercicios/:itemId/dificuldade/`. Quando só existe estado por treino, a tela libera o primeiro registro após marcar o treino como feito. A tela e a API bloqueiam alterações após a conclusão.
+- **US12, US13 e US14:** no detalhe do exercício, a nota pertence ao item prescrito. O aluno salva por `POST` e edita por `PATCH` em `/api/treinos/exercicios/:itemId/dificuldade/`. O primeiro registro confirma que o aluno realizou aquele exercício e está disponível com o treino em andamento. Quando a API informa que um exercício ainda não foi realizado, a tela usa essa informação. A tela e a API bloqueiam alterações após a conclusão.
 - **US51:** no detalhe e no histórico do treino, o treinador consulta o feedback do aluno em somente leitura, com a indicação de edição. A medição do CA04 depende do ambiente de entrega.
 - **US64:** na conta do aluno, a entrada fica em **Preferências de privacidade → Excluir meus dados**. O fluxo usa a senha atual e a confirmação explícita em `POST /api/auth/excluir-conta/`. Depois da resposta de sucesso, a tela mostra o protocolo e encerra a sessão. A remoção de arquivos de vídeo (CA03) depende da integração do armazenamento de vídeos de execução.
 

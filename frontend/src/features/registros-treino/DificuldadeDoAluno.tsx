@@ -14,7 +14,7 @@ interface DificuldadeDoAlunoProps {
   treino: string
   nota: NotaDificuldade | null
   treinoConcluido: boolean
-  executado: boolean
+  executado?: boolean
   treinador?: string
   feedback?: FeedbackDeAluno | null
   onSalvar: (alteracao: AlteracaoDificuldade) => Promise<NotaDificuldade>
@@ -70,6 +70,7 @@ function FormularioDificuldade({ nota, treinador, onSalvar, onCancelar }: Formul
           </label>
         ))}
       </fieldset>
+      {nota === null && <p>Ao salvar, você confirma que realizou este exercício.</p>}
       <section className="conta-aluno__cartao registros-cartao">
         <h2>Enquanto o treino estiver aberto</h2>
         <p>Você pode alterar sua nota até {treinador || 'o treinador'} concluir o treino.</p>
@@ -94,7 +95,7 @@ export function DificuldadeDoAluno({
   const [formulario, abrirFormulario] = useState(iniciarFormulario)
   const registrada = registro.origem === nota ? registro.atual : nota
   const aluno = usuario.papel === 'ALUNO'
-  const editavel = aluno && !treinoConcluido && (executado || registrada !== null)
+  const editavel = aluno && !treinoConcluido && (executado !== false || registrada !== null)
   const editando = formulario && editavel
   const detalhe = exercicio + ' · ' + treino
 
@@ -132,7 +133,7 @@ export function DificuldadeDoAluno({
             <p>Você pode consultar a dificuldade registrada.</p>
           </section>
         )}
-        {!treinoConcluido && !executado && registrada === null && (
+        {!treinoConcluido && executado === false && registrada === null && (
           <p className="registros-detalhe">Registre a dificuldade depois de realizar o exercício.</p>
         )}
         <div className="registros-acoes">

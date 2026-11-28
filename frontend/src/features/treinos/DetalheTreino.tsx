@@ -131,9 +131,9 @@ export function DetalheTreino({
   }
 
   const nota = selecionado?.dificuldade?.nota ?? null
-  const executado = selecionado?.feito ?? status === 'feito'
+  const executado = selecionado?.feito
   const abrirDificuldade = selecionado && aluno && onSalvarDificuldade && status !== 'concluido' &&
-    selecionado.dificuldade !== undefined && (nota !== null || executado)
+    selecionado.dificuldade !== undefined && (nota !== null || executado !== false)
 
   if (selecionado && aluno && selecao?.tela === 'dificuldade' && onSalvarDificuldade) {
     return <DificuldadeDoAluno usuario={usuario} links={navegacao} exercicio={selecionado.nome}
