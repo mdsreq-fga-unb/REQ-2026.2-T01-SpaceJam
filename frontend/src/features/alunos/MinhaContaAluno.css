@@ -108,11 +108,15 @@
   text-decoration: none;
 }
 
+/* Mesmo item ativo do TreinoLayout (protótipo V2): gradiente horizontal, contorno laranja
+   e negrito. Assim o menu não muda de aparência ao passar de Meu planejamento/Conta para
+   as telas de treino, histórico e vídeo. */
 .conta-aluno__navegacao a[aria-current='page'] {
-  background: linear-gradient(135deg, #791710, var(--conta-destaque));
+  background: linear-gradient(to right, #791710, var(--conta-destaque));
+  box-shadow: inset 0 0 0 1px var(--conta-laranja);
   color: #fff;
   font-family: 'Barlow', 'Arial Narrow', sans-serif;
-  font-weight: 500;
+  font-weight: 700;
 }
 
 .conta-aluno__conteudo {
