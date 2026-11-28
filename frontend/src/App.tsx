@@ -12,6 +12,7 @@ import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 import { DocumentoLegalPage } from './features/termos/DocumentoLegalPage'
+import { ContaExcluidaPage, ExcluirDadosAlunoPage } from './features/conta/ExcluirDadosAlunoPage'
 import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivacidadePage'
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
@@ -31,6 +32,8 @@ import { HistoricoTreinosPage } from './features/treinos/HistoricoTreinosPage'
 import { AssociarErrosOrientacoesPage } from './features/exercicios/AssociarErrosOrientacoesPage'
 
 const PreviaIteracao4 = import.meta.env.DEV ? lazy(() => import('./pages/PreviaIteracao4')) : null
+
+const PreviaRegistrosIteracao4 = import.meta.env.DEV ? lazy(() => import('./pages/PreviaRegistrosIteracao4')) : null
 
 export default function App() {
   return (
@@ -67,6 +70,10 @@ export default function App() {
             }
           />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/conta/excluir" element={
+            <RotaProtegida papel="ALUNO"><ExcluirDadosAlunoPage /></RotaProtegida>
+          } />
+          <Route path="/conta/excluida" element={<ContaExcluidaPage />} />
           <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
           <Route path="/recuperar-senha/redefinir" element={<RedefinirSenhaPage />} />
           <Route path="/redefinir-senha" element={<RedefinirSenhaPage />} />
@@ -257,6 +264,11 @@ export default function App() {
           {import.meta.env.DEV && PreviaIteracao4 && (
             <Route path="/previa/iteracao-4/:tela?/:treinoId?" element={
               <Suspense fallback={<p role="status">Carregando prévia...</p>}><PreviaIteracao4 /></Suspense>
+            } />
+          )}
+          {import.meta.env.DEV && PreviaRegistrosIteracao4 && (
+            <Route path="/previa/iteracao-4/registros/:tela?" element={
+              <Suspense fallback={<p role="status">Carregando prévia...</p>}><PreviaRegistrosIteracao4 /></Suspense>
             } />
           )}
           <Route path="*" element={<Navigate to="/" replace />} />

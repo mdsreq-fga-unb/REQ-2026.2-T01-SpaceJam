@@ -26,6 +26,7 @@ interface DetalheApi extends ResumoApi {
     parametros: string
     orientacoes: string
     errosOrientacoes?: { erro: string; orientacao_corretiva: string }[]
+    dificuldade?: { nota: 1 | 2 | 3 | 4 | 5 } | null
     feedback?: { autorNome?: string; texto: string; editado: boolean } | null
   }[]
 }
@@ -61,6 +62,7 @@ export async function consultarRegistroHistorico(treinoId: number, alunoId: numb
       nome: exercicio.nome,
       parametros: exercicio.parametros,
       orientacoes: exercicio.orientacoes,
+      dificuldade: exercicio.dificuldade === undefined ? undefined : exercicio.dificuldade?.nota ?? null,
       errosOrientacoes: exercicio.errosOrientacoes?.map(par => ({
         erro: par.erro,
         orientacaoCorretiva: par.orientacao_corretiva,

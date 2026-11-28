@@ -93,6 +93,15 @@ A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a e
 | US28 | Perfil do aluno acompanhado → Ver histórico de treinos | `GET /api/treinos/alunos/:alunoId/historico/` traz os treinos concluídos do aluno da carteira, com paginação. |
 | US58 | Menu Histórico na conta do aluno | `GET /api/treinos/meu-historico/` traz os treinos do próprio aluno em todos os estados, com paginação. |
 
-Os detalhes dos dois históricos usam `GET /api/treinos/:treinoId/`, com os dados preservados da prescrição e os feedbacks do aluno. Dificuldade e feedback do treinador ainda dependem das respectivas histórias. O detalhe da US28 também depende da integração de vídeos de execução. Na US41, falta validar o efeito da exclusão na busca quando essa operação estiver disponível.
+Os detalhes dos dois históricos usam `GET /api/treinos/:treinoId/`, com os dados preservados da prescrição e os feedbacks do aluno. O detalhe também exibe a dificuldade registrada pelo aluno. O feedback do treinador ainda depende das histórias correspondentes. O detalhe da US28 também depende da integração de vídeos de execução. Na US41, falta validar o efeito da exclusão na busca quando essa operação estiver disponível.
 
 A rota `/previa/iteracao-4` usa dados fictícios para revisar os estados da interface em desenvolvimento. O build de produção exclui essa rota. Os testes das rotas integradas ficam em `tests/IntegracaoBibliotecaHistoricos.test.tsx`.
+
+## Iteração 4 · dificuldades, feedback do aluno e exclusão de dados
+
+- **US12, US13 e US14:** no detalhe do exercício, a nota pertence ao item prescrito. O aluno salva por `POST` e edita por `PATCH` em `/api/treinos/exercicios/:itemId/dificuldade/`. O primeiro registro confirma que o aluno realizou aquele exercício e está disponível com o treino em andamento. Quando a API informa que um exercício ainda não foi realizado, a tela usa essa informação. A tela e a API bloqueiam alterações após a conclusão.
+- **US51:** no detalhe e no histórico do treino, o treinador consulta o feedback do aluno em somente leitura, com a indicação de edição. A medição do CA04 depende do ambiente de entrega.
+- **US64:** na conta do aluno, a entrada fica em **Preferências de privacidade → Excluir meus dados**. O fluxo usa a senha atual e a confirmação explícita em `POST /api/auth/excluir-conta/`. Depois da resposta de sucesso, a tela mostra o protocolo e encerra a sessão. A remoção de arquivos de vídeo (CA03) depende da integração do armazenamento de vídeos de execução.
+
+A rota `/previa/iteracao-4/registros` permanece disponível somente em desenvolvimento,
+com dados fictícios em memória para revisar os estados das telas.

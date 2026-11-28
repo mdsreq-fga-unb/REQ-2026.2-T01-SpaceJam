@@ -8,11 +8,13 @@ from rest_framework.views import APIView
 
 from apps.contas.permissions import IsAluno, IsTreinador, ROTA_PROTEGIDA
 
-from .models import FeedbackAluno, Treino
+from .models import DificuldadeAluno, FeedbackAluno, Treino
 from .serializers_execucao import (
     AvaliarConclusaoTreinadorSerializer,
+    DificuldadeAlunoSerializer,
     FeedbackAlunoSerializer,
     RegistrarStatusAlunoSerializer,
+    SalvarDificuldadeAlunoSerializer,
     SalvarFeedbackAlunoSerializer,
     TreinoDetalheSerializer,
     TreinoStatusConsultaSerializer,
@@ -33,7 +35,10 @@ def _obter_treino_com_permissao(request, treino_id, *, bloquear_linha=False, inc
     if bloquear_linha:
         queryset = queryset.select_for_update(of=("self",))
     if incluir_exercicios:
-        queryset = queryset.prefetch_related("exercicios__feedback_aluno__aluno")
+        queryset = queryset.prefetch_related(
+            "exercicios__feedback_aluno__aluno",
+            "exercicios__dificuldade_aluno__aluno",
+        )
     treino = get_object_or_404(queryset, pk=treino_id)
     _validar_acesso_treino(request.user, treino)
     return treino
@@ -203,5 +208,88 @@ class ItemTreinoFeedbackAlunoView(APIView):
 
         return Response(
             FeedbackAlunoSerializer(feedback).data,
+            status=status.HTTP_200_OK,
+        )
+
+def _obter_item_treino_dificuldade_do_aluno(request, item_id):
+    treinos = Treino.objects.select_related("planejamento__aluno").select_for_update(of=("self",))
+    treino = get_object_or_404(treinos, exercicios__pk=item_id)
+    _validar_acesso_treino(request.user, treino)
+    item = get_object_or_404(treino.exercicios.select_related("dificuldade_aluno__aluno"), pk=item_id)
+    return treino, item
+
+
+class ItemTreinoDificuldadeAlunoView(APIView):
+    """US13 (RF1213 — POST) e US14 (RF1214 — PATCH) — Registrar e editar dificuldade (1 a 5) do aluno."""
+
+    permission_classes = [*ROTA_PROTEGIDA, IsAluno]
+
+    def post(self, request, item_id: int):
+        """US13 (RF1213) — Registrar dificuldade única (1 a 5) enquanto o treino não estiver concluído."""
+        serializer = SalvarDificuldadeAlunoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        try:
+            with transaction.atomic():
+                treino, item = _obter_item_treino_dificuldade_do_aluno(request, item_id)
+
+                if treino.esta_concluido:
+                    return Response(
+                        {"detail": "Não é possível registrar dificuldade em um treino já concluído."},
+                        status=status.HTTP_409_CONFLICT,
+                    )
+
+                if hasattr(item, "dificuldade_aluno"):
+                    return Response(
+                        {"detail": "Você já registrou a dificuldade para este exercício. Utilize a edição."},
+                        status=status.HTTP_409_CONFLICT,
+                    )
+
+                dificuldade = DificuldadeAluno.objects.create(
+                    item_treino=item,
+                    aluno=request.user,
+                    nota=serializer.validated_data["nota"],
+                )
+        except IntegrityError:
+            return Response(
+                {"detail": "Você já registrou a dificuldade para este exercício. Utilize a edição."},
+                status=status.HTTP_409_CONFLICT,
+            )
+
+        return Response(
+            DificuldadeAlunoSerializer(dificuldade).data,
+            status=status.HTTP_201_CREATED,
+        )
+
+    def patch(self, request, item_id: int):
+        """US14 (RF1214) — Editar dificuldade do próprio aluno enquanto o treino não estiver concluído."""
+        serializer = SalvarDificuldadeAlunoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        with transaction.atomic():
+            treino, item = _obter_item_treino_dificuldade_do_aluno(request, item_id)
+
+            if not hasattr(item, "dificuldade_aluno"):
+                return Response(
+                    {"detail": "Nenhuma dificuldade registrada para este exercício."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            dificuldade = item.dificuldade_aluno
+            if dificuldade.aluno_id != request.user.id:
+                raise PermissionDenied("Apenas o autor pode editar esta dificuldade.")
+
+            if treino.esta_concluido:
+                return Response(
+                    {"detail": "Não é possível editar dificuldade de um treino já concluído."},
+                    status=status.HTTP_409_CONFLICT,
+                )
+
+            dificuldade.nota = serializer.validated_data["nota"]
+            dificuldade.editado_em = timezone.now()
+            dificuldade.save(update_fields=["nota", "editado_em"])
+
+        return Response(
+            DificuldadeAlunoSerializer(dificuldade).data,
             status=status.HTTP_200_OK,
         )

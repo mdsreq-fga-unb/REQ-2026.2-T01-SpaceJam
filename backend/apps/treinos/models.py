@@ -164,3 +164,37 @@ class FeedbackAluno(models.Model):
 
     def __str__(self):
         return f"Feedback de {self.aluno.username} em {self.item_treino.nome}"
+
+class DificuldadeAluno(models.Model):
+    """Percepção de dificuldade (escala 1 a 5) registrada pelo aluno em um exercício do treino (US12/US13/US14)."""
+
+    item_treino = models.OneToOneField(
+        TreinoExercicio, on_delete=models.CASCADE, related_name="dificuldade_aluno"
+    )
+    aluno = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="dificuldades_registradas",
+        limit_choices_to={"papel": "ALUNO"},
+    )
+    nota = models.PositiveSmallIntegerField()
+    criado_em = models.DateTimeField(auto_now_add=True)
+    editado_em = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Dificuldade do aluno"
+        verbose_name_plural = "Dificuldades dos alunos"
+        ordering = ["-criado_em"]
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(nota__gte=1, nota__lte=5),
+                name="dificuldade_aluno_nota_entre_1_e_5",
+            ),
+        ]
+
+    @property
+    def editado(self):
+        return self.editado_em is not None
+
+    def __str__(self):
+        return f"Dificuldade {self.nota}/5 de {self.aluno.username} em {self.item_treino.nome}"

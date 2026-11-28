@@ -94,6 +94,12 @@ export function PreferenciasPrivacidade({ usuario, onVoltar }: { usuario: Usuari
             <button type="button" className="privacidade__voltar" onClick={onVoltar}>Voltar à conta</button>
           </div>
         </form>
+        {usuario.papel === 'ALUNO' && (
+          <section className="conta-aluno__cartao">
+            <h2>Dados da sua conta</h2>
+            <Link to="/conta/excluir">Excluir meus dados</Link>
+          </section>
+        )}
       </main>
     </div>
   )

@@ -134,6 +134,10 @@ class HistoricoImutavelError(Exception):
 
 class HistoricoAceiteTermosQuerySet(models.QuerySet):
     def update(self, **kwargs):
+        # RN05 + RN15 (US64): permite apenas desvincular o titular excluído (anonimização LGPD),
+        # bloqueando qualquer outra alteração na trilha probatória (RNF16).
+        if set(kwargs.keys()) == {"usuario"} and kwargs["usuario"] is None:
+            return super().update(**kwargs)
         raise HistoricoImutavelError("O histórico de aceite dos termos é imutável (RNF16).")
 
     def delete(self):
@@ -154,8 +158,10 @@ class HistoricoAceiteTermos(models.Model):
 
     usuario = models.ForeignKey(
         Usuario,
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         related_name="aceites_termos",
+        null=True,
+        blank=True,
     )
     versao = models.CharField(max_length=20)
     data_hora = models.DateTimeField(default=timezone.now, editable=False)
