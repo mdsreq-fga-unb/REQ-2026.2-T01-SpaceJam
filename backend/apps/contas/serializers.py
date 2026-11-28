@@ -576,3 +576,47 @@ class LesaoSerializer(serializers.ModelSerializer):
         model = Lesao
         fields = ["id", "descricao", "criado_em"]
         read_only_fields = ["id", "criado_em"]
+
+class ExcluirContaSerializer(serializers.Serializer):
+    """US64 (RF4813) — Validação de confirmação explícita e senha atual para exclusão de conta (RN05, RNF05)."""
+
+    senha_atual = serializers.CharField(
+        write_only=True,
+        required=True,
+        allow_blank=False,
+        error_messages={
+            "required": "Informe sua senha atual para confirmar a exclusão.",
+            "blank": "Informe sua senha atual para confirmar a exclusão.",
+        },
+    )
+    confirmacao = serializers.CharField(
+        write_only=True,
+        required=False,
+        allow_blank=True,
+    )
+    confirmado = serializers.BooleanField(
+        write_only=True,
+        required=False,
+        default=False,
+    )
+
+    def validate_senha_atual(self, value):
+        usuario = self.context["request"].user
+        if not usuario.check_password(value):
+            raise serializers.ValidationError("A senha atual está incorreta.")
+        return value
+
+    def validate(self, attrs):
+        confirmacao_texto = (attrs.get("confirmacao") or "").strip().upper()
+        confirmado_flag = attrs.get("confirmado", False)
+
+        if confirmacao_texto != "EXCLUIR" and confirmado_flag is not True:
+            raise serializers.ValidationError(
+                {
+                    "confirmacao": (
+                        "Confirmação explícita obrigatória. Envie 'confirmacao': 'EXCLUIR' "
+                        "ou 'confirmado': true após ler o aviso de irreversibilidade."
+                    )
+                }
+            )
+        return attrs

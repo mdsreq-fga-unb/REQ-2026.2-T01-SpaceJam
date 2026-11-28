@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 from .views_execucao import (
+    ItemTreinoDificuldadeAlunoView,
     ItemTreinoFeedbackAlunoView,
     TreinoConcluirTreinadorView,
     TreinoDetalheView,
@@ -60,6 +61,11 @@ urlpatterns = [
     path("<int:treino_id>/status/", TreinoStatusView.as_view(), name="treino-status"),
     path("<int:treino_id>/feito/", TreinoRegistrarStatusAlunoView.as_view(), name="treino-feito"),
     path("<int:treino_id>/concluir/", TreinoConcluirTreinadorView.as_view(), name="treino-concluir"),
+    path(
+        "exercicios/<int:item_id>/dificuldade/",
+        ItemTreinoDificuldadeAlunoView.as_view(),
+        name="item-treino-dificuldade",
+    ),
     path(
         "exercicios/<int:item_id>/feedback-aluno/",
         ItemTreinoFeedbackAlunoView.as_view(),

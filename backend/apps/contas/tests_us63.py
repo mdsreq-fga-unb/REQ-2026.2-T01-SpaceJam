@@ -256,7 +256,9 @@ class HistoricoAceiteTests(TermosMixin, TestCase):
         mantido = self._criar_usuario("outro", aceitar=True)
 
         usuario_id = usuario.pk  # delete() zera o pk da instância
+        HistoricoAceiteTermos.objects.filter(usuario=usuario).update(usuario=None)
         usuario.delete()
 
         self.assertFalse(HistoricoAceiteTermos.objects.filter(usuario_id=usuario_id).exists())
+        self.assertEqual(HistoricoAceiteTermos.objects.filter(usuario__isnull=True).count(), 2)
         self.assertEqual(self._historico(mantido), [("1.0", "ACEITE")])
