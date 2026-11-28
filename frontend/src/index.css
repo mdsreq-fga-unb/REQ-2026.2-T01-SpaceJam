@@ -4,7 +4,8 @@
 :root {
   font-family: 'Roboto Condensed', 'Arial Narrow', sans-serif;
   color: #c7b3ba;
-  background: #290611;
+  /* Mesmo fundo escuro das telas V2: evita o fundo vinho enquanto a tela carrega. */
+  background: #111113;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -154,8 +155,6 @@ img { display: block; }
 
 .marca { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; letter-spacing: .05em; }
 .marca img { width: 48px; height: 48px; object-fit: contain; }
-.pagina-espera { min-height: 100svh; display: grid; align-content: center; justify-items: center; gap: 28px; padding: 24px; }
-.pagina-espera p { font-size: 18px; }
 .cabecalho-conta { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 16px max(24px, calc((100% - 1120px)/2)); background: var(--cartao); }
 .botao-secundario { min-height: 44px; padding: 8px 16px; border: 1px solid #ac8e98; background: var(--botao); color: var(--texto); border-radius: 16px; font-size: 16px; }
 .botao-secundario:hover { background: var(--texto); color: var(--fundo); }

@@ -1,0 +1,65 @@
+.treinador-v2 {
+  --treinador-cartao: #1d1d20;
+  --treinador-acao: #d63f1e;
+}
+.treinador-v2 .sj52__conteudo { width: min(100%, 1000px); }
+.treinador-v2 .sj52__intro h1 { margin: 0; }
+.treinador-v2 .sj52__intro p { margin-bottom: 0; }
+.treinador-v2 .sj52__menu a:hover { background: #28282d; }
+.treinador-v2 .sj52__menu > [aria-disabled] { color: var(--sj52-texto); }
+
+.treinador-v2__botao {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+  color: var(--sj52-laranja);
+  font: 500 16px/1.25 Barlow, Arial, sans-serif;
+  text-align: center;
+  text-decoration: none;
+}
+.treinador-v2__botao:hover:not(:disabled) { background: #242428; }
+.treinador-v2__botao--principal {
+  border-color: transparent;
+  background: var(--treinador-acao);
+  color: #fff;
+}
+.treinador-v2__botao--principal:hover:not(:disabled) { background: #b72f14; }
+.treinador-v2__botao:disabled { opacity: .6; cursor: not-allowed; }
+.treinador-v2__cartao {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--sj52-borda);
+  border-radius: 12px;
+  background: var(--treinador-cartao);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 899px) {
+  .treinador-v2 .sj52__lateral { display: contents; }
+  .treinador-v2 .sj52__lateral > .sj52__marca,
+  .treinador-v2 .sj52__usuario-lateral { display: none; }
+  .treinador-v2 .sj52__menu {
+    position: fixed;
+    z-index: 30;
+    inset: auto 0 0;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    padding: 10px 8px max(10px, env(safe-area-inset-bottom));
+    background: var(--sj52-lateral);
+  }
+  .treinador-v2 .sj52__menu > * {
+    justify-content: center;
+    min-width: 0;
+    padding: 0 4px;
+    background: var(--treinador-cartao);
+    font-size: 13px;
+  }
+  .treinador-v2 .sj52__menu > [aria-current='page'] {
+    background: linear-gradient(100deg, #791710, #d63f1e);
+  }
+}

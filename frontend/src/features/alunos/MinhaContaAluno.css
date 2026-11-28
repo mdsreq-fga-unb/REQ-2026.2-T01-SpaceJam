@@ -95,7 +95,7 @@
   border-top: 1px solid var(--conta-borda);
 }
 
-.conta-aluno__navegacao span {
+.conta-aluno__navegacao > * {
   display: grid;
   min-width: 0;
   place-items: center;
@@ -105,9 +105,10 @@
   font-size: 12px;
   line-height: 16px;
   text-align: center;
+  text-decoration: none;
 }
 
-.conta-aluno__navegacao span[aria-current='page'] {
+.conta-aluno__navegacao a[aria-current='page'] {
   background: linear-gradient(135deg, #791710, var(--conta-destaque));
   color: #fff;
   font-family: 'Barlow', 'Arial Narrow', sans-serif;
@@ -313,7 +314,7 @@
     border-top: 0;
   }
 
-  .conta-aluno__navegacao span {
+  .conta-aluno__navegacao > * {
     min-height: 48px;
     place-items: center start;
     padding: 12px 16px;
@@ -525,7 +526,7 @@ body:has(.conta-aluno),
     gap: 8px;
   }
 
-  .conta-aluno__navegacao span {
+  .conta-aluno__navegacao > * {
     min-width: 0;
     overflow: hidden;
   }

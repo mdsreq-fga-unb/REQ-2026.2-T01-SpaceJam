@@ -12,17 +12,21 @@ from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from . import termos
 from .models import HistoricoAceiteTermos, Usuario
-from .permissions import IsAlunoProprietarioPerfil, ROTA_PROTEGIDA
+from .permissions import IsAlunoProprietarioPerfil, IsTreinador, ROTA_PROTEGIDA
 from .serializers import (
+    AlunoAcompanhadoSerializer,
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     DadosCadastraisAlunoSerializer,
     EditarPerfilAlunoSerializer,
+    LesaoSerializer,
     LoginAlunoSerializer,
     LoginTreinadorSerializer,
     PerfilAlunoAcompanhadoSerializer,
     UsuarioSerializer,
     TrocarSenhaSerializer,
+    SolicitarRecuperacaoSenhaSerializer,
+    RedefinirSenhaRecuperacaoSerializer,
 )
 
 
@@ -176,7 +180,7 @@ def meus_dados_aluno(request):
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 @api_view(["GET"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def consultar_perfil_aluno_acompanhado(request, aluno_id):
     """US61 — Consultar perfil de aluno acompanhado pelo treinador (RF4810, RN03, RN04, RN25, RN26)."""
     if request.user.papel != Usuario.Papel.TREINADOR:
@@ -207,7 +211,7 @@ def consultar_perfil_aluno_acompanhado(request, aluno_id):
     return Response(PerfilAlunoAcompanhadoSerializer(aluno).data, status=status.HTTP_200_OK)
 
 @api_view(["POST"])
-@permission_classes([IsAuthenticated])
+@permission_classes(ROTA_PROTEGIDA)
 def trocar_senha(request):
     """US08 — Trocar senha de usuário autenticado (RF1108, RN24, RNF08)."""
     serializer = TrocarSenhaSerializer(
@@ -260,3 +264,85 @@ def editar_perfil_aluno(request, aluno_id=None):
     serializer.is_valid(raise_exception=True)
     usuario_atualizado = serializer.save()
     return Response(UsuarioSerializer(usuario_atualizado).data, status=status.HTTP_200_OK)
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def solicitar_recuperacao_senha(request):
+    """US10 — Solicita envio de link temporário de recuperação de senha (RF1110 / RN12)."""
+    serializer = SolicitarRecuperacaoSenhaSerializer(data=request.data, context={"request": request})
+    serializer.is_valid(raise_exception=True)
+    resultado = serializer.save()
+    return Response(resultado, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([AllowAny])
+def redefinir_senha_recuperacao(request):
+    """US10 — Redefine a senha utilizando link/token válido de uso único (RF1110 / RN12 / RN24)."""
+    serializer = RedefinirSenhaRecuperacaoSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save()
+    return Response(
+        {"detail": "Senha redefinida com sucesso."},
+        status=status.HTTP_200_OK,
+    )
+
+
+# US52 — Consultar alunos acompanhados pelo treinador
+@api_view(["GET"])
+@permission_classes(ROTA_PROTEGIDA)
+def alunos_acompanhados(request):
+    """Consulta os alunos vinculados ao treinador autenticado."""
+
+    # CA04 — Somente treinadores podem acessar a carteira.
+    if not request.user.is_treinador:
+        return Response(
+            {"detail": "Apenas treinadores podem consultar seus alunos."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    # CA01 — Busca somente os alunos vinculados ao treinador logado.
+    alunos = (
+        request.user.alunos
+        .filter(papel="ALUNO")
+        .only(
+            "id",
+            "first_name",
+            "last_name",
+            "username",
+            "email",
+            "telefone",
+        )
+        .order_by("first_name", "last_name")
+    )
+
+    serializer = AlunoAcompanhadoSerializer(alunos, many=True)
+
+    # CA03 — Retorna também o código de convite.
+    return Response(
+        {
+            "alunos": serializer.data,
+            "codigo_convite": request.user.codigo_convite,
+        },
+    )
+
+
+@api_view(["POST"])
+@permission_classes([*ROTA_PROTEGIDA, IsTreinador])
+def registrar_lesao(request, aluno_id):
+    """US11 — Registrar lesão no histórico do aluno."""
+    aluno = Usuario.objects.filter(id=aluno_id, papel=Usuario.Papel.ALUNO).first()
+    if not aluno:
+        return Response({"detail": "Aluno não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+
+    # O treinador só registra lesões de alunos da própria carteira
+    if aluno.treinador_id != request.user.id:
+        return Response(
+            {"detail": "Você não tem permissão para registrar lesões deste aluno."},
+            status=status.HTTP_403_FORBIDDEN,
+        )
+
+    serializer = LesaoSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    serializer.save(aluno=aluno)
+    return Response(serializer.data, status=status.HTTP_201_CREATED)

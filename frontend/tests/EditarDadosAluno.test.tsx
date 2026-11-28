@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 import { EditarDadosAluno } from '../src/features/alunos/EditarDadosAluno'
 import { MinhaContaAluno } from '../src/features/alunos/MinhaContaAluno'
@@ -58,8 +59,8 @@ describe('US07 — Editar informações do próprio perfil', () => {
 
   it('converte centímetros em metros e vírgula para valores de API', () => {
     const dados = dadosDoUsuario(usuario)
-    expect(dadosParaAtualizacao({ ...dados, altura_cm: '185', peso_kg: '80,5', envergadura_cm: '190', frequencia_semanal: '4' }).perfil_aluno)
-      .toEqual({ altura: '1.85', peso: '80.50', envergadura: '1.90', frequencia_semanal: 4, objetivos: 'Melhorar o arremesso' })
+    expect(dadosParaAtualizacao({ ...dados, altura_cm: '185', peso_kg: '80,5', envergadura_cm: '190', frequencia_semanal: '4' }))
+      .toEqual({ nome: 'Beatriz', sobrenome: 'Costa', apelido: 'beatriz.costa', email: 'beatriz@example.com', telefone: '61999990000', altura: '1.85', peso: '80.50', envergadura: '1.90', objetivos: 'Melhorar o arremesso' })
   })
 
   it('exige intervalo coerente para frequência e medidas', () => {
@@ -68,13 +69,13 @@ describe('US07 — Editar informações do próprio perfil', () => {
     expect(erros.altura_cm).toBeTruthy()
     expect(erros.peso_kg).toBeTruthy()
     expect(erros.envergadura_cm).toBeTruthy()
-    expect(erros.frequencia_semanal).toBeTruthy()
+    expect(erros.frequencia_semanal).toBeUndefined() // não editável pela US07
   })
 
   it('rejeita data de nascimento impossível, e-mail incorreto e apelido com espaços', () => {
     const dados = dadosDoUsuario(usuario)
     const erros = validarDadosAluno({ ...dados, data_nascimento: '2003-02-30', email: 'sem-arroba', apelido: 'um apelido' })
-    expect(erros.data_nascimento).toBeTruthy()
+    expect(erros.data_nascimento).toBeUndefined() // não editável pela US07
     expect(erros.email).toBeTruthy()
     expect(erros.apelido).toBeTruthy()
   })
@@ -92,7 +93,7 @@ describe('US07 — Editar informações do próprio perfil', () => {
     await userEvent.setup().click(screen.getByRole('button', { name: 'Salvar alterações' }))
     await waitFor(() => expect(salvar).toHaveBeenCalledOnce())
     expect(salvar.mock.calls[0][0].apelido).toBe('beatriz.costa')
-    expect(salvar.mock.calls[0][0].perfil_aluno.altura).toBe('1.72')
+    expect(salvar.mock.calls[0][0].altura).toBe('1.72')
     expect(await screen.findByText('Alterações salvas com sucesso.')).toBeTruthy()
   })
 
@@ -104,10 +105,29 @@ describe('US07 — Editar informações do próprio perfil', () => {
     expect(screen.queryByText('Alterações salvas com sucesso.')).toBeNull()
   })
 
+  it('valida o telefone editável e permite apagar o contato opcional', async () => {
+    const salvar = vi.fn().mockResolvedValue(undefined)
+    renderizar(salvar)
+    const pessoa = userEvent.setup()
+    const telefone = screen.getByLabelText('Telefone')
+    const botao = screen.getByRole('button', { name: 'Salvar alterações' })
+
+    expect(telefone).toBeEnabled()
+    await pessoa.clear(telefone)
+    await pessoa.type(telefone, 'ramal')
+    await pessoa.click(botao)
+    expect(telefone).toHaveAttribute('aria-invalid', 'true')
+    expect(salvar).not.toHaveBeenCalled()
+
+    await pessoa.clear(telefone)
+    await pessoa.click(botao)
+    await waitFor(() => expect(salvar).toHaveBeenCalledWith(expect.objectContaining({ telefone: '' })))
+  })
+
   it('mantém a navegação da US53 compatível com os testes existentes', () => {
     const editar = vi.fn()
     const logout = vi.fn()
-    render(<MinhaContaAluno usuario={usuario} logout={logout} editarDados={editar} />)
+    render(<MinhaContaAluno usuario={usuario} logout={logout} editarDados={editar} />, { wrapper: MemoryRouter })
     fireEvent.click(screen.getByRole('button', { name: 'Editar meus dados' }))
     expect(editar).toHaveBeenCalledOnce()
   })

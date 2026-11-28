@@ -19,7 +19,7 @@ describe('ExerciseForm', () => {
     expect(screen.getByLabelText(/fundamento/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/objetivo/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/orientações/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/erros comuns/i)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/erros comuns/i)).not.toBeInTheDocument();
     expect(screen.getByLabelText(/vídeo base/i)).toBeInTheDocument();
   });
 
@@ -90,7 +90,6 @@ describe('ExerciseForm', () => {
       fundamento: 'Arremesso',
       objetivo: 'Melhorar a finalização próxima à cesta.',
       orientacoes: undefined,
-      errosComuns: undefined,
       videoUrl: undefined,
     });
   });
@@ -128,11 +127,6 @@ describe('ExerciseForm', () => {
     );
 
     await usuario.type(
-      screen.getByLabelText(/erros comuns/i),
-      'Não olhar para a cesta durante a finalização.'
-    );
-
-    await usuario.type(
       screen.getByLabelText(/vídeo base/i),
       'https://www.youtube.com/watch?v=exemplo'
     );
@@ -146,7 +140,6 @@ describe('ExerciseForm', () => {
       fundamento: 'Arremesso',
       objetivo: 'Melhorar a finalização.',
       orientacoes: 'Realizar a bandeja utilizando a mão dominante.',
-      errosComuns: 'Não olhar para a cesta durante a finalização.',
       videoUrl: 'https://www.youtube.com/watch?v=exemplo',
     });
   });
@@ -229,8 +222,7 @@ describe('ExerciseForm', () => {
     expect(screen.getByLabelText(/orientações/i))
       .toHaveValue('Usar a mão dominante.');
 
-    expect(screen.getByLabelText(/erros comuns/i))
-      .toHaveValue('Não olhar para a cesta.');
+    expect(screen.queryByLabelText(/erros comuns/i)).not.toBeInTheDocument();
 
     expect(screen.getByLabelText(/vídeo base/i))
       .toHaveValue('https://www.youtube.com/watch?v=exemplo');

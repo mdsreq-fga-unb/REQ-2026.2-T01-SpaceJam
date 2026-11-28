@@ -1,5 +1,5 @@
 import type { Usuario } from '../../types/usuario'
-import './MinhaContaAluno.css'
+import { LayoutAluno } from './LayoutAluno'
 
 type MinhaContaAlunoProps = {
   usuario: Usuario
@@ -7,6 +7,8 @@ type MinhaContaAlunoProps = {
   editarDados?: () => void
   trocarSenha?: () => void
   preferenciasPrivacidade?: () => void
+  treinadorVinculado?: { id: number; nome: string; codigo_convite?: string } | null
+  historicoLesoes?: unknown[] | null
 }
 
 type Medida = string | number | null | undefined
@@ -47,13 +49,20 @@ function formatarNascimento(data?: string | null) {
   return `${dia}/${mes}/${ano}`
 }
 
-export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, preferenciasPrivacidade }: MinhaContaAlunoProps) {
+function descreverLesao(item: unknown): string {
+  if (typeof item === 'string') return item
+  if (item && typeof item === 'object' && 'descricao' in item && typeof item.descricao === 'string') {
+    return item.descricao
+  }
+  return 'Lesão registrada'
+}
+
+export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, preferenciasPrivacidade, treinadorVinculado, historicoLesoes }: MinhaContaAlunoProps) {
   const nome =
     [usuario.first_name, usuario.last_name]
       .filter(Boolean)
       .join(' ') || usuario.apelido
 
-  const nomeCurto = usuario.first_name || usuario.apelido
   const perfil = usuario.perfil_aluno
 
   const frequencia =
@@ -64,33 +73,7 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
       : 'Não informado'
 
   return (
-    <div className="conta-aluno">
-      <header className="conta-aluno__cabecalho">
-        <div className="conta-aluno__marca">
-          <picture className="conta-aluno__logo-v2">
-            <source media="(min-width: 900px)" srcSet="/space-jam-logo-v2-desktop.png" />
-            <img src="/space-jam-logo-v2-mobile.png" alt="" width="36" height="38" />
-          </picture>
-          <span className="conta-aluno__nome-marca">SPACE JAM</span>
-        </div>
-
-        <nav className="conta-aluno__navegacao" aria-label="Seções do sistema">
-          <span>Treinos</span>
-          <span>Histórico</span>
-          <span>Feedbacks</span>
-          <span aria-current="page">Conta</span>
-        </nav>
-
-        <div className="conta-aluno__usuario">
-          <span className="conta-aluno__nome-curto">{nomeCurto}</span>
-          <div className="conta-aluno__perfil-desktop">
-            <strong>{nome}</strong>
-            <span>Aluno</span>
-          </div>
-        </div>
-      </header>
-
-      <main className="conta-aluno__conteudo">
+    <LayoutAluno usuario={usuario} secao="Conta">
         <div className="conta-aluno__titulo">
           <h1>Minha conta</h1>
           <p>{nome}</p>
@@ -103,6 +86,7 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
               <div><dt>Apelido:</dt><dd>{usuario.apelido || 'Não informado'}</dd></div>
               <div><dt>E-mail:</dt><dd>{usuario.email || 'Não informado'}</dd></div>
               <div><dt>Nascimento:</dt><dd>{formatarNascimento(usuario.data_nascimento)}</dd></div>
+              {treinadorVinculado && <div><dt>Treinador vinculado:</dt><dd>{treinadorVinculado.nome}</dd></div>}
             </dl>
           </section>
 
@@ -118,12 +102,18 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
 
           <section className="conta-aluno__cartao conta-aluno__cartao--objetivos" aria-labelledby="objetivos">
             <h2 id="objetivos">Objetivos</h2>
-            <p className="conta-aluno__indisponivel">{perfil?.objetivos?.trim() || 'Não informado'}</p>
+                        <p className="conta-aluno__indisponivel">{perfil?.objetivos?.trim() || 'Nenhum objetivo registrado'}</p>
           </section>
 
           <section className="conta-aluno__cartao conta-aluno__cartao--lesoes" aria-labelledby="historico-lesoes">
             <h2 id="historico-lesoes">Histórico de lesões</h2>
-            <p className="conta-aluno__indisponivel">Histórico ainda não disponível para consulta.</p>
+            {historicoLesoes == null ? (
+              <p className="conta-aluno__indisponivel">Histórico ainda não disponível para consulta.</p>
+            ) : historicoLesoes.length === 0 ? (
+              <p className="conta-aluno__indisponivel">Nenhuma lesão registrada.</p>
+            ) : (
+              <ul>{historicoLesoes.map((lesao, indice) => <li key={indice}>{descreverLesao(lesao)}</li>)}</ul>
+            )}
           </section>
         </div>
 
@@ -136,7 +126,6 @@ export function MinhaContaAluno({ usuario, logout, editarDados, trocarSenha, pre
           <button type="button" disabled>Solicitar exclusão dos dados</button>
           <button className="conta-aluno__sair" type="button" onClick={logout}>Sair da conta</button>
         </div>
-      </main>
-    </div>
+    </LayoutAluno>
   )
 }

@@ -1,6 +1,7 @@
 
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { MemoryRouter } from 'react-router'
 import { describe, expect, it, vi } from 'vitest'
 import { MinhaContaAluno } from '../src/features/alunos/MinhaContaAluno'
 import type { Usuario } from '../src/types/usuario'
@@ -24,7 +25,7 @@ const aluno: Usuario = {
 
 describe('US53 — Consultar próprios dados cadastrais', () => {
   it('exibe os dados reais do aluno', () => {
-    render(<MinhaContaAluno usuario={aluno} logout={vi.fn()} />)
+    render(<MinhaContaAluno usuario={aluno} logout={vi.fn()} />, { wrapper: MemoryRouter })
 
     expect(screen.getByRole('heading', { name: 'Minha conta' })).toBeTruthy()
     expect(screen.getByText('beatriz.costa')).toBeTruthy()
@@ -44,17 +45,29 @@ describe('US53 — Consultar próprios dados cadastrais', () => {
       perfil_aluno: null,
     }
 
-    render(<MinhaContaAluno usuario={semPerfil} logout={vi.fn()} />)
+    render(<MinhaContaAluno usuario={semPerfil} logout={vi.fn()} />, { wrapper: MemoryRouter })
 
     expect(screen.getAllByText('Não informado').length).toBeGreaterThan(0)
     expect(screen.queryByText('185 cm')).toBeNull()
     expect(screen.queryByText('Melhorar o arremesso')).toBeNull()
   })
 
+  it('informa quando não há objetivos registrados (US59 CA04)', () => {
+    const semObjetivos: Usuario = {
+      ...aluno,
+      perfil_aluno: { ...aluno.perfil_aluno!, objetivos: '' },
+    }
+
+    render(<MinhaContaAluno usuario={semObjetivos} logout={vi.fn()} />, { wrapper: MemoryRouter })
+
+    expect(screen.getByText('Nenhum objetivo registrado')).toBeTruthy()
+    expect(screen.queryByText('Melhorar o arremesso')).toBeNull()
+  })
+
   it('permite sair da conta', async () => {
     const logout = vi.fn()
 
-    render(<MinhaContaAluno usuario={aluno} logout={logout} />)
+    render(<MinhaContaAluno usuario={aluno} logout={logout} />, { wrapper: MemoryRouter })
 
     await userEvent.setup().click(
       screen.getByRole('button', { name: 'Sair da conta' }),

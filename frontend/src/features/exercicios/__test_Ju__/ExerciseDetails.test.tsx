@@ -39,9 +39,10 @@ describe('ExerciseDetails', () => {
       screen.getByText('Utilizar a mão dominante.')
     ).toBeInTheDocument();
 
-    expect(
-      screen.getByText('Não olhar para a cesta.')
-    ).toBeInTheDocument();
+    // O texto antigo de erros comuns não aparece mais no detalhe:
+    // a lista fica na tela "Erros e orientações" (US37).
+    expect(screen.queryByRole('heading', { name: 'Erros comuns' })).not.toBeInTheDocument();
+    expect(screen.queryByText('Não olhar para a cesta.')).not.toBeInTheDocument();
 
     expect(
       screen.getByRole('link', { name: /assistir vídeo/i })
@@ -64,7 +65,7 @@ describe('ExerciseDetails', () => {
       />
     );
 
-    expect(screen.getAllByText('Não informado')).toHaveLength(3);
+    expect(screen.getAllByText('Não informado')).toHaveLength(2);
 
     expect(
       screen.queryByRole('link', { name: /assistir vídeo/i })

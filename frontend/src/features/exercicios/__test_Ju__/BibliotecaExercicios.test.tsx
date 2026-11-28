@@ -124,7 +124,7 @@ describe('BibliotecaExercicios', () => {
     await cadastrarExercicio(usuario, 'Arremesso de bandeja');
     await cadastrarExercicio(usuario, 'Passe de peito');
 
-    const campoBusca = screen.getByPlaceholderText('Buscar:');
+    const campoBusca = screen.getByRole('searchbox', { name: 'Buscar por nome' });
 
     await usuario.type(campoBusca, 'Arremesso');
 
@@ -135,6 +135,27 @@ describe('BibliotecaExercicios', () => {
     expect(
       screen.queryByRole('button', { name: 'Passe de peito' })
     ).not.toBeInTheDocument();
+  });
+
+  it('busca por parte do nome, informa quando não há resultado e permite limpar', async () => {
+    const usuario = userEvent.setup();
+    banco = [{ id: 1, nome: 'Arremesso de três pontos', fundamento: 'Arremesso', objetivo: 'Controle' }];
+    renderizarBiblioteca();
+    const campoBusca = screen.getByRole('searchbox', { name: 'Buscar por nome' });
+
+    await usuario.type(campoBusca, '  ARREMESSO  ');
+    expect(await screen.findByRole('button', { name: 'Arremesso de três pontos' })).toBeVisible();
+    expect(screen.getByRole('status')).toHaveTextContent('1 exercício encontrado.');
+    expect(screen.queryByRole('button', { name: /^Buscar$/ })).not.toBeInTheDocument();
+    await usuario.keyboard('{Enter}');
+    expect(screen.getByRole('region', { name: 'Resultados da busca' })).toHaveFocus();
+    await usuario.clear(campoBusca);
+    await usuario.type(campoBusca, 'Gancho');
+    expect(screen.getByText('Nenhum exercício encontrado.')).toBeVisible();
+    await usuario.click(screen.getByRole('button', { name: 'Limpar busca' }));
+    expect(campoBusca).toHaveValue('');
+    expect(campoBusca).toHaveFocus();
+    expect(screen.getByRole('button', { name: 'Arremesso de três pontos' })).toBeVisible();
   });
 
   // TESTE 15: Abrir detalhes
@@ -242,6 +263,7 @@ describe('BibliotecaExercicios', () => {
     await usuario.click(await screen.findByRole('button', { name: 'Passe de peito' }));
     await usuario.click(await screen.findByRole('button', { name: /editar exercício/i }));
     await usuario.type(screen.getByLabelText(/nome do exercício/i), ' atualizado');
+    await usuario.click(screen.getByRole('button', { name: 'Voltar à biblioteca' }));
     await usuario.click(screen.getByRole('button', { name: /adicionar exercício/i }));
 
     expect(screen.getByRole('heading', { name: 'Novo exercício' })).toBeInTheDocument();

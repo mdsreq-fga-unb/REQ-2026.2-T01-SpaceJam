@@ -25,6 +25,7 @@ export function RedefinirSenha({ token, onRedefinir }: Props) {
   const [aviso, setAviso] = useState('')
   const [concluido, setConcluido] = useState(false)
   const [linkInvalido, setLinkInvalido] = useState(false)
+  const [erroToken, setErroToken] = useState('')
   const [enviando, setEnviando] = useState(false)
   const pendente = useRef(false)
   const campoNovaSenha = useRef<HTMLInputElement>(null)
@@ -58,7 +59,18 @@ export function RedefinirSenha({ token, onRedefinir }: Props) {
       setDados(INICIAIS)
       setVisiveis({})
     } catch (falha) {
-      if (falha instanceof ApiError && [401, 404, 410].includes(falha.status)) {
+      if (falha instanceof ApiError && (
+        [401, 404, 410].includes(falha.status) ||
+        falha.campos.codigo?.some(c => ['token_invalido', 'token_expirado', 'token_usado'].includes(c))
+      )) {
+        const codigo = falha.campos.codigo?.[0]
+        setErroToken(codigo === 'token_expirado'
+          ? 'Este link expirou. Solicite um novo link.'
+          : codigo === 'token_usado'
+            ? 'Este link já foi utilizado ou revogado. Solicite um novo link.'
+            : codigo === 'token_invalido'
+              ? 'Este link de recuperação é inválido. Solicite um novo link.'
+              : 'Este link é inválido, expirou ou já foi utilizado.')
         setLinkInvalido(true)
         setDados(INICIAIS)
       } else {
@@ -77,7 +89,7 @@ export function RedefinirSenha({ token, onRedefinir }: Props) {
     >
       {!token || linkInvalido ? (
         <div className="recuperacao-senha__estado" role="alert">
-          <p>Este link é inválido, expirou ou já foi utilizado.</p>
+          <p>{erroToken || 'Este link é inválido, expirou ou já foi utilizado.'}</p>
           <Link to="/recuperar-senha" className="recuperacao-senha__link">Solicitar outro link</Link>
         </div>
       ) : concluido ? (
