@@ -1,0 +1,75 @@
+/* US42 — Cartão "Vídeo da execução" no exercício do treino. */
+
+.video-cartao {
+  gap: 12px;
+}
+
+.video-cartao-dados {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.video-cartao-feedback {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #141417;
+}
+
+.video-cartao-feedback p {
+  color: var(--treino-texto);
+}
+
+.video-cartao .video-cartao-aviso {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #20382c;
+  color: #b6ebc6;
+  font-weight: 600;
+}
+
+.video-cartao .video-cartao-nota {
+  color: var(--treino-laranja);
+}
+
+.video-cartao-bloqueio {
+  padding: 14px 16px;
+  gap: 4px;
+}
+
+.video-cartao-bloqueio h3 {
+  font: 700 16px/22px Barlow, sans-serif;
+}
+
+.video-cartao-limites {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.video-cartao .treino-acoes {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Desktop: o vídeo ocupa a coluna da direita em duas linhas, e a coluna da esquerda
+   empilha "Como executar" e "Seu feedback" sem o vão deixado pela altura do vídeo. */
+@media (min-width: 900px) {
+  /* Só quando há "Como executar" antes; sem ele, o fluxo normal da grade já fica certo.
+     1ª linha do tamanho de "Como executar"; a 2ª absorve a altura que sobra do vídeo,
+     para o espaço entre os cartões da esquerda continuar igual ao da grade. */
+  .treino-exercicio-conteudo:has(> * + .video-cartao) {
+    grid-template-rows: auto 1fr;
+  }
+
+  .treino-exercicio-conteudo > * + .video-cartao {
+    grid-column: 2;
+    grid-row: span 2;
+    align-self: stretch;
+  }
+
+  /* Colunas da mesma altura: o cartão de baixo estica até a base do vídeo (e vice-versa). */
+  .treino-exercicio-conteudo > * + .video-cartao ~ * {
+    align-self: stretch;
+  }
+}
