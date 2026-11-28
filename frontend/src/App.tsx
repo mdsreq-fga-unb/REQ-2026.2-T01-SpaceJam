@@ -26,6 +26,9 @@ import { TreinadorNovoPlanejamento } from './features/treinador/TreinadorNovoPla
 import { TreinadorNovoTreino } from './features/treinador/TreinadorNovoTreino'
 import {TreinadorEditarPlanejamento, TreinadorPlanejamentosAnteriores, TreinadorEditarTreino,} from './features/treinador/TreinadorHistoriasComplementares'
 import { TreinoPage } from './features/treinos/TreinoPage'
+import { EnviarVideoPage } from './features/videos/EnviarVideoPage'
+import { AssistirVideoPage } from './features/videos/AssistirVideoPage'
+import { MeusVideosPage } from './features/videos/MeusVideosPage'
 
 export default function App() {
   return (
@@ -238,6 +241,27 @@ export default function App() {
                 <VideoDemonstracaoExercicio />
               </RotaProtegida>
             }
+          />
+          {/* US42 — vídeo de execução: envio só do aluno; assistir, aluno dono ou treinador (CA04) */}
+          <Route
+            path="/treinos/meus-videos"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <MeusVideosPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinos/:treinoId/exercicios/:itemId/video/enviar"
+            element={
+              <RotaProtegida papel="ALUNO">
+                <EnviarVideoPage />
+              </RotaProtegida>
+            }
+          />
+          <Route
+            path="/treinos/:treinoId/exercicios/:itemId/video"
+            element={<RotaProtegida><AssistirVideoPage /></RotaProtegida>}
           />
           <Route path="/treinos/:treinoId" element={<RotaProtegida><TreinoPage /></RotaProtegida>} />
           <Route path="*" element={<Navigate to="/" replace />} />
