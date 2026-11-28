@@ -181,32 +181,58 @@ O link de envio vale para um único caminho, escolhido pelo Django, não sobresc
 
 ### Fluxo
 
-1. `POST /api/treinos/exercicios/<item_id>/video/upload-url/` (aluno dono do treino) com `{ "nomeArquivo", "tipo", "tamanhoBytes", "duracaoSegundos" }`. Responde `urlUpload`, `tipoConteudo`, `comprovante` e `substituiVideo`.
+1. `POST /api/treinos/exercicios/<item_id>/video/upload-url/` (aluno dono do treino) com `{ "nomeArquivo", "tipo", "tamanhoBytes", "duracaoSegundos" }`. Responde `urlUpload`, `tipoConteudo`, `comprovante`, `modo` (`NOVO`, `SUBSTITUICAO` ou `NOVA_TENTATIVA`) e `substituiVideo`. O app só chama esta rota **depois** que o aluno confirma na prévia (RNF15/CA03).
 2. O app envia o arquivo com `PUT` em `urlUpload` (`XMLHttpRequest` + `FormData`, com o tipo `tipoConteudo`).
-3. `POST /api/treinos/exercicios/<item_id>/video/` com `{ "comprovante" }`. Cria a ficha (`201`) ou substitui o vídeo anterior e apaga o antigo (`200`, CA05).
-4. `GET /api/treinos/exercicios/<item_id>/video/` (aluno dono ou treinador da carteira, CA04). Responde os dados do vídeo e `urlVisualizacao`, válida por 10 minutos. Se vencer, chame de novo.
+3. `POST /api/treinos/exercicios/<item_id>/video/` com `{ "comprovante" }`. Confere o arquivo real e cria a submissão (`201`), substitui o vídeo ainda não avaliado e apaga o antigo (`200`, CA05) ou abre nova tentativa (`201`, RN09/RN06). A resposta traz `modo`.
+4. `GET /api/treinos/exercicios/<item_id>/video/` (aluno dono ou treinador da carteira, CA04). Responde o vídeo atual e `urlVisualizacao`, válida por 10 minutos (se vencer, chame de novo). `?tentativa=N` traz uma submissão anterior.
+5. `GET /api/treinos/meus-videos/` (só aluno). Lista todos os vídeos do aluno, de todos os treinos (filtro opcional `?treino=<id>`), com `exercicioNome`, `treinoId`, `treinoNome`, `tentativa`, `status` (`AGUARDANDO_AVALIACAO` ou `AVALIADO`), `feedbackTreinador`, `atual` e, no vídeo atual de cada exercício, `envio` (abaixo). Tentativas antigas vêm com `atual: false` e `envio: null`.
 
-`<item_id>` é o `exercicios[].id` de `GET /api/treinos/<treino_id>/`, que também traz `exercicios[].videoExecucao`: `null` sem vídeo ("Enviar"), ou os dados do vídeo ("Substituir").
+`<item_id>` é o `exercicios[].id` de `GET /api/treinos/<treino_id>/`, que também traz por exercício `status`, `videoExecucao` (vídeo da submissão atual ou `null`) e `envioVideo`.
+
+### O que o aluno pode fazer (`envioVideo` / `envio`)
+
+`{ "permitido", "modo", "motivo" }`, decidido em `apps/videos/tentativas.py` e aplicado igual nas rotas de envio. A tela mostra só o botão que o servidor vai aceitar:
+
+| Situação | `modo` | `motivo` | Botão |
+| --- | --- | --- | --- |
+| Sem vídeo | `NOVO` | — | Enviar vídeo |
+| Vídeo sem feedback do treinador (RN10) | `SUBSTITUICAO` | — | Substituir vídeo |
+| Vídeo avaliado e exercício (ou treino) devolvido para "Corrigir/Refazer" (RN09/RN06) | `NOVA_TENTATIVA` | — | Enviar nova tentativa |
+| Vídeo avaliado, sem devolução | — | `VIDEO_AVALIADO` | nenhum (vídeo imutável) |
+| Exercício validado como "Concluído" (RN06) | — | `EXERCICIO_CONCLUIDO` | nenhum |
+| Treino concluído (RN07) | — | `TREINO_CONCLUIDO` | nenhum |
+
+Cada submissão tem um único vídeo (`VideoExecucao.tentativa`, único por exercício). Uma nova tentativa não apaga a anterior: ela fica no histórico com o feedback recebido. O feedback do treinador (`FeedbackTreinador`, um por vídeo) já existe no banco; as rotas para o treinador registrar e editar são da US45/US46. Até lá, ele pode ser lançado pelo admin para testes.
 
 ### Limites (RN09, RNF06, RNF13)
 
-Formatos `.mp4`/`.mov`, até `VIDEO_MAX_SEGUNDOS` (60) e `VIDEO_MAX_BYTES` (50 MB no plano Free do Supabase, abaixo dos 100 MB da RN09). O tamanho é conferido em quatro pontos: no app, no passo 1, pelo próprio bucket durante o envio (testado: 51 MB recusado com `413`) e no passo 3, com o tamanho real do arquivo. A duração vem do app; o servidor não abre o vídeo no MVP.
+Formatos `.mp4`/`.mov`, até `VIDEO_MAX_SEGUNDOS` (60) e `VIDEO_MAX_BYTES` (**50 MB por arquivo**, limite adotado pelo projeto; a documentação será ajustada).
 
-### Erros próprios (`{ "detail", "code" }`)
+- **Tamanho:** conferido no app, no passo 1, pelo próprio bucket durante o envio (testado: 51 MB recusado com `413`) e no passo 3, com o tamanho real do arquivo.
+- **Formato:** extensão e tipo no passo 1; tipo real do arquivo no passo 3; e a estrutura MP4/MOV do arquivo (um `.avi` renomeado é recusado).
+- **Duração:** informada pelo app no passo 1 e **lida do próprio arquivo** no passo 3 (`apps/videos/midia.py`). O servidor busca por Range HTTP só os cabeçalhos das caixas e o `moov/mvhd` (alguns KB), sem baixar nem decodificar o vídeo. A duração salva é a real, arredondada para cima.
+
+Arquivo recusado no passo 3 é apagado do Storage antes da resposta.
+
+### Erros (`{ "detail", "code" }` em todas as respostas de erro destas rotas)
 
 | Status | `code` | Quando |
 | --- | --- | --- |
-| `400` | `COMPROVANTE_INVALIDO` | Comprovante alterado, de outro exercício ou aluno, ou com mais de 2 horas |
-| `400` | `ARQUIVO_NAO_ENCONTRADO` / `ARQUIVO_INVALIDO` | O arquivo não chegou, ou chegou fora do formato ou do tamanho (e é apagado) |
-| `404` | `VIDEO_NAO_ENCONTRADO` | Exercício sem vídeo |
-| `409` | `TREINO_CONCLUIDO` | Treino já concluído pelo treinador |
+| `400` | `ARQUIVO_INVALIDO` | Passo 1: dados fora dos limites (vem também `campos: { "<campo>": ["mensagem"] }`). Passo 3: arquivo real fora do formato, do tamanho ou da duração, ou ilegível (e é apagado) |
+| `400` | `COMPROVANTE_INVALIDO` | Comprovante ausente, alterado, de outro exercício ou aluno, ou com mais de 2 horas |
+| `400` | `ARQUIVO_NAO_ENCONTRADO` | O arquivo não chegou ao Storage |
+| `401` | `NAO_AUTENTICADO` | Sem login |
+| `403` | `SEM_PERMISSAO` / `TERMOS_PENDENTES` | Outro aluno, treinador de outra carteira, papel errado / termos não aceitos (RN15) |
+| `404` | `NAO_ENCONTRADO` / `VIDEO_NAO_ENCONTRADO` | Exercício inexistente / exercício sem vídeo (ou tentativa inexistente) |
+| `409` | `VIDEO_AVALIADO` | Treinador já registrou feedback (RN10), inclusive se avaliou enquanto o arquivo subia |
+| `409` | `EXERCICIO_CONCLUIDO` / `TREINO_CONCLUIDO` | Exercício validado / treino concluído pelo treinador |
 | `503` | `ARMAZENAMENTO_INDISPONIVEL` | Storage fora do ar ou `.env` sem as variáveis `SUPABASE_*` |
 
-Campos inválidos no passo 1 seguem o formato do DRF (`{ "<campo>": ["mensagem"] }`). Acesso segue o padrão: `401` sem login, `403` para outro aluno, treinador de outra carteira ou termos pendentes.
+Qualquer erro que o app não trate de forma específica pode cair na tela genérica "Não foi possível concluir", usando `detail` como texto.
 
 ### Configuração e cuidados
 
 - Variáveis em `.env.example`: `SUPABASE_URL`, `SUPABASE_SECRET_KEY` (só no backend), `SUPABASE_BUCKET_VIDEOS`, `SUPABASE_PREFIXO` (a sua pasta no bucket compartilhado, como `dev-maria`), `VIDEO_MAX_BYTES` e `VIDEO_MAX_SEGUNDOS`.
 - O bucket é **privado** e sem policies, com o mesmo limite de tamanho de `VIDEO_MAX_BYTES` e os tipos `video/mp4, video/quicktime`.
-- Apagar a ficha do vídeo (edição ou exclusão do treino, exclusão da conta) apaga o arquivo do Storage (`apps/videos/signals.py`, RN05).
-- Um vídeo por exercício, sem histórico de tentativas. A RN10/US43 (bloquear a troca depois do feedback do treinador) entra quando esse feedback existir.
+- Apagar a ficha do vídeo (edição ou exclusão do treino, exclusão da conta) apaga o arquivo do Storage (`apps/videos/signals.py`, RN05), incluindo todas as tentativas.
+- **Envios não confirmados (RNF15):** se o app sobe o arquivo e fecha antes do passo 3, o arquivo fica sem ficha. `python manage.py limpar_videos_orfaos` (ou `--simular`) apaga os que têm mais de 2 horas, só na pasta `SUPABASE_PREFIXO`. Rode periodicamente (ex.: cron diário).
