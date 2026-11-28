@@ -1,4 +1,5 @@
 import type { ReactNode, Ref } from 'react'
+import { Link, useInRouterContext } from 'react-router'
 import type { Usuario } from '../../types/usuario'
 import '@fontsource/barlow/latin-400.css'
 import '@fontsource/barlow/latin-500.css'
@@ -18,6 +19,7 @@ interface TreinoLayoutProps {
 
 export function TreinoLayout({ usuario, links, secaoAtiva = 'Treinos', children }: TreinoLayoutProps) {
   const treinador = usuario.papel === 'TREINADOR'
+  const dentroDoRoteador = useInRouterContext()
   const perfil = treinador ? 'Treinador' : 'Aluno'
   const nome = [usuario.first_name, usuario.last_name].filter(Boolean).join(' ') || usuario.apelido
   const secoes = treinador
@@ -38,9 +40,12 @@ export function TreinoLayout({ usuario, links, secaoAtiva = 'Treinos', children 
       <nav className="treino-navegacao" aria-label={treinador ? 'Seções do treinador' : 'Seções do aluno'}>
         {secoes.map(secao => {
           const destino = links?.[secao]
-          if (destino) return (
-            <a key={secao} href={destino} aria-current={secao === secaoAtiva ? 'location' : undefined}>{secao}</a>
-          )
+          const atual = secao === secaoAtiva ? 'location' : undefined
+          // Navegação interna pelo roteador: troca a tela sem recarregar o app (nem a sessão).
+          // Fora de um roteador (alguns testes renderizam o layout sozinho), cai no <a> comum.
+          if (destino) return dentroDoRoteador
+            ? <Link key={secao} to={destino} aria-current={atual}>{secao}</Link>
+            : <a key={secao} href={destino} aria-current={atual}>{secao}</a>
           return secao === secaoAtiva
             ? <span key={secao} aria-current="page">{secao}</span>
             : <span key={secao} aria-disabled="true">{secao}</span>
