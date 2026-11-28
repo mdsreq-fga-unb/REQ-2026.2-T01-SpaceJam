@@ -41,6 +41,21 @@
   text-decoration: none;
 }
 
+/* Celular: selo sempre abaixo do título, para o texto ficar no mesmo lugar em
+   todos os cartões, seja qual for o tamanho do nome do treino. */
+@media (max-width: 719px) {
+  .meu-planejamento__treino {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .meu-planejamento__treino > div {
+    flex: none;
+    width: 100%;
+  }
+}
+
 .meu-planejamento__treino:hover {
   border-color: var(--conta-laranja);
 }
