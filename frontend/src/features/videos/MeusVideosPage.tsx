@@ -3,6 +3,7 @@ import { Link } from 'react-router'
 import { ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
 import { TituloTreino, TreinoLayout } from '../treinos/TreinoLayout'
+import { navegacaoAluno } from '../treinos/navegacao'
 import { formatarDuracao } from './verificacaoVideo'
 import {
   caminhoEnvio, caminhoExercicio, caminhoVideo, formatarDataHora, listarMeusVideos, rotuloDoModo, textoDoStatus,
@@ -201,7 +202,7 @@ export function MeusVideosPage() {
   const { usuario } = useAuth()
   if (!usuario) return null
   return (
-    <TreinoLayout usuario={usuario} links={{ Conta: '/', Treinos: '/treinos' }}>
+    <TreinoLayout usuario={usuario} links={navegacaoAluno}>
       <ListaMeusVideos />
     </TreinoLayout>
   )
