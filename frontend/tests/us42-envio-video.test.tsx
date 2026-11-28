@@ -105,7 +105,8 @@ describe('US42 — envio do vídeo', () => {
       [CONFIRMAR]: { corpo: { ...video(), modo: 'NOVO' }, status: 201 },
     })
     await pessoa.click(await screen.findByRole('link', { name: 'Enviar vídeo da execução' }))
-    expect(await screen.findByRole('heading', { name: 'Enviar vídeo da execução' })).toHaveFocus()
+    const titulo = await screen.findByRole('heading', { name: 'Enviar vídeo da execução' })
+    await waitFor(() => expect(titulo).toHaveFocus())
     expect(screen.getByText('Só você e Lucas, seu treinador.')).toBeVisible()
     expect(screen.getByRole('button', { name: 'Escolher arquivo de vídeo' })).toBeVisible()
 
@@ -257,7 +258,7 @@ describe('US42 — envio do vídeo', () => {
 
     await pessoa.click(screen.getByRole('button', { name: 'Cancelar envio' }))
     const dialogo = screen.getByRole('alertdialog', { name: 'Cancelar o envio?' })
-    expect(within(dialogo).getByRole('button', { name: 'Continuar enviando' })).toHaveFocus()
+    await waitFor(() => expect(within(dialogo).getByRole('button', { name: 'Continuar enviando' })).toHaveFocus())
     await pessoa.keyboard('{Escape}')
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument()
 

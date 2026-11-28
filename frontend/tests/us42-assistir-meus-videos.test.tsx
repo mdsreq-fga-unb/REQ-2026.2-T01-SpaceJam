@@ -38,7 +38,8 @@ describe('US42 — assistir ao vídeo enviado (CA04)', () => {
       'GET /api/treinos/14/': devolvido,
       [VIDEO_ATUAL]: paraAssistir({ tentativa: 2, status: 'AVALIADO', feedbackTreinador: feedbackLucas }),
     })
-    expect(await screen.findByRole('heading', { name: 'Drible alternado' })).toHaveFocus()
+    const titulo = await screen.findByRole('heading', { name: 'Drible alternado' })
+    await waitFor(() => expect(titulo).toHaveFocus())
     expect(screen.getByLabelText('Vídeo da execução: Drible alternado, tentativa 2'))
       .toHaveAttribute('src', 'https://storage.exemplo/v.mp4?token=2')
     expect(screen.getByText('Avaliado por Lucas')).toBeVisible()
@@ -122,7 +123,8 @@ describe('US42 — Meus vídeos', () => {
         ],
       },
     })
-    expect(await screen.findByRole('heading', { name: 'Meus vídeos' })).toHaveFocus()
+    const titulo = await screen.findByRole('heading', { name: 'Meus vídeos' })
+    await waitFor(() => expect(titulo).toHaveFocus())
     expect(screen.getByText('2 exercícios com vídeo · 1 aguardando avaliação')).toBeVisible()
 
     const treinoA = screen.getByRole('region', { name: 'Treino A' })
