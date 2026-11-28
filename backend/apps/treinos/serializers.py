@@ -7,6 +7,7 @@ from rest_framework.exceptions import APIException, NotFound
 from apps.contas.models import Usuario
 from apps.exercicios.models import Exercicio
 from apps.exercicios.services import snapshot_exercicio
+from apps.videos.models import VideoExecucao
 
 from .models import FeedbackAluno, Planejamento, Treino, TreinoExercicio
 
@@ -289,6 +290,43 @@ def motivo_bloqueio_planejamento(planejamento):
     return None
 
 
+def parametros_enviados(item):
+    return (item["series"], item.get("repeticoes"), item.get("duracao_segundos"))
+
+
+def parametros_atuais(te):
+    return (te.series, te.repeticoes, te.duracao_segundos)
+
+
+def ids_com_video(ids):
+    """Ids, entre `ids`, dos exercícios do treino que já têm algum vídeo de execução."""
+    if not ids:
+        return set()
+    return set(
+        VideoExecucao.objects.filter(item_treino_id__in=ids).values_list("item_treino_id", flat=True)
+    )
+
+
+def mensagem_exercicios_com_video(exercicios, acao):
+    """`acao`: "removido" ou "alterado"."""
+    nomes = sorted(f"\"{te.nome}\"" for te in exercicios)
+    if not nomes:
+        return None
+    if acao == "alterado":
+        if len(nomes) == 1:
+            return (
+                f"O exercício {nomes[0]} já tem vídeo de execução enviado e não pode ter "
+                "séries, repetições ou duração alteradas."
+            )
+        return (
+            f"Os exercícios {', '.join(nomes)} já têm vídeo de execução enviado e não podem ter "
+            "séries, repetições ou duração alteradas."
+        )
+    if len(nomes) == 1:
+        return f"O exercício {nomes[0]} já tem vídeo de execução enviado e não pode ser removido."
+    return f"Os exercícios {', '.join(nomes)} já têm vídeo de execução enviado e não podem ser removidos."
+
+
 # US25 — Editar treino
 def motivo_bloqueio_edicao(treino):
     if not treino.planejamento.is_vigente:
@@ -395,6 +433,23 @@ class TreinoEdicaoSerializer(serializers.ModelSerializer):
             if FeedbackAluno.objects.filter(item_treino_id__in=removidos).exists():
                 raise EdicaoBloqueada("Exercícios com feedback do aluno não podem ser removidos.")
 
+            # US42 / RN10 — vídeo enviado (avaliado ou não) é histórico do aluno:
+            # - remover o exercício apagaria em cascata as tentativas, o feedback do treinador
+            #   e os arquivos;
+            # - mudar séries/repetições/duração faria o vídeo (e o feedback) não corresponder
+            #   mais à prescrição exibida.
+            alterados = {
+                te_id for te_id, item in enviados.items()
+                if parametros_enviados(item) != parametros_atuais(existentes[te_id])
+            }
+            com_video = ids_com_video(removidos | alterados)
+            for ids, acao in ((removidos, "removido"), (alterados, "alterado")):
+                mensagem = mensagem_exercicios_com_video(
+                    (existentes[te_id] for te_id in com_video & ids), acao
+                )
+                if mensagem:
+                    raise EdicaoBloqueada(mensagem)
+
             for te_id in removidos:
                 te = existentes[te_id]
                 if treino_ja_feito or te.status != TreinoExercicio.Status.A_FAZER:
@@ -404,8 +459,8 @@ class TreinoEdicaoSerializer(serializers.ModelSerializer):
 
             for te_id, item in enviados.items():
                 te = existentes[te_id]
-                novos_valores = (item["series"], item.get("repeticoes"), item.get("duracao_segundos"))
-                valores_atuais = (te.series, te.repeticoes, te.duracao_segundos)
+                novos_valores = parametros_enviados(item)
+                valores_atuais = parametros_atuais(te)
                 if (treino_ja_feito or te.status != TreinoExercicio.Status.A_FAZER) and novos_valores != valores_atuais:
                     raise EdicaoBloqueada(
                         f"O exercício \"{te.nome}\" já foi executado e não pode ser alterado."
@@ -506,6 +561,11 @@ def remover_treinos_do_planejamento(planejamento, ids):
             raise EdicaoBloqueada("Este treino já tem exercícios executados e não pode ser removido.")
         if FeedbackAluno.objects.filter(item_treino__treino=treino).exists():
             raise EdicaoBloqueada("Treinos com feedback do aluno não podem ser removidos.")
+        # US42 / RN10 — remover o treino apagaria os vídeos de todos os seus exercícios.
+        if VideoExecucao.objects.filter(item_treino__treino=treino).exists():
+            raise EdicaoBloqueada(
+                f"O treino \"{treino.nome}\" tem exercícios com vídeo de execução enviado e não pode ser removido."
+            )
 
     planejamento.treinos.filter(pk__in=ids).delete()
 
