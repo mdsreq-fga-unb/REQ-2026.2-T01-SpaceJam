@@ -44,3 +44,30 @@ O login conserva os tokens access e refresh e confirma o perfil pelo servidor. A
 `tests/acesso-api-real.test.tsx` é opcional e usa HTTP real. Só execute contra uma cópia descartável do backend, com banco vazio, migrações aplicadas e proxy do Vite ativo. Defina `SPACE_JAM_API_TEST_URL` com a base local (por exemplo `http://127.0.0.1:5173/api`) e `SPACE_JAM_TEST_ACTIVATION_CODE` com o código desse backend de teste, apenas no processo de testes. Execute `npm test -- --pool=threads tests/acesso-api-real.test.tsx`. Não use banco da equipe: a suíte cria contas fictícias e o backend permite apenas um treinador. Na execução padrão esses testes ficam ignorados por falta das variáveis explícitas.
 
 A suíte real verifica cadastro/persistência/vínculo pelo cliente HTTP, login e saída pelos componentes React, consulta e restauração do perfil, rejeição de credenciais/duplicidade e aceite pelo endpoint. Usa DOM de teste (jsdom), não automatiza um navegador real e não comprova a revisão dos documentos de termos. Testes aprovados não substituem revisão independente nem validação do cliente.
+
+## Iteração 4 · dificuldades, feedback do aluno e exclusão de dados
+
+Acesse `/previa/iteracao-4/registros` no Vite para revisar o registro e a
+edição de dificuldade, a consulta pelo treinador, o bloqueio após conclusão
+e a confirmação de exclusão. A prévia usa dados fictícios em memória. A
+alteração de nota fica visível ao trocar de perfil na mesma visita e some
+quando a página é recarregada. A rota fica fora do build de produção.
+
+| História | Frontend | Integração com Guilherme |
+| --- | --- | --- |
+| US12 | O treinador consegue conferir a nota por exercício ou ver “Não registrada” na prévia. | Confirmar o campo de dificuldade no detalhe do treino e validar que só a carteira do treinador é consultável. |
+| US13 e US14 | Seletor inteiro de 1 a 5, edição, reenvio após erro e bloqueio quando o treino é concluído. | Confirmar os métodos e a resposta de criação e edição por exercício prescrito, e como a API indica execução. Validar autoria, persistência e bloqueio após conclusão. |
+| US51 | O fluxo de treino da develop já consulta texto e marca de edição do feedback por exercício em `GET /api/treinos/:treinoId/`. A prévia também mostra a consulta somente para leitura. | Reaproveitar o campo `feedback` da Iteração 3. Validar o acesso pelo histórico de treinos da US28 com Thiago, a preservação após conclusão e o carregamento em até 5 segundos. |
+| US64 | Aviso, confirmação explícita, estado de envio, erro e confirmação simulada. | Confirmar contrato e resposta da solicitação autenticada. Conectar o encerramento de sessão após aceite e validar a revogação do acesso e o processamento dos dados e das mídias. |
+
+Os critérios oficiais permanecem em `docs/criterios_aceitacao.md`. Os testes
+`IteracaoQuatro.test.tsx` e `PreviaRegistrosIteracao4.test.tsx` verificam
+o comportamento da interface. A integração real e a validação no ambiente
+de entrega ainda precisam ser registradas no DoD.
+
+Na verificação local em Chrome, a alteração simulada de dificuldade ficou
+visível na consulta do treinador, o treino concluído manteve a nota somente
+para leitura e a exclusão exigiu confirmação. Um teste separado com a API
+local de treinos exibiu ao treinador o feedback editado de um treino
+concluído, sem ação de edição. A US51 ainda precisa passar pelos critérios
+de acesso via histórico e tempo de resposta no ambiente de entrega.

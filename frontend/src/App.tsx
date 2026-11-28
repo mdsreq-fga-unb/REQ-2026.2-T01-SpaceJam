@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router'
 import { AuthProvider } from './auth/AuthContext'
 import { RotaProtegida } from './auth/RotaProtegida'
@@ -15,6 +16,8 @@ import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosP
 
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
 import BibliotecaExercicios from './features/exercicios/BibliotecaExercicios'
+
+const PreviaRegistrosIteracao4 = import.meta.env.DEV ? lazy(() => import('./pages/PreviaRegistrosIteracao4')) : null
 
 export default function App() {
   return (
@@ -87,6 +90,11 @@ export default function App() {
               </RotaProtegida>
             }
           />
+          {import.meta.env.DEV && PreviaRegistrosIteracao4 && (
+            <Route path="/previa/iteracao-4/registros/:tela?" element={
+              <Suspense fallback={<p role="status">Carregando prévia...</p>}><PreviaRegistrosIteracao4 /></Suspense>
+            } />
+          )}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
