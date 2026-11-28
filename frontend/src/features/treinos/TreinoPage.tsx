@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router'
+import { useLocation, useNavigate, useParams } from 'react-router'
 import { api, ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
+import type { SituacaoEnvio, VideoExecucao } from '../videos/videosApi'
 import { DetalheTreino, type ConsultaTreino } from './DetalheTreino'
 import type { StatusTreino } from './EstadoTreino'
 import type { AlteracaoFeedback, FeedbackAluno } from './FeedbackExercicio'
@@ -29,7 +30,26 @@ interface DetalheApi {
     videoTitulo?: string
     videoDescricao?: string
     feedback?: FeedbackAluno | null
+    videoExecucao?: VideoExecucao | null
+    envioVideo?: SituacaoEnvio
   }[]
+}
+
+/** US42: as telas de vídeo voltam para cá com `?exercicio=<id>` e um aviso no `state`. */
+function useRetornoDoVideo() {
+  const local = useLocation()
+  const navegar = useNavigate()
+  const [retorno] = useState(() => ({
+    exercicio: Number(new URLSearchParams(local.search).get('exercicio')) || undefined,
+    aviso: (local.state as { avisoVideo?: string } | null)?.avisoVideo,
+  }))
+
+  useEffect(() => {
+    // Limpa o endereço: recarregar a página não reabre o aviso (mesmo padrão da US37).
+    if (local.search || local.state) navegar(local.pathname, { replace: true, state: null })
+  }, [local.pathname, local.search, local.state, navegar])
+
+  return retorno
 }
 
 const navegacaoTreino = { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios' }
@@ -51,6 +71,7 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
   const [tentativa, setTentativa] = useState(0)
   const requisicao = useRef<AbortController>(null)
   const navegar = useNavigate()
+  const retornoDoVideo = useRetornoDoVideo()
   const rota = '/treinos/' + id + '/'
 
   useEffect(() => {
@@ -136,6 +157,7 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
         ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
         : undefined}
     onSalvarFeedback={aluno ? salvarFeedback : undefined}
+    treinoId={id} exercicioInicial={retornoDoVideo.exercicio} avisoVideo={retornoDoVideo.aviso}
   />
 }
 
