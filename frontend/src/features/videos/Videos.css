@@ -1,0 +1,112 @@
+/* US42 — Peças comuns das telas de vídeo de execução.
+   Usa as variáveis e os componentes de Treino.css (treino-cartao, treino-botao…). */
+
+.video-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  justify-self: start;
+  min-height: 28px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: #3a2a1c;
+  color: #ffc59a;
+  font: 600 14px/20px Barlow, sans-serif;
+}
+
+.video-status::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.video-status[data-status='AVALIADO'] {
+  background: #20382c;
+  color: #b6ebc6;
+}
+
+.video-player {
+  display: block;
+  width: 100%;
+  max-height: min(70dvh, 560px);
+  border-radius: 12px;
+  background: #000;
+  object-fit: contain;
+}
+
+.video-carregando {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  min-height: 320px;
+  text-align: center;
+}
+
+.video-carregando p {
+  max-width: 34ch;
+  color: var(--treino-secundario);
+}
+
+.video-carregando h1 {
+  font: 700 28px/34px 'Barlow Condensed', sans-serif;
+}
+
+.video-carregando h1:focus {
+  outline: none;
+}
+
+.video-giro {
+  width: 44px;
+  height: 44px;
+  border: 5px solid #3a3a40;
+  border-top-color: var(--treino-laranja);
+  border-radius: 50%;
+  animation: video-giro .9s linear infinite;
+}
+
+@keyframes video-giro {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-giro { animation-duration: 3s; }
+}
+
+/* Telas de vídeo no celular: os botões acompanham a largura dos cartões, sem o
+   limite de 480px das telas de treino. No desktop vale a largura de uma coluna (Treino.css). */
+@media (max-width: 899px) {
+  .video-tela > .treino-acoes {
+    width: 100%;
+  }
+}
+
+/* Telas com player (assistir e prévia do envio): as ações acompanham a largura do vídeo.
+   No celular, largura total; no desktop, a da coluna do vídeo (3fr de 3fr + 2fr, gap 24px). */
+.video-assistir + .treino-acoes,
+.video-previa + .treino-acoes {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .video-assistir + .treino-acoes,
+  .video-previa + .treino-acoes {
+    width: calc((100% - 24px) * 3 / 5);
+  }
+}
+
+/* Link com aparência de botão (navega para outra tela, então é <a>). */
+a.treino-botao {
+  text-align: center;
+  text-decoration: none;
+}
+
+a.treino-atalho {
+  text-decoration: none;
+}
+
+a.treino-atalho:hover {
+  text-decoration: underline;
+}
