@@ -93,33 +93,15 @@ A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a e
 | US28 | Perfil do aluno acompanhado → Ver histórico de treinos | `GET /api/treinos/alunos/:alunoId/historico/` traz os treinos concluídos do aluno da carteira, com paginação. |
 | US58 | Menu Histórico na conta do aluno | `GET /api/treinos/meu-historico/` traz os treinos do próprio aluno em todos os estados, com paginação. |
 
-Os detalhes dos dois históricos usam `GET /api/treinos/:treinoId/`, com os dados preservados da prescrição e os feedbacks do aluno. Dificuldade e feedback do treinador ainda dependem das respectivas histórias. O detalhe da US28 também depende da integração de vídeos de execução. Na US41, falta validar o efeito da exclusão na busca quando essa operação estiver disponível.
+Os detalhes dos dois históricos usam `GET /api/treinos/:treinoId/`, com os dados preservados da prescrição e os feedbacks do aluno. O detalhe também exibe a dificuldade registrada pelo aluno. O feedback do treinador ainda depende das histórias correspondentes. O detalhe da US28 também depende da integração de vídeos de execução. Na US41, falta validar o efeito da exclusão na busca quando essa operação estiver disponível.
 
 A rota `/previa/iteracao-4` usa dados fictícios para revisar os estados da interface em desenvolvimento. O build de produção exclui essa rota. Os testes das rotas integradas ficam em `tests/IntegracaoBibliotecaHistoricos.test.tsx`.
 
 ## Iteração 4 · dificuldades, feedback do aluno e exclusão de dados
 
-Acesse `/previa/iteracao-4/registros` no Vite para revisar o registro e a
-edição de dificuldade, a consulta pelo treinador, o bloqueio após conclusão
-e a confirmação de exclusão. A prévia usa dados fictícios em memória. A
-alteração de nota fica visível ao trocar de perfil na mesma visita e some
-quando a página é recarregada. A rota fica fora do build de produção.
+- **US12, US13 e US14:** no detalhe do exercício, a nota pertence ao item prescrito. O aluno salva por `POST` e edita por `PATCH` em `/api/treinos/exercicios/:itemId/dificuldade/`. Quando só existe estado por treino, a tela libera o primeiro registro após marcar o treino como feito. A tela e a API bloqueiam alterações após a conclusão.
+- **US51:** no detalhe e no histórico do treino, o treinador consulta o feedback do aluno em somente leitura, com a indicação de edição. A medição do CA04 depende do ambiente de entrega.
+- **US64:** na conta do aluno, a entrada fica em **Preferências de privacidade → Excluir meus dados**. O fluxo usa a senha atual e a confirmação explícita em `POST /api/auth/excluir-conta/`. Depois da resposta de sucesso, a tela mostra o protocolo e encerra a sessão. A remoção de arquivos de vídeo (CA03) depende da integração do armazenamento de vídeos de execução.
 
-| História | Frontend | Integração com Guilherme |
-| --- | --- | --- |
-| US12 | O treinador consegue conferir a nota por exercício ou ver “Não registrada” na prévia. | Confirmar o campo de dificuldade no detalhe do treino e validar que só a carteira do treinador é consultável. |
-| US13 e US14 | Seletor inteiro de 1 a 5, edição, reenvio após erro e bloqueio quando o treino é concluído. | Confirmar os métodos e a resposta de criação e edição por exercício prescrito, e como a API indica execução. Validar autoria, persistência e bloqueio após conclusão. |
-| US51 | O fluxo de treino da develop já consulta texto e marca de edição do feedback por exercício em `GET /api/treinos/:treinoId/`. A prévia também mostra a consulta somente para leitura. | Reaproveitar o campo `feedback` da Iteração 3. Validar o acesso pelo histórico de treinos da US28 com Thiago, a preservação após conclusão e o carregamento em até 5 segundos. |
-| US64 | Aviso, confirmação explícita, estado de envio, erro e confirmação simulada. | Confirmar contrato e resposta da solicitação autenticada. Conectar o encerramento de sessão após aceite e validar a revogação do acesso e o processamento dos dados e das mídias. |
-
-Os critérios oficiais permanecem em `docs/criterios_aceitacao.md`. Os testes
-`IteracaoQuatro.test.tsx` e `PreviaRegistrosIteracao4.test.tsx` verificam
-o comportamento da interface. A integração real e a validação no ambiente
-de entrega ainda precisam ser registradas no DoD.
-
-Na verificação local em Chrome, a alteração simulada de dificuldade ficou
-visível na consulta do treinador, o treino concluído manteve a nota somente
-para leitura e a exclusão exigiu confirmação. Um teste separado com a API
-local de treinos exibiu ao treinador o feedback editado de um treino
-concluído, sem ação de edição. A US51 ainda precisa passar pelos critérios
-de acesso via histórico e tempo de resposta no ambiente de entrega.
+A rota `/previa/iteracao-4/registros` permanece disponível somente em desenvolvimento,
+com dados fictícios em memória para revisar os estados das telas.

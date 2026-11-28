@@ -37,7 +37,7 @@ describe('Integração dos históricos e da associação', () => {
       if (rota === '/api/treinos/meu-historico/?page=1') return json({ next: 'http://api/exemplo/?page=2', previous: null, results: [{ ...treino, id: 6, nome: 'Treino anterior' }] })
       if (rota === '/api/treinos/meu-historico/?page=2') return json({ next: null, previous: 'http://api/exemplo/', results: [treino] })
       if (rota === '/api/treinos/7/') return json({ ...treino, exercicios: [{
-        id: 1, nome: 'Drible', parametros: '3 séries', errosOrientacoes: [par],
+        id: 1, nome: 'Drible', parametros: '3 séries', errosOrientacoes: [par], dificuldade: { nota: 4 },
         feedback: { autorNome: 'Alex', texto: 'Consegui manter o controle.', editado: true },
       }] })
       return json({}, 404)
@@ -48,6 +48,7 @@ describe('Integração dos históricos e da associação', () => {
     await pessoa.click(screen.getByRole('link', { name: 'Consultar Controle de bola' }))
     expect(await screen.findByText('Consegui manter o controle.')).toBeVisible()
     expect(screen.getByText('Olhar à frente')).toBeVisible()
+    expect(screen.getByText('4 de 5')).toBeVisible()
     await pessoa.click(screen.getByRole('link', { name: 'Voltar ao histórico' }))
     expect(await screen.findByText('Controle de bola')).toBeVisible()
     expect(window.location.search).toBe('?pagina=2')

@@ -127,6 +127,17 @@
 .registros-erro { color: var(--registros-aviso); margin: 0; line-height: 1.5; }
 .registros-acoes p { overflow-wrap: anywhere; }
 
+.registros-senha input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--conta-borda, #504b4e);
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
 .registros-layout--visitante { display: block; padding-bottom: 0; }
 .registros-layout--visitante .conta-aluno__cabecalho { min-height: 88px; }
 

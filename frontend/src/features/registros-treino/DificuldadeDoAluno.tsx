@@ -21,6 +21,7 @@ interface DificuldadeDoAlunoProps {
   onVoltar: () => void
   onEditarFeedback?: () => void
   onEnviarVideo?: () => void
+  iniciarFormulario?: boolean
 }
 
 interface FormularioDificuldadeProps {
@@ -87,10 +88,10 @@ function FormularioDificuldade({ nota, treinador, onSalvar, onCancelar }: Formul
 
 export function DificuldadeDoAluno({
   usuario, links, exercicio, treino, nota, treinador, treinoConcluido, executado, feedback,
-  onSalvar, onVoltar, onEditarFeedback, onEnviarVideo,
+  onSalvar, onVoltar, onEditarFeedback, onEnviarVideo, iniciarFormulario = false,
 }: DificuldadeDoAlunoProps) {
   const [registro, setRegistro] = useState({ origem: nota, atual: nota })
-  const [formulario, abrirFormulario] = useState(false)
+  const [formulario, abrirFormulario] = useState(iniciarFormulario)
   const registrada = registro.origem === nota ? registro.atual : nota
   const aluno = usuario.papel === 'ALUNO'
   const editavel = aluno && !treinoConcluido && (executado || registrada !== null)

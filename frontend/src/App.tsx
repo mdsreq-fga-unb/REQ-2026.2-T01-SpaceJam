@@ -12,6 +12,7 @@ import { TrocarSenhaPage } from './features/conta/TrocarSenhaPage'
 import { RecuperarSenhaPage } from './features/conta/RecuperarSenhaPage'
 import { RedefinirSenhaPage } from './features/conta/RedefinirSenhaPage'
 import { DocumentoLegalPage } from './features/termos/DocumentoLegalPage'
+import { ContaExcluidaPage, ExcluirDadosAlunoPage } from './features/conta/ExcluirDadosAlunoPage'
 import { PreferenciasPrivacidadePage } from './features/conta/PreferenciasPrivacidadePage'
 import { AlunosAcompanhadosPage } from './features/treinador/AlunosAcompanhadosPage'
 import { PerfilAlunoAcompanhadoPage } from './features/treinador/PerfilAlunoAcompanhadoPage'
@@ -69,6 +70,10 @@ export default function App() {
             }
           />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/conta/excluir" element={
+            <RotaProtegida papel="ALUNO"><ExcluirDadosAlunoPage /></RotaProtegida>
+          } />
+          <Route path="/conta/excluida" element={<ContaExcluidaPage />} />
           <Route path="/recuperar-senha" element={<RecuperarSenhaPage />} />
           <Route path="/recuperar-senha/redefinir" element={<RedefinirSenhaPage />} />
           <Route path="/redefinir-senha" element={<RedefinirSenhaPage />} />

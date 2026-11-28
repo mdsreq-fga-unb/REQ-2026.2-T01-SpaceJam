@@ -5,6 +5,8 @@ import { useAuth } from '../../auth/useAuth'
 import { DetalheTreino, type ConsultaTreino } from './DetalheTreino'
 import type { StatusTreino } from './EstadoTreino'
 import type { AlteracaoFeedback, FeedbackAluno } from './FeedbackExercicio'
+import type { AlteracaoDificuldade } from '../registros-treino/DificuldadeDoAluno'
+import type { NotaDificuldade } from '../registros-treino/RegistroCartoes'
 import type { UsuarioTreino } from './TreinoLayout'
 
 type StatusApi = 'EM_ANDAMENTO' | 'FEITO' | 'CORRIGIR_REFAZER' | 'CONCLUIDO'
@@ -29,6 +31,7 @@ interface DetalheApi {
     videoTitulo?: string
     videoDescricao?: string
     feedback?: FeedbackAluno | null
+    dificuldade?: { nota: NotaDificuldade } | null
   }[]
 }
 
@@ -125,6 +128,27 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
     }
   }
 
+  async function salvarDificuldade(itemId: number, { operacao, nota }: AlteracaoDificuldade) {
+    const signal = requisicao.current?.signal
+    try {
+      const dificuldade = await api<{ nota: NotaDificuldade }>('/treinos/exercicios/' + itemId + '/dificuldade/', {
+        method: operacao === 'registrar' ? 'POST' : 'PATCH',
+        body: JSON.stringify({ nota }),
+        signal,
+      })
+      if (!signal?.aborted) {
+        setConsulta(atual => atual.estado === 'disponivel' ? {
+          ...atual,
+          exercicios: atual.exercicios.map(item => item.id === itemId ? { ...item, dificuldade } : item),
+        } : atual)
+      }
+      return dificuldade.nota
+    } catch (erro) {
+      await atualizarAposConflito(erro, signal)
+      throw erro
+    }
+  }
+
   const aluno = usuario.papel === 'ALUNO'
   return <DetalheTreino usuario={usuario} consulta={consulta} navegacao={aluno ? navegacaoAluno : navegacaoTreino}
     onMarcarFeito={aluno ? () => enviarStatus('feito', 'FEITO') : undefined}
@@ -136,6 +160,7 @@ function TelaTreino({ usuario, id }: { usuario: UsuarioTreino; id: number }) {
         ? () => navegar('/treinador/alunos/' + consulta.alunoId + '/planejamento')
         : undefined}
     onSalvarFeedback={aluno ? salvarFeedback : undefined}
+    onSalvarDificuldade={aluno ? salvarDificuldade : undefined}
   />
 }
 

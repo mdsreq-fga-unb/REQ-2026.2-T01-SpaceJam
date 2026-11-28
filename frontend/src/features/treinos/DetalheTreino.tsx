@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import { EstadoTreino, type ConsultaStatus, type StatusTreino } from './EstadoTreino'
 import { FeedbackExercicio, FormularioFeedback, type AlteracaoFeedback, type FeedbackAluno } from './FeedbackExercicio'
+import { DificuldadeDoAluno, type AlteracaoDificuldade } from '../registros-treino/DificuldadeDoAluno'
+import { CartaoDificuldade, type NotaDificuldade } from '../registros-treino/RegistroCartoes'
 import { TituloTreino, TreinoLayout, type UsuarioTreino } from './TreinoLayout'
 
 interface ExercicioDoTreino {
   id: number
   nome: string
   feedback?: FeedbackAluno | null
+  dificuldade?: { nota: NotaDificuldade } | null
   parametros?: string
   resumo?: string
   situacao?: string
@@ -36,7 +39,7 @@ type TreinoDisponivel = {
 }
 
 export type ConsultaTreino = Exclude<ConsultaStatus, { estado: 'disponivel' }> | TreinoDisponivel
-type SelecaoExercicio = { id: number; tela: 'exercicio' } | { id: number; tela: 'feedback'; editando: boolean }
+type SelecaoExercicio = { id: number; tela: 'exercicio' | 'dificuldade' } | { id: number; tela: 'feedback'; editando: boolean }
 
 interface DetalheTreinoProps {
   usuario: UsuarioTreino
@@ -47,6 +50,7 @@ interface DetalheTreinoProps {
   onDevolver?: () => Promise<void>
   onConcluir?: () => Promise<void>
   onSalvarFeedback?: (exercicioId: number, alteracao: AlteracaoFeedback) => Promise<void>
+  onSalvarDificuldade?: (exercicioId: number, alteracao: AlteracaoDificuldade) => Promise<NotaDificuldade>
   onAbrirExercicio?: (exercicioId: number) => void
   onVerHistorico?: () => void
   onVoltarPlanejamento?: () => void
@@ -84,7 +88,7 @@ function NomeExercicio({ exercicio, numero, aluno, onAbrir }: {
 }
 
 export function DetalheTreino({
-  usuario, consulta, navegacao, onMarcarFeito, onDesfazerFeito, onDevolver, onConcluir, onSalvarFeedback,
+  usuario, consulta, navegacao, onMarcarFeito, onDesfazerFeito, onDevolver, onConcluir, onSalvarFeedback, onSalvarDificuldade,
   onAbrirExercicio, onVerHistorico, onVoltarPlanejamento, onVerFeedback,
 }: DetalheTreinoProps) {
   const [selecao, setSelecao] = useState<SelecaoExercicio | null>(null)
@@ -124,6 +128,19 @@ export function DetalheTreino({
           onFechar={() => setSelecao({ id: selecionado.id, tela: 'exercicio' })} />
       </TreinoLayout>
     )
+  }
+
+  const nota = selecionado?.dificuldade?.nota ?? null
+  const executado = selecionado?.feito ?? status === 'feito'
+  const abrirDificuldade = selecionado && aluno && onSalvarDificuldade && status !== 'concluido' &&
+    selecionado.dificuldade !== undefined && (nota !== null || executado)
+
+  if (selecionado && aluno && selecao?.tela === 'dificuldade' && onSalvarDificuldade) {
+    return <DificuldadeDoAluno usuario={usuario} links={navegacao} exercicio={selecionado.nome}
+      treino={consulta.titulo || consulta.nome} nota={nota} treinoConcluido={status === 'concluido'}
+      executado={executado} treinador={treinadorNome} iniciarFormulario
+      onSalvar={alteracao => onSalvarDificuldade(selecionado.id, alteracao)}
+      onVoltar={() => setSelecao({ id: selecionado.id, tela: 'exercicio' })} />
   }
 
   if (selecionado) {
@@ -170,12 +187,23 @@ export function DetalheTreino({
               )}
             </section>
           )}
-          {feedbackSelecionado !== undefined && (
-            <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
-              feedback={feedbackSelecionado}
-              onAbrir={aluno && onSalvarFeedback
-                ? () => setSelecao({ id, tela: 'feedback', editando: Boolean(feedbackSelecionado) })
-                : undefined} />
+          {(selecionado.dificuldade !== undefined || feedbackSelecionado !== undefined) && (
+            <div className="registros-pilha">
+              {selecionado.dificuldade !== undefined && <CartaoDificuldade nota={nota} />}
+              {abrirDificuldade && (
+                <button className="treino-atalho" type="button"
+                  onClick={() => setSelecao({ id, tela: 'dificuldade' })}>
+                  {nota === null ? 'Registrar dificuldade' : 'Editar dificuldade'}
+                </button>
+              )}
+              {feedbackSelecionado !== undefined && (
+                <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
+                  feedback={feedbackSelecionado}
+                  onAbrir={aluno && onSalvarFeedback
+                    ? () => setSelecao({ id, tela: 'feedback', editando: Boolean(feedbackSelecionado) })
+                    : undefined} />
+              )}
+            </div>
           )}
         </div>
       </TreinoLayout>
