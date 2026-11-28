@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import FeedbackAluno, Treino, TreinoExercicio
+from .models import DificuldadeAluno, FeedbackAluno, Treino, TreinoExercicio
 from .serializers import nome_do_aluno
 
 
@@ -10,6 +10,46 @@ STATUS_API_PARA_FRONT = {
     Treino.Status.CORRIGIR_REFAZER: "corrigir-refazer",
     Treino.Status.CONCLUIDO: "concluido",
 }
+
+
+class DificuldadeAlunoSerializer(serializers.ModelSerializer):
+    autorId = serializers.IntegerField(source="aluno_id", read_only=True)
+    autorNome = serializers.SerializerMethodField()
+    exercicioId = serializers.IntegerField(source="item_treino_id", read_only=True)
+    criadoEm = serializers.DateTimeField(source="criado_em", read_only=True)
+    editadoEm = serializers.DateTimeField(source="editado_em", read_only=True)
+    editado = serializers.BooleanField(read_only=True)
+
+    class Meta:
+        model = DificuldadeAluno
+        fields = [
+            "id", "exercicioId", "autorId", "autorNome", "nota", "editado", "criadoEm", "editadoEm",
+        ]
+
+    def get_autorNome(self, obj):
+        return nome_do_aluno(obj.aluno)
+
+
+class SalvarDificuldadeAlunoSerializer(serializers.Serializer):
+    nota = serializers.IntegerField(
+        min_value=1,
+        max_value=5,
+        error_messages={
+            "required": "Informe o nível de dificuldade de 1 a 5.",
+            "null": "Informe o nível de dificuldade de 1 a 5.",
+            "invalid": "O nível de dificuldade deve ser um número inteiro entre 1 e 5.",
+            "min_value": "O nível de dificuldade deve ser entre 1 e 5.",
+            "max_value": "O nível de dificuldade deve ser entre 1 e 5.",
+        },
+    )
+
+    def validate_nota(self, value):
+        # Em Python bool é subclasse de int (True == 1); rejeita explicitamente.
+        if isinstance(self.initial_data.get("nota"), bool):
+            raise serializers.ValidationError(
+                "O nível de dificuldade deve ser um número inteiro entre 1 e 5."
+            )
+        return value
 
 
 class FeedbackAlunoSerializer(serializers.ModelSerializer):
@@ -55,13 +95,14 @@ class ExercicioExecucaoSerializer(serializers.ModelSerializer):
     # US35 CA03: título e descrição do vídeo-base copiados na prescrição (RN23).
     videoTitulo = serializers.CharField(source="video_titulo", read_only=True)
     videoDescricao = serializers.CharField(source="video_descricao", read_only=True)
+    dificuldade = DificuldadeAlunoSerializer(source="dificuldade_aluno", read_only=True)
     feedback = FeedbackAlunoSerializer(source="feedback_aluno", read_only=True)
 
     class Meta:
         model = TreinoExercicio
         fields = [
             "id", "ordem", "nome", "parametros", "orientacoes", "errosComuns", "errosOrientacoes",
-            "videoTitulo", "videoDescricao", "feedback",
+            "videoTitulo", "videoDescricao", "dificuldade", "feedback",
         ]
 
     def get_parametros(self, obj):

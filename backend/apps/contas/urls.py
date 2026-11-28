@@ -57,4 +57,9 @@ urlpatterns = [
         views.redefinir_senha_recuperacao,
         name="redefinir-senha",
     ),
+    #US64 - Solicitar exclusão de conta
+    path(
+        "auth/excluir-conta/", 
+        views.ExcluirContaView.as_view(), 
+        name="auth-excluir-conta"),
 ]

@@ -1,32 +1,37 @@
+import uuid
 from datetime import datetime, timezone as dt_timezone
 
 from django.conf import settings
 from django.core.cache import cache
-from django.db import connection
+from django.db import connection, transaction
 from rest_framework import status
-from rest_framework.fields import BooleanField
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.fields import BooleanField
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework_simplejwt.exceptions import TokenError
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from rest_framework_simplejwt.tokens import RefreshToken
+
 from . import termos
 from .models import HistoricoAceiteTermos, Usuario
-from .permissions import IsAlunoProprietarioPerfil, IsTreinador, ROTA_PROTEGIDA
+from .permissions import IsAluno, IsAlunoProprietarioPerfil, IsTreinador, ROTA_PROTEGIDA
 from .serializers import (
     AlunoAcompanhadoSerializer,
     CadastroAlunoSerializer,
     CadastroTreinadorSerializer,
     DadosCadastraisAlunoSerializer,
     EditarPerfilAlunoSerializer,
+    ExcluirContaSerializer,
     LesaoSerializer,
     LoginAlunoSerializer,
     LoginTreinadorSerializer,
     PerfilAlunoAcompanhadoSerializer,
-    UsuarioSerializer,
-    TrocarSenhaSerializer,
-    SolicitarRecuperacaoSenhaSerializer,
     RedefinirSenhaRecuperacaoSerializer,
+    SolicitarRecuperacaoSenhaSerializer,
+    TrocarSenhaSerializer,
+    UsuarioSerializer,
 )
 
 
@@ -346,3 +351,46 @@ def registrar_lesao(request, aluno_id):
     serializer.is_valid(raise_exception=True)
     serializer.save(aluno=aluno)
     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class ExcluirContaView(APIView):
+    """US64 (RF4813) — Solicitar exclusão dos próprios dados pelo titular Aluno (RN05, RN15, RNF05, RNF08, RNF09)."""
+
+    permission_classes = [*ROTA_PROTEGIDA, IsAluno]
+
+    def post(self, request):
+        serializer = ExcluirContaSerializer(data=request.data, context={"request": request})
+        serializer.is_valid(raise_exception=True)
+
+        usuario = request.user
+        encerrado_em = datetime.now(dt_timezone.utc)
+        protocolo = f"EXC-{encerrado_em.strftime('%Y%m%d')}-{uuid.uuid4().hex[:8].upper()}"
+
+        # Revoga imediatamente o access token atual no cache (BlacklistableJWTAuthentication)
+        if request.auth:
+            jti = request.auth.get("jti")
+            exp = request.auth.get("exp")
+            if jti:
+                ttl = max(int(exp - encerrado_em.timestamp()), 60) if exp else 1800
+                cache.set(f"blacklist_access_{jti}", True, timeout=ttl)
+
+        with transaction.atomic():
+            # Coloca todos os refresh tokens pendentes do usuário na blacklist
+            tokens_ativos = OutstandingToken.objects.filter(user=usuario)
+            for token in tokens_ativos:
+                BlacklistedToken.objects.get_or_create(token=token)
+            tokens_ativos.delete()
+
+            # RN05 + RN15: anonimiza a trilha probatória de aceite de termos antes de remover o titular
+            HistoricoAceiteTermos.objects.filter(usuario=usuario).update(usuario=None)
+
+            # Remove fisicamente o titular e todos os dados em cascata
+            usuario.delete()
+
+        return Response(
+            {
+                "detail": "Sua conta e todos os seus dados pessoais foram excluídos permanentemente.",
+                "protocolo": protocolo,
+                "excluido_em": encerrado_em.isoformat(),
+            },
+            status=status.HTTP_200_OK,
+        )

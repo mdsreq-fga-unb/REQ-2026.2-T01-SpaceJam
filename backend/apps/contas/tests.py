@@ -858,6 +858,7 @@ class RegistrarLesaoTests(LesaoMixin, APITestCase):
     # Lesões são removidas junto com a conta do aluno
     def test_rn05_exclusao_do_aluno_remove_as_lesoes(self):
         Lesao.objects.create(aluno=self.aluno, descricao="Entorse no tornozelo.")
+        self.aluno.aceites_termos.update(usuario=None)
         self.aluno.delete()
         self.assertEqual(Lesao.objects.count(), 0)
 
