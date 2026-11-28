@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import SolicitarEnvioVideoView, VideoExecucaoView
+from .views import MeusVideosView, SolicitarEnvioVideoView, VideoExecucaoView
 
 # Incluídas em /api/treinos/, ao lado de exercicios/<id>/feedback-aluno/.
 urlpatterns = [
@@ -14,4 +14,5 @@ urlpatterns = [
         VideoExecucaoView.as_view(),
         name="video-execucao",
     ),
+    path("meus-videos/", MeusVideosView.as_view(), name="meus-videos"),
 ]
