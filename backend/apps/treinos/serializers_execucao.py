@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from apps.videos.serializers import VideoExecucaoSerializer
+from apps.videos import tentativas
+from apps.videos.serializers import VideoExecucaoSerializer, dados_situacao
 
 from .models import FeedbackAluno, Treino, TreinoExercicio
 from .serializers import nome_do_aluno
@@ -58,16 +59,35 @@ class ExercicioExecucaoSerializer(serializers.ModelSerializer):
     videoTitulo = serializers.CharField(source="video_titulo", read_only=True)
     videoDescricao = serializers.CharField(source="video_descricao", read_only=True)
     feedback = FeedbackAlunoSerializer(source="feedback_aluno", read_only=True)
-    # US42 CA05: null = "Enviar vídeo"; preenchido = "Substituir vídeo". Sem link: o link
-    # de 10 min só é gerado quando alguém abre o vídeo (GET exercicios/<id>/video/).
-    videoExecucao = VideoExecucaoSerializer(source="video_execucao", read_only=True)
+    # US42: vídeo da submissão atual (null = nenhum). Sem link: o link de 10 min só é
+    # gerado quando alguém abre o vídeo (GET exercicios/<id>/video/).
+    videoExecucao = serializers.SerializerMethodField()
+    # US42 CA05 + RN06/RN09/RN10: o que a tela pode oferecer, decidido pelo servidor.
+    # modo NOVO → "Enviar vídeo"; SUBSTITUICAO → "Substituir vídeo";
+    # NOVA_TENTATIVA → "Enviar nova tentativa"; permitido=false → motivo do bloqueio.
+    envioVideo = serializers.SerializerMethodField()
 
     class Meta:
         model = TreinoExercicio
         fields = [
-            "id", "ordem", "nome", "parametros", "orientacoes", "errosComuns", "errosOrientacoes",
-            "videoTitulo", "videoDescricao", "feedback", "videoExecucao",
+            "id", "ordem", "nome", "status", "parametros", "orientacoes", "errosComuns",
+            "errosOrientacoes", "videoTitulo", "videoDescricao", "feedback", "videoExecucao",
+            "envioVideo",
         ]
+
+    @staticmethod
+    def _video_atual(obj):
+        # Usa o prefetch (ordenado por -tentativa) feito em TreinoDetalheView.
+        videos = list(obj.videos.all())
+        return max(videos, key=lambda v: v.tentativa) if videos else None
+
+    def get_videoExecucao(self, obj):
+        video = self._video_atual(obj)
+        return VideoExecucaoSerializer(video).data if video else None
+
+    def get_envioVideo(self, obj):
+        situacao = tentativas.situacao_envio(obj.treino, obj, self._video_atual(obj))
+        return dados_situacao(situacao)
 
     def get_parametros(self, obj):
         series = f"{obj.series} {'série' if obj.series == 1 else 'séries'}"
