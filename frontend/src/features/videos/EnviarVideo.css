@@ -1,0 +1,196 @@
+/* US42 — Fluxo de envio do vídeo de execução. */
+
+.video-origem {
+  gap: 12px;
+}
+
+.video-opcao {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 0 16px;
+  border: 1px solid var(--treino-borda);
+  border-radius: 12px;
+  background: #232327;
+  color: var(--treino-texto);
+  text-align: left;
+  font: 600 16px/22px Barlow, sans-serif;
+}
+
+.video-opcao svg {
+  flex: none;
+  color: var(--treino-laranja);
+}
+
+.video-opcao:hover {
+  background: #2b2b30;
+}
+
+.video-opcao:focus-visible {
+  outline: 2px solid var(--treino-laranja);
+  outline-offset: 3px;
+}
+
+.video-limites {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--treino-secundario);
+}
+
+.video-previa-lateral {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.video-previa-player {
+  min-width: 0;
+}
+
+.video-regras {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.video-regras li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f0d2a8;
+}
+
+.video-regras li span {
+  flex: 1;
+}
+
+.video-regras svg {
+  flex: none;
+}
+
+.video-comparacao {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.video-comparacao > div {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: #141417;
+  overflow-wrap: anywhere;
+}
+
+.video-comparacao > div[data-novo] {
+  border-color: #6a3a24;
+  background: #2a1d17;
+}
+
+.video-comparacao span {
+  color: var(--treino-secundario);
+  font-size: 13px;
+}
+
+.video-comparacao > div[data-novo] span {
+  color: #f2b38f;
+}
+
+.video-comparacao small {
+  color: var(--treino-secundario);
+  font-size: 14px;
+}
+
+.video-progresso {
+  gap: 12px;
+}
+
+.video-progresso progress {
+  display: block;
+  width: 100%;
+  height: 10px;
+  border: 0;
+  border-radius: 5px;
+  appearance: none;
+  background: #2c2c31;
+  overflow: hidden;
+}
+
+.video-progresso progress::-webkit-progress-bar {
+  border-radius: inherit;
+  background: #2c2c31;
+}
+
+.video-progresso progress::-webkit-progress-value {
+  border-radius: inherit;
+  background: var(--treino-vermelho);
+  transition: width .15s linear;
+}
+
+.video-progresso progress::-moz-progress-bar {
+  border-radius: inherit;
+  background: var(--treino-vermelho);
+}
+
+.video-progresso .video-progresso-numeros {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.video-progresso-numeros strong {
+  color: var(--treino-laranja);
+}
+
+.video-dialogo-fundo {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(0 0 0 / 60%);
+}
+
+.video-dialogo {
+  width: min(100%, 400px);
+  gap: 12px;
+}
+
+.video-dialogo h2 {
+  font-size: 20px;
+}
+
+.video-resultado {
+  width: min(100%, 560px);
+}
+
+@media (min-width: 900px) {
+  .video-previa {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+
+  /* Colunas da mesma altura: o cartão de escolha acompanha a coluna da direita.
+     As opções ficam no topo e a nota desce para a base, alinhada à última linha
+     do cartão "Quem vai ver". */
+  .treino-colunas > .video-origem {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .video-origem > p:last-child {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+}
