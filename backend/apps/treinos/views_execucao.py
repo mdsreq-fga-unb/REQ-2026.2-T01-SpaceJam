@@ -1,4 +1,5 @@
 from django.db import IntegrityError, transaction
+from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import status
@@ -7,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.contas.permissions import IsAluno, IsTreinador, ROTA_PROTEGIDA
+from apps.videos.models import VideoExecucao
 
 from .models import FeedbackAluno, Treino
 from .serializers_execucao import (
@@ -34,7 +36,12 @@ def _obter_treino_com_permissao(request, treino_id, *, bloquear_linha=False, inc
         queryset = queryset.select_for_update(of=("self",))
     if incluir_exercicios:
         queryset = queryset.prefetch_related(
-            "exercicios__feedback_aluno__aluno", "exercicios__video_execucao"
+            "exercicios__feedback_aluno__aluno",
+            # US42: todas as tentativas de vídeo com o feedback do treinador, numa consulta só.
+            Prefetch(
+                "exercicios__videos",
+                queryset=VideoExecucao.objects.select_related("feedback_treinador").order_by("-tentativa"),
+            ),
         )
     treino = get_object_or_404(queryset, pk=treino_id)
     _validar_acesso_treino(request.user, treino)
