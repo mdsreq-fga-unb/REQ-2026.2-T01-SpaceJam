@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router'
 import { ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
 import { TituloTreino, TreinoLayout } from '../treinos/TreinoLayout'
+import { navegacaoAluno } from '../treinos/navegacao'
 import {
   LIMITE_MB, LIMITE_SEGUNDOS, TEXTO_LIMITES, TIPOS_ACEITOS, formatarDuracao, formatarTamanho, verificarVideo,
   type ResultadoRegra,
@@ -14,7 +15,6 @@ import {
 import './Videos.css'
 import './EnviarVideo.css'
 
-const navegacaoAluno = { Conta: '/', Treinos: '/treinos' }
 
 type Tela =
   | 'selecao' | 'verificando' | 'invalido' | 'previa' | 'enviando' | 'falha' | 'erro' | 'bloqueado' | 'sessao'
