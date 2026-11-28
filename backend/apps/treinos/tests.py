@@ -1,3 +1,5 @@
+from unittest import mock
+
 from django.db import IntegrityError, transaction
 from rest_framework.test import APITestCase
 
@@ -5,6 +7,7 @@ from apps.contas import termos
 from apps.contas.authentication import SessaoRefreshToken
 from apps.contas.models import Usuario
 from apps.exercicios.models import ErroComumExercicio, Exercicio
+from apps.videos.models import FeedbackTreinador, VideoExecucao
 from datetime import timedelta
 
 from django.utils import timezone
@@ -1464,3 +1467,219 @@ class ConsultarHistoricoPlanejamentosUS21Tests(APITestCase):
         self.assertEqual(r_lista.status_code, 404)
         self.assertEqual(r_detalhe.status_code, 404)
         self.assertNotIn("Oculto", str(r_lista.data) + str(r_detalhe.data))
+
+
+class PreservarExerciciosComVideoTests(APITestCase):
+    """US42 / RN10 — Exercício com vídeo de execução não pode ser removido pelo treinador.
+
+    Remover o exercício (US25) ou o treino (US19) apagaria em cascata as tentativas de
+    vídeo, o feedback do treinador e os arquivos no Storage. O Storage é simulado: o
+    teste confere que `storage.remover` nunca é chamado quando a remoção é bloqueada.
+    """
+
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach42", email="coach42@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.aluno = Usuario.objects.create_user(
+            username="beatriz42", email="bia42@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        for usuario in (self.treinador, self.aluno):
+            termos.registrar_aceite(usuario)
+        self.planejamento = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Finalização"
+        )
+        self.exercicio = Exercicio.objects.create(
+            nome="Bandeja", objetivo="Finalização", fundamento="ARREMESSO", criado_por=self.treinador,
+        )
+        self.treino = Treino.objects.create(planejamento=self.planejamento, nome="Treino A")
+        self.a = self._item(1, "Bandeja")
+        self.b = self._item(2, "Arremesso livre")
+        self.c = self._item(3, "Drible entre cones")
+        remover = mock.patch("apps.videos.storage.remover")
+        self.remover = remover.start()
+        self.addCleanup(remover.stop)
+
+    def _item(self, ordem, nome, treino=None):
+        return TreinoExercicio.objects.create(
+            treino=treino or self.treino, ordem=ordem, exercicio_origem=self.exercicio, nome=nome,
+            objetivo="Finalização", fundamento="ARREMESSO", series=3, repeticoes=10,
+        )
+
+    def _video(self, item, tentativa=1):
+        return VideoExecucao.objects.create(
+            item_treino=item, aluno=self.aluno, tentativa=tentativa,
+            caminho_storage=f"dev/aluno_{self.aluno.id}/item_{item.id}/{tentativa}.mp4",
+            formato="video/mp4", tamanho_bytes=1024, duracao_segundos=30,
+        )
+
+    def _avaliar(self, video):
+        return FeedbackTreinador.objects.create(video=video, treinador=self.treinador, texto="Boa base.")
+
+    def _editar(self, *itens, parametros=None, nome="Treino A"):
+        """PUT com os `itens` (mesmos parâmetros de hoje, salvo os de `parametros[item]`)."""
+        self.client.force_authenticate(user=self.treinador)
+        parametros = parametros or {}
+        payload = {
+            "nome": nome,
+            "exercicios": [
+                {"id": item.id, **parametros.get(item, {"series": 3, "repeticoes": 10})}
+                for item in itens
+            ],
+        }
+        with self.captureOnCommitCallbacks(execute=True):
+            return self.client.put(f"/api/treinos/treinos/{self.treino.id}/", payload, format="json")
+
+    def _assert_bloqueado(self, resposta, *nomes):
+        self.assertEqual(resposta.status_code, 409)
+        self.assertEqual(resposta.data["code"], "EDICAO_BLOQUEADA")
+        for nome in nomes:
+            self.assertIn(nome, str(resposta.data["detail"]))
+        self.remover.assert_not_called()
+
+    # --- Editar treino (US25) ---
+
+    def test_cenario_a_video_aguardando_avaliacao_bloqueia_remocao(self):
+        video = self._video(self.c)
+
+        resposta = self._editar(self.a, self.b)
+
+        self._assert_bloqueado(resposta, "Drible entre cones", "vídeo")
+        self.assertTrue(TreinoExercicio.objects.filter(pk=self.c.pk).exists())
+        self.assertTrue(VideoExecucao.objects.filter(pk=video.pk).exists())
+
+    def test_cenario_b_video_avaliado_em_treino_devolvido_bloqueia_remocao(self):
+        anterior = self._video(self.c)
+        feedback = self._avaliar(anterior)
+        self.treino.status = Treino.Status.CORRIGIR_REFAZER
+        self.treino.save(update_fields=["status"])
+
+        resposta = self._editar(self.a, self.b)
+
+        self._assert_bloqueado(resposta, "Drible entre cones")
+        self.assertTrue(VideoExecucao.objects.filter(pk=anterior.pk).exists())
+        self.assertTrue(FeedbackTreinador.objects.filter(pk=feedback.pk).exists())
+
+    def test_cenario_c_bloqueia_qualquer_status_do_exercicio(self):
+        self._video(self.c)
+        for situacao in (TreinoExercicio.Status.A_FAZER, TreinoExercicio.Status.CORRIGIR):
+            with self.subTest(status=situacao):
+                self.c.status = situacao
+                self.c.save(update_fields=["status"])
+
+                resposta = self._editar(self.a, self.b)
+
+                self._assert_bloqueado(resposta, "Drible entre cones")
+        self.assertEqual(self.treino.exercicios.count(), 3)
+
+    def test_cenario_c_lista_todos_os_exercicios_com_video_na_mensagem(self):
+        self._video(self.b)
+        self._video(self.c)
+
+        resposta = self._editar(self.a)
+
+        self._assert_bloqueado(resposta, "Arremesso livre", "Drible entre cones")
+        self.assertEqual(self.treino.exercicios.count(), 3)
+
+    def test_cenario_d_exercicio_sem_video_e_sem_execucao_e_removido(self):
+        resposta = self._editar(self.a, self.b)
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertFalse(TreinoExercicio.objects.filter(pk=self.c.pk).exists())
+
+    def test_cenario_d_remove_o_exercicio_sem_video_e_mantem_o_que_tem(self):
+        video = self._video(self.a)
+
+        resposta = self._editar(self.a, self.b)
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertFalse(TreinoExercicio.objects.filter(pk=self.c.pk).exists())
+        self.assertTrue(VideoExecucao.objects.filter(pk=video.pk).exists())
+        self.remover.assert_not_called()
+
+    # --- Alterar séries / repetições / duração (US25) ---
+
+    def _parametros(self, item):
+        item.refresh_from_db()
+        return item.series, item.repeticoes, item.duracao_segundos
+
+    def test_alterar_parametros_de_exercicio_com_video_aguardando_avaliacao_e_bloqueado(self):
+        self._video(self.c)
+        mudancas = {
+            "séries": {"series": 4, "repeticoes": 10},
+            "repetições": {"series": 3, "repeticoes": 12},
+            "duração": {"series": 3, "duracao_segundos": 45},
+        }
+        for nome, novos in mudancas.items():
+            with self.subTest(mudanca=nome):
+                resposta = self._editar(self.a, self.b, self.c, parametros={self.c: novos})
+
+                self._assert_bloqueado(resposta, "Drible entre cones", "séries, repetições ou duração")
+                self.assertEqual(self._parametros(self.c), (3, 10, None))
+
+    def test_alterar_parametros_de_video_avaliado_em_treino_devolvido_e_bloqueado(self):
+        self._avaliar(self._video(self.c))
+        self.treino.status = Treino.Status.CORRIGIR_REFAZER
+        self.treino.save(update_fields=["status"])
+
+        resposta = self._editar(self.a, self.b, self.c, parametros={self.c: {"series": 5, "repeticoes": 10}})
+
+        self._assert_bloqueado(resposta, "Drible entre cones")
+        self.assertEqual(self._parametros(self.c), (3, 10, None))
+
+    def test_bloqueio_da_alteracao_lista_todos_e_nao_salva_nada(self):
+        self._video(self.b)
+        self._video(self.c)
+        mais_series = {"series": 4, "repeticoes": 10}
+
+        resposta = self._editar(
+            self.a, self.b, self.c, nome="Treino A revisado",
+            parametros={self.a: mais_series, self.b: mais_series, self.c: mais_series},
+        )
+
+        self._assert_bloqueado(resposta, "Arremesso livre", "Drible entre cones")
+        self.treino.refresh_from_db()
+        self.assertEqual(self.treino.nome, "Treino A")  # a edição inteira é recusada
+        self.assertEqual(self._parametros(self.a), (3, 10, None))
+
+    def test_exercicio_com_video_mantido_sem_mudanca_nao_bloqueia_a_edicao(self):
+        self._video(self.c)
+
+        resposta = self._editar(
+            self.a, self.b, self.c, nome="Treino A revisado",
+            parametros={self.a: {"series": 4, "duracao_segundos": 30}},
+        )
+
+        self.assertEqual(resposta.status_code, 200)
+        self.assertEqual(self._parametros(self.a), (4, None, 30))
+        self.assertEqual(self._parametros(self.c), (3, 10, None))
+
+    # --- Remover treino do planejamento (US19) ---
+
+    def test_remover_treino_com_video_e_bloqueado_pelo_delete_e_pelo_patch(self):
+        video = self._video(self.c)
+        url = f"/api/treinos/planejamentos/{self.planejamento.id}/"
+        self.client.force_authenticate(user=self.treinador)
+
+        with self.captureOnCommitCallbacks(execute=True):
+            respostas = [
+                self.client.delete(f"{url}treinos/{self.treino.id}/"),
+                self.client.patch(url, {"treinos_removidos": [self.treino.id]}, format="json"),
+            ]
+
+        for resposta in respostas:
+            self._assert_bloqueado(resposta, "Treino A", "vídeo")
+        self.assertTrue(Treino.objects.filter(pk=self.treino.pk).exists())
+        self.assertTrue(VideoExecucao.objects.filter(pk=video.pk).exists())
+
+    def test_remover_treino_sem_video_continua_permitido(self):
+        self.client.force_authenticate(user=self.treinador)
+
+        resposta = self.client.delete(
+            f"/api/treinos/planejamentos/{self.planejamento.id}/treinos/{self.treino.id}/"
+        )
+
+        self.assertEqual(resposta.status_code, 204)
+        self.assertFalse(Treino.objects.filter(pk=self.treino.pk).exists())
