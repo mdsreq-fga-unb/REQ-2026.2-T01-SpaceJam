@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { EstadoTreino, type ConsultaStatus, type StatusTreino } from './EstadoTreino'
 import { FeedbackExercicio, FormularioFeedback, type AlteracaoFeedback, type FeedbackAluno } from './FeedbackExercicio'
 import { TituloTreino, TreinoLayout, type UsuarioTreino } from './TreinoLayout'
+import { CartaoVideoExecucao } from '../videos/CartaoVideoExecucao'
+import type { SituacaoEnvio, VideoExecucao } from '../videos/videosApi'
 
 interface ExercicioDoTreino {
   id: number
@@ -18,6 +20,9 @@ interface ExercicioDoTreino {
   /** US35 CA03: título e descrição do vídeo-base copiados na prescrição. */
   videoTitulo?: string
   videoDescricao?: string
+  /** US42: vídeo da submissão atual (null = nenhum) e o que o aluno pode fazer com ele. */
+  videoExecucao?: VideoExecucao | null
+  envioVideo?: SituacaoEnvio
 }
 
 type TreinoDisponivel = {
@@ -51,6 +56,12 @@ interface DetalheTreinoProps {
   onVerHistorico?: () => void
   onVoltarPlanejamento?: () => void
   onVerFeedback?: () => void
+  /** US42: id do treino na API, usado nos links do vídeo de execução. */
+  treinoId?: number
+  /** US42: abre direto neste exercício (volta das telas de vídeo). */
+  exercicioInicial?: number
+  /** US42: confirmação do envio que acabou de terminar. */
+  avisoVideo?: string
 }
 
 function NomeExercicio({ exercicio, numero, aluno, onAbrir }: {
@@ -85,16 +96,18 @@ function NomeExercicio({ exercicio, numero, aluno, onAbrir }: {
 
 export function DetalheTreino({
   usuario, consulta, navegacao, onMarcarFeito, onDesfazerFeito, onDevolver, onConcluir, onSalvarFeedback,
-  onAbrirExercicio, onVerHistorico, onVoltarPlanejamento, onVerFeedback,
+  onAbrirExercicio, onVerHistorico, onVoltarPlanejamento, onVerFeedback, treinoId, exercicioInicial, avisoVideo,
 }: DetalheTreinoProps) {
-  const [selecao, setSelecao] = useState<SelecaoExercicio | null>(null)
+  const [selecao, setSelecao] = useState<SelecaoExercicio | null>(
+    exercicioInicial ? { id: exercicioInicial, tela: 'exercicio' } : null,
+  )
   const tituloExercicio = useRef<HTMLHeadingElement>(null)
   const idExercicioVisivel = selecao?.tela === 'exercicio' ? selecao.id : null
   const aluno = usuario.papel === 'ALUNO'
 
   useEffect(() => {
     if (idExercicioVisivel !== null) tituloExercicio.current?.focus()
-  }, [idExercicioVisivel])
+  }, [idExercicioVisivel, consulta.estado])
 
   if (consulta.estado !== 'disponivel' || (aluno && usuario.id !== consulta.alunoId)) {
     const consultaIndisponivel = consulta.estado === 'disponivel' ? { estado: 'erro' } as const : consulta
@@ -127,7 +140,10 @@ export function DetalheTreino({
   }
 
   if (selecionado) {
-    const { id, nome, parametros, situacao, orientacoes, errosComuns, errosOrientacoes = [], videoTitulo, videoDescricao } = selecionado
+    const {
+      id, nome, parametros, situacao, orientacoes, errosComuns, errosOrientacoes = [], videoTitulo, videoDescricao,
+      videoExecucao, envioVideo,
+    } = selecionado
     return (
       <TreinoLayout usuario={usuario} links={navegacao}>
         <button className="treino-botao treino-botao--voltar" type="button" onClick={() => setSelecao(null)}>
@@ -169,6 +185,10 @@ export function DetalheTreino({
                 </div>
               )}
             </section>
+          )}
+          {treinoId !== undefined && videoExecucao !== undefined && (
+            <CartaoVideoExecucao aluno={aluno} treinoId={treinoId} exercicioId={id} treinadorNome={treinadorNome}
+              video={videoExecucao} envio={envioVideo} aviso={avisoVideo} />
           )}
           {feedbackSelecionado !== undefined && (
             <FeedbackExercicio alunoId={alunoId} usuario={usuario} statusTreino={status}
