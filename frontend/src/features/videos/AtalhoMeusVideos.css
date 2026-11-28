@@ -1,0 +1,73 @@
+/* US42 — Atalho "Meus vídeos" em Meu planejamento. Usa as variáveis de conta-aluno. */
+
+.atalho-videos {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.atalho-videos__rotulo {
+  color: var(--conta-texto-secundario);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.atalho-videos__cartao {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 72px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.atalho-videos__cartao:hover {
+  border-color: var(--conta-laranja);
+}
+
+.atalho-videos__cartao:focus-visible {
+  outline: 2px solid var(--conta-laranja);
+  outline-offset: 3px;
+}
+
+.atalho-videos__icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #402520;
+  color: #ffb092;
+}
+
+.atalho-videos__texto {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.atalho-videos__texto strong {
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.atalho-videos__texto span {
+  color: var(--conta-texto-secundario);
+  line-height: 1.4;
+}
+
+.atalho-videos__seta {
+  flex: none;
+  color: var(--conta-texto-secundario);
+}
+
+/* Desktop: mesma largura de um cartão de treino (grade de 2 colunas com gap de 12px). */
+@media (min-width: 720px) {
+  .atalho-videos .atalho-videos__cartao {
+    width: calc((100% - 12px) / 2);
+  }
+}
