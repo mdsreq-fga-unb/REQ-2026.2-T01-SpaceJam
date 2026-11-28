@@ -1,6 +1,6 @@
 from unittest import mock
 
-from django.db import IntegrityError, transaction
+from django.db import IntegrityError, connection, transaction
 from rest_framework.test import APITestCase
 
 from apps.contas import termos
@@ -10,6 +10,7 @@ from apps.exercicios.models import ErroComumExercicio, Exercicio
 from apps.videos.models import FeedbackTreinador, VideoExecucao
 from datetime import timedelta
 
+from django.test.utils import CaptureQueriesContext
 from django.utils import timezone
 
 from .models import FeedbackAluno, Planejamento, Treino, TreinoExercicio
@@ -1683,3 +1684,403 @@ class PreservarExerciciosComVideoTests(APITestCase):
 
         self.assertEqual(resposta.status_code, 204)
         self.assertFalse(Treino.objects.filter(pk=self.treino.pk).exists())
+
+
+class HistoricoTreinosAlunoUS28Tests(APITestCase):
+    """US28 — Consultar histórico de treinos de aluno acompanhado."""
+
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach", email="coach@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.outro_treinador = Usuario.objects.create_user(
+            username="outro_coach", email="outro@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.aluno = Usuario.objects.create_user(
+            username="beatriz", email="bia@aluno.com", password="SenhaAluno#2026",
+            first_name="Beatriz", last_name="Costa",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.outro_aluno = Usuario.objects.create_user(
+            username="carlos", email="carlos@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.aluno_de_outra_carteira = Usuario.objects.create_user(
+            username="diana", email="diana@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.outro_treinador,
+        )
+        for usuario in (
+            self.treinador, self.outro_treinador, self.aluno, self.outro_aluno,
+            self.aluno_de_outra_carteira,
+        ):
+            termos.registrar_aceite(usuario)
+        self.planejamento = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Controle de bola"
+        )
+
+    def _url(self, aluno=None):
+        return f"/api/treinos/alunos/{(aluno or self.aluno).pk}/historico/"
+
+    def _treino(self, nome, estado, planejamento=None):
+        return Treino.objects.create(
+            planejamento=planejamento or self.planejamento, nome=nome, status=estado
+        )
+
+    # Evolução Longitudinal
+    def test_ca01_lista_so_treinos_concluidos_do_aluno_do_mais_recente_ao_mais_antigo(self):
+        antigo = self._treino("Treino A", Treino.Status.CONCLUIDO)
+        self._treino("Treino B", Treino.Status.EM_ANDAMENTO)
+        self._treino("Treino C", Treino.Status.FEITO)
+        self._treino("Treino D", Treino.Status.CORRIGIR_REFAZER)
+        recente = self._treino("Treino E", Treino.Status.CONCLUIDO)
+        planejamento_outro_aluno = Planejamento.objects.create(
+            aluno=self.outro_aluno, treinador=self.treinador, nome="Outro aluno"
+        )
+        self._treino("Treino de outro aluno", Treino.Status.CONCLUIDO, planejamento_outro_aluno)
+
+        self.client.force_authenticate(user=self.treinador)
+        r = self.client.get(self._url())
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([item["id"] for item in r.data["results"]], [recente.id, antigo.id])
+        self.assertEqual(r.data["count"], 2)
+        self.assertEqual(r.data["aluno"], {"id": self.aluno.id, "nome": "Beatriz Costa"})
+
+    def test_ca01_inclui_treinos_concluidos_de_planejamento_encerrado(self):
+        self.planejamento.status = Planejamento.Status.HISTORICO
+        self.planejamento.encerrado_em = timezone.now()
+        self.planejamento.save(update_fields=["status", "encerrado_em"])
+        antigo = self._treino("Treino do ciclo anterior", Treino.Status.CONCLUIDO)
+        vigente = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Ciclo atual"
+        )
+        atual = self._treino("Treino do ciclo atual", Treino.Status.CONCLUIDO, vigente)
+
+        self.client.force_authenticate(user=self.treinador)
+        r = self.client.get(self._url())
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([item["id"] for item in r.data["results"]], [atual.id, antigo.id])
+
+    def test_ca01_item_traz_status_e_quantidade_de_exercicios(self):
+        treino = self._treino("Treino A", Treino.Status.CONCLUIDO)
+        for ordem in (1, 2):
+            TreinoExercicio.objects.create(
+                treino=treino, ordem=ordem, nome=f"Exercício {ordem}", objetivo="Controle",
+                fundamento="DRIBLE", series=3, repeticoes=8,
+            )
+        treino.realizado_em = timezone.now()
+        treino.save(update_fields=["realizado_em"])
+
+        self.client.force_authenticate(user=self.treinador)
+        item = self.client.get(self._url()).data["results"][0]
+
+        self.assertEqual(item["nome"], "Treino A")
+        self.assertEqual(item["alunoId"], self.aluno.id)
+        self.assertEqual(item["statusSlug"], "concluido")
+        self.assertEqual(item["statusLabel"], "Concluído")
+        self.assertEqual(item["quantidadeExercicios"], 2)
+        self.assertIsNotNone(item["realizadoEm"])
+
+    def test_ca01_aluno_sem_treinos_concluidos_recebe_lista_vazia(self):
+        self._treino("Treino A", Treino.Status.FEITO)
+
+        self.client.force_authenticate(user=self.treinador)
+        r = self.client.get(self._url())
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["count"], 0)
+        self.assertEqual(r.data["results"], [])
+
+    # Exercício Alterado ou Excluído
+    def test_ca03_treino_do_historico_mantem_dados_da_epoca_apos_editar_e_excluir_exercicio(self):
+        origem = Exercicio.objects.create(
+            nome="Drible alternado", objetivo="Controle de bola", fundamento="DRIBLE",
+            criado_por=self.treinador,
+        )
+        treino = self._treino("Treino A", Treino.Status.CONCLUIDO)
+        TreinoExercicio.objects.create(
+            treino=treino, ordem=1, exercicio_origem=origem, nome=origem.nome,
+            objetivo=origem.objetivo, fundamento=origem.fundamento, orientacoes="Olhar à frente",
+            series=3, repeticoes=8,
+        )
+        origem.nome = "Nome novo na biblioteca"
+        origem.save(update_fields=["nome"])
+        origem.delete()
+
+        self.client.force_authenticate(user=self.treinador)
+        lista = self.client.get(self._url())
+        detalhe = self.client.get(f"/api/treinos/{treino.id}/")
+
+        self.assertEqual([item["id"] for item in lista.data["results"]], [treino.id])
+        self.assertEqual(lista.data["results"][0]["quantidadeExercicios"], 1)
+        self.assertEqual(detalhe.status_code, 200)
+        exercicio = detalhe.data["exercicios"][0]
+        self.assertEqual(exercicio["nome"], "Drible alternado")
+        self.assertEqual(exercicio["orientacoes"], "Olhar à frente")
+
+    # Desempenho
+    def test_ca04_listagem_e_paginada_e_respeita_o_limite_de_tamanho(self):
+        for numero in range(25):
+            self._treino(f"Treino {numero}", Treino.Status.CONCLUIDO)
+
+        self.client.force_authenticate(user=self.treinador)
+        primeira = self.client.get(self._url())
+        segunda = self.client.get(self._url(), {"page": 2})
+        tudo = self.client.get(self._url(), {"tamanho": 1000})
+
+        self.assertEqual(primeira.data["count"], 25)
+        self.assertEqual(len(primeira.data["results"]), 20)
+        self.assertIsNotNone(primeira.data["next"])
+        self.assertEqual(len(segunda.data["results"]), 5)
+        self.assertIsNone(segunda.data["next"])
+        self.assertEqual(len(tudo.data["results"]), 25)
+
+    def test_ca04_numero_de_consultas_nao_cresce_com_a_quantidade_de_treinos(self):
+        self.client.force_authenticate(user=self.treinador)
+        self._treino("Treino 0", Treino.Status.CONCLUIDO)
+        with CaptureQueriesContext(connection) as com_um_treino:
+            self.client.get(self._url())
+
+        for numero in range(1, 10):
+            self._treino(f"Treino {numero}", Treino.Status.CONCLUIDO)
+        with CaptureQueriesContext(connection) as com_dez_treinos:
+            r = self.client.get(self._url())
+
+        self.assertEqual(len(r.data["results"]), 10)
+        self.assertEqual(len(com_dez_treinos), len(com_um_treino))
+
+    # Acesso Restrito
+    def test_ca05_aluno_nao_acessa_historico_pela_api_do_treinador(self):
+        self._treino("Treino A", Treino.Status.CONCLUIDO)
+
+        for usuario in (self.aluno, self.outro_aluno):
+            self.client.force_authenticate(user=usuario)
+            r = self.client.get(self._url())
+            self.assertEqual(r.status_code, 403)
+            self.assertNotIn("results", r.data)
+
+    def test_ca05_treinador_de_outra_carteira_recebe_403(self):
+        self._treino("Treino A", Treino.Status.CONCLUIDO)
+
+        self.client.force_authenticate(user=self.outro_treinador)
+        r = self.client.get(self._url())
+
+        self.assertEqual(r.status_code, 403)
+        self.assertNotIn("results", r.data)
+
+    def test_ca05_treinador_nao_acessa_aluno_de_outra_carteira(self):
+        self.client.force_authenticate(user=self.treinador)
+
+        self.assertEqual(self.client.get(self._url(self.aluno_de_outra_carteira)).status_code, 403)
+
+    def test_ca05_sem_login_recebe_401(self):
+        self.assertEqual(self.client.get(self._url()).status_code, 401)
+
+    def test_aluno_inexistente_ou_que_nao_e_aluno_recebe_404(self):
+        self.client.force_authenticate(user=self.treinador)
+
+        self.assertEqual(self.client.get("/api/treinos/alunos/999999/historico/").status_code, 404)
+        self.assertEqual(self.client.get(self._url(self.outro_treinador)).status_code, 404)
+
+    # O campo novo do serializer compartilhado não pode quebrar o detalhe nem o status do treino.
+    def test_quantidade_de_exercicios_nos_endpoints_de_detalhe_e_status(self):
+        treino = self._treino("Treino A", Treino.Status.EM_ANDAMENTO)
+        TreinoExercicio.objects.create(
+            treino=treino, ordem=1, nome="Exercício 1", objetivo="Controle",
+            fundamento="DRIBLE", series=3, repeticoes=8,
+        )
+
+        self.client.force_authenticate(user=self.treinador)
+        detalhe = self.client.get(f"/api/treinos/{treino.id}/")
+        status_treino = self.client.get(f"/api/treinos/{treino.id}/status/")
+
+        self.assertEqual(detalhe.data["quantidadeExercicios"], 1)
+        self.assertEqual(status_treino.data["quantidadeExercicios"], 1)
+
+
+class MeuHistoricoTreinosUS58Tests(APITestCase):
+    """US58 — Consultar próprio histórico de treinos."""
+
+    URL = "/api/treinos/meu-historico/"
+
+    def setUp(self):
+        self.treinador = Usuario.objects.create_user(
+            username="coach", email="coach@basquete.com", password="SenhaForte#2026",
+            papel=Usuario.Papel.TREINADOR,
+        )
+        self.aluno = Usuario.objects.create_user(
+            username="beatriz", email="bia@aluno.com", password="SenhaAluno#2026",
+            first_name="Beatriz", papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        self.outro_aluno = Usuario.objects.create_user(
+            username="carlos", email="carlos@aluno.com", password="SenhaAluno#2026",
+            papel=Usuario.Papel.ALUNO, treinador=self.treinador,
+        )
+        for usuario in (self.treinador, self.aluno, self.outro_aluno):
+            termos.registrar_aceite(usuario)
+        self.planejamento = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Controle de bola"
+        )
+        self.planejamento_do_outro = Planejamento.objects.create(
+            aluno=self.outro_aluno, treinador=self.treinador, nome="Arremesso"
+        )
+
+    def _treino(self, nome, estado, planejamento=None):
+        return Treino.objects.create(
+            planejamento=planejamento or self.planejamento, nome=nome, status=estado
+        )
+
+    # Histórico Individual
+    def test_ca01_lista_treinos_em_qualquer_status_do_mais_recente_ao_mais_antigo(self):
+        em_andamento = self._treino("Treino A", Treino.Status.EM_ANDAMENTO)
+        feito = self._treino("Treino B", Treino.Status.FEITO)
+        corrigir = self._treino("Treino C", Treino.Status.CORRIGIR_REFAZER)
+        concluido = self._treino("Treino D", Treino.Status.CONCLUIDO)
+        self._treino("Treino de outro aluno", Treino.Status.CONCLUIDO, self.planejamento_do_outro)
+
+        self.client.force_authenticate(user=self.aluno)
+        r = self.client.get(self.URL)
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(
+            [item["id"] for item in r.data["results"]],
+            [concluido.id, corrigir.id, feito.id, em_andamento.id],
+        )
+        self.assertEqual(r.data["count"], 4)
+        self.assertEqual(
+            [item["statusSlug"] for item in r.data["results"]],
+            ["concluido", "corrigir-refazer", "feito", "em-andamento"],
+        )
+
+    def test_ca01_inclui_treinos_de_planejamento_encerrado_e_do_vigente(self):
+        self.planejamento.status = Planejamento.Status.HISTORICO
+        self.planejamento.encerrado_em = timezone.now()
+        self.planejamento.save(update_fields=["status", "encerrado_em"])
+        antigo = self._treino("Treino do ciclo anterior", Treino.Status.CONCLUIDO)
+        vigente = Planejamento.objects.create(
+            aluno=self.aluno, treinador=self.treinador, nome="Ciclo atual"
+        )
+        atual = self._treino("Treino do ciclo atual", Treino.Status.EM_ANDAMENTO, vigente)
+
+        self.client.force_authenticate(user=self.aluno)
+        r = self.client.get(self.URL)
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([item["id"] for item in r.data["results"]], [atual.id, antigo.id])
+
+    def test_ca01_item_traz_status_e_quantidade_de_exercicios(self):
+        treino = self._treino("Treino A", Treino.Status.FEITO)
+        TreinoExercicio.objects.create(
+            treino=treino, ordem=1, nome="Exercício 1", objetivo="Controle",
+            fundamento="DRIBLE", series=3, repeticoes=8,
+        )
+        treino.realizado_em = timezone.now()
+        treino.save(update_fields=["realizado_em"])
+
+        self.client.force_authenticate(user=self.aluno)
+        item = self.client.get(self.URL).data["results"][0]
+
+        self.assertEqual(item["nome"], "Treino A")
+        self.assertEqual(item["alunoId"], self.aluno.id)
+        self.assertEqual(item["statusSlug"], "feito")
+        self.assertEqual(item["quantidadeExercicios"], 1)
+        self.assertIsNotNone(item["realizadoEm"])
+
+    def test_ca01_aluno_sem_treinos_recebe_lista_vazia(self):
+        self.client.force_authenticate(user=self.aluno)
+        r = self.client.get(self.URL)
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.data["count"], 0)
+        self.assertEqual(r.data["results"], [])
+
+    # Detalhe do Treino
+    def test_ca02_detalhe_do_treino_do_historico_mantem_dados_da_epoca(self):
+        origem = Exercicio.objects.create(
+            nome="Drible alternado", objetivo="Controle de bola", fundamento="DRIBLE",
+            criado_por=self.treinador,
+        )
+        treino = self._treino("Treino A", Treino.Status.CONCLUIDO)
+        TreinoExercicio.objects.create(
+            treino=treino, ordem=1, exercicio_origem=origem, nome=origem.nome,
+            objetivo=origem.objetivo, fundamento=origem.fundamento, orientacoes="Olhar à frente",
+            series=3, repeticoes=8,
+        )
+        origem.nome = "Nome novo na biblioteca"
+        origem.save(update_fields=["nome"])
+        origem.delete()
+
+        self.client.force_authenticate(user=self.aluno)
+        lista = self.client.get(self.URL)
+        detalhe = self.client.get(f"/api/treinos/{treino.id}/")
+
+        self.assertEqual([item["id"] for item in lista.data["results"]], [treino.id])
+        self.assertEqual(detalhe.status_code, 200)
+        self.assertEqual(detalhe.data["statusSlug"], "concluido")
+        self.assertEqual(detalhe.data["exercicios"][0]["nome"], "Drible alternado")
+
+    # Isolamento
+    def test_ca03_historico_de_outro_aluno_nao_aparece_nem_por_parametro(self):
+        meu = self._treino("Meu treino", Treino.Status.CONCLUIDO)
+        self._treino("Treino de outro aluno", Treino.Status.CONCLUIDO, self.planejamento_do_outro)
+
+        self.client.force_authenticate(user=self.aluno)
+        r = self.client.get(self.URL, {"aluno": self.outro_aluno.id, "aluno_id": self.outro_aluno.id})
+
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual([item["id"] for item in r.data["results"]], [meu.id])
+
+    def test_ca03_aluno_nao_abre_treino_nem_historico_de_outro_aluno_pela_api(self):
+        treino_do_outro = self._treino(
+            "Treino de outro aluno", Treino.Status.CONCLUIDO, self.planejamento_do_outro
+        )
+
+        self.client.force_authenticate(user=self.aluno)
+        detalhe = self.client.get(f"/api/treinos/{treino_do_outro.id}/")
+        historico_do_outro = self.client.get(
+            f"/api/treinos/alunos/{self.outro_aluno.id}/historico/"
+        )
+
+        self.assertEqual(detalhe.status_code, 403)
+        self.assertEqual(historico_do_outro.status_code, 403)
+
+    def test_treinador_nao_usa_a_rota_do_aluno(self):
+        self.client.force_authenticate(user=self.treinador)
+
+        self.assertEqual(self.client.get(self.URL).status_code, 403)
+
+    def test_sem_login_recebe_401(self):
+        self.assertEqual(self.client.get(self.URL).status_code, 401)
+
+    # Desempenho
+    def test_ca04_listagem_e_paginada_e_respeita_o_limite_de_tamanho(self):
+        for numero in range(25):
+            self._treino(f"Treino {numero}", Treino.Status.CONCLUIDO)
+
+        self.client.force_authenticate(user=self.aluno)
+        primeira = self.client.get(self.URL)
+        segunda = self.client.get(self.URL, {"page": 2})
+        tudo = self.client.get(self.URL, {"tamanho": 1000})
+
+        self.assertEqual(primeira.data["count"], 25)
+        self.assertEqual(len(primeira.data["results"]), 20)
+        self.assertIsNotNone(primeira.data["next"])
+        self.assertEqual(len(segunda.data["results"]), 5)
+        self.assertEqual(len(tudo.data["results"]), 25)
+
+    def test_ca04_numero_de_consultas_nao_cresce_com_a_quantidade_de_treinos(self):
+        self.client.force_authenticate(user=self.aluno)
+        self._treino("Treino 0", Treino.Status.CONCLUIDO)
+        with CaptureQueriesContext(connection) as com_um_treino:
+            self.client.get(self.URL)
+
+        for numero in range(1, 10):
+            self._treino(f"Treino {numero}", Treino.Status.CONCLUIDO)
+        with CaptureQueriesContext(connection) as com_dez_treinos:
+            r = self.client.get(self.URL)
+
+        self.assertEqual(len(r.data["results"]), 10)
+        self.assertEqual(len(com_dez_treinos), len(com_um_treino))

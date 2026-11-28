@@ -7,6 +7,7 @@ import { DetalheTreino, type ConsultaTreino } from './DetalheTreino'
 import type { StatusTreino } from './EstadoTreino'
 import type { AlteracaoFeedback, FeedbackAluno } from './FeedbackExercicio'
 import type { UsuarioTreino } from './TreinoLayout'
+import { navegacaoAluno, navegacaoTreinador as navegacaoTreino } from './navegacao'
 
 type StatusApi = 'EM_ANDAMENTO' | 'FEITO' | 'CORRIGIR_REFAZER' | 'CONCLUIDO'
 
@@ -52,8 +53,6 @@ function useRetornoDoVideo() {
   return retorno
 }
 
-const navegacaoTreino = { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios' }
-const navegacaoAluno = { Conta: '/', Treinos: '/treinos' }
 const dataCurta = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'UTC' })
 
 function dadosDoTreino(detalhe: DetalheApi): ConsultaTreino {

@@ -24,6 +24,7 @@ interface PerfilAlunoAcompanhadoProps {
   onVoltar?: () => void
   onRegistrarLesao?: (descricao: string, signal: AbortSignal) => Promise<void>
   onVerPlanejamento?: () => void
+  onVerHistorico?: () => void
 }
 
 function valorOuIndisponivel(valor?: string | null) {
@@ -76,6 +77,7 @@ export function PerfilAlunoAcompanhado({
   onVoltar,
   onRegistrarLesao,
   onVerPlanejamento,
+  onVerHistorico,
 }: PerfilAlunoAcompanhadoProps) {
   const nomeTreinador = treinador.first_name || treinador.apelido
   const botaoRegistrar = useRef<HTMLButtonElement>(null)
@@ -272,6 +274,11 @@ export function PerfilAlunoAcompanhado({
               >
                 Ver planejamento
               </button>
+              {onVerHistorico && (
+                <button className="perfil-acompanhado__acao" type="button" onClick={onVerHistorico}>
+                  Ver histórico de treinos
+                </button>
+              )}
             </section>
 
             <p className="perfil-acompanhado__observacao">

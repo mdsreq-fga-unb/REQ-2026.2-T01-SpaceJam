@@ -1,4 +1,3 @@
-
 import type { Exercicio } from '../../../types/exercicio';
 import styles from '../BibliotecaExercicios.module.css';
 
@@ -42,6 +41,16 @@ export default function ExerciseDetails({
             <h2>Orientações</h2>
             <p>{exercicio.orientacoes || 'Não informado'}</p>
           </section>
+          {somenteConsulta && Boolean(exercicio.errosOrientacoes?.length) && (
+            <section>
+              <h2>Erros e orientações</h2>
+              <ul>
+                {exercicio.errosOrientacoes?.map(par => (
+                  <li key={par.id}><strong>{par.erro}</strong><p>{par.orientacaoCorretiva}</p></li>
+                ))}
+              </ul>
+            </section>
+          )}
         </div>
 
         <div className={styles.pilha}>
@@ -67,35 +76,16 @@ export default function ExerciseDetails({
 
       {!somenteConsulta && (
         <div className={styles.acoesDetalhe}>
-          <button type="button" className={styles.principal} onClick={onEditar} disabled={edicaoIndisponivel}>
-            Editar exercício
-          </button>
-
+          <button type="button" className={styles.principal} onClick={onEditar} disabled={edicaoIndisponivel}>Editar exercício</button>
           {onErrosOrientacoes
             ? <button type="button" className={styles.secundario} onClick={onErrosOrientacoes}>Erros e orientações</button>
             : <a className={styles.secundario} href="#orientacoes-exercicio">Erros e orientações</a>}
-
-          {exercicio.videoUrl
-            ? <a className={styles.secundario} href={exercicio.videoUrl} target="_blank" rel="noopener noreferrer">Vídeo de demonstração</a>
-            : <button type="button" className={styles.secundario} disabled>Vídeo de demonstração</button>}
-
-          {onFechar && (
-            <button type="button" className={styles.secundario} onClick={onFechar}>
-              Fechar
-            </button>
+          {onVideoDemonstracao && (
+            <button type="button" className={styles.secundario} onClick={onVideoDemonstracao}>Vídeo de demonstração</button>
           )}
+          {onFechar && <button type="button" className={styles.secundario} onClick={onFechar}>Fechar</button>}
         </div>
       )}
-      <div className={styles.acoesDetalhe}>
-        <button type="button" className={styles.principal} onClick={onEditar} disabled={edicaoIndisponivel}>Editar exercício</button>
-        {onErrosOrientacoes
-          ? <button type="button" className={styles.secundario} onClick={onErrosOrientacoes}>Erros e orientações</button>
-          : <a className={styles.secundario} href="#orientacoes-exercicio">Erros e orientações</a>}
-        {onVideoDemonstracao && (
-          <button type="button" className={styles.secundario} onClick={onVideoDemonstracao}>Vídeo de demonstração</button>
-        )}
-        {onFechar && <button type="button" className={styles.secundario} onClick={onFechar}>Fechar</button>}
-      </div>
     </section>
   );
 }

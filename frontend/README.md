@@ -101,3 +101,16 @@ Os resultados registram o comportamento no ambiente de teste. A revisão indepen
 - **US49 e US50** — Na tela do exercício do treino, o aluno registra seu feedback com `POST` e edita o mesmo registro com `PATCH`, em `/api/treinos/exercicios/:itemId/feedback-aluno/`. O detalhe do treino já inclui o feedback salvo e sua marca de edição. Após a conclusão o formulário fica indisponível.
 
 A navegação do aluno pelo próprio planejamento é a US60. A prescrição, a execução e o feedback usam os mesmos identificadores de treino e exercício. Os testes da rota e do formulário ficam em `tests/TreinoPage.test.tsx`.
+
+## Iteração 4 · biblioteca e histórico
+
+| US | Acesso na aplicação | Integração |
+| --- | --- | --- |
+| US33 | Biblioteca → Consultar exercício → Erros e orientações → Associar erros e orientações | A API lista pares disponíveis em `GET /api/exercicios/:exercicioId/erros-comuns/candidatos/` e copia os selecionados pelo `POST /api/exercicios/:exercicioId/erros-comuns/associar/`. Cada cópia pertence ao exercício de destino. A prescrição preserva os pares conforme a RN23. |
+| US41 | Campo “Buscar por nome” na biblioteca, em `/exercicios` | A busca aceita parte do nome e ignora maiúsculas e minúsculas. Cadastro e edição atualizam a lista pela resposta da API. |
+| US28 | Perfil do aluno acompanhado → Ver histórico de treinos | `GET /api/treinos/alunos/:alunoId/historico/` traz os treinos concluídos do aluno da carteira, com paginação. |
+| US58 | Menu Histórico na conta do aluno | `GET /api/treinos/meu-historico/` traz os treinos do próprio aluno em todos os estados, com paginação. |
+
+Os detalhes dos dois históricos usam `GET /api/treinos/:treinoId/`, com os dados preservados da prescrição e os feedbacks do aluno. Dificuldade e feedback do treinador ainda dependem das respectivas histórias. O detalhe da US28 também depende da integração de vídeos de execução. Na US41, falta validar o efeito da exclusão na busca quando essa operação estiver disponível.
+
+A rota `/previa/iteracao-4` usa dados fictícios para revisar os estados da interface em desenvolvimento. O build de produção exclui essa rota. Os testes das rotas integradas ficam em `tests/IntegracaoBibliotecaHistoricos.test.tsx`.
