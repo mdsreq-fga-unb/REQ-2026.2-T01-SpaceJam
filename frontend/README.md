@@ -48,6 +48,24 @@ Telas do treinador para manter os pares **erro comum + orientação corretiva** 
 - O formulário do exercício (US39) não envia a lista, portanto editar o exercício não apaga os itens. O campo de texto antigo "Erros comuns" saiu da consulta e do formulário do exercício; o valor já salvo é preservado ao editar, e os erros passam a ser mantidos só em "Erros e orientações".
 - Código: `src/features/exercicios/` (`ErrosOrientacoesExercicio.tsx`, `ErroOrientacaoPage.tsx`, `RemoverErroOrientacaoPage.tsx`, `components/ErroOrientacaoForm.tsx` e `ErrosOrientacoes.module.css`). Testes: `tests/us37-erros-orientacoes-*.test.ts(x)`.
 
+## Vídeo de execução do exercício (US42)
+
+O aluno envia, substitui ou reenvia o vídeo da execução de um exercício do treino, e o treinador assiste a esse vídeo. A API está descrita em `backend/README.md` (seção US42). O código fica em `src/features/videos/`, e os testes em `tests/us42-*.test.ts(x)`.
+
+| Rota | Tela | Quem |
+| --- | --- | --- |
+| `/treinos/:treinoId?exercicio=:itemId` | Exercício do treino com o cartão "Vídeo da execução" | Aluno e treinador |
+| `/treinos/:treinoId/exercicios/:itemId/video/enviar` | Envio: escolher, verificar, prévia, enviar, confirmar | Aluno |
+| `/treinos/:treinoId/exercicios/:itemId/video[?tentativa=N]` | Assistir ao vídeo, com status, feedback do treinador e tentativas | Aluno dono e treinador (CA04) |
+| `/treinos/meus-videos` | Meus vídeos, agrupados por treino e exercício | Aluno |
+
+- **O servidor decide a ação.** O botão mostrado vem de `envioVideo`/`envio` e pode ser "Enviar vídeo da execução", "Substituir vídeo" (RN10, CA05) ou "Enviar nova tentativa" (RN09/RN06). Quando o envio está bloqueado (treino concluído, exercício validado ou vídeo já avaliado), a tela explica o motivo em vez de deixar o aluno tentar e falhar.
+- **Nada sai do aparelho antes da confirmação (RNF15, CA03).** Formato, tamanho e duração são verificados localmente. A duração é lida no cabeçalho MP4/MOV, como no backend, por isso funciona até com vídeos HEVC que o navegador não reproduz. Os limites ficam em `verificacaoVideo.ts`: 60 s e 50 MB, os mesmos de `VIDEO_MAX_SEGUNDOS`/`VIDEO_MAX_BYTES`; altere os dois juntos. Quando um vídeo é recusado, a tela mostra qual regra falhou e o valor encontrado.
+- **Envio direto ao Storage (CA02).** `XMLHttpRequest` com barra de progresso real. A barra fica em 99% até o `POST .../video/` confirmar. Fechar a aba durante o envio pede confirmação, e cancelar pede confirmação num diálogo. Se a conexão cair, a tela informa em que porcentagem parou, e "Tentar novamente" reaproveita o mesmo arquivo.
+- **Erros padronizados.** O `code` do backend define a tela: `409` de bloqueio, `ARQUIVO_INVALIDO` (volta à verificação), `401` (sessão expirada) e qualquer outro erro, inclusive `503 ARMAZENAMENTO_INDISPONIVEL`, que leva a "Não foi possível concluir", com "Tentar novamente" quando faz sentido.
+- **Assistir.** O vídeo toca pelo link de 10 minutos. Se o link vencer com a tela aberta, um novo é pedido automaticamente e o vídeo retoma do mesmo ponto.
+- **Volta ao exercício.** As telas de vídeo voltam com `?exercicio=<id>` e um aviso de confirmação no `state`. O endereço é limpo em seguida, então recarregar a página não repete o aviso.
+
 ## Pendências para o incremento
 
 - Validar com o responsável pela plataforma os pontos destacados nos documentos legais (DoD06) e publicar com zero pendências, mantendo `VERSAO_DOCUMENTOS_LEGAIS` igual a `TERMOS_VERSAO_ATUAL`. Configurar uma URL não comprova conteúdo, disponibilidade ou validação do documento.
