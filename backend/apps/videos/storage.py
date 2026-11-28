@@ -6,10 +6,14 @@ Qualquer falha do Storage (fora do ar, chave errada, .env incompleto) vira
 `ErroArmazenamento`, que a API responde como 503.
 """
 import uuid
+from datetime import datetime
 from functools import lru_cache
 
+import httpx
 from django.conf import settings
 from supabase import create_client
+
+from . import midia
 
 # Link de leitura curto: o vídeo só é exibido a quem o backend autorizou (RNF12, CA04).
 # 10 min cobrem uma revisão normal do treinador; se vencer com a tela aberta, o front
@@ -79,3 +83,69 @@ def obter_info(caminho: str) -> dict | None:
 def remover(caminho: str) -> None:
     """Apaga o arquivo do Storage (substituição de vídeo; RN05 na exclusão de conta)."""
     _executar(lambda: _bucket().remove([caminho]))
+
+
+# Link usado só pelo servidor para ler o cabeçalho do vídeo na confirmação.
+VALIDADE_LEITURA_INTERNA_SEGUNDOS = 120
+
+
+def ler_duracao(caminho: str, tamanho_total: int) -> float:
+    """RNF13 — Duração real do arquivo no Storage, lida no cabeçalho MP4/MOV.
+
+    Busca só os trechos necessários (cabeçalhos das caixas e o `moov`) com Range HTTP,
+    sem baixar o vídeo inteiro. Falha de rede ou do Storage vira `ErroArmazenamento`;
+    arquivo que não é MP4/MOV legível vira `midia.ArquivoIlegivel`.
+    """
+    url = gerar_url_leitura(caminho, VALIDADE_LEITURA_INTERNA_SEGUNDOS)
+    inteiro = {}  # se o Storage ignorar o Range, guarda o arquivo para não baixar de novo
+
+    try:
+        with httpx.Client(timeout=20.0, follow_redirects=True) as cliente:
+
+            def leitor(inicio: int, tamanho: int) -> bytes:
+                if "dados" in inteiro:
+                    dados = inteiro["dados"][inicio:inicio + tamanho]
+                else:
+                    fim = inicio + tamanho - 1
+                    resposta = cliente.get(url, headers={"Range": f"bytes={inicio}-{fim}"})
+                    if resposta.status_code == 206:
+                        dados = resposta.content
+                    elif resposta.status_code == 200:
+                        inteiro["dados"] = resposta.content
+                        dados = resposta.content[inicio:inicio + tamanho]
+                    else:
+                        raise ErroArmazenamento(f"Leitura do vídeo respondeu {resposta.status_code}.")
+                if len(dados) != tamanho:
+                    raise midia.ArquivoIlegivel("Arquivo menor do que o informado.")
+                return dados
+
+            return midia.ler_duracao(leitor, tamanho_total)
+    except httpx.HTTPError as erro:
+        raise ErroArmazenamento(str(erro)) from erro
+
+
+def listar_arquivos(prefixo: str):
+    """Percorre as pastas do bucket a partir de `prefixo` e gera `(caminho, criado_em)`.
+
+    Usada pela faxina de envios não confirmados (RNF15). No Supabase, pastas vêm na
+    listagem com `id` nulo; arquivos têm `id` e `created_at`.
+    """
+    pendentes = [prefixo.strip("/")]
+    while pendentes:
+        pasta = pendentes.pop()
+        inicio = 0
+        while True:
+            pagina = _executar(
+                lambda: _bucket().list(
+                    pasta, {"limit": 100, "offset": inicio, "sortBy": {"column": "name", "order": "asc"}}
+                )
+            )
+            for entrada in pagina:
+                caminho = f"{pasta}/{entrada['name']}"
+                if entrada.get("id") is None:
+                    pendentes.append(caminho)
+                elif entrada.get("created_at"):
+                    yield caminho, datetime.fromisoformat(entrada["created_at"].replace("Z", "+00:00"))
+            if len(pagina) < 100:
+                break
+            inicio += 100
