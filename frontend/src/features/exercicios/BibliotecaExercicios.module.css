@@ -23,6 +23,7 @@
   color-scheme: dark;
 }
 .biblioteca :is(input, textarea)::placeholder { color: var(--sj52-secundario); opacity: 1; }
+.busca input[type='search'] { border-color: #777780; }
 .biblioteca select {
   appearance: none;
   padding-right: 44px;
@@ -78,9 +79,9 @@
 
 .principal,
 .adicionar,
+.limparBusca,
 .secundario,
-.voltar,
-.buscar {
+.voltar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -94,10 +95,9 @@
   text-align: center;
   text-decoration: none;
 }
-.principal, .adicionar { border-color: transparent; background: var(--treinador-acao); color: #fff; }
-.principal:hover:not(:disabled), .adicionar:hover:not(:disabled) { background: #b72f14; }
-.secundario:hover, .voltar:hover, .buscar:hover { background: #242428; }
-.buscar { width: min(100%, 180px); margin-top: 14px; }
+.principal, .adicionar, .limparBusca { border-color: transparent; background: var(--treinador-acao); color: #fff; }
+.principal:hover:not(:disabled), .adicionar:hover:not(:disabled), .limparBusca:hover { background: #b72f14; }
+.secundario:hover, .voltar:hover { background: #242428; }
 .voltar { width: min(100%, 240px); margin-bottom: 24px; }
 .adicionar { width: min(100%, 260px); }
 .biblioteca button:disabled { opacity: .62; cursor: not-allowed; }
@@ -109,5 +109,10 @@
 @media (max-width: 899px) {
   .lista, .colunas { grid-template-columns: minmax(0, 1fr); }
   .colunas { gap: 22px; }
-  .acoesDetalhe, .buscar, .voltar, .adicionar { width: 100%; }
+  .acoesDetalhe, .voltar, .adicionar { width: 100%; }
+  .biblioteca :is(input, button, [tabindex]) { scroll-margin-block-end: calc(80px + env(safe-area-inset-bottom)); }
 }
+.buscaVazia { max-width: 48ch; }
+.buscaVazia h2 { margin: 0 0 8px; font-size: 18px; }
+.buscaVazia p { margin: 0; color: var(--sj52-secundario); line-height: 1.5; }
+.limparBusca { width: min(100%, 350px); margin-top: 24px; background: #c4381c; }

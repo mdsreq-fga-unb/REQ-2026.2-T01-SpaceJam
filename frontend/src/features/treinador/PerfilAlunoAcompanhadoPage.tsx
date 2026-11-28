@@ -119,6 +119,9 @@ export function PerfilAlunoAcompanhadoPage() {
       onVerPlanejamento={selecionado && !previa
         ? () => navegar(`/treinador/alunos/${selecionado.id}/planejamento`)
         : undefined}
+      onVerHistorico={selecionado && !previa
+        ? () => navegar('/treinador/alunos/' + selecionado.id + '/historico')
+        : undefined}
       onRegistrarLesao={podeRegistrar
         ? (descricao, signal) => registrarLesao(selecionado.id, descricao, signal)
         : undefined}

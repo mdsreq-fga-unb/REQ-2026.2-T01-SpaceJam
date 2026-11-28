@@ -59,6 +59,7 @@ export default function ErrosOrientacoesExercicio() {
     }
   }, [local, navegar]);
   const idValido = idDeRotaValido(exercicioId);
+  const rotaAssociar = '/exercicios/' + exercicioId + '/erros-orientacoes/associar';
   const rotaNovo = `/exercicios/${exercicioId}/erros-orientacoes/novo`;
   const [estado, setEstado] = useState<{ id: string; exercicio?: Exercicio; erro?: string } | null>(null);
 
@@ -116,12 +117,15 @@ export default function ErrosOrientacoesExercicio() {
                   <h2 id="us37-erros-titulo">Erros comuns e orientações</h2>
                   <p>{contagemDeItens(itens.length)}</p>
                 </div>
-                {itens.length > 0 && (
-                  <Link className={estilos.adicionar} to={rotaNovo}>
-                    <IconeMais />
-                    Adicionar erro/orientação
-                  </Link>
-                )}
+                <div className={estilos.acoesLista}>
+                  <Link className={estilos.adicionar} to={rotaAssociar}>Associar erros e orientações</Link>
+                  {itens.length > 0 && (
+                    <Link className={estilos.adicionar} to={rotaNovo}>
+                      <IconeMais />
+                      Adicionar erro/orientação
+                    </Link>
+                  )}
+                </div>
               </div>
 
               {itens.length > 0 ? (

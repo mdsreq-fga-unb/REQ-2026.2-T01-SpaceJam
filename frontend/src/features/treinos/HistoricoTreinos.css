@@ -1,0 +1,72 @@
+.historico {
+  line-height: 1.5;
+}
+
+.historico-lista,
+.historico-grade {
+  display: grid;
+  align-items: start;
+  gap: 24px;
+  min-width: 0;
+}
+
+.historico-lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.historico-resumo { padding: 16px; }
+
+.historico-consultar {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  min-width: 44px;
+  /* Amplia o alvo sem aumentar a distância visual entre a data e o link. */
+  margin: -10px 0 -8px -8px;
+  padding-inline: 8px;
+  text-decoration: none;
+}
+
+.historico :is(a, button):focus-visible {
+  outline: 2px solid var(--treino-laranja);
+  outline-offset: 3px;
+}
+
+.historico-exercicio dl {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+}
+
+.historico-exercicio dt { margin: 0; font-weight: 700; }
+.historico-exercicio dd {
+  margin: 0 0 8px;
+  color: var(--treino-secundario);
+  font-size: 1em;
+}
+.historico-anotacoes {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.historico-anotacoes strong { color: var(--treino-texto); }
+.historico-anotacoes p { white-space: pre-wrap; }
+.historico-voltar { width: 100%; text-decoration: none; }
+
+.historico-paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.historico-paginacao .treino-botao { width: auto; text-decoration: none; }
+
+@media (min-width: 900px) {
+  .historico-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .historico-voltar { width: calc((100% - 24px) / 2); }
+}

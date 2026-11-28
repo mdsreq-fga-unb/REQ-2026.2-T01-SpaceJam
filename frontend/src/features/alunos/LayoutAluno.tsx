@@ -26,7 +26,7 @@ export function LayoutAluno({ usuario, secao, children }: LayoutAlunoProps) {
 
         <nav className="conta-aluno__navegacao" aria-label="Seções do sistema">
           <Link to="/treinos" aria-current={secao === 'Treinos' ? 'page' : undefined}>Treinos</Link>
-          <span>Histórico</span>
+          <Link to="/historico">Histórico</Link>
           <span>Feedbacks</span>
           <Link to="/" aria-current={secao === 'Conta' ? 'page' : undefined}>Conta</Link>
         </nav>

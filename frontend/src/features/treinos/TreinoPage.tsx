@@ -32,8 +32,8 @@ interface DetalheApi {
   }[]
 }
 
-const navegacaoTreino = { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios' }
-const navegacaoAluno = { Conta: '/', Treinos: '/treinos' }
+const navegacaoTreino = { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios', Treinos: '/treinador/planejamentos' }
+const navegacaoAluno = { Conta: '/', Treinos: '/treinos', Histórico: '/historico' }
 const dataCurta = new Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeZone: 'UTC' })
 
 function dadosDoTreino(detalhe: DetalheApi): ConsultaTreino {

@@ -92,8 +92,8 @@ export async function listarExercicios(): Promise<Exercicio[]> {
   return itens.map(daApi);
 }
 
-export async function consultarExercicio(id: number): Promise<Exercicio> {
-  const dados = await api<ExercicioApi>(`/exercicios/${id}/`);
+export async function consultarExercicio(id: number, signal?: AbortSignal): Promise<Exercicio> {
+  const dados = await api<ExercicioApi>(`/exercicios/${id}/`, { signal });
   return daApi(dados);
 }
 
@@ -150,6 +150,19 @@ function erroOrientacaoParaApi(textos: TextosErroOrientacao) {
 export async function listarErrosOrientacoes(exercicioId: number): Promise<ErroOrientacao[]> {
   const dados = await api<ErroOrientacaoApi[]>(rotaErrosOrientacoes(exercicioId));
   return dados.map(erroOrientacaoDaApi);
+}
+
+export async function listarCandidatosErroOrientacao(exercicioId: number, signal?: AbortSignal): Promise<ErroOrientacao[]> {
+  const dados = await api<ErroOrientacaoApi[]>(rotaErrosOrientacoes(exercicioId) + 'candidatos/', { signal });
+  return dados.map(erroOrientacaoDaApi);
+}
+
+export async function associarErrosOrientacoes(exercicioId: number, ids: number[]) {
+  const dados = await api<{ criados: ErroOrientacaoApi[]; ignorados: number }>(rotaErrosOrientacoes(exercicioId) + 'associar/', {
+    method: 'POST',
+    body: JSON.stringify({ ids }),
+  });
+  return { criados: dados.criados.map(erroOrientacaoDaApi), ignorados: dados.ignorados };
 }
 
 export async function criarErroOrientacao(
