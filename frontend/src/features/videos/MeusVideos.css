@@ -1,0 +1,99 @@
+/* US42 — "Meus vídeos". */
+
+.meus-videos-treino {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.meus-videos-treino > h2 {
+  font: 700 24px/28px 'Barlow Condensed', sans-serif;
+}
+
+.meus-videos-lista {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cartões da mesma linha com a mesma altura: o <li> estica e o cartão o preenche. */
+.meus-videos-lista > li {
+  display: grid;
+  min-width: 0;
+}
+
+.treino-cartao.meus-videos-cartao {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  height: 100%;
+}
+
+/* Selo sempre abaixo do título: o texto fica no mesmo lugar em todos os cartões,
+   seja qual for o tamanho do nome do exercício. */
+.meus-videos-cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.meus-videos-cabecalho h3 {
+  font: 700 18px/24px Barlow, sans-serif;
+}
+
+.meus-videos-feedback {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #141417;
+}
+
+.treino-cartao .meus-videos-feedback p {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  color: var(--treino-texto);
+  white-space: pre-wrap;
+}
+
+/* Ações presas ao rodapé: ficam na mesma altura nos cartões lado a lado. */
+.meus-videos-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin-top: auto;
+}
+
+.meus-videos-acoes .treino-atalho,
+.meus-videos-anteriores .treino-atalho {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.treino-cartao .meus-videos-anteriores {
+  font-size: 14px;
+}
+
+/* "Voltar aos treinos" acompanha a largura dos cartões: total no celular,
+   a de um cartão no desktop (grade de 2 colunas com gap de 16px). */
+.meus-videos-treino ~ .treino-acoes {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .meus-videos-treino ~ .treino-acoes {
+    width: calc((100% - 16px) / 2);
+  }
+}
+
+@media (min-width: 900px) {
+  .meus-videos-lista {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
