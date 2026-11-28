@@ -3,6 +3,7 @@ import { Link, useParams, useSearchParams } from 'react-router'
 import { ApiError } from '../../api/client'
 import { useAuth } from '../../auth/useAuth'
 import { TituloTreino, TreinoLayout } from '../treinos/TreinoLayout'
+import { navegacaoAluno, navegacaoTreinador } from '../treinos/navegacao'
 import { formatarDuracao, formatarTamanho } from './verificacaoVideo'
 import {
   caminhoEnvio, caminhoExercicio, caminhoMeusVideos, caminhoVideo, consultarExercicioComVideo, consultarVideo,
@@ -230,8 +231,8 @@ export function AssistirVideoPage() {
   const itemId = idValido(params.itemId)
   const tentativa = idValido(busca.get('tentativa') ?? undefined) ?? undefined
   const links = aluno
-    ? { Conta: '/', Treinos: '/treinos' }
-    : { Conta: '/', Alunos: '/treinador/alunos', Biblioteca: '/exercicios' }
+    ? navegacaoAluno
+    : navegacaoTreinador
 
   return (
     <TreinoLayout usuario={usuario} links={links}>
