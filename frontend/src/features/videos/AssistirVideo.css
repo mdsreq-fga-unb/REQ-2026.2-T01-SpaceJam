@@ -1,0 +1,42 @@
+/* US42 — Assistir ao vídeo de execução enviado. */
+
+.video-assistir-player,
+.video-assistir-lateral {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.video-assistir-lateral {
+  gap: 16px;
+}
+
+.video-assistir-info,
+.video-feedback-data {
+  color: var(--treino-secundario);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.treino-cartao .video-feedback {
+  color: var(--treino-texto);
+}
+
+.video-tentativas {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.video-tentativas [aria-current='page'] {
+  font-weight: 700;
+}
+
+@media (min-width: 900px) {
+  .video-assistir {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
