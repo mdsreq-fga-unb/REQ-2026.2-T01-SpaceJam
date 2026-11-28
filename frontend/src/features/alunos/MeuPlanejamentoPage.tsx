@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import { useAuth } from '../../auth/useAuth'
 import { LayoutAluno } from './LayoutAluno'
+import { AtalhoMeusVideos } from '../videos/AtalhoMeusVideos'
 import {
   consultarMeuPlanejamento,
   type ExercicioPrescrito,
@@ -72,6 +73,8 @@ function ListaDeTreinos({ planejamento }: { planejamento: PlanejamentoDoAluno | 
           <p className="conta-aluno__indisponivel">Nenhum treino planejado.</p>
         </section>
       )}
+      {/* US42 — vídeos de execução enviados, a partir da entrada da seção Treinos. */}
+      <AtalhoMeusVideos />
     </>
   )
 }
