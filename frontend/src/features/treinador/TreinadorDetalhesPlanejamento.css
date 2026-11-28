@@ -76,15 +76,42 @@
   line-height: 24px;
 }
 
-.detalhes-planejamento__cartao[data-status='CONCLUIDO'] .detalhes-planejamento__status {
+/* Cartões da mesma linha com a mesma altura; "Ver exercícios" fica no rodapé,
+   alinhado entre colunas mesmo quando um treino não tem "Editar treino". */
+.detalhes-planejamento__coluna > .detalhes-planejamento__cartao {
+  flex: 1;
+}
+
+.detalhes-planejamento__cartao > .detalhes-planejamento__exercicios {
+  margin-top: auto;
+}
+
+/* Todo status vira selo (antes só "Concluído"), com uma cor por situação. */
+.detalhes-planejamento__cartao .detalhes-planejamento__status {
   display: inline-block;
   padding: 2px 8px;
   border-radius: 999px;
-  background: #20382c;
-  color: #b6ebc6;
+  background: #343437;
+  color: #f2f2f2;
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
+}
+
+.detalhes-planejamento__cartao[data-status='EM_ANDAMENTO'] .detalhes-planejamento__status,
+.detalhes-planejamento__cartao[data-status='CORRIGIR_REFAZER'] .detalhes-planejamento__status {
+  background: #402520;
+  color: #ffb092;
+}
+
+.detalhes-planejamento__cartao[data-status='FEITO'] .detalhes-planejamento__status {
+  background: #3a2a1c;
+  color: #ffc59a;
+}
+
+.detalhes-planejamento__cartao[data-status='CONCLUIDO'] .detalhes-planejamento__status {
+  background: #20382c;
+  color: #b6ebc6;
 }
 
 .detalhes-planejamento__link {
